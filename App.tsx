@@ -9,6 +9,9 @@ import Wishlist from './components/Wishlist';
 import Testimonials from './components/Testimonials';
 import ProductDetailModal from './components/ProductDetailModal';
 import CategoryFilter from './components/CategoryFilter';
+import { ReorderSubscription } from './components/ReorderSubscription';
+import { RecipeToCart } from './components/RecipeToCart';
+import { InventorySubstitutions } from './components/InventorySubstitutions';
 
 const MOCK_PRODUCTS: Product[] = [
   { id: 1, name: 'Himalayan Saffron', description: 'Premium quality saffron from the valleys of Kashmir.', price: 15.99, imageUrl: 'https://picsum.photos/seed/saffron/400/400', category: 'Spices', stock: 10, reviews: [
@@ -42,6 +45,7 @@ const App: React.FC = () => {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [activeView, setActiveView] = useState<'shop' | 'reorder' | 'recipes' | 'inventory'>('shop');
 
   const categories = useMemo(() => {
     const allCategories = MOCK_PRODUCTS.map(p => p.category);
@@ -68,6 +72,13 @@ const App: React.FC = () => {
         return [...prevItems, { ...product, quantity }];
       }
     });
+  };
+
+  const handleAddToCartById = (productId: number, quantity: number) => {
+    const product = products.find(p => p.id === productId);
+    if (product) {
+      handleAddToCart(product, quantity);
+    }
   };
 
   const handleUpdateQuantity = (productId: number, quantity: number) => {
@@ -126,51 +137,114 @@ const App: React.FC = () => {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Header 
-        cartItemCount={cartItemCount} 
+      <Header
+        cartItemCount={cartItemCount}
         wishlistItemCount={wishlist.length}
         searchQuery={searchQuery}
-        onSearchChange={setSearchQuery} 
+        onSearchChange={setSearchQuery}
       />
       <main className="flex-grow pt-20">
-        <Hero />
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-center text-brand-dark mb-4">Our Products</h2>
-            <CategoryFilter 
-              categories={categories}
-              selectedCategory={selectedCategory}
-              onSelectCategory={setSelectedCategory}
-            />
-            <div className="flex flex-col lg:flex-row lg:gap-12 mt-8">
-              <div className="lg:w-2/3">
-                <ProductGrid 
-                  products={filteredProducts} 
-                  onAddToCart={(p) => handleAddToCart(p, 1)}
-                  onToggleWishlist={handleToggleWishlist}
-                  wishlistedIds={wishlistedIds}
-                  onSelectProduct={setSelectedProduct}
-                />
-              </div>
-              <div className="lg:w-1/3 mt-12 lg:mt-0">
-                  <div className="lg:sticky top-28">
-                    <Cart items={cartItems} onUpdateQuantity={handleUpdateQuantity} />
-                  </div>
-              </div>
-            </div>
-        </div>
-        {wishlist.length > 0 && (
-          <div className="bg-brand-light">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-              <h2 className="text-3xl md:text-4xl font-serif font-bold text-center text-brand-dark mb-10">Your Wishlist</h2>
-              <Wishlist 
-                items={wishlist} 
-                onToggleWishlist={handleToggleWishlist} 
-                onAddToCart={(p) => handleAddToCart(p, 1)}
-              />
-            </div>
+        <div className="bg-white border-b sticky top-16 z-10">
+          <div className="container mx-auto px-4 py-3">
+            <nav className="flex gap-4 overflow-x-auto">
+              <button
+                onClick={() => setActiveView('shop')}
+                className={`px-4 py-2 rounded-lg font-medium whitespace-nowrap transition-colors ${
+                  activeView === 'shop'
+                    ? 'bg-amber-600 text-white'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
+              >
+                Shop Products
+              </button>
+              <button
+                onClick={() => setActiveView('recipes')}
+                className={`px-4 py-2 rounded-lg font-medium whitespace-nowrap transition-colors ${
+                  activeView === 'recipes'
+                    ? 'bg-amber-600 text-white'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
+              >
+                Recipes
+              </button>
+              <button
+                onClick={() => setActiveView('reorder')}
+                className={`px-4 py-2 rounded-lg font-medium whitespace-nowrap transition-colors ${
+                  activeView === 'reorder'
+                    ? 'bg-amber-600 text-white'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
+              >
+                Reorder & Subscriptions
+              </button>
+              <button
+                onClick={() => setActiveView('inventory')}
+                className={`px-4 py-2 rounded-lg font-medium whitespace-nowrap transition-colors ${
+                  activeView === 'inventory'
+                    ? 'bg-amber-600 text-white'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
+              >
+                Inventory & Substitutions
+              </button>
+            </nav>
           </div>
+        </div>
+
+        {activeView === 'shop' && <Hero />}
+        {activeView === 'shop' && (
+          <>
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <h2 className="text-3xl md:text-4xl font-serif font-bold text-center text-brand-dark mb-4">Our Products</h2>
+                <CategoryFilter
+                  categories={categories}
+                  selectedCategory={selectedCategory}
+                  onSelectCategory={setSelectedCategory}
+                />
+                <div className="flex flex-col lg:flex-row lg:gap-12 mt-8">
+                  <div className="lg:w-2/3">
+                    <ProductGrid
+                      products={filteredProducts}
+                      onAddToCart={(p) => handleAddToCart(p, 1)}
+                      onToggleWishlist={handleToggleWishlist}
+                      wishlistedIds={wishlistedIds}
+                      onSelectProduct={setSelectedProduct}
+                    />
+                  </div>
+                  <div className="lg:w-1/3 mt-12 lg:mt-0">
+                      <div className="lg:sticky top-28">
+                        <Cart items={cartItems} onUpdateQuantity={handleUpdateQuantity} />
+                      </div>
+                  </div>
+                </div>
+            </div>
+            {wishlist.length > 0 && (
+              <div className="bg-brand-light">
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                  <h2 className="text-3xl md:text-4xl font-serif font-bold text-center text-brand-dark mb-10">Your Wishlist</h2>
+                  <Wishlist
+                    items={wishlist}
+                    onToggleWishlist={handleToggleWishlist}
+                    onAddToCart={(p) => handleAddToCart(p, 1)}
+                  />
+                </div>
+              </div>
+            )}
+            <Testimonials testimonials={testimonials} />
+          </>
         )}
-        <Testimonials testimonials={testimonials} />
+
+        {activeView === 'recipes' && (
+          <RecipeToCart onAddToCart={handleAddToCartById} />
+        )}
+
+        {activeView === 'reorder' && (
+          <ReorderSubscription onAddToCart={handleAddToCartById} />
+        )}
+
+        {activeView === 'inventory' && (
+          <InventorySubstitutions products={products} onAddToCart={handleAddToCartById} />
+        )}
       </main>
       <Footer />
       {selectedProduct && (
