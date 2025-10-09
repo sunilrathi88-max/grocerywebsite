@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, lazy, Suspense } from 'react';
 import { Product, CartItem, Review } from './types';
 import Header from './components/Header';
 import Hero from './components/Hero';
@@ -7,12 +7,13 @@ import Cart from './components/Cart';
 import Footer from './components/Footer';
 import Wishlist from './components/Wishlist';
 import Testimonials from './components/Testimonials';
-import ProductDetailModal from './components/ProductDetailModal';
 import CategoryFilter from './components/CategoryFilter';
 import { ReorderSubscription } from './components/ReorderSubscription';
 import { RecipeToCart } from './components/RecipeToCart';
 import { InventorySubstitutions } from './components/InventorySubstitutions';
 import { mockProducts, mockTestimonials } from './data/mockData';
+
+const ProductDetailModal = lazy(() => import('./components/ProductDetailModal'));
 
 const App: React.FC = () => {
   const [products, setProducts] = useState<Product[]>(mockProducts);
@@ -225,16 +226,18 @@ const App: React.FC = () => {
       </main>
       <Footer />
       {selectedProduct && (
-        <ProductDetailModal 
-          product={selectedProduct} 
-          onClose={() => setSelectedProduct(null)}
-          onAddToCart={(p) => {
-            handleAddToCart(p, 1);
-            setSelectedProduct(null);
-          }}
-          onAddReview={handleAddReview}
-          onDeleteReview={handleDeleteReview}
-        />
+        <Suspense fallback={<div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center"><div className="text-white">Loading...</div></div>}>
+          <ProductDetailModal 
+            product={selectedProduct} 
+            onClose={() => setSelectedProduct(null)}
+            onAddToCart={(p) => {
+              handleAddToCart(p, 1);
+              setSelectedProduct(null);
+            }}
+            onAddReview={handleAddReview}
+            onDeleteReview={handleDeleteReview}
+          />
+        </Suspense>
       )}
     </div>
   );

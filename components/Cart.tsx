@@ -66,4 +66,4 @@ const Cart: React.FC<CartProps> = ({ items, onUpdateQuantity }) => {
   );
 };
 
-export default Cart;
+export default React.memo(Cart);
