@@ -18,15 +18,15 @@ const Cart: React.FC<CartProps> = ({ items, onUpdateQuantity }) => {
   const total = subtotal + tax;
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6 border border-gray-200">
+    <aside className="bg-white rounded-lg shadow-lg p-6 border border-gray-200" role="complementary" aria-label="Shopping cart">
       <h2 className="text-2xl font-serif font-bold text-brand-dark border-b pb-4 mb-4">Shopping Cart</h2>
       {items.length === 0 ? (
         <p className="text-gray-500">Your cart is empty.</p>
       ) : (
         <>
-          <div className="space-y-4 max-h-80 overflow-y-auto pr-2">
+          <div className="space-y-4 max-h-80 overflow-y-auto pr-2" role="list" aria-label="Cart items">
             {items.map(item => (
-              <div key={item.id} className="flex items-center justify-between">
+              <div key={item.id} className="flex items-center justify-between" role="listitem">
                 <div className="flex items-center gap-4">
                   <img src={item.imageUrl} alt={item.name} className="w-16 h-16 object-cover rounded-md" />
                   <div>
@@ -34,11 +34,11 @@ const Cart: React.FC<CartProps> = ({ items, onUpdateQuantity }) => {
                     <p className="text-sm text-gray-500">${(item.salePrice ?? item.price).toFixed(2)}</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <button onClick={() => onUpdateQuantity(item.id, item.quantity - 1)} className="p-1 rounded-full hover:bg-gray-200 transition-colors"><MinusIcon /></button>
-                  <span className="w-8 text-center font-bold">{item.quantity}</span>
-                  <button onClick={() => onUpdateQuantity(item.id, item.quantity + 1)} className="p-1 rounded-full hover:bg-gray-200 transition-colors"><PlusIcon /></button>
-                  <button onClick={() => onUpdateQuantity(item.id, 0)} className="p-1 rounded-full text-red-500 hover:bg-red-100 transition-colors ml-2"><TrashIcon /></button>
+                <div className="flex items-center gap-2" role="group" aria-label={`Quantity controls for ${item.name}`}>
+                  <button onClick={() => onUpdateQuantity(item.id, item.quantity - 1)} className="p-1 rounded-full hover:bg-gray-200 transition-colors" aria-label={`Decrease quantity of ${item.name}`}><MinusIcon /></button>
+                  <span className="w-8 text-center font-bold" aria-label={`Quantity: ${item.quantity}`}>{item.quantity}</span>
+                  <button onClick={() => onUpdateQuantity(item.id, item.quantity + 1)} className="p-1 rounded-full hover:bg-gray-200 transition-colors" aria-label={`Increase quantity of ${item.name}`}><PlusIcon /></button>
+                  <button onClick={() => onUpdateQuantity(item.id, 0)} className="p-1 rounded-full text-red-500 hover:bg-red-100 transition-colors ml-2" aria-label={`Remove ${item.name} from cart`}><TrashIcon /></button>
                 </div>
               </div>
             ))}
@@ -57,12 +57,12 @@ const Cart: React.FC<CartProps> = ({ items, onUpdateQuantity }) => {
               <span>${total.toFixed(2)}</span>
             </div>
           </div>
-          <button className="mt-6 w-full bg-brand-primary text-white font-bold py-3 rounded-full shadow-lg hover:bg-opacity-90 transform hover:scale-105 transition-all duration-300">
+          <button className="mt-6 w-full bg-brand-primary text-white font-bold py-3 rounded-full shadow-lg hover:bg-opacity-90 transform hover:scale-105 transition-all duration-300" aria-label="Proceed to checkout">
             Proceed to Checkout
           </button>
         </>
       )}
-    </div>
+    </aside>
   );
 };
 

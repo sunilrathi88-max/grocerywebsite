@@ -22,9 +22,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onToggl
   const onSale = product.salePrice && product.salePrice < product.price;
 
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden group transform hover:-translate-y-2 transition-all duration-300 border border-transparent hover:border-brand-primary/50 hover:shadow-xl">
+    <article className="bg-white rounded-lg shadow-md overflow-hidden group transform hover:-translate-y-2 transition-all duration-300 border border-transparent hover:border-brand-primary/50 hover:shadow-xl">
       <div className="relative">
-        <div onClick={() => onSelectProduct(product)} className="cursor-pointer">
+        <div onClick={() => onSelectProduct(product)} className="cursor-pointer" role="button" tabIndex={0} onKeyPress={(e) => e.key === 'Enter' && onSelectProduct(product)}>
           <img className="h-56 w-full object-cover" src={product.imageUrl} alt={product.name} />
           <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-opacity duration-300"></div>
            {isOutOfStock && (
@@ -36,7 +36,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onToggl
         <button
           onClick={() => onToggleWishlist(product)}
           className="absolute top-3 right-3 bg-white/70 backdrop-blur-sm p-2 rounded-full text-brand-dark hover:text-red-500 transition-colors duration-300 z-10"
-          aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
+          aria-label={isWishlisted ? `Remove ${product.name} from wishlist` : `Add ${product.name} to wishlist`}
         >
           <HeartIcon className={`h-6 w-6 ${isWishlisted ? 'text-red-500 fill-current' : 'fill-transparent stroke-current'}`} />
         </button>
@@ -45,10 +45,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onToggl
         <h3 onClick={() => onSelectProduct(product)} className="text-xl font-serif font-bold text-brand-dark cursor-pointer">{product.name}</h3>
         <p className="text-gray-600 mt-2 text-sm h-10">{product.description}</p>
         
-        <div className="flex items-center mt-3 h-[20px]">
+        <div className="flex items-center mt-3 h-[20px]" role="group" aria-label={averageRating ? `Rating: ${averageRating.toFixed(1)} out of 5 stars` : 'No ratings yet'}>
           {averageRating ? (
             <>
-              <div className="flex">
+              <div className="flex" aria-hidden="true">
                 {Array.from({ length: 5 }).map((_, index) => (
                   <StarIcon 
                     key={index} 
@@ -68,7 +68,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onToggl
             {onSale ? (
               <div className="flex items-baseline gap-2">
                 <span className="text-2xl font-bold text-red-500 font-sans">${product.salePrice!.toFixed(2)}</span>
-                <span className="text-lg font-sans text-gray-500 line-through">${product.price.toFixed(2)}</span>
+                <span className="text-lg font-sans text-gray-500 line-through" aria-label={`Original price $${product.price.toFixed(2)}`}>${product.price.toFixed(2)}</span>
               </div>
             ) : (
               <span className="text-2xl font-bold text-brand-dark font-sans">${product.price.toFixed(2)}</span>
@@ -78,14 +78,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onToggl
             onClick={() => onAddToCart(product)}
             disabled={isOutOfStock}
             className="flex items-center gap-2 bg-brand-primary text-white font-bold py-2 px-4 rounded-full shadow-md hover:bg-brand-primary/90 transform hover:scale-105 transition-all duration-300 disabled:bg-gray-400 disabled:cursor-not-allowed disabled:transform-none"
-            aria-label={`Add ${product.name} to cart`}
+            aria-label={isOutOfStock ? `${product.name} is out of stock` : `Add ${product.name} to cart`}
           >
             <PlusIcon />
             Add
           </button>
         </div>
       </div>
-    </div>
+    </article>
   );
 };
 
