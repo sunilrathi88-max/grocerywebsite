@@ -1,6 +1,8 @@
-import React, { useState, useMemo, lazy, Suspense } from 'react';
-import { Product, CartItem, Review } from './types';
+import React, { useState, useMemo, lazy, Suspense, useCallback } from 'react';
+import { Product, Review } from './types';
 import { mockProducts, mockTestimonials } from './data/mockData';
+import { useCart } from './hooks/useCart';
+import { useWishlist } from './hooks/useWishlist';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import ProductGrid from './components/ProductGrid';
@@ -17,8 +19,8 @@ const ProductDetailModal = lazy(() => import('./components/ProductDetailModal'))
 
 const App: React.FC = () => {
   const [products, setProducts] = useState<Product[]>(mockProducts);
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
-  const [wishlist, setWishlist] = useState<Product[]>([]);
+  const { cartItems, addToCart, updateQuantity, cartItemCount } = useCart();
+  const { wishlist, toggleWishlist, wishlistedIds } = useWishlist();
   const [testimonials] = useState(mockTestimonials);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
@@ -38,48 +40,12 @@ const App: React.FC = () => {
     });
   }, [products, searchQuery, selectedCategory]);
 
-  const handleAddToCart = (product: Product, quantity: number = 1) => {
-    if (product.stock === 0) return;
-    setCartItems(prevItems => {
-      const itemInCart = prevItems.find(item => item.id === product.id);
-      if (itemInCart) {
-        return prevItems.map(item =>
-          item.id === product.id ? { ...item, quantity: item.quantity + quantity } : item
-        );
-      } else {
-        return [...prevItems, { ...product, quantity }];
-      }
-    });
-  };
-
-  const handleAddToCartById = (productId: number, quantity: number) => {
+  const handleAddToCartById = useCallback((productId: number, quantity: number) => {
     const product = products.find(p => p.id === productId);
     if (product) {
-      handleAddToCart(product, quantity);
+      addToCart(product, quantity);
     }
-  };
-
-  const handleUpdateQuantity = (productId: number, quantity: number) => {
-    setCartItems(prevItems => {
-      if (quantity <= 0) {
-        return prevItems.filter(item => item.id !== productId);
-      }
-      return prevItems.map(item =>
-        item.id === productId ? { ...item, quantity } : item
-      );
-    });
-  };
-
-  const handleToggleWishlist = (product: Product) => {
-    setWishlist(prevWishlist => {
-        const isInWishlist = prevWishlist.some(item => item.id === product.id);
-        if (isInWishlist) {
-            return prevWishlist.filter(item => item.id !== product.id);
-        } else {
-            return [...prevWishlist, product];
-        }
-    });
-  };
+  }, [products, addToCart]);
 
   const handleAddReview = (productId: number, review: Omit<Review, 'id'>) => {
     const updatedProducts = products.map(p => {
@@ -106,12 +72,6 @@ const App: React.FC = () => {
     });
     setProducts(updatedProducts);
   };
-
-  const wishlistedIds = useMemo(() => new Set(wishlist.map(p => p.id)), [wishlist]);
-
-  const cartItemCount = useMemo(() => {
-    return cartItems.reduce((total, item) => total + item.quantity, 0);
-  }, [cartItems]);
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -183,15 +143,15 @@ const App: React.FC = () => {
                   <div className="lg:w-2/3">
                     <ProductGrid
                       products={filteredProducts}
-                      onAddToCart={(p) => handleAddToCart(p, 1)}
-                      onToggleWishlist={handleToggleWishlist}
+                      onAddToCart={(p) => addToCart(p, 1)}
+                      onToggleWishlist={toggleWishlist}
                       wishlistedIds={wishlistedIds}
                       onSelectProduct={setSelectedProduct}
                     />
                   </div>
                   <div className="lg:w-1/3 mt-12 lg:mt-0">
                       <div className="lg:sticky top-28">
-                        <Cart items={cartItems} onUpdateQuantity={handleUpdateQuantity} />
+                        <Cart items={cartItems} onUpdateQuantity={updateQuantity} />
                       </div>
                   </div>
                 </div>
@@ -202,8 +162,8 @@ const App: React.FC = () => {
                   <h2 className="text-3xl md:text-4xl font-serif font-bold text-center text-brand-dark mb-10">Your Wishlist</h2>
                   <Wishlist
                     items={wishlist}
-                    onToggleWishlist={handleToggleWishlist}
-                    onAddToCart={(p) => handleAddToCart(p, 1)}
+                    onToggleWishlist={toggleWishlist}
+                    onAddToCart={(p) => addToCart(p, 1)}
                   />
                 </div>
               </div>
@@ -231,7 +191,7 @@ const App: React.FC = () => {
             product={selectedProduct} 
             onClose={() => setSelectedProduct(null)}
             onAddToCart={(p) => {
-              handleAddToCart(p, 1);
+              addToCart(p, 1);
               setSelectedProduct(null);
             }}
             onAddReview={handleAddReview}
