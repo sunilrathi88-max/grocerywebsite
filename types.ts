@@ -139,3 +139,10 @@ export interface RestockNotification {
   notified: boolean;
   createdAt: Date;
 }
+
+export interface Testimonial {
+  id: number;
+  name: string;
+  quote: string;
+  rating: number;
+}
