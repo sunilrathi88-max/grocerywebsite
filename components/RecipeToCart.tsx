@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Recipe, PantryItem } from '../types';
 import { mockRecipes } from '../data/mockData';
@@ -14,6 +14,13 @@ export function RecipeToCart({ onAddToCart }: RecipeToCartProps) {
   const [pantryItems] = useState<PantryItem[]>([]);
   const [filterCuisine, setFilterCuisine] = useState<string>('all');
   const [filterDietary, setFilterDietary] = useState<string>('all');
+
+  // Reset servings when a new recipe is selected
+  useEffect(() => {
+    if (selectedRecipe) {
+      setServings(selectedRecipe.servings);
+    }
+  }, [selectedRecipe]);
 
   const cuisines = ['all', ...Array.from(new Set(recipes.map(r => r.cuisine)))];
   const dietaryOptions = ['all', 'vegetarian', 'vegan', 'high-protein'];
