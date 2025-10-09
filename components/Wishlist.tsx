@@ -54,4 +54,4 @@ const Wishlist: React.FC<WishlistProps> = ({ items, onToggleWishlist, onAddToCar
   );
 };
 
-export default Wishlist;
+export default React.memo(Wishlist);

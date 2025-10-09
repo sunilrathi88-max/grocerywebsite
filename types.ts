@@ -24,6 +24,13 @@ export interface CartItem extends Product {
   quantity: number;
 }
 
+export interface Testimonial {
+  id: number;
+  name: string;
+  quote: string;
+  rating: number;
+}
+
 export interface ProductSubstitution {
   id: string;
   productId: number;

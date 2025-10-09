@@ -1,5 +1,6 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, lazy, Suspense } from 'react';
 import { Product, CartItem, Review } from './types';
+import { mockProducts, mockTestimonials } from './data/mockData';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import ProductGrid from './components/ProductGrid';
@@ -7,48 +8,25 @@ import Cart from './components/Cart';
 import Footer from './components/Footer';
 import Wishlist from './components/Wishlist';
 import Testimonials from './components/Testimonials';
-import ProductDetailModal from './components/ProductDetailModal';
 import CategoryFilter from './components/CategoryFilter';
 import { ReorderSubscription } from './components/ReorderSubscription';
 import { RecipeToCart } from './components/RecipeToCart';
 import { InventorySubstitutions } from './components/InventorySubstitutions';
 
-const MOCK_PRODUCTS: Product[] = [
-  { id: 1, name: 'Himalayan Saffron', description: 'Premium quality saffron from the valleys of Kashmir.', price: 15.99, imageUrl: 'https://picsum.photos/seed/saffron/400/400', category: 'Spices', stock: 10, reviews: [
-    { id: 1, author: 'Aisha R.', rating: 5, comment: "Absolutely the best saffron I've ever used. The aroma is intoxicating!" },
-    { id: 2, author: 'Vikram B.', rating: 4, comment: "Great quality and color. A bit pricey, but worth it for special occasions." },
-  ] },
-  { id: 2, name: 'Malabar Black Pepper', description: 'Aromatic and pungent peppercorns from Kerala.', price: 8.50, salePrice: 6.99, imageUrl: 'https://picsum.photos/seed/pepper/400/400', category: 'Spices', stock: 0, reviews: [
-    { id: 3, author: 'Meera N.', rating: 5, comment: "Incredibly pungent and flavorful. You can really taste the difference." },
-  ] },
-  { id: 3, name: 'Assam Gold Tea', description: 'Full-bodied black tea with malty flavor.', price: 12.00, imageUrl: 'https://picsum.photos/seed/tea/400/400', category: 'Beverages', stock: 25, reviews: [] },
-  { id: 4, name: 'Organic Turmeric Powder', description: 'Vibrant and earthy turmeric with high curcumin content.', price: 6.75, imageUrl: 'https://picsum.photos/seed/turmeric/400/400', category: 'Spices', stock: 50, reviews: [] },
-  { id: 5, name: 'California Almonds', description: 'Crunchy and nutritious premium almonds.', price: 18.25, salePrice: 15.00, imageUrl: 'https://picsum.photos/seed/almonds/400/400', category: 'Nuts', stock: 3, reviews: [
-    { id: 4, author: 'Sanjay P.', rating: 5, comment: "Very fresh and crunchy. Perfect for snacking." },
-  ] },
-  { id: 6, name: 'Gourmet Garam Masala', description: 'Aromatic blend of hand-ground spices for authentic flavor.', price: 9.99, imageUrl: 'https://picsum.photos/seed/masala/400/400', category: 'Spices', stock: 30, reviews: [] },
-  { id: 7, name: 'Sun-dried Figs', description: 'Sweet and chewy figs, naturally dried.', price: 14.50, imageUrl: 'https://picsum.photos/seed/figs/400/400', category: 'Dry Fruits', stock: 12, reviews: [] },
-  { id: 8, name: 'Cashew Nuts (W240)', description: 'Large, whole cashew nuts, creamy and delicious.', price: 22.00, imageUrl: 'https://picsum.photos/seed/cashews/400/400', category: 'Nuts', stock: 40, reviews: [] },
-];
-
-const MOCK_TESTIMONIALS = [
-  { id: 1, name: 'Priya S.', quote: 'The spices are incredibly fresh and aromatic. My curries have never tasted better! Tattva Co. is my new go-to for all my Indian cooking needs.', rating: 5 },
-  { id: 2, name: 'Rahul K.', quote: 'Absolutely love the quality of the almonds and cashews. They are crunchy, fresh, and taste premium. The packaging is also top-notch.', rating: 5 },
-  { id: 3, name: 'Anjali M.', quote: 'I was looking for authentic garam masala and found it here. The blend is perfect and adds such a wonderful flavor to my dishes. Highly recommended!', rating: 4 },
-];
+const ProductDetailModal = lazy(() => import('./components/ProductDetailModal'));
 
 const App: React.FC = () => {
-  const [products, setProducts] = useState<Product[]>(MOCK_PRODUCTS);
+  const [products, setProducts] = useState<Product[]>(mockProducts);
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [wishlist, setWishlist] = useState<Product[]>([]);
-  const [testimonials] = useState(MOCK_TESTIMONIALS);
+  const [testimonials] = useState(mockTestimonials);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [activeView, setActiveView] = useState<'shop' | 'reorder' | 'recipes' | 'inventory'>('shop');
 
   const categories = useMemo(() => {
-    const allCategories = MOCK_PRODUCTS.map(p => p.category);
+    const allCategories = mockProducts.map(p => p.category);
     return ['All', ...Array.from(new Set(allCategories))];
   }, []);
 
@@ -248,16 +226,18 @@ const App: React.FC = () => {
       </main>
       <Footer />
       {selectedProduct && (
-        <ProductDetailModal 
-          product={selectedProduct} 
-          onClose={() => setSelectedProduct(null)}
-          onAddToCart={(p) => {
-            handleAddToCart(p, 1);
-            setSelectedProduct(null);
-          }}
-          onAddReview={handleAddReview}
-          onDeleteReview={handleDeleteReview}
-        />
+        <Suspense fallback={<div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center"><div className="text-white">Loading...</div></div>}>
+          <ProductDetailModal 
+            product={selectedProduct} 
+            onClose={() => setSelectedProduct(null)}
+            onAddToCart={(p) => {
+              handleAddToCart(p, 1);
+              setSelectedProduct(null);
+            }}
+            onAddReview={handleAddReview}
+            onDeleteReview={handleDeleteReview}
+          />
+        </Suspense>
       )}
     </div>
   );
