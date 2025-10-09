@@ -3,7 +3,7 @@ import React from 'react';
 
 const Hero: React.FC = () => {
   return (
-    <div className="relative bg-cover bg-center h-96" style={{ backgroundImage: "url('https://picsum.photos/seed/hero/1600/600')" }}>
+    <div className="relative bg-cover bg-center h-96" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1598514983318-761235499264?q=80&w=1600&h=600&auto=format&fit=crop')" }}>
       <div className="absolute inset-0 bg-brand-dark bg-opacity-40"></div>
       <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-center items-start text-white">
         <h1 className="text-4xl md:text-6xl font-serif font-bold drop-shadow-lg">Authentic Indian Gourmet</h1>
