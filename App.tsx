@@ -1,5 +1,5 @@
 import React, { useState, useMemo, lazy, Suspense } from 'react';
-import { Product, CartItem, Review } from './types';
+import { Product, Review } from './types';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import ProductGrid from './components/ProductGrid';
@@ -12,18 +12,21 @@ import { ReorderSubscription } from './components/ReorderSubscription';
 import { RecipeToCart } from './components/RecipeToCart';
 import { InventorySubstitutions } from './components/InventorySubstitutions';
 import { mockProducts, mockTestimonials } from './data/mockData';
+import { useCart } from './hooks/useCart';
+import { useWishlist } from './hooks/useWishlist';
 
 const ProductDetailModal = lazy(() => import('./components/ProductDetailModal'));
 
 const App: React.FC = () => {
   const [products, setProducts] = useState<Product[]>(mockProducts);
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
-  const [wishlist, setWishlist] = useState<Product[]>([]);
   const [testimonials] = useState(mockTestimonials);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [activeView, setActiveView] = useState<'shop' | 'reorder' | 'recipes' | 'inventory'>('shop');
+
+  const { cartItems, handleAddToCart, handleUpdateQuantity, cartItemCount } = useCart();
+  const { wishlist, handleToggleWishlist, wishlistedIds } = useWishlist();
 
   const categories = useMemo(() => {
     const allCategories = mockProducts.map(p => p.category);
@@ -38,47 +41,11 @@ const App: React.FC = () => {
     });
   }, [products, searchQuery, selectedCategory]);
 
-  const handleAddToCart = (product: Product, quantity: number = 1) => {
-    if (product.stock === 0) return;
-    setCartItems(prevItems => {
-      const itemInCart = prevItems.find(item => item.id === product.id);
-      if (itemInCart) {
-        return prevItems.map(item =>
-          item.id === product.id ? { ...item, quantity: item.quantity + quantity } : item
-        );
-      } else {
-        return [...prevItems, { ...product, quantity }];
-      }
-    });
-  };
-
   const handleAddToCartById = (productId: number, quantity: number) => {
     const product = products.find(p => p.id === productId);
     if (product) {
       handleAddToCart(product, quantity);
     }
-  };
-
-  const handleUpdateQuantity = (productId: number, quantity: number) => {
-    setCartItems(prevItems => {
-      if (quantity <= 0) {
-        return prevItems.filter(item => item.id !== productId);
-      }
-      return prevItems.map(item =>
-        item.id === productId ? { ...item, quantity } : item
-      );
-    });
-  };
-
-  const handleToggleWishlist = (product: Product) => {
-    setWishlist(prevWishlist => {
-        const isInWishlist = prevWishlist.some(item => item.id === product.id);
-        if (isInWishlist) {
-            return prevWishlist.filter(item => item.id !== product.id);
-        } else {
-            return [...prevWishlist, product];
-        }
-    });
   };
 
   const handleAddReview = (productId: number, review: Omit<Review, 'id'>) => {
@@ -106,12 +73,6 @@ const App: React.FC = () => {
     });
     setProducts(updatedProducts);
   };
-
-  const wishlistedIds = useMemo(() => new Set(wishlist.map(p => p.id)), [wishlist]);
-
-  const cartItemCount = useMemo(() => {
-    return cartItems.reduce((total, item) => total + item.quantity, 0);
-  }, [cartItems]);
 
   return (
     <div className="flex flex-col min-h-screen">
