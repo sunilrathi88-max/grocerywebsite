@@ -12,7 +12,6 @@ import ProductDetailModal from './components/ProductDetailModal';
 import CategoryFilter from './components/CategoryFilter';
 import ToastContainer from './components/ToastContainer';
 import SideModal from './components/SideModal';
-import { HeartIcon } from './components/icons/HeartIcon';
 import Breadcrumbs from './components/Breadcrumbs';
 import PromotionalBanner from './components/PromotionalBanner';
 import SortDropdown from './components/SortDropdown';
@@ -325,7 +324,7 @@ const App: React.FC = () => {
         if (isInWishlist) {
             return prevWishlist.filter(item => item.id !== product.id);
         } else {
-            addToast(`'${product.name}' added to wishlist`, 'success', <HeartIcon className="h-6 w-6 text-red-500 fill-current" />);
+            addToast(`'${product.name}' added to wishlist`, 'success');
             return [...prevWishlist, product];
         }
     });
