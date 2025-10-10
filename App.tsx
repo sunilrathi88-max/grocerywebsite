@@ -21,6 +21,7 @@ import AdvancedFilters from './components/AdvancedFilters';
 import CheckoutPage from './components/CheckoutPage';
 import UserProfile from './components/UserProfile';
 import AdminDashboard from './components/AdminDashboard';
+import { getProductPrice, getAverageRating, isAnyVariantOnSale, isAnyVariantInStock } from './utils/sorting';
 
 const MOCK_PRODUCTS: Product[] = [
   { 
@@ -240,40 +241,33 @@ const App: React.FC = () => {
     return ['All', ...Array.from(new Set(allCategories))];
   }, []);
 
-  const getProductPrice = (product: Product): number => {
-    const prices = product.variants.map(v => v.salePrice ?? v.price);
-    return Math.min(...prices);
-  };
-
   const processedProducts = useMemo(() => {
-    let filtered = products.filter(product => {
-        const matchesCategory = selectedCategory === 'All' || product.category === selectedCategory;
-        const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
-        const matchesOnSale = !showOnlyOnSale || product.variants.some(v => v.salePrice && v.salePrice < v.price);
-        const matchesInStock = !showOnlyInStock || product.variants.some(v => v.stock > 0);
-        return matchesCategory && matchesSearch && matchesOnSale && matchesInStock;
+    const filtered = products.filter(product => {
+      const matchesCategory = selectedCategory === 'All' || product.category === selectedCategory;
+      const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesOnSale = !showOnlyOnSale || isAnyVariantOnSale(product);
+      const matchesInStock = !showOnlyInStock || isAnyVariantInStock(product);
+      return matchesCategory && matchesSearch && matchesOnSale && matchesInStock;
     });
 
+    const sorted = [...filtered];
+
     switch (sortOption) {
-        case 'price-asc':
-            filtered.sort((a, b) => getProductPrice(a) - getProductPrice(b));
-            break;
-        case 'price-desc':
-            filtered.sort((a, b) => getProductPrice(b) - getProductPrice(a));
-            break;
-        case 'rating-desc':
-            filtered.sort((a, b) => {
-                const ratingA = a.reviews.length > 0 ? a.reviews.reduce((acc, r) => acc + r.rating, 0) / a.reviews.length : 0;
-                const ratingB = b.reviews.length > 0 ? b.reviews.reduce((acc, r) => acc + r.rating, 0) / b.reviews.length : 0;
-                return ratingB - ratingA;
-            });
-            break;
-        case 'featured':
-        default:
-            // Assuming original order is 'featured'
-            break;
+      case 'price-asc':
+        sorted.sort((a, b) => getProductPrice(a) - getProductPrice(b));
+        break;
+      case 'price-desc':
+        sorted.sort((a, b) => getProductPrice(b) - getProductPrice(a));
+        break;
+      case 'rating-desc':
+        sorted.sort((a, b) => getAverageRating(b.reviews) - getAverageRating(a.reviews));
+        break;
+      case 'featured':
+      default:
+        // keep original order
+        break;
     }
-    return filtered;
+    return sorted;
   }, [products, searchQuery, selectedCategory, sortOption, showOnlyOnSale, showOnlyInStock]);
 
   const handleAddToCart = useCallback((product: Product, variant: Variant, quantity: number = 1) => {
