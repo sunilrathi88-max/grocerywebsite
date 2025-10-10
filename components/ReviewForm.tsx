@@ -1,12 +1,13 @@
-
 import React, { useState } from 'react';
 import { StarIcon } from './icons/StarIcon';
+import { ToastMessage } from '../types';
 
 interface ReviewFormProps {
   onSubmit: (review: { author: string; rating: number; comment: string; }) => void;
+  addToast: (message: string, type: ToastMessage['type'], icon?: React.ReactNode) => void;
 }
 
-const ReviewForm: React.FC<ReviewFormProps> = ({ onSubmit }) => {
+const ReviewForm: React.FC<ReviewFormProps> = ({ onSubmit, addToast }) => {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
   const [author, setAuthor] = useState('');
@@ -22,7 +23,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ onSubmit }) => {
       setAuthor('');
       setHoverRating(0);
     } else {
-        alert('Please fill out all fields and provide a rating.');
+        addToast('Please fill out all fields and provide a rating.', 'error');
     }
   };
 
