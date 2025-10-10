@@ -18,6 +18,16 @@ export default defineConfig(({ mode }) => {
         alias: {
           '@': path.resolve(__dirname, '.'),
         }
+      },
+      test: {
+        environment: 'jsdom',
+        setupFiles: './setupTests.ts',
+        globals: true,
+        css: true,
+        coverage: {
+          provider: 'v8',
+          reporter: ['text', 'html'],
+        },
       }
     };
 });
