@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "vitest"
+    "test": "vitest",
+    "setup": "node -e \"const fs = require('fs'); const path = '.env.local'; if (!fs.existsSync(path)) { fs.copyFileSync('.env.local.example', path); console.log('.env.local created from .env.local.example'); } else { console.log('.env.local already exists'); }\""
   },
   "dependencies": {
     "framer-motion": "11.0.8",
