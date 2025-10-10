@@ -57,3 +57,35 @@ describe('sorting utils coercion', () => {
     expect(isAnyVariantInStock(p)).toBe(true);
   });
 });
+
+describe('backward compatibility with numeric values', () => {
+  it('handles pure numeric data correctly', () => {
+    const product = makeProduct({
+      variants: [
+        { id: 1, name: '100g', price: 10, stock: 5 },
+        { id: 2, name: '200g', price: 20, salePrice: 15, stock: 3 }
+      ],
+      reviews: [
+        { id: 1, author: 'A', rating: 5, comment: 'Great' },
+        { id: 2, author: 'B', rating: 3, comment: 'Good' }
+      ]
+    });
+
+    expect(getProductPrice(product)).toBe(10);
+    expect(getAverageRating(product.reviews)).toBe(4);
+    expect(isAnyVariantOnSale(product)).toBe(true);
+    expect(isAnyVariantInStock(product)).toBe(true);
+  });
+
+  it('handles zero stock correctly', () => {
+    const product = makeProduct({
+      variants: [ { id: 1, name: '100g', price: 10, stock: 0 } ]
+    });
+    expect(isAnyVariantInStock(product)).toBe(false);
+  });
+
+  it('handles products without reviews correctly', () => {
+    const product = makeProduct({ reviews: [] });
+    expect(getAverageRating(product.reviews)).toBe(0);
+  });
+});
