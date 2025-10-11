@@ -14,10 +14,22 @@ const BLANK_PRODUCT: Product = {
   name: '',
   description: '',
   category: 'Spices',
-  images: [''],
+  images: [],
   variants: [{ id: Date.now(), name: '100g', price: 0, stock: 0 }],
   reviews: []
 };
+
+// Helper function to read file as data URL
+const fileToDataUri = (file: File): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      resolve(event.target?.result as string);
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
 
 const ProductFormModal: React.FC<ProductFormModalProps> = ({ product, onSave, onClose }) => {
   const [formData, setFormData] = useState<Product>(product || BLANK_PRODUCT);
@@ -33,6 +45,21 @@ const ProductFormModal: React.FC<ProductFormModalProps> = ({ product, onSave, on
     (newVariants[index] as any)[field] = value;
     setFormData({ ...formData, variants: newVariants });
   };
+
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const files = Array.from(e.target.files);
+      const newImageUrls = await Promise.all(files.map(fileToDataUri));
+      setFormData(prev => ({ ...prev, images: [...prev.images.filter(img => img), ...newImageUrls] }));
+    }
+  };
+
+  const removeImage = (index: number) => {
+    const newImages = [...formData.images];
+    newImages.splice(index, 1);
+    setFormData({ ...formData, images: newImages });
+  };
+
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -64,9 +91,26 @@ const ProductFormModal: React.FC<ProductFormModalProps> = ({ product, onSave, on
                 <option>Dry Fruits</option>
             </select>
           </div>
+          
           <div>
-            <label className="block text-sm font-medium">Image URL</label>
-            <input type="text" name="images" value={formData.images[0]} onChange={(e) => setFormData({...formData, images: [e.target.value]})} className="mt-1 input-field" required />
+            <label className="block text-sm font-medium">Product Images</label>
+            <div className="mt-2 grid grid-cols-3 sm:grid-cols-4 gap-4">
+              {formData.images.map((img, index) => (
+                img && <div key={index} className="relative group">
+                  <img src={img} alt={`Product image ${index + 1}`} className="w-full h-24 object-cover rounded-md" />
+                  <button type="button" onClick={() => removeImage(index)} className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-0.5 opacity-0 group-hover:opacity-100 transition-opacity" aria-label="Remove image">
+                    <XIcon className="h-4 w-4" />
+                  </button>
+                </div>
+              ))}
+            </div>
+            <div className="mt-4">
+              <label htmlFor="image-upload" className="cursor-pointer bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-primary">
+                <span>Upload Images</span>
+                <input id="image-upload" name="image-upload" type="file" multiple accept="image/*" className="sr-only" onChange={handleImageChange} />
+              </label>
+              <p className="text-xs text-gray-500 mt-1">Add one or more images for the product. This is a frontend simulation.</p>
+            </div>
           </div>
           
           <div className="border-t pt-4">
@@ -79,7 +123,7 @@ const ProductFormModal: React.FC<ProductFormModalProps> = ({ product, onSave, on
                     </div>
                     <div>
                         <label className="block text-xs font-medium">Price</label>
-                        <input type="number" name="price" value={variant.price} onChange={e => handleVariantChange(e, index)} className="mt-1 input-field-sm" />
+                        <input type="number" step="0.01" name="price" value={variant.price} onChange={e => handleVariantChange(e, index)} className="mt-1 input-field-sm" />
                     </div>
                      <div>
                         <label className="block text-xs font-medium">Stock</label>

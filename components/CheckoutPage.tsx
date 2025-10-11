@@ -1,19 +1,21 @@
-
 import React, { useState, useMemo } from 'react';
 import { CartItem, User, Address, Order, ToastMessage } from '../types';
 import { CheckCircleIcon } from './icons/CheckCircleIcon';
 import { CalendarIcon } from './icons/CalendarIcon';
 import { XIcon } from './icons/XIcon';
+import { ShieldCheckIcon } from './icons/ShieldCheckIcon';
 
 interface CheckoutPageProps {
   cartItems: CartItem[];
-  user: User;
+  user: User | null;
   onPlaceOrder: (order: Omit<Order, 'id' | 'date' | 'status'>) => Order;
   addToast: (message: string, type: ToastMessage['type']) => void;
   discount: number;
   promoCode: string;
   onApplyPromoCode: (code: string) => void;
   onRemovePromoCode: () => void;
+  subtotal: number;
+  shippingCost: number;
 }
 
 const OrderConfirmation: React.FC<{ order: Order }> = ({ order }) => {
@@ -28,9 +30,10 @@ const OrderConfirmation: React.FC<{ order: Order }> = ({ order }) => {
         <h2 className="text-3xl font-serif font-bold text-brand-dark">Thank you for your order!</h2>
         <p className="mt-2 text-gray-600">Your order has been placed successfully. A confirmation email has been sent.</p>
         
-        <div className="mt-6 text-left bg-brand-accent/50 p-4 rounded-lg">
+        <div className="mt-6 text-left bg-brand-accent/50 p-4 rounded-lg space-y-1">
           <p><strong>Order ID:</strong> <span className="font-mono">{order.id}</span></p>
           <p><strong>Estimated Delivery:</strong> {estimatedDeliveryDate}</p>
+          <p><strong>Payment Method:</strong> {order.paymentMethod}</p>
         </div>
 
         <div className="mt-6 border-t pt-6">
@@ -98,9 +101,8 @@ const DeliverySlotPicker: React.FC<{
 
   const timeSlots = useMemo(() => {
       if (!selectedDate) return [];
-      // Mock different slots for different days
       const day = new Date(selectedDate).getDay();
-      if (day % 2 === 0) { // Even days
+      if (day % 2 === 0) { 
           return [
               { time: '09:00 AM - 11:00 AM', available: true },
               { time: '11:00 AM - 01:00 PM', available: true },
@@ -108,7 +110,7 @@ const DeliverySlotPicker: React.FC<{
               { time: '03:00 PM - 05:00 PM', available: true },
           ];
       }
-      return [ // Odd days
+      return [ 
           { time: '10:00 AM - 12:00 PM', available: true },
           { time: '12:00 PM - 02:00 PM', available: false },
           { time: '02:00 PM - 04:00 PM', available: true },
@@ -158,30 +160,20 @@ const DeliverySlotPicker: React.FC<{
 };
 
 
-const CheckoutPage: React.FC<CheckoutPageProps> = ({ cartItems, user, onPlaceOrder, addToast, discount, promoCode, onApplyPromoCode, onRemovePromoCode }) => {
-  const defaultShipping = user.addresses.find(a => a.isDefault && a.type === 'Shipping') || user.addresses[0];
+const CheckoutPage: React.FC<CheckoutPageProps> = ({ cartItems, user, onPlaceOrder, addToast, discount, promoCode, onApplyPromoCode, onRemovePromoCode, subtotal, shippingCost }) => {
+  const defaultShipping = user?.addresses.find(a => a.isDefault && a.type === 'Shipping') || user?.addresses[0] || { street: '', city: '', state: '', zip: '', country: '' };
 
-  const [shippingAddress, setShippingAddress] = useState<Omit<Address, 'id' | 'type'>>(defaultShipping);
-  const [billingAddress, setBillingAddress] = useState<Omit<Address, 'id' | 'type'>>(defaultShipping);
+  const [shippingAddress, setShippingAddress] = useState<Omit<Address, 'id' | 'type' | 'isDefault'>>(defaultShipping);
+  const [billingAddress, setBillingAddress] = useState<Omit<Address, 'id' | 'type' | 'isDefault'>>(defaultShipping);
   const [useSameAddress, setUseSameAddress] = useState(true);
-  const [deliveryMethod, setDeliveryMethod] = useState('standard');
+  const [paymentMethod, setPaymentMethod] = useState('');
   const [orderConfirmation, setOrderConfirmation] = useState<Order | null>(null);
   const [localPromoCode, setLocalPromoCode] = useState('');
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
 
-  const subtotal = useMemo(() => cartItems.reduce((sum, item) => {
-    const price = item.selectedVariant.salePrice ?? item.selectedVariant.price;
-    return sum + price * item.quantity;
-  }, 0), [cartItems]);
-
-  const deliveryCost = useMemo(() => {
-    if (subtotal > 50) return 0;
-    return deliveryMethod === 'express' ? 14.99 : 4.99;
-  }, [subtotal, deliveryMethod]);
-  
   const tax = useMemo(() => (subtotal - discount) * 0.08, [subtotal, discount]);
-  const total = useMemo(() => subtotal + deliveryCost + tax - discount, [subtotal, deliveryCost, tax, discount]);
+  const total = useMemo(() => subtotal + shippingCost + tax - discount, [subtotal, shippingCost, tax, discount]);
   
   const handleInputChange = (setter: React.Dispatch<React.SetStateAction<any>>) => (e: React.ChangeEvent<HTMLInputElement>) => {
     setter(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -190,12 +182,13 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ cartItems, user, onPlaceOrd
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (cartItems.length === 0) {
-      addToast('Your cart is empty.', 'error');
-      return;
+      addToast('Your cart is empty.', 'error'); return;
     }
     if (!selectedDate || !selectedTime) {
-      addToast('Please select a delivery slot.', 'error');
-      return;
+      addToast('Please select a delivery slot.', 'error'); return;
+    }
+    if (!paymentMethod) {
+      addToast('Please select a payment method.', 'error'); return;
     }
     
     const confirmedOrder = onPlaceOrder({
@@ -203,20 +196,22 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ cartItems, user, onPlaceOrd
       total: total,
       shippingAddress: { ...shippingAddress, id: 0, type: 'Shipping'},
       billingAddress: useSameAddress ? { ...shippingAddress, id: 0, type: 'Billing' } : { ...billingAddress, id: 0, type: 'Billing'},
-      deliveryMethod,
+      deliveryMethod: "Standard",
+      paymentMethod: paymentMethod,
+      shippingCost: shippingCost,
       discount,
       deliverySlot: { date: new Date(selectedDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }), time: selectedTime },
     });
     setOrderConfirmation(confirmedOrder);
   };
 
-  const AddressForm: React.FC<{ address: Omit<Address, 'id' | 'type'>, onChange: (e: React.ChangeEvent<HTMLInputElement>) => void, title: string }> = ({ address, onChange, title }) => (
+  const AddressForm: React.FC<{ address: Omit<Address, 'id' | 'type' | 'isDefault'>, onChange: (e: React.ChangeEvent<HTMLInputElement>) => void, title: string }> = ({ address, onChange, title }) => (
     <div className="space-y-4">
       <h3 className="text-lg font-serif font-bold">{title}</h3>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
             <label htmlFor="name" className="block text-sm font-medium text-gray-700">Full Name</label>
-            <input type="text" name="name" defaultValue={user.name} className="mt-1 input-field" required />
+            <input type="text" name="name" defaultValue={user?.name || ''} className="mt-1 input-field" required />
         </div>
         <div>
             <label htmlFor="street" className="block text-sm font-medium text-gray-700">Street Address</label>
@@ -267,6 +262,23 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ cartItems, user, onPlaceOrd
               onSelectDate={(date) => { setSelectedDate(date); setSelectedTime(null); }}
               onSelectTime={setSelectedTime}
             />
+            
+             <div>
+              <h3 className="text-lg font-serif font-bold mb-4">Payment Method</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {['Credit Card', 'PayPal', 'Google Pay', 'Cash on Delivery'].map(method => (
+                  <button
+                    key={method}
+                    type="button"
+                    onClick={() => setPaymentMethod(method)}
+                    className={`px-4 py-3 font-bold rounded-lg transition-all duration-300 border-2 text-center ${paymentMethod === method ? 'bg-brand-primary text-white border-brand-primary shadow-lg' : 'bg-white text-brand-dark hover:bg-brand-secondary/50 border-gray-300'}`}
+                  >
+                    {method}
+                  </button>
+                ))}
+              </div>
+            </div>
+
           </div>
           
           {/* Right/Sidebar Column */}
@@ -293,7 +305,12 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ cartItems, user, onPlaceOrd
                         <span>-${discount.toFixed(2)}</span>
                     </div>
                 )}
-                <div className="flex justify-between text-sm text-gray-600"><span>Shipping</span><span>${deliveryCost.toFixed(2)}</span></div>
+                <div className="flex justify-between text-sm text-gray-600">
+                  <span>Shipping</span>
+                  <span className={shippingCost === 0 ? 'text-green-600 font-bold' : ''}>
+                    {shippingCost === 0 ? 'Free' : `$${shippingCost.toFixed(2)}`}
+                  </span>
+                </div>
                 <div className="flex justify-between text-sm text-gray-600"><span>Taxes (8%)</span><span>${tax.toFixed(2)}</span></div>
                 <div className="flex justify-between font-bold text-lg text-brand-dark mt-2 pt-2 border-t"><span>Total</span><span>${total.toFixed(2)}</span></div>
               </div>
@@ -311,11 +328,18 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ cartItems, user, onPlaceOrd
                     </div>
                 )}
               </div>
+
+              <div className="mt-6 border-t pt-4 text-center text-brand-dark">
+                <div className="flex items-center justify-center gap-3 text-sm">
+                    <ShieldCheckIcon className="h-6 w-6 text-green-600"/>
+                    <span className="font-bold">Secure SSL Checkout</span>
+                </div>
+              </div>
               
-              <div className="mt-6">
+              <div className="mt-4">
                 <button 
                   type="submit" 
-                  disabled={!selectedDate || !selectedTime}
+                  disabled={!selectedDate || !selectedTime || !paymentMethod}
                   className="w-full bg-brand-dark text-white font-bold py-3 rounded-full shadow-lg hover:bg-opacity-90 transform hover:scale-105 transition-all duration-300 disabled:bg-gray-400 disabled:cursor-not-allowed"
                 >
                   Place Order

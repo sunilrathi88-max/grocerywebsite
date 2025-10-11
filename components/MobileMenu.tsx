@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { XIcon } from './icons/XIcon';
@@ -47,6 +46,13 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, searchQuery, o
     }),
   };
 
+  const navLinks = [
+    { name: 'Home', href: '#/' },
+    { name: 'Products', href: '#/' },
+    { name: 'Contact Us', href: '#/contact' },
+    { name: 'Recipes', href: '#/recipes' },
+  ];
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -89,18 +95,18 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, searchQuery, o
                 />
             </div>
             <nav className="flex flex-col p-6 pt-0 space-y-4">
-              {['Home', 'Products', 'About Us', 'Recipes'].map((item, i) => (
+              {navLinks.map((link, i) => (
                 <motion.a
-                  key={item}
+                  key={link.name}
                   custom={i}
                   variants={navItemVariants}
                   initial="hidden"
                   animate="visible"
-                  href="#"
+                  href={link.href}
                   className="text-2xl font-serif text-brand-dark hover:text-brand-primary transition-colors"
                   onClick={onClose}
                 >
-                  {item}
+                  {link.name}
                 </motion.a>
               ))}
             </nav>

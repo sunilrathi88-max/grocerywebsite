@@ -1,4 +1,3 @@
-// FIX: Import React to use React.ReactNode type.
 import React from 'react';
 
 export interface Review {
@@ -6,6 +5,14 @@ export interface Review {
   author: string;
   rating: number;
   comment: string;
+  verifiedPurchase?: boolean;
+}
+
+export interface QnA {
+  id: number;
+  author: string;
+  question: string;
+  answer?: string;
 }
 
 export interface Variant {
@@ -25,6 +32,10 @@ export interface Product {
   category: string;
   variants: Variant[];
   reviews: Review[];
+  qna?: QnA[];
+  nutrition?: { key: string; value: string }[];
+  origin?: string;
+  tags?: string[];
 }
 
 export interface CartItem {
@@ -70,6 +81,8 @@ export interface Order {
   shippingAddress: Address;
   billingAddress: Address;
   deliveryMethod: string;
+  paymentMethod: string;
+  shippingCost: number;
   discount?: number;
   deliverySlot?: {
     date: string;
