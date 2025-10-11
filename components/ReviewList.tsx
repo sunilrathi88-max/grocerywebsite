@@ -1,8 +1,8 @@
-
 import React from 'react';
 import { Review } from '../types';
 import { StarIcon } from './icons/StarIcon';
 import { TrashIcon } from './icons/TrashIcon';
+import { CheckBadgeIcon } from './icons/CheckBadgeIcon';
 
 interface ReviewListProps {
   reviews: Review[];
@@ -21,12 +21,12 @@ const ReviewList: React.FC<ReviewListProps> = ({ reviews, productId, onDelete })
         <div key={review.id} className="border-b pb-4 last:border-0 last:pb-0">
           <div className="flex items-center justify-between mb-1">
               <div className="flex items-center">
-                <p className="font-bold text-brand-dark mr-3">{review.author}</p>
-                <div className="flex">
-                  {Array.from({ length: 5 }).map((_, index) => (
-                    <StarIcon key={index} className={`w-5 h-5 ${index < review.rating ? 'text-yellow-400' : 'text-gray-300'}`} />
-                  ))}
-                </div>
+                <p className="font-bold text-brand-dark mr-2">{review.author}</p>
+                {review.verifiedPurchase && (
+                  <div title="Verified Purchase">
+                    <CheckBadgeIcon className="h-5 w-5 text-green-600" />
+                  </div>
+                )}
               </div>
               <button 
                 onClick={() => onDelete(productId, review.id)} 
@@ -36,6 +36,13 @@ const ReviewList: React.FC<ReviewListProps> = ({ reviews, productId, onDelete })
                   <TrashIcon />
               </button>
           </div>
+           <div className="flex items-center mb-2">
+              <div className="flex">
+                {Array.from({ length: 5 }).map((_, index) => (
+                  <StarIcon key={index} className={`w-5 h-5 ${index < review.rating ? 'text-yellow-400' : 'text-gray-300'}`} />
+                ))}
+              </div>
+            </div>
           <p className="text-gray-700">{review.comment}</p>
         </div>
       ))}

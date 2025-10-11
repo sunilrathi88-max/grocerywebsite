@@ -1,21 +1,94 @@
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Product, Order, OrderStatus } from '../types';
 import ProductFormModal from './ProductFormModal';
 import { PlusIcon } from './icons/PlusIcon';
 import { TrashIcon } from './icons/TrashIcon';
 import { PencilIcon } from './icons/PencilIcon';
+import { CurrencyDollarIcon } from './icons/CurrencyDollarIcon';
+import { ShoppingBagIcon } from './icons/ShoppingBagIcon';
+import { UsersIcon } from './icons/UsersIcon';
+
+interface AnalyticsProps {
+  totalRevenue: number;
+  totalOrders: number;
+  uniqueCustomers: number;
+  salesData: { name: string; sales: number }[];
+}
 
 interface AdminDashboardProps {
   products: Product[];
   orders: Order[];
+  analytics: AnalyticsProps;
   onSaveProduct: (product: Product) => void;
   onDeleteProduct: (productId: number) => void;
   onUpdateOrderStatus: (orderId: string, status: OrderStatus) => void;
 }
 
+const StatCard: React.FC<{ title: string; value: string | number; icon: React.ReactNode }> = ({ title, value, icon }) => (
+    <div className="bg-white p-6 rounded-lg shadow-md flex items-center space-x-4">
+        <div className="bg-brand-secondary/50 p-3 rounded-full">
+            {icon}
+        </div>
+        <div>
+            <p className="text-sm text-gray-500 font-medium">{title}</p>
+            <p className="text-2xl font-bold font-sans text-brand-dark">{value}</p>
+        </div>
+    </div>
+);
+
+const SalesChart: React.FC<{ data: { name: string, sales: number }[] }> = ({ data }) => {
+    const maxSales = useMemo(() => Math.max(...data.map(d => d.sales), 0), [data]);
+
+    return (
+        <div className="bg-white p-6 rounded-lg shadow-md">
+            <h4 className="text-lg font-serif font-bold mb-4">Monthly Sales</h4>
+            {data.length > 0 ? (
+                <div className="flex items-end space-x-4 h-64 border-l border-b border-gray-200 pl-4 pb-4">
+                    {data.map(item => (
+                        <div key={item.name} className="flex-1 flex flex-col items-center justify-end h-full">
+                            <div
+                                className="w-3/4 bg-brand-primary hover:bg-brand-primary/80 rounded-t-md transition-all"
+                                style={{ height: `${maxSales > 0 ? (item.sales / maxSales) * 100 : 0}%` }}
+                                title={`$${item.sales.toFixed(2)}`}
+                            />
+                            <p className="text-xs text-gray-500 mt-2">{item.name}</p>
+                        </div>
+                    ))}
+                </div>
+            ) : (
+                <p className="text-center text-gray-500 py-10">No sales data to display.</p>
+            )}
+        </div>
+    );
+};
+
+
+const AnalyticsDashboard: React.FC<{ analytics: AnalyticsProps }> = ({ analytics }) => (
+    <div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            <StatCard 
+                title="Total Revenue" 
+                value={`$${analytics.totalRevenue.toFixed(2)}`}
+                icon={<CurrencyDollarIcon className="h-8 w-8 text-brand-primary" />}
+            />
+            <StatCard 
+                title="Total Orders" 
+                value={analytics.totalOrders}
+                icon={<ShoppingBagIcon className="h-8 w-8 text-brand-primary" />}
+            />
+            <StatCard 
+                title="Unique Customers" 
+                value={analytics.uniqueCustomers}
+                icon={<UsersIcon className="h-8 w-8 text-brand-primary" />}
+            />
+        </div>
+        <SalesChart data={analytics.salesData} />
+    </div>
+);
+
 const AdminDashboard: React.FC<AdminDashboardProps> = (props) => {
-  const [activeTab, setActiveTab] = useState<'products' | 'orders'>('products');
+  const [activeTab, setActiveTab] = useState<'products' | 'orders' | 'analytics'>('products');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
 
@@ -42,12 +115,14 @@ const AdminDashboard: React.FC<AdminDashboardProps> = (props) => {
         <nav className="-mb-px flex space-x-8" aria-label="Tabs">
           <button onClick={() => setActiveTab('products')} className={`whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm ${activeTab === 'products' ? 'border-brand-primary text-brand-primary' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}`}>Products</button>
           <button onClick={() => setActiveTab('orders')} className={`whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm ${activeTab === 'orders' ? 'border-brand-primary text-brand-primary' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}`}>Orders</button>
+          <button onClick={() => setActiveTab('analytics')} className={`whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm ${activeTab === 'analytics' ? 'border-brand-primary text-brand-primary' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}`}>Analytics</button>
         </nav>
       </div>
       
       <div className="mt-8">
         {activeTab === 'products' && <ProductManagement products={props.products} onAddNew={handleAddNew} onEdit={handleEdit} onDelete={props.onDeleteProduct} />}
         {activeTab === 'orders' && <OrderManagement orders={props.orders} onUpdateStatus={props.onUpdateOrderStatus} />}
+        {activeTab === 'analytics' && <AnalyticsDashboard analytics={props.analytics} />}
       </div>
       
       {isModalOpen && <ProductFormModal product={editingProduct} onSave={handleSave} onClose={() => setIsModalOpen(false)} />}

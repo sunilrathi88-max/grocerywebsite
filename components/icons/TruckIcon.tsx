@@ -1,3 +1,4 @@
+
 import React from 'react';
 
 export const TruckIcon: React.FC<{className?: string}> = ({ className = "h-8 w-8" }) => (

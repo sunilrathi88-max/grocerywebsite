@@ -1,9 +1,11 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { Product, Variant } from '../types';
 import { PlusIcon } from './icons/PlusIcon';
 import { HeartIcon } from './icons/HeartIcon';
 import { StarIcon } from './icons/StarIcon';
 import { EyeIcon } from './icons/EyeIcon';
+import { CompareIcon } from './icons/CompareIcon';
 
 interface ProductCardProps {
   product: Product;
@@ -11,16 +13,21 @@ interface ProductCardProps {
   onToggleWishlist: (product: Product) => void;
   isWishlisted: boolean;
   onSelectProduct: (product: Product) => void;
+  onToggleCompare: (product: Product) => void;
+  isCompared: boolean;
+  onNotifyMe: (productName: string) => void;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onToggleWishlist, isWishlisted, onSelectProduct }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onToggleWishlist, isWishlisted, onSelectProduct, onToggleCompare, isCompared, onNotifyMe }) => {
   const averageRating = product.reviews.length > 0
     ? product.reviews.reduce((acc, review) => acc + review.rating, 0) / product.reviews.length
     : null;
   
   const roundedRating = averageRating ? Math.round(averageRating) : 0;
-  const isOutOfStock = product.variants.every(v => v.stock === 0);
-  
+  const totalStock = product.variants.reduce((sum, v) => sum + v.stock, 0);
+  const isOutOfStock = totalStock === 0;
+  const isLowStock = totalStock > 0 && totalStock <= 5;
+
   const defaultVariant = product.variants[0];
   const onSale = defaultVariant.salePrice && defaultVariant.salePrice < defaultVariant.price;
   const hasMultiplePrices = product.variants.length > 1;
@@ -46,31 +53,53 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onToggl
                 <EyeIcon className="h-5 w-5" />
                 Quick View
               </button>
-              <button 
-                onClick={() => onAddToCart(product, defaultVariant)}
-                disabled={isOutOfStock}
-                className="p-3 bg-white text-brand-dark rounded-full shadow-md hover:bg-brand-secondary/80 transform hover:scale-105 transition-all duration-300 disabled:bg-gray-400 disabled:text-white disabled:cursor-not-allowed disabled:transform-none"
-                aria-label={`Add ${product.name} to cart`}
-              >
-                <PlusIcon />
-              </button>
+              {isOutOfStock ? (
+                <button
+                    onClick={() => onNotifyMe(product.name)}
+                    className="bg-brand-dark text-white font-bold py-2 px-4 rounded-full shadow-md hover:bg-opacity-80 transform hover:scale-105 transition-all duration-300"
+                >
+                    Notify Me
+                </button>
+              ) : (
+                <button 
+                  onClick={() => onAddToCart(product, defaultVariant)}
+                  className="flex items-center gap-2 bg-white text-brand-dark font-bold py-2 px-4 rounded-full shadow-md hover:bg-brand-secondary/80 transform hover:scale-105 transition-all duration-300"
+                  aria-label={`Add ${product.name} to cart`}
+                >
+                  <PlusIcon />
+                  Add to Cart
+                </button>
+              )}
           </div>
           {isOutOfStock && (
-            <div className="absolute inset-0 bg-white bg-opacity-60 flex items-center justify-center">
+            <div className="absolute inset-0 bg-white bg-opacity-60 flex items-center justify-center group-hover:hidden">
                 <span className="bg-brand-dark text-white font-bold py-2 px-4 rounded-full">Out of Stock</span>
             </div>
           )}
         </div>
-        <button
+        <motion.button
+          whileTap={{ scale: 1.2 }}
           onClick={() => onToggleWishlist(product)}
           className="absolute top-3 right-3 bg-white/70 backdrop-blur-sm p-2 rounded-full text-brand-dark hover:text-red-500 transition-colors duration-300 z-10"
           aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
         >
           <HeartIcon className={`h-6 w-6 ${isWishlisted ? 'text-red-500 fill-current' : 'fill-transparent stroke-current'}`} />
+        </motion.button>
+        <button
+          onClick={() => onToggleCompare(product)}
+          className={`absolute bottom-3 right-3 bg-white/70 backdrop-blur-sm p-2 rounded-full text-brand-dark transition-colors duration-300 z-10 ${isCompared ? 'text-brand-primary' : 'hover:text-brand-primary'}`}
+          aria-label={isCompared ? 'Remove from comparison' : 'Add to comparison'}
+        >
+          <CompareIcon />
         </button>
-        {onSale && (
-            <span className="absolute top-3 left-3 bg-red-500 text-white font-bold text-xs py-1 px-3 rounded-full z-10">SALE</span>
-        )}
+        <div className="absolute top-3 left-3 flex flex-col gap-2 z-10">
+            {onSale && (
+                <span className="bg-red-500 text-white font-bold text-xs py-1 px-3 rounded-full">SALE</span>
+            )}
+            {isLowStock && (
+                 <span className="bg-yellow-500 text-white font-bold text-xs py-1 px-3 rounded-full">LOW STOCK</span>
+            )}
+        </div>
       </div>
       <div className="p-5 flex flex-col flex-grow">
         <button onClick={() => onSelectProduct(product)} className="w-full text-left" aria-label={`View details for ${product.name}`}>

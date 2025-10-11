@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { CartItem } from '../types';
 import { PlusIcon } from './icons/PlusIcon';
 import { MinusIcon } from './icons/MinusIcon';
@@ -15,17 +15,50 @@ interface CartProps {
   onPromoCodeChange: (code: string) => void;
   onApplyPromoCode: (code: string) => void;
   discount: number;
+  subtotal: number;
+  shippingCost: number;
 }
 
-const Cart: React.FC<CartProps> = ({ items, onUpdateQuantity, onClose, isLoggedIn, promoCode, onPromoCodeChange, onApplyPromoCode, discount }) => {
-  const subtotal = items.reduce((sum, item) => {
-    const price = item.selectedVariant.salePrice ?? item.selectedVariant.price;
-    return sum + price * item.quantity;
-  }, 0);
-  const tax = subtotal * 0.08;
-  const total = subtotal - discount + tax;
+const Spinner: React.FC<{className?: string}> = ({ className = "h-5 w-5" }) => (
+    <svg className={`animate-spin ${className}`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+    </svg>
+);
 
-  const canCheckout = isLoggedIn && items.length > 0;
+const Cart: React.FC<CartProps> = ({ items, onUpdateQuantity, onClose, isLoggedIn, promoCode, onPromoCodeChange, onApplyPromoCode, discount, subtotal, shippingCost }) => {
+  const [loadingState, setLoadingState] = useState<{ type: 'item' | 'promo' | null, id?: string }>({ type: null });
+  const tax = (subtotal - discount) * 0.08;
+  const total = subtotal - discount + shippingCost + tax;
+
+  const canCheckout = items.length > 0;
+
+  const handleQuantityChange = (item: CartItem, newQuantity: number) => {
+    const performUpdate = () => {
+      setLoadingState({ type: 'item', id: `${item.product.id}-${item.selectedVariant.id}` });
+      setTimeout(() => {
+        onUpdateQuantity(item.product.id, item.selectedVariant.id, newQuantity);
+        setLoadingState({ type: null });
+      }, 500); // Simulate network delay
+    };
+
+    if (newQuantity <= 0) {
+      if (window.confirm(`Are you sure you want to remove "${item.product.name}" from your cart?`)) {
+        performUpdate();
+      }
+    } else {
+      performUpdate();
+    }
+  };
+
+  const handleApplyPromo = () => {
+    setLoadingState({ type: 'promo' });
+    setTimeout(() => {
+        onApplyPromoCode(promoCode);
+        setLoadingState({ type: null });
+    }, 800); // Simulate network delay
+  };
+
 
   return (
     <div className="h-full flex flex-col">
@@ -44,35 +77,46 @@ const Cart: React.FC<CartProps> = ({ items, onUpdateQuantity, onClose, isLoggedI
       ) : (
         <>
           <div className="flex-grow space-y-4 pr-2 -mr-2 overflow-y-auto">
-            {items.map(item => (
-              <div key={`${item.product.id}-${item.selectedVariant.id}`} className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <img 
-                    src={item.product.images[0]} 
-                    alt={item.product.name} 
-                    className="w-16 h-16 object-cover rounded-md bg-gray-200" 
-                    loading="lazy"
-                  />
-                  <div>
-                    <p className="font-bold text-brand-dark leading-tight">{item.product.name}</p>
-                    <p className="text-sm text-gray-500">{item.selectedVariant.name}</p>
-                    <p className="text-sm text-gray-500">${(item.selectedVariant.salePrice ?? item.selectedVariant.price).toFixed(2)}</p>
+            {items.map(item => {
+              const isItemLoading = loadingState.type === 'item' && loadingState.id === `${item.product.id}-${item.selectedVariant.id}`;
+              return (
+                <div key={`${item.product.id}-${item.selectedVariant.id}`} className="flex items-center justify-between">
+                  <div className="flex items-center gap-4">
+                    <img 
+                      src={item.product.images[0]} 
+                      alt={item.product.name} 
+                      className="w-16 h-16 object-cover rounded-md bg-gray-200" 
+                      loading="lazy"
+                    />
+                    <div>
+                      <p className="font-bold text-brand-dark leading-tight">{item.product.name}</p>
+                      <p className="text-sm text-gray-500">{item.selectedVariant.name}</p>
+                      <p className="text-sm text-gray-500">${(item.selectedVariant.salePrice ?? item.selectedVariant.price).toFixed(2)}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    {isItemLoading ? (
+                        <div className="w-[140px] flex justify-center items-center">
+                            <Spinner className="h-6 w-6 text-brand-primary" />
+                        </div>
+                    ) : (
+                        <>
+                            <button onClick={() => handleQuantityChange(item, item.quantity - 1)} className="p-1 rounded-full hover:bg-gray-200 transition-colors"><MinusIcon /></button>
+                            <span className="w-8 text-center font-bold">{item.quantity}</span>
+                            <button 
+                                onClick={() => handleQuantityChange(item, item.quantity + 1)} 
+                                className="p-1 rounded-full hover:bg-gray-200 transition-colors disabled:text-gray-300 disabled:cursor-not-allowed disabled:hover:bg-transparent"
+                                disabled={item.quantity >= item.selectedVariant.stock}
+                            >
+                                <PlusIcon />
+                            </button>
+                            <button onClick={() => handleQuantityChange(item, 0)} className="p-1 rounded-full text-red-500 hover:bg-red-100 transition-colors ml-2"><TrashIcon /></button>
+                        </>
+                    )}
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <button onClick={() => onUpdateQuantity(item.product.id, item.selectedVariant.id, item.quantity - 1)} className="p-1 rounded-full hover:bg-gray-200 transition-colors"><MinusIcon /></button>
-                  <span className="w-8 text-center font-bold">{item.quantity}</span>
-                  <button 
-                    onClick={() => onUpdateQuantity(item.product.id, item.selectedVariant.id, item.quantity + 1)} 
-                    className="p-1 rounded-full hover:bg-gray-200 transition-colors disabled:text-gray-300 disabled:cursor-not-allowed disabled:hover:bg-transparent"
-                    disabled={item.quantity >= item.selectedVariant.stock}
-                  >
-                    <PlusIcon />
-                  </button>
-                  <button onClick={() => onUpdateQuantity(item.product.id, item.selectedVariant.id, 0)} className="p-1 rounded-full text-red-500 hover:bg-red-100 transition-colors ml-2"><TrashIcon /></button>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           <div className="mt-4">
@@ -85,13 +129,15 @@ const Cart: React.FC<CartProps> = ({ items, onUpdateQuantity, onClose, isLoggedI
                     onChange={(e) => onPromoCodeChange(e.target.value)}
                     className="flex-1 block w-full rounded-none rounded-l-md border-gray-300 focus:ring-brand-primary focus:border-brand-primary sm:text-sm"
                     placeholder="TATTVA10"
+                    disabled={loadingState.type === 'promo'}
                 />
                 <button
                     type="button"
-                    onClick={() => onApplyPromoCode(promoCode)}
-                    className="inline-flex items-center px-4 py-2 border border-l-0 border-gray-300 rounded-r-md bg-gray-50 text-sm font-medium text-gray-700 hover:bg-gray-100"
+                    onClick={handleApplyPromo}
+                    disabled={loadingState.type === 'promo'}
+                    className="relative inline-flex items-center justify-center w-[75px] px-4 py-2 border border-l-0 border-gray-300 rounded-r-md bg-gray-50 text-sm font-medium text-gray-700 hover:bg-gray-100 disabled:bg-gray-200 disabled:cursor-wait"
                 >
-                    Apply
+                    {loadingState.type === 'promo' ? <Spinner /> : 'Apply'}
                 </button>
             </div>
           </div>
@@ -107,6 +153,10 @@ const Cart: React.FC<CartProps> = ({ items, onUpdateQuantity, onClose, isLoggedI
                 <span>-${discount.toFixed(2)}</span>
               </div>
             )}
+             <div className="flex justify-between text-gray-600">
+              <span>Shipping</span>
+              <span>{shippingCost === 0 ? 'Free' : `$${shippingCost.toFixed(2)}`}</span>
+            </div>
             <div className="flex justify-between text-gray-600">
               <span>Taxes (8%)</span>
               <span>${tax.toFixed(2)}</span>
@@ -116,16 +166,16 @@ const Cart: React.FC<CartProps> = ({ items, onUpdateQuantity, onClose, isLoggedI
               <span>${total.toFixed(2)}</span>
             </div>
           </div>
-          {!isLoggedIn && items.length > 0 && <p className="text-center text-sm text-red-500 mt-4">Please log in to proceed to checkout.</p>}
+          {!isLoggedIn && items.length > 0 && <p className="text-center text-sm text-gray-500 mt-4">You can check out as a guest or log in.</p>}
           <a
             href={canCheckout ? "#/checkout" : undefined}
             onClick={canCheckout ? onClose : (e) => e.preventDefault()}
             className={`mt-4 block w-full text-center bg-brand-primary text-white font-bold py-3 rounded-full shadow-lg transition-all duration-300 ${
-              !canCheckout
+              !canCheckout || !!loadingState.type
                 ? 'bg-gray-400 cursor-not-allowed'
                 : 'hover:bg-opacity-90 transform hover:scale-105'
             }`}
-             aria-disabled={!canCheckout}
+             aria-disabled={!canCheckout || !!loadingState.type}
           >
             Proceed to Checkout
           </a>

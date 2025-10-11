@@ -6,21 +6,17 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview",
-    "test": "vitest",
-    "setup": "node -e \"const fs = require('fs'); const path = '.env.local'; if (!fs.existsSync(path)) { fs.copyFileSync('.env.local.example', path); console.log('.env.local created from .env.local.example'); } else { console.log('.env.local already exists'); }\""
+    "preview": "vite preview"
   },
   "dependencies": {
-    "framer-motion": "11.0.8",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "framer-motion": "11.0.8"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",
     "@vitejs/plugin-react": "^5.0.0",
-    "@vitest/ui": "^3.2.4",
     "typescript": "~5.8.2",
-    "vite": "^6.2.0",
-    "vitest": "^3.2.4"
+    "vite": "^6.2.0"
   }
 }
