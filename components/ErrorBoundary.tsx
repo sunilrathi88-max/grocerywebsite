@@ -1,26 +1,28 @@
-import React, { Component, ErrorInfo, ReactNode } from 'react';
+import React, { ErrorInfo, PropsWithChildren } from 'react';
 import { AlertTriangleIcon } from './icons/AlertTriangleIcon';
 
-interface Props {
-  children: ReactNode;
-}
+type Props = PropsWithChildren<{}>;
 
 interface State {
   hasError: boolean;
   error?: Error;
 }
 
-class ErrorBoundary extends Component<Props, State> {
-  public state: State = {
-    hasError: false,
-    error: undefined,
-  };
+class ErrorBoundary extends React.Component<Props, State> {
+  // FIX: Reverted to constructor-based state initialization to resolve error with 'this.props'.
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      hasError: false,
+      error: undefined,
+    };
+  }
 
-  public static getDerivedStateFromError(error: Error): State {
+  static getDerivedStateFromError(error: Error): State {
     return { hasError: true, error };
   }
 
-  public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     console.error("Uncaught error:", error, errorInfo);
     // In a real app, you would log this to an error reporting service
   }
@@ -29,7 +31,7 @@ class ErrorBoundary extends Component<Props, State> {
     window.location.reload();
   };
 
-  public render() {
+  render() {
     if (this.state.hasError) {
       return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-brand-accent p-8 text-center">

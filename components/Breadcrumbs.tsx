@@ -5,6 +5,7 @@ import { ChevronRightIcon } from './icons/ChevronRightIcon';
 interface BreadcrumbItem {
   label: string;
   href?: string;
+  onClick?: () => void;
 }
 
 interface BreadcrumbsProps {
@@ -17,12 +18,20 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items }) => {
       <ol className="flex items-center space-x-2 text-sm">
         {items.map((item, index) => (
           <li key={index} className="flex items-center">
-            {index < items.length - 1 && item.href ? (
-              <a href={item.href} className="text-gray-500 hover:text-brand-dark transition-colors">
-                {item.label}
-              </a>
+            {index < items.length - 1 ? (
+                item.href ? (
+                  <a href={item.href} className="text-gray-500 hover:text-brand-dark transition-colors">
+                    {item.label}
+                  </a>
+                ) : item.onClick ? (
+                  <button onClick={item.onClick} className="text-gray-500 hover:text-brand-dark transition-colors">
+                    {item.label}
+                  </button>
+                ) : (
+                  <span className="text-gray-500">{item.label}</span>
+                )
             ) : (
-              <span className="font-medium text-brand-dark" aria-current={index === items.length - 1 ? 'page' : undefined}>
+              <span className="font-medium text-brand-dark" aria-current={'page'}>
                 {item.label}
               </span>
             )}

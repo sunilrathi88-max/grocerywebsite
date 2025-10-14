@@ -89,3 +89,22 @@ export interface Order {
     time: string;
   };
 }
+// FIX: Added Testimonial interface to be shared across components.
+export interface Testimonial {
+    id: number;
+    name: string;
+    quote: string;
+    rating: number;
+}
+
+export interface BlogPost {
+  id: number;
+  slug: string;
+  title: string;
+  author: string;
+  date: string;
+  image: string;
+  excerpt: string;
+  content: string; // This could be markdown or HTML string
+  tags: string[];
+}
