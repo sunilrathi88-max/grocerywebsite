@@ -134,7 +134,7 @@ const QuizModule: React.FC<QuizModuleProps> = ({ addToast }) => {
                 })}
             </ul>
             {isAnswered && (
-                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="mt-6 p-4 bg-brand-accent rounded-lg">
+                <motion.div {...{ initial: { opacity: 0, y: 10 }, animate: { opacity: 1, y: 0 }, transition: { delay: 0.2 } }} className="mt-6 p-4 bg-brand-accent rounded-lg">
                     <p className="font-semibold text-brand-dark">{feedback}</p>
                     <button onClick={onClickNext} className="mt-4 bg-brand-primary text-white font-bold py-2 px-6 rounded-full shadow-lg hover:bg-opacity-90 transform hover:scale-105 transition-all duration-300">
                         {activeQuestion === questions.length - 1 ? 'Finish Quiz' : 'Next Question'}

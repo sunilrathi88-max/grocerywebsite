@@ -51,6 +51,7 @@ const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
             <h4 className="font-bold tracking-wider uppercase text-gray-500">About</h4>
             <ul className="mt-4 space-y-2 text-sm">
               <li><a href="#/about" className="hover:text-brand-dark transition-colors">Our Story</a></li>
+              <li><a href="#/blog" className="hover:text-brand-dark transition-colors">Blog</a></li>
               <li><a href="#/contact" className="hover:text-brand-dark transition-colors">Contact Us</a></li>
               <li><a href="#/faqs" className="hover:text-brand-dark transition-colors">FAQs</a></li>
             </ul>

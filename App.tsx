@@ -1,396 +1,509 @@
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import { Product, CartItem, ToastMessage, Review, Variant, User, Order, OrderStatus, QnA as QnAType, BlogPost } from './types';
+import { Recipe } from './components/RecipesPage';
 
-import React, { useState, useMemo, useCallback, useEffect } from 'react';
-import { Product, CartItem, Review, ToastMessage, Variant, User, Order, OrderStatus, Address, QnA } from './types';
+// Mock Data
+import { MOCK_PRODUCTS, MOCK_USER, MOCK_ORDERS, MOCK_TESTIMONIALS, MOCK_ANALYTICS, MOCK_POSTS } from './data';
+
+// Components
 import Header from './components/Header';
 import Hero from './components/Hero';
 import ProductGrid from './components/ProductGrid';
-import Cart from './components/Cart';
+import CategoryFilter from './components/CategoryFilter';
 import Footer from './components/Footer';
-import Wishlist from './components/Wishlist';
 import Testimonials from './components/Testimonials';
 import ProductDetailModal from './components/ProductDetailModal';
-import CategoryFilter from './components/CategoryFilter';
-import ToastContainer from './components/ToastContainer';
 import SideModal from './components/SideModal';
-import { HeartIcon } from './components/icons/HeartIcon';
-import Breadcrumbs from './components/Breadcrumbs';
+import Cart from './components/Cart';
+import Wishlist from './components/Wishlist';
+import ToastContainer from './components/ToastContainer';
+import MobileMenu from './components/MobileMenu';
 import PromotionalBanner from './components/PromotionalBanner';
 import SortDropdown from './components/SortDropdown';
-import MobileMenu from './components/MobileMenu';
 import AdvancedFilters from './components/AdvancedFilters';
+import AuthModal from './components/AuthModal';
 import CheckoutPage from './components/CheckoutPage';
 import UserProfile from './components/UserProfile';
 import AdminDashboard from './components/AdminDashboard';
-import AuthModal from './components/AuthModal';
 import PrivacyPolicyPage from './components/PrivacyPolicyPage';
 import RefundPolicyPage from './components/RefundPolicyPage';
 import TermsOfServicePage from './components/TermsOfServicePage';
-import ContactPage from './components/ContactPage';
-import ProductSlider from './components/ProductSlider';
-import ComparisonBar from './components/ComparisonBar';
-import ExitIntentModal from './components/ExitIntentModal';
-import RecipesPage, { Recipe } from './components/RecipesPage';
-import ComparisonModal from './components/ComparisonModal';
-import RecipeDetailModal from './components/RecipeDetailModal';
-import QuizModule from './components/QuizModule';
 import AboutPage from './components/AboutPage';
 import FAQsPage from './components/FAQsPage';
-
-
-const MOCK_PRODUCTS: Product[] = [
-  { 
-    id: 1, 
-    name: 'Himalayan Saffron', 
-    description: 'Hand-picked from the pristine high-altitude valleys of Kashmir, our Himalayan Saffron boasts an intoxicating aroma and a deep, vibrant crimson color. Each delicate thread promises to infuse your culinary creations with an unparalleled, luxurious flavor and a golden hue. Perfect for biryanis, desserts, and saffron-infused teas.', 
-    images: ['https://images.unsplash.com/photo-1599511438938-2303d5448f70?q=80&w=800&h=800&auto=format&fit=crop','https://images.unsplash.com/photo-1631140356882-756515758a18?q=80&w=800&h=800&auto=format&fit=crop','https://images.unsplash.com/photo-1599511438914-5f532a2223a3?q=80&w=800&h=800&auto=format&fit=crop'],
-    videos: ['https://videos.pexels.com/video-files/6864539/6864539-hd.mp4'],
-    category: 'Spices',
-    variants: [ { id: 101, name: '1g', price: 15.99, stock: 10 }, { id: 102, name: '2g', price: 29.99, stock: 5 }, { id: 103, name: '5g', price: 69.99, salePrice: 64.99, stock: 3 } ],
-    reviews: [
-      { id: 1, author: 'Aisha R.', rating: 5, comment: "Absolutely the best saffron I've ever used. The aroma is intoxicating!", verifiedPurchase: true },
-      { id: 2, author: 'Vikram B.', rating: 4, comment: "Great quality and color. A bit pricey, but worth it for special occasions." },
-    ],
-    qna: [ { id: 1, author: 'Rohan', question: 'Is this saffron pure Kashmiri?', answer: 'Yes, it is 100% pure Grade A Mongra saffron sourced directly from Pampore, Kashmir.' }, { id: 2, author: 'Priya', question: 'What is the best way to store it?', answer: 'Store it in a cool, dark place, away from direct sunlight. The airtight container it comes in is perfect.'}],
-    origin: 'Kashmir, India', tags: ['Premium', 'Aromatic'], nutrition: [ { key: 'Calories', value: '310' }, { key: 'Manganese', value: '1.4mg' }, { key: 'Vitamin C', value: '1.2mg' } ]
-  },
-  { 
-    id: 2, name: 'Malabar Black Pepper', description: 'Sourced directly from the lush, spice-laden hills of the Malabar Coast, these Tellicherry peppercorns are among the world\'s finest. They are left on the vine longer to develop a deep, rich flavor profile that is both pungent and complexly aromatic, with hints of citrus and pine. Grind fresh for a transformative kick to any dish.', 
-    images: ['https://images.unsplash.com/photo-1519167758481-83f550bb4e3f?q=80&w=800&h=800&auto=format&fit=crop'], videos: ['https://videos.pexels.com/video-files/5589467/5589467-sd.mp4'],
-    category: 'Spices', variants: [ { id: 201, name: '100g', price: 8.50, salePrice: 6.99, stock: 20 } ],
-    reviews: [ { id: 3, author: 'Meera N.', rating: 5, comment: "Incredibly pungent and flavorful. You can really taste the difference.", verifiedPurchase: true }, ],
-    origin: 'Kerala, India', tags: ['Tellicherry', 'Aromatic']
-  },
-  { id: 3, name: 'Assam Gold Tea', description: 'Full-bodied black tea with malty flavor.', images: ['https://images.unsplash.com/photo-1627891244343-03067ea81404?q=80&w=800&h=800&auto=format&fit=crop'], category: 'Beverages', variants: [ { id: 301, name: '250g', price: 12.00, stock: 4 } ], reviews: [], origin: 'Assam, India', tags: ['Organic', 'Single Origin'], nutrition: [ { key: 'Caffeine', value: 'High' }, { key: 'Antioxidants', value: 'Rich' } ] },
-  { id: 4, name: 'Organic Turmeric Powder', description: 'Vibrant and earthy turmeric with high curcumin content.', images: ['https://images.unsplash.com/photo-1607013251379-e6eecfffe234?q=80&w=800&h=800&auto=format&fit=crop'], category: 'Spices', variants: [ { id: 401, name: '150g', price: 6.75, stock: 50 } ], reviews: [], origin: 'Erode, India', tags: ['Organic', 'Gluten-Free'] },
-  { id: 5, name: 'Kashmiri Almonds', description: 'Crunchy and nutritious premium almonds from the valleys of Kashmir.', images: ['https://images.unsplash.com/photo-1569472023033-9a3d24001d4b?q=80&w=800&h=800&auto=format&fit=crop', 'https://images.unsplash.com/photo-1606756790134-42848c7f5592?q=80&w=800&h=800&auto=format&fit=crop'], category: 'Nuts', variants: [ { id: 501, name: '500g', price: 18.25, salePrice: 15.00, stock: 2 }, { id: 502, name: '1kg', price: 34.00, salePrice: 28.50, stock: 0 } ], reviews: [ { id: 4, author: 'Sanjay P.', rating: 5, comment: "Very fresh and crunchy. Perfect for snacking.", verifiedPurchase: true }, ], origin: 'Kashmir, India', tags: ['Gluten-Free', 'Single Origin'] },
-  { id: 6, name: 'Gourmet Garam Masala', description: 'Our signature Garam Masala is a tribute to tradition, artisanally crafted from a secret blend of over a dozen whole spices. Each spice is individually toasted to perfection before being ground to release its full-bodied aroma and flavor. This warm, fragrant blend is the heart of North Indian cuisine, essential for creating authentic, soul-satisfying dishes.', images: ['https://images.unsplash.com/photo-1599021438284-82d2d6501d9f?q=80&w=800&h=800&auto=format&fit=crop'], videos: ['https://videos.pexels.com/video-files/5763784/5763784-sd.mp4'], category: 'Spices', variants: [{ id: 601, name: '100g', price: 9.99, stock: 30 }], reviews: [], tags: ['Hand-Crafted', 'Aromatic'] },
-  { id: 7, name: 'Sun-dried Figs', description: 'Sweet and chewy figs, naturally dried.', images: ['https://images.unsplash.com/photo-1601056582390-0b73c4155b1f?q=80&w=800&h=800&auto=format&fit=crop'], category: 'Dry Fruits', variants: [{ id: 701, name: '400g', price: 14.50, stock: 0 }], reviews: [], tags: ['Organic'] },
-  { id: 8, name: 'Cashew Nuts (W240)', description: 'Large, whole cashew nuts, creamy and delicious.', images: ['https://images.unsplash.com/photo-1601358902534-19c2a13819c2a1381395?q=80&w=800&h=800&auto=format&fit=crop'], category: 'Nuts', variants: [{ id: 801, name: '500g', price: 22.00, stock: 40 }], reviews: [] },
-];
-const MOCK_TESTIMONIALS = [ { id: 1, name: 'Priya S.', quote: 'The spices are incredibly fresh and aromatic. My curries have never tasted better! Tattva Co. is my new go-to for all my Indian cooking needs.', rating: 5 }, { id: 2, name: 'Rahul K.', quote: 'Absolutely love the quality of the almonds and cashews. They are crunchy, fresh, and taste premium. The packaging is also top-notch.', rating: 5 }, { id: 3, name: 'Anjali M.', quote: 'I was looking for authentic garam masala and found it here. The blend is perfect and adds such a wonderful flavor to my dishes. Highly recommended!', rating: 4 }, ];
-const MOCK_USER: User = { id: 1, name: 'Anika Sharma', email: 'anika.sharma@example.com', isAdmin: true, addresses: [ { id: 1, type: 'Shipping', street: '123 Spice Lane', city: 'Mumbai', state: 'MH', zip: '400001', country: 'India', isDefault: true }, { id: 2, type: 'Billing', street: '456 Silk Road', city: 'Delhi', state: 'DL', zip: '110001', country: 'India' }, ] };
-const MOCK_PROMO_CODES: { [key: string]: { type: 'percent' | 'fixed'; value: number } } = { 'TATTVA10': { type: 'percent', value: 10 }, 'SPICE5': { type: 'fixed', value: 5 }, 'COMEBACK15': { type: 'percent', value: 15 }, 'QUIZMASTER15': { type: 'percent', value: 15 }, 'SPICEFAN10': { type: 'percent', value: 10 } };
-const getInitialRoute = () => window.location.hash.replace(/^#/, '') || '/';
-
-const useExitIntent = (onExitIntent: () => void, cartItemCount: number) => {
-  useEffect(() => {
-    const handleMouseOut = (e: MouseEvent) => {
-      if (cartItemCount > 0 && !e.relatedTarget && e.clientY <= 0) {
-        onExitIntent();
-      }
-    };
-    document.addEventListener('mouseout', handleMouseOut);
-    return () => document.removeEventListener('mouseout', handleMouseOut);
-  }, [onExitIntent, cartItemCount]);
-};
-
-const usePersistentState = <T,>(key: string, initialValue: T): [T, React.Dispatch<React.SetStateAction<T>>] => {
-  const [state, setState] = useState<T>(() => {
-    try {
-      const item = window.localStorage.getItem(key);
-      return item ? JSON.parse(item) : initialValue;
-    } catch (error) {
-      console.error(`Error reading localStorage key "${key}":`, error);
-      return initialValue;
-    }
-  });
-
-  useEffect(() => {
-    try {
-      window.localStorage.setItem(key, JSON.stringify(state));
-    } catch (error) {
-      console.error(`Error setting localStorage key "${key}":`, error);
-    }
-  }, [key, state]);
-
-  return [state, setState];
-};
-
+import ContactPage from './components/ContactPage';
+import ComparisonBar from './components/ComparisonBar';
+import ComparisonModal from './components/ComparisonModal';
+import ExitIntentModal from './components/ExitIntentModal';
+import RecipesPage from './components/RecipesPage';
+import RecipeDetailModal from './components/RecipeDetailModal';
+import QuizModule from './components/QuizModule';
+import BlogPage from './components/BlogPage';
+import BlogPostPage from './components/BlogPostPage';
 
 const App: React.FC = () => {
-  const [products, setProducts] = useState<Product[]>(MOCK_PRODUCTS);
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
-  const [wishlist, setWishlist] = useState<Product[]>([]);
-  const [testimonials] = useState(MOCK_TESTIMONIALS);
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [toasts, setToasts] = useState<ToastMessage[]>([]);
-  const [isCartOpen, setCartOpen] = useState(false);
-  const [isWishlistOpen, setWishlistOpen] = useState(false);
-  const [isBannerVisible, setBannerVisible] = useState(true);
-  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
-  
-  // New state
-  const [isLoading, setIsLoading] = useState(true);
-  const [isExitIntentOpen, setExitIntentOpen] = useState(false);
-  const [isComparisonModalOpen, setComparisonModalOpen] = useState(false);
-  const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
+    // State management
+    const [products, setProducts] = useState<Product[]>(MOCK_PRODUCTS);
+    const [posts, setPosts] = useState<BlogPost[]>(MOCK_POSTS);
+    const [orders, setOrders] = useState<Order[]>(MOCK_ORDERS);
+    const [cartItems, setCartItems] = useState<CartItem[]>([]);
+    const [wishlistItems, setWishlistItems] = useState<Product[]>([]);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState('All');
+    const [sortOrder, setSortOrder] = useState('featured');
+    const [isCartOpen, setIsCartOpen] = useState(false);
+    const [isWishlistOpen, setIsWishlistOpen] = useState(false);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+    const [toasts, setToasts] = useState<ToastMessage[]>([]);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [currentUser, setCurrentUser] = useState<User | null>(null);
+    const [isAuthModalOpen, setAuthModalOpen] = useState(false);
+    const [showPromoBanner, setShowPromoBanner] = useState(true);
+    const [currentView, setCurrentView] = useState('home');
 
-  // Persistent State
-  const [selectedCategory, setSelectedCategory] = usePersistentState('tattva_category', 'All');
-  const [sortOption, setSortOption] = usePersistentState('tattva_sort', 'featured');
-  const [showOnlyOnSale, setShowOnlyOnSale] = usePersistentState('tattva_onSale', false);
-  const [showOnlyInStock, setShowOnlyInStock] = usePersistentState('tattva_inStock', false);
-  const [selectedTags, setSelectedTags] = usePersistentState<string[]>('tattva_tags', []);
-  const [comparisonList, setComparisonList] = usePersistentState<Product[]>('tattva_comparison', []);
-  const [recentlyViewed, setRecentlyViewed] = useState<Product[]>(() => {
-    try {
-      const item = window.localStorage.getItem('tattva_recentlyViewed');
-      if (item) {
-        const ids = JSON.parse(item) as number[];
-        const viewedProducts = ids.map(id => MOCK_PRODUCTS.find(p => p.id === id)).filter(Boolean) as Product[];
-        return viewedProducts;
-      }
-      return [];
-    } catch (error) {
-      console.error("Error reading recently viewed items:", error);
-      return [];
-    }
-  });
+    // Advanced filters state
+    const [showOnSale, setShowOnSale] = useState(false);
+    const [showInStock, setShowInStock] = useState(false);
+    const [selectedTags, setSelectedTags] = useState<string[]>([]);
+    const maxPrice = useMemo(() => Math.ceil(Math.max(...MOCK_PRODUCTS.flatMap(p => p.variants.map(v => v.price)))), []);
+    const [priceRange, setPriceRange] = useState({ min: 0, max: maxPrice });
+
+    // Comparison state
+    const [comparisonItems, setComparisonItems] = useState<Product[]>([]);
+    const [isComparisonModalOpen, setIsComparisonModalOpen] = useState(false);
+
+    // Exit-intent modal state
+    const [isExitIntentModalOpen, setIsExitIntentModalOpen] = useState(false);
+
+    // Recipe page state
+    const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
+
+    // Loading state
+    const [isLoading, setIsLoading] = useState(true);
+
+    // Promo code state
+    const [promoCode, setPromoCode] = useState('');
+    const [discount, setDiscount] = useState(0);
+
+    // Routing
+    useEffect(() => {
+        const handleHashChange = () => {
+            const hash = window.location.hash.replace('#/', '');
+            setCurrentView(hash || 'home');
+            window.scrollTo(0, 0);
+        };
+        window.addEventListener('hashchange', handleHashChange);
+        handleHashChange(); // Initial load
+        return () => window.removeEventListener('hashchange', handleHashChange);
+    }, []);
+
+    // Simulate loading
+    useEffect(() => {
+      setTimeout(() => setIsLoading(false), 1000);
+    }, []);
+
+    // Exit-intent listener
+    useEffect(() => {
+        const handleMouseLeave = (e: MouseEvent) => {
+            if (e.clientY <= 0 && !isExitIntentModalOpen && cartItems.length > 0) {
+                setIsExitIntentModalOpen(true);
+            }
+        };
+        document.addEventListener('mouseleave', handleMouseLeave);
+        return () => document.removeEventListener('mouseleave', handleMouseLeave);
+    }, [isExitIntentModalOpen, cartItems.length]);
 
 
-  const maxPrice = useMemo(() => Math.max(...MOCK_PRODUCTS.flatMap(p => p.variants.map(v => v.price))), []);
-  const [priceRange, setPriceRange] = usePersistentState('tattva_priceRange', { min: 0, max: maxPrice });
+    // Memoized values
+    const categories = useMemo(() => ['All', ...Array.from(new Set(MOCK_PRODUCTS.map(p => p.category)))], []);
+    const availableTags = useMemo(() => Array.from(new Set(MOCK_PRODUCTS.flatMap(p => p.tags || []))), []);
+    const wishlistedIds = useMemo(() => new Set(wishlistItems.map(p => p.id)), [wishlistItems]);
+    const comparisonIds = useMemo(() => new Set(comparisonItems.map(p => p.id)), [comparisonItems]);
+    
+    const subtotal = useMemo(() => cartItems.reduce((sum, item) => sum + (item.selectedVariant.salePrice ?? item.selectedVariant.price) * item.quantity, 0), [cartItems]);
+    const shippingCost = useMemo(() => (subtotal > 50 || subtotal === 0) ? 0 : 10, [subtotal]);
 
-  // Routing and auth state
-  const [route, setRoute] = useState(getInitialRoute());
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
-  const [isAuthModalOpen, setAuthModalOpen] = useState(false);
-  const [orders, setOrders] = useState<Order[]>([]);
-  const [promoCode, setPromoCode] = useState('');
-  const [discount, setDiscount] = useState(0);
+    // Handlers
+    const addToast = useCallback((message: string, type: ToastMessage['type'], icon?: React.ReactNode) => {
+        const newToast = { id: Date.now(), message, type, icon };
+        setToasts(currentToasts => [...currentToasts, newToast]);
+    }, []);
 
-  useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 1500);
-    return () => clearTimeout(timer);
-  }, []);
+    const handleAddToCart = useCallback((product: Product, variant: Variant, quantity: number = 1) => {
+        setCartItems(prevItems => {
+            const existingItem = prevItems.find(item => item.product.id === product.id && item.selectedVariant.id === variant.id);
+            if (existingItem) {
+                return prevItems.map(item =>
+                    item.product.id === product.id && item.selectedVariant.id === variant.id
+                        ? { ...item, quantity: Math.min(item.quantity + quantity, variant.stock) }
+                        : item
+                );
+            }
+            return [...prevItems, { product, selectedVariant: variant, quantity }];
+        });
+        addToast(`${product.name} added to cart!`, 'success');
+    }, [addToast]);
 
-  useEffect(() => {
-    const handleHashChange = () => setRoute(getInitialRoute());
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
-  }, []);
-  
-  useExitIntent(() => setExitIntentOpen(true), cartItems.length);
-
-  const addToast = useCallback((message: string, type: ToastMessage['type'], icon?: React.ReactNode) => {
-    setToasts(toasts => [...toasts, { id: Date.now(), message, type, icon }]);
-  }, []);
-
-  const subtotal = useMemo(() => cartItems.reduce((sum, item) => {
-      const price = item.selectedVariant.salePrice ?? item.selectedVariant.price;
-      return sum + price * item.quantity;
-  }, 0), [cartItems]);
-  
-  const shippingCost = useMemo(() => subtotal > 50 ? 0 : 5.00, [subtotal]);
-
-  const handleApplyPromoCode = useCallback((code: string) => {
-    const promo = MOCK_PROMO_CODES[code.toUpperCase()];
-    if (promo) {
-        setPromoCode(code);
-        if (promo.type === 'percent') {
-            const discountValue = (subtotal * promo.value) / 100;
-            setDiscount(discountValue);
-            addToast(`Successfully applied ${promo.value}% discount!`, 'success');
+    const handleUpdateQuantity = useCallback((productId: number, variantId: number, quantity: number) => {
+        if (quantity <= 0) {
+            setCartItems(prev => prev.filter(item => !(item.product.id === productId && item.selectedVariant.id === variantId)));
         } else {
-            setDiscount(promo.value);
-            addToast(`Successfully applied $${promo.value.toFixed(2)} discount!`, 'success');
+            setCartItems(prev => prev.map(item =>
+                item.product.id === productId && item.selectedVariant.id === variantId
+                    ? { ...item, quantity: Math.min(quantity, item.selectedVariant.stock) }
+                    : item
+            ));
         }
-    } else {
-        setPromoCode('');
+    }, []);
+
+    const handleToggleWishlist = useCallback((product: Product) => {
+        setWishlistItems(prev => {
+            const isWishlisted = prev.some(item => item.id === product.id);
+            if (isWishlisted) {
+                addToast(`${product.name} removed from wishlist.`, 'info');
+                return prev.filter(item => item.id !== product.id);
+            } else {
+                addToast(`${product.name} added to wishlist!`, 'success');
+                return [...prev, product];
+            }
+        });
+    }, [addToast]);
+    
+    const handleLogin = useCallback(() => {
+        setIsLoggedIn(true);
+        setCurrentUser(MOCK_USER);
+        setAuthModalOpen(false);
+        addToast(`Welcome back, ${MOCK_USER.name}!`, 'success');
+    }, [addToast]);
+    
+    const handleLogout = useCallback(() => {
+        setIsLoggedIn(false);
+        setCurrentUser(null);
+        addToast('You have been logged out.', 'info');
+    }, [addToast]);
+
+    const handleSelectCategoryAndClose = useCallback((category: string) => {
+        setSelectedCategory(category);
+        setSelectedProduct(null);
+        window.location.hash = '#/';
+    }, []);
+
+    const handleAddReview = useCallback((productId: number, review: Omit<Review, 'id'>) => {
+        setProducts(prev => prev.map(p => {
+            if (p.id === productId) {
+                const newReview = { ...review, id: Date.now(), verifiedPurchase: isLoggedIn };
+                return { ...p, reviews: [newReview, ...p.reviews] };
+            }
+            return p;
+        }));
+        addToast('Thank you for your review!', 'success');
+    }, [isLoggedIn, addToast]);
+    
+    const handleDeleteReview = useCallback((productId: number, reviewId: number) => {
+        setProducts(prev => prev.map(p => {
+            if (p.id === productId) {
+                return { ...p, reviews: p.reviews.filter(r => r.id !== reviewId) };
+            }
+            return p;
+        }));
+    }, []);
+
+    const handleAskQuestion = useCallback((productId: number, question: { author: string; question: string }) => {
+        setProducts(prev => prev.map(p => {
+            if (p.id === productId) {
+                const newQnA: QnAType = { ...question, id: Date.now() };
+                return { ...p, qna: [...(p.qna || []), newQnA] };
+            }
+            return p;
+        }));
+        addToast('Your question has been submitted.', 'success');
+    }, [addToast]);
+
+    const handleNotifyMe = useCallback((productName: string) => {
+      addToast(`We'll notify you when ${productName} is back in stock!`, 'success');
+      setSelectedProduct(null);
+    }, [addToast]);
+
+    const handleApplyPromoCode = useCallback((code: string) => {
+        if (code.toUpperCase() === 'TATTVA10') {
+            setDiscount(subtotal * 0.10);
+            setPromoCode(code);
+            addToast('Promo code applied!', 'success');
+        } else if (code.toUpperCase() === 'COMEBACK15' || code.toUpperCase() === 'QUIZMASTER15') {
+            setDiscount(subtotal * 0.15);
+            setPromoCode(code);
+            addToast('Promo code applied!', 'success');
+        } else if (code.toUpperCase() === 'SPICEFAN10') {
+            setDiscount(subtotal * 0.10);
+            setPromoCode(code);
+            addToast('Promo code applied!', 'success');
+        } else {
+            addToast('Invalid promo code.', 'error');
+        }
+    }, [subtotal, addToast]);
+
+    const handleRemovePromoCode = useCallback(() => {
         setDiscount(0);
-        addToast('Invalid or expired promo code.', 'error');
-    }
-  }, [addToast, subtotal]);
+        setPromoCode('');
+    }, []);
 
-  useEffect(() => {
-    if(promoCode) handleApplyPromoCode(promoCode);
-    else setDiscount(0);
-  }, [subtotal, promoCode, handleApplyPromoCode]);
+    const handlePlaceOrder = useCallback((orderData: Omit<Order, 'id' | 'date' | 'status'>): Order => {
+        const newOrder: Order = {
+            ...orderData,
+            id: `TC${1003 + orders.length}-${new Date().getFullYear()}`,
+            date: new Date().toISOString(),
+            status: 'Processing',
+        };
+        setOrders(prev => [newOrder, ...prev]);
+        setCartItems([]);
+        setDiscount(0);
+        setPromoCode('');
+        setCurrentView('home'); // Prevent staying on checkout page
+        window.location.hash = `#/order-confirmation/${newOrder.id}`;
+        return newOrder;
+    }, [orders.length]);
+    
+    // Admin handlers
+    const handleSaveProduct = useCallback((product: Product) => {
+        setProducts(prev => {
+            if (product.id === 0) { // New product
+                const newProduct = { ...product, id: Date.now() };
+                return [newProduct, ...prev];
+            } else { // Existing product
+                return prev.map(p => p.id === product.id ? product : p);
+            }
+        });
+        addToast(`Product "${product.name}" saved successfully!`, 'success');
+    }, [addToast]);
 
-  const handleRemovePromoCode = useCallback(() => {
-      setPromoCode('');
-      addToast('Promo code removed.', 'info');
-  }, [addToast]);
-
-  const handleSelectProduct = useCallback((product: Product) => {
-    setSelectedProduct(product);
-    setRecentlyViewed(prev => {
-      const newRecentlyViewed = [product, ...prev.filter(p => p.id !== product.id)].slice(0, 5);
-      localStorage.setItem('tattva_recentlyViewed', JSON.stringify(newRecentlyViewed.map(p => p.id)));
-      return newRecentlyViewed;
-    });
-  }, []);
-
-  const categories = useMemo(() => ['All', ...Array.from(new Set(MOCK_PRODUCTS.map(p => p.category)))], []);
-  const allTags = useMemo(() => Array.from(new Set(MOCK_PRODUCTS.flatMap(p => p.tags || []))), []);
-
-  const handleToggleTag = useCallback((tag: string) => setSelectedTags(prev => prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]), [setSelectedTags]);
-  const getProductPrice = (product: Product) => Math.min(...product.variants.map(v => v.salePrice ?? v.price));
-
-  const processedProducts = useMemo(() => {
-    let filtered = products.filter(product => {
-        const matchesCategory = selectedCategory === 'All' || product.category === selectedCategory;
-        const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
-        const matchesOnSale = !showOnlyOnSale || product.variants.some(v => v.salePrice);
-        const matchesInStock = !showOnlyInStock || product.variants.some(v => v.stock > 0);
-        const matchesTags = selectedTags.length === 0 || selectedTags.every(tag => product.tags?.includes(tag));
-        const matchesPrice = product.variants.some(v => (v.salePrice ?? v.price) <= priceRange.max);
-        return matchesCategory && matchesSearch && matchesOnSale && matchesInStock && matchesTags && matchesPrice;
-    });
-
-    switch (sortOption) {
-        case 'price-asc': filtered.sort((a, b) => getProductPrice(a) - getProductPrice(b)); break;
-        case 'price-desc': filtered.sort((a, b) => getProductPrice(b) - getProductPrice(a)); break;
-        case 'rating-desc': filtered.sort((a, b) => (b.reviews.reduce((acc, r) => acc + r.rating, 0) / (b.reviews.length || 1)) - (a.reviews.reduce((acc, r) => acc + r.rating, 0) / (a.reviews.length || 1))); break;
-    }
-    return filtered;
-  }, [products, searchQuery, selectedCategory, sortOption, showOnlyOnSale, showOnlyInStock, selectedTags, priceRange]);
-
-  const handleAddToCart = useCallback((product: Product, variant: Variant, quantity: number = 1) => {
-    if (variant.stock < quantity) { addToast(`Sorry, '${product.name} (${variant.name})' is out of stock.`, 'error'); return; }
-    const itemInCart = cartItems.find(item => item.product.id === product.id && item.selectedVariant.id === variant.id);
-    if (itemInCart && (itemInCart.quantity + quantity) > variant.stock) { addToast(`Only ${variant.stock} units of '${product.name} (${variant.name})' are available.`, 'error'); return; }
-    setCartItems(prevItems => {
-      const existingItem = prevItems.find(item => item.product.id === product.id && item.selectedVariant.id === variant.id);
-      return existingItem ? prevItems.map(item => (item.product.id === product.id && item.selectedVariant.id === variant.id) ? { ...item, quantity: item.quantity + quantity } : item) : [...prevItems, { product, selectedVariant: variant, quantity }];
-    });
-    addToast(`'${product.name} (${variant.name})' added to cart`, 'success');
-  }, [cartItems, addToast]);
-  
-  const handleUpdateQuantity = useCallback((productId: number, variantId: number, quantity: number) => {
-    const itemInCart = cartItems.find(item => item.product.id === productId && item.selectedVariant.id === variantId);
-    if (!itemInCart) return;
-    if (quantity > itemInCart.selectedVariant.stock) { addToast(`Only ${itemInCart.selectedVariant.stock} units of '${itemInCart.product.name}' are available.`, 'error'); return; }
-    setCartItems(prevItems => (quantity <= 0) ? prevItems.filter(item => !(item.product.id === productId && item.selectedVariant.id === variantId)) : prevItems.map(item => (item.product.id === productId && item.selectedVariant.id === variantId) ? { ...item, quantity } : item));
-  }, [cartItems, addToast]);
-
-  const handleToggleWishlist = useCallback((product: Product) => setWishlist(prev => prev.some(item => item.id === product.id) ? prev.filter(item => item.id !== product.id) : (addToast(`'${product.name}' added to wishlist`, 'success', <HeartIcon className="h-6 w-6 text-red-500 fill-current" />), [...prev, product])), [addToast]);
-
-  const handleAddReview = useCallback((productId: number, review: Omit<Review, 'id' | 'verifiedPurchase'>) => {
-    setProducts(current => current.map(p => p.id === productId ? { ...p, reviews: [{ ...review, id: Date.now(), verifiedPurchase: false }, ...p.reviews] } : p));
-    setSelectedProduct(prev => prev && prev.id === productId ? { ...prev, reviews: [{ ...review, id: Date.now(), verifiedPurchase: false }, ...prev.reviews] } : prev);
-  }, []);
-
-  const handleAskQuestion = useCallback((productId: number, question: Omit<QnA, 'id'|'answer'>) => {
-    setProducts(current => current.map(p => p.id === productId ? { ...p, qna: [...(p.qna || []), { ...question, id: Date.now() }] } : p));
-    setSelectedProduct(prev => prev && prev.id === productId ? { ...prev, qna: [...(prev.qna || []), { ...question, id: Date.now() }] } : prev);
-    addToast('Your question has been submitted!', 'success');
-  }, [addToast]);
-  
-  const handleToggleCompare = useCallback((product: Product) => {
-    setComparisonList(prev => {
-        if(prev.some(p => p.id === product.id)) {
-            return prev.filter(p => p.id !== product.id);
+    const handleDeleteProduct = useCallback((productId: number) => {
+        if (window.confirm("Are you sure you want to delete this product?")) {
+            setProducts(prev => prev.filter(p => p.id !== productId));
+            addToast('Product deleted.', 'info');
         }
-        if(prev.length >= 4) {
-            addToast('You can only compare up to 4 products.', 'info');
-            return prev;
+    }, [addToast]);
+
+    const handleUpdateOrderStatus = useCallback((orderId: string, status: OrderStatus) => {
+        setOrders(prev => prev.map(o => o.id === orderId ? { ...o, status } : o));
+    }, []);
+
+    // Comparison handlers
+    const handleToggleCompare = useCallback((product: Product) => {
+        setComparisonItems(prev => {
+            const isCompared = prev.some(item => item.id === product.id);
+            if (isCompared) {
+                return prev.filter(item => item.id !== product.id);
+            } else if (prev.length < 4) {
+                return [...prev, product];
+            } else {
+                addToast('You can only compare up to 4 products.', 'info');
+                return prev;
+            }
+        });
+    }, [addToast]);
+
+
+    // Filtering and sorting logic
+    const filteredAndSortedProducts = useMemo(() => {
+        let result = MOCK_PRODUCTS;
+
+        if (selectedCategory !== 'All') {
+            result = result.filter(p => p.category === selectedCategory);
         }
-        return [...prev, product];
-    });
-  }, [addToast, setComparisonList]);
 
-  const handleNotifyMe = useCallback((productName: string) => {
-    addToast(`We'll notify you when '${productName}' is back in stock!`, 'info');
-  }, [addToast]);
+        if (searchQuery) {
+            result = result.filter(p => p.name.toLowerCase().includes(searchQuery.toLowerCase()));
+        }
 
-  const handleCategorySelectFromHeader = useCallback((category: string) => {
-    setSelectedCategory(category);
-    window.location.hash = '/';
-  }, [setSelectedCategory]);
+        if (showOnSale) {
+            result = result.filter(p => p.variants.some(v => v.salePrice && v.salePrice < v.price));
+        }
 
-  const wishlistedIds = useMemo(() => new Set(wishlist.map(p => p.id)), [wishlist]);
-  const comparisonIds = useMemo(() => new Set(comparisonList.map(p => p.id)), [comparisonList]);
-  const breadcrumbItems = useMemo(() => {
-    const items: { label: string; href?: string }[] = [{ label: 'Home', href: '#/' }];
-    if (route.startsWith('/profile')) items.push({ label: 'Profile' });
-    else if (route.startsWith('/admin')) items.push({ label: 'Admin Dashboard' });
-    else if (route.startsWith('/checkout')) items.push({ label: 'Checkout' });
-    else if (route.startsWith('/contact')) items.push({ label: 'Contact' });
-    else if (route.startsWith('/privacy-policy')) items.push({ label: 'Privacy Policy' });
-    else if (route.startsWith('/refund-policy')) items.push({ label: 'Refund Policy' });
-    else if (route.startsWith('/terms-of-service')) items.push({ label: 'Terms of Service' });
-    else if (route.startsWith('/recipes')) items.push({ label: 'Recipes' });
-    else if (route.startsWith('/about')) items.push({ label: 'About Us' });
-    else if (route.startsWith('/faqs')) items.push({ label: 'FAQs' });
-    else if (selectedCategory !== 'All') {
-      items.push({ label: 'Products', href: '#/' });
-      items.push({ label: selectedCategory });
-    } else {
-      items.push({ label: 'Products' });
+        if (showInStock) {
+            result = result.filter(p => p.variants.some(v => v.stock > 0));
+        }
+        
+        if (selectedTags.length > 0) {
+            result = result.filter(p => selectedTags.every(tag => p.tags?.includes(tag)));
+        }
+        
+        result = result.filter(p => (p.variants[0].salePrice ?? p.variants[0].price) <= priceRange.max);
+
+        switch (sortOrder) {
+            case 'price-asc':
+                result.sort((a, b) => (a.variants[0].salePrice ?? a.variants[0].price) - (b.variants[0].salePrice ?? b.variants[0].price));
+                break;
+            case 'price-desc':
+                result.sort((a, b) => (b.variants[0].salePrice ?? b.variants[0].price) - (a.variants[0].salePrice ?? a.variants[0].price));
+                break;
+            case 'rating-desc':
+                result.sort((a, b) => {
+                    const ratingA = a.reviews.length ? a.reviews.reduce((sum, r) => sum + r.rating, 0) / a.reviews.length : 0;
+                    const ratingB = b.reviews.length ? b.reviews.reduce((sum, r) => sum + r.rating, 0) / b.reviews.length : 0;
+                    return ratingB - ratingA;
+                });
+                break;
+            default: // featured
+                break;
+        }
+
+        return result;
+    }, [searchQuery, selectedCategory, sortOrder, showOnSale, showInStock, selectedTags, priceRange]);
+
+
+    const renderView = () => {
+        if (currentView.startsWith('order-confirmation')) {
+          const orderId = currentView.split('/')[1];
+          const order = orders.find(o => o.id === orderId);
+          // This is a trick to show the confirmation page by re-using the CheckoutPage component structure
+          return order ? <CheckoutPage cartItems={[]} user={currentUser} onPlaceOrder={handlePlaceOrder} addToast={addToast} discount={0} promoCode="" onApplyPromoCode={()=>{}} onRemovePromoCode={()=>{}} subtotal={0} shippingCost={0} /> : <div className="text-center py-20"><h2>Order not found</h2></div>;
+        }
+
+        if (currentView.startsWith('blog/')) {
+            const slug = currentView.split('/')[1];
+            const post = posts.find(p => p.slug === slug);
+            return post ? <BlogPostPage post={post} /> : <div className="text-center py-20"><h2>Post not found</h2></div>;
+        }
+        
+        switch(currentView) {
+            case 'checkout': return <CheckoutPage cartItems={cartItems} user={currentUser} onPlaceOrder={handlePlaceOrder} addToast={addToast} discount={discount} promoCode={promoCode} onApplyPromoCode={handleApplyPromoCode} onRemovePromoCode={handleRemovePromoCode} subtotal={subtotal} shippingCost={shippingCost} />;
+            case 'profile': return currentUser ? <UserProfile user={currentUser} orders={orders} /> : <div className="text-center py-20"><h2>Please log in to view your profile.</h2></div>;
+            case 'admin': return currentUser?.isAdmin ? <AdminDashboard products={products} orders={orders} analytics={MOCK_ANALYTICS} onSaveProduct={handleSaveProduct} onDeleteProduct={handleDeleteProduct} onUpdateOrderStatus={handleUpdateOrderStatus} /> : <div className="text-center py-20"><h2>Access Denied.</h2></div>;
+            case 'privacy-policy': return <PrivacyPolicyPage />;
+            case 'refund-policy': return <RefundPolicyPage />;
+            case 'terms-of-service': return <TermsOfServicePage />;
+            case 'about': return <AboutPage />;
+            case 'faqs': return <FAQsPage />;
+            case 'contact': return <ContactPage />;
+            case 'recipes': return <RecipesPage onSelectRecipe={setSelectedRecipe} />;
+            case 'blog': return <BlogPage posts={posts} onSelectPost={(slug) => window.location.hash = `#/blog/${slug}`} />;
+            case 'home':
+            default:
+                return (
+                    <>
+                        <Hero />
+                        <main id="products-section" className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                            <CategoryFilter categories={categories} selectedCategory={selectedCategory} onSelectCategory={setSelectedCategory} />
+                            <div className="flex flex-col sm:flex-row justify-between items-center mb-8 gap-4">
+                               <AdvancedFilters 
+                                  showOnSale={showOnSale}
+                                  onToggleOnSale={() => setShowOnSale(v => !v)}
+                                  showInStock={showInStock}
+                                  onToggleInStock={() => setShowInStock(v => !v)}
+                                  availableTags={availableTags}
+                                  selectedTags={selectedTags}
+                                  onToggleTag={(tag) => setSelectedTags(prev => prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag])}
+                                  priceRange={priceRange}
+                                  maxPrice={maxPrice}
+                                  onPriceChange={(val) => setPriceRange(prev => ({ ...prev, max: val}))}
+                               />
+                                <SortDropdown currentSort={sortOrder} onSortChange={setSortOrder} />
+                            </div>
+                            <ProductGrid
+                                products={filteredAndSortedProducts}
+                                onAddToCart={handleAddToCart}
+                                onToggleWishlist={handleToggleWishlist}
+                                wishlistedIds={wishlistedIds}
+                                onSelectProduct={setSelectedProduct}
+                                onToggleCompare={handleToggleCompare}
+                                comparisonIds={comparisonIds}
+                                isLoading={isLoading}
+                                onNotifyMe={handleNotifyMe}
+                            />
+                        </main>
+                        <Testimonials testimonials={MOCK_TESTIMONIALS} />
+                        <section className="bg-brand-secondary/30 py-16">
+                            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                                <QuizModule addToast={addToast} />
+                            </div>
+                        </section>
+                    </>
+                );
+        }
     }
-    return items;
-  }, [selectedCategory, route]);
+    
+    return (
+        <div className="flex flex-col min-h-screen">
+            {showPromoBanner && <PromotionalBanner onClose={() => setShowPromoBanner(false)} />}
+            <Header
+                cartItems={cartItems}
+                wishlistItemCount={wishlistItems.length}
+                searchQuery={searchQuery}
+                onSearchChange={setSearchQuery}
+                onCartClick={() => setIsCartOpen(true)}
+                onWishlistClick={() => setIsWishlistOpen(true)}
+                onMobileMenuClick={() => setIsMobileMenuOpen(true)}
+                isLoggedIn={isLoggedIn}
+                isAdmin={!!currentUser?.isAdmin}
+                onLoginClick={() => setAuthModalOpen(true)}
+                onLogoutClick={handleLogout}
+                allProducts={MOCK_PRODUCTS}
+                onSelectProduct={setSelectedProduct}
+                subtotal={subtotal}
+                categories={categories}
+                onSelectCategory={setSelectedCategory}
+            />
+            <div className={`pt-20 flex-grow ${comparisonItems.length > 0 ? 'pb-24' : ''}`}>
+                {renderView()}
+            </div>
+            <Footer onSelectCategory={setSelectedCategory} />
 
-  const renderPage = () => {
-    switch (route) {
-        case '/checkout': return <CheckoutPage cartItems={cartItems} user={currentUser} onPlaceOrder={(data) => { 
-            const order: Order = {...data, id:`TCO-${Date.now()}`, date: new Date().toISOString(), status:'Processing'}; setOrders(p => [order,...p]); setCartItems([]); setPromoCode(''); return order; }} addToast={addToast} discount={discount} promoCode={promoCode} onApplyPromoCode={handleApplyPromoCode} onRemovePromoCode={handleRemovePromoCode} shippingCost={shippingCost} subtotal={subtotal} />;
-        case '/profile': return <UserProfile user={currentUser!} orders={orders} />;
-        case '/admin': return currentUser?.isAdmin ? <AdminDashboard products={products} orders={orders} analytics={{totalRevenue: orders.reduce((s,o)=>s+o.total,0), totalOrders: orders.length, uniqueCustomers: new Set(orders.map(o => o.shippingAddress.street)).size, salesData: Object.entries(orders.reduce((acc, o) => {const m=new Date(o.date).toLocaleString('default',{month:'short',year:'numeric'}); acc[m]=(acc[m]||0)+o.total; return acc;}, {} as {[key:string]:number})).map(([name, sales])=>({name, sales})).reverse()}} onSaveProduct={(p) => {setProducts(prev => prev.some(pr=>pr.id===p.id) ? prev.map(pr=>pr.id===p.id?p:pr) : [...prev, {...p,id:Date.now()}]); addToast('Product saved!', 'success');}} onDeleteProduct={(id) => {setProducts(prev => prev.filter(p=>p.id!==id)); addToast('Product deleted!', 'info');}} onUpdateOrderStatus={(id,s) => {setOrders(prev=>prev.map(o=>o.id===id?{...o,status:s}:o)); addToast(`Order status updated.`, 'success');}} /> : <div className="text-center py-20"><h2>Access Denied</h2></div>;
-        case '/privacy-policy': return <PrivacyPolicyPage />;
-        case '/refund-policy': return <RefundPolicyPage />;
-        case '/terms-of-service': return <TermsOfServicePage />;
-        case '/contact': return <ContactPage />;
-        case '/recipes': return <RecipesPage onSelectRecipe={setSelectedRecipe} />;
-        case '/about': return <AboutPage />;
-        case '/faqs': return <FAQsPage />;
-        default:
-            return (
-                <>
-                    <Hero />
-                    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-                        <div className="text-center mb-8">
-                            <h2 className="text-3xl md:text-4xl font-serif font-bold text-brand-dark">Our Products</h2>
-                        </div>
-                        <CategoryFilter categories={categories} selectedCategory={selectedCategory} onSelectCategory={setSelectedCategory} />
-                        <div className="flex flex-col md:flex-row justify-between items-start mb-6 gap-4">
-                            <AdvancedFilters availableTags={allTags} selectedTags={selectedTags} onToggleTag={handleToggleTag} showOnSale={showOnlyOnSale} onToggleOnSale={() => setShowOnlyOnSale(v => !v)} showInStock={showOnlyInStock} onToggleInStock={() => setShowOnlyInStock(v => !v)} priceRange={priceRange} maxPrice={maxPrice} onPriceChange={(max) => setPriceRange(p => ({...p, max}))} />
-                            <SortDropdown currentSort={sortOption} onSortChange={setSortOption} />
-                        </div>
-                        <ProductGrid products={processedProducts} onAddToCart={(p, v) => handleAddToCart(p, v, 1)} onToggleWishlist={handleToggleWishlist} wishlistedIds={wishlistedIds} onSelectProduct={handleSelectProduct} isLoading={isLoading} onToggleCompare={handleToggleCompare} comparisonIds={comparisonIds} onNotifyMe={handleNotifyMe} />
-                    </div>
-                    {recentlyViewed.length > 0 && (
-                        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-                            <ProductSlider title="Recently Viewed" products={recentlyViewed} onAddToCart={(p, v) => handleAddToCart(p, v, 1)} onToggleWishlist={handleToggleWishlist} wishlistedIds={wishlistedIds} onSelectProduct={handleSelectProduct} onToggleCompare={handleToggleCompare} comparisonIds={comparisonIds} onNotifyMe={handleNotifyMe} />
-                        </div>
-                    )}
-                    <Testimonials testimonials={testimonials} />
-                    <section className="bg-brand-secondary/30 py-16">
-                        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                            <QuizModule addToast={addToast} />
-                        </div>
-                    </section>
-                </>
-            );
-    }
-  }
+            {/* Modals & Overlays */}
+            {selectedProduct && (
+                <ProductDetailModal
+                    product={selectedProduct}
+                    allProducts={MOCK_PRODUCTS}
+                    onClose={() => setSelectedProduct(null)}
+                    onAddToCart={handleAddToCart}
+                    onAddReview={handleAddReview}
+                    onDeleteReview={handleDeleteReview}
+                    onSelectCategoryAndClose={handleSelectCategoryAndClose}
+                    addToast={addToast}
+                    onAskQuestion={handleAskQuestion}
+                    onSelectProduct={setSelectedProduct}
+                    onNotifyMe={handleNotifyMe}
+                />
+            )}
+            
+            {selectedRecipe && <RecipeDetailModal recipe={selectedRecipe} onClose={() => setSelectedRecipe(null)} />}
 
-  return (
-    <div className="flex flex-col min-h-screen">
-      <ToastContainer toasts={toasts} onClose={(id) => setToasts(ts => ts.filter(t => t.id !== id))} />
-      {isBannerVisible && <PromotionalBanner onClose={() => setBannerVisible(false)} />}
-      <Header cartItems={cartItems} subtotal={subtotal} wishlistItemCount={wishlist.length} searchQuery={searchQuery} onSearchChange={setSearchQuery} onCartClick={() => setCartOpen(true)} onWishlistClick={() => setWishlistOpen(true)} onMobileMenuClick={() => setMobileMenuOpen(true)} isLoggedIn={isLoggedIn} isAdmin={currentUser?.isAdmin ?? false} onLoginClick={() => setAuthModalOpen(true)} onLogoutClick={() => {setIsLoggedIn(false); setCurrentUser(null); addToast('You have been logged out.', 'info');}} allProducts={products} onSelectProduct={handleSelectProduct} categories={categories} onSelectCategory={handleCategorySelectFromHeader} />
-      <MobileMenu isOpen={isMobileMenuOpen} onClose={() => setMobileMenuOpen(false)} searchQuery={searchQuery} onSearchChange={setSearchQuery} />
-      <main className="flex-grow pt-20">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4"><Breadcrumbs items={breadcrumbItems} /></div>
-        {renderPage()}
-      </main>
-      <Footer onSelectCategory={handleCategorySelectFromHeader} />
+            <SideModal isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} title="Your Shopping Cart">
+                <Cart 
+                    items={cartItems} 
+                    onUpdateQuantity={handleUpdateQuantity} 
+                    onClose={() => setIsCartOpen(false)} 
+                    isLoggedIn={isLoggedIn}
+                    promoCode={promoCode}
+                    onPromoCodeChange={setPromoCode}
+                    onApplyPromoCode={handleApplyPromoCode}
+                    discount={discount}
+                    subtotal={subtotal}
+                    shippingCost={shippingCost}
+                />
+            </SideModal>
+            
+            <SideModal isOpen={isWishlistOpen} onClose={() => setIsWishlistOpen(false)} title="Your Wishlist">
+                <Wishlist items={wishlistItems} onToggleWishlist={handleToggleWishlist} onAddToCart={handleAddToCart} onClose={() => setIsWishlistOpen(false)} />
+            </SideModal>
 
-      <SideModal title="Shopping Cart" isOpen={isCartOpen} onClose={() => setCartOpen(false)}><Cart items={cartItems} onUpdateQuantity={handleUpdateQuantity} onClose={() => setCartOpen(false)} isLoggedIn={isLoggedIn} promoCode={promoCode} onPromoCodeChange={setPromoCode} onApplyPromoCode={handleApplyPromoCode} discount={discount} shippingCost={shippingCost} subtotal={subtotal} /></SideModal>
-      <SideModal title="Your Wishlist" isOpen={isWishlistOpen} onClose={() => setWishlistOpen(false)}><Wishlist items={wishlist} onToggleWishlist={handleToggleWishlist} onAddToCart={(p,v)=>handleAddToCart(p,v,1)} onClose={() => setWishlistOpen(false)} /></SideModal>
+            <MobileMenu isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} searchQuery={searchQuery} onSearchChange={setSearchQuery} />
 
-      {selectedProduct && <ProductDetailModal product={selectedProduct} allProducts={products} onClose={() => setSelectedProduct(null)} onAddToCart={handleAddToCart} onAddReview={handleAddReview} onDeleteReview={(pid, rid) => {setProducts(c => c.map(p => p.id === pid ? {...p, reviews: p.reviews.filter(r => r.id !== rid)} : p)); setSelectedProduct(prev => prev ? {...prev, reviews: prev.reviews.filter(r => r.id !== rid)} : null);}} onSelectCategoryAndClose={(c) => {setSelectedCategory(c); setSelectedProduct(null);}} addToast={addToast} onAskQuestion={handleAskQuestion} onSelectProduct={handleSelectProduct} onNotifyMe={handleNotifyMe} />}
-      {isAuthModalOpen && <AuthModal onClose={() => setAuthModalOpen(false)} onLogin={() => {setIsLoggedIn(true); setCurrentUser(MOCK_USER); setAuthModalOpen(false); addToast(`Welcome back, ${MOCK_USER.name}!`, 'success');}} />}
-      <ComparisonBar items={comparisonList} onRemove={handleToggleCompare} onClear={() => setComparisonList([])} onCompare={() => setComparisonModalOpen(true)} />
-      {isExitIntentOpen && cartItems.length > 0 && <ExitIntentModal onClose={() => setExitIntentOpen(false)} onApplyPromo={(code) => { handleApplyPromoCode(code); addToast('15% discount applied!', 'success'); }} />}
-      {isComparisonModalOpen && <ComparisonModal items={comparisonList} onClose={() => setComparisonModalOpen(false)} />}
-      {selectedRecipe && <RecipeDetailModal recipe={selectedRecipe} onClose={() => setSelectedRecipe(null)} />}
-    </div>
-  );
+            <ToastContainer toasts={toasts} onClose={(id) => setToasts(current => current.filter(t => t.id !== id))} />
+
+            {isAuthModalOpen && <AuthModal onClose={() => setAuthModalOpen(false)} onLogin={handleLogin} />}
+
+            <ComparisonBar 
+                items={comparisonItems}
+                onRemove={(p) => setComparisonItems(prev => prev.filter(item => item.id !== p.id))}
+                onClear={() => setComparisonItems([])}
+                onCompare={() => setIsComparisonModalOpen(true)}
+            />
+
+            {isComparisonModalOpen && <ComparisonModal items={comparisonItems} onClose={() => setIsComparisonModalOpen(false)} />}
+            
+            {isExitIntentModalOpen && <ExitIntentModal onClose={() => setIsExitIntentModalOpen(false)} onApplyPromo={handleApplyPromoCode} />}
+        </div>
+    );
 };
 
 export default App;

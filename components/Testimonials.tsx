@@ -1,12 +1,6 @@
 import React from 'react';
 import { StarIcon } from './icons/StarIcon';
-
-interface Testimonial {
-    id: number;
-    name: string;
-    quote: string;
-    rating: number;
-}
+import { Testimonial } from '../types';
 
 interface TestimonialsProps {
     testimonials: Testimonial[];

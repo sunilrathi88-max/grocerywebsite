@@ -105,8 +105,9 @@ const Header: React.FC<HeaderProps> = ({
                   </div>
               )}
             </div>
-            <a href="#/contact" className="text-brand-dark hover:text-brand-primary transition-colors duration-300">Contact</a>
             <a href="#/recipes" className="text-brand-dark hover:text-brand-primary transition-colors duration-300">Recipes</a>
+            <a href="#/blog" className="text-brand-dark hover:text-brand-primary transition-colors duration-300">Blog</a>
+            <a href="#/contact" className="text-brand-dark hover:text-brand-primary transition-colors duration-300">Contact</a>
           </nav>
           <div className="flex items-center space-x-2">
             <div className="relative hidden sm:block" ref={searchContainerRef}>

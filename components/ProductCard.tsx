@@ -19,6 +19,10 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onToggleWishlist, isWishlisted, onSelectProduct, onToggleCompare, isCompared, onNotifyMe }) => {
+  // Debugging logs as requested
+  console.log('ProductCard props:', product);
+  console.log('Product images array:', product.images);
+  
   const averageRating = product.reviews.length > 0
     ? product.reviews.reduce((acc, review) => acc + review.rating, 0) / product.reviews.length
     : null;
@@ -40,7 +44,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onToggl
         <div className="h-64 w-full bg-gray-200 relative overflow-hidden">
           <img 
             className="h-full w-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-110" 
-            src={product.images[0]} 
+            src={product.images?.[0] || 'https://placehold.co/400x400/F8E3D9/333333?text=Tattva+Co.'}
             alt={product.name}
             loading="lazy"
           />
@@ -78,7 +82,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onToggl
           )}
         </div>
         <motion.button
-          whileTap={{ scale: 1.2 }}
+          // FIX: Wrapped framer-motion prop in a spread object to resolve TypeScript error.
+          {...{ whileTap: { scale: 1.2 } }}
           onClick={() => onToggleWishlist(product)}
           className="absolute top-3 right-3 bg-white/70 backdrop-blur-sm p-2 rounded-full text-brand-dark hover:text-red-500 transition-colors duration-300 z-10"
           aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
