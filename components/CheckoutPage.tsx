@@ -5,6 +5,8 @@ import { CalendarIcon } from './icons/CalendarIcon';
 import { XIcon } from './icons/XIcon';
 import { ShieldCheckIcon } from './icons/ShieldCheckIcon';
 
+const PLACEHOLDER_IMAGE = 'https://via.placeholder.com/100x100/F8E3D9/333333?text=Tattva+Co.';
+
 interface CheckoutPageProps {
   cartItems: CartItem[];
   user: User | null;
@@ -22,6 +24,14 @@ const OrderConfirmation: React.FC<{ order: Order }> = ({ order }) => {
   const estimatedDeliveryDate = order.deliverySlot 
     ? `${order.deliverySlot.date}, between ${order.deliverySlot.time}`
     : 'in 3-5 business days';
+
+  // Handle image load errors with branded placeholder
+  const handleImageError = (event: React.SyntheticEvent<HTMLImageElement>) => {
+    const img = event.currentTarget;
+    if (img.src !== PLACEHOLDER_IMAGE) {
+      img.src = PLACEHOLDER_IMAGE;
+    }
+  };
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 flex justify-center">
@@ -41,7 +51,7 @@ const OrderConfirmation: React.FC<{ order: Order }> = ({ order }) => {
           <div className="space-y-4 max-h-60 overflow-y-auto text-left pr-2">
             {order.items.map(item => (
               <div key={`${item.product.id}-${item.selectedVariant.id}`} className="flex justify-between items-start gap-4">
-                <img src={item.product.images[0]} alt={item.product.name} className="w-16 h-16 object-cover rounded-md flex-shrink-0" />
+                <img src={item.product.images[0] || PLACEHOLDER_IMAGE} alt={item.product.name} className="w-16 h-16 object-cover rounded-md flex-shrink-0" onError={handleImageError} />
                 <div className="flex-grow">
                   <p className="font-bold text-sm leading-tight">{item.product.name}</p>
                   <p className="text-xs text-gray-500">{item.selectedVariant.name} x {item.quantity}</p>
@@ -172,6 +182,14 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ cartItems, user, onPlaceOrd
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
 
+  // Handle image load errors with branded placeholder
+  const handleImageError = (event: React.SyntheticEvent<HTMLImageElement>) => {
+    const img = event.currentTarget;
+    if (img.src !== PLACEHOLDER_IMAGE) {
+      img.src = PLACEHOLDER_IMAGE;
+    }
+  };
+
   const tax = useMemo(() => (subtotal - discount) * 0.08, [subtotal, discount]);
   const total = useMemo(() => subtotal + shippingCost + tax - discount, [subtotal, shippingCost, tax, discount]);
   
@@ -288,7 +306,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ cartItems, user, onPlaceOrd
               <div className="space-y-4 max-h-60 overflow-y-auto pr-2">
                 {cartItems.map(item => (
                   <div key={`${item.product.id}-${item.selectedVariant.id}`} className="flex justify-between items-start gap-4">
-                    <img src={item.product.images[0]} alt={item.product.name} className="w-16 h-16 object-cover rounded-md flex-shrink-0" />
+                    <img src={item.product.images[0] || PLACEHOLDER_IMAGE} alt={item.product.name} className="w-16 h-16 object-cover rounded-md flex-shrink-0" onError={handleImageError} />
                     <div className="flex-grow">
                       <p className="font-bold text-sm leading-tight">{item.product.name}</p>
                       <p className="text-xs text-gray-500">{item.selectedVariant.name} x {item.quantity}</p>

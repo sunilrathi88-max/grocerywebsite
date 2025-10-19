@@ -8,6 +8,8 @@ import { Product, CartItem } from '../types';
 import MiniCart from './MiniCart';
 import { ChevronDownIcon } from './icons/ChevronDownIcon';
 
+const PLACEHOLDER_IMAGE = 'https://via.placeholder.com/100x100/F8E3D9/333333?text=Tattva+Co.';
+
 interface HeaderProps {
     cartItems: CartItem[];
     wishlistItemCount: number;
@@ -48,6 +50,14 @@ const Header: React.FC<HeaderProps> = ({
   const [isAutocompleteOpen, setAutocompleteOpen] = useState(false);
   const [isMiniCartOpen, setMiniCartOpen] = useState(false);
   const [isProductsOpen, setProductsOpen] = useState(false);
+  
+  // Handle image load errors with branded placeholder
+  const handleImageError = (event: React.SyntheticEvent<HTMLImageElement>) => {
+    const img = event.currentTarget;
+    if (img.src !== PLACEHOLDER_IMAGE) {
+      img.src = PLACEHOLDER_IMAGE;
+    }
+  };
   const searchContainerRef = useRef<HTMLDivElement>(null);
   
   const cartItemCount = useMemo(() => cartItems.reduce((total, item) => total + item.quantity, 0), [cartItems]);
@@ -125,7 +135,7 @@ const Header: React.FC<HeaderProps> = ({
                     {autocompleteResults.map(product => (
                       <li key={product.id}>
                         <button onClick={() => { onSelectProduct(product); setAutocompleteOpen(false); onSearchChange(''); }} className="w-full text-left flex items-center gap-4 p-3 hover:bg-brand-secondary/30 transition-colors">
-                          <img src={product.images[0]} alt={product.name} className="w-10 h-10 object-cover rounded-md" />
+                          <img src={product.images[0] || PLACEHOLDER_IMAGE} alt={product.name} className="w-10 h-10 object-cover rounded-md" onError={handleImageError} />
                           <span>{product.name}</span>
                         </button>
                       </li>
