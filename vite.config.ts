@@ -18,6 +18,22 @@ export default defineConfig(({ mode }) => {
         alias: {
           '@': path.resolve(__dirname, '.'),
         }
-      }
+      },
+      // Reduce memory pressure for Windows by limiting worker threads and
+      // tuning esbuild to smaller chunks during dev.
+      esbuild: {
+        target: 'es2020',
+        legalComments: 'none',
+      },
+      worker: {
+        format: 'es',
+      },
+      optimizeDeps: {
+        esbuildOptions: {
+          target: 'es2020',
+        },
+        // Disable auto pre-bundling if it's causing spikes
+        force: false,
+      },
     };
 });
