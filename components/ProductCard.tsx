@@ -23,6 +23,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onToggl
   console.log('ProductCard props:', product);
   console.log('Product images array:', product.images);
   
+  const [imageError, setImageError] = React.useState(false);
+  
   const averageRating = product.reviews.length > 0
     ? product.reviews.reduce((acc, review) => acc + review.rating, 0) / product.reviews.length
     : null;
@@ -37,6 +39,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onToggl
   const hasMultiplePrices = product.variants.length > 1;
 
   const displayPrice = defaultVariant.salePrice ?? defaultVariant.price;
+  
+  // Use a data URI fallback that cannot be blocked
+  const fallbackImage = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgZmlsbD0iI0Y4RTNEOSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyNCIgZmlsbD0iIzMzMzMzMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSI+VGF0dHZhIENvLjwvdGV4dD48L3N2Zz4=';
 
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden group transform hover:-translate-y-2 transition-all duration-300 border border-transparent hover:border-brand-primary/50 hover:shadow-xl flex flex-col">
@@ -44,9 +49,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onToggl
         <div className="h-64 w-full bg-gray-200 relative overflow-hidden">
           <img 
             className="h-full w-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-110" 
-            src={product.images?.[0] || 'https://placehold.co/400x400/F8E3D9/333333?text=Tattva+Co.'}
+            src={imageError ? fallbackImage : (product.images?.[0] || fallbackImage)}
             alt={product.name}
             loading="lazy"
+            onError={() => setImageError(true)}
           />
           <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-opacity duration-300 flex items-center justify-center space-x-4 opacity-0 group-hover:opacity-100">
              <button

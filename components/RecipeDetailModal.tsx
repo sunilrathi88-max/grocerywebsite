@@ -10,6 +10,9 @@ interface RecipeDetailModalProps {
 }
 
 const RecipeDetailModal: React.FC<RecipeDetailModalProps> = ({ recipe, onClose }) => {
+  const [imageError, setImageError] = React.useState(false);
+  const fallbackImage = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNjAwIiBoZWlnaHQ9IjQwMCIgZmlsbD0iI0Y4RTNEOSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyNCIgZmlsbD0iIzMzMzMzMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSI+VGF0dHZhIENvLjwvdGV4dD48L3N2Zz4=';
+  
   return (
     <div
       className="fixed inset-0 bg-black bg-opacity-60 z-[100] flex justify-center items-center p-4 animate-fade-in"
@@ -29,7 +32,12 @@ const RecipeDetailModal: React.FC<RecipeDetailModalProps> = ({ recipe, onClose }
         </div>
 
         <div className="overflow-y-auto">
-          <img src={recipe.image} alt={recipe.title} className="w-full h-64 object-cover" />
+          <img 
+            src={imageError ? fallbackImage : recipe.image} 
+            alt={recipe.title} 
+            className="w-full h-64 object-cover"
+            onError={() => setImageError(true)}
+          />
           <div className="p-6">
             <div className="flex items-center justify-around text-center border-b pb-4 mb-6 text-sm text-gray-600">
                 <div className="flex flex-col items-center gap-1">
@@ -78,13 +86,5 @@ const RecipeDetailModal: React.FC<RecipeDetailModalProps> = ({ recipe, onClose }
     </div>
   );
 };
-
-// A clock icon for the recipe modal
-const ClockIcon: React.FC<{className?: string}> = ({ className }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-    </svg>
-);
-
 
 export default RecipeDetailModal;
