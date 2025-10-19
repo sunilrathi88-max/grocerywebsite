@@ -6,8 +6,8 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Himalayan Saffron',
     description: 'The finest, hand-picked saffron from the valleys of Kashmir. Known for its deep red color, strong aroma, and rich flavor. Perfect for biryanis, desserts, and milk-based sweets.',
     images: [
-      'https://images.unsplash.com/photo-1599550931215-c0529d3c509d?q=80&w=800',
-      'https://images.unsplash.com/photo-1626202157971-e9703f89e5a2?q=80&w=800',
+  'https://via.placeholder.com/400x400/F8E3D9/333333?text=Tattva+Co.',
+  'https://via.placeholder.com/400x400/F8E3D9/333333?text=Tattva+Co.',
     ],
     videos: ['https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4'],
     category: 'Spices',
@@ -29,8 +29,8 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Malabar Black Pepper',
     description: 'Bold and pungent Tellicherry peppercorns from the Malabar Coast of Kerala. Sun-dried and hand-sorted to ensure only the best make it to your table.',
     images: [
-      'https://images.unsplash.com/photo-1529129759391-76a0c45b7f32?q=80&w=800',
-      'https://images.unsplash.com/photo-1615385544228-309d592333d9?q=80&w=800',
+  'https://via.placeholder.com/400x400/F8E3D9/333333?text=Tattva+Co.',
+  'https://via.placeholder.com/400x400/F8E3D9/333333?text=Tattva+Co.',
     ],
     category: 'Spices',
     variants: [{ id: 201, name: '250g', price: 8.99, stock: 30 }],
@@ -43,8 +43,8 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Kashmiri Almonds',
     description: 'Sweet, nutrient-rich Mamra almonds from the Kashmir valley. They are smaller than their Californian counterparts but packed with more flavor and natural oils.',
     images: [
-      'https://images.unsplash.com/photo-1607564172421-d7a8b3e827e8?q=80&w=800',
-      'https://images.unsplash.com/photo-1610422359868-e8a4a553457a?q=80&w=800',
+  'https://via.placeholder.com/400x400/F8E3D9/333333?text=Tattva+Co.',
+  'https://via.placeholder.com/400x400/F8E3D9/333333?text=Tattva+Co.',
     ],
     category: 'Nuts',
     variants: [
@@ -61,8 +61,8 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Organic Turmeric Powder',
     description: 'Vibrant, earthy, and potent turmeric powder with high curcumin content, sourced from organic farms in Andhra Pradesh. A staple for curries and a healthy boost for lattes.',
     images: [
-      'https://images.unsplash.com/photo-1598514983934-22b7d5a528cb?q=80&w=800',
-      'https://images.unsplash.com/photo-1587338339943-5243179263a2?q=80&w=800',
+  'https://via.placeholder.com/400x400/F8E3D9/333333?text=Tattva+Co.',
+  'https://via.placeholder.com/400x400/F8E3D9/333333?text=Tattva+Co.',
     ],
     category: 'Spices',
     variants: [{ id: 401, name: '200g', price: 6.99, stock: 5 }],
@@ -79,8 +79,8 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Darjeeling First Flush Tea',
     description: 'The "Champagne of Teas" from the first harvest of the season in Darjeeling. This tea has a light, floral aroma with a hint of astringency and a muscatel finish.',
     images: [
-      'https://images.unsplash.com/photo-1576092762262-d4a465b75b6a?q=80&w=800',
-      'https://images.unsplash.com/photo-1556742059-4f9502b761a4?q=80&w=800',
+  'https://via.placeholder.com/400x400/F8E3D9/333333?text=Tattva+Co.',
+  'https://via.placeholder.com/400x400/F8E3D9/333333?text=Tattva+Co.',
     ],
     category: 'Beverages',
     variants: [{ id: 501, name: '100g', price: 19.99, salePrice: 17.50, stock: 25 }],
@@ -93,8 +93,8 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Gourmet Garam Masala',
     description: 'Our signature blend of 12 aromatic spices, including cinnamon, cardamom, and cloves, roasted and ground in small batches for the perfect, balanced flavor profile.',
     images: [
-      'https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?q=80&w=800',
-      'https://images.unsplash.com/photo-1600791200424-9b5f5f05b63d?q=80&w=800',
+  'https://via.placeholder.com/400x400/F8E3D9/333333?text=Tattva+Co.',
+  'https://via.placeholder.com/400x400/F8E3D9/333333?text=Tattva+Co.',
     ],
     category: 'Spices',
     variants: [{ id: 601, name: '100g', price: 9.50, stock: 40 }],
@@ -107,8 +107,8 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Organic Dried Apricots',
     description: 'Sun-dried, unsulphured apricots from Ladakh. These are naturally sweet, chewy, and packed with fiber and vitamins. A perfect healthy snack.',
     images: [
-      'https://images.unsplash.com/photo-1601000632839-4977e7614f7b?q=80&w=800',
-      'https://images.unsplash.com/photo-1592396302792-386968011663?q=80&w=800',
+  'https://via.placeholder.com/400x400/F8E3D9/333333?text=Tattva+Co.',
+  'https://via.placeholder.com/400x400/F8E3D9/333333?text=Tattva+Co.',
     ],
     category: 'Dry Fruits',
     variants: [{ id: 701, name: '400g', price: 14.00, stock: 18 }],
@@ -121,8 +121,8 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Goan Cashew Nuts',
     description: 'Large, creamy, and crunchy W240 grade cashew nuts from the sunny orchards of Goa. Perfectly roasted and lightly salted to bring out their natural sweetness.',
     images: [
-      'https://images.unsplash.com/photo-1615485544462-84951b32e85a?q=80&w=800',
-      'https://images.unsplash.com/photo-1594273513642-e029c17e2ff1?q=80&w=800',
+  'https://via.placeholder.com/400x400/F8E3D9/333333?text=Tattva+Co.',
+  'https://via.placeholder.com/400x400/F8E3D9/333333?text=Tattva+Co.',
     ],
     category: 'Nuts',
     variants: [
@@ -191,7 +191,7 @@ export const MOCK_POSTS: BlogPost[] = [
     title: 'The Secret to Perfect Biryani: It\'s All in the Saffron',
     author: 'Anika Sharma',
     date: 'July 15, 2024',
-    image: 'https://images.unsplash.com/photo-1589302168068-964664d93dc0?q=80&w=800&auto=format&fit=crop',
+  image: 'https://via.placeholder.com/800x450/F8E3D9/333333?text=Tattva+Co.',
     excerpt: 'Unlock the secrets to a truly aromatic and flavorful biryani. We dive deep into why high-quality saffron, like our Himalayan variety, is the game-changer you need in your kitchen.',
     content: `
       <p>Biryani is more than just a dish; it's a celebration. And at the heart of every great biryani is the quality of its ingredients. While the blend of spices is crucial, the one element that elevates it from good to unforgettable is saffron.</p>
@@ -213,7 +213,7 @@ export const MOCK_POSTS: BlogPost[] = [
     title: 'Beyond the Grind: The Power of Malabar Pepper',
     author: 'Rohan Gupta',
     date: 'June 28, 2024',
-    image: 'https://images.unsplash.com/photo-1608611149999-cec7d4c2b8b1?q=80&w=800&auto=format&fit=crop',
+  image: 'https://via.placeholder.com/800x450/F8E3D9/333333?text=Tattva+Co.',
     excerpt: 'Think all pepper is the same? Think again. We explore the bold, complex flavors of Tellicherry peppercorns from the Malabar Coast and why they deserve a prime spot in your spice rack.',
     content: `
       <p>Pepper is one of the most common spices in the world, but it's often overlooked. We're here to change that. The <strong>Tattva Co. Malabar Black Pepper</strong> features Tellicherry peppercorns, the largest and most aromatic of all peppercorns.</p>

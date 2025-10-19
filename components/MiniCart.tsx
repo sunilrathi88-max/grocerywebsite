@@ -25,6 +25,7 @@ const MiniCart: React.FC<MiniCartProps> = ({ items, subtotal }) => {
                   src={item.product.images[0]} 
                   alt={item.product.name}
                   className="w-12 h-12 object-cover rounded-md flex-shrink-0"
+                  onError={(e) => { const t = e.currentTarget; t.onerror = null; t.src = 'https://via.placeholder.com/48x48/F8E3D9/333333?text=Tattva+Co.'; }}
                 />
                 <div className="flex-grow min-w-0">
                   <p className="text-sm font-bold truncate">{item.product.name}</p>

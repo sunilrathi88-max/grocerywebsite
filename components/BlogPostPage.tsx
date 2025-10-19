@@ -27,7 +27,7 @@ const BlogPostPage: React.FC<BlogPostPageProps> = ({ post }) => {
           <span>&bull;</span>
           <span>{post.date}</span>
         </div>
-        <img src={post.image} alt={post.title} className="w-full h-auto max-h-[500px] object-cover rounded-lg shadow-lg mb-8" />
+  <img src={post.image} alt={post.title} className="w-full h-auto max-h-[500px] object-cover rounded-lg shadow-lg mb-8" onError={(e) => { const t = e.currentTarget; t.onerror = null; t.src = 'https://via.placeholder.com/800x450/F8E3D9/333333?text=Tattva+Co.'; }} />
         <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: post.content }} />
         <div className="mt-8 pt-6 border-t">
           <h4 className="font-bold text-sm text-gray-600">Tags:</h4>

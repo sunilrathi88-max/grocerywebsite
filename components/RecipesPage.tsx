@@ -17,7 +17,7 @@ const MOCK_RECIPES: Recipe[] = [
     { 
         id: 1, 
         title: 'Classic Chicken Biryani', 
-        image: 'https://images.unsplash.com/photo-1631515243349-e0cb75fb8da7?q=80&w=600&h=400&auto=format&fit=crop', 
+        image: 'https://via.placeholder.com/600x400/F8E3D9/333333?text=Tattva+Co.', 
         prepTime: '20 mins', cookTime: '40 mins', serves: 4, 
         description: 'Aromatic and flavorful one-pot meal made with saffron-infused rice, tender chicken, and a blend of Tattva Co. spices.',
         ingredients: ['500g Chicken', '2 cups Basmati Rice', '1 pinch Tattva Co. Himalayan Saffron', '2 tbsp Tattva Co. Garam Masala', '1 cup Yogurt', '2 Onions, sliced', 'Ginger-garlic paste'],
@@ -26,7 +26,7 @@ const MOCK_RECIPES: Recipe[] = [
     { 
         id: 2, 
         title: 'Spicy Malabar Pepper Prawns', 
-        image: 'https://images.unsplash.com/photo-1598494822832-7cb319d9b8e2?q=80&w=600&h=400&auto=format&fit=crop', 
+        image: 'https://via.placeholder.com/600x400/F8E3D9/333333?text=Tattva+Co.', 
         prepTime: '15 mins', cookTime: '10 mins', serves: 2, 
         description: 'A quick and fiery appetizer featuring fresh prawns coated in freshly ground Malabar black pepper and other spices.',
         ingredients: ['250g Prawns, deveined', '2 tbsp Tattva Co. Malabar Black Pepper, coarsely ground', '1 tsp Tattva Co. Turmeric Powder', 'Curry leaves', 'Coconut oil'],
@@ -35,7 +35,7 @@ const MOCK_RECIPES: Recipe[] = [
     { 
         id: 3, 
         title: 'Creamy Turmeric Latte', 
-        image: 'https://images.unsplash.com/photo-1566435942040-566b613e1a67?q=80&w=600&h=400&auto=format&fit=crop', 
+        image: 'https://via.placeholder.com/600x400/F8E3D9/333333?text=Tattva+Co.', 
         prepTime: '5 mins', cookTime: '5 mins', serves: 1, 
         description: 'A comforting and healthy beverage made with our organic turmeric powder, milk, and a hint of sweetness.',
         ingredients: ['1 cup Milk (of choice)', '1 tsp Tattva Co. Organic Turmeric Powder', '1/4 tsp Cinnamon powder', 'Pinch of black pepper', '1 tsp Honey or Maple Syrup'],
@@ -44,7 +44,7 @@ const MOCK_RECIPES: Recipe[] = [
     { 
         id: 4, 
         title: 'Garam Masala Spiced Nuts', 
-        image: 'https://images.unsplash.com/photo-1583624320433-40e9d6519548?q=80&w=600&h=400&auto=format&fit=crop', 
+        image: 'https://via.placeholder.com/600x400/F8E3D9/333333?text=Tattva+Co.', 
         prepTime: '5 mins', cookTime: '15 mins', serves: 6, 
         description: 'An addictive snack of mixed nuts roasted with Tattva Co. Garam Masala, a little salt, and a touch of maple syrup.',
         ingredients: ['2 cups Mixed Nuts (Tattva Co. Almonds, Cashews)', '1 tbsp Coconut oil, melted', '1.5 tsp Tattva Co. Garam Masala', '1/2 tsp Salt', '1 tbsp Maple syrup'],
@@ -67,7 +67,7 @@ const RecipesPage: React.FC<RecipesPageProps> = ({ onSelectRecipe }) => {
                 {MOCK_RECIPES.map(recipe => (
                     <div key={recipe.id} className="bg-white rounded-lg shadow-md overflow-hidden group transform hover:-translate-y-2 transition-all duration-300">
                         <div className="relative h-56">
-                            <img src={recipe.image} alt={recipe.title} className="w-full h-full object-cover" />
+                            <img src={recipe.image} alt={recipe.title} className="w-full h-full object-cover" onError={(e) => { const t = e.currentTarget; t.onerror = null; t.src = 'https://via.placeholder.com/600x224/F8E3D9/333333?text=Tattva+Co.'; }} />
                         </div>
                         <div className="p-6 flex flex-col">
                             <h3 className="text-xl font-serif font-bold text-brand-dark">{recipe.title}</h3>

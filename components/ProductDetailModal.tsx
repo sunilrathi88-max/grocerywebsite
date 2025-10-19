@@ -34,7 +34,7 @@ interface ProductDetailModalProps {
   onNotifyMe: (productName: string) => void;
 }
 
-const PLACEHOLDER_THUMB = 'https://via.placeholder.com/100x100.png?text=Tattva+Co.';
+const PLACEHOLDER_THUMB = 'https://via.placeholder.com/100x100/F8E3D9/333333?text=Tattva+Co.';
 
 // Mock data for "Frequently Bought Together"
 const FBT_MOCK: { [key: number]: number[] } = {
@@ -193,6 +193,7 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product, allPro
                     className="w-full h-auto object-cover aspect-square rounded-lg shadow-md transition-transform duration-300 ease-in-out group-hover:scale-150"
                     style={zoomStyle}
                     loading="lazy"
+                    onError={(e) => { const target = e.currentTarget; target.onerror = null; target.src = 'https://via.placeholder.com/800x800/F8E3D9/333333?text=Tattva+Co.'; }}
                   />
                 ) : activeMedia?.type === 'video' ? (
                   <video
@@ -229,7 +230,7 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product, allPro
                             className={`relative w-16 h-16 rounded-md overflow-hidden border-2 transition-colors ${activeIndex === idx ? 'border-brand-primary' : 'border-transparent hover:border-brand-primary/50'}`}
                             aria-label={`View ${item.type} ${idx + 1}`}
                         >
-                            <img src={item.thumb} alt={`${product.name} thumbnail ${idx+1}`} className="w-full h-full object-cover"/>
+                            <img src={item.thumb} alt={`${product.name} thumbnail ${idx+1}`} className="w-full h-full object-cover" onError={(e) => { const t = e.currentTarget; t.onerror = null; t.src = PLACEHOLDER_THUMB; }}/>
                             {item.type === 'video' && (<div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center"><PlayIcon className="h-8 w-8 text-white drop-shadow-lg" /></div>)}
                         </button>
                     ))}
@@ -356,13 +357,13 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product, allPro
               <h3 className="text-xl font-serif font-bold text-brand-dark mb-6">Frequently Bought Together</h3>
               <div className="flex flex-col items-center gap-4">
                 <div className="flex items-center justify-center flex-wrap gap-4">
-                  <div className="text-center w-24"><img src={product.images[0]} alt={product.name} className="w-24 h-24 object-cover rounded-lg shadow-md"/><p className="text-xs mt-1 font-bold truncate">{product.name}</p></div>
+                  <div className="text-center w-24"><img src={product.images[0]} alt={product.name} className="w-24 h-24 object-cover rounded-lg shadow-md" onError={(e) => { const t = e.currentTarget; t.onerror = null; t.src = 'https://via.placeholder.com/96x96/F8E3D9/333333?text=Tattva+Co.'; }}/><p className="text-xs mt-1 font-bold truncate">{product.name}</p></div>
                   {frequentlyBoughtTogetherProducts.map(p => (
                     <div key={p.id} className="flex items-center gap-4">
                       <span className="text-2xl font-light text-gray-400">+</span>
                       <div className="flex items-center gap-2">
                          <input type="checkbox" id={`fbt-${p.id}`} checked={fbtSelection.includes(p.id)} onChange={() => handleToggleFbt(p.id)} className="h-4 w-4 text-brand-primary border-gray-300 rounded focus:ring-brand-primary"/>
-                         <label htmlFor={`fbt-${p.id}`} className="text-center w-24 cursor-pointer"><img src={p.images[0]} alt={p.name} className="w-24 h-24 object-cover rounded-lg shadow-md"/><p className="text-xs mt-1 font-bold truncate">{p.name}</p></label>
+                         <label htmlFor={`fbt-${p.id}`} className="text-center w-24 cursor-pointer"><img src={p.images[0]} alt={p.name} className="w-24 h-24 object-cover rounded-lg shadow-md" onError={(e) => { const t = e.currentTarget; t.onerror = null; t.src = 'https://via.placeholder.com/96x96/F8E3D9/333333?text=Tattva+Co.'; }}/><p className="text-xs mt-1 font-bold truncate">{p.name}</p></label>
                       </div>
                     </div>
                   ))}

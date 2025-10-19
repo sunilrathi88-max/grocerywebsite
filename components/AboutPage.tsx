@@ -20,9 +20,13 @@ const AboutPage: React.FC = () => {
           </div>
           <div>
             <img 
-              src="https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1200&auto=format&fit=crop" 
+              src="https://via.placeholder.com/1200x800/F8E3D9/333333?text=Tattva+Co." 
               alt="A vibrant Indian spice market"
               className="rounded-lg shadow-xl"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.src = 'https://via.placeholder.com/1200x800/F8E3D9/333333?text=Tattva+Co.';
+              }}
             />
           </div>
         </div>

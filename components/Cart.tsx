@@ -87,6 +87,7 @@ const Cart: React.FC<CartProps> = ({ items, onUpdateQuantity, onClose, isLoggedI
                       alt={item.product.name} 
                       className="w-16 h-16 object-cover rounded-md bg-gray-200" 
                       loading="lazy"
+                      onError={(e) => { const t = e.currentTarget; t.onerror = null; t.src = 'https://via.placeholder.com/64x64/F8E3D9/333333?text=Tattva+Co.'; }}
                     />
                     <div>
                       <p className="font-bold text-brand-dark leading-tight">{item.product.name}</p>

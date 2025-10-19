@@ -41,7 +41,7 @@ const OrderConfirmation: React.FC<{ order: Order }> = ({ order }) => {
           <div className="space-y-4 max-h-60 overflow-y-auto text-left pr-2">
             {order.items.map(item => (
               <div key={`${item.product.id}-${item.selectedVariant.id}`} className="flex justify-between items-start gap-4">
-                <img src={item.product.images[0]} alt={item.product.name} className="w-16 h-16 object-cover rounded-md flex-shrink-0" />
+                <img src={item.product.images[0]} alt={item.product.name} className="w-16 h-16 object-cover rounded-md flex-shrink-0" onError={(e) => { const t = e.currentTarget; t.onerror = null; t.src = 'https://via.placeholder.com/64x64/F8E3D9/333333?text=Tattva+Co.'; }} />
                 <div className="flex-grow">
                   <p className="font-bold text-sm leading-tight">{item.product.name}</p>
                   <p className="text-xs text-gray-500">{item.selectedVariant.name} x {item.quantity}</p>
@@ -288,7 +288,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ cartItems, user, onPlaceOrd
               <div className="space-y-4 max-h-60 overflow-y-auto pr-2">
                 {cartItems.map(item => (
                   <div key={`${item.product.id}-${item.selectedVariant.id}`} className="flex justify-between items-start gap-4">
-                    <img src={item.product.images[0]} alt={item.product.name} className="w-16 h-16 object-cover rounded-md flex-shrink-0" />
+                    <img src={item.product.images[0]} alt={item.product.name} className="w-16 h-16 object-cover rounded-md flex-shrink-0" onError={(e) => { const t = e.currentTarget; t.onerror = null; t.src = 'https://via.placeholder.com/64x64/F8E3D9/333333?text=Tattva+Co.'; }} />
                     <div className="flex-grow">
                       <p className="font-bold text-sm leading-tight">{item.product.name}</p>
                       <p className="text-xs text-gray-500">{item.selectedVariant.name} x {item.quantity}</p>
