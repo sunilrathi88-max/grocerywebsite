@@ -1,3 +1,4 @@
+import { PLACEHOLDER_IMAGES } from '../constants';
 
 import React from 'react';
 
@@ -20,9 +21,13 @@ const AboutPage: React.FC = () => {
           </div>
           <div>
             <img 
-              src="https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1200&auto=format&fit=crop" 
+              src={PLACEHOLDER_IMAGES.ABOUT}
               alt="A vibrant Indian spice market"
               className="rounded-lg shadow-xl"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.src = PLACEHOLDER_IMAGES.ABOUT;
+              }}
             />
           </div>
         </div>
