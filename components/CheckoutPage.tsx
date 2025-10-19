@@ -23,6 +23,13 @@ const OrderConfirmation: React.FC<{ order: Order }> = ({ order }) => {
     ? `${order.deliverySlot.date}, between ${order.deliverySlot.time}`
     : 'in 3-5 business days';
 
+  const handleImageError = (event: React.SyntheticEvent<HTMLImageElement>) => {
+    const img = event.currentTarget;
+    if (!img.src.startsWith('data:image/svg+xml')) {
+      img.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiBmaWxsPSIjRjhFM0Q5Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMCIgZmlsbD0iIzMzMzMzMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPlRhdHR2YSBDby48L3RleHQ+PC9zdmc+';
+    }
+  };
+
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 flex justify-center">
       <div className="max-w-2xl w-full bg-white p-8 rounded-lg shadow-lg text-center animate-fade-in">
@@ -41,7 +48,7 @@ const OrderConfirmation: React.FC<{ order: Order }> = ({ order }) => {
           <div className="space-y-4 max-h-60 overflow-y-auto text-left pr-2">
             {order.items.map(item => (
               <div key={`${item.product.id}-${item.selectedVariant.id}`} className="flex justify-between items-start gap-4">
-                <img src={item.product.images[0]} alt={item.product.name} className="w-16 h-16 object-cover rounded-md flex-shrink-0" />
+                <img src={item.product.images[0]} alt={item.product.name} className="w-16 h-16 object-cover rounded-md flex-shrink-0" onError={handleImageError} />
                 <div className="flex-grow">
                   <p className="font-bold text-sm leading-tight">{item.product.name}</p>
                   <p className="text-xs text-gray-500">{item.selectedVariant.name} x {item.quantity}</p>
@@ -172,6 +179,13 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ cartItems, user, onPlaceOrd
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
 
+  const handleImageError = (event: React.SyntheticEvent<HTMLImageElement>) => {
+    const img = event.currentTarget;
+    if (!img.src.startsWith('data:image/svg+xml')) {
+      img.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiBmaWxsPSIjRjhFM0Q5Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMCIgZmlsbD0iIzMzMzMzMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPlRhdHR2YSBDby48L3RleHQ+PC9zdmc+';
+    }
+  };
+
   const tax = useMemo(() => (subtotal - discount) * 0.08, [subtotal, discount]);
   const total = useMemo(() => subtotal + shippingCost + tax - discount, [subtotal, shippingCost, tax, discount]);
   
@@ -288,7 +302,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ cartItems, user, onPlaceOrd
               <div className="space-y-4 max-h-60 overflow-y-auto pr-2">
                 {cartItems.map(item => (
                   <div key={`${item.product.id}-${item.selectedVariant.id}`} className="flex justify-between items-start gap-4">
-                    <img src={item.product.images[0]} alt={item.product.name} className="w-16 h-16 object-cover rounded-md flex-shrink-0" />
+                    <img src={item.product.images[0]} alt={item.product.name} className="w-16 h-16 object-cover rounded-md flex-shrink-0" onError={handleImageError} />
                     <div className="flex-grow">
                       <p className="font-bold text-sm leading-tight">{item.product.name}</p>
                       <p className="text-xs text-gray-500">{item.selectedVariant.name} x {item.quantity}</p>

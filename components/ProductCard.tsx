@@ -23,6 +23,16 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onToggl
   console.log('ProductCard props:', product);
   console.log('Product images array:', product.images);
   
+  // Use inline SVG as fallback to avoid external URL blocking issues
+  const placeholderImage = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgZmlsbD0iI0Y4RTNEOSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjQiIGZpbGw9IiMzMzMzMzMiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5UYXR0dmEgQ28uPC90ZXh0Pjwvc3ZnPg==';
+  // Guarantee a branded fallback if remote assets fail to load.
+  const handleImageError = (event: React.SyntheticEvent<HTMLImageElement>) => {
+    const img = event.currentTarget;
+    if (!img.src.startsWith('data:image/svg+xml')) {
+      img.src = placeholderImage;
+    }
+  };
+
   const averageRating = product.reviews.length > 0
     ? product.reviews.reduce((acc, review) => acc + review.rating, 0) / product.reviews.length
     : null;
@@ -44,9 +54,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onToggl
         <div className="h-64 w-full bg-gray-200 relative overflow-hidden">
           <img 
             className="h-full w-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-110" 
-            src={product.images?.[0] || 'https://placehold.co/400x400/F8E3D9/333333?text=Tattva+Co.'}
+            src={product.images?.[0] || placeholderImage}
             alt={product.name}
             loading="lazy"
+            onError={handleImageError}
           />
           <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-opacity duration-300 flex items-center justify-center space-x-4 opacity-0 group-hover:opacity-100">
              <button

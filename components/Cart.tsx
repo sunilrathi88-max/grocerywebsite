@@ -31,6 +31,13 @@ const Cart: React.FC<CartProps> = ({ items, onUpdateQuantity, onClose, isLoggedI
   const tax = (subtotal - discount) * 0.08;
   const total = subtotal - discount + shippingCost + tax;
 
+  const handleImageError = (event: React.SyntheticEvent<HTMLImageElement>) => {
+    const img = event.currentTarget;
+    if (!img.src.startsWith('data:image/svg+xml')) {
+      img.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiBmaWxsPSIjRjhFM0Q5Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMCIgZmlsbD0iIzMzMzMzMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPlRhdHR2YSBDby48L3RleHQ+PC9zdmc+';
+    }
+  };
+
   const canCheckout = items.length > 0;
 
   const handleQuantityChange = (item: CartItem, newQuantity: number) => {
@@ -87,6 +94,7 @@ const Cart: React.FC<CartProps> = ({ items, onUpdateQuantity, onClose, isLoggedI
                       alt={item.product.name} 
                       className="w-16 h-16 object-cover rounded-md bg-gray-200" 
                       loading="lazy"
+                      onError={handleImageError}
                     />
                     <div>
                       <p className="font-bold text-brand-dark leading-tight">{item.product.name}</p>

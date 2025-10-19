@@ -8,6 +8,13 @@ interface MiniCartProps {
 }
 
 const MiniCart: React.FC<MiniCartProps> = ({ items, subtotal }) => {
+  const handleImageError = (event: React.SyntheticEvent<HTMLImageElement>) => {
+    const img = event.currentTarget;
+    if (!img.src.startsWith('data:image/svg+xml')) {
+      img.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiBmaWxsPSIjRjhFM0Q5Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSI4IiBmaWxsPSIjMzMzMzMzIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+VGF0dHZhIENvLjwvdGV4dD48L3N2Zz4=';
+    }
+  };
+
   return (
     <div className="absolute top-full right-0 mt-2 w-80 bg-white rounded-lg shadow-2xl border z-50 p-4">
       {items.length === 0 ? (
@@ -25,6 +32,7 @@ const MiniCart: React.FC<MiniCartProps> = ({ items, subtotal }) => {
                   src={item.product.images[0]} 
                   alt={item.product.name}
                   className="w-12 h-12 object-cover rounded-md flex-shrink-0"
+                  onError={handleImageError}
                 />
                 <div className="flex-grow min-w-0">
                   <p className="text-sm font-bold truncate">{item.product.name}</p>

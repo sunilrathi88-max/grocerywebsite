@@ -14,6 +14,13 @@ interface WishlistProps {
 }
 
 const Wishlist: React.FC<WishlistProps> = ({ items, onToggleWishlist, onAddToCart, onClose }) => {
+  const handleImageError = (event: React.SyntheticEvent<HTMLImageElement>) => {
+    const img = event.currentTarget;
+    if (!img.src.startsWith('data:image/svg+xml')) {
+      img.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjgwIiBoZWlnaHQ9IjgwIiBmaWxsPSIjRjhFM0Q5Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgZmlsbD0iIzMzMzMzMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPlRhdHR2YSBDby48L3RleHQ+PC9zdmc+';
+    }
+  };
+
   if (items.length === 0) {
     return (
       <div className="flex-grow flex flex-col items-center justify-center text-center">
@@ -40,7 +47,8 @@ const Wishlist: React.FC<WishlistProps> = ({ items, onToggleWishlist, onAddToCar
                 src={item.images[0]} 
                 alt={item.name} 
                 className="w-20 h-20 object-cover rounded-md bg-gray-200" 
-                loading="lazy" 
+                loading="lazy"
+                onError={handleImageError}
                 />
                 <div className="flex-grow">
                 <p className="font-bold text-brand-dark text-lg">{item.name}</p>
