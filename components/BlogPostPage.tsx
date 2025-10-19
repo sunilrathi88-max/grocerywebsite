@@ -7,6 +7,9 @@ interface BlogPostPageProps {
 }
 
 const BlogPostPage: React.FC<BlogPostPageProps> = ({ post }) => {
+  const [imageError, setImageError] = React.useState(false);
+  const fallbackImage = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjUwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iODAwIiBoZWlnaHQ9IjUwMCIgZmlsbD0iI0Y4RTNEOSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyNCIgZmlsbD0iIzMzMzMzMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSI+VGF0dHZhIENvLjwvdGV4dD48L3N2Zz4=';
+  
   if (!post) {
     return <div className="text-center py-20"><h2>Post not found</h2></div>;
   }
@@ -27,7 +30,12 @@ const BlogPostPage: React.FC<BlogPostPageProps> = ({ post }) => {
           <span>&bull;</span>
           <span>{post.date}</span>
         </div>
-        <img src={post.image} alt={post.title} className="w-full h-auto max-h-[500px] object-cover rounded-lg shadow-lg mb-8" />
+        <img 
+          src={imageError ? fallbackImage : post.image} 
+          alt={post.title} 
+          className="w-full h-auto max-h-[500px] object-cover rounded-lg shadow-lg mb-8"
+          onError={() => setImageError(true)}
+        />
         <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: post.content }} />
         <div className="mt-8 pt-6 border-t">
           <h4 className="font-bold text-sm text-gray-600">Tags:</h4>

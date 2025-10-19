@@ -57,6 +57,9 @@ interface RecipesPageProps {
 }
 
 const RecipesPage: React.FC<RecipesPageProps> = ({ onSelectRecipe }) => {
+    const [imageErrors, setImageErrors] = React.useState<Set<string>>(new Set());
+    const fallbackImage = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNjAwIiBoZWlnaHQ9IjQwMCIgZmlsbD0iI0Y4RTNEOSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyNCIgZmlsbD0iIzMzMzMzMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSI+VGF0dHZhIENvLjwvdGV4dD48L3N2Zz4=';
+    
     return (
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div className="text-center mb-12">
@@ -67,7 +70,12 @@ const RecipesPage: React.FC<RecipesPageProps> = ({ onSelectRecipe }) => {
                 {MOCK_RECIPES.map(recipe => (
                     <div key={recipe.id} className="bg-white rounded-lg shadow-md overflow-hidden group transform hover:-translate-y-2 transition-all duration-300">
                         <div className="relative h-56">
-                            <img src={recipe.image} alt={recipe.title} className="w-full h-full object-cover" />
+                            <img 
+                              src={imageErrors.has(recipe.image) ? fallbackImage : recipe.image} 
+                              alt={recipe.title} 
+                              className="w-full h-full object-cover"
+                              onError={() => setImageErrors(prev => new Set(prev).add(recipe.image))}
+                            />
                         </div>
                         <div className="p-6 flex flex-col">
                             <h3 className="text-xl font-serif font-bold text-brand-dark">{recipe.title}</h3>

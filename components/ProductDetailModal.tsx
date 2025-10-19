@@ -48,6 +48,7 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product, allPro
   const [activeTab, setActiveTab] = useState<'description' | 'reviews' | 'qna'>('description');
   const [viewers, setViewers] = useState(Math.floor(Math.random() * 10) + 2);
   const [isStickyButtonVisible, setStickyButtonVisible] = useState(false);
+  const [imageErrors, setImageErrors] = useState<Set<string>>(new Set());
 
   const mainButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -78,11 +79,16 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product, allPro
   }, [mainButtonRef]);
 
   const media = useMemo(() => {
-    const images = product.images.map(url => ({ type: 'image' as const, url, thumb: url }));
-    const fallbackThumb = product.images[0] || PLACEHOLDER_THUMB;
+    const fallbackImage = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgZmlsbD0iI0Y4RTNEOSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyNCIgZmlsbD0iIzMzMzMzMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSI+VGF0dHZhIENvLjwvdGV4dD48L3N2Zz4=';
+    const images = product.images.map(url => ({ 
+      type: 'image' as const, 
+      url: imageErrors.has(url) ? fallbackImage : url, 
+      thumb: imageErrors.has(url) ? fallbackImage : url 
+    }));
+    const fallbackThumb = (product.images[0] && !imageErrors.has(product.images[0])) ? product.images[0] : fallbackImage;
     const videos = (product.videos || []).map(url => ({ type: 'video' as const, url, thumb: fallbackThumb }));
     return [...images, ...videos];
-  }, [product.images, product.videos]);
+  }, [product.images, product.videos, imageErrors]);
 
   const frequentlyBoughtTogetherProducts = useMemo(() => {
     const fbtIds = FBT_MOCK[product.id] || [];
@@ -193,6 +199,7 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product, allPro
                     className="w-full h-auto object-cover aspect-square rounded-lg shadow-md transition-transform duration-300 ease-in-out group-hover:scale-150"
                     style={zoomStyle}
                     loading="lazy"
+                    onError={() => setImageErrors(prev => new Set(prev).add(activeMedia.url))}
                   />
                 ) : activeMedia?.type === 'video' ? (
                   <video
@@ -229,7 +236,12 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product, allPro
                             className={`relative w-16 h-16 rounded-md overflow-hidden border-2 transition-colors ${activeIndex === idx ? 'border-brand-primary' : 'border-transparent hover:border-brand-primary/50'}`}
                             aria-label={`View ${item.type} ${idx + 1}`}
                         >
-                            <img src={item.thumb} alt={`${product.name} thumbnail ${idx+1}`} className="w-full h-full object-cover"/>
+                            <img 
+                              src={item.thumb} 
+                              alt={`${product.name} thumbnail ${idx+1}`} 
+                              className="w-full h-full object-cover"
+                              onError={() => setImageErrors(prev => new Set(prev).add(item.thumb))}
+                            />
                             {item.type === 'video' && (<div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center"><PlayIcon className="h-8 w-8 text-white drop-shadow-lg" /></div>)}
                         </button>
                     ))}
@@ -356,13 +368,29 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product, allPro
               <h3 className="text-xl font-serif font-bold text-brand-dark mb-6">Frequently Bought Together</h3>
               <div className="flex flex-col items-center gap-4">
                 <div className="flex items-center justify-center flex-wrap gap-4">
-                  <div className="text-center w-24"><img src={product.images[0]} alt={product.name} className="w-24 h-24 object-cover rounded-lg shadow-md"/><p className="text-xs mt-1 font-bold truncate">{product.name}</p></div>
+                  <div className="text-center w-24">
+                    <img 
+                      src={imageErrors.has(product.images[0]) ? 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgZmlsbD0iI0Y4RTNEOSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyNCIgZmlsbD0iIzMzMzMzMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSI+VGF0dHZhIENvLjwvdGV4dD48L3N2Zz4=' : product.images[0]} 
+                      alt={product.name} 
+                      className="w-24 h-24 object-cover rounded-lg shadow-md"
+                      onError={() => setImageErrors(prev => new Set(prev).add(product.images[0]))}
+                    />
+                    <p className="text-xs mt-1 font-bold truncate">{product.name}</p>
+                  </div>
                   {frequentlyBoughtTogetherProducts.map(p => (
                     <div key={p.id} className="flex items-center gap-4">
                       <span className="text-2xl font-light text-gray-400">+</span>
                       <div className="flex items-center gap-2">
                          <input type="checkbox" id={`fbt-${p.id}`} checked={fbtSelection.includes(p.id)} onChange={() => handleToggleFbt(p.id)} className="h-4 w-4 text-brand-primary border-gray-300 rounded focus:ring-brand-primary"/>
-                         <label htmlFor={`fbt-${p.id}`} className="text-center w-24 cursor-pointer"><img src={p.images[0]} alt={p.name} className="w-24 h-24 object-cover rounded-lg shadow-md"/><p className="text-xs mt-1 font-bold truncate">{p.name}</p></label>
+                         <label htmlFor={`fbt-${p.id}`} className="text-center w-24 cursor-pointer">
+                           <img 
+                             src={imageErrors.has(p.images[0]) ? 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgZmlsbD0iI0Y4RTNEOSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyNCIgZmlsbD0iIzMzMzMzMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSI+VGF0dHZhIENvLjwvdGV4dD48L3N2Zz4=' : p.images[0]} 
+                             alt={p.name} 
+                             className="w-24 h-24 object-cover rounded-lg shadow-md"
+                             onError={() => setImageErrors(prev => new Set(prev).add(p.images[0]))}
+                           />
+                           <p className="text-xs mt-1 font-bold truncate">{p.name}</p>
+                         </label>
                       </div>
                     </div>
                   ))}
