@@ -1,7 +1,7 @@
 import React from 'react';
 import { Recipe } from './RecipesPage';
 import { XIcon } from './icons/XIcon';
-import { ClockIcon } from './icons/ClockIcon';
+import { CalendarIcon } from './icons/CalendarIcon';
 import { UsersIcon } from './icons/UsersIcon';
 
 interface RecipeDetailModalProps {
@@ -29,16 +29,16 @@ const RecipeDetailModal: React.FC<RecipeDetailModalProps> = ({ recipe, onClose }
         </div>
 
         <div className="overflow-y-auto">
-          <img src={recipe.image} alt={recipe.title} className="w-full h-64 object-cover" />
+          <img src={recipe.image} alt={recipe.title} className="w-full h-64 object-cover" onError={(e) => { const t = e.currentTarget; t.onerror = null; t.src = 'https://via.placeholder.com/600x256/F8E3D9/333333?text=Tattva+Co.'; }} />
           <div className="p-6">
             <div className="flex items-center justify-around text-center border-b pb-4 mb-6 text-sm text-gray-600">
-                <div className="flex flex-col items-center gap-1">
-                    <ClockIcon className="h-6 w-6 text-brand-primary" />
+        <div className="flex flex-col items-center gap-1">
+          <CalendarIcon className="h-6 w-6 text-brand-primary" />
                     <strong>Prep Time</strong>
                     <span>{recipe.prepTime}</span>
                 </div>
                 <div className="flex flex-col items-center gap-1">
-                    <ClockIcon className="h-6 w-6 text-brand-primary" />
+          <CalendarIcon className="h-6 w-6 text-brand-primary" />
                     <strong>Cook Time</strong>
                     <span>{recipe.cookTime}</span>
                 </div>
@@ -78,13 +78,5 @@ const RecipeDetailModal: React.FC<RecipeDetailModalProps> = ({ recipe, onClose }
     </div>
   );
 };
-
-// A clock icon for the recipe modal
-const ClockIcon: React.FC<{className?: string}> = ({ className }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-    </svg>
-);
-
 
 export default RecipeDetailModal;
