@@ -97,7 +97,7 @@ const ProductFormModal: React.FC<ProductFormModalProps> = ({ product, onSave, on
             <div className="mt-2 grid grid-cols-3 sm:grid-cols-4 gap-4">
               {formData.images.map((img, index) => (
                 img && <div key={index} className="relative group">
-                  <img src={img} alt={`Product image ${index + 1}`} className="w-full h-24 object-cover rounded-md" loading="lazy" onError={(e) => { const t = e.target as HTMLImageElement; t.src = 'https://via.placeholder.com/160x96/F8E3D9/333333?text=Img'; }} />
+                  <img src={img} alt={`Product image ${index + 1}`} className="w-full h-24 object-cover rounded-md" loading="lazy" onError={(e) => { const t = e.target as HTMLImageElement; t.src = 'https://via.placeholder.com/160x96/F8E3D9/333333?text=Tattva+Co.'; }} />
                   <button type="button" onClick={() => removeImage(index)} className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-0.5 opacity-0 group-hover:opacity-100 transition-opacity" aria-label="Remove image">
                     <XIcon className="h-4 w-4" />
                   </button>

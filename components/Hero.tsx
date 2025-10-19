@@ -6,8 +6,8 @@ const Hero: React.FC = () => {
   const [backgroundLoaded, setBackgroundLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
   
-  const heroImageUrl = 'https://via.placeholder.com/1200x600/8B5A3C/FFFFFF?text=Tattva+Co.+Spices';
-  const fallbackImageUrl = 'https://via.placeholder.com/1200x600/8B5A3C/FFFFFF?text=Tattva+Co.+Spices';
+  const heroImageUrl = 'https://via.placeholder.com/1200x600/F8E3D9/333333?text=Tattva+Co.';
+  const fallbackImageUrl = 'https://via.placeholder.com/1200x600/F8E3D9/333333?text=Tattva+Co.';
   const gradientFallback = 'linear-gradient(135deg, #8B5A3C 0%, #D2B48C 50%, #F4A460 100%)';
 
   useEffect(() => {

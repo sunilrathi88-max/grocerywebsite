@@ -28,7 +28,7 @@ const MiniCart: React.FC<MiniCartProps> = ({ items, subtotal }) => {
                   loading="lazy"
                   onError={(e) => {
                     const target = e.target as HTMLImageElement;
-                    target.src = 'https://via.placeholder.com/48x48/F8E3D9/333333?text=Product';
+                    target.src = 'https://via.placeholder.com/48x48/F8E3D9/333333?text=Tattva+Co.';
                   }}
                 />
                 <div className="flex-grow min-w-0">

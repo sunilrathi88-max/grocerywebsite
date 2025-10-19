@@ -2,9 +2,9 @@ import React from 'react';
 
 const ImageTest: React.FC = () => {
   const testImages = [
-    'https://images.unsplash.com/photo-1599550931215-c0529d3c509d?q=80&w=800',
-    'https://placehold.co/400x400/F8E3D9/333333?text=Tattva+Co.',
-    'https://via.placeholder.com/400x400/F8E3D9/333333?text=Test'
+    'https://via.placeholder.com/400x400/F8E3D9/333333?text=Tattva+Co.+-+Test+1',
+    'https://via.placeholder.com/400x400/F8E3D9/333333?text=Tattva+Co.+-+Test+2',
+    'https://via.placeholder.com/400x400/F8E3D9/333333?text=Tattva+Co.+-+Test+3'
   ];
 
   return (

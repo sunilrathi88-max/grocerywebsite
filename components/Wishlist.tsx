@@ -43,7 +43,7 @@ const Wishlist: React.FC<WishlistProps> = ({ items, onToggleWishlist, onAddToCar
                 loading="lazy"
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;
-                  target.src = 'https://via.placeholder.com/80x80/F8E3D9/333333?text=Product';
+                  target.src = 'https://via.placeholder.com/80x80/F8E3D9/333333?text=Tattva+Co.';
                 }}
                 />
                 <div className="flex-grow">

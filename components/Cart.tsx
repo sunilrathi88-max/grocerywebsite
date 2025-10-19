@@ -89,7 +89,7 @@ const Cart: React.FC<CartProps> = ({ items, onUpdateQuantity, onClose, isLoggedI
                       loading="lazy"
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;
-                        target.src = 'https://via.placeholder.com/64x64/F8E3D9/333333?text=Product';
+                        target.src = 'https://via.placeholder.com/64x64/F8E3D9/333333?text=Tattva+Co.';
                       }}
                     />
                     <div>

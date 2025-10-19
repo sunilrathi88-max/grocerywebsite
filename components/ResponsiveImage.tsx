@@ -65,7 +65,7 @@ const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
         if (fallbackSrc) {
           e.currentTarget.src = fallbackSrc;
         } else {
-          e.currentTarget.src = 'https://via.placeholder.com/400x300/f0f0f0/666?text=Image+Not+Found';
+          e.currentTarget.src = 'https://via.placeholder.com/400x300/F8E3D9/333333?text=Tattva+Co.';
         }
       }}
       sizes={sizes}

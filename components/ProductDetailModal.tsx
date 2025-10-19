@@ -195,7 +195,7 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product, allPro
                     loading="lazy"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
-                      target.src = 'https://via.placeholder.com/600x600/F8E3D9/333333?text=Product';
+                      target.src = 'https://via.placeholder.com/600x600/F8E3D9/333333?text=Tattva+Co.';
                     }}
                   />
                 ) : activeMedia?.type === 'video' ? (
@@ -240,7 +240,7 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product, allPro
                               loading="lazy"
                               onError={(e) => {
                                 const target = e.target as HTMLImageElement;
-                                target.src = 'https://via.placeholder.com/64x64/F8E3D9/333333?text=Img';
+                                target.src = 'https://via.placeholder.com/64x64/F8E3D9/333333?text=Tattva+Co.';
                               }}
                             />
                             {item.type === 'video' && (<div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center"><PlayIcon className="h-8 w-8 text-white drop-shadow-lg" /></div>)}
@@ -369,13 +369,13 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product, allPro
               <h3 className="text-xl font-serif font-bold text-brand-dark mb-6">Frequently Bought Together</h3>
               <div className="flex flex-col items-center gap-4">
                 <div className="flex items-center justify-center flex-wrap gap-4">
-                  <div className="text-center w-24"><img src={product.images[0]} alt={product.name} className="w-24 h-24 object-cover rounded-lg shadow-md" loading="lazy" onError={(e) => { const t = e.target as HTMLImageElement; t.src = 'https://via.placeholder.com/96x96/F8E3D9/333333?text=Product'; }} /><p className="text-xs mt-1 font-bold truncate">{product.name}</p></div>
+                  <div className="text-center w-24"><img src={product.images[0]} alt={product.name} className="w-24 h-24 object-cover rounded-lg shadow-md" loading="lazy" onError={(e) => { const t = e.target as HTMLImageElement; t.src = 'https://via.placeholder.com/96x96/F8E3D9/333333?text=Tattva+Co.'; }} /><p className="text-xs mt-1 font-bold truncate">{product.name}</p></div>
                   {frequentlyBoughtTogetherProducts.map(p => (
                     <div key={p.id} className="flex items-center gap-4">
                       <span className="text-2xl font-light text-gray-400">+</span>
                       <div className="flex items-center gap-2">
                          <input type="checkbox" id={`fbt-${p.id}`} checked={fbtSelection.includes(p.id)} onChange={() => handleToggleFbt(p.id)} className="h-4 w-4 text-brand-primary border-gray-300 rounded focus:ring-brand-primary"/>
-                         <label htmlFor={`fbt-${p.id}`} className="text-center w-24 cursor-pointer"><img src={p.images[0]} alt={p.name} className="w-24 h-24 object-cover rounded-lg shadow-md" loading="lazy" onError={(e) => { const t = e.target as HTMLImageElement; t.src = 'https://via.placeholder.com/96x96/F8E3D9/333333?text=Product'; }} /><p className="text-xs mt-1 font-bold truncate">{p.name}</p></label>
+                         <label htmlFor={`fbt-${p.id}`} className="text-center w-24 cursor-pointer"><img src={p.images[0]} alt={p.name} className="w-24 h-24 object-cover rounded-lg shadow-md" loading="lazy" onError={(e) => { const t = e.target as HTMLImageElement; t.src = 'https://via.placeholder.com/96x96/F8E3D9/333333?text=Tattva+Co.'; }} /><p className="text-xs mt-1 font-bold truncate">{p.name}</p></label>
                       </div>
                     </div>
                   ))}

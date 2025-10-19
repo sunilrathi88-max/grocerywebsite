@@ -34,7 +34,7 @@ const RecipeDetailModal: React.FC<RecipeDetailModalProps> = ({ recipe, onClose }
             alt={recipe.title} 
             className="w-full h-64 object-cover"
             onError={(e) => {
-              e.currentTarget.src = 'https://via.placeholder.com/400x300/f0f0f0/666?text=Recipe+Image';
+              e.currentTarget.src = 'https://via.placeholder.com/400x300/F8E3D9/333333?text=Tattva+Co.+-+Recipe';
             }}
           />
           <div className="p-6">

@@ -12,7 +12,7 @@ const BlogPostCard: React.FC<BlogPostCardProps> = ({ post, onSelectPost }) => {
     <div className="bg-white rounded-lg shadow-md overflow-hidden group transform hover:-translate-y-2 transition-all duration-300">
       <a href={`#/blog/${post.slug}`} onClick={(e) => { e.preventDefault(); onSelectPost(post.slug); }} className="block">
         <div className="relative h-56">
-          <img src={post.image} alt={post.title} className="w-full h-full object-cover" onError={(e) => { const target = e.target as HTMLImageElement; target.src = 'https://via.placeholder.com/400x300/F8E3D9/333333?text=Blog+Post'; }} />
+          <img src={post.image} alt={post.title} className="w-full h-full object-cover" onError={(e) => { const target = e.target as HTMLImageElement; target.src = 'https://via.placeholder.com/400x300/F8E3D9/333333?text=Tattva+Co.+-+Blog'; }} />
         </div>
         <div className="p-6 flex flex-col">
           <p className="text-sm text-gray-500 mb-2">{post.date} &bull; By {post.author}</p>
