@@ -23,11 +23,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onToggl
   console.log('ProductCard props:', product);
   console.log('Product images array:', product.images);
   
-  const placeholderImage = 'https://via.placeholder.com/400x400/F8E3D9/333333?text=Tattva+Co.';
+  // Use inline SVG as fallback to avoid external URL blocking issues
+  const placeholderImage = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgZmlsbD0iI0Y4RTNEOSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjQiIGZpbGw9IiMzMzMzMzMiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5UYXR0dmEgQ28uPC90ZXh0Pjwvc3ZnPg==';
   // Guarantee a branded fallback if remote assets fail to load.
   const handleImageError = (event: React.SyntheticEvent<HTMLImageElement>) => {
     const img = event.currentTarget;
-    if (img.src !== placeholderImage) {
+    if (!img.src.startsWith('data:image/svg+xml')) {
       img.src = placeholderImage;
     }
   };

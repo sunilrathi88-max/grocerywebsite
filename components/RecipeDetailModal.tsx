@@ -29,7 +29,7 @@ const RecipeDetailModal: React.FC<RecipeDetailModalProps> = ({ recipe, onClose }
         </div>
 
         <div className="overflow-y-auto">
-          <img src={recipe.image} alt={recipe.title} className="w-full h-64 object-cover" onError={(e) => { const t = e.currentTarget; t.onerror = null; t.src = 'https://via.placeholder.com/600x256/F8E3D9/333333?text=Tattva+Co.'; }} />
+          <img src={recipe.image} alt={recipe.title} className="w-full h-64 object-cover" onError={(e) => { const t = e.currentTarget; t.onerror = null; t.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAwIiBoZWlnaHQ9IjI1NiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNjAwIiBoZWlnaHQ9IjI1NiIgZmlsbD0iI0Y4RTNEOSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjQiIGZpbGw9IiMzMzMzMzMiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5UYXR0dmEgQ28uPC90ZXh0Pjwvc3ZnPg=='; }} />
           <div className="p-6">
             <div className="flex items-center justify-around text-center border-b pb-4 mb-6 text-sm text-gray-600">
         <div className="flex flex-col items-center gap-1">
