@@ -82,11 +82,15 @@ const Cart: React.FC<CartProps> = ({ items, onUpdateQuantity, onClose, isLoggedI
               return (
                 <div key={`${item.product.id}-${item.selectedVariant.id}`} className="flex items-center justify-between">
                   <div className="flex items-center gap-4">
-                    <img 
+                    <img
                       src={item.product.images[0]} 
                       alt={item.product.name} 
                       className="w-16 h-16 object-cover rounded-md bg-gray-200" 
                       loading="lazy"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.src = 'https://via.placeholder.com/64x64/F8E3D9/333333?text=Product';
+                      }}
                     />
                     <div>
                       <p className="font-bold text-brand-dark leading-tight">{item.product.name}</p>

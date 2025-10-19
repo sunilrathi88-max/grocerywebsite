@@ -1,15 +1,63 @@
 
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Hero: React.FC = () => {
+  const [backgroundLoaded, setBackgroundLoaded] = useState(false);
+  const [imageError, setImageError] = useState(false);
+  
+  const heroImageUrl = 'https://via.placeholder.com/1200x600/8B5A3C/FFFFFF?text=Tattva+Co.+Spices';
+  const fallbackImageUrl = 'https://via.placeholder.com/1200x600/8B5A3C/FFFFFF?text=Tattva+Co.+Spices';
+  const gradientFallback = 'linear-gradient(135deg, #8B5A3C 0%, #D2B48C 50%, #F4A460 100%)';
+
+  useEffect(() => {
+    const img = new Image();
+    img.onload = () => {
+      setBackgroundLoaded(true);
+      setImageError(false);
+    };
+    img.onerror = () => {
+      // Try fallback image
+      const fallbackImg = new Image();
+      fallbackImg.onload = () => {
+        setBackgroundLoaded(true);
+        setImageError(false);
+      };
+      fallbackImg.onerror = () => {
+        setBackgroundLoaded(true);
+        setImageError(true);
+      };
+      fallbackImg.src = fallbackImageUrl;
+    };
+    img.src = heroImageUrl;
+  }, []);
+
+  const getBackgroundImage = () => {
+    if (!backgroundLoaded) {
+      return gradientFallback;
+    }
+    if (imageError) {
+      return `url('${fallbackImageUrl}')`;
+    }
+    return `url('${heroImageUrl}')`;
+  };
+
   return (
     <div 
-      className="relative bg-cover bg-center h-[500px] flex items-center justify-center text-center text-white" 
-      style={{ backgroundImage: "url('https://images.unsplash.com/photo-1596040033229-a0b3b5e0c6f9?w=1200&q=80')" }}
+      className="relative bg-cover bg-center h-[500px] flex items-center justify-center text-center text-white transition-all duration-1000 ease-in-out" 
+      style={{ 
+        backgroundImage: getBackgroundImage(),
+        backgroundBlendMode: imageError ? 'normal' : 'overlay'
+      }}
       aria-labelledby="hero-heading"
     >
-      <div className="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+      {!backgroundLoaded && (
+        <div className="absolute inset-0 animate-pulse">
+          <div className="absolute inset-0 bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-primary opacity-80" />
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-20 animate-shimmer" />
+        </div>
+      )}
+      <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]"></div>
       <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 z-10 animate-fade-in-up">
         <h1 id="hero-heading" className="text-4xl sm:text-5xl md:text-6xl font-serif font-bold drop-shadow-2xl leading-tight">
           The Essence of India, Delivered.
@@ -35,8 +83,15 @@ const Hero: React.FC = () => {
             transform: translateY(0);
           }
         }
+        @keyframes shimmer {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(100%); }
+        }
         .animate-fade-in-up {
           animation: fade-in-up 0.8s ease-out forwards;
+        }
+        .animate-shimmer {
+          animation: shimmer 2s infinite;
         }
       `}</style>
     </div>

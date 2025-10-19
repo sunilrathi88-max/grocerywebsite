@@ -36,11 +36,15 @@ const Wishlist: React.FC<WishlistProps> = ({ items, onToggleWishlist, onAddToCar
         {items.map(item => (
             <div key={item.id} className="flex flex-col sm:flex-row items-center justify-between border-b pb-4 last:border-b-0 last:pb-0 gap-4">
             <div className="flex items-center gap-4 flex-grow">
-                <img 
+                <img
                 src={item.images[0]} 
                 alt={item.name} 
                 className="w-20 h-20 object-cover rounded-md bg-gray-200" 
-                loading="lazy" 
+                loading="lazy"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.src = 'https://via.placeholder.com/80x80/F8E3D9/333333?text=Product';
+                }}
                 />
                 <div className="flex-grow">
                 <p className="font-bold text-brand-dark text-lg">{item.name}</p>
