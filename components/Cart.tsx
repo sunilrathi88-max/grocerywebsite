@@ -1,10 +1,11 @@
-
 import React, { useState } from 'react';
 import { CartItem } from '../types';
 import { PlusIcon } from './icons/PlusIcon';
 import { MinusIcon } from './icons/MinusIcon';
 import { TrashIcon } from './icons/TrashIcon';
 import { ShoppingCartIcon } from './icons/ShoppingCartIcon';
+
+const PLACEHOLDER_IMAGE = 'https://via.placeholder.com/100x100/F8E3D9/333333?text=Tattva+Co.';
 
 interface CartProps {
   items: CartItem[];
@@ -32,6 +33,14 @@ const Cart: React.FC<CartProps> = ({ items, onUpdateQuantity, onClose, isLoggedI
   const total = subtotal - discount + shippingCost + tax;
 
   const canCheckout = items.length > 0;
+
+  // Handle image load errors with branded placeholder
+  const handleImageError = (event: React.SyntheticEvent<HTMLImageElement>) => {
+    const img = event.currentTarget;
+    if (img.src !== PLACEHOLDER_IMAGE) {
+      img.src = PLACEHOLDER_IMAGE;
+    }
+  };
 
   const handleQuantityChange = (item: CartItem, newQuantity: number) => {
     const performUpdate = () => {
@@ -83,10 +92,11 @@ const Cart: React.FC<CartProps> = ({ items, onUpdateQuantity, onClose, isLoggedI
                 <div key={`${item.product.id}-${item.selectedVariant.id}`} className="flex items-center justify-between">
                   <div className="flex items-center gap-4">
                     <img 
-                      src={item.product.images[0]} 
+                      src={item.product.images[0] || PLACEHOLDER_IMAGE} 
                       alt={item.product.name} 
                       className="w-16 h-16 object-cover rounded-md bg-gray-200" 
                       loading="lazy"
+                      onError={handleImageError}
                     />
                     <div>
                       <p className="font-bold text-brand-dark leading-tight">{item.product.name}</p>

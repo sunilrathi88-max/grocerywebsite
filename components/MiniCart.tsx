@@ -2,12 +2,22 @@ import React from 'react';
 import { CartItem } from '../types';
 import { ShoppingCartIcon } from './icons/ShoppingCartIcon';
 
+const PLACEHOLDER_IMAGE = 'https://via.placeholder.com/100x100/F8E3D9/333333?text=Tattva+Co.';
+
 interface MiniCartProps {
   items: CartItem[];
   subtotal: number;
 }
 
 const MiniCart: React.FC<MiniCartProps> = ({ items, subtotal }) => {
+  // Handle image load errors with branded placeholder
+  const handleImageError = (event: React.SyntheticEvent<HTMLImageElement>) => {
+    const img = event.currentTarget;
+    if (img.src !== PLACEHOLDER_IMAGE) {
+      img.src = PLACEHOLDER_IMAGE;
+    }
+  };
+
   return (
     <div className="absolute top-full right-0 mt-2 w-80 bg-white rounded-lg shadow-2xl border z-50 p-4">
       {items.length === 0 ? (
@@ -22,9 +32,10 @@ const MiniCart: React.FC<MiniCartProps> = ({ items, subtotal }) => {
             {items.map(item => (
               <div key={`${item.product.id}-${item.selectedVariant.id}`} className="flex items-center gap-3">
                 <img 
-                  src={item.product.images[0]} 
+                  src={item.product.images[0] || PLACEHOLDER_IMAGE} 
                   alt={item.product.name}
                   className="w-12 h-12 object-cover rounded-md flex-shrink-0"
+                  onError={handleImageError}
                 />
                 <div className="flex-grow min-w-0">
                   <p className="text-sm font-bold truncate">{item.product.name}</p>
