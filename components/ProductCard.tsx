@@ -6,6 +6,7 @@ import { HeartIcon } from './icons/HeartIcon';
 import { StarIcon } from './icons/StarIcon';
 import { EyeIcon } from './icons/EyeIcon';
 import { CompareIcon } from './icons/CompareIcon';
+import { PLACEHOLDER_IMAGES } from '../constants';
 
 interface ProductCardProps {
   product: Product;
@@ -44,7 +45,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onToggl
         <div className="h-64 w-full bg-gray-200 relative overflow-hidden">
           <img 
             className="h-full w-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-110" 
-            src={product.images?.[0] || 'https://via.placeholder.com/400x400/F8E3D9/333333?text=Tattva+Co.'}
+            src={product.images?.[0] || PLACEHOLDER_IMAGES.PRODUCT}
             alt={product.name}
             loading="lazy"
           />

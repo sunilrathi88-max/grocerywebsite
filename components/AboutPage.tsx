@@ -1,3 +1,4 @@
+import { PLACEHOLDER_IMAGES } from '../constants';
 
 import React from 'react';
 
@@ -20,12 +21,12 @@ const AboutPage: React.FC = () => {
           </div>
           <div>
             <img 
-              src="https://via.placeholder.com/1200x800/F8E3D9/333333?text=Tattva+Co." 
+              src={PLACEHOLDER_IMAGES.ABOUT}
               alt="A vibrant Indian spice market"
               className="rounded-lg shadow-xl"
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
-                target.src = 'https://via.placeholder.com/1200x800/F8E3D9/333333?text=Tattva+Co.';
+                target.src = PLACEHOLDER_IMAGES.ABOUT;
               }}
             />
           </div>

@@ -1,3 +1,4 @@
+import { PLACEHOLDER_IMAGES } from '../constants';
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { ShoppingCartIcon } from './icons/ShoppingCartIcon';
 import { HeartIcon } from './icons/HeartIcon';
@@ -125,7 +126,7 @@ const Header: React.FC<HeaderProps> = ({
                     {autocompleteResults.map(product => (
                       <li key={product.id}>
                         <button onClick={() => { onSelectProduct(product); setAutocompleteOpen(false); onSearchChange(''); }} className="w-full text-left flex items-center gap-4 p-3 hover:bg-brand-secondary/30 transition-colors">
-                          <img src={product.images[0]} alt={product.name} className="w-10 h-10 object-cover rounded-md" onError={(e) => { const t = e.currentTarget; t.onerror = null; t.src = 'https://via.placeholder.com/40x40/F8E3D9/333333?text=Tattva+Co.'; }} />
+                          <img src={product.images[0]} alt={product.name} className="w-10 h-10 object-cover rounded-md" onError={(e) => { const t = e.currentTarget; t.onerror = null; t.src = PLACEHOLDER_IMAGES.THUMB; }} />
                           <span>{product.name}</span>
                         </button>
                       </li>

@@ -1,12 +1,13 @@
 
 
 import React from 'react';
+import { PLACEHOLDER_IMAGES } from '../constants';
 
 const Hero: React.FC = () => {
   return (
     <div 
       className="relative bg-cover bg-center h-[500px] flex items-center justify-center text-center text-white" 
-      style={{ backgroundImage: "url('https://via.placeholder.com/1200x500/F8E3D9/333333?text=Tattva+Co.')" }}
+      style={{ backgroundImage: `url('${PLACEHOLDER_IMAGES.HERO}')` }}
       aria-labelledby="hero-heading"
     >
       <div className="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>

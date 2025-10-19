@@ -1,4 +1,5 @@
 import React from 'react';
+import { PLACEHOLDER_IMAGES } from '../constants';
 
 interface ResponsiveImageProps {
   src: string;
@@ -65,7 +66,7 @@ const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
         if (fallbackSrc) {
           e.currentTarget.src = fallbackSrc;
         } else {
-          e.currentTarget.src = 'https://via.placeholder.com/400x300/F8E3D9/333333?text=Tattva+Co.';
+          e.currentTarget.src = PLACEHOLDER_IMAGES.PRODUCT;
         }
       }}
       sizes={sizes}

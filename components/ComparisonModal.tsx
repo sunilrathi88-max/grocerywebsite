@@ -1,3 +1,4 @@
+import { PLACEHOLDER_IMAGES } from '../constants';
 import React from 'react';
 import { Product } from '../types';
 import { XIcon } from './icons/XIcon';
@@ -64,7 +65,7 @@ const ComparisonModal: React.FC<ComparisonModalProps> = ({ items, onClose }) => 
                 <th className="p-4 font-bold w-1/5">Feature</th>
                 {items.map(item => (
                   <th key={item.id} className="p-4 text-center">
-                    <img src={item.images[0]} alt={item.name} className="w-24 h-24 object-cover mx-auto rounded-md" onError={(e) => { const t = e.currentTarget; t.onerror = null; t.src = 'https://via.placeholder.com/96x96/F8E3D9/333333?text=Tattva+Co.'; }} />
+                    <img src={item.images[0]} alt={item.name} className="w-24 h-24 object-cover mx-auto rounded-md" onError={(e) => { const t = e.currentTarget; t.onerror = null; t.src = PLACEHOLDER_IMAGES.THUMB; }} />
                     <p className="font-bold mt-2 text-brand-dark">{item.name}</p>
                   </th>
                 ))}

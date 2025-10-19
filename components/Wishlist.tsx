@@ -1,3 +1,4 @@
+import { PLACEHOLDER_IMAGES } from '../constants';
 import React from 'react';
 import { Product, Variant } from '../types';
 import { PlusIcon } from './icons/PlusIcon';
@@ -41,7 +42,7 @@ const Wishlist: React.FC<WishlistProps> = ({ items, onToggleWishlist, onAddToCar
                 alt={item.name} 
                 className="w-20 h-20 object-cover rounded-md bg-gray-200" 
                 loading="lazy" 
-                onError={(e) => { const t = e.currentTarget; t.onerror = null; t.src = 'https://via.placeholder.com/80x80/F8E3D9/333333?text=Tattva+Co.'; }}
+                onError={(e) => { const t = e.currentTarget; t.onerror = null; t.src = PLACEHOLDER_IMAGES.THUMB; }}
                 />
                 <div className="flex-grow">
                 <p className="font-bold text-brand-dark text-lg">{item.name}</p>

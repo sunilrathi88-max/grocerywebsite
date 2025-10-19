@@ -1,3 +1,4 @@
+import { PLACEHOLDER_IMAGES } from '../constants';
 import React from 'react';
 import { Product } from '../types';
 import { XIcon } from './icons/XIcon';
@@ -22,7 +23,7 @@ const ComparisonBar: React.FC<ComparisonBarProps> = ({ items, onRemove, onClear,
           <div className="flex items-center gap-3">
             {items.map(item => (
               <div key={item.id} className="relative">
-                <img src={item.images[0]} alt={item.name} className="w-12 h-12 object-cover rounded-md" onError={(e) => { const t = e.currentTarget; t.onerror = null; t.src = 'https://via.placeholder.com/48x48/F8E3D9/333333?text=Tattva+Co.'; }} />
+                <img src={item.images[0]} alt={item.name} className="w-12 h-12 object-cover rounded-md" onError={(e) => { const t = e.currentTarget; t.onerror = null; t.src = PLACEHOLDER_IMAGES.THUMB; }} />
                 <button 
                   onClick={() => onRemove(item)}
                   className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-0.5"
