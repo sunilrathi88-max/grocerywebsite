@@ -7,8 +7,9 @@ import { CogIcon } from './icons/CogIcon';
 import { Product, CartItem } from '../types';
 import MiniCart from './MiniCart';
 import { ChevronDownIcon } from './icons/ChevronDownIcon';
-
-const PLACEHOLDER_IMAGE = 'https://via.placeholder.com/100x100/F8E3D9/333333?text=Tattva+Co.';
+import { ChevronRightIcon } from './icons/ChevronRightIcon';
+import { TagIcon } from './icons/TagIcon';
+import { imageErrorHandlers } from '../utils/imageHelpers';
 
 interface HeaderProps {
     cartItems: CartItem[];
@@ -50,22 +51,27 @@ const Header: React.FC<HeaderProps> = ({
   const [isAutocompleteOpen, setAutocompleteOpen] = useState(false);
   const [isMiniCartOpen, setMiniCartOpen] = useState(false);
   const [isProductsOpen, setProductsOpen] = useState(false);
-  
-  // Handle image load errors with branded placeholder
-  const handleImageError = (event: React.SyntheticEvent<HTMLImageElement>) => {
-    const img = event.currentTarget;
-    if (img.src !== PLACEHOLDER_IMAGE) {
-      img.src = PLACEHOLDER_IMAGE;
-    }
-  };
   const searchContainerRef = useRef<HTMLDivElement>(null);
   
   const cartItemCount = useMemo(() => cartItems.reduce((total, item) => total + item.quantity, 0), [cartItems]);
 
   const autocompleteResults = useMemo(() => {
-    if (!searchQuery) return [];
-    return allProducts.filter(p => p.name.toLowerCase().includes(searchQuery.toLowerCase())).slice(0, 5);
-  }, [searchQuery, allProducts]);
+    if (!searchQuery) return { products: [], categories: [] };
+    
+    const query = searchQuery.toLowerCase();
+    
+    // Find matching products
+    const matchingProducts = allProducts
+      .filter(p => p.name.toLowerCase().includes(query))
+      .slice(0, 4);
+    
+    // Find matching categories
+    const matchingCategories = categories
+      .filter(cat => cat.toLowerCase() !== 'all' && cat.toLowerCase().includes(query))
+      .slice(0, 2);
+    
+    return { products: matchingProducts, categories: matchingCategories };
+  }, [searchQuery, allProducts, categories]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -86,6 +92,16 @@ const Header: React.FC<HeaderProps> = ({
       miniCartTimeout = window.setTimeout(() => setMiniCartOpen(false), 200);
   };
 
+  // Products dropdown hover handling with delay
+  let productsTimeout: number;
+  const handleProductsEnter = () => {
+      clearTimeout(productsTimeout);
+      setProductsOpen(true);
+  };
+  const handleProductsLeave = () => {
+      productsTimeout = window.setTimeout(() => setProductsOpen(false), 300);
+  };
+
   return (
     <header className="bg-brand-light/80 backdrop-blur-lg border-b border-gray-200 fixed top-0 w-full z-50 shadow-sm">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -97,16 +113,60 @@ const Header: React.FC<HeaderProps> = ({
           </div>
           <nav className="hidden md:flex items-center space-x-8">
             <a href="#/" className="text-brand-dark hover:text-brand-primary transition-colors duration-300">Home</a>
-            <div className="relative" onMouseEnter={() => setProductsOpen(true)} onMouseLeave={() => setProductsOpen(false)}>
+            <div className="relative" onMouseEnter={handleProductsEnter} onMouseLeave={handleProductsLeave}>
               <button className="flex items-center gap-1 text-brand-dark hover:text-brand-primary transition-colors duration-300">
                   Products <ChevronDownIcon className="h-4 w-4" />
               </button>
               {isProductsOpen && (
-                  <div className="absolute top-full mt-2 w-48 bg-white rounded-lg shadow-lg border z-10 animate-fade-in-fast">
+                  <div className="absolute top-full mt-2 w-48 bg-white rounded-lg shadow-lg border z-10 animate-fade-in-fast" onMouseEnter={handleProductsEnter} onMouseLeave={handleProductsLeave}>
                       <ul>
                           {categories.map(category => (
                               <li key={category}>
-                                  <button onClick={() => { onSelectCategory(category); setProductsOpen(false); }} className="w-full text-left p-3 hover:bg-brand-secondary/30 transition-colors text-sm">
+                                  <button 
+                                    onClick={() => { 
+                                      console.log('Category clicked:', category);
+                                      
+                                      // Close dropdown immediately
+                                      setProductsOpen(false);
+                                      
+                                      // Set the category first
+                                      onSelectCategory(category);
+                                      
+                                      // Check if we need to navigate to home page
+                                      const currentHash = window.location.hash;
+                                      const needsNavigation = currentHash !== '#/' && currentHash !== '' && currentHash !== '#';
+                                      
+                                      console.log('Current hash:', currentHash, 'Needs navigation:', needsNavigation);
+                                      
+                                      if (needsNavigation) {
+                                        // Navigate to home page first
+                                        window.location.hash = '#/';
+                                      }
+                                      
+                                      // Scroll to products section after a delay
+                                      const scrollDelay = needsNavigation ? 500 : 150;
+                                      setTimeout(() => {
+                                        const productsSection = document.getElementById('products-section');
+                                        console.log('Products section found:', !!productsSection);
+                                        
+                                        if (productsSection) {
+                                          const headerOffset = 100;
+                                          const elementPosition = productsSection.getBoundingClientRect().top;
+                                          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                                          
+                                          console.log('Scrolling to:', offsetPosition);
+                                          
+                                          window.scrollTo({
+                                            top: offsetPosition,
+                                            behavior: 'smooth'
+                                          });
+                                        } else {
+                                          console.error('Products section not found!');
+                                        }
+                                      }, scrollDelay);
+                                    }} 
+                                    className="w-full text-left p-3 hover:bg-brand-secondary/30 transition-colors text-sm"
+                                  >
                                       {category}
                                   </button>
                               </li>
@@ -129,18 +189,84 @@ const Header: React.FC<HeaderProps> = ({
                 onFocus={() => setAutocompleteOpen(true)}
                 className="bg-white border border-gray-300 rounded-full py-2 pl-4 pr-10 focus:outline-none focus:ring-2 focus:ring-brand-primary transition-all duration-300 w-40"
               />
-              {isAutocompleteOpen && autocompleteResults.length > 0 && (
-                <div className="absolute top-full mt-2 w-80 bg-white rounded-lg shadow-lg border z-10">
-                  <ul>
-                    {autocompleteResults.map(product => (
-                      <li key={product.id}>
-                        <button onClick={() => { onSelectProduct(product); setAutocompleteOpen(false); onSearchChange(''); }} className="w-full text-left flex items-center gap-4 p-3 hover:bg-brand-secondary/30 transition-colors">
-                          <img src={product.images[0] || PLACEHOLDER_IMAGE} alt={product.name} className="w-10 h-10 object-cover rounded-md" onError={handleImageError} />
-                          <span>{product.name}</span>
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
+              {isAutocompleteOpen && (autocompleteResults.products.length > 0 || autocompleteResults.categories.length > 0) && (
+                <div className="absolute top-full mt-2 w-80 bg-white rounded-lg shadow-2xl border border-gray-200 z-50 animate-fade-in-up overflow-hidden">
+                  {/* Categories Section */}
+                  {autocompleteResults.categories.length > 0 && (
+                    <div className="border-b border-gray-100">
+                      <div className="px-4 py-2 bg-gray-50">
+                        <p className="text-xs font-bold text-gray-500 uppercase tracking-wide">Categories</p>
+                      </div>
+                      <ul>
+                        {autocompleteResults.categories.map(category => (
+                          <li key={category}>
+                            <button 
+                              onClick={() => { 
+                                onSelectCategory(category); 
+                                setAutocompleteOpen(false); 
+                                onSearchChange(''); 
+                              }} 
+                              className="w-full text-left flex items-center gap-3 px-4 py-3 hover:bg-gradient-to-r hover:from-brand-primary/10 hover:to-amber-50 transition-all group"
+                            >
+                              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-brand-primary to-amber-600 flex items-center justify-center flex-shrink-0">
+                                <TagIcon className="h-4 w-4 text-white" />
+                              </div>
+                              <span className="font-medium text-gray-800 group-hover:text-brand-primary transition-colors">{category}</span>
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  
+                  {/* Products Section */}
+                  {autocompleteResults.products.length > 0 && (
+                    <div>
+                      <div className="px-4 py-2 bg-gray-50">
+                        <p className="text-xs font-bold text-gray-500 uppercase tracking-wide">Products</p>
+                      </div>
+                      <ul>
+                        {autocompleteResults.products.map(product => (
+                          <li key={product.id}>
+                            <button 
+                              onClick={() => { 
+                                onSelectProduct(product); 
+                                setAutocompleteOpen(false); 
+                                onSearchChange(''); 
+                              }} 
+                              className="w-full text-left flex items-center gap-4 px-4 py-3 hover:bg-gradient-to-r hover:from-brand-primary/10 hover:to-amber-50 transition-all group"
+                            >
+                              <img 
+                                src={product.images[0]} 
+                                alt={product.name} 
+                                className="w-12 h-12 object-cover rounded-lg shadow-sm group-hover:shadow-md transition-shadow" 
+                                onError={imageErrorHandlers.thumb} 
+                              />
+                              <div className="flex-1">
+                                <p className="font-medium text-gray-800 group-hover:text-brand-primary transition-colors">{product.name}</p>
+                                <p className="text-sm text-gray-500">${product.variants[0].salePrice || product.variants[0].price}</p>
+                              </div>
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  
+                  {/* Search All Results */}
+                  {searchQuery && (
+                    <div className="border-t border-gray-100 bg-gray-50">
+                      <button 
+                        onClick={() => { 
+                          setAutocompleteOpen(false); 
+                        }} 
+                        className="w-full text-left px-4 py-3 text-sm font-medium text-brand-primary hover:bg-brand-primary/10 transition-colors flex items-center justify-between group"
+                      >
+                        <span>View all results for "{searchQuery}"</span>
+                        <ChevronRightIcon className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                      </button>
+                    </div>
+                  )}
                 </div>
               )}
             </div>

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Review } from '../types';
-import { StarIcon } from './icons/StarIcon';
 import { TrashIcon } from './icons/TrashIcon';
-import { CheckBadgeIcon } from './icons/CheckBadgeIcon';
+import StarRating from './StarRating';
+import VerifiedBadge from './VerifiedBadge';
 
 interface ReviewListProps {
   reviews: Review[];
@@ -18,15 +18,11 @@ const ReviewList: React.FC<ReviewListProps> = ({ reviews, productId, onDelete })
   return (
     <div className="space-y-6">
       {reviews.map(review => (
-        <div key={review.id} className="border-b pb-4 last:border-0 last:pb-0">
-          <div className="flex items-center justify-between mb-1">
-              <div className="flex items-center">
-                <p className="font-bold text-brand-dark mr-2">{review.author}</p>
-                {review.verifiedPurchase && (
-                  <div title="Verified Purchase">
-                    <CheckBadgeIcon className="h-5 w-5 text-green-600" />
-                  </div>
-                )}
+        <div key={review.id} className="border-b pb-4 last:border-0 last:pb-0 hover:bg-gray-50 p-3 rounded-lg transition-colors">
+          <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center gap-2">
+                <p className="font-bold text-brand-dark">{review.author}</p>
+                {review.verifiedPurchase && <VerifiedBadge size="sm" />}
               </div>
               <button 
                 onClick={() => onDelete(productId, review.id)} 
@@ -36,14 +32,17 @@ const ReviewList: React.FC<ReviewListProps> = ({ reviews, productId, onDelete })
                   <TrashIcon />
               </button>
           </div>
-           <div className="flex items-center mb-2">
-              <div className="flex">
-                {Array.from({ length: 5 }).map((_, index) => (
-                  <StarIcon key={index} className={`w-5 h-5 ${index < review.rating ? 'text-yellow-400' : 'text-gray-300'}`} />
-                ))}
-              </div>
-            </div>
-          <p className="text-gray-700">{review.comment}</p>
+          <div className="mb-2">
+            <StarRating rating={review.rating} size="sm" />
+          </div>
+          <p className="text-gray-700 leading-relaxed">{review.comment}</p>
+          <p className="text-xs text-gray-400 mt-2">
+            {new Date(review.date).toLocaleDateString('en-US', { 
+              year: 'numeric', 
+              month: 'long', 
+              day: 'numeric' 
+            })}
+          </p>
         </div>
       ))}
     </div>

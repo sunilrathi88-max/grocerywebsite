@@ -2,8 +2,7 @@ import React from 'react';
 import { Product } from '../types';
 import { XIcon } from './icons/XIcon';
 import { StarIcon } from './icons/StarIcon';
-
-const PLACEHOLDER_IMAGE = 'https://via.placeholder.com/100x100/F8E3D9/333333?text=Tattva+Co.';
+import { imageErrorHandlers } from '../utils/imageHelpers';
 
 interface ComparisonModalProps {
   items: Product[];
@@ -12,14 +11,6 @@ interface ComparisonModalProps {
 
 const ComparisonModal: React.FC<ComparisonModalProps> = ({ items, onClose }) => {
     
-  // Handle image load errors with branded placeholder
-  const handleImageError = (event: React.SyntheticEvent<HTMLImageElement>) => {
-    const img = event.currentTarget;
-    if (img.src !== PLACEHOLDER_IMAGE) {
-      img.src = PLACEHOLDER_IMAGE;
-    }
-  };
-
   const getAverageRating = (product: Product) => {
     if (product.reviews.length === 0) return { avg: 0, count: 0 };
     const total = product.reviews.reduce((acc, r) => acc + r.rating, 0);
@@ -74,7 +65,7 @@ const ComparisonModal: React.FC<ComparisonModalProps> = ({ items, onClose }) => 
                 <th className="p-4 font-bold w-1/5">Feature</th>
                 {items.map(item => (
                   <th key={item.id} className="p-4 text-center">
-                    <img src={item.images[0] || PLACEHOLDER_IMAGE} alt={item.name} className="w-24 h-24 object-cover mx-auto rounded-md" onError={handleImageError} />
+                    <img src={item.images[0]} alt={item.name} className="w-24 h-24 object-cover mx-auto rounded-md" onError={imageErrorHandlers.thumb} />
                     <p className="font-bold mt-2 text-brand-dark">{item.name}</p>
                   </th>
                 ))}

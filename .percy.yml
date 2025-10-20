@@ -1,0 +1,18 @@
+module.exports = {
+  version: 2,
+  // Percy configuration for Tattva Co.
+  snapshot: {
+    widths: [375, 768, 1280, 1920],
+    minHeight: 1024,
+    percyCSS: '',
+  },
+  discovery: {
+    allowedHostnames: ['localhost'],
+    networkIdleTimeout: 750,
+  },
+  // Percy will wait for these patterns before capturing
+  discovery: {
+    allowedHostnames: ['localhost', '127.0.0.1'],
+    disallowedHostnames: [],
+  },
+};

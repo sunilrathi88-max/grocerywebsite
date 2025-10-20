@@ -1,6 +1,7 @@
 import React from 'react';
 import { BlogPost } from '../types';
 import Breadcrumbs from './Breadcrumbs';
+import { imageErrorHandlers } from '../utils/imageHelpers';
 
 interface BlogPostPageProps {
   post: BlogPost;
@@ -27,7 +28,7 @@ const BlogPostPage: React.FC<BlogPostPageProps> = ({ post }) => {
           <span>&bull;</span>
           <span>{post.date}</span>
         </div>
-        <img src={post.image} alt={post.title} className="w-full h-auto max-h-[500px] object-cover rounded-lg shadow-lg mb-8" />
+        <img src={post.image} alt={post.title} className="w-full h-auto max-h-[500px] object-cover rounded-lg shadow-lg mb-8" onError={imageErrorHandlers.blog} />
         <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: post.content }} />
         <div className="mt-8 pt-6 border-t">
           <h4 className="font-bold text-sm text-gray-600">Tags:</h4>

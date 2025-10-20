@@ -2,6 +2,9 @@ import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { Product, CartItem, ToastMessage, Review, Variant, User, Order, OrderStatus, QnA as QnAType, BlogPost } from './types';
 import { Recipe } from './components/RecipesPage';
 
+// Performance Utils
+import { usePerformanceMonitoring } from './utils/performance';
+
 // Mock Data
 import { MOCK_PRODUCTS, MOCK_USER, MOCK_ORDERS, MOCK_TESTIMONIALS, MOCK_ANALYTICS, MOCK_POSTS } from './data';
 
@@ -17,6 +20,7 @@ import SideModal from './components/SideModal';
 import Cart from './components/Cart';
 import Wishlist from './components/Wishlist';
 import ToastContainer from './components/ToastContainer';
+import SocialProofNotifications from './components/SocialProofNotifications';
 import MobileMenu from './components/MobileMenu';
 import PromotionalBanner from './components/PromotionalBanner';
 import SortDropdown from './components/SortDropdown';
@@ -41,6 +45,9 @@ import BlogPage from './components/BlogPage';
 import BlogPostPage from './components/BlogPostPage';
 
 const App: React.FC = () => {
+    // Enable performance monitoring
+    usePerformanceMonitoring();
+
     // State management
     const [products, setProducts] = useState<Product[]>(MOCK_PRODUCTS);
     const [posts, setPosts] = useState<BlogPost[]>(MOCK_POSTS);
@@ -382,9 +389,11 @@ const App: React.FC = () => {
                 return (
                     <>
                         <Hero />
-                        <main id="products-section" className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-                            <CategoryFilter categories={categories} selectedCategory={selectedCategory} onSelectCategory={setSelectedCategory} />
-                            <div className="flex flex-col sm:flex-row justify-between items-center mb-8 gap-4">
+                        <main id="products-section" className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16 animate-fade-in">
+                            <div className="mb-8 animate-fade-in-up">
+                                <CategoryFilter categories={categories} selectedCategory={selectedCategory} onSelectCategory={setSelectedCategory} />
+                            </div>
+                            <div className="flex flex-col gap-6 mb-8 animate-fade-in-up stagger-1">
                                <AdvancedFilters 
                                   showOnSale={showOnSale}
                                   onToggleOnSale={() => setShowOnSale(v => !v)}
@@ -489,6 +498,8 @@ const App: React.FC = () => {
             <MobileMenu isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} searchQuery={searchQuery} onSearchChange={setSearchQuery} />
 
             <ToastContainer toasts={toasts} onClose={(id) => setToasts(current => current.filter(t => t.id !== id))} />
+            
+            <SocialProofNotifications />
 
             {isAuthModalOpen && <AuthModal onClose={() => setAuthModalOpen(false)} onLogin={handleLogin} />}
 
