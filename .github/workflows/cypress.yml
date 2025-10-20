@@ -31,13 +31,29 @@ jobs:
       - name: Install dependencies
         run: npm ci
       
+      - name: Verify Cypress installation
+        run: npx cypress verify
+      
+      - name: Cypress info
+        run: npx cypress info
+      
+      - name: Create directories for artifacts
+        run: |
+          mkdir -p cypress/videos
+          mkdir -p cypress/screenshots
+          mkdir -p cypress/results
+      
       - name: Start dev server
         run: npm run dev &
         env:
           CI: true
+          PORT: 3001
       
-      - name: Wait for server
-        run: npx wait-on http://localhost:3001 --timeout 60000
+      - name: Wait for server to be ready
+        run: npx wait-on http://localhost:3001 --timeout 120000 --interval 1000 --verbose
+      
+      - name: Check server is responding
+        run: curl http://localhost:3001 || echo "Server check failed"
       
       - name: Run Cypress tests
         uses: cypress-io/github-action@v6
@@ -47,8 +63,10 @@ jobs:
           wait-on-timeout: 120
           record: false
           config-file: cypress.config.ts
+          install: false
         env:
           CYPRESS_baseUrl: http://localhost:3001
+          DEBUG: 'cypress:*'
       
       - name: Upload screenshots
         uses: actions/upload-artifact@v4
@@ -56,6 +74,7 @@ jobs:
         with:
           name: cypress-screenshots-${{ matrix.browser }}
           path: cypress/screenshots
+          if-no-files-found: ignore
           retention-days: 7
       
       - name: Upload videos
@@ -64,6 +83,7 @@ jobs:
         with:
           name: cypress-videos-${{ matrix.browser }}
           path: cypress/videos
+          if-no-files-found: ignore
           retention-days: 7
       
       - name: Upload test results
@@ -72,6 +92,7 @@ jobs:
         with:
           name: cypress-results-${{ matrix.browser }}
           path: cypress/results
+          if-no-files-found: ignore
           retention-days: 30
 
   percy-visual-tests:
