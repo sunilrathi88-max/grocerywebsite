@@ -19,6 +19,14 @@ export default defineConfig({
       runMode: 2,
       openMode: 0,
     },
+    reporter: 'mochawesome',
+    reporterOptions: {
+      reportDir: 'cypress/results',
+      overwrite: false,
+      html: true,
+      json: true,
+      charts: true,
+    },
   },
   component: {
     devServer: {
