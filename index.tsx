@@ -2,6 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import ErrorBoundary from './components/ErrorBoundary';
+import './animations.css';
+
+// Add smooth scroll behavior globally
+if (typeof window !== 'undefined') {
+  document.documentElement.style.scrollBehavior = 'smooth';
+}
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {

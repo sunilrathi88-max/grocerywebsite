@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { StarIcon } from './icons/StarIcon';
 import { ToastMessage } from '../types';
+import StarRating from './StarRating';
 
 interface ReviewFormProps {
   onSubmit: (review: { author: string; rating: number; comment: string; }) => void;
@@ -11,7 +11,6 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ onSubmit, addToast }) => {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
   const [author, setAuthor] = useState('');
-  const [hoverRating, setHoverRating] = useState(0);
   
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,7 +20,6 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ onSubmit, addToast }) => {
       setRating(0);
       setComment('');
       setAuthor('');
-      setHoverRating(0);
     } else {
         addToast('Please fill out all fields and provide a rating.', 'error');
     }
@@ -30,33 +28,30 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ onSubmit, addToast }) => {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-            <label htmlFor="author" className="block text-sm font-medium text-gray-700">Your Name</label>
+            <label htmlFor="author" className="block text-sm font-medium text-gray-700 mb-1">Your Name</label>
             <input
                 type="text"
                 id="author"
                 value={author}
                 onChange={(e) => setAuthor(e.target.value)}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-brand-primary focus:border-brand-primary sm:text-sm"
+                className="block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-brand-primary transition-all"
+                placeholder="Enter your name"
                 required
             />
         </div>
         <div>
-            <label className="block text-sm font-medium text-gray-700">Rating</label>
-            <div className="flex items-center mt-1">
-                {[1, 2, 3, 4, 5].map(star => (
-                    <button
-                        type="button"
-                        key={star}
-                        onClick={() => setRating(star)}
-                        onMouseEnter={() => setHoverRating(star)}
-                        onMouseLeave={() => setHoverRating(0)}
-                        className="text-gray-300"
-                        aria-label={`Rate ${star} stars`}
-                    >
-                        <StarIcon className={`w-7 h-7 transition-colors ${(hoverRating || rating) >= star ? 'text-yellow-400' : 'text-gray-300'}`} />
-                    </button>
-                ))}
-            </div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Your Rating</label>
+            <StarRating 
+              rating={rating} 
+              size="lg" 
+              interactive 
+              onRate={setRating}
+            />
+            {rating > 0 && (
+              <p className="text-sm text-gray-600 mt-1">
+                You rated this {rating} star{rating !== 1 ? 's' : ''}
+              </p>
+            )}
         </div>
         <div>
             <label htmlFor="comment" className="block text-sm font-medium text-gray-700">Comment</label>

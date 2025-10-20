@@ -1,5 +1,6 @@
 import React from 'react';
 import { ChefHatIcon } from './icons/ChefHatIcon';
+import { imageErrorHandlers } from '../utils/imageHelpers';
 
 export interface Recipe {
     id: number;
@@ -67,7 +68,7 @@ const RecipesPage: React.FC<RecipesPageProps> = ({ onSelectRecipe }) => {
                 {MOCK_RECIPES.map(recipe => (
                     <div key={recipe.id} className="bg-white rounded-lg shadow-md overflow-hidden group transform hover:-translate-y-2 transition-all duration-300">
                         <div className="relative h-56">
-                            <img src={recipe.image} alt={recipe.title} className="w-full h-full object-cover" />
+                            <img src={recipe.image} alt={recipe.title} className="w-full h-full object-cover" onError={imageErrorHandlers.recipe} />
                         </div>
                         <div className="p-6 flex flex-col">
                             <h3 className="text-xl font-serif font-bold text-brand-dark">{recipe.title}</h3>

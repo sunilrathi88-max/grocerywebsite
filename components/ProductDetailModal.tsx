@@ -18,6 +18,9 @@ import QnA from './QnA';
 import ProductSlider from './ProductSlider';
 import { ShieldCheckIcon } from './icons/ShieldCheckIcon';
 import { LeafIcon } from './icons/LeafIcon';
+import { UsersIcon } from './icons/UsersIcon';
+import { CheckBadgeIcon } from './icons/CheckBadgeIcon';
+import { CheckCircleIcon } from './icons/CheckCircleIcon';
 import { TruckIcon } from './icons/TruckIcon';
 
 interface ProductDetailModalProps {
@@ -34,8 +37,8 @@ interface ProductDetailModalProps {
   onNotifyMe: (productName: string) => void;
 }
 
-const PLACEHOLDER_IMAGE = 'https://via.placeholder.com/400x400/F8E3D9/333333?text=Tattva+Co.';
 const PLACEHOLDER_THUMB = 'https://via.placeholder.com/100x100/F8E3D9/333333?text=Tattva+Co.';
+const PLACEHOLDER_IMAGE = 'https://via.placeholder.com/600x600/F8E3D9/333333?text=Tattva+Co.';
 
 // Mock data for "Frequently Bought Together"
 const FBT_MOCK: { [key: number]: number[] } = {
@@ -46,19 +49,26 @@ const FBT_MOCK: { [key: number]: number[] } = {
 const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product, allProducts, onClose, onAddToCart, onAddReview, onDeleteReview, onSelectCategoryAndClose, addToast, onAskQuestion, onSelectProduct, onNotifyMe }) => {
   const [selectedVariant, setSelectedVariant] = useState(product.variants.find(v => v.stock > 0) || product.variants[0]);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [activeTab, setActiveTab] = useState<'description' | 'reviews' | 'qna'>('description');
+  const [activeTab, setActiveTab] = useState<'description' | 'nutrition' | 'sourcing' | 'reviews' | 'qna'>('description');
   const [viewers, setViewers] = useState(Math.floor(Math.random() * 10) + 2);
   const [isStickyButtonVisible, setStickyButtonVisible] = useState(false);
 
-  const mainButtonRef = useRef<HTMLButtonElement>(null);
-
-  // Handle image load errors with branded placeholder
-  const handleImageError = (event: React.SyntheticEvent<HTMLImageElement>) => {
+  // Image error handlers
+  const handleMainImageError = (event: React.SyntheticEvent<HTMLImageElement>) => {
     const img = event.currentTarget;
     if (img.src !== PLACEHOLDER_IMAGE) {
       img.src = PLACEHOLDER_IMAGE;
     }
   };
+
+  const handleThumbImageError = (event: React.SyntheticEvent<HTMLImageElement>) => {
+    const img = event.currentTarget;
+    if (img.src !== PLACEHOLDER_THUMB) {
+      img.src = PLACEHOLDER_THUMB;
+    }
+  };
+
+  const mainButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -202,7 +212,7 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product, allPro
                     className="w-full h-auto object-cover aspect-square rounded-lg shadow-md transition-transform duration-300 ease-in-out group-hover:scale-150"
                     style={zoomStyle}
                     loading="lazy"
-                    onError={handleImageError}
+                    onError={handleMainImageError}
                   />
                 ) : activeMedia?.type === 'video' ? (
                   <video
@@ -239,7 +249,7 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product, allPro
                             className={`relative w-16 h-16 rounded-md overflow-hidden border-2 transition-colors ${activeIndex === idx ? 'border-brand-primary' : 'border-transparent hover:border-brand-primary/50'}`}
                             aria-label={`View ${item.type} ${idx + 1}`}
                         >
-                            <img src={item.thumb} alt={`${product.name} thumbnail ${idx+1}`} className="w-full h-full object-cover" onError={handleImageError} />
+                            <img src={item.thumb} alt={`${product.name} thumbnail ${idx+1}`} className="w-full h-full object-cover" onError={handleThumbImageError} />
                             {item.type === 'video' && (<div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center"><PlayIcon className="h-8 w-8 text-white drop-shadow-lg" /></div>)}
                         </button>
                     ))}
@@ -332,24 +342,137 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product, allPro
           {/* Tabs Section */}
           <div className="p-6 border-t">
               <div className="border-b border-gray-200 mb-6">
-                <nav className="-mb-px flex space-x-8" aria-label="Tabs">
-                    <button onClick={() => setActiveTab('description')} className={`whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-sm ${activeTab === 'description' ? 'border-brand-primary text-brand-primary' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}`}>Description</button>
-                    <button onClick={() => setActiveTab('reviews')} className={`whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-sm ${activeTab === 'reviews' ? 'border-brand-primary text-brand-primary' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}`}>Reviews ({product.reviews.length})</button>
-                    <button onClick={() => setActiveTab('qna')} className={`whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-sm ${activeTab === 'qna' ? 'border-brand-primary text-brand-primary' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}`}>Q&A ({product.qna?.length || 0})</button>
+                <nav className="-mb-px flex space-x-4 overflow-x-auto" aria-label="Tabs">
+                    <button 
+                      onClick={() => setActiveTab('description')} 
+                      className={`whitespace-nowrap pb-4 px-3 border-b-2 font-medium text-sm transition-all ${activeTab === 'description' ? 'border-brand-primary text-brand-primary' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}`}
+                    >
+                      Description
+                    </button>
+                    <button 
+                      onClick={() => setActiveTab('nutrition')} 
+                      className={`whitespace-nowrap pb-4 px-3 border-b-2 font-medium text-sm transition-all ${activeTab === 'nutrition' ? 'border-brand-primary text-brand-primary' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}`}
+                    >
+                      Nutrition Facts
+                    </button>
+                    <button 
+                      onClick={() => setActiveTab('sourcing')} 
+                      className={`whitespace-nowrap pb-4 px-3 border-b-2 font-medium text-sm transition-all ${activeTab === 'sourcing' ? 'border-brand-primary text-brand-primary' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}`}
+                    >
+                      Origin Story
+                    </button>
+                    <button 
+                      onClick={() => setActiveTab('reviews')} 
+                      className={`whitespace-nowrap pb-4 px-3 border-b-2 font-medium text-sm transition-all ${activeTab === 'reviews' ? 'border-brand-primary text-brand-primary' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}`}
+                    >
+                      Reviews ({product.reviews.length})
+                    </button>
+                    <button 
+                      onClick={() => setActiveTab('qna')} 
+                      className={`whitespace-nowrap pb-4 px-3 border-b-2 font-medium text-sm transition-all ${activeTab === 'qna' ? 'border-brand-primary text-brand-primary' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}`}
+                    >
+                      Q&A ({product.qna?.length || 0})
+                    </button>
                 </nav>
               </div>
               
-              <div>
+              <div className="animate-fade-in">
                 {activeTab === 'description' && (
                   <div className="prose max-w-none">
-                    <p>{product.description}</p>
+                    <p className="text-gray-700 leading-relaxed">{product.description}</p>
                     <div className="space-y-4 my-6">
                       {product.tags && product.tags.length > 0 && (<div className="flex items-start gap-3"><TagIcon className="h-6 w-6 text-brand-primary flex-shrink-0 mt-1" /><div><h4 className="font-bold text-sm text-gray-600">Tags:</h4><div className="flex flex-wrap gap-2 mt-1">{product.tags.map(tag => (<span key={tag} className="bg-brand-secondary text-brand-dark text-xs font-bold px-2 py-1 rounded-full">{tag}</span>))}</div></div></div>)}
                       {product.origin && (<div className="flex items-center gap-3"><GlobeIcon className="h-6 w-6 text-brand-primary flex-shrink-0" /><div><h4 className="font-bold text-sm text-gray-600">Origin:</h4><p className="text-brand-dark">{product.origin}</p></div></div>)}
-                      {product.nutrition && product.nutrition.length > 0 && (<div className="flex items-start gap-3"><SparklesIcon className="h-6 w-6 text-brand-primary flex-shrink-0 mt-1" /><div><h4 className="font-bold text-sm text-gray-600 mb-1">Nutrition Highlights:</h4><ul className="text-sm text-brand-dark list-disc list-inside">{product.nutrition.map(n => <li key={n.key}><strong>{n.key}:</strong> {n.value}</li>)}</ul></div></div>)}
                     </div>
                   </div>
                 )}
+                
+                {activeTab === 'nutrition' && (
+                  <div className="space-y-6">
+                    <div className="bg-white border-2 border-black rounded-lg p-6">
+                      <h3 className="text-2xl font-bold border-b-8 border-black pb-2 mb-4">Nutrition Facts</h3>
+                      <div className="space-y-3">
+                        {product.nutrition && product.nutrition.length > 0 ? (
+                          <>
+                            {product.nutrition.map((n, idx) => (
+                              <div key={idx} className="flex justify-between items-center py-2 border-b border-gray-300">
+                                <span className="font-semibold text-gray-800">{n.key}</span>
+                                <span className="text-gray-600">{n.value}</span>
+                              </div>
+                            ))}
+                          </>
+                        ) : (
+                          <div className="text-center py-8 text-gray-500">
+                            <SparklesIcon className="h-12 w-12 mx-auto mb-3 text-gray-300" />
+                            <p>Nutrition information coming soon</p>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    
+                    {product.tags && product.tags.some(tag => ['Organic', 'Vegan', 'Gluten-Free', 'Non-GMO'].includes(tag)) && (
+                      <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                        <h4 className="font-bold text-green-800 mb-3 flex items-center gap-2">
+                          <CheckBadgeIcon className="h-5 w-5" />
+                          Certifications & Benefits
+                        </h4>
+                        <div className="flex flex-wrap gap-2">
+                          {product.tags.filter(tag => ['Organic', 'Vegan', 'Gluten-Free', 'Non-GMO'].includes(tag)).map(tag => (
+                            <span key={tag} className="bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1">
+                              <CheckCircleIcon className="h-4 w-4" />
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+                
+                {activeTab === 'sourcing' && (
+                  <div className="space-y-6">
+                    <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-lg p-6 border border-amber-200">
+                      <div className="flex items-start gap-4 mb-4">
+                        <GlobeIcon className="h-8 w-8 text-brand-primary flex-shrink-0" />
+                        <div>
+                          <h3 className="text-xl font-bold text-brand-dark mb-2">Origin</h3>
+                          <p className="text-brand-dark text-lg font-semibold">{product.origin || 'Sourced from premium locations'}</p>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="prose max-w-none">
+                      <h4 className="font-bold text-brand-dark flex items-center gap-2 mb-3">
+                        <LeafIcon className="h-5 w-5 text-green-600" />
+                        Our Sourcing Story
+                      </h4>
+                      <p className="text-gray-700 leading-relaxed">
+                        We partner directly with farmers and artisans who share our commitment to quality and sustainability. 
+                        Each {product.name.toLowerCase()} is carefully selected and processed using traditional methods that 
+                        preserve its natural flavors and beneficial properties.
+                      </p>
+                      
+                      <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div className="bg-white p-4 rounded-lg border border-gray-200">
+                          <ShieldCheckIcon className="h-8 w-8 text-green-600 mb-2" />
+                          <h5 className="font-bold text-sm text-gray-800 mb-1">Quality Assured</h5>
+                          <p className="text-xs text-gray-600">Rigorous testing & quality control</p>
+                        </div>
+                        <div className="bg-white p-4 rounded-lg border border-gray-200">
+                          <UsersIcon className="h-8 w-8 text-blue-600 mb-2" />
+                          <h5 className="font-bold text-sm text-gray-800 mb-1">Fair Trade</h5>
+                          <p className="text-xs text-gray-600">Supporting farming communities</p>
+                        </div>
+                        <div className="bg-white p-4 rounded-lg border border-gray-200">
+                          <LeafIcon className="h-8 w-8 text-green-600 mb-2" />
+                          <h5 className="font-bold text-sm text-gray-800 mb-1">Sustainable</h5>
+                          <p className="text-xs text-gray-600">Eco-friendly practices</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                
                  {activeTab === 'reviews' && (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div><h4 className="font-bold text-brand-dark mb-4">Leave a Review</h4><ReviewForm onSubmit={(review) => onAddReview(product.id, review)} addToast={addToast} /></div>
@@ -366,13 +489,13 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product, allPro
               <h3 className="text-xl font-serif font-bold text-brand-dark mb-6">Frequently Bought Together</h3>
               <div className="flex flex-col items-center gap-4">
                 <div className="flex items-center justify-center flex-wrap gap-4">
-                  <div className="text-center w-24"><img src={product.images[0] || PLACEHOLDER_IMAGE} alt={product.name} className="w-24 h-24 object-cover rounded-lg shadow-md" onError={handleImageError} /><p className="text-xs mt-1 font-bold truncate">{product.name}</p></div>
+                  <div className="text-center w-24"><img src={product.images[0]} alt={product.name} className="w-24 h-24 object-cover rounded-lg shadow-md" onError={handleThumbImageError} /><p className="text-xs mt-1 font-bold truncate">{product.name}</p></div>
                   {frequentlyBoughtTogetherProducts.map(p => (
                     <div key={p.id} className="flex items-center gap-4">
                       <span className="text-2xl font-light text-gray-400">+</span>
                       <div className="flex items-center gap-2">
                          <input type="checkbox" id={`fbt-${p.id}`} checked={fbtSelection.includes(p.id)} onChange={() => handleToggleFbt(p.id)} className="h-4 w-4 text-brand-primary border-gray-300 rounded focus:ring-brand-primary"/>
-                         <label htmlFor={`fbt-${p.id}`} className="text-center w-24 cursor-pointer"><img src={p.images[0] || PLACEHOLDER_IMAGE} alt={p.name} className="w-24 h-24 object-cover rounded-lg shadow-md" onError={handleImageError} /><p className="text-xs mt-1 font-bold truncate">{p.name}</p></label>
+                         <label htmlFor={`fbt-${p.id}`} className="text-center w-24 cursor-pointer"><img src={p.images[0]} alt={p.name} className="w-24 h-24 object-cover rounded-lg shadow-md" onError={handleThumbImageError} /><p className="text-xs mt-1 font-bold truncate">{p.name}</p></label>
                       </div>
                     </div>
                   ))}

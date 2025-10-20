@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { imageErrorHandlers } from '../utils/imageHelpers';
 
 const AboutPage: React.FC = () => {
   return (
@@ -23,6 +24,7 @@ const AboutPage: React.FC = () => {
               src="https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1200&auto=format&fit=crop" 
               alt="A vibrant Indian spice market"
               className="rounded-lg shadow-xl"
+              onError={imageErrorHandlers.hero}
             />
           </div>
         </div>

@@ -5,8 +5,7 @@ import { HeartIcon } from './icons/HeartIcon';
 import { FacebookIcon } from './icons/FacebookIcon';
 import { TwitterIcon } from './icons/TwitterIcon';
 import { PinterestIcon } from './icons/PinterestIcon';
-
-const PLACEHOLDER_IMAGE = 'https://via.placeholder.com/100x100/F8E3D9/333333?text=Tattva+Co.';
+import { imageErrorHandlers } from '../utils/imageHelpers';
 
 interface WishlistProps {
   items: Product[];
@@ -16,14 +15,6 @@ interface WishlistProps {
 }
 
 const Wishlist: React.FC<WishlistProps> = ({ items, onToggleWishlist, onAddToCart, onClose }) => {
-  // Handle image load errors with branded placeholder
-  const handleImageError = (event: React.SyntheticEvent<HTMLImageElement>) => {
-    const img = event.currentTarget;
-    if (img.src !== PLACEHOLDER_IMAGE) {
-      img.src = PLACEHOLDER_IMAGE;
-    }
-  };
-
   if (items.length === 0) {
     return (
       <div className="flex-grow flex flex-col items-center justify-center text-center">
@@ -47,11 +38,11 @@ const Wishlist: React.FC<WishlistProps> = ({ items, onToggleWishlist, onAddToCar
             <div key={item.id} className="flex flex-col sm:flex-row items-center justify-between border-b pb-4 last:border-b-0 last:pb-0 gap-4">
             <div className="flex items-center gap-4 flex-grow">
                 <img 
-                src={item.images[0] || PLACEHOLDER_IMAGE} 
+                src={item.images[0]} 
                 alt={item.name} 
                 className="w-20 h-20 object-cover rounded-md bg-gray-200" 
                 loading="lazy"
-                onError={handleImageError}
+                onError={imageErrorHandlers.thumb}
                 />
                 <div className="flex-grow">
                 <p className="font-bold text-brand-dark text-lg">{item.name}</p>
