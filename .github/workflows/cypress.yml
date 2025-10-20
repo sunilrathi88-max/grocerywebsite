@@ -54,7 +54,7 @@ jobs:
           CYPRESS_baseUrl: http://localhost:3001
       
       - name: Upload screenshots
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: cypress-screenshots-${{ matrix.browser }}
@@ -62,7 +62,7 @@ jobs:
           retention-days: 7
       
       - name: Upload videos
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: cypress-videos-${{ matrix.browser }}
@@ -70,7 +70,7 @@ jobs:
           retention-days: 7
       
       - name: Upload test results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: cypress-results-${{ matrix.browser }}
@@ -108,7 +108,7 @@ jobs:
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
       
       - name: Upload Percy results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: percy-results
@@ -152,7 +152,7 @@ jobs:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
       
       - name: Upload Lighthouse results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: lighthouse-results
@@ -166,7 +166,7 @@ jobs:
     
     steps:
       - name: Download all artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
       
       - name: Create test summary
         run: |
