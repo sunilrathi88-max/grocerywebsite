@@ -29,7 +29,8 @@ describe('Lazy Loading Images', () => {
       let loadedImages = 0;
       
       $imgs.each((i, img) => {
-        if (img.complete && img.naturalHeight > 0) {
+        const htmlImg = img as HTMLImageElement;
+        if (htmlImg.complete && htmlImg.naturalHeight > 0) {
           loadedImages++;
         }
       });
@@ -48,7 +49,8 @@ describe('Lazy Loading Images', () => {
     // Get initial loaded count
     let initialLoaded = 0;
     cy.get('.product-card img').each(($img) => {
-      if ($img[0].complete && $img[0].naturalHeight > 0) {
+      const htmlImg = $img[0] as HTMLImageElement;
+      if (htmlImg.complete && htmlImg.naturalHeight > 0) {
         initialLoaded++;
       }
     });
@@ -62,7 +64,8 @@ describe('Lazy Loading Images', () => {
       let loadedAfterScroll = 0;
       
       $imgs.each((i, img) => {
-        if (img.complete && img.naturalHeight > 0) {
+        const htmlImg = img as HTMLImageElement;
+        if (htmlImg.complete && htmlImg.naturalHeight > 0) {
           loadedAfterScroll++;
         }
       });
@@ -195,7 +198,8 @@ describe('Lazy Loading Images', () => {
     
     // Filtered product images should load
     cy.get('.product-card img').first().should('be.visible').and(($img) => {
-      expect($img[0].complete).to.be.true;
+      const htmlImg = $img[0] as HTMLImageElement;
+      expect(htmlImg.complete).to.be.true;
     });
   });
 

@@ -157,8 +157,8 @@ describe('Quiz and Promo Code System', () => {
     }
 
     // Get the promo code text
-    cy.contains(/QUIZMASTER15|SPICEFAN10/).then(($el) => {
-      const promoCode = $el.text().trim();
+    cy.contains(/QUIZMASTER15|SPICEFAN10/).then(($el: JQuery<HTMLElement>) => {
+      const promoCode = $el && $el.length > 0 ? $el.text().trim() : '';
       
       // Add product to cart
       cy.visit('/');

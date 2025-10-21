@@ -7,6 +7,7 @@ interface LazyImageProps {
   placeholderSrc?: string;
   width?: number;
   height?: number;
+  onError?: (event: React.SyntheticEvent<HTMLImageElement, Event>) => void;
 }
 
 /**
@@ -20,6 +21,7 @@ export const LazyImage: React.FC<LazyImageProps> = ({
   placeholderSrc = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3Crect fill="%23f3f4f6" width="400" height="300"/%3E%3C/svg%3E',
   width,
   height,
+  onError,
 }) => {
   const imgRef = useRef<HTMLImageElement>(null);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -62,6 +64,7 @@ export const LazyImage: React.FC<LazyImageProps> = ({
       height={height}
       loading="lazy"
       onLoad={() => setIsLoaded(true)}
+      onError={onError}
     />
   );
 };
