@@ -5,6 +5,11 @@ import { Recipe } from './components/RecipesPage';
 // Performance Utils
 import { usePerformanceMonitoring } from './utils/performance';
 
+// Custom Hooks
+import { useCart } from './hooks/useCart';
+import { useWishlist } from './hooks/useWishlist';
+import { useProductFilter } from './hooks/useProductFilter';
+
 // Mock Data
 import { MOCK_PRODUCTS, MOCK_USER, MOCK_ORDERS, MOCK_TESTIMONIALS, MOCK_ANALYTICS, MOCK_POSTS } from './data';
 
@@ -48,12 +53,27 @@ const App: React.FC = () => {
     // Enable performance monitoring
     usePerformanceMonitoring();
 
+    // Custom hooks for cart, wishlist, and filtering
+    const { 
+        cartItems, 
+        cartItemCount, 
+        subtotal, 
+        addToCart, 
+        updateQuantity, 
+        clearCart 
+    } = useCart();
+    
+    const { 
+        wishlistItems, 
+        wishlistItemCount, 
+        toggleWishlist, 
+        isInWishlist 
+    } = useWishlist();
+
     // State management
     const [products, setProducts] = useState<Product[]>(MOCK_PRODUCTS);
     const [posts, setPosts] = useState<BlogPost[]>(MOCK_POSTS);
     const [orders, setOrders] = useState<Order[]>(MOCK_ORDERS);
-    const [cartItems, setCartItems] = useState<CartItem[]>([]);
-    const [wishlistItems, setWishlistItems] = useState<Product[]>([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('All');
     const [sortOrder, setSortOrder] = useState('featured');
@@ -127,7 +147,6 @@ const App: React.FC = () => {
     const wishlistedIds = useMemo(() => new Set(wishlistItems.map(p => p.id)), [wishlistItems]);
     const comparisonIds = useMemo(() => new Set(comparisonItems.map(p => p.id)), [comparisonItems]);
     
-    const subtotal = useMemo(() => cartItems.reduce((sum, item) => sum + (item.selectedVariant.salePrice ?? item.selectedVariant.price) * item.quantity, 0), [cartItems]);
     const shippingCost = useMemo(() => (subtotal > 50 || subtotal === 0) ? 0 : 10, [subtotal]);
 
     // Handlers
@@ -137,44 +156,23 @@ const App: React.FC = () => {
     }, []);
 
     const handleAddToCart = useCallback((product: Product, variant: Variant, quantity: number = 1) => {
-        setCartItems(prevItems => {
-            const existingItem = prevItems.find(item => item.product.id === product.id && item.selectedVariant.id === variant.id);
-            if (existingItem) {
-                return prevItems.map(item =>
-                    item.product.id === product.id && item.selectedVariant.id === variant.id
-                        ? { ...item, quantity: Math.min(item.quantity + quantity, variant.stock) }
-                        : item
-                );
-            }
-            return [...prevItems, { product, selectedVariant: variant, quantity }];
-        });
+        addToCart(product, variant, quantity);
         addToast(`${product.name} added to cart!`, 'success');
-    }, [addToast]);
+    }, [addToCart, addToast]);
 
     const handleUpdateQuantity = useCallback((productId: number, variantId: number, quantity: number) => {
-        if (quantity <= 0) {
-            setCartItems(prev => prev.filter(item => !(item.product.id === productId && item.selectedVariant.id === variantId)));
-        } else {
-            setCartItems(prev => prev.map(item =>
-                item.product.id === productId && item.selectedVariant.id === variantId
-                    ? { ...item, quantity: Math.min(quantity, item.selectedVariant.stock) }
-                    : item
-            ));
-        }
-    }, []);
+        updateQuantity(productId, variantId, quantity);
+    }, [updateQuantity]);
 
     const handleToggleWishlist = useCallback((product: Product) => {
-        setWishlistItems(prev => {
-            const isWishlisted = prev.some(item => item.id === product.id);
-            if (isWishlisted) {
-                addToast(`${product.name} removed from wishlist.`, 'info');
-                return prev.filter(item => item.id !== product.id);
-            } else {
-                addToast(`${product.name} added to wishlist!`, 'success');
-                return [...prev, product];
-            }
-        });
-    }, [addToast]);
+        const wasInWishlist = isInWishlist(product.id);
+        toggleWishlist(product);
+        if (wasInWishlist) {
+            addToast(`${product.name} removed from wishlist.`, 'info');
+        } else {
+            addToast(`${product.name} added to wishlist!`, 'success');
+        }
+    }, [toggleWishlist, isInWishlist, addToast]);
     
     const handleLogin = useCallback(() => {
         setIsLoggedIn(true);
@@ -262,13 +260,13 @@ const App: React.FC = () => {
             status: 'Processing',
         };
         setOrders(prev => [newOrder, ...prev]);
-        setCartItems([]);
+        clearCart();
         setDiscount(0);
         setPromoCode('');
         setCurrentView('home'); // Prevent staying on checkout page
         window.location.hash = `#/order-confirmation/${newOrder.id}`;
         return newOrder;
-    }, [orders.length]);
+    }, [orders.length, clearCart]);
     
     // Admin handlers
     const handleSaveProduct = useCallback((product: Product) => {
@@ -310,52 +308,36 @@ const App: React.FC = () => {
     }, [addToast]);
 
 
-    // Filtering and sorting logic
+    // Filtering and sorting logic (delegated to useProductFilter hook)
+    const sortMap: any = {
+        'price-asc': 'price-asc',
+        'price-desc': 'price-desc',
+        'rating-desc': 'rating',
+        'featured': undefined
+    };
+
+    const { filteredProducts } = useProductFilter(MOCK_PRODUCTS, {
+        category: selectedCategory,
+        searchQuery,
+        priceRange: [priceRange.min, priceRange.max],
+        inStockOnly: showInStock,
+        sortBy: sortMap[sortOrder]
+    });
+
+    // Additional filters not yet in useProductFilter hook
     const filteredAndSortedProducts = useMemo(() => {
-        let result = MOCK_PRODUCTS;
-
-        if (selectedCategory !== 'All') {
-            result = result.filter(p => p.category === selectedCategory);
-        }
-
-        if (searchQuery) {
-            result = result.filter(p => p.name.toLowerCase().includes(searchQuery.toLowerCase()));
-        }
+        let result = filteredProducts;
 
         if (showOnSale) {
             result = result.filter(p => p.variants.some(v => v.salePrice && v.salePrice < v.price));
         }
 
-        if (showInStock) {
-            result = result.filter(p => p.variants.some(v => v.stock > 0));
-        }
-        
         if (selectedTags.length > 0) {
             result = result.filter(p => selectedTags.every(tag => p.tags?.includes(tag)));
         }
-        
-        result = result.filter(p => (p.variants[0].salePrice ?? p.variants[0].price) <= priceRange.max);
-
-        switch (sortOrder) {
-            case 'price-asc':
-                result.sort((a, b) => (a.variants[0].salePrice ?? a.variants[0].price) - (b.variants[0].salePrice ?? b.variants[0].price));
-                break;
-            case 'price-desc':
-                result.sort((a, b) => (b.variants[0].salePrice ?? b.variants[0].price) - (a.variants[0].salePrice ?? a.variants[0].price));
-                break;
-            case 'rating-desc':
-                result.sort((a, b) => {
-                    const ratingA = a.reviews.length ? a.reviews.reduce((sum, r) => sum + r.rating, 0) / a.reviews.length : 0;
-                    const ratingB = b.reviews.length ? b.reviews.reduce((sum, r) => sum + r.rating, 0) / b.reviews.length : 0;
-                    return ratingB - ratingA;
-                });
-                break;
-            default: // featured
-                break;
-        }
 
         return result;
-    }, [searchQuery, selectedCategory, sortOrder, showOnSale, showInStock, selectedTags, priceRange]);
+    }, [filteredProducts, showOnSale, selectedTags]);
 
 
     const renderView = () => {
@@ -436,7 +418,7 @@ const App: React.FC = () => {
             {showPromoBanner && <PromotionalBanner onClose={() => setShowPromoBanner(false)} />}
             <Header
                 cartItems={cartItems}
-                wishlistItemCount={wishlistItems.length}
+                wishlistItemCount={wishlistItemCount}
                 searchQuery={searchQuery}
                 onSearchChange={setSearchQuery}
                 onCartClick={() => setIsCartOpen(true)}
