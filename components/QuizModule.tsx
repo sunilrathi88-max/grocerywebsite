@@ -125,9 +125,8 @@ const QuizModule: React.FC<QuizModuleProps> = ({ addToast }) => {
         
         return (
             <motion.div 
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
                 className="bg-white p-8 rounded-lg shadow-lg text-center"
+                {...{ initial: { opacity: 0, scale: 0.9 }, animate: { opacity: 1, scale: 1 } } as any}
             >
                 {/* Trophy or Star Icon */}
                 <div className={`w-20 h-20 mx-auto mb-4 rounded-full flex items-center justify-center ${
@@ -193,9 +192,8 @@ const QuizModule: React.FC<QuizModuleProps> = ({ addToast }) => {
                 {/* Promo Code */}
                 {promo && (
                     <motion.div 
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
                         className="mt-6 bg-gradient-to-br from-brand-primary to-amber-500 p-6 rounded-lg text-white"
+                        {...{ initial: { scale: 0 }, animate: { scale: 1 } } as any}
                     >
                         <SparklesIcon className="w-8 h-8 mx-auto mb-2" />
                         <p className="font-bold text-lg mb-2">🎁 Congratulations! You earned a reward!</p>
@@ -266,7 +264,7 @@ const QuizModule: React.FC<QuizModuleProps> = ({ addToast }) => {
                 })}
             </ul>
             {isAnswered && (
-                <motion.div {...{ initial: { opacity: 0, y: 10 }, animate: { opacity: 1, y: 0 }, transition: { delay: 0.2 } }} className="mt-6 p-4 bg-brand-accent rounded-lg">
+                <motion.div className="mt-6 p-4 bg-brand-accent rounded-lg" {...{ initial: { opacity: 0, y: 10 }, animate: { opacity: 1, y: 0 }, transition: { delay: 0.2 } } as any}>
                     <p className="font-semibold text-brand-dark">{feedback}</p>
                     <button onClick={onClickNext} className="mt-4 bg-brand-primary text-white font-bold py-2 px-6 rounded-full shadow-lg hover:bg-opacity-90 transform hover:scale-105 transition-all duration-300">
                         {activeQuestion === questions.length - 1 ? 'Finish Quiz' : 'Next Question'}

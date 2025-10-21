@@ -331,7 +331,7 @@ describe('Advanced Test Scenarios', () => {
 
     it('should navigate with keyboard', () => {
       // Tab through elements
-      cy.get('body').tab();
+      cy.get('body').trigger('keydown', { key: 'Tab' });
       cy.focused().should('be.visible');
       
       // Press Enter on focused element
