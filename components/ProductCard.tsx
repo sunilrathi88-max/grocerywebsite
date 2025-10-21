@@ -61,8 +61,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onToggl
             alt={product.name}
             width={400}
             height={300}
-            loading="lazy"
-            onError={handleImageError}
           />
           {/* Dark Overlay on Hover */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-black/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -106,10 +104,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onToggl
         
         {/* Wishlist Button - Enhanced */}
         <motion.button
-          {...{ whileTap: { scale: 1.2 } }}
-          onClick={() => onToggleWishlist(product)}
-          className="absolute top-4 right-4 bg-white/90 backdrop-blur-md p-3 rounded-full text-gray-700 hover:text-red-500 hover:bg-white shadow-lg hover:shadow-xl transition-all duration-300 z-10 group/heart"
-          aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
+          {...{
+            whileTap: { scale: 1.2 },
+            onClick: () => onToggleWishlist(product),
+            className: "absolute top-4 right-4 bg-white/90 backdrop-blur-md p-3 rounded-full text-gray-700 hover:text-red-500 hover:bg-white shadow-lg hover:shadow-xl transition-all duration-300 z-10 group/heart",
+            'aria-label': isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'
+          } as any}
         >
           <HeartIcon className={`h-6 w-6 transition-all duration-300 ${isWishlisted ? 'text-red-500 fill-current scale-110' : 'fill-transparent stroke-current group-hover/heart:scale-110'}`} />
         </motion.button>

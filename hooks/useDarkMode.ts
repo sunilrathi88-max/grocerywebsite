@@ -3,6 +3,9 @@ import { useState, useEffect } from 'react';
 export const useDarkMode = () => {
   // Check if user has a saved preference, otherwise use system preference
   const [darkMode, setDarkMode] = useState(() => {
+    // Check if we're in a browser environment
+    if (typeof window === 'undefined') return false;
+    
     const savedMode = localStorage.getItem('darkMode');
     if (savedMode !== null) {
       return savedMode === 'true';

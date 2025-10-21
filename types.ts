@@ -6,6 +6,7 @@ export interface Review {
   rating: number;
   comment: string;
   verifiedPurchase?: boolean;
+  date?: string;
 }
 
 export interface QnA {
