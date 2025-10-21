@@ -65,10 +65,10 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, searchQuery, o
             animate: { opacity: 1 },
             exit: { opacity: 0 },
             transition: { duration: 0.3 },
-          }}
-          className="fixed inset-0 bg-black bg-opacity-50 z-[80]"
-          onClick={onClose}
-          aria-hidden="true"
+            className: "fixed inset-0 bg-black bg-opacity-50 z-[80]",
+            onClick: onClose,
+            'aria-hidden': "true"
+          } as any}
         />,
         <motion.div
           key="menu"
@@ -79,11 +79,11 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, searchQuery, o
             exit: "hidden",
             variants: menuVariants,
             transition: { type: 'spring', stiffness: 300, damping: 30 },
-          }}
-          className="fixed top-0 left-0 h-full w-full max-w-sm bg-white shadow-xl z-[90] flex flex-col"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="mobile-menu-title"
+            className: "fixed top-0 left-0 h-full w-full max-w-sm bg-white shadow-xl z-[90] flex flex-col",
+            role: "dialog",
+            'aria-modal': "true",
+            'aria-labelledby': "mobile-menu-title"
+          } as any}
         >
           <div className="flex items-center justify-between p-4 border-b">
             <h2 id="mobile-menu-title" className="text-2xl font-serif font-bold text-brand-dark">Menu</h2>
@@ -111,11 +111,11 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, searchQuery, o
                   variants: navItemVariants,
                   initial: "hidden",
                   animate: "visible",
-                }}
-                key={link.name}
-                href={link.href}
-                className="text-2xl font-serif text-brand-dark hover:text-brand-primary transition-colors"
-                onClick={onClose}
+                  key: link.name,
+                  href: link.href,
+                  className: "text-2xl font-serif text-brand-dark hover:text-brand-primary transition-colors",
+                  onClick: onClose
+                } as any}
               >
                 {link.name}
               </motion.a>
