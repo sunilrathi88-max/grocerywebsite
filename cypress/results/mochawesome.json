@@ -1,0 +1,202 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 5,
+    "passes": 0,
+    "pending": 0,
+    "failures": 5,
+    "start": "2025-10-20T13:04:13.253Z",
+    "end": "2025-10-20T13:08:48.898Z",
+    "duration": 275645,
+    "testsRegistered": 5,
+    "passPercent": 0,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "b863c792-db8b-463e-8189-8bc554bf5537",
+      "title": "",
+      "fullFile": "cypress\\e2e\\01-dropdown-navigation.cy.ts",
+      "file": "cypress\\e2e\\01-dropdown-navigation.cy.ts",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "83b9949b-8b84-42dc-9718-836dbd1f34ee",
+          "title": "Products Dropdown Navigation",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should display dropdown on hover",
+              "fullTitle": "Products Dropdown Navigation should display dropdown on hover",
+              "timedOut": null,
+              "duration": 8158,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.get('header').within(() => {\n    cy.contains('Products').trigger('mouseover');\n});\ncy.get('[class*=\"dropdown\"]', { timeout: 5000 })\n    .should('be.visible')\n    .and('contain.text', 'Spices');",
+              "err": {
+                "message": "AssertionError: Timed out retrying after 5000ms: Expected to find element: `[class*=\"dropdown\"]`, but never found it.",
+                "estack": "AssertionError: Timed out retrying after 5000ms: Expected to find element: `[class*=\"dropdown\"]`, but never found it.\n    at Context.eval (webpack://tattva-co.---indian-gourmet-products/./cypress/e2e/01-dropdown-navigation.cy.ts:19:7)",
+                "diff": null
+              },
+              "uuid": "338455e6-ef42-4829-803c-92b50e40be52",
+              "parentUUID": "83b9949b-8b84-42dc-9718-836dbd1f34ee",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should keep dropdown open when moving mouse into it",
+              "fullTitle": "Products Dropdown Navigation should keep dropdown open when moving mouse into it",
+              "timedOut": null,
+              "duration": 14392,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "// Hover over Products button\ncy.get('header').within(() => {\n    cy.contains('Products').trigger('mouseover');\n});\n// Wait for dropdown to appear\ncy.get('[class*=\"dropdown\"]').should('be.visible');\n// Move mouse into dropdown area\ncy.get('[class*=\"dropdown\"]').trigger('mouseover');\n// Wait 400ms (more than the 300ms delay)\ncy.wait(400);\n// Dropdown should still be visible\ncy.get('[class*=\"dropdown\"]').should('be.visible');",
+              "err": {
+                "message": "AssertionError: Timed out retrying after 10000ms: Expected to find element: `[class*=\"dropdown\"]`, but never found it.",
+                "estack": "AssertionError: Timed out retrying after 10000ms: Expected to find element: `[class*=\"dropdown\"]`, but never found it.\n    at Context.eval (webpack://tattva-co.---indian-gourmet-products/./cypress/e2e/01-dropdown-navigation.cy.ts:30:34)",
+                "diff": null
+              },
+              "uuid": "243a50cd-02ce-4aa9-847c-6c88630c5951",
+              "parentUUID": "83b9949b-8b84-42dc-9718-836dbd1f34ee",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should navigate to category when clicked",
+              "fullTitle": "Products Dropdown Navigation should navigate to category when clicked",
+              "timedOut": null,
+              "duration": 14070,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "// Hover and click Spices category\ncy.get('header').within(() => {\n    cy.contains('Products').trigger('mouseover');\n});\ncy.get('[class*=\"dropdown\"]').within(() => {\n    cy.contains('Spices').click();\n});\n// Verify URL or page state changed\ncy.url().should('include', '#');\n// Verify products are filtered\ncy.get('.product-card').should('have.length.at.least', 1);",
+              "err": {
+                "message": "AssertionError: Timed out retrying after 10000ms: Expected to find element: `[class*=\"dropdown\"]`, but never found it.",
+                "estack": "AssertionError: Timed out retrying after 10000ms: Expected to find element: `[class*=\"dropdown\"]`, but never found it.\n    at Context.eval (webpack://tattva-co.---indian-gourmet-products/./cypress/e2e/01-dropdown-navigation.cy.ts:48:7)",
+                "diff": null
+              },
+              "uuid": "3b5e352f-6409-4cd8-9607-3770e2514b79",
+              "parentUUID": "83b9949b-8b84-42dc-9718-836dbd1f34ee",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should test all categories",
+              "fullTitle": "Products Dropdown Navigation should test all categories",
+              "timedOut": null,
+              "duration": 13312,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "const categories = ['Spices', 'Nuts', 'Dry Fruits', 'Beverages'];\ncategories.forEach(category => {\n    cy.get('header').within(() => {\n        cy.contains('Products').trigger('mouseover');\n    });\n    cy.get('[class*=\"dropdown\"]').within(() => {\n        cy.contains(category).should('be.visible');\n    });\n    // Reset for next iteration\n    cy.get('body').click(0, 0);\n    cy.wait(500);\n});",
+              "err": {
+                "message": "AssertionError: Timed out retrying after 10000ms: Expected to find element: `[class*=\"dropdown\"]`, but never found it.",
+                "estack": "AssertionError: Timed out retrying after 10000ms: Expected to find element: `[class*=\"dropdown\"]`, but never found it.\n    at eval (webpack://tattva-co.---indian-gourmet-products/./cypress/e2e/01-dropdown-navigation.cy.ts:67:9)\nat Array.forEach (<anonymous>)\n    at Context.eval (webpack://tattva-co.---indian-gourmet-products/./cypress/e2e/01-dropdown-navigation.cy.ts:62:15)",
+                "diff": null
+              },
+              "uuid": "d8f0d748-5c26-47b4-bfa6-d6b58b746a9d",
+              "parentUUID": "83b9949b-8b84-42dc-9718-836dbd1f34ee",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should close dropdown when clicking outside",
+              "fullTitle": "Products Dropdown Navigation should close dropdown when clicking outside",
+              "timedOut": null,
+              "duration": 12882,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.get('header').within(() => {\n    cy.contains('Products').trigger('mouseover');\n});\ncy.get('[class*=\"dropdown\"]').should('be.visible');\n// Click outside\ncy.get('body').click(0, 0);\n// Dropdown should close\ncy.get('[class*=\"dropdown\"]').should('not.be.visible');",
+              "err": {
+                "message": "AssertionError: Timed out retrying after 10000ms: Expected to find element: `[class*=\"dropdown\"]`, but never found it.",
+                "estack": "AssertionError: Timed out retrying after 10000ms: Expected to find element: `[class*=\"dropdown\"]`, but never found it.\n    at Context.eval (webpack://tattva-co.---indian-gourmet-products/./cypress/e2e/01-dropdown-navigation.cy.ts:82:34)",
+                "diff": null
+              },
+              "uuid": "4acee903-251a-4da6-a5e1-d707bed8ee57",
+              "parentUUID": "83b9949b-8b84-42dc-9718-836dbd1f34ee",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "338455e6-ef42-4829-803c-92b50e40be52",
+            "243a50cd-02ce-4aa9-847c-6c88630c5951",
+            "3b5e352f-6409-4cd8-9607-3770e2514b79",
+            "d8f0d748-5c26-47b4-bfa6-d6b58b746a9d",
+            "4acee903-251a-4da6-a5e1-d707bed8ee57"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 62814,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/results",
+        "overwrite": false,
+        "html": true,
+        "json": true,
+        "charts": true
+      },
+      "version": "6.3.0"
+    }
+  }
+}

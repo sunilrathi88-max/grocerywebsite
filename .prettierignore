@@ -1,0 +1,12 @@
+node_modules
+dist
+build
+coverage
+.vscode
+.git
+*.min.js
+*.min.css
+package-lock.json
+cypress/videos
+cypress/screenshots
+cypress/results
