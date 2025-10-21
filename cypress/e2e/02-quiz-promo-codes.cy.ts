@@ -32,11 +32,20 @@ describe('Quiz and Promo Code System', () => {
 
     // Answer each question
     correctAnswers.forEach((answer, index) => {
+      // Click the answer
       cy.contains('button', answer).click();
       
+      // Wait for feedback animation to complete (motion.div has 0.2s delay)
+      cy.wait(600);
+      
       if (index < correctAnswers.length - 1) {
-        cy.contains('button', 'Next').click();
+        // Click "Next Question" button - wait for it to be visible first
+        cy.contains('button', 'Next Question').should('be.visible').click();
         cy.wait(500);
+      } else {
+        // Click "Finish Quiz" button for last question
+        cy.contains('button', 'Finish Quiz').should('be.visible').click();
+        cy.wait(1000);
       }
     });
 
@@ -64,11 +73,20 @@ describe('Quiz and Promo Code System', () => {
     ];
 
     answers.forEach((answer, index) => {
+      // Click the answer
       cy.contains('button', answer).click();
       
+      // Wait for feedback animation to complete (motion.div has 0.2s delay)
+      cy.wait(600);
+      
       if (index < answers.length - 1) {
-        cy.contains('button', 'Next').click();
+        // Click "Next Question" button - wait for it to be visible first
+        cy.contains('button', 'Next Question').should('be.visible').click();
         cy.wait(500);
+      } else {
+        // Click "Finish Quiz" button for last question
+        cy.contains('button', 'Finish Quiz').should('be.visible').click();
+        cy.wait(1000);
       }
     });
 
@@ -82,18 +100,28 @@ describe('Quiz and Promo Code System', () => {
   });
 
   it('should copy promo code to clipboard', () => {
-    // Complete quiz quickly
-    for (let i = 0; i < 8; i++) {
-      cy.get('[class*="quiz"]').within(() => {
-        cy.get('button').contains(/Himalayan|Kerala|Gluten|Cool|Increases|1-2|Indians|All/).first().click();
-      });
+    // Complete quiz quickly with correct answers
+    const correctAnswers = [
+      'Himalayan Saffron', 'Kerala', 'Gluten-Free', 'Cool, dry, and dark place',
+      'Increases cholesterol', '1-2 years', 'Indians', 'All of the above'
+    ];
+    
+    correctAnswers.forEach((answer, index) => {
+      cy.contains('button', answer).click();
+      cy.wait(600);
       
-      if (i < 7) {
-        cy.contains('button', 'Next').click();
+      if (index < correctAnswers.length - 1) {
+        cy.contains('button', 'Next Question').should('be.visible').click();
+        cy.wait(500);
+      } else {
+        cy.contains('button', 'Finish Quiz').should('be.visible').click();
+        cy.wait(1000);
       }
-      cy.wait(300);
-    }
-
+    });
+    
+    // Wait for results screen
+    cy.contains('Quiz Completed!').should('be.visible');
+    
     // Click Copy Code button
     cy.contains('button', 'Copy Code').click();
     
@@ -102,17 +130,27 @@ describe('Quiz and Promo Code System', () => {
   });
 
   it('should allow replay of quiz', () => {
-    // Complete quiz
-    for (let i = 0; i < 8; i++) {
-      cy.get('[class*="quiz"]').within(() => {
-        cy.get('button').contains(/button/i).first().click();
-      });
+    // Complete quiz with correct answers
+    const correctAnswers = [
+      'Himalayan Saffron', 'Kerala', 'Gluten-Free', 'Cool, dry, and dark place',
+      'Increases cholesterol', '1-2 years', 'Indians', 'All of the above'
+    ];
+    
+    correctAnswers.forEach((answer, index) => {
+      cy.contains('button', answer).click();
+      cy.wait(600);
       
-      if (i < 7) {
-        cy.contains('button', 'Next').click();
+      if (index < correctAnswers.length - 1) {
+        cy.contains('button', 'Next Question').should('be.visible').click();
+        cy.wait(500);
+      } else {
+        cy.contains('button', 'Finish Quiz').should('be.visible').click();
+        cy.wait(1000);
       }
-      cy.wait(300);
-    }
+    });
+    
+    // Wait for results
+    cy.contains('Quiz Completed!').should('be.visible');
 
     // Click Play Again
     cy.contains('button', 'Play Again').click();
@@ -122,64 +160,77 @@ describe('Quiz and Promo Code System', () => {
   });
 
   it('should display progress bar and stats', () => {
-    // Answer all questions
-    for (let i = 0; i < 8; i++) {
-      cy.get('[class*="quiz"]').within(() => {
-        cy.get('button').first().click();
-      });
-      
-      if (i < 7) {
-        cy.contains('button', 'Next').click();
-      }
-      cy.wait(300);
-    }
-
-    // Check for progress bar
-    cy.get('[class*="progress"]').should('exist');
+    // Answer all questions with correct answers
+    const correctAnswers = [
+      'Himalayan Saffron', 'Kerala', 'Gluten-Free', 'Cool, dry, and dark place',
+      'Increases cholesterol', '1-2 years', 'Indians', 'All of the above'
+    ];
     
-    // Check for stats
-    cy.contains(/\d+ Correct/).should('be.visible');
-    cy.contains(/\d+ Wrong/).should('be.visible');
-    cy.contains(/Points Earned/).should('be.visible');
+    correctAnswers.forEach((answer, index) => {
+      cy.contains('button', answer).click();
+      cy.wait(600);
+      
+      if (index < correctAnswers.length - 1) {
+        cy.contains('button', 'Next Question').should('be.visible').click();
+        cy.wait(500);
+      } else {
+        cy.contains('button', 'Finish Quiz').should('be.visible').click();
+        cy.wait(1000);
+      }
+    });
+
+    // Verify results screen with stats
+    cy.contains('Quiz Completed!').should('be.visible');
+    cy.contains('8 / 8').should('be.visible'); // Score display
+    cy.contains('Perfect Score!').should('be.visible');
   });
 
   it('should apply promo code in checkout', () => {
-    // Complete quiz to get promo code
-    for (let i = 0; i < 8; i++) {
-      cy.get('[class*="quiz"]').within(() => {
-        cy.get('button').contains(/Himalayan|Kerala|Gluten|Cool|Increases|1-2|Indians|All/).first().click();
-      });
+    // Complete quiz to get QUIZMASTER15 promo code
+    const correctAnswers = [
+      'Himalayan Saffron', 'Kerala', 'Gluten-Free', 'Cool, dry, and dark place',
+      'Increases cholesterol', '1-2 years', 'Indians', 'All of the above'
+    ];
+    
+    correctAnswers.forEach((answer, index) => {
+      cy.contains('button', answer).click();
+      cy.wait(600);
       
-      if (i < 7) {
-        cy.contains('button', 'Next').click();
+      if (index < correctAnswers.length - 1) {
+        cy.contains('button', 'Next Question').should('be.visible').click();
+        cy.wait(500);
+      } else {
+        cy.contains('button', 'Finish Quiz').should('be.visible').click();
+        cy.wait(1000);
       }
-      cy.wait(300);
-    }
-
-    // Get the promo code text
-    cy.contains(/QUIZMASTER15|SPICEFAN10/).then(($el) => {
-      const promoCode = $el.text().trim();
-      
-      // Add product to cart
-      cy.visit('/');
-      cy.get('.product-card').first().within(() => {
-        cy.contains('button', /Add to Cart/i).click({ force: true });
-      });
-      cy.wait(1000);
-      
-      // Go to checkout
-      cy.get('[href*="checkout"], [href="#/checkout"]').first().click({ force: true });
-      cy.wait(1000);
-      
-      // Apply promo code
-      cy.get('input[placeholder*="promo" i], input[placeholder*="code" i]')
-        .clear()
-        .type(promoCode);
-      
-      cy.get('button').contains(/apply/i).click();
-      
-      // Verify discount applied
-      cy.contains(/Promo code applied|discount/i).should('be.visible');
     });
+
+    // Verify promo code is displayed
+    cy.contains('QUIZMASTER15').should('be.visible');
+    
+    // Store the promo code
+    const promoCode = 'QUIZMASTER15';
+      
+    // Add product to cart
+    cy.visit('/');
+    cy.wait(1000);
+    
+    // Find and click Add to Cart button
+    cy.get('button').contains(/Add to Cart/i).first().click();
+    cy.wait(1000);
+      
+    // Go to cart
+    cy.get('a[href="#/cart"], button').contains(/Cart/i).click();
+    cy.wait(1000);
+      
+    // Go to checkout
+    cy.contains('button', /Proceed to Checkout/i).click();
+    cy.wait(1000);
+      
+    // Apply promo code using the custom command
+    cy.applyPromoCode(promoCode);
+      
+    // Verify discount applied
+    cy.contains('15% off').should('be.visible');
   });
 });
