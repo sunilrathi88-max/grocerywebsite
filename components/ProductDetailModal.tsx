@@ -1,6 +1,7 @@
 import React, { useState, useRef, useMemo, useEffect } from 'react';
 import { Product, Review, ToastMessage, Variant, QnA as QnAType } from '../types';
 import { XIcon } from './icons/XIcon';
+import { OptimizedImage } from './OptimizedImage';
 import ReviewList from './ReviewList';
 import ReviewForm from './ReviewForm';
 import Breadcrumbs from './Breadcrumbs';
@@ -205,13 +206,14 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product, allPro
                 onMouseLeave={activeMedia?.type === 'image' ? handleMouseLeave : undefined}
               >
                 {activeMedia?.type === 'image' ? (
-                  <img 
-                    ref={imageRef}
+                  <OptimizedImage 
                     src={activeMedia.url} 
                     alt={product.name} 
                     className="w-full h-auto object-cover aspect-square rounded-lg shadow-md transition-transform duration-300 ease-in-out group-hover:scale-150"
-                    style={zoomStyle}
-                    loading="lazy"
+                    type="detail"
+                    priority="high"
+                    width={800}
+                    height={800}
                     onError={handleMainImageError}
                   />
                 ) : activeMedia?.type === 'video' ? (
@@ -249,7 +251,16 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product, allPro
                             className={`relative w-16 h-16 rounded-md overflow-hidden border-2 transition-colors ${activeIndex === idx ? 'border-brand-primary' : 'border-transparent hover:border-brand-primary/50'}`}
                             aria-label={`View ${item.type} ${idx + 1}`}
                         >
-                            <img src={item.thumb} alt={`${product.name} thumbnail ${idx+1}`} className="w-full h-full object-cover" onError={handleThumbImageError} />
+                            <OptimizedImage 
+                              src={item.thumb} 
+                              alt={`${product.name} thumbnail ${idx+1}`} 
+                              className="w-full h-full object-cover" 
+                              type="thumbnail"
+                              priority="high"
+                              width={64}
+                              height={64}
+                              onError={handleThumbImageError} 
+                            />
                             {item.type === 'video' && (<div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center"><PlayIcon className="h-8 w-8 text-white drop-shadow-lg" /></div>)}
                         </button>
                     ))}
@@ -489,13 +500,37 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product, allPro
               <h3 className="text-xl font-serif font-bold text-brand-dark mb-6">Frequently Bought Together</h3>
               <div className="flex flex-col items-center gap-4">
                 <div className="flex items-center justify-center flex-wrap gap-4">
-                  <div className="text-center w-24"><img src={product.images[0]} alt={product.name} className="w-24 h-24 object-cover rounded-lg shadow-md" onError={handleThumbImageError} /><p className="text-xs mt-1 font-bold truncate">{product.name}</p></div>
+                  <div className="text-center w-24">
+                    <OptimizedImage 
+                      src={product.images[0]} 
+                      alt={product.name} 
+                      className="w-24 h-24 object-cover rounded-lg shadow-md" 
+                      type="thumbnail"
+                      priority="auto"
+                      width={96}
+                      height={96}
+                      onError={handleThumbImageError} 
+                    />
+                    <p className="text-xs mt-1 font-bold truncate">{product.name}</p>
+                  </div>
                   {frequentlyBoughtTogetherProducts.map(p => (
                     <div key={p.id} className="flex items-center gap-4">
                       <span className="text-2xl font-light text-gray-400">+</span>
                       <div className="flex items-center gap-2">
                          <input type="checkbox" id={`fbt-${p.id}`} checked={fbtSelection.includes(p.id)} onChange={() => handleToggleFbt(p.id)} className="h-4 w-4 text-brand-primary border-gray-300 rounded focus:ring-brand-primary"/>
-                         <label htmlFor={`fbt-${p.id}`} className="text-center w-24 cursor-pointer"><img src={p.images[0]} alt={p.name} className="w-24 h-24 object-cover rounded-lg shadow-md" onError={handleThumbImageError} /><p className="text-xs mt-1 font-bold truncate">{p.name}</p></label>
+                         <label htmlFor={`fbt-${p.id}`} className="text-center w-24 cursor-pointer">
+                           <OptimizedImage 
+                             src={p.images[0]} 
+                             alt={p.name} 
+                             className="w-24 h-24 object-cover rounded-lg shadow-md" 
+                             type="thumbnail"
+                             priority="auto"
+                             width={96}
+                             height={96}
+                             onError={handleThumbImageError} 
+                           />
+                           <p className="text-xs mt-1 font-bold truncate">{p.name}</p>
+                         </label>
                       </div>
                     </div>
                   ))}
