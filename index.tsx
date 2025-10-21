@@ -6,7 +6,7 @@ import { initGA } from './utils/analytics';
 import './animations.css';
 
 // Initialize Google Analytics if measurement ID is provided
-const gaId = import.meta.env.VITE_GA_MEASUREMENT_ID;
+const gaId = (import.meta as any).env?.VITE_GA_MEASUREMENT_ID;
 if (gaId && gaId !== 'G-XXXXXXXXXX') {
   initGA(gaId);
   console.log('📊 Google Analytics initialized');
