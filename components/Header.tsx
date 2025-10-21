@@ -4,12 +4,15 @@ import { HeartIcon } from './icons/HeartIcon';
 import { MenuIcon } from './icons/MenuIcon';
 import { UserIcon } from './icons/UserIcon';
 import { CogIcon } from './icons/CogIcon';
+import { MoonIcon } from './icons/MoonIcon';
+import { SunIcon } from './icons/SunIcon';
 import { Product, CartItem } from '../types';
 import MiniCart from './MiniCart';
 import { ChevronDownIcon } from './icons/ChevronDownIcon';
 import { ChevronRightIcon } from './icons/ChevronRightIcon';
 import { TagIcon } from './icons/TagIcon';
 import { imageErrorHandlers } from '../utils/imageHelpers';
+import { useDarkMode } from '../hooks/useDarkMode';
 
 interface HeaderProps {
     cartItems: CartItem[];
@@ -51,6 +54,7 @@ const Header: React.FC<HeaderProps> = ({
   const [isAutocompleteOpen, setAutocompleteOpen] = useState(false);
   const [isMiniCartOpen, setMiniCartOpen] = useState(false);
   const [isProductsOpen, setProductsOpen] = useState(false);
+  const [darkMode, setDarkMode] = useDarkMode();
   const searchContainerRef = useRef<HTMLDivElement>(null);
   
   const cartItemCount = useMemo(() => cartItems.reduce((total, item) => total + item.quantity, 0), [cartItems]);
@@ -103,16 +107,16 @@ const Header: React.FC<HeaderProps> = ({
   };
 
   return (
-    <header className="bg-brand-light/80 backdrop-blur-lg border-b border-gray-200 fixed top-0 w-full z-50 shadow-sm">
+    <header className="bg-brand-light/80 dark:bg-gray-800/80 backdrop-blur-lg border-b border-gray-200 dark:border-gray-700 fixed top-0 w-full z-50 shadow-sm transition-colors duration-300">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           <div className="flex-shrink-0">
-            <a href="#/" className="text-3xl font-serif font-bold text-brand-dark">
+            <a href="#/" className="text-3xl font-serif font-bold text-brand-dark dark:text-gray-100 transition-colors duration-300">
               Tattva Co.
             </a>
           </div>
           <nav className="hidden md:flex items-center space-x-8">
-            <a href="#/" className="text-brand-dark hover:text-brand-primary transition-colors duration-300">Home</a>
+            <a href="#/" className="text-brand-dark dark:text-gray-100 hover:text-brand-primary dark:hover:text-brand-primary transition-colors duration-300">Home</a>
             <div className="relative" onMouseEnter={handleProductsEnter} onMouseLeave={handleProductsLeave}>
               <button className="flex items-center gap-1 text-brand-dark hover:text-brand-primary transition-colors duration-300">
                   Products <ChevronDownIcon className="h-4 w-4" />
@@ -272,11 +276,18 @@ const Header: React.FC<HeaderProps> = ({
             </div>
             {isLoggedIn && (
                 <>
-                  {isAdmin && ( <a href="#/admin" className="relative p-2 rounded-full text-brand-dark hover:bg-brand-secondary/30 transition-colors" aria-label="Admin Dashboard"><CogIcon className="h-6 w-6" /></a>)}
-                  <a href="#/profile" className="relative p-2 rounded-full text-brand-dark hover:bg-brand-secondary/30 transition-colors" aria-label="User Profile"><UserIcon className="h-6 w-6" /></a>
+                  {isAdmin && ( <a href="#/admin" className="relative p-2 rounded-full text-brand-dark dark:text-gray-100 hover:bg-brand-secondary/30 dark:hover:bg-gray-700 transition-colors" aria-label="Admin Dashboard"><CogIcon className="h-6 w-6" /></a>)}
+                  <a href="#/profile" className="relative p-2 rounded-full text-brand-dark dark:text-gray-100 hover:bg-brand-secondary/30 dark:hover:bg-gray-700 transition-colors" aria-label="User Profile"><UserIcon className="h-6 w-6" /></a>
                 </>
             )}
-            <button onClick={onWishlistClick} className="relative p-2 rounded-full text-brand-dark hover:bg-brand-secondary/30 transition-colors" aria-label={`View your wishlist (${wishlistItemCount} items)`}>
+            <button 
+              onClick={() => setDarkMode(!darkMode)} 
+              className="relative p-2 rounded-full text-brand-dark dark:text-gray-100 hover:bg-brand-secondary/30 dark:hover:bg-gray-700 transition-all duration-300" 
+              aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+            >
+              {darkMode ? <SunIcon className="h-6 w-6" /> : <MoonIcon className="h-6 w-6" />}
+            </button>
+            <button onClick={onWishlistClick} className="relative p-2 rounded-full text-brand-dark dark:text-gray-100 hover:bg-brand-secondary/30 dark:hover:bg-gray-700 transition-colors" aria-label={`View your wishlist (${wishlistItemCount} items)`}>
               <HeartIcon className="h-6 w-6" />
                {wishlistItemCount > 0 && (<span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-brand-primary text-white text-xs font-bold">{wishlistItemCount}</span>)}
             </button>

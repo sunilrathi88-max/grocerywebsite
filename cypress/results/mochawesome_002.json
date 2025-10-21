@@ -1,0 +1,187 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 5,
+    "passes": 4,
+    "pending": 0,
+    "failures": 1,
+    "start": "2025-10-20T13:14:22.693Z",
+    "end": "2025-10-20T13:15:36.691Z",
+    "duration": 73998,
+    "testsRegistered": 5,
+    "passPercent": 80,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "c4b7206b-3e05-41ba-bc63-dbc92d2a2c84",
+      "title": "",
+      "fullFile": "cypress\\e2e\\01-dropdown-navigation.cy.ts",
+      "file": "cypress\\e2e\\01-dropdown-navigation.cy.ts",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "9df8da89-4a4a-4f6a-a8e7-50c118ed7126",
+          "title": "Products Dropdown Navigation",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should display dropdown on hover",
+              "fullTitle": "Products Dropdown Navigation should display dropdown on hover",
+              "timedOut": null,
+              "duration": 5408,
+              "state": "passed",
+              "speed": "medium",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Hover over the Products button\ncy.get('header nav')\n    .contains('button', 'Products')\n    .trigger('mouseover');\n// Dropdown menu should appear with categories\ncy.get('header nav div.absolute')\n    .should('be.visible')\n    .and('contain.text', 'Spices');",
+              "err": {},
+              "uuid": "b27b85d3-66a4-4767-a8fc-f3a1e74d3d40",
+              "parentUUID": "9df8da89-4a4a-4f6a-a8e7-50c118ed7126",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should keep dropdown open when moving mouse into it",
+              "fullTitle": "Products Dropdown Navigation should keep dropdown open when moving mouse into it",
+              "timedOut": null,
+              "duration": 4130,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Hover over Products button\ncy.get('header nav')\n    .contains('button', 'Products')\n    .trigger('mouseover');\n// Wait for dropdown to appear\ncy.get('header nav div.absolute').should('be.visible');\n// Move mouse into dropdown area\ncy.get('header nav div.absolute').trigger('mouseover');\n// Wait 400ms (more than the 300ms delay)\ncy.wait(400);\n// Dropdown should still be visible\ncy.get('header nav div.absolute').should('be.visible');",
+              "err": {},
+              "uuid": "5af03eaa-a3d4-4b99-a19e-eb51726b4971",
+              "parentUUID": "9df8da89-4a4a-4f6a-a8e7-50c118ed7126",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should navigate to category when clicked",
+              "fullTitle": "Products Dropdown Navigation should navigate to category when clicked",
+              "timedOut": null,
+              "duration": 4544,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Hover and click Spices category\ncy.get('header nav')\n    .contains('button', 'Products')\n    .trigger('mouseover');\ncy.get('header nav div.absolute').within(() => {\n    cy.contains('button', 'Spices').click();\n});\n// Wait for navigation and filtering\ncy.wait(1000);\n// Verify products section is visible\ncy.get('#products-section').should('be.visible');",
+              "err": {},
+              "uuid": "1f9bca3c-73e8-4cfe-80b2-5d9966d89389",
+              "parentUUID": "9df8da89-4a4a-4f6a-a8e7-50c118ed7126",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should test all categories",
+              "fullTitle": "Products Dropdown Navigation should test all categories",
+              "timedOut": null,
+              "duration": 5875,
+              "state": "passed",
+              "speed": "medium",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const categories = ['Spices', 'Nuts', 'Dry Fruits', 'Beverages'];\ncategories.forEach(category => {\n    cy.get('header nav')\n        .contains('button', 'Products')\n        .trigger('mouseover');\n    cy.get('header nav div.absolute').within(() => {\n        cy.contains('button', category).should('be.visible');\n    });\n    // Reset for next iteration\n    cy.get('body').click(0, 0);\n    cy.wait(500);\n});",
+              "err": {},
+              "uuid": "0714459f-fbc1-4e3e-9787-f8d2a0c52ede",
+              "parentUUID": "9df8da89-4a4a-4f6a-a8e7-50c118ed7126",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should close dropdown when clicking outside",
+              "fullTitle": "Products Dropdown Navigation should close dropdown when clicking outside",
+              "timedOut": null,
+              "duration": 13708,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.get('header nav')\n    .contains('button', 'Products')\n    .trigger('mouseover');\ncy.get('header nav div.absolute').should('be.visible');\n// Move mouse away from dropdown\ncy.get('header nav')\n    .contains('button', 'Products')\n    .trigger('mouseleave');\n// Wait for close delay (300ms)\ncy.wait(400);\n// Dropdown should not exist in DOM\ncy.get('header nav div.absolute').should('not.exist');",
+              "err": {
+                "message": "AssertionError: Timed out retrying after 10000ms: Expected <div.absolute.top-full.mt-2.w-48.bg-white.rounded-lg.shadow-lg.border.z-10.animate-fade-in-fast> not to exist in the DOM, but it was continuously found.",
+                "estack": "AssertionError: Timed out retrying after 10000ms: Expected <div.absolute.top-full.mt-2.w-48.bg-white.rounded-lg.shadow-lg.border.z-10.animate-fade-in-fast> not to exist in the DOM, but it was continuously found.\n    at Context.eval (webpack://tattva-co.---indian-gourmet-products/./cypress/e2e/01-dropdown-navigation.cy.ts:95:38)",
+                "diff": null
+              },
+              "uuid": "6d136d29-e275-4df7-8b1d-46ffdcf2996e",
+              "parentUUID": "9df8da89-4a4a-4f6a-a8e7-50c118ed7126",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "b27b85d3-66a4-4767-a8fc-f3a1e74d3d40",
+            "5af03eaa-a3d4-4b99-a19e-eb51726b4971",
+            "1f9bca3c-73e8-4cfe-80b2-5d9966d89389",
+            "0714459f-fbc1-4e3e-9787-f8d2a0c52ede"
+          ],
+          "failures": [
+            "6d136d29-e275-4df7-8b1d-46ffdcf2996e"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 33665,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/results",
+        "overwrite": false,
+        "html": true,
+        "json": true,
+        "charts": true
+      },
+      "version": "6.3.0"
+    }
+  }
+}
