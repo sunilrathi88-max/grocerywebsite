@@ -6,6 +6,7 @@ import { FacebookIcon } from './icons/FacebookIcon';
 import { TwitterIcon } from './icons/TwitterIcon';
 import { PinterestIcon } from './icons/PinterestIcon';
 import { InstagramIcon } from './icons/InstagramIcon';
+import TrustBadges from './TrustBadges';
 
 interface FooterProps {
   onSelectCategory: (category: string) => void;
@@ -91,6 +92,10 @@ const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
                     <p className="text-sm text-gray-600">On orders over $50</p>
                 </div>
             </div>
+            
+            {/* Trust Badges with Payment Methods */}
+            <TrustBadges />
+            
             <div className="border-t border-gray-200 pt-8 text-center text-sm text-gray-500">
               <p>&copy; {new Date().getFullYear()} Tattva Co. All Rights Reserved.</p>
             </div>

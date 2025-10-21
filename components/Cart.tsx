@@ -6,6 +6,7 @@ import { MinusIcon } from './icons/MinusIcon';
 import { TrashIcon } from './icons/TrashIcon';
 import { ShoppingCartIcon } from './icons/ShoppingCartIcon';
 import { imageErrorHandlers } from '../utils/imageHelpers';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface CartProps {
   items: CartItem[];
@@ -78,47 +79,83 @@ const Cart: React.FC<CartProps> = ({ items, onUpdateQuantity, onClose, isLoggedI
       ) : (
         <>
           <div className="flex-grow space-y-4 pr-2 -mr-2 overflow-y-auto">
-            {items.map(item => {
-              const isItemLoading = loadingState.type === 'item' && loadingState.id === `${item.product.id}-${item.selectedVariant.id}`;
-              return (
-                <div key={`${item.product.id}-${item.selectedVariant.id}`} className="flex items-center justify-between">
-                  <div className="flex items-center gap-4">
-                    <img 
-                      src={item.product.images[0]} 
-                      alt={item.product.name} 
-                      className="w-16 h-16 object-cover rounded-md bg-gray-200" 
-                      loading="lazy"
-                      onError={imageErrorHandlers.thumb}
-                    />
-                    <div>
-                      <p className="font-bold text-brand-dark leading-tight">{item.product.name}</p>
-                      <p className="text-sm text-gray-500">{item.selectedVariant.name}</p>
-                      <p className="text-sm text-gray-500">${(item.selectedVariant.salePrice ?? item.selectedVariant.price).toFixed(2)}</p>
+            <AnimatePresence mode="popLayout">
+              {items.map(item => {
+                const isItemLoading = loadingState.type === 'item' && loadingState.id === `${item.product.id}-${item.selectedVariant.id}`;
+                return (
+                  <motion.div 
+                    key={`${item.product.id}-${item.selectedVariant.id}`} 
+                    className="flex items-center justify-between"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 20, height: 0 }}
+                    transition={{ duration: 0.3 }}
+                    layout
+                    {...({} as any)}
+                  >
+                    <div className="flex items-center gap-4">
+                      <img 
+                        src={item.product.images[0]} 
+                        alt={item.product.name} 
+                        className="w-16 h-16 object-cover rounded-md bg-gray-200" 
+                        loading="lazy"
+                        onError={imageErrorHandlers.thumb}
+                      />
+                      <div>
+                        <p className="font-bold text-brand-dark dark:text-white leading-tight">{item.product.name}</p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">{item.selectedVariant.name}</p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">${(item.selectedVariant.salePrice ?? item.selectedVariant.price).toFixed(2)}</p>
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    {isItemLoading ? (
-                        <div className="w-[140px] flex justify-center items-center">
-                            <Spinner className="h-6 w-6 text-brand-primary" />
-                        </div>
-                    ) : (
-                        <>
-                            <button onClick={() => handleQuantityChange(item, item.quantity - 1)} className="p-1 rounded-full hover:bg-gray-200 transition-colors"><MinusIcon /></button>
-                            <span className="w-8 text-center font-bold">{item.quantity}</span>
-                            <button 
-                                onClick={() => handleQuantityChange(item, item.quantity + 1)} 
-                                className="p-1 rounded-full hover:bg-gray-200 transition-colors disabled:text-gray-300 disabled:cursor-not-allowed disabled:hover:bg-transparent"
-                                disabled={item.quantity >= item.selectedVariant.stock}
-                            >
-                                <PlusIcon />
-                            </button>
-                            <button onClick={() => handleQuantityChange(item, 0)} className="p-1 rounded-full text-red-500 hover:bg-red-100 transition-colors ml-2"><TrashIcon /></button>
-                        </>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
+                    <div className="flex items-center gap-2">
+                      {isItemLoading ? (
+                          <div className="w-[140px] flex justify-center items-center">
+                              <Spinner className="h-6 w-6 text-brand-primary" />
+                          </div>
+                      ) : (
+                          <>
+                              <motion.button 
+                                onClick={() => handleQuantityChange(item, item.quantity - 1)} 
+                                className="p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                                whileTap={{ scale: 0.9 }}
+                                {...({} as any)}
+                              >
+                                <MinusIcon />
+                              </motion.button>
+                              <motion.span 
+                                className="w-8 text-center font-bold"
+                                key={item.quantity}
+                                initial={{ scale: 1.2 }}
+                                animate={{ scale: 1 }}
+                                {...({} as any)}
+                              >
+                                {item.quantity}
+                              </motion.span>
+                              <motion.button 
+                                  onClick={() => handleQuantityChange(item, item.quantity + 1)} 
+                                  className="p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors disabled:text-gray-300 disabled:cursor-not-allowed disabled:hover:bg-transparent"
+                                  disabled={item.quantity >= item.selectedVariant.stock}
+                                  whileTap={{ scale: 0.9 }}
+                                  {...({} as any)}
+                              >
+                                  <PlusIcon />
+                              </motion.button>
+                              <motion.button 
+                                onClick={() => handleQuantityChange(item, 0)} 
+                                className="p-1 rounded-full text-red-500 hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors ml-2"
+                                whileHover={{ scale: 1.1 }}
+                                whileTap={{ scale: 0.9 }}
+                                {...({} as any)}
+                              >
+                                <TrashIcon />
+                              </motion.button>
+                          </>
+                      )}
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </AnimatePresence>
           </div>
 
           <div className="mt-4">

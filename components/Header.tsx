@@ -13,6 +13,7 @@ import { ChevronRightIcon } from './icons/ChevronRightIcon';
 import { TagIcon } from './icons/TagIcon';
 import { imageErrorHandlers } from '../utils/imageHelpers';
 import { useDarkMode } from '../hooks/useDarkMode';
+import { motion } from 'framer-motion';
 
 interface HeaderProps {
     cartItems: CartItem[];
@@ -55,9 +56,20 @@ const Header: React.FC<HeaderProps> = ({
   const [isMiniCartOpen, setMiniCartOpen] = useState(false);
   const [isProductsOpen, setProductsOpen] = useState(false);
   const [darkMode, setDarkMode] = useDarkMode();
+  const [cartBounce, setCartBounce] = useState(false);
   const searchContainerRef = useRef<HTMLDivElement>(null);
+  const prevCartCountRef = useRef<number>(0);
   
   const cartItemCount = useMemo(() => cartItems.reduce((total, item) => total + item.quantity, 0), [cartItems]);
+
+  // Trigger bounce animation when cart count increases
+  useEffect(() => {
+    if (cartItemCount > prevCartCountRef.current && prevCartCountRef.current !== 0) {
+      setCartBounce(true);
+      setTimeout(() => setCartBounce(false), 600);
+    }
+    prevCartCountRef.current = cartItemCount;
+  }, [cartItemCount]);
 
   const autocompleteResults = useMemo(() => {
     if (!searchQuery) return { products: [], categories: [] };
@@ -292,10 +304,34 @@ const Header: React.FC<HeaderProps> = ({
                {wishlistItemCount > 0 && (<span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-brand-primary text-white text-xs font-bold">{wishlistItemCount}</span>)}
             </button>
             <div className="relative" onMouseEnter={handleMiniCartEnter} onMouseLeave={handleMiniCartLeave}>
-                <button onClick={onCartClick} className="relative p-2 rounded-full text-brand-dark hover:bg-brand-secondary/30 transition-colors" aria-label={`View your cart (${cartItemCount} items)`}>
-                    <ShoppingCartIcon className="h-6 w-6" />
-                    {cartItemCount > 0 && (<span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-brand-primary text-white text-xs font-bold">{cartItemCount}</span>)}
-                </button>
+                <motion.div
+                  animate={cartBounce ? { 
+                    scale: [1, 1.2, 0.9, 1.1, 1],
+                    rotate: [0, -10, 10, -5, 0]
+                  } : {}}
+                  transition={{ duration: 0.6, ease: "easeInOut" }}
+                  {...({} as any)}
+                >
+                  <button 
+                    onClick={onCartClick} 
+                    className="relative p-2 rounded-full text-brand-dark dark:text-gray-100 hover:bg-brand-secondary/30 dark:hover:bg-gray-700 transition-colors" 
+                    aria-label={`View your cart (${cartItemCount} items)`}
+                  >
+                      <ShoppingCartIcon className="h-6 w-6" />
+                      {cartItemCount > 0 && (
+                        <motion.span 
+                          className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-brand-primary text-white text-xs font-bold"
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          key={cartItemCount}
+                          transition={{ type: "spring", stiffness: 500, damping: 15 }}
+                          {...({} as any)}
+                        >
+                          {cartItemCount}
+                        </motion.span>
+                      )}
+                  </button>
+                </motion.div>
                 {isMiniCartOpen && <MiniCart items={cartItems} subtotal={subtotal} />}
             </div>
              <button onClick={isLoggedIn ? onLogoutClick : onLoginClick} className="hidden sm:block bg-brand-dark text-white font-bold py-2 px-4 rounded-full text-sm hover:bg-opacity-80 transition-colors">{isLoggedIn ? 'Logout' : 'Login'}</button>
