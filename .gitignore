@@ -22,3 +22,15 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Cypress
+cypress/results/
+cypress/screenshots/
+cypress/videos/
+.nyc_output/
+coverage/
+
+# Environment variables
+.env
+.env.local
+.env.production
