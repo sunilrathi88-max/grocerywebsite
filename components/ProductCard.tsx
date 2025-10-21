@@ -20,10 +20,6 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onToggleWishlist, isWishlisted, onSelectProduct, onToggleCompare, isCompared, onNotifyMe }) => {
-  // Debugging logs as requested
-  console.log('ProductCard props:', product);
-  console.log('Product images array:', product.images);
-  
   const placeholderImage = 'https://via.placeholder.com/400x400/F8E3D9/333333?text=Tattva+Co.';
   // Guarantee a branded fallback if remote assets fail to load.
   const handleImageError = (event: React.SyntheticEvent<HTMLImageElement>) => {
