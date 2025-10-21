@@ -5,6 +5,10 @@ import { Recipe } from './components/RecipesPage';
 // Performance Utils
 import { usePerformanceMonitoring } from './utils/performance';
 
+// SEO Utils
+import SEO from './components/SEO';
+import { pageSEO, generateOrganizationSchema, generateProductSchema } from './utils/seo';
+
 // Custom Hooks
 import { useCart } from './hooks/useCart';
 import { useWishlist } from './hooks/useWishlist';
@@ -415,6 +419,21 @@ const App: React.FC = () => {
     
     return (
         <div className="flex flex-col min-h-screen">
+            {/* SEO Meta Tags and Structured Data */}
+            <SEO
+                {...(currentView === 'home' ? pageSEO.home() : 
+                    currentView === 'recipes' ? pageSEO.recipes() :
+                    currentView === 'blog' ? pageSEO.blog() :
+                    currentView === 'about' ? pageSEO.about() :
+                    currentView === 'contact' ? pageSEO.contact() :
+                    currentView === 'faqs' ? pageSEO.home() :
+                    selectedCategory !== 'All' ? pageSEO.products(selectedCategory) :
+                    pageSEO.home()
+                )}
+                structuredData={generateOrganizationSchema()}
+                structuredDataId="organization-schema"
+            />
+            
             {showPromoBanner && <PromotionalBanner onClose={() => setShowPromoBanner(false)} />}
             <Header
                 cartItems={cartItems}
@@ -441,19 +460,27 @@ const App: React.FC = () => {
 
             {/* Modals & Overlays */}
             {selectedProduct && (
-                <ProductDetailModal
-                    product={selectedProduct}
-                    allProducts={MOCK_PRODUCTS}
-                    onClose={() => setSelectedProduct(null)}
-                    onAddToCart={handleAddToCart}
-                    onAddReview={handleAddReview}
-                    onDeleteReview={handleDeleteReview}
-                    onSelectCategoryAndClose={handleSelectCategoryAndClose}
-                    addToast={addToast}
-                    onAskQuestion={handleAskQuestion}
-                    onSelectProduct={setSelectedProduct}
-                    onNotifyMe={handleNotifyMe}
-                />
+                <>
+                    {/* Product-specific SEO */}
+                    <SEO
+                        {...pageSEO.product(selectedProduct.name, selectedProduct.description)}
+                        structuredData={generateProductSchema(selectedProduct)}
+                        structuredDataId="product-schema"
+                    />
+                    <ProductDetailModal
+                        product={selectedProduct}
+                        allProducts={MOCK_PRODUCTS}
+                        onClose={() => setSelectedProduct(null)}
+                        onAddToCart={handleAddToCart}
+                        onAddReview={handleAddReview}
+                        onDeleteReview={handleDeleteReview}
+                        onSelectCategoryAndClose={handleSelectCategoryAndClose}
+                        addToast={addToast}
+                        onAskQuestion={handleAskQuestion}
+                        onSelectProduct={setSelectedProduct}
+                        onNotifyMe={handleNotifyMe}
+                    />
+                </>
             )}
             
             {selectedRecipe && <RecipeDetailModal recipe={selectedRecipe} onClose={() => setSelectedRecipe(null)} />}
