@@ -26,8 +26,6 @@ const ProductGrid: React.FC<ProductGridProps> = ({
   isLoading,
   onNotifyMe
 }) => {
-  // Debugging log as requested
-  console.log('Product grid data:', products);
 
   if (isLoading) {
     return (
