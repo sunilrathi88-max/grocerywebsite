@@ -5,6 +5,7 @@ import { PlusIcon } from './icons/PlusIcon';
 import { MinusIcon } from './icons/MinusIcon';
 import { TrashIcon } from './icons/TrashIcon';
 import { ShoppingCartIcon } from './icons/ShoppingCartIcon';
+import { OptimizedImage } from './OptimizedImage';
 import { imageErrorHandlers } from '../utils/imageHelpers';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -94,11 +95,14 @@ const Cart: React.FC<CartProps> = ({ items, onUpdateQuantity, onClose, isLoggedI
                     {...({} as any)}
                   >
                     <div className="flex items-center gap-4">
-                      <img 
+                      <OptimizedImage 
                         src={item.product.images[0]} 
                         alt={item.product.name} 
                         className="w-16 h-16 object-cover rounded-md bg-gray-200" 
-                        loading="lazy"
+                        type="thumbnail"
+                        priority="high"
+                        width={64}
+                        height={64}
                         onError={imageErrorHandlers.thumb}
                       />
                       <div>

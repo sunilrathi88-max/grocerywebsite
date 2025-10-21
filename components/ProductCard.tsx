@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Product, Variant } from '../types';
-import { LazyImage } from './LazyImage';
+import { OptimizedImage } from './OptimizedImage';
 import { PlusIcon } from './icons/PlusIcon';
 import { HeartIcon } from './icons/HeartIcon';
 import { StarIcon } from './icons/StarIcon';
@@ -55,10 +55,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onToggl
       
       <div className="relative">
         <div className="h-72 w-full bg-gradient-to-br from-gray-100 to-gray-200 relative overflow-hidden rounded-t-2xl">
-          <LazyImage 
+          <OptimizedImage 
             className="h-full w-full object-cover transition-all duration-700 ease-out group-hover:scale-110 group-hover:rotate-2" 
             src={product.images?.[0] || placeholderImage}
             alt={product.name}
+            type="card"
+            priority="auto"
+            fallbackSrc={placeholderImage}
             width={400}
             height={300}
           />
