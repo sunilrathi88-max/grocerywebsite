@@ -4,6 +4,7 @@ import { CheckCircleIcon } from './icons/CheckCircleIcon';
 import { CalendarIcon } from './icons/CalendarIcon';
 import { XIcon } from './icons/XIcon';
 import { ShieldCheckIcon } from './icons/ShieldCheckIcon';
+import { OptimizedImage } from './OptimizedImage';
 import { imageErrorHandlers } from '../utils/imageHelpers';
 
 interface CheckoutPageProps {
@@ -42,7 +43,16 @@ const OrderConfirmation: React.FC<{ order: Order }> = ({ order }) => {
           <div className="space-y-4 max-h-60 overflow-y-auto text-left pr-2">
             {order.items.map(item => (
               <div key={`${item.product.id}-${item.selectedVariant.id}`} className="flex justify-between items-start gap-4">
-                <img src={item.product.images[0]} alt={item.product.name} className="w-16 h-16 object-cover rounded-md flex-shrink-0" onError={imageErrorHandlers.thumb} />
+                <OptimizedImage 
+                  src={item.product.images[0]} 
+                  alt={item.product.name} 
+                  className="w-16 h-16 object-cover rounded-md flex-shrink-0" 
+                  type="thumbnail"
+                  priority="high"
+                  width={64}
+                  height={64}
+                  onError={imageErrorHandlers.thumb} 
+                />
                 <div className="flex-grow">
                   <p className="font-bold text-sm leading-tight">{item.product.name}</p>
                   <p className="text-xs text-gray-500">{item.selectedVariant.name} x {item.quantity}</p>
@@ -289,7 +299,16 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ cartItems, user, onPlaceOrd
               <div className="space-y-4 max-h-60 overflow-y-auto pr-2">
                 {cartItems.map(item => (
                   <div key={`${item.product.id}-${item.selectedVariant.id}`} className="flex justify-between items-start gap-4">
-                    <img src={item.product.images[0]} alt={item.product.name} className="w-16 h-16 object-cover rounded-md flex-shrink-0" onError={imageErrorHandlers.thumb} />
+                    <OptimizedImage 
+                      src={item.product.images[0]} 
+                      alt={item.product.name} 
+                      className="w-16 h-16 object-cover rounded-md flex-shrink-0" 
+                      type="thumbnail"
+                      priority="high"
+                      width={64}
+                      height={64}
+                      onError={imageErrorHandlers.thumb} 
+                    />
                     <div className="flex-grow">
                       <p className="font-bold text-sm leading-tight">{item.product.name}</p>
                       <p className="text-xs text-gray-500">{item.selectedVariant.name} x {item.quantity}</p>
