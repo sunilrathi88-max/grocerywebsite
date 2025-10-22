@@ -196,6 +196,97 @@ const DeliverySlotPicker: React.FC<{
   );
 };
 
+// Move AddressForm outside to avoid creating component during render
+const AddressForm: React.FC<{
+  address: Omit<Address, 'id' | 'type' | 'isDefault'>;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  title: string;
+  userName?: string;
+}> = ({ address, onChange, title, userName }) => (
+  <div className="space-y-4">
+    <h3 className="text-lg font-serif font-bold">{title}</h3>
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div>
+        <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+          Full Name
+        </label>
+        <input
+          type="text"
+          name="name"
+          defaultValue={userName || ''}
+          className="mt-1 input-field"
+          required
+        />
+      </div>
+      <div>
+        <label htmlFor="street" className="block text-sm font-medium text-gray-700">
+          Street Address
+        </label>
+        <input
+          type="text"
+          name="street"
+          value={address.street}
+          onChange={onChange}
+          className="mt-1 input-field"
+          required
+        />
+      </div>
+      <div>
+        <label htmlFor="city" className="block text-sm font-medium text-gray-700">
+          City
+        </label>
+        <input
+          type="text"
+          name="city"
+          value={address.city}
+          onChange={onChange}
+          className="mt-1 input-field"
+          required
+        />
+      </div>
+      <div>
+        <label htmlFor="state" className="block text-sm font-medium text-gray-700">
+          State / Province
+        </label>
+        <input
+          type="text"
+          name="state"
+          value={address.state}
+          onChange={onChange}
+          className="mt-1 input-field"
+          required
+        />
+      </div>
+      <div>
+        <label htmlFor="zip" className="block text-sm font-medium text-gray-700">
+          ZIP / Postal Code
+        </label>
+        <input
+          type="text"
+          name="zip"
+          value={address.zip}
+          onChange={onChange}
+          className="mt-1 input-field"
+          required
+        />
+      </div>
+      <div>
+        <label htmlFor="country" className="block text-sm font-medium text-gray-700">
+          Country
+        </label>
+        <input
+          type="text"
+          name="country"
+          value={address.country}
+          onChange={onChange}
+          className="mt-1 input-field"
+          required
+        />
+      </div>
+    </div>
+  </div>
+);
+
 const CheckoutPage: React.FC<CheckoutPageProps> = ({
   cartItems,
   user,
@@ -272,95 +363,6 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
     setOrderConfirmation(confirmedOrder);
   };
 
-  const AddressForm: React.FC<{
-    address: Omit<Address, 'id' | 'type' | 'isDefault'>;
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    title: string;
-  }> = ({ address, onChange, title }) => (
-    <div className="space-y-4">
-      <h3 className="text-lg font-serif font-bold">{title}</h3>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div>
-          <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-            Full Name
-          </label>
-          <input
-            type="text"
-            name="name"
-            defaultValue={user?.name || ''}
-            className="mt-1 input-field"
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="street" className="block text-sm font-medium text-gray-700">
-            Street Address
-          </label>
-          <input
-            type="text"
-            name="street"
-            value={address.street}
-            onChange={onChange}
-            className="mt-1 input-field"
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="city" className="block text-sm font-medium text-gray-700">
-            City
-          </label>
-          <input
-            type="text"
-            name="city"
-            value={address.city}
-            onChange={onChange}
-            className="mt-1 input-field"
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="state" className="block text-sm font-medium text-gray-700">
-            State / Province
-          </label>
-          <input
-            type="text"
-            name="state"
-            value={address.state}
-            onChange={onChange}
-            className="mt-1 input-field"
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="zip" className="block text-sm font-medium text-gray-700">
-            ZIP / Postal Code
-          </label>
-          <input
-            type="text"
-            name="zip"
-            value={address.zip}
-            onChange={onChange}
-            className="mt-1 input-field"
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="country" className="block text-sm font-medium text-gray-700">
-            Country
-          </label>
-          <input
-            type="text"
-            name="country"
-            value={address.country}
-            onChange={onChange}
-            className="mt-1 input-field"
-            required
-          />
-        </div>
-      </div>
-    </div>
-  );
-
   if (orderConfirmation) {
     return <OrderConfirmation order={orderConfirmation} />;
   }
@@ -377,6 +379,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
             address={shippingAddress}
             onChange={handleInputChange(setShippingAddress)}
             title="Shipping Address"
+            userName={user?.name}
           />
 
           <div className="flex items-center">
@@ -398,6 +401,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
               address={billingAddress}
               onChange={handleInputChange(setBillingAddress)}
               title="Billing Address"
+              userName={user?.name}
             />
           )}
 
@@ -493,7 +497,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
             <div className="mt-4">
               {promoCode ? (
                 <div className="flex justify-between items-center bg-green-100 text-green-800 text-sm p-2 rounded-md">
-                  <span>Code "{promoCode}" applied!</span>
+                  <span>Code &quot;{promoCode}&quot; applied!</span>
                   <button
                     type="button"
                     onClick={onRemovePromoCode}

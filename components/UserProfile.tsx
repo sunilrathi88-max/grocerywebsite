@@ -145,7 +145,7 @@ const OrderHistory: React.FC<{ orders: Order[] }> = ({ orders }) => (
   <div>
     <h3 className="text-2xl font-serif font-bold mb-6">Order History</h3>
     {orders.length === 0 ? (
-      <p>You haven't placed any orders yet.</p>
+      <p>You haven&apos;t placed any orders yet.</p>
     ) : (
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">

@@ -27,7 +27,7 @@ const Testimonials: React.FC<TestimonialsProps> = ({ testimonials }) => {
                   />
                 ))}
               </div>
-              <p className="text-brand-dark italic mb-6">"{testimonial.quote}"</p>
+              <p className="text-brand-dark italic mb-6">&quot;{testimonial.quote}&quot;</p>
               <p className="font-bold text-brand-dark font-serif">- {testimonial.name}</p>
             </div>
           ))}

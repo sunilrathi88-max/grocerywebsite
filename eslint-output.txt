@@ -1,0 +1,682 @@
+﻿
+> tattva-co.---indian-gourmet-products@0.0.0 lint
+> eslint . --ext .ts,.tsx,.js,.jsx
+
+
+C:\Users\shubh\grocerywebsite\App.tsx
+    4:3   warning  'CartItem' is defined but never used                @typescript-eslint/no-unused-vars
+   79:22  warning  'cartItemCount' is assigned a value but never used  @typescript-eslint/no-unused-vars
+   85:17  warning  'setPosts' is assigned a value but never used       @typescript-eslint/no-unused-vars
+  373:18  warning  Unexpected any. Specify a different type            @typescript-eslint/no-explicit-any
+
+C:\Users\shubh\grocerywebsite\components\AboutPage.tsx
+  26:15  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  26:22  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  26:30  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  26:40  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  26:45  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  26:53  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\Users\shubh\grocerywebsite\components\AdvancedFilters.tsx
+  85:16  error  Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+C:\Users\shubh\grocerywebsite\components\AdvancedFilters.tsx:85:16
+  83 |             </h3>
+  84 |             <div className="flex items-center flex-wrap gap-3">
+> 85 |               <FilterButton isActive={showOnSale} onClick={onToggleOnSale}>
+     |                ^^^^^^^^^^^^ This component is created during render
+  86 |                 ≡ƒöÑ On Sale
+  87 |               </FilterButton>
+  88 |               <FilterButton isActive={showInStock} onClick={onToggleInStock}>
+
+C:\Users\shubh\grocerywebsite\components\AdvancedFilters.tsx:35:8
+  33 |     onClick: () => void;
+  34 |     children: React.ReactNode;
+> 35 |   }> = ({ isActive, onClick, children }) => (
+     |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 36 |     <button
+     | ^^^^^^^^^^^
+> 37 |       onClick={onClick}
+     | ^^^^^^^^^^^
+> 38 |       className={`px-5 py-2.5 text-sm font-bold rounded-xl transition-all duration-300 border-2 transform hover:scale-105 hover:shadow-md ${
+     | ^^^^^^^^^^^
+> 39 |         isActive
+     | ^^^^^^^^^^^
+> 40 |           ? 'bg-gradient-to-r from-brand-primary to-amber-500 text-white border-transparent shadow-lg'
+     | ^^^^^^^^^^^
+> 41 |           : 'bg-white text-gray-700 hover:bg-gray-50 border-gray-200 hover:border-brand-primary/30'
+     | ^^^^^^^^^^^
+> 42 |       }`}
+     | ^^^^^^^^^^^
+> 43 |     >
+     | ^^^^^^^^^^^
+> 44 |       {children}
+     | ^^^^^^^^^^^
+> 45 |     </button>
+     | ^^^^^^^^^^^
+> 46 |   );
+     | ^^^^ The component is created during render here
+  47 |
+  48 |   const activeFilterCount =
+  49 |     (showOnSale ? 1 : 0) +  react-hooks/static-components
+  88:16  error  Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+C:\Users\shubh\grocerywebsite\components\AdvancedFilters.tsx:88:16
+  86 |                 ≡ƒöÑ On Sale
+  87 |               </FilterButton>
+> 88 |               <FilterButton isActive={showInStock} onClick={onToggleInStock}>
+     |                ^^^^^^^^^^^^ This component is created during render
+  89 |                 Γ£ô In Stock
+  90 |               </FilterButton>
+  91 |             </div>
+
+C:\Users\shubh\grocerywebsite\components\AdvancedFilters.tsx:35:8
+  33 |     onClick: () => void;
+  34 |     children: React.ReactNode;
+> 35 |   }> = ({ isActive, onClick, children }) => (
+     |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 36 |     <button
+     | ^^^^^^^^^^^
+> 37 |       onClick={onClick}
+     | ^^^^^^^^^^^
+> 38 |       className={`px-5 py-2.5 text-sm font-bold rounded-xl transition-all duration-300 border-2 transform hover:scale-105 hover:shadow-md ${
+     | ^^^^^^^^^^^
+> 39 |         isActive
+     | ^^^^^^^^^^^
+> 40 |           ? 'bg-gradient-to-r from-brand-primary to-amber-500 text-white border-transparent shadow-lg'
+     | ^^^^^^^^^^^
+> 41 |           : 'bg-white text-gray-700 hover:bg-gray-50 border-gray-200 hover:border-brand-primary/30'
+     | ^^^^^^^^^^^
+> 42 |       }`}
+     | ^^^^^^^^^^^
+> 43 |     >
+     | ^^^^^^^^^^^
+> 44 |       {children}
+     | ^^^^^^^^^^^
+> 45 |     </button>
+     | ^^^^^^^^^^^
+> 46 |   );
+     | ^^^^ The component is created during render here
+  47 |
+  48 |   const activeFilterCount =
+  49 |     (showOnSale ? 1 : 0) +                                                                                    react-hooks/static-components
+
+C:\Users\shubh\grocerywebsite\components\Cart.tsx
+  126:32  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  165:40  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  174:40  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  183:40  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  192:40  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\shubh\grocerywebsite\components\CheckoutPage.tsx
+  232:50  warning  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-explicit-any
+  376:12  error    Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+C:\Users\shubh\grocerywebsite\components\CheckoutPage.tsx:376:12
+  374 |         {/* Left/Main Column */}
+  375 |         <div className="lg:col-span-2 space-y-8">
+> 376 |           <AddressForm
+      |            ^^^^^^^^^^^ This component is created during render
+  377 |             address={shippingAddress}
+  378 |             onChange={handleInputChange(setShippingAddress)}
+  379 |             title="Shipping Address"
+
+C:\Users\shubh\grocerywebsite\components\CheckoutPage.tsx:279:8
+  277 |     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  278 |     title: string;
+> 279 |   }> = ({ address, onChange, title }) => (
+      |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 280 |     <div className="space-y-4">
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 281 |       <h3 className="text-lg font-serif font-bold">{title}</h3>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 282 |       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 283 |         <div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 284 |           <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 285 |             Full Name
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 286 |           </label>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 287 |           <input
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 288 |             type="text"
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 289 |             name="name"
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 290 |             defaultValue={user?.name || ''}
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 291 |             className="mt-1 input-field"
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 292 |             required
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 293 |           />
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 294 |         </div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 295 |         <div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 296 |           <label htmlFor="street" className="block text-sm font-medium text-gray-700">
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 297 |             Street Address
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 298 |           </label>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 299 |           <input
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 300 |             type="text"
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 301 |             name="street"
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 302 |             value={address.street}
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 303 |             onChange={onChange}
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 304 |             className="mt-1 input-field"
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 305 |             required
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 306 |           />
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 307 |         </div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 308 |         <div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 309 |           <label htmlFor="city" className="block text-sm font-medium text-gray-700">
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 310 |             City
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 311 |           </label>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 312 |           <input
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 313 |             type="text"
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 314 |             name="city"
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 315 |             value={address.city}
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 316 |             onChange={onChange}
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 317 |             className="mt-1 input-field"
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 318 |             required
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 319 |           />
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 320 |         </div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 321 |         <div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 322 |           <label htmlFor="state" className="block text-sm font-medium text-gray-700">
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 323 |             State / Province
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 324 |           </label>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 325 |           <input
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 326 |             type="text"
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 327 |             name="state"
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 328 |             value={address.state}
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 329 |             onChange={onChange}
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 330 |             className="mt-1 input-field"
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 331 |             required
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 332 |           />
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 333 |         </div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 334 |         <div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 335 |           <label htmlFor="zip" className="block text-sm font-medium text-gray-700">
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 336 |             ZIP / Postal Code
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 337 |           </label>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 338 |           <input
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 339 |             type="text"
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 340 |             name="zip"
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 341 |             value={address.zip}
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 342 |             onChange={onChange}
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 343 |             className="mt-1 input-field"
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 344 |             required
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 345 |           />
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 346 |         </div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 347 |         <div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 348 |           <label htmlFor="country" className="block text-sm font-medium text-gray-700">
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 349 |             Country
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 350 |           </label>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 351 |           <input
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 352 |             type="text"
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 353 |             name="country"
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 354 |             value={address.country}
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 355 |             onChange={onChange}
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 356 |             className="mt-1 input-field"
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 357 |             required
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 358 |           />
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 359 |         </div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 360 |       </div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 361 |     </div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 362 |   );
+      | ^^^^ The component is created during render here
+  363 |
+  364 |   if (orderConfirmation) {
+  365 |     return <OrderConfirmation order={orderConfirmation} />;  react-hooks/static-components
+  397:14  error    Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+C:\Users\shubh\grocerywebsite\components\CheckoutPage.tsx:397:14
+  395 |
+  396 |           {!useSameAddress && (
+> 397 |             <AddressForm
+      |              ^^^^^^^^^^^ This component is created during render
+  398 |               address={billingAddress}
+  399 |               onChange={handleInputChange(setBillingAddress)}
+  400 |               title="Billing Address"
+
+C:\Users\shubh\grocerywebsite\components\CheckoutPage.tsx:279:8
+  277 |     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  278 |     title: string;
+> 279 |   }> = ({ address, onChange, title }) => (
+      |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 280 |     <div className="space-y-4">
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 281 |       <h3 className="text-lg font-serif font-bold">{title}</h3>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 282 |       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 283 |         <div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 284 |           <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 285 |             Full Name
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 286 |           </label>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 287 |           <input
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 288 |             type="text"
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 289 |             name="name"
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 290 |             defaultValue={user?.name || ''}
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 291 |             className="mt-1 input-field"
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 292 |             required
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 293 |           />
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 294 |         </div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 295 |         <div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 296 |           <label htmlFor="street" className="block text-sm font-medium text-gray-700">
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 297 |             Street Address
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 298 |           </label>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 299 |           <input
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 300 |             type="text"
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 301 |             name="street"
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 302 |             value={address.street}
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 303 |             onChange={onChange}
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 304 |             className="mt-1 input-field"
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 305 |             required
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 306 |           />
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 307 |         </div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 308 |         <div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 309 |           <label htmlFor="city" className="block text-sm font-medium text-gray-700">
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 310 |             City
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 311 |           </label>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 312 |           <input
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 313 |             type="text"
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 314 |             name="city"
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 315 |             value={address.city}
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 316 |             onChange={onChange}
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 317 |             className="mt-1 input-field"
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 318 |             required
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 319 |           />
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 320 |         </div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 321 |         <div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 322 |           <label htmlFor="state" className="block text-sm font-medium text-gray-700">
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 323 |             State / Province
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 324 |           </label>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 325 |           <input
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 326 |             type="text"
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 327 |             name="state"
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 328 |             value={address.state}
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 329 |             onChange={onChange}
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 330 |             className="mt-1 input-field"
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 331 |             required
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 332 |           />
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 333 |         </div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 334 |         <div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 335 |           <label htmlFor="zip" className="block text-sm font-medium text-gray-700">
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 336 |             ZIP / Postal Code
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 337 |           </label>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 338 |           <input
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 339 |             type="text"
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 340 |             name="zip"
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 341 |             value={address.zip}
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 342 |             onChange={onChange}
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 343 |             className="mt-1 input-field"
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 344 |             required
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 345 |           />
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 346 |         </div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 347 |         <div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 348 |           <label htmlFor="country" className="block text-sm font-medium text-gray-700">
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 349 |             Country
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 350 |           </label>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 351 |           <input
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 352 |             type="text"
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 353 |             name="country"
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 354 |             value={address.country}
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 355 |             onChange={onChange}
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 356 |             className="mt-1 input-field"
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 357 |             required
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 358 |           />
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 359 |         </div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 360 |       </div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 361 |     </div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 362 |   );
+      | ^^^^ The component is created during render here
+  363 |
+  364 |   if (orderConfirmation) {
+  365 |     return <OrderConfirmation order={orderConfirmation} />;                                              react-hooks/static-components
+  496:30  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  react/no-unescaped-entities
+  496:42  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  react/no-unescaped-entities
+
+C:\Users\shubh\grocerywebsite\components\ContactPage.tsx
+  17:13  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\Users\shubh\grocerywebsite\components\ErrorBoundary.tsx
+   4:32  error  The `{}` ("empty object") type allows any non-nullish value, including literals like `0` and `""`.
+- If that's what you want, disable this lint rule with an inline comment or configure the 'allowObjectTypes' rule option.
+- If you want a type meaning "any object", you probably want `object` instead.
+- If you want a type meaning "any value", you probably want `unknown` instead  @typescript-eslint/no-empty-object-type
+  43:15  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                                                                                                                                                                                                                                                                                                                            react/no-unescaped-entities
+
+C:\Users\shubh\grocerywebsite\components\ExitIntentModal.tsx
+  35:69  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  37:14  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\Users\shubh\grocerywebsite\components\Footer.tsx
+  16:9  warning  'handleNewsletterSubmit' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\shubh\grocerywebsite\components\Header.tsx
+   72:7   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\shubh\grocerywebsite\components\Header.tsx:72:7
+  70 |     const prevCount = prevCartCountRef.current;
+  71 |     if (cartItemCount > prevCount && prevCount !== 0) {
+> 72 |       setCartBounce(true);
+     |       ^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  73 |       setTimeout(() => setCartBounce(false), 600);
+  74 |     }
+  75 |     // Update ref after checking (refs can be updated in effects)  react-hooks/set-state-in-effect
+  172:29  warning  Unexpected console statement. Only these console methods are allowed: warn, error                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  no-console
+  185:29  warning  Unexpected console statement. Only these console methods are allowed: warn, error                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  no-console
+  201:31  warning  Unexpected console statement. Only these console methods are allowed: warn, error                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  no-console
+  209:33  warning  Unexpected console statement. Only these console methods are allowed: warn, error                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  no-console
+  344:54  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    react/no-unescaped-entities
+  344:68  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    react/no-unescaped-entities
+  406:28  warning  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           @typescript-eslint/no-explicit-any
+  421:34  warning  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           @typescript-eslint/no-explicit-any
+
+C:\Users\shubh\grocerywebsite\components\LazyImage.tsx
+  50:35  warning  The ref value 'imgRef.current' will likely have changed by the time this effect cleanup function runs. If this ref points to a node rendered by React, copy 'imgRef.current' to a variable inside the effect, and use that variable in the cleanup function  react-hooks/exhaustive-deps
+
+C:\Users\shubh\grocerywebsite\components\LoyaltyPointsTracker.tsx
+   1:27  warning  'useEffect' is defined but never used            @typescript-eslint/no-unused-vars
+  23:18  warning  'setPoints' is assigned a value but never used   @typescript-eslint/no-unused-vars
+  30:19  warning  'setHistory' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\shubh\grocerywebsite\components\MobileMenu.tsx
+   76:16  warning  Unexpected any. Specify a different type    @typescript-eslint/no-explicit-any
+   92:16  warning  Unexpected any. Specify a different type    @typescript-eslint/no-explicit-any
+  119:15  error    Missing "key" prop for element in iterator  react/jsx-key
+  131:22  warning  Unexpected any. Specify a different type    @typescript-eslint/no-explicit-any
+
+C:\Users\shubh\grocerywebsite\components\OptimizedImage.tsx
+  87:35  warning  The ref value 'imgRef.current' will likely have changed by the time this effect cleanup function runs. If this ref points to a node rendered by React, copy 'imgRef.current' to a variable inside the effect, and use that variable in the cleanup function  react-hooks/exhaustive-deps
+
+C:\Users\shubh\grocerywebsite\components\PrivacyPolicyPage.tsx
+  13:23  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  13:26  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  13:29  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  13:32  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  13:38  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  13:42  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  13:82  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  13:90  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+
+C:\Users\shubh\grocerywebsite\components\ProductCard.tsx
+   34:3   warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+   35:3   warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  125:16  warning  Unexpected any. Specify a different type                                           @typescript-eslint/no-explicit-any
+
+C:\Users\shubh\grocerywebsite\components\ProductDetailModal.tsx
+    2:57  warning  'QnAType' is defined but never used                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+   44:7   warning  'PLACEHOLDER_IMAGE' is assigned a value but never used                                                                                                                                                                                                                     @typescript-eslint/no-unused-vars
+   85:7   error    'setViewers' is not defined                                                                                                                                                                                                                                                no-undef
+  104:42  warning  The ref value 'mainButtonRef.current' will likely have changed by the time this effect cleanup function runs. If this ref points to a node rendered by React, copy 'mainButtonRef.current' to a variable inside the effect, and use that variable in the cleanup function  react-hooks/exhaustive-deps
+  170:10  warning  'zoomStyle' is assigned a value but never used                                                                                                                                                                                                                             @typescript-eslint/no-unused-vars
+
+C:\Users\shubh\grocerywebsite\components\ProductFormModal.tsx
+  46:28  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\shubh\grocerywebsite\components\ProductGrid.tsx
+  30:3  warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+
+C:\Users\shubh\grocerywebsite\components\QuizModule.tsx
+  139:14  warning  Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+  158:36  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  221:18  warning  Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+  302:16  warning  Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+
+C:\Users\shubh\grocerywebsite\components\RecipeDetailModal.tsx
+  14:9  warning  'placeholderImage' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\shubh\grocerywebsite\components\ResponsiveImage.tsx
+   2:28  warning  'imageErrorHandlers' is defined but never used                                          @typescript-eslint/no-unused-vars
+  30:3   warning  'breakpoints' is assigned a value but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars
+
+C:\Users\shubh\grocerywebsite\components\SEO.tsx
+  5:20  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\shubh\grocerywebsite\components\SideModal.tsx
+  39:16  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  54:16  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\shubh\grocerywebsite\components\SocialProofNotifications.tsx
+  45:10  warning  'nextId' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\shubh\grocerywebsite\components\TermsOfServicePage.tsx
+  21:12  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  21:21  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  29:67  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  29:75  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+
+C:\Users\shubh\grocerywebsite\components\Testimonials.tsx
+  30:58  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  30:78  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+
+C:\Users\shubh\grocerywebsite\components\Toast.tsx
+  48:12  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\shubh\grocerywebsite\components\UserProfile.tsx
+  148:19  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\Users\shubh\grocerywebsite\components\__tests__\Cart.test.tsx
+  10:23  warning  'layout' is defined but never used. Allowed unused args must match /^_/u      @typescript-eslint/no-unused-vars
+  10:43  warning  Unexpected any. Specify a different type                                      @typescript-eslint/no-explicit-any
+  11:46  warning  'whileTap' is defined but never used. Allowed unused args must match /^_/u    @typescript-eslint/no-unused-vars
+  11:56  warning  'whileHover' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars
+  11:90  warning  Unexpected any. Specify a different type                                      @typescript-eslint/no-explicit-any
+  16:36  warning  Unexpected any. Specify a different type                                      @typescript-eslint/no-explicit-any
+  18:35  warning  Unexpected any. Specify a different type                                      @typescript-eslint/no-explicit-any
+  23:45  warning  Unexpected any. Specify a different type                                      @typescript-eslint/no-explicit-any
+
+C:\Users\shubh\grocerywebsite\components\__tests__\ProductCard.test.tsx
+    2:37  warning  'waitFor' is defined but never used                                         @typescript-eslint/no-unused-vars
+   10:46  warning  'whileTap' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars
+   10:68  warning  Unexpected any. Specify a different type                                    @typescript-eslint/no-explicit-any
+   20:54  warning  Unexpected any. Specify a different type                                    @typescript-eslint/no-explicit-any
+  436:15  warning  'container' is assigned a value but never used                              @typescript-eslint/no-unused-vars
+  459:15  warning  'container' is assigned a value but never used                              @typescript-eslint/no-unused-vars
+
+C:\Users\shubh\grocerywebsite\index.tsx
+   9:30  warning  Unexpected any. Specify a different type                                           @typescript-eslint/no-explicit-any
+  12:3   warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+
+C:\Users\shubh\grocerywebsite\jest.setup.ts
+  27:6   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  47:43  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\shubh\grocerywebsite\utils\analytics.ts
+    6:72  warning  Unexpected any. Specify a different type                                           @typescript-eslint/no-explicit-any
+    7:17  warning  Unexpected any. Specify a different type                                           @typescript-eslint/no-explicit-any
+   29:19  warning  Unexpected any. Specify a different type                                           @typescript-eslint/no-explicit-any
+   34:3   warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+   48:3   warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+   63:3   warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+  231:17  warning  Unexpected any. Specify a different type                                           @typescript-eslint/no-explicit-any
+  231:25  warning  Unexpected any. Specify a different type                                           @typescript-eslint/no-explicit-any
+  231:33  warning  Unexpected any. Specify a different type                                           @typescript-eslint/no-explicit-any
+  231:41  warning  Unexpected any. Specify a different type                                           @typescript-eslint/no-explicit-any
+  231:50  warning  Unexpected any. Specify a different type                                           @typescript-eslint/no-explicit-any
+  231:59  warning  Unexpected any. Specify a different type                                           @typescript-eslint/no-explicit-any
+  245:3   warning  Unexpected console statement. Only these console methods are allowed: warn, error  no-console
+
+C:\Users\shubh\grocerywebsite\utils\performance.ts
+   16:58  warning  Unexpected any. Specify a different type                                                                                                                                                                                                               @typescript-eslint/no-explicit-any
+   17:9   warning  Unexpected console statement. Only these console methods are allowed: warn, error                                                                                                                                                                      no-console
+   24:33  warning  Unexpected any. Specify a different type                                                                                                                                                                                                               @typescript-eslint/no-explicit-any
+   25:11  warning  Unexpected console statement. Only these console methods are allowed: warn, error                                                                                                                                                                      no-console
+   33:43  warning  Unexpected any. Specify a different type                                                                                                                                                                                                               @typescript-eslint/no-explicit-any
+   36:13  warning  Unexpected console statement. Only these console methods are allowed: warn, error                                                                                                                                                                      no-console
+   76:32  warning  The ref value 'ref.current' will likely have changed by the time this effect cleanup function runs. If this ref points to a node rendered by React, copy 'ref.current' to a variable inside the effect, and use that variable in the cleanup function  react-hooks/exhaustive-deps
+  109:51  warning  Unexpected any. Specify a different type                                                                                                                                                                                                               @typescript-eslint/no-explicit-any
+  110:16  warning  Unexpected any. Specify a different type                                                                                                                                                                                                               @typescript-eslint/no-explicit-any
+  120:5   warning  Unexpected console statement. Only these console methods are allowed: warn, error                                                                                                                                                                      no-console
+  127:46  warning  Unexpected any. Specify a different type                                                                                                                                                                                                               @typescript-eslint/no-explicit-any
+  127:56  warning  Unexpected any. Specify a different type                                                                                                                                                                                                               @typescript-eslint/no-explicit-any
+  141:46  warning  Unexpected any. Specify a different type                                                                                                                                                                                                               @typescript-eslint/no-explicit-any
+  141:56  warning  Unexpected any. Specify a different type                                                                                                                                                                                                               @typescript-eslint/no-explicit-any
+
+C:\Users\shubh\grocerywebsite\utils\seo.ts
+  151:41  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+Γ£û 129 problems (38 errors, 91 warnings)
+

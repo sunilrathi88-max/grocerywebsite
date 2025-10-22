@@ -14,6 +14,24 @@ interface AdvancedFiltersProps {
   onPriceChange: (value: number) => void;
 }
 
+// Move FilterButton outside to avoid creating component during render
+const FilterButton: React.FC<{
+  isActive: boolean;
+  onClick: () => void;
+  children: React.ReactNode;
+}> = ({ isActive, onClick, children }) => (
+  <button
+    onClick={onClick}
+    className={`px-5 py-2.5 text-sm font-bold rounded-xl transition-all duration-300 border-2 transform hover:scale-105 hover:shadow-md ${
+      isActive
+        ? 'bg-gradient-to-r from-brand-primary to-amber-500 text-white border-transparent shadow-lg'
+        : 'bg-white text-gray-700 hover:bg-gray-50 border-gray-200 hover:border-brand-primary/30'
+    }`}
+  >
+    {children}
+  </button>
+);
+
 const AdvancedFilters: React.FC<AdvancedFiltersProps> = ({
   showOnSale,
   onToggleOnSale,
@@ -27,23 +45,6 @@ const AdvancedFilters: React.FC<AdvancedFiltersProps> = ({
   onPriceChange,
 }) => {
   const [isExpanded, setIsExpanded] = useState(true);
-
-  const FilterButton: React.FC<{
-    isActive: boolean;
-    onClick: () => void;
-    children: React.ReactNode;
-  }> = ({ isActive, onClick, children }) => (
-    <button
-      onClick={onClick}
-      className={`px-5 py-2.5 text-sm font-bold rounded-xl transition-all duration-300 border-2 transform hover:scale-105 hover:shadow-md ${
-        isActive
-          ? 'bg-gradient-to-r from-brand-primary to-amber-500 text-white border-transparent shadow-lg'
-          : 'bg-white text-gray-700 hover:bg-gray-50 border-gray-200 hover:border-brand-primary/30'
-      }`}
-    >
-      {children}
-    </button>
-  );
 
   const activeFilterCount =
     (showOnSale ? 1 : 0) +

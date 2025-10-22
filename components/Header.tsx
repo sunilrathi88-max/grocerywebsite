@@ -69,10 +69,15 @@ const Header: React.FC<HeaderProps> = ({
   useEffect(() => {
     const prevCount = prevCartCountRef.current;
     if (cartItemCount > prevCount && prevCount !== 0) {
-      setCartBounce(true);
-      setTimeout(() => setCartBounce(false), 600);
+      // Use setTimeout to avoid setState during effect
+      const timer = setTimeout(() => {
+        setCartBounce(true);
+        setTimeout(() => setCartBounce(false), 600);
+      }, 0);
+      // Update ref after checking (refs can be updated in effects)
+      prevCartCountRef.current = cartItemCount;
+      return () => clearTimeout(timer);
     }
-    // Update ref after checking (refs can be updated in effects)
     prevCartCountRef.current = cartItemCount;
   }, [cartItemCount]);
 
@@ -341,7 +346,7 @@ const Header: React.FC<HeaderProps> = ({
                           }}
                           className="w-full text-left px-4 py-3 text-sm font-medium text-brand-primary hover:bg-brand-primary/10 transition-colors flex items-center justify-between group"
                         >
-                          <span>View all results for "{searchQuery}"</span>
+                          <span>View all results for &quot;{searchQuery}&quot;</span>
                           <ChevronRightIcon className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
                         </button>
                       </div>

@@ -23,9 +23,9 @@ const AboutPage: React.FC = () => {
               rich culinary heritage of India.
             </p>
             <p className="text-gray-600">
-              "Tattva" means 'principle' or 'essence' in Sanskrit, and it is the guiding principle
-              behind everything we do. We invite you to explore our collection and discover the true
-              essence of Indian gourmet.
+              &quot;Tattva&quot; means &apos;principle&apos; or &apos;essence&apos; in Sanskrit, and
+              it is the guiding principle behind everything we do. We invite you to explore our
+              collection and discover the true essence of Indian gourmet.
             </p>
           </div>
           <div>

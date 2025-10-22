@@ -1,7 +1,7 @@
 import React, { ErrorInfo, PropsWithChildren } from 'react';
 import { AlertTriangleIcon } from './icons/AlertTriangleIcon';
 
-type Props = PropsWithChildren<{}>;
+type Props = PropsWithChildren<Record<string, never>>;
 
 interface State {
   hasError: boolean;
@@ -40,8 +40,8 @@ class ErrorBoundary extends React.Component<Props, State> {
             Oops! Something went wrong.
           </h1>
           <p className="mt-4 text-lg text-gray-600 max-w-lg">
-            We've encountered an unexpected issue. Our team has been notified. Please try refreshing
-            the page.
+            We&apos;ve encountered an unexpected issue. Our team has been notified. Please try
+            refreshing the page.
           </p>
           <button
             onClick={this.handleRefresh}

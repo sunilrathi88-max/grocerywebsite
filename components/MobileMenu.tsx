@@ -117,6 +117,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
           <nav className="flex flex-col p-6 pt-0 space-y-4">
             {navLinks.map((link, i) => (
               <motion.a
+                key={link.name}
                 // FIX: Wrapped framer-motion props in a spread object to resolve TypeScript error.
                 {...({
                   custom: i,
