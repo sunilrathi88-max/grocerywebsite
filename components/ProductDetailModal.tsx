@@ -67,7 +67,8 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
   const [activeTab, setActiveTab] = useState<
     'description' | 'nutrition' | 'sourcing' | 'reviews' | 'qna'
   >('description');
-  const [viewers, setViewers] = useState(Math.floor(Math.random() * 10) + 2);
+  // Use lazy initialization to set random viewer count only once
+  const [viewers] = useState(() => Math.floor(Math.random() * 10) + 2);
   const [isStickyButtonVisible, setStickyButtonVisible] = useState(false);
 
   // Image error handlers

@@ -67,10 +67,12 @@ const Header: React.FC<HeaderProps> = ({
 
   // Trigger bounce animation when cart count increases
   useEffect(() => {
-    if (cartItemCount > prevCartCountRef.current && prevCartCountRef.current !== 0) {
+    const prevCount = prevCartCountRef.current;
+    if (cartItemCount > prevCount && prevCount !== 0) {
       setCartBounce(true);
       setTimeout(() => setCartBounce(false), 600);
     }
+    // Update ref after checking (refs can be updated in effects)
     prevCartCountRef.current = cartItemCount;
   }, [cartItemCount]);
 
@@ -105,23 +107,28 @@ const Header: React.FC<HeaderProps> = ({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [searchContainerRef]);
 
-  let miniCartTimeout: number;
+  // Mini cart hover handling with delay (using useRef to avoid reassignment)
+  const miniCartTimeoutRef = React.useRef<number | undefined>(undefined);
   const handleMiniCartEnter = () => {
-    clearTimeout(miniCartTimeout);
+    if (miniCartTimeoutRef.current) {
+      clearTimeout(miniCartTimeoutRef.current);
+    }
     setMiniCartOpen(true);
   };
   const handleMiniCartLeave = () => {
-    miniCartTimeout = window.setTimeout(() => setMiniCartOpen(false), 200);
+    miniCartTimeoutRef.current = window.setTimeout(() => setMiniCartOpen(false), 200);
   };
 
-  // Products dropdown hover handling with delay
-  let productsTimeout: number;
+  // Products dropdown hover handling with delay (using useRef to avoid reassignment)
+  const productsTimeoutRef = React.useRef<number | undefined>(undefined);
   const handleProductsEnter = () => {
-    clearTimeout(productsTimeout);
+    if (productsTimeoutRef.current) {
+      clearTimeout(productsTimeoutRef.current);
+    }
     setProductsOpen(true);
   };
   const handleProductsLeave = () => {
-    productsTimeout = window.setTimeout(() => setProductsOpen(false), 300);
+    productsTimeoutRef.current = window.setTimeout(() => setProductsOpen(false), 300);
   };
 
   return (
