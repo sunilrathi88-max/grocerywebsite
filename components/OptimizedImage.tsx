@@ -4,6 +4,7 @@ import {
   getLoadingAttribute,
   LoadingPriority,
 } from '../utils/imageOptimization';
+import { PLACEHOLDER_URLS } from '../utils/imageHelpers';
 
 interface OptimizedImageProps {
   src: string;
@@ -42,7 +43,7 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
   className = '',
   type = 'card',
   priority = 'auto',
-  fallbackSrc = 'https://via.placeholder.com/400x400/F8E3D9/333333?text=Tattva+Co.',
+  fallbackSrc = PLACEHOLDER_URLS.product,
   onLoad,
   onError,
   width,
@@ -53,8 +54,11 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
   const [isInView, setIsInView] = useState(priority === 'high');
   const imgRef = useRef<HTMLImageElement>(null);
 
+  // Safety-net: If src is missing or is an external placeholder, use local fallback
+  const safeSrc = !src || src.includes('via.placeholder') ? PLACEHOLDER_URLS.product : src;
+
   // Generate responsive image configuration
-  const imageConfig = createResponsiveImage(src, type);
+  const imageConfig = createResponsiveImage(safeSrc, type);
   const loading = getLoadingAttribute(priority);
 
   // Intersection Observer for lazy loading (skip if priority is high)
@@ -93,10 +97,17 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
   const handleError = (event: React.SyntheticEvent<HTMLImageElement>) => {
     setHasError(true);
     if (onError) onError(event);
+    // Set as loaded even on error to show fallback
+    setIsLoaded(true);
   };
 
-  // Use placeholder until image is in view
-  const imageSrc = isInView ? (hasError ? fallbackSrc : src) : fallbackSrc;
+  // Safety-net: ensure fallbackSrc is always local (never external placeholder)
+  const safeFallbackSrc = fallbackSrc?.includes('via.placeholder')
+    ? PLACEHOLDER_URLS.product
+    : fallbackSrc || PLACEHOLDER_URLS.product;
+
+  // Use actual src if in view or if error (to show fallback), otherwise use fallback for lazy loading
+  const imageSrc = hasError ? safeFallbackSrc : isInView ? safeSrc : safeFallbackSrc;
 
   return (
     <picture>

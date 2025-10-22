@@ -1,4 +1,5 @@
 import React from 'react';
+import { PLACEHOLDER_URLS, imageErrorHandlers } from '../utils/imageHelpers';
 import { Recipe } from './RecipesPage';
 import { XIcon } from './icons/XIcon';
 import { ClockIcon } from './icons/ClockIcon';
@@ -10,13 +11,8 @@ interface RecipeDetailModalProps {
 }
 
 const RecipeDetailModal: React.FC<RecipeDetailModalProps> = ({ recipe, onClose }) => {
-  const placeholderImage = 'https://via.placeholder.com/600x256/F8E3D9/333333?text=Tattva+Co.';
-  const handleImageError = (event: React.SyntheticEvent<HTMLImageElement>) => {
-    const img = event.currentTarget;
-    if (img.src !== placeholderImage) {
-      img.src = placeholderImage;
-    }
-  };
+  const placeholderImage = PLACEHOLDER_URLS.recipe;
+  const handleImageError = imageErrorHandlers.recipe;
 
   return (
     <div
