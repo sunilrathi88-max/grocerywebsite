@@ -48,10 +48,12 @@ export const generateSrcSet = (
   widths: number[] = [400, 640, 768, 1024, 1280, 1536]
 ): string => {
   // If SVG, return single source (vector graphics scale infinitely)
-  if (src.endsWith('.svg')) return src;
+  // For SVGs we don't generate size-specific raster variants — return empty so callers skip srcSet
+  if (src.endsWith('.svg')) return '';
 
   // For placeholders, return single source
-  if (src.includes('placeholder') || src.includes('via.placeholder')) return src;
+  // Don't build srcSet for placeholder/external images
+  if (src.includes('placeholder') || src.includes('via.placeholder')) return '';
 
   // Extract base name without extension
   const lastDotIndex = src.lastIndexOf('.');
@@ -74,8 +76,9 @@ export const generateWebPSrcSet = (
   src: string,
   widths: number[] = [400, 640, 768, 1024, 1280, 1536]
 ): string => {
-  if (src.endsWith('.svg')) return src;
-  if (src.includes('placeholder') || src.includes('via.placeholder')) return src;
+  // For SVGs or placeholders, don't generate a WebP srcset (not applicable)
+  if (src.endsWith('.svg')) return '';
+  if (src.includes('placeholder') || src.includes('via.placeholder')) return '';
 
   const lastDotIndex = src.lastIndexOf('.');
   const baseName = src.substring(0, lastDotIndex);
