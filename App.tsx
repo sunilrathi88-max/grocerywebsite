@@ -117,6 +117,11 @@ const App: React.FC = () => {
     // refreshProducts, // Available if needed for manual refresh
   } = useProducts({ useMockData: true, autoFetch: true });
 
+  // Debug: Log products to console
+  useEffect(() => {
+    console.log('🔍 Products loaded:', products.length, products);
+  }, [products]);
+
   // State management
   const [posts] = useState<BlogPost[]>(MOCK_POSTS);
   const [orders, setOrders] = useState<Order[]>(MOCK_ORDERS);
@@ -433,8 +438,18 @@ const App: React.FC = () => {
       result = result.filter((p) => selectedTags.every((tag) => p.tags?.includes(tag)));
     }
 
+    console.log('🎯 Filtered products:', result.length, {
+      total: products.length,
+      afterFilter: filteredProducts.length,
+      final: result.length,
+      showOnSale,
+      selectedTags,
+      selectedCategory,
+      searchQuery,
+    });
+
     return result;
-  }, [filteredProducts, showOnSale, selectedTags]);
+  }, [filteredProducts, showOnSale, selectedTags, products.length, selectedCategory, searchQuery]);
 
   const renderView = () => {
     // Loading fallback for lazy-loaded pages
