@@ -42,7 +42,7 @@ const PRODUCT_NAMES = [
 
 export const SocialProofNotifications: React.FC = () => {
   const [notifications, setNotifications] = useState<PurchaseNotification[]>([]);
-  const [nextId, setNextId] = useState(1);
+  const [, setNextId] = useState(1);
   const intervalRef = React.useRef<number | undefined>(undefined);
 
   const dismissNotification = useCallback((id: number) => {
@@ -68,7 +68,7 @@ export const SocialProofNotifications: React.FC = () => {
 
       return currentId + 1;
     });
-  }, [dismissNotification]);
+  }, [dismissNotification, setNextId]);
 
   useEffect(() => {
     // Show first notification after 3 seconds

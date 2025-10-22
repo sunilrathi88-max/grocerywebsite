@@ -1,5 +1,5 @@
 import React from 'react';
-import { PLACEHOLDER_URLS, imageErrorHandlers } from '../utils/imageHelpers';
+import { imageErrorHandlers } from '../utils/imageHelpers';
 import { Recipe } from './RecipesPage';
 import { XIcon } from './icons/XIcon';
 import { ClockIcon } from './icons/ClockIcon';
@@ -11,7 +11,6 @@ interface RecipeDetailModalProps {
 }
 
 const RecipeDetailModal: React.FC<RecipeDetailModalProps> = ({ recipe, onClose }) => {
-  const placeholderImage = PLACEHOLDER_URLS.recipe;
   const handleImageError = imageErrorHandlers.recipe;
 
   return (

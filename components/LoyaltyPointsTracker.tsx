@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { GiftIcon } from './icons/GiftIcon';
 import { SparklesIcon } from './icons/SparklesIcon';
 import { TruckIcon } from './icons/TruckIcon';
@@ -20,14 +20,14 @@ interface PointsHistory {
 }
 
 export const LoyaltyPointsTracker: React.FC = () => {
-  const [points, setPoints] = useState<LoyaltyPoints>({
+  const [points] = useState<LoyaltyPoints>({
     current: 1250,
     lifetime: 3800,
     tier: 'Silver',
     nextTierPoints: 5000,
   });
 
-  const [history, setHistory] = useState<PointsHistory[]>([
+  const [history] = useState<PointsHistory[]>([
     { id: '1', date: '2024-01-15', description: 'Purchase #1234', points: 150, type: 'earned' },
     { id: '2', date: '2024-01-10', description: 'Product Review', points: 50, type: 'earned' },
     {
