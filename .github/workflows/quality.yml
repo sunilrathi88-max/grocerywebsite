@@ -1,0 +1,43 @@
+name: Code Quality Checks
+
+on:
+  pull_request:
+    branches: [main, develop]
+  push:
+    branches: [main, develop]
+
+jobs:
+  lint-and-format:
+    name: ESLint & Prettier
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+        
+      - name: 🟢 Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          
+      - name: 📦 Install
+        run: npm ci
+        
+      - name: 🎨 Run ESLint
+        run: npm run lint
+        
+      - name: 💅 Check Formatting
+        run: npm run format:check
+        
+      - name: 📊 Post PR Comment
+        if: failure() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '❌ Code quality checks failed. Please run `npm run lint:fix` and `npm run format` locally.'
+            })

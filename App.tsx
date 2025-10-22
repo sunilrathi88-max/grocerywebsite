@@ -76,24 +76,26 @@ const App: React.FC = () => {
   useEffect(() => {
     if ('serviceWorker' in navigator) {
       // Import workbox-window dynamically
-      import('workbox-window').then(({ Workbox }) => {
-        const wb = new Workbox('/sw.js');
+      import('workbox-window')
+        .then(({ Workbox }) => {
+          const wb = new Workbox('/sw.js');
 
-        wb.addEventListener('installed', (event) => {
-          if (event.isUpdate) {
-            // New content available, show update notification
-            if (window.confirm('New version available! Click OK to update.')) {
-              window.location.reload();
+          wb.addEventListener('installed', (event) => {
+            if (event.isUpdate) {
+              // New content available, show update notification
+              if (window.confirm('New version available! Click OK to update.')) {
+                window.location.reload();
+              }
             }
-          }
-        });
+          });
 
-        wb.register().catch((error) => {
-          console.warn('Service Worker registration failed:', error);
+          wb.register().catch((error) => {
+            console.warn('Service Worker registration failed:', error);
+          });
+        })
+        .catch((error) => {
+          console.warn('Workbox import failed:', error);
         });
-      }).catch((error) => {
-        console.warn('Workbox import failed:', error);
-      });
     }
   }, []);
 
@@ -105,8 +107,8 @@ const App: React.FC = () => {
   // Use the products hook with mock data fallback (set useMockData: true for now)
   const {
     products,
-    isLoading: _productsLoading,
-    error: _productsError,
+    // isLoading: _productsLoading, // Unused but available for future
+    // error: _productsError, // Unused but available for future
     addProduct: addProductAPI,
     updateProduct: updateProductAPI,
     deleteProduct: deleteProductAPI,

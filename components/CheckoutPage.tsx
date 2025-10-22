@@ -372,7 +372,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
 
       // Try API first
       const confirmedOrder = await orderAPI.create(orderData);
-      setOrderConfirmation(confirmedOrder);
+      setOrderConfirmation(confirmedOrder.data);
       addToast('Order placed successfully!', 'success');
     } catch (error) {
       // Fallback to local order creation
