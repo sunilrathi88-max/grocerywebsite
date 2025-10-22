@@ -30,7 +30,6 @@ import { MOCK_USER, MOCK_ORDERS, MOCK_TESTIMONIALS, MOCK_ANALYTICS, MOCK_POSTS }
 
 // Core Components (Eagerly Loaded - Always Visible)
 import Header from './components/Header';
-import Hero from './components/Hero';
 import ProductGrid from './components/ProductGrid';
 import CategoryFilter from './components/CategoryFilter';
 import Footer from './components/Footer';
@@ -39,6 +38,7 @@ import PromotionalBanner from './components/PromotionalBanner';
 import SortDropdown from './components/SortDropdown';
 
 // Lazy-Loaded Components (Load on Demand)
+const Hero = React.lazy(() => import('./components/Hero'));
 const Testimonials = React.lazy(() => import('./components/Testimonials'));
 const ProductDetailModal = React.lazy(() => import('./components/ProductDetailModal'));
 const SideModal = React.lazy(() => import('./components/SideModal'));

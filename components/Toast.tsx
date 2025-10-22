@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import { motion } from 'framer-motion';
+import React, { useEffect, useState } from 'react';
 import { CheckCircleIcon } from './icons/CheckCircleIcon';
 import { XIcon } from './icons/XIcon';
 import { ToastMessage } from '../types';
@@ -11,9 +10,20 @@ interface ToastProps {
 }
 
 const Toast: React.FC<ToastProps> = ({ toast, onClose }) => {
+  const [isVisible, setIsVisible] = useState(false);
+  const [isExiting, setIsExiting] = useState(false);
+
   useEffect(() => {
+    // Trigger entrance animation
+    requestAnimationFrame(() => {
+      setIsVisible(true);
+    });
+
     const timer = setTimeout(() => {
-      onClose(toast.id);
+      setIsExiting(true);
+      setTimeout(() => {
+        onClose(toast.id);
+      }, 200); // Match exit animation duration
     }, 3000);
 
     return () => {
@@ -36,18 +46,16 @@ const Toast: React.FC<ToastProps> = ({ toast, onClose }) => {
   };
 
   return (
-    <motion.div
-      // FIX: Wrapped framer-motion props in a spread object to resolve TypeScript errors.
-
-      {...({
-        layout: true,
-        initial: { opacity: 0, y: 50, scale: 0.3 },
-        animate: { opacity: 1, y: 0, scale: 1 },
-        exit: { opacity: 0, scale: 0.5, transition: { duration: 0.2 } },
-        className:
-          'max-w-sm w-full bg-white shadow-lg rounded-lg pointer-events-auto ring-1 ring-black ring-opacity-5 overflow-hidden',
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } as any)}
+    <div
+      className={`
+        max-w-sm w-full bg-white shadow-lg rounded-lg pointer-events-auto ring-1 ring-black ring-opacity-5 overflow-hidden
+        transition-all duration-300 ease-out
+        ${
+          isVisible && !isExiting
+            ? 'opacity-100 translate-y-0 scale-100'
+            : 'opacity-0 translate-y-12 scale-90'
+        }
+      `}
     >
       <div className="p-4">
         <div className="flex items-start">
@@ -66,7 +74,7 @@ const Toast: React.FC<ToastProps> = ({ toast, onClose }) => {
           </div>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
