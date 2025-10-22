@@ -396,6 +396,7 @@ const Header: React.FC<HeaderProps> = ({
                     : {}
                 }
                 transition={{ duration: 0.6, ease: 'easeInOut' }}
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 {...({} as any)}
               >
                 <button
@@ -411,6 +412,7 @@ const Header: React.FC<HeaderProps> = ({
                       animate={{ scale: 1 }}
                       key={cartItemCount}
                       transition={{ type: 'spring', stiffness: 500, damping: 15 }}
+                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
                       {...({} as any)}
                     >
                       {cartItemCount}

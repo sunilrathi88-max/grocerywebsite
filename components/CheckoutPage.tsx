@@ -320,10 +320,11 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
   );
 
   const handleInputChange =
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (setter: React.Dispatch<React.SetStateAction<any>>) =>
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setter((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-    };
+      (e: React.ChangeEvent<HTMLInputElement>) => {
+        setter((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+      };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

@@ -5,8 +5,9 @@ import Cart from '../Cart';
 import { CartItem, Product, Variant } from '../../types';
 
 // Mock framer-motion
-jest.mock('framer-motion', () => ({
-  motion: {
+/* eslint-disable @typescript-eslint/no-explicit-any */
+jest.mock('framer-motion', () => {
+  const motion = {
     div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
     button: ({ children, onClick, className, disabled, ...props }: any) => (
       <button onClick={onClick} className={className} disabled={disabled} {...props}>
@@ -14,16 +15,22 @@ jest.mock('framer-motion', () => ({
       </button>
     ),
     span: ({ children, ...props }: any) => <span {...props}>{children}</span>,
-  },
-  AnimatePresence: ({ children }: any) => <>{children}</>,
-}));
+  };
+
+  const AnimatePresence = ({ children }: any) => <>{children}</>;
+
+  return { motion, AnimatePresence };
+});
+/* eslint-enable @typescript-eslint/no-explicit-any */
 
 // Mock OptimizedImage
+/* eslint-disable @typescript-eslint/no-explicit-any */
 jest.mock('../OptimizedImage', () => ({
   OptimizedImage: ({ src, alt, className }: any) => (
     <img src={src} alt={alt} className={className} data-testid="cart-item-image" />
   ),
 }));
+/* eslint-enable @typescript-eslint/no-explicit-any */
 
 describe('Cart', () => {
   // Mock functions

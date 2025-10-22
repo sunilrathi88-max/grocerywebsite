@@ -136,6 +136,7 @@ const QuizModule: React.FC<QuizModuleProps> = ({ addToast }) => {
           initial: { opacity: 0, scale: 0.9 },
           animate: { opacity: 1, scale: 1 },
           className: 'bg-white p-8 rounded-lg shadow-lg text-center',
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } as any)}
       >
         {/* Trophy or Star Icon */}
@@ -218,6 +219,7 @@ const QuizModule: React.FC<QuizModuleProps> = ({ addToast }) => {
               animate: { scale: 1 },
               className:
                 'mt-6 bg-gradient-to-br from-brand-primary to-amber-500 p-6 rounded-lg text-white',
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
             } as any)}
           >
             <SparklesIcon className="w-8 h-8 mx-auto mb-2" />
@@ -299,6 +301,7 @@ const QuizModule: React.FC<QuizModuleProps> = ({ addToast }) => {
             animate: { opacity: 1, y: 0 },
             transition: { delay: 0.2 },
             className: 'mt-6 p-4 bg-brand-accent rounded-lg',
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
           } as any)}
         >
           <p className="font-semibold text-brand-dark">{feedback}</p>

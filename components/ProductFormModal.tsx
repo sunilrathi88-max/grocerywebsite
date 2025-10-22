@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Product } from '../types';
+import { Product, Variant } from '../types';
 import { XIcon } from './icons/XIcon';
 
 interface ProductFormModalProps {
@@ -43,7 +43,15 @@ const ProductFormModal: React.FC<ProductFormModalProps> = ({ product, onSave, on
     const newVariants = [...formData.variants];
     const field = e.target.name as keyof (typeof newVariants)[0];
     const value = e.target.type === 'number' ? parseFloat(e.target.value) : e.target.value;
-    (newVariants[index] as any)[field] = value;
+    // Safely update the variant by creating a new object and assigning the changed field
+    const existing = newVariants[index];
+    const updated = {
+      ...existing,
+      // computed assignment - cast to any because keyof assignment is dynamic
+      [field]: value,
+    } as Variant;
+
+    newVariants[index] = updated;
     setFormData({ ...formData, variants: newVariants });
   };
 

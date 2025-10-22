@@ -111,6 +111,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         </div>
 
         {/* Wishlist Button - Enhanced */}
+        {}
         <motion.button
           {...({
             whileTap: { scale: 1.2 },
@@ -118,6 +119,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
             className:
               'absolute top-4 right-4 bg-white/90 backdrop-blur-md p-3 rounded-full text-gray-700 hover:text-red-500 hover:bg-white shadow-lg hover:shadow-xl transition-all duration-300 z-10 group/heart',
             'aria-label': isWishlisted ? 'Remove from wishlist' : 'Add to wishlist',
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
           } as any)}
         >
           <HeartIcon

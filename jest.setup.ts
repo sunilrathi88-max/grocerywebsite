@@ -24,7 +24,7 @@ global.IntersectionObserver = class IntersectionObserver {
     return [];
   }
   unobserve() {}
-} as any;
+} as unknown as typeof IntersectionObserver;
 
 // Mock localStorage
 const localStorageMock = (() => {
@@ -44,4 +44,8 @@ const localStorageMock = (() => {
   };
 })();
 
-global.localStorage = localStorageMock as any;
+// Assign typed mock to global.localStorage
+Object.defineProperty(global, 'localStorage', {
+  value: localStorageMock,
+  writable: true,
+});

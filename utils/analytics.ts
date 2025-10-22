@@ -31,6 +31,7 @@ export const initGA = (measurementId: string) => {
     page_path: window.location.pathname,
   });
 
+  // eslint-disable-next-line no-console
   console.log('Google Analytics initialized with ID:', measurementId);
 };
 
@@ -45,6 +46,7 @@ export const trackPageView = (path: string, title?: string) => {
     page_title: title || document.title,
   });
 
+  // eslint-disable-next-line no-console
   console.log('Page view tracked:', path);
 };
 
@@ -60,6 +62,7 @@ export const trackEvent = (category: string, action: string, label?: string, val
     value: value,
   });
 
+  // eslint-disable-next-line no-console
   console.log('Event tracked:', { category, action, label, value });
 };
 
@@ -228,6 +231,7 @@ export const trackBadgeUnlock = (badgeName: string) => {
 export const initHotjar = (hjid: number, hjsv: number) => {
   if (typeof window === 'undefined') return;
 
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   (function (h: any, o: any, t: any, j: any, a?: any, r?: any) {
     h.hj =
       h.hj ||
@@ -241,7 +245,9 @@ export const initHotjar = (hjid: number, hjsv: number) => {
     r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
     a.appendChild(r);
   })(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
+  /* eslint-enable @typescript-eslint/no-explicit-any */
 
+  // eslint-disable-next-line no-console
   console.log('Hotjar initialized with ID:', hjid);
 };
 

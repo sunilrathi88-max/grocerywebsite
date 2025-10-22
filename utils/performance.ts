@@ -9,7 +9,9 @@ export const usePerformanceMonitoring = () => {
     if (typeof window === 'undefined') return;
 
     // Report Web Vitals
+
     if ('PerformanceObserver' in window) {
+      /* eslint-disable @typescript-eslint/no-explicit-any, no-console */
       // Largest Contentful Paint (LCP)
       const lcpObserver = new PerformanceObserver((list) => {
         const entries = list.getEntries();
@@ -38,6 +40,7 @@ export const usePerformanceMonitoring = () => {
         });
       });
       clsObserver.observe({ entryTypes: ['layout-shift'] });
+      /* eslint-enable @typescript-eslint/no-explicit-any, no-console */
 
       return () => {
         lcpObserver.disconnect();
@@ -105,7 +108,9 @@ export const preloadCriticalResources = () => {
 /**
  * Report performance metrics to analytics
  */
+
 export const reportWebVitals = (metric: { name: string; value: number }) => {
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   // Send to Google Analytics
   if (typeof window !== 'undefined' && (window as any).gtag) {
     (window as any).gtag('event', metric.name, {
@@ -115,9 +120,11 @@ export const reportWebVitals = (metric: { name: string; value: number }) => {
       non_interaction: true,
     });
   }
+  /* eslint-enable @typescript-eslint/no-explicit-any */
 
   // Log to console in development
   if (process.env.NODE_ENV === 'development') {
+    // eslint-disable-next-line no-console
     console.log(`[Performance] ${metric.name}:`, metric.value);
   }
 };
@@ -125,6 +132,7 @@ export const reportWebVitals = (metric: { name: string; value: number }) => {
 /**
  * Debounce function for performance
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const debounce = <T extends (...args: any[]) => any>(
   func: T,
   wait: number
@@ -139,6 +147,7 @@ export const debounce = <T extends (...args: any[]) => any>(
 /**
  * Throttle function for performance
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const throttle = <T extends (...args: any[]) => any>(
   func: T,
   limit: number

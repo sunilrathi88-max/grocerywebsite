@@ -38,6 +38,7 @@ const Toast: React.FC<ToastProps> = ({ toast, onClose }) => {
   return (
     <motion.div
       // FIX: Wrapped framer-motion props in a spread object to resolve TypeScript errors.
+
       {...({
         layout: true,
         initial: { opacity: 0, y: 50, scale: 0.3 },
@@ -45,6 +46,7 @@ const Toast: React.FC<ToastProps> = ({ toast, onClose }) => {
         exit: { opacity: 0, scale: 0.5, transition: { duration: 0.2 } },
         className:
           'max-w-sm w-full bg-white shadow-lg rounded-lg pointer-events-auto ring-1 ring-black ring-opacity-5 overflow-hidden',
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } as any)}
     >
       <div className="p-4">
