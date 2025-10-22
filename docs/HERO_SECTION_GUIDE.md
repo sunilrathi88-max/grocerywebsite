@@ -3,6 +3,7 @@
 ## ✅ What's New
 
 Your homepage now features a **premium, slider-based hero section** with:
+
 - ✨ **Multi-slide carousel** using react-slick
 - 🎨 **Luxury brand styling** (Playfair Display + Nunito fonts)
 - 🖼️ **3 branded slide images** with gradient backgrounds
@@ -15,16 +16,19 @@ Your homepage now features a **premium, slider-based hero section** with:
 ## 🎬 Hero Features
 
 ### **Slide 1: Brand Essence**
+
 - **Heading:** "The Essence of India, Delivered."
 - **Image:** Tattva Co. logo with leaf emoji 🌿
 - **CTA:** "Explore Collection" → Scrolls to products
 
 ### **Slide 2: Featured Product (Saffron)**
+
 - **Heading:** "Himalayan Saffron"
 - **Image:** Saffron flower emoji 🌸
 - **CTA:** "Shop Saffron" → Scrolls to products
 
 ### **Slide 3: Brand Story**
+
 - **Heading:** "Spices with Soul"
 - **Image:** Spice blend with chili emoji 🌶️
 - **CTA:** "Browse Recipes" → Navigates to recipes page
@@ -34,6 +38,7 @@ Your homepage now features a **premium, slider-based hero section** with:
 ## 📂 Files Modified/Created
 
 ### **Created:**
+
 ```
 public/images/hero/
 ├── slide-essence.svg   (Brand intro with 🌿)
@@ -42,6 +47,7 @@ public/images/hero/
 ```
 
 ### **Modified:**
+
 - ✅ `components/Hero.tsx` - Complete rewrite with slider
 - ✅ `index.html` - Added Nunito font (weight 400, 700)
 - ✅ Package dependencies (react-slick already installed)
@@ -51,41 +57,47 @@ public/images/hero/
 ## 🎨 Design Specifications
 
 ### **Typography**
-| Element | Font | Weight | Size | Color |
-|---------|------|--------|------|-------|
-| Heading | Playfair Display | 900 (Black) | 2.7rem | #9b6d3f |
-| Subheading | Nunito | 400 (Regular) | 1.14rem | #4b3426 |
-| Button | System | 700 (Bold) | 1.07rem | #7b4d1e |
+
+| Element    | Font             | Weight        | Size    | Color   |
+| ---------- | ---------------- | ------------- | ------- | ------- |
+| Heading    | Playfair Display | 900 (Black)   | 2.7rem  | #9b6d3f |
+| Subheading | Nunito           | 400 (Regular) | 1.14rem | #4b3426 |
+| Button     | System           | 700 (Bold)    | 1.07rem | #7b4d1e |
 
 ### **Colors**
-| Color Name | Hex Code | Usage |
-|------------|----------|-------|
-| Warm Gold | #9b6d3f | Headings |
-| Dark Brown | #7b4d1e | Buttons, emphasis |
-| Rich Brown | #4b3426 | Body text |
-| Soft Beige | #F3E8DA | Background start |
-| Golden Yellow | #FFE9B6 | Background end, button gradient |
-| Peach Gold | #F8BA8F | Button gradient end |
+
+| Color Name    | Hex Code | Usage                           |
+| ------------- | -------- | ------------------------------- |
+| Warm Gold     | #9b6d3f  | Headings                        |
+| Dark Brown    | #7b4d1e  | Buttons, emphasis               |
+| Rich Brown    | #4b3426  | Body text                       |
+| Soft Beige    | #F3E8DA  | Background start                |
+| Golden Yellow | #FFE9B6  | Background end, button gradient |
+| Peach Gold    | #F8BA8F  | Button gradient end             |
 
 ### **Gradients**
+
 **Background:**
+
 ```css
-background: linear-gradient(to bottom, #f3e8da, #ffe9b6)
+background: linear-gradient(to bottom, #f3e8da, #ffe9b6);
 ```
 
 **Card Overlay:**
+
 ```css
 background: linear-gradient(
   180deg,
   rgba(243, 232, 218, 0.9) 0%,
   rgba(243, 232, 218, 0.7) 60%,
   rgba(183, 133, 80, 0.18) 100%
-)
+);
 ```
 
 **Button:**
+
 ```css
-background: linear-gradient(to right, #ffe9b6, #f8ba8f)
+background: linear-gradient(to right, #ffe9b6, #f8ba8f);
 ```
 
 ---
@@ -134,6 +146,7 @@ const slides: HeroSlide[] = [
 ### **Create New Slide Image**
 
 1. **Copy existing template:**
+
    ```bash
    cp public/images/hero/slide-essence.svg public/images/hero/slide-new.svg
    ```
@@ -145,12 +158,13 @@ const slides: HeroSlide[] = [
 
 3. **Reference in slide:**
    ```typescript
-   image: '/images/hero/slide-new.svg'
+   image: '/images/hero/slide-new.svg';
    ```
 
 ### **Change Autoplay Speed**
 
 In `Hero.tsx`, line 52:
+
 ```typescript
 autoplaySpeed: 5000,  // Change to 3000 for 3 seconds, etc.
 ```
@@ -158,6 +172,7 @@ autoplaySpeed: 5000,  // Change to 3000 for 3 seconds, etc.
 ### **Disable Autoplay**
 
 In `Hero.tsx`, line 50:
+
 ```typescript
 autoplay: false,  // Slides won't auto-advance
 ```
@@ -165,6 +180,7 @@ autoplay: false,  // Slides won't auto-advance
 ### **Change Transition Effect**
 
 In `Hero.tsx`, line 51:
+
 ```typescript
 fade: false,  // Use slide transition instead of fade
 ```
@@ -174,12 +190,14 @@ fade: false,  // Use slide transition instead of fade
 ## 📱 Responsive Behavior
 
 ### **Desktop (≥768px)**
+
 - Arrows positioned outside card: `-40px` left/right
 - Full heading size: `2.7rem`
 - Image size: `120px`
 - Padding: `3rem` (48px)
 
 ### **Mobile (<768px)**
+
 - Arrows positioned inside card: `10px` left/right with `z-index: 10`
 - Smaller heading: Responsive via Tailwind `text-3xl md:text-[2.7rem]`
 - Image size: `120px` (same)
@@ -190,26 +208,36 @@ fade: false,  // Use slide transition instead of fade
 ## 🎬 Animations
 
 ### **1. Floating Image**
+
 ```css
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }
 .animate-float {
   animation: float 3s ease-in-out infinite;
 }
 ```
+
 **Effect:** Images gently bob up and down
 
 ### **2. Fade Transition**
+
 - Controlled by react-slick's `fade: true`
 - Smooth 800ms cross-fade between slides
 
 ### **3. Button Hover**
+
 ```css
 hover:scale-105
 hover:shadow-[0_4px_24px_-6px_rgba(181,129,76,0.6)]
 ```
+
 **Effect:** Button grows slightly and shadow intensifies
 
 ---
@@ -217,6 +245,7 @@ hover:shadow-[0_4px_24px_-6px_rgba(181,129,76,0.6)]
 ## 🧪 Testing Checklist
 
 ### **Visual Tests**
+
 - [ ] Hero section displays on homepage
 - [ ] 3 slides cycle automatically (5s each)
 - [ ] Images load correctly (no broken SVGs)
@@ -225,6 +254,7 @@ hover:shadow-[0_4px_24px_-6px_rgba(181,129,76,0.6)]
 - [ ] Buttons have gradient background
 
 ### **Interaction Tests**
+
 - [ ] Clicking "Explore Collection" scrolls to products
 - [ ] Clicking "Shop Saffron" scrolls to products
 - [ ] Clicking "Browse Recipes" navigates to recipes
@@ -233,11 +263,13 @@ hover:shadow-[0_4px_24px_-6px_rgba(181,129,76,0.6)]
 - [ ] Autoplay pauses on hover
 
 ### **Responsive Tests**
+
 - [ ] Desktop (1920px): Full layout, arrows outside
 - [ ] Tablet (768px): Responsive text, arrows inside
 - [ ] Mobile (375px): Stacked layout, readable text
 
 ### **Performance Tests**
+
 - [ ] No console errors
 - [ ] Smooth transitions (no lag)
 - [ ] SVG images load instantly (<1KB each)
@@ -249,6 +281,7 @@ hover:shadow-[0_4px_24px_-6px_rgba(181,129,76,0.6)]
 ### **Issue: Slider doesn't show**
 
 **Fix:**
+
 ```bash
 # Verify packages installed
 npm list react-slick slick-carousel
@@ -260,11 +293,16 @@ npm install react-slick slick-carousel
 ### **Issue: Fonts don't load**
 
 **Check `index.html` has:**
+
 ```html
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+<link
+  href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Nunito:wght@400;700&display=swap"
+  rel="stylesheet"
+/>
 ```
 
 **Clear cache:**
+
 ```bash
 Ctrl+Shift+R  # Hard refresh in browser
 ```
@@ -272,6 +310,7 @@ Ctrl+Shift+R  # Hard refresh in browser
 ### **Issue: Arrows/dots don't show**
 
 **Ensure CSS is imported in `Hero.tsx`:**
+
 ```typescript
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -280,15 +319,17 @@ import 'slick-carousel/slick/slick-theme.css';
 ### **Issue: Images don't load**
 
 **Verify files exist:**
+
 ```bash
 ls public/images/hero/
 # Should show: slide-essence.svg, slide-saffron.svg, slide-spices.svg
 ```
 
 **Check paths start with `/`:**
+
 ```typescript
-image: '/images/hero/slide-essence.svg'  // ✅ Correct
-image: 'images/hero/slide-essence.svg'   // ❌ Wrong
+image: '/images/hero/slide-essence.svg'; // ✅ Correct
+image: 'images/hero/slide-essence.svg'; // ❌ Wrong
 ```
 
 ---
@@ -301,10 +342,10 @@ image: 'images/hero/slide-essence.svg'   // ❌ Wrong
 
 ```typescript
 // Heading color
-className="text-[#9b6d3f]"  // Change #9b6d3f to your brand color
+className = 'text-[#9b6d3f]'; // Change #9b6d3f to your brand color
 
 // Button gradient
-className="bg-gradient-to-r from-[#ffe9b6] to-[#f8ba8f]"
+className = 'bg-gradient-to-r from-[#ffe9b6] to-[#f8ba8f]';
 ```
 
 **In slide SVG files:**
@@ -318,13 +359,15 @@ className="bg-gradient-to-r from-[#ffe9b6] to-[#f8ba8f]"
 ### **Replace SVG with Real Photos**
 
 1. **Add photo to `/public/images/hero/`:**
+
    ```
    public/images/hero/slide-saffron.jpg
    ```
 
 2. **Update slide image path:**
+
    ```typescript
-   image: '/images/hero/slide-saffron.jpg'  // Changed .svg to .jpg
+   image: '/images/hero/slide-saffron.jpg'; // Changed .svg to .jpg
    ```
 
 3. **Recommended image specs:**
@@ -356,11 +399,13 @@ Add before the overlay in `Hero.tsx`:
 ### **Add Parallax Effect**
 
 Install framer-motion:
+
 ```bash
 npm install framer-motion
 ```
 
 Wrap slide content:
+
 ```tsx
 import { motion } from 'framer-motion';
 
@@ -370,12 +415,13 @@ import { motion } from 'framer-motion';
   transition={{ duration: 0.8 }}
 >
   {/* Slide content */}
-</motion.div>
+</motion.div>;
 ```
 
 ### **Add Custom Slide Indicators**
 
 Replace default dots with icons:
+
 ```typescript
 const settings = {
   // ... other settings ...
@@ -389,27 +435,30 @@ const settings = {
 
 ## 📊 Performance Metrics
 
-| Metric | Target | Current |
-|--------|--------|---------|
-| Initial Load | < 100ms | ✅ ~50ms |
-| Transition Speed | 800ms | ✅ 800ms |
-| Image Size (each) | < 10KB | ✅ ~1KB (SVG) |
-| Total Hero Size | < 50KB | ✅ ~15KB |
-| LCP (Largest Contentful Paint) | < 2.5s | ✅ < 1s |
+| Metric                         | Target  | Current       |
+| ------------------------------ | ------- | ------------- |
+| Initial Load                   | < 100ms | ✅ ~50ms      |
+| Transition Speed               | 800ms   | ✅ 800ms      |
+| Image Size (each)              | < 10KB  | ✅ ~1KB (SVG) |
+| Total Hero Size                | < 50KB  | ✅ ~15KB      |
+| LCP (Largest Contentful Paint) | < 2.5s  | ✅ < 1s       |
 
 ---
 
 ## 📚 References
 
 ### **Libraries Used**
+
 - [react-slick](https://react-slick.neostack.com/) - Carousel component
 - [slick-carousel](https://kenwheeler.github.io/slick/) - Core slider library
 
 ### **Fonts**
+
 - [Playfair Display](https://fonts.google.com/specimen/Playfair+Display) - Serif (headings)
 - [Nunito](https://fonts.google.com/specimen/Nunito) - Sans-serif (body)
 
 ### **Design Inspiration**
+
 - Indian luxury brand aesthetics
 - Gourmet food websites
 - Premium spice retailers
@@ -419,15 +468,17 @@ const settings = {
 ## ✅ Summary
 
 ### **What Changed**
-| Before | After |
-|--------|-------|
-| ❌ Static hero with Unsplash image | ✅ Dynamic 3-slide carousel |
-| ❌ Generic design | ✅ Premium Indian aesthetic |
-| ❌ External image dependency | ✅ Local SVG images |
-| ❌ Single CTA | ✅ 3 different CTAs per slide |
-| ❌ Basic fonts | ✅ Luxury typography (Playfair + Nunito) |
+
+| Before                             | After                                    |
+| ---------------------------------- | ---------------------------------------- |
+| ❌ Static hero with Unsplash image | ✅ Dynamic 3-slide carousel              |
+| ❌ Generic design                  | ✅ Premium Indian aesthetic              |
+| ❌ External image dependency       | ✅ Local SVG images                      |
+| ❌ Single CTA                      | ✅ 3 different CTAs per slide            |
+| ❌ Basic fonts                     | ✅ Luxury typography (Playfair + Nunito) |
 
 ### **Benefits**
+
 - ✅ **Engagement:** Users see 3 messages vs 1
 - ✅ **Brand:** Premium design matches product quality
 - ✅ **Performance:** Local SVGs load instantly
@@ -435,6 +486,7 @@ const settings = {
 - ✅ **Mobile:** Fully responsive out of the box
 
 ### **Next Steps**
+
 1. ✅ **Test:** Visit http://localhost:3001/ and verify slider works
 2. 🎨 **Customize:** Replace SVGs with product photos
 3. 📝 **Content:** Update slide copy to match your brand voice

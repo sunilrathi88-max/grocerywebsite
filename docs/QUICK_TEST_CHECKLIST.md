@@ -1,4 +1,5 @@
 # 🎯 Quick Testing Checklist
+
 **Use this as a quick reference while testing**
 
 ---
@@ -141,7 +142,7 @@ After completing all tests:
 **Quiz & Promo Codes:** ⬜ PASS / ⬜ FAIL  
 **Web Vitals Logs:** ⬜ PASS / ⬜ FAIL  
 **Lazy Loading:** ⬜ PASS / ⬜ FAIL  
-**Social Proof:** ⬜ PASS / ⬜ FAIL  
+**Social Proof:** ⬜ PASS / ⬜ FAIL
 
 ---
 

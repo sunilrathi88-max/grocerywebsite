@@ -3,6 +3,7 @@
 ## Product Detail Modal - Before vs After
 
 ### BEFORE (3 tabs)
+
 ```
 ┌─────────────────────────────────────┐
 │  Description | Reviews | Q&A        │
@@ -17,6 +18,7 @@
 ```
 
 ### AFTER (5 tabs)
+
 ```
 ┌──────────────────────────────────────────────────────────────┐
 │  Description | Nutrition Facts | Origin Story | Reviews | Q&A │
@@ -51,6 +53,7 @@
 ## Search Autocomplete - Before vs After
 
 ### BEFORE (simple list)
+
 ```
 ┌─────────────────────────┐
 │  Search...              │
@@ -67,6 +70,7 @@
 ```
 
 ### AFTER (organized sections)
+
 ```
 ┌────────────────────────────────────┐
 │  Search: saffron                   │
@@ -95,35 +99,39 @@
 ## Key Visual Differences
 
 ### Product Modal Enhancements
-| Feature | Before | After |
-|---------|--------|-------|
-| **Tab Count** | 3 tabs | 5 tabs |
-| **Nutrition Display** | Bullet list | FDA-style table |
-| **Certifications** | In tags | Prominent badges |
-| **Origin Story** | One line text | Full section with cards |
-| **Visual Hierarchy** | Flat | Gradient cards, icons |
-| **Mobile Scrolling** | Basic | Horizontal scroll tabs |
+
+| Feature               | Before        | After                   |
+| --------------------- | ------------- | ----------------------- |
+| **Tab Count**         | 3 tabs        | 5 tabs                  |
+| **Nutrition Display** | Bullet list   | FDA-style table         |
+| **Certifications**    | In tags       | Prominent badges        |
+| **Origin Story**      | One line text | Full section with cards |
+| **Visual Hierarchy**  | Flat          | Gradient cards, icons   |
+| **Mobile Scrolling**  | Basic         | Horizontal scroll tabs  |
 
 ### Search Enhancements
-| Feature | Before | After |
-|---------|--------|-------|
-| **Results Organization** | Flat list | Sectioned (Categories + Products) |
-| **Visual Elements** | Text only | Images, icons, gradients |
-| **Price Display** | ❌ Not shown | ✅ Shown with each product |
-| **Category Navigation** | ❌ Not available | ✅ Direct category access |
-| **Call-to-Action** | None | "View all results" button |
-| **Hover Effects** | Basic | Gradient animations |
+
+| Feature                  | Before           | After                             |
+| ------------------------ | ---------------- | --------------------------------- |
+| **Results Organization** | Flat list        | Sectioned (Categories + Products) |
+| **Visual Elements**      | Text only        | Images, icons, gradients          |
+| **Price Display**        | ❌ Not shown     | ✅ Shown with each product        |
+| **Category Navigation**  | ❌ Not available | ✅ Direct category access         |
+| **Call-to-Action**       | None             | "View all results" button         |
+| **Hover Effects**        | Basic            | Gradient animations               |
 
 ---
 
 ## Color Coding System
 
 ### Product Modal Tabs
+
 - **Active Tab**: `border-brand-primary` (gold underline)
 - **Inactive Tab**: `border-transparent` (no underline)
 - **Hover**: `border-gray-300` (gray underline)
 
 ### Search Dropdown
+
 - **Section Headers**: Gray background (#F9FAFB)
 - **Category Icons**: Gradient (brand-primary → amber-600)
 - **Hover State**: `from-brand-primary/10 to-amber-50`
@@ -134,6 +142,7 @@
 ## Animation Timing
 
 ### Transitions
+
 ```css
 Tab switching: fade-in (300ms)
 Search dropdown: fade-in-up (400ms)
@@ -142,6 +151,7 @@ Icon transforms: transform (300ms)
 ```
 
 ### Entrance Animations
+
 ```css
 .animate-fade-in {
   animation: fadeIn 0.3s ease-in-out;
@@ -157,27 +167,30 @@ Icon transforms: transform (300ms)
 ## Icon Usage Map
 
 ### Product Modal Icons
-| Section | Icon | Purpose |
-|---------|------|---------|
-| Nutrition | SparklesIcon | Section header (if no data) |
-| Certifications | CheckBadgeIcon | Header icon |
-| Cert Badges | CheckCircleIcon | Individual badge icon |
-| Origin Header | GlobeIcon | Location indicator |
-| Quality Card | ShieldCheckIcon | Quality assurance |
-| Fair Trade Card | UsersIcon | Community support |
-| Eco Card | LeafIcon | Sustainability |
+
+| Section         | Icon            | Purpose                     |
+| --------------- | --------------- | --------------------------- |
+| Nutrition       | SparklesIcon    | Section header (if no data) |
+| Certifications  | CheckBadgeIcon  | Header icon                 |
+| Cert Badges     | CheckCircleIcon | Individual badge icon       |
+| Origin Header   | GlobeIcon       | Location indicator          |
+| Quality Card    | ShieldCheckIcon | Quality assurance           |
+| Fair Trade Card | UsersIcon       | Community support           |
+| Eco Card        | LeafIcon        | Sustainability              |
 
 ### Search Dropdown Icons
-| Element | Icon | Purpose |
-|---------|------|---------|
-| Category Item | TagIcon | Category identifier |
-| Footer CTA | ChevronRightIcon | Navigation arrow |
+
+| Element       | Icon             | Purpose             |
+| ------------- | ---------------- | ------------------- |
+| Category Item | TagIcon          | Category identifier |
+| Footer CTA    | ChevronRightIcon | Navigation arrow    |
 
 ---
 
 ## Responsive Breakpoints
 
 ### Product Modal
+
 ```
 Mobile (< 640px):
 - Tabs scroll horizontally
@@ -196,6 +209,7 @@ Desktop (≥ 768px):
 ```
 
 ### Search Dropdown
+
 ```
 All sizes:
 - Fixed width (20rem)
@@ -208,13 +222,13 @@ All sizes:
 ## Usage Examples
 
 ### Opening Nutrition Tab from Code
+
 ```tsx
-<button onClick={() => setActiveTab('nutrition')}>
-  View Nutrition Facts
-</button>
+<button onClick={() => setActiveTab('nutrition')}>View Nutrition Facts</button>
 ```
 
 ### Accessing Search Categories
+
 ```tsx
 // User types "spice"
 // Autocomplete shows:
@@ -228,13 +242,16 @@ onSelectCategory('Spices') // Filters to category
 ```
 
 ### Checking Certifications
+
 ```tsx
 // Auto-detects from product.tags
 const certTags = ['Organic', 'Vegan', 'Gluten-Free', 'Non-GMO'];
-const hasCerts = product.tags.some(tag => certTags.includes(tag));
+const hasCerts = product.tags.some((tag) => certTags.includes(tag));
 
 // Shows badge section if true
-{hasCerts && <CertificationBadges />}
+{
+  hasCerts && <CertificationBadges />;
+}
 ```
 
 ---
@@ -256,6 +273,7 @@ Total impact: +25KB bundle size (acceptable for features gained)
 ## Browser DevTools Tips
 
 ### Testing Product Modal
+
 1. Open any product
 2. Click each of the 5 tabs
 3. Check console for errors
@@ -263,6 +281,7 @@ Total impact: +25KB bundle size (acceptable for features gained)
 5. Test on mobile viewport (375px width)
 
 ### Testing Search
+
 1. Click search input
 2. Type "saffron"
 3. Verify dropdown shows categories and products
@@ -275,18 +294,22 @@ Total impact: +25KB bundle size (acceptable for features gained)
 ## Common Issues & Fixes
 
 ### Tab content not switching
+
 **Issue**: Active tab state not updating  
 **Fix**: Verify `activeTab` state type includes all 5 options
 
 ### Certifications not showing
+
 **Issue**: Tags don't match exact strings  
 **Fix**: Ensure tags are 'Organic', 'Vegan', etc. (case-sensitive)
 
 ### Search dropdown not appearing
+
 **Issue**: `autocompleteResults` empty  
 **Fix**: Check that categories array is passed to Header component
 
 ### Icons not displaying
+
 **Issue**: Import missing  
 **Fix**: Verify all icon imports at top of file
 
@@ -295,16 +318,18 @@ Total impact: +25KB bundle size (acceptable for features gained)
 ## Performance Notes
 
 ### Optimization Done
+
 ✅ `useMemo` for autocomplete results  
 ✅ Image lazy loading  
 ✅ Conditional rendering (only show active tab)  
-✅ Error boundaries for image failures  
+✅ Error boundaries for image failures
 
 ### Future Optimizations
+
 ⏳ Virtual scrolling for long search results  
 ⏳ Tab content lazy loading  
 ⏳ WebP image conversion  
-⏳ Code splitting for modal  
+⏳ Code splitting for modal
 
 ---
 

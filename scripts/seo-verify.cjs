@@ -8,9 +8,9 @@ const puppeteer = require('puppeteer');
     errors: [],
   };
 
-  const browser = await puppeteer.launch({ 
-    headless: 'new', 
-    args: ['--no-sandbox','--disable-setuid-sandbox'] 
+  const browser = await puppeteer.launch({
+    headless: 'new',
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
   });
   try {
     const page = await browser.newPage();
@@ -20,12 +20,12 @@ const puppeteer = require('puppeteer');
     // Load homepage - try network address if localhost fails
     const urls = ['http://localhost:3000', 'http://127.0.0.1:3000', 'http://192.168.1.9:3000'];
     let pageLoaded = false;
-    
+
     for (const url of urls) {
       try {
-        await page.goto(url, { 
+        await page.goto(url, {
           waitUntil: 'networkidle2',
-          timeout: 10000 
+          timeout: 10000,
         });
         console.log(`Page loaded successfully from ${url}`);
         pageLoaded = true;
@@ -34,7 +34,7 @@ const puppeteer = require('puppeteer');
         console.log(`Failed to load from ${url}: ${err.message}`);
       }
     }
-    
+
     if (!pageLoaded) {
       throw new Error('Could not connect to dev server on any address');
     }
@@ -62,9 +62,9 @@ const puppeteer = require('puppeteer');
       '[data-test="product-card"]',
       '.product-card',
       'button[aria-label*="View"]',
-      'div[class*="ProductCard"]'
+      'div[class*="ProductCard"]',
     ];
-    
+
     let clicked = false;
     for (const selector of productCardSelectors) {
       const elem = await page.$(selector);
@@ -95,7 +95,6 @@ const puppeteer = require('puppeteer');
     } else {
       result.errors.push('Could not find any product card to click.');
     }
-
   } catch (err) {
     console.error('Error during verification:', err.message);
     result.errors.push(err.message || String(err));
@@ -104,7 +103,7 @@ const puppeteer = require('puppeteer');
     console.log('\n=== SEO VERIFICATION REPORT ===');
     console.log(JSON.stringify(result, null, 2));
     console.log('================================\n');
-    
+
     // Exit with error code if there are errors
     process.exit(result.errors.length > 0 ? 1 : 0);
   }

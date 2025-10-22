@@ -1,12 +1,15 @@
 # 🚀 Test Suite Update Action Plan
 
 ## Overview
+
 We've successfully fixed the dropdown navigation tests (4/4 passing). Now we need to update the remaining 8 test suites to match the current UI structure.
 
 ---
 
 ## ✅ Completed
+
 ### Suite 1: Dropdown Navigation (01-dropdown-navigation.cy.ts)
+
 - Status: **4/4 tests passing** ✅
 - Duration: 19 seconds
 - Issues Fixed:
@@ -22,8 +25,10 @@ We've successfully fixed the dropdown navigation tests (4/4 passing). Now we nee
 ### Priority 1: Core Functionality Tests
 
 #### Suite 2: Quiz & Promo Codes (02-quiz-promo-codes.cy.ts)
+
 **Tests:** 7 tests
 **What it tests:**
+
 - 8-question quiz completion
 - QUIZMASTER15 (15% off) code generation
 - SPICEFAN10 (10% off) code generation
@@ -32,11 +37,13 @@ We've successfully fixed the dropdown navigation tests (4/4 passing). Now we nee
 - Promo code application in checkout
 
 **Likely Issues:**
+
 - Quiz button/question selectors may need updating
 - Promo code input field selectors
 - Toast notification selectors
 
 **Fix Strategy:**
+
 ```bash
 # Run locally first to see errors
 npx cypress run --spec "cypress/e2e/02-quiz-promo-codes.cy.ts"
@@ -50,8 +57,10 @@ grep -r "quiz" components/QuizModule.tsx
 ---
 
 #### Suite 3: Performance Vitals (03-performance-vitals.cy.ts)
+
 **Tests:** 12 tests
 **What it tests:**
+
 - Page load times < 5000ms
 - LCP (Largest Contentful Paint) < 2500ms
 - FID (First Input Delay) < 100ms
@@ -61,10 +70,12 @@ grep -r "quiz" components/QuizModule.tsx
 - Performance on homepage, product pages, checkout
 
 **Likely Issues:**
+
 - May need performance budget adjustments
 - Custom command `checkWebVitals()` may need updates
 
 **Fix Strategy:**
+
 ```bash
 # This test uses custom commands
 # Check implementation in cypress/support/commands.ts
@@ -78,8 +89,10 @@ npx cypress run --spec "cypress/e2e/03-performance-vitals.cy.ts"
 ---
 
 #### Suite 4: Lazy Loading (04-lazy-loading.cy.ts)
+
 **Tests:** 13 tests
 **What it tests:**
+
 - Images have `loading="lazy"` attribute
 - Images don't all load immediately
 - Images load on scroll
@@ -88,10 +101,12 @@ npx cypress run --spec "cypress/e2e/03-performance-vitals.cy.ts"
 - Error handling for broken images
 
 **Likely Issues:**
+
 - Image selectors may need updating
 - Need to verify LazyImage component usage
 
 **Fix Strategy:**
+
 ```bash
 # Check LazyImage component
 cat components/LazyImage.tsx
@@ -103,8 +118,10 @@ npx cypress run --spec "cypress/e2e/04-lazy-loading.cy.ts"
 ---
 
 #### Suite 5: Social Proof (05-social-proof.cy.ts)
+
 **Tests:** 14 tests
 **What it tests:**
+
 - "X just purchased Y" notifications
 - 3s initial delay
 - 10-15s intervals
@@ -116,10 +133,12 @@ npx cypress run --spec "cypress/e2e/04-lazy-loading.cy.ts"
 - Mobile responsiveness
 
 **Likely Issues:**
+
 - Notification popup selectors
 - Timing assertions may be flaky
 
 **Fix Strategy:**
+
 ```bash
 # Check SocialProofNotifications component
 cat components/SocialProofNotifications.tsx
@@ -133,8 +152,10 @@ npx cypress run --spec "cypress/e2e/05-social-proof.cy.ts"
 ### Priority 2: E2E & Integration Tests
 
 #### Suite 6: Checkout Flow (06-checkout-flow.cy.ts)
+
 **Tests:** 17 tests
 **What it tests:**
+
 - Add to cart functionality
 - Cart quantity updates
 - Remove from cart
@@ -146,12 +167,14 @@ npx cypress run --spec "cypress/e2e/05-social-proof.cy.ts"
 - Empty cart handling
 
 **Likely Issues:**
+
 - Cart selectors
 - Checkout form field IDs
 - Button selectors
 - Success message selectors
 
 **Fix Strategy:**
+
 ```bash
 # Most complex test - do after others
 # Check Cart and CheckoutPage components
@@ -165,8 +188,10 @@ npx cypress run --spec "cypress/e2e/06-checkout-flow.cy.ts" --headed
 ---
 
 #### Suite 7: Mobile Responsive (07-mobile-responsive.cy.ts)
+
 **Tests:** 30+ tests
 **What it tests:**
+
 - iPhone SE (375x667)
 - iPhone 11 (414x896)
 - Samsung Galaxy S20 (360x800)
@@ -179,11 +204,13 @@ npx cypress run --spec "cypress/e2e/06-checkout-flow.cy.ts" --headed
 - Breakpoint behavior
 
 **Likely Issues:**
+
 - Mobile menu selectors
 - Hamburger icon selector
 - Viewport-specific element visibility
 
 **Fix Strategy:**
+
 ```bash
 # Check MobileMenu component
 cat components/MobileMenu.tsx
@@ -197,8 +224,10 @@ npx cypress run --spec "cypress/e2e/07-mobile-responsive.cy.ts"
 ### Priority 3: Advanced Testing
 
 #### Suite 8: Visual Regression (08-visual-regression.cy.ts)
+
 **Tests:** 14 tests (Percy snapshots)
 **What it tests:**
+
 - Homepage desktop & mobile
 - Product grid with filters
 - Product detail modal
@@ -211,10 +240,12 @@ npx cypress run --spec "cypress/e2e/07-mobile-responsive.cy.ts"
 - Responsive breakpoints (5 widths)
 
 **Requirements:**
+
 - ⚠️ Requires PERCY_TOKEN in GitHub Secrets
 - Uses `cy.percySnapshot()`
 
 **Fix Strategy:**
+
 ```bash
 # This won't work without Percy token in CI
 # Can run locally if Percy CLI is set up
@@ -230,8 +261,10 @@ grep -r "percy" cypress/support/commands.ts
 ---
 
 #### Suite 9: Advanced Scenarios (09-advanced-scenarios.cy.ts)
+
 **Tests:** 60+ tests
 **What it tests:**
+
 - Loyalty points on quiz completion
 - Loyalty points on purchase
 - Badge tracking
@@ -248,11 +281,13 @@ grep -r "percy" cypress/support/commands.ts
 - Error handling (network errors, validation)
 
 **Likely Issues:**
+
 - Complex scenarios need careful selector updates
 - localStorage checks
 - Network error simulation
 
 **Fix Strategy:**
+
 ```bash
 # Most comprehensive test - do last
 # Run in stages
@@ -267,6 +302,7 @@ npx cypress open
 ## Update Strategy
 
 ### Step-by-Step Process
+
 1. **Run test locally** to identify failures
 2. **Check component implementation** to find correct selectors
 3. **Update test file** with correct selectors
@@ -276,6 +312,7 @@ npx cypress open
 7. **Repeat** for next test suite
 
 ### Batch Approach
+
 ```bash
 # Update suites 2-5 together (core functionality)
 # Then commit once
@@ -292,31 +329,32 @@ npx cypress open
 ## Common Selector Patterns
 
 ### Current UI Structure
+
 ```typescript
 // Header navigation
-cy.get('header nav')
-cy.get('header nav div.absolute') // Dropdown menus
+cy.get('header nav');
+cy.get('header nav div.absolute'); // Dropdown menus
 
 // Buttons
-cy.contains('button', 'Text') // Specific button text
-cy.get('button').contains('Text') // Alternative
+cy.contains('button', 'Text'); // Specific button text
+cy.get('button').contains('Text'); // Alternative
 
 // Forms
-cy.get('input[name="fieldname"]')
-cy.get('input[type="email"]')
-cy.get('textarea[name="message"]')
+cy.get('input[name="fieldname"]');
+cy.get('input[type="email"]');
+cy.get('textarea[name="message"]');
 
 // Products
-cy.get('#products-section')
-cy.get('[data-testid="product-card"]') // If we add test IDs
+cy.get('#products-section');
+cy.get('[data-testid="product-card"]'); // If we add test IDs
 
 // Modals
-cy.get('[role="dialog"]')
-cy.get('div[class*="modal"]')
+cy.get('[role="dialog"]');
+cy.get('div[class*="modal"]');
 
 // Toast notifications
-cy.get('[class*="toast"]')
-cy.contains('Added to cart')
+cy.get('[class*="toast"]');
+cy.contains('Added to cart');
 ```
 
 ---
@@ -324,6 +362,7 @@ cy.contains('Added to cart')
 ## Testing Workflow
 
 ### Local Development
+
 ```bash
 # 1. Ensure dev server is running
 npm run dev
@@ -341,6 +380,7 @@ start cypress/results/mochawesome.html
 ```
 
 ### CI/CD Pipeline
+
 ```bash
 # 1. Commit changes
 git add cypress/e2e/*.cy.ts
@@ -360,33 +400,35 @@ git push origin main
 
 ## Time Estimates
 
-| Suite | Tests | Complexity | Est. Time |
-|-------|-------|------------|-----------|
-| ✅ 01 - Dropdown | 4 | Low | DONE |
-| 02 - Quiz/Promo | 7 | Medium | 30 min |
-| 03 - Performance | 12 | Low | 15 min |
-| 04 - Lazy Loading | 13 | Medium | 30 min |
-| 05 - Social Proof | 14 | Medium | 30 min |
-| 06 - Checkout | 17 | High | 60 min |
-| 07 - Mobile | 30+ | Medium | 45 min |
-| 08 - Percy | 14 | Low* | 15 min |
-| 09 - Advanced | 60+ | High | 90 min |
+| Suite             | Tests | Complexity | Est. Time |
+| ----------------- | ----- | ---------- | --------- |
+| ✅ 01 - Dropdown  | 4     | Low        | DONE      |
+| 02 - Quiz/Promo   | 7     | Medium     | 30 min    |
+| 03 - Performance  | 12    | Low        | 15 min    |
+| 04 - Lazy Loading | 13    | Medium     | 30 min    |
+| 05 - Social Proof | 14    | Medium     | 30 min    |
+| 06 - Checkout     | 17    | High       | 60 min    |
+| 07 - Mobile       | 30+   | Medium     | 45 min    |
+| 08 - Percy        | 14    | Low\*      | 15 min    |
+| 09 - Advanced     | 60+   | High       | 90 min    |
 
 **Total estimated time:** ~5-6 hours
 
-*Percy suite is low complexity but requires Percy token to run in CI
+\*Percy suite is low complexity but requires Percy token to run in CI
 
 ---
 
 ## Success Criteria
 
 ### Per Suite
+
 - ✅ All tests passing locally
 - ✅ No console errors
 - ✅ Artifacts generating correctly
 - ✅ Test duration reasonable (<5 min per suite)
 
 ### Overall
+
 - ✅ 172+ tests passing
 - ✅ All CI jobs green (except Percy without token)
 - ✅ No deprecation warnings

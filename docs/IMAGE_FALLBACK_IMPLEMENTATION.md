@@ -1,9 +1,11 @@
 # Image Fallback Implementation Guide
 
 ## Overview
+
 This document describes the comprehensive image fallback system implemented across the Tattva Co. grocery website to ensure a polished user experience even when remote images fail to load.
 
 ## Problem Statement
+
 - External image URLs (Unsplash, CDNs) can fail due to network issues, rate limiting, or broken links
 - Broken images create a poor user experience with blank spaces or broken image icons
 - No consistent fallback strategy existed across components
@@ -31,6 +33,7 @@ export const imageErrorHandlers = {
 ```
 
 ### 2. Branded Placeholder Design
+
 - **Colors**: Brand accent (#F8E3D9) background with dark text (#333333)
 - **Text**: "Tattva Co." branding maintains visual consistency
 - **Sizes**: Optimized for different use cases (product cards, thumbnails, hero images)
@@ -38,6 +41,7 @@ export const imageErrorHandlers = {
 ### 3. Components Updated (14 total)
 
 #### Core Shopping Experience
+
 - `ProductCard.tsx` - Main product grid cards
 - `ProductDetailModal.tsx` - Product detail view (main image, thumbnails, frequently-bought-together)
 - `Wishlist.tsx` - Wishlist item thumbnails
@@ -46,13 +50,16 @@ export const imageErrorHandlers = {
 - `CheckoutPage.tsx` - Checkout order summary images
 
 #### Navigation & Search
+
 - `Header.tsx` - Search autocomplete product thumbnails
 
 #### Comparison Features
+
 - `ComparisonBar.tsx` - Bottom comparison bar thumbnails
 - `ComparisonModal.tsx` - Side-by-side comparison product images
 
 #### Content Pages
+
 - `BlogPostCard.tsx` - Blog listing page cards
 - `BlogPostPage.tsx` - Individual blog post hero images
 - `RecipesPage.tsx` - Recipe card images
@@ -62,52 +69,52 @@ export const imageErrorHandlers = {
 ## Implementation Pattern
 
 ### Standard Usage
+
 ```tsx
 import { imageErrorHandlers } from '../utils/imageHelpers';
 
 // For product images
-<img 
-  src={product.images[0]} 
+<img
+  src={product.images[0]}
   alt={product.name}
   onError={imageErrorHandlers.product}
 />
 
 // For thumbnails
-<img 
-  src={item.product.images[0]} 
+<img
+  src={item.product.images[0]}
   alt={item.product.name}
   onError={imageErrorHandlers.thumb}
 />
 
 // For blog/hero images
-<img 
-  src={post.image} 
+<img
+  src={post.image}
   alt={post.title}
   onError={imageErrorHandlers.blog}
 />
 ```
 
 ### Custom Handler (Advanced)
+
 ```tsx
 import { createImageErrorHandler, PLACEHOLDER_URLS } from '../utils/imageHelpers';
 
 const customHandler = createImageErrorHandler(PLACEHOLDER_URLS.hero);
 
-<img 
-  src={customImageUrl}
-  alt="Custom"
-  onError={customHandler}
-/>
+<img src={customImageUrl} alt="Custom" onError={customHandler} />;
 ```
 
 ## Testing Strategy
 
 ### Development Testing
+
 - Product ID 1 (Himalayan Saffron) uses a broken URL: `https://invalid-broken-url-test.com/nonexistent.jpg`
 - This allows continuous verification that fallbacks work correctly
 - All components display the branded placeholder when encountering this product
 
 ### Browser Testing Checklist
+
 1. ✅ Homepage product grid
 2. ✅ Product detail modal
 3. ✅ Shopping cart
@@ -120,6 +127,7 @@ const customHandler = createImageErrorHandler(PLACEHOLDER_URLS.hero);
 10. ✅ About page
 
 ### Production Considerations
+
 - Replace test broken URL with working Unsplash URL before deployment
 - Consider self-hosting critical images in `/public/images/` for reliability
 - Monitor image load failures in production analytics
@@ -128,17 +136,20 @@ const customHandler = createImageErrorHandler(PLACEHOLDER_URLS.hero);
 ## Benefits
 
 ### User Experience
+
 - No broken image icons or blank spaces
 - Consistent branded placeholder maintains visual polish
 - Users can still navigate and interact with products
 
 ### Developer Experience
+
 - Single import provides all fallback handlers
 - Consistent pattern across entire codebase
 - Easy to extend with new placeholder types
 - Type-safe with TypeScript
 
 ### Performance
+
 - Fallback handlers are lightweight (no external dependencies)
 - Placeholders are cached by browser after first load
 - No impact on initial bundle size
@@ -146,16 +157,19 @@ const customHandler = createImageErrorHandler(PLACEHOLDER_URLS.hero);
 ## Maintenance
 
 ### Adding New Image Types
+
 1. Add new placeholder URL to `PLACEHOLDER_URLS` in `utils/imageHelpers.ts`
 2. Create new handler in `imageErrorHandlers` object
 3. Import and use in target component
 
 ### Updating Placeholder Design
+
 - Modify URLs in `PLACEHOLDER_URLS` to change colors/text
 - Consider using local `/public/images/` fallbacks for custom designs
 - Update documentation if changing URL patterns
 
 ### Monitoring
+
 - Use browser DevTools Network tab to identify failing images
 - Check console for 404/CORS errors
 - Consider adding analytics tracking for fallback triggers
@@ -163,11 +177,13 @@ const customHandler = createImageErrorHandler(PLACEHOLDER_URLS.hero);
 ## Migration Guide (For New Components)
 
 1. Import the utility:
+
    ```tsx
    import { imageErrorHandlers } from '../utils/imageHelpers';
    ```
 
 2. Add `onError` handler to `<img>` tag:
+
    ```tsx
    <img src={url} alt="..." onError={imageErrorHandlers.product} />
    ```
@@ -182,6 +198,7 @@ const customHandler = createImageErrorHandler(PLACEHOLDER_URLS.hero);
 ## Future Enhancements
 
 ### Potential Improvements
+
 - [ ] Add loading states with skeleton screens
 - [ ] Implement progressive image loading (blur-up)
 - [ ] Create custom SVG placeholders instead of external service
@@ -191,6 +208,7 @@ const customHandler = createImageErrorHandler(PLACEHOLDER_URLS.hero);
 - [ ] Create admin tool to validate all image URLs
 
 ### Self-Hosting Strategy
+
 For production reliability, consider moving to self-hosted images:
 
 ```
@@ -206,13 +224,19 @@ public/
 ```
 
 Update image references:
+
 ```tsx
-<img src="/images/products/saffron-1.jpg" alt="..." onError={() => e.target.src = '/images/placeholders/product-fallback.svg'} />
+<img
+  src="/images/products/saffron-1.jpg"
+  alt="..."
+  onError={() => (e.target.src = '/images/placeholders/product-fallback.svg')}
+/>
 ```
 
 ## Support
 
 For questions or issues with image fallbacks:
+
 1. Check browser console for 404/CORS errors
 2. Verify `utils/imageHelpers.ts` is properly imported
 3. Ensure `onError` handler is attached to `<img>` element
@@ -222,6 +246,7 @@ For questions or issues with image fallbacks:
 ## Changelog
 
 ### v1.0.0 (October 2025)
+
 - ✅ Created centralized `imageHelpers.ts` utility
 - ✅ Implemented fallbacks across 14 components
 - ✅ Added branded placeholder design

@@ -22,7 +22,10 @@ export const productAPI = {
     page?: number;
     limit?: number;
   }): Promise<Product[]> => {
-    const response = await api.get<PaginatedResponse<Product>>('/products', params as Record<string, string | number>);
+    const response = await api.get<PaginatedResponse<Product>>(
+      '/products',
+      params as Record<string, string | number>
+    );
     return response.data;
   },
 
@@ -120,12 +123,8 @@ export const userAPI = {
   /**
    * Register new user
    */
-  register: (userData: {
-    name: string;
-    email: string;
-    password: string;
-    phone?: string;
-  }) => api.post<APIResponse<{ user: User; token: string }>>('/auth/register', userData),
+  register: (userData: { name: string; email: string; password: string; phone?: string }) =>
+    api.post<APIResponse<{ user: User; token: string }>>('/auth/register', userData),
 
   /**
    * Logout user
@@ -140,8 +139,7 @@ export const userAPI = {
   /**
    * Update user profile
    */
-  updateProfile: (userData: Partial<User>) =>
-    api.put<APIResponse<User>>('/users/me', userData),
+  updateProfile: (userData: Partial<User>) => api.put<APIResponse<User>>('/users/me', userData),
 
   /**
    * Change password
@@ -220,14 +218,12 @@ export const wishlistAPI = {
   /**
    * Add product to wishlist
    */
-  add: (productId: number) =>
-    api.post<APIResponse<void>>('/wishlist', { productId }),
+  add: (productId: number) => api.post<APIResponse<void>>('/wishlist', { productId }),
 
   /**
    * Remove product from wishlist
    */
-  remove: (productId: number) =>
-    api.delete<APIResponse<void>>(`/wishlist/${productId}`),
+  remove: (productId: number) => api.delete<APIResponse<void>>(`/wishlist/${productId}`),
 
   /**
    * Clear entire wishlist

@@ -19,25 +19,27 @@ Updated `components/Header.tsx` to:
 ### **Code Changes:**
 
 **Before:**
+
 ```typescript
-<button onClick={() => { 
-  onSelectCategory(category); 
-  setProductsOpen(false); 
+<button onClick={() => {
+  onSelectCategory(category);
+  setProductsOpen(false);
 }} ...>
 ```
 
 **After:**
+
 ```typescript
-<button 
-  onClick={() => { 
-    onSelectCategory(category); 
+<button
+  onClick={() => {
+    onSelectCategory(category);
     setProductsOpen(false);
-    
+
     // Navigate to home if not already there
     if (window.location.hash !== '#/' && window.location.hash !== '') {
       window.location.hash = '#/';
     }
-    
+
     // Scroll to products section
     setTimeout(() => {
       const productsSection = document.getElementById('products-section');
@@ -72,12 +74,14 @@ Updated `components/Header.tsx` to:
 ## 🧪 Testing Checklist
 
 ### **Test 1: From Homepage**
+
 - [ ] Hover over "Products" in header
 - [ ] Click any category (e.g., "Spices")
 - [ ] Page scrolls to products section
 - [ ] Products are filtered to selected category
 
 ### **Test 2: From Other Pages**
+
 - [ ] Navigate to Blog page (`#/blog`)
 - [ ] Click "Products" → Select category
 - [ ] Redirects to homepage
@@ -85,6 +89,7 @@ Updated `components/Header.tsx` to:
 - [ ] Shows filtered products
 
 ### **Test 3: All Categories Work**
+
 - [ ] Click "All" → Shows all products
 - [ ] Click "Spices" → Shows spices only
 - [ ] Click "Nuts" → Shows nuts only
@@ -92,6 +97,7 @@ Updated `components/Header.tsx` to:
 - [ ] Click "Beverages" → Shows beverages only
 
 ### **Test 4: Smooth Scrolling**
+
 - [ ] Scroll animation is smooth (not jumpy)
 - [ ] Header stays visible during scroll
 - [ ] Products section appears at top of viewport
@@ -101,6 +107,7 @@ Updated `components/Header.tsx` to:
 ## 🎨 Categories Available
 
 Your current categories:
+
 - ✅ **All** - Shows all products
 - ✅ **Spices** - Saffron, Pepper, Turmeric, Garam Masala
 - ✅ **Nuts** - Almonds, Cashews
@@ -142,17 +149,20 @@ CategoryFilter.tsx (shows selected category)
 ### **Issue: Still not scrolling**
 
 **Check 1: Verify products section has ID**
+
 ```tsx
 // In App.tsx, should have:
 <main id="products-section" ...>
 ```
 
 **Check 2: Clear browser cache**
+
 ```
 Ctrl + Shift + R (hard refresh)
 ```
 
 **Check 3: Check console for errors**
+
 ```
 F12 → Console tab
 ```
@@ -160,12 +170,13 @@ F12 → Console tab
 ### **Issue: Scrolls but shows all products**
 
 This means the category filter isn't working. Check:
+
 ```typescript
 // In App.tsx, verify:
 const filteredProducts = useMemo(() => {
-  return selectedCategory === 'All' 
-    ? products 
-    : products.filter(p => p.category === selectedCategory);
+  return selectedCategory === 'All'
+    ? products
+    : products.filter((p) => p.category === selectedCategory);
 }, [products, selectedCategory]);
 ```
 
@@ -174,16 +185,19 @@ const filteredProducts = useMemo(() => {
 ## ✅ Summary
 
 ### **What Was Fixed:**
+
 - ❌ **Before:** Clicking Products menu did nothing visible
 - ✅ **After:** Clicks navigate to homepage and scroll to products
 
 ### **User Experience:**
+
 - ✅ **Intuitive:** Click category → See filtered products
 - ✅ **Smooth:** Animated scroll (not jarring jump)
 - ✅ **Smart:** Navigates to home if on another page
 - ✅ **Fast:** 100ms delay barely noticeable
 
 ### **Files Modified:**
+
 - ✅ `components/Header.tsx` - Added scroll logic
 
 ---

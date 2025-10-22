@@ -4,8 +4,5 @@
     "types": ["cypress", "@percy/cypress", "@testing-library/cypress"],
     "isolatedModules": false
   },
-  "include": [
-    "**/*.ts",
-    "**/*.tsx"
-  ]
+  "include": ["**/*.ts", "**/*.tsx"]
 }

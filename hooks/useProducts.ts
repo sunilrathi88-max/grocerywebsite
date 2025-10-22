@@ -108,18 +108,14 @@ export const useProducts = (options: UseProductsOptions = {}): UseProductsReturn
     async (id: number, updates: Partial<Product>): Promise<Product | null> => {
       if (useMockData) {
         // Mock mode: update locally
-        setProducts((prev) =>
-          prev.map((p) => (p.id === id ? { ...p, ...updates } : p))
-        );
+        setProducts((prev) => prev.map((p) => (p.id === id ? { ...p, ...updates } : p)));
         return products.find((p) => p.id === id) || null;
       }
 
       setIsLoading(true);
       try {
         const updatedProduct = await productAPI.update(id, updates);
-        setProducts((prev) =>
-          prev.map((p) => (p.id === id ? updatedProduct : p))
-        );
+        setProducts((prev) => prev.map((p) => (p.id === id ? updatedProduct : p)));
         return updatedProduct;
       } catch (err) {
         console.error('Failed to update product:', err);
@@ -175,9 +171,7 @@ export const useProducts = (options: UseProductsOptions = {}): UseProductsReturn
       if (useMockData) {
         // Mock mode: update product locally
         setProducts((prev) =>
-          prev.map((p) =>
-            p.id === productId ? { ...p, reviews: [...p.reviews, review] } : p
-          )
+          prev.map((p) => (p.id === productId ? { ...p, reviews: [...p.reviews, review] } : p))
         );
         return;
       }
@@ -186,9 +180,7 @@ export const useProducts = (options: UseProductsOptions = {}): UseProductsReturn
         await productAPI.addReview(productId, review);
         // Refresh the specific product
         const updatedProduct = await productAPI.getById(productId);
-        setProducts((prev) =>
-          prev.map((p) => (p.id === productId ? updatedProduct : p))
-        );
+        setProducts((prev) => prev.map((p) => (p.id === productId ? updatedProduct : p)));
       } catch (err) {
         console.error('Failed to add review:', err);
         throw err;
@@ -205,9 +197,7 @@ export const useProducts = (options: UseProductsOptions = {}): UseProductsReturn
       if (useMockData) {
         // Mock mode: update product locally
         setProducts((prev) =>
-          prev.map((p) =>
-            p.id === productId ? { ...p, qna: [...p.qna, question] } : p
-          )
+          prev.map((p) => (p.id === productId ? { ...p, qna: [...p.qna, question] } : p))
         );
         return;
       }
@@ -216,9 +206,7 @@ export const useProducts = (options: UseProductsOptions = {}): UseProductsReturn
         await productAPI.addQuestion(productId, question);
         // Refresh the specific product
         const updatedProduct = await productAPI.getById(productId);
-        setProducts((prev) =>
-          prev.map((p) => (p.id === productId ? updatedProduct : p))
-        );
+        setProducts((prev) => prev.map((p) => (p.id === productId ? updatedProduct : p)));
       } catch (err) {
         console.error('Failed to add question:', err);
         throw err;

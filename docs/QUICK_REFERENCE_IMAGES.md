@@ -10,7 +10,7 @@ Your **product images are now 100% local** - no more broken external URLs!
 
 🌐 **Running at:** http://localhost:3001/
 
-*(Port 3001 because 3000 was in use)*
+_(Port 3001 because 3000 was in use)_
 
 ---
 
@@ -31,6 +31,7 @@ public/images/
 ## 🎨 Current Image Format
 
 **SVG placeholders** with:
+
 - ✅ Your brand colors (#F8E3D9 beige, #333333 charcoal)
 - ✅ Product names displayed
 - ✅ Relevant emojis (🌸 for saffron, ⚫ for pepper, etc.)
@@ -46,13 +47,14 @@ public/images/
    - Example: `saffron-1.jpg`
 
 2. **Update data.ts** (line 9 for Saffron):
+
    ```typescript
    images: [
      '/images/products/saffron-1.jpg',  // Changed .svg → .jpg
      '/images/products/saffron-2.jpg',
    ]images: [
-  '/images/products/saffron-1.jpg',  // Changed .svg to .jpg
-]
+   '/images/products/saffron-1.jpg',  // Changed .svg to .jpg
+   ]
    ```
 
 3. **Refresh browser** - Done! ✅
@@ -60,6 +62,7 @@ public/images/
 ### Method 2: Add New Product Images
 
 1. **Create new SVG or add photo:**
+
    ```
    public/images/products/honey-1.svg
    ```
@@ -79,20 +82,25 @@ public/images/
 ## 🧪 Testing in Browser
 
 ### 1. Open DevTools
+
 Press **F12** or Right-click → Inspect
 
 ### 2. Check Network Tab
+
 1. Click **Network** tab
 2. Filter by **Img** (images only)
 3. Reload page (**Ctrl+R**)
 
 **✅ What You Should See:**
+
 - `/images/products/saffron-1.svg` → **200 OK** (green)
 - `/images/products/pepper-1.svg` → **200 OK** (green)
 - No red 404 errors!
 
 ### 3. Visual Check
+
 Navigate to:
+
 - ✅ **Homepage** → Product grid shows images
 - ✅ **Click product** → Modal shows image gallery
 - ✅ **Add to cart** → Cart shows thumbnails
@@ -106,22 +114,22 @@ Navigate to:
 
 ```typescript
 // Public folder (CURRENT SETUP)
-'/images/products/saffron-1.svg'          // ✅ Starts with /
-'/images/blog/biryani.svg'                // ✅ Starts with /
-'/images/fallbacks/product-fallback.svg'  // ✅ Starts with /
+'/images/products/saffron-1.svg'; // ✅ Starts with /
+'/images/blog/biryani.svg'; // ✅ Starts with /
+'/images/fallbacks/product-fallback.svg'; // ✅ Starts with /
 
 // Relative paths (if importing)
-'../assets/images/saffron.jpg'            // ✅ Relative from component
-'./images/saffron.jpg'                    // ✅ Relative from current folder
+'../assets/images/saffron.jpg'; // ✅ Relative from component
+'./images/saffron.jpg'; // ✅ Relative from current folder
 ```
 
 ### ❌ WRONG Paths
 
 ```typescript
-'images/products/saffron-1.svg'           // ❌ Missing leading /
-'public/images/products/saffron-1.svg'    // ❌ Don't include 'public'
-'C:/Users/.../public/images/...'          // ❌ No absolute file paths
-'https://unsplash.com/...'                // ❌ No external URLs (old way)
+'images/products/saffron-1.svg'; // ❌ Missing leading /
+'public/images/products/saffron-1.svg'; // ❌ Don't include 'public'
+'C:/Users/.../public/images/...'; // ❌ No absolute file paths
+'https://unsplash.com/...'; // ❌ No external URLs (old way)
 ```
 
 ---
@@ -131,6 +139,7 @@ Navigate to:
 ### Issue: Image shows fallback instead of actual image
 
 **Fix:**
+
 1. Check filename spelling (case-sensitive!)
 2. Verify file exists: `ls public/images/products/`
 3. Check path starts with `/` in data.ts
@@ -139,6 +148,7 @@ Navigate to:
 ### Issue: 404 Error in Network Tab
 
 **Fix:**
+
 ```bash
 # Verify file exists
 ls public/images/products/saffron-1.svg
@@ -150,6 +160,7 @@ npm run dev
 ### Issue: All images broken after update
 
 **Fix:**
+
 ```bash
 # Clear Vite cache
 Remove-Item -Recurse -Force .\node_modules\.vite
@@ -163,18 +174,19 @@ npm run dev
 ## 📊 Image Specifications
 
 | **Image Type** | **Current Format** | **Production Format** | **Size** |
-|----------------|-------------------|---------------------|----------|
-| Product Card   | SVG               | JPG/WebP            | 400×400  |
-| Product Detail | SVG               | JPG/WebP            | 800×800  |
-| Thumbnail      | SVG               | JPG/WebP            | 100×100  |
-| Blog Hero      | SVG               | JPG/WebP            | 1200×600 |
-| Fallback       | SVG               | SVG                 | Any      |
+| -------------- | ------------------ | --------------------- | -------- |
+| Product Card   | SVG                | JPG/WebP              | 400×400  |
+| Product Detail | SVG                | JPG/WebP              | 800×800  |
+| Thumbnail      | SVG                | JPG/WebP              | 100×100  |
+| Blog Hero      | SVG                | JPG/WebP              | 1200×600 |
+| Fallback       | SVG                | SVG                   | Any      |
 
 ---
 
 ## 🚀 Next Steps
 
 ### For Development (Current)
+
 ✅ **You're all set!** All images work locally.
 
 ### For Production (Future)
@@ -207,6 +219,7 @@ npm run dev
 ## 💡 Tips
 
 ### Tip 1: Batch Image Creation
+
 ```bash
 # Create multiple product images at once
 for i in {1..10}; do
@@ -215,6 +228,7 @@ done
 ```
 
 ### Tip 2: Image Optimization Script
+
 ```bash
 # Install ImageMagick first
 # Then optimize all images:
@@ -222,12 +236,15 @@ mogrify -resize 800x800 -quality 85 public/images/products/*.jpg
 ```
 
 ### Tip 3: Find Images
+
 **Free stock photos:**
+
 - [Unsplash.com](https://unsplash.com) - Free, high-quality
 - [Pexels.com](https://pexels.com) - Free, no attribution
 - [Pixabay.com](https://pixabay.com) - Free, public domain
 
 **Search terms:**
+
 - "saffron spice close up"
 - "organic turmeric powder"
 - "kashmiri almonds"
@@ -238,15 +255,18 @@ mogrify -resize 800x800 -quality 85 public/images/products/*.jpg
 ## ✅ Summary
 
 ### What Changed
+
 - ❌ **Before:** External Unsplash URLs (unreliable, slow)
 - ✅ **After:** Local SVG placeholders (fast, reliable)
 
 ### Files Updated
+
 - ✅ `data.ts` - 8 products, 2 blog posts
 - ✅ `utils/imageHelpers.ts` - Fallback paths
 - ✅ `public/images/` - 23 new SVG files
 
 ### Result
+
 - ✅ **No 404 errors**
 - ✅ **No external dependencies**
 - ✅ **Works offline**

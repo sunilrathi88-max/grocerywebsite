@@ -44,6 +44,7 @@ npm run dev
 Your app automatically tracks these events:
 
 ### E-commerce Events:
+
 - ✅ **Product View** - When user clicks product detail
 - ✅ **Add to Cart** - When item added
 - ✅ **Remove from Cart** - When item removed
@@ -52,6 +53,7 @@ Your app automatically tracks these events:
 - ✅ **Search** - When user searches products
 
 ### Gamification Events:
+
 - ✅ **Quiz Completion** - Score and promo code earned
 - ✅ **Points Earned** - Loyalty points added
 - ✅ **Badge Unlock** - Achievement unlocked
@@ -61,17 +63,21 @@ Your app automatically tracks these events:
 ## 🔍 Viewing Your Data
 
 ### Realtime Reports
+
 - Go to **Reports → Realtime** to see live users
 
 ### E-commerce Reports
+
 - Go to **Reports → Monetization → Ecommerce purchases**
 - See revenue, products sold, conversion rates
 
 ### Events
+
 - Go to **Reports → Engagement → Events**
 - See all custom events and their counts
 
 ### User Behavior
+
 - Go to **Reports → Engagement → Pages and screens**
 - See most visited pages, time on page
 
@@ -87,7 +93,7 @@ import { trackEvent } from './utils/analytics';
 // Track any custom event
 trackEvent('button_click', {
   button_name: 'Newsletter Signup',
-  location: 'footer'
+  location: 'footer',
 });
 
 // Track page view
@@ -101,18 +107,22 @@ trackPageView('/custom-page', 'Custom Page Title');
 Hotjar shows you HOW users interact with your site (mouse movements, clicks, scrolls).
 
 ### 1. Sign Up
+
 Go to [Hotjar.com](https://www.hotjar.com) and create free account
 
 ### 2. Get Site ID
+
 1. Add your website
 2. Copy the **Site ID** (just numbers, e.g., `3456789`)
 
 ### 3. Add to .env
+
 ```bash
 VITE_HOTJAR_SITE_ID=3456789
 ```
 
 ### 4. Features You'll Get:
+
 - **Heatmaps** - See where users click most
 - **Recordings** - Watch real user sessions
 - **Surveys** - Ask users for feedback
@@ -123,11 +133,13 @@ VITE_HOTJAR_SITE_ID=3456789
 ## 🚫 Privacy & GDPR
 
 ### Current Setup:
+
 - ✅ No personal data collected
 - ✅ Google Analytics anonymizes IPs
 - ✅ No cookies before user consent
 
 ### For Production (Recommended):
+
 Add a cookie consent banner:
 
 ```tsx
@@ -147,17 +159,20 @@ import CookieConsent from "react-cookie-consent";
 ## 📈 Success Metrics to Watch
 
 ### Week 1:
+
 - ✅ Unique visitors
 - ✅ Bounce rate (should be < 60%)
 - ✅ Average session duration (target: > 2 min)
 
 ### Month 1:
+
 - ✅ Cart abandonment rate
 - ✅ Product view → Add to cart rate
 - ✅ Quiz completion rate
 - ✅ Top selling products
 
 ### Month 3:
+
 - ✅ Customer lifetime value
 - ✅ Repeat purchase rate
 - ✅ Revenue per user
@@ -168,6 +183,7 @@ import CookieConsent from "react-cookie-consent";
 ## 🐛 Troubleshooting
 
 ### "Not seeing data in Google Analytics"
+
 1. Wait 24-48 hours for data to appear (except Realtime)
 2. Check your Measurement ID is correct
 3. Check browser console for errors
@@ -175,11 +191,13 @@ import CookieConsent from "react-cookie-consent";
 5. Use "Realtime" reports to see immediate data
 
 ### "Console shows 'not initialized'"
+
 - Your .env file isn't being read
 - Restart dev server: `npm run dev`
 - Check file is named exactly `.env` (not `.env.txt`)
 
 ### "Getting errors about gtag"
+
 - Check `utils/analytics.ts` file exists
 - Make sure you imported `initGA` correctly
 
