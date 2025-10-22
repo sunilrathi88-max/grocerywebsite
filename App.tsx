@@ -34,41 +34,45 @@ import {
   MOCK_POSTS,
 } from './data';
 
-// Components
+// Core Components (Eagerly Loaded - Always Visible)
 import Header from './components/Header';
 import Hero from './components/Hero';
 import ProductGrid from './components/ProductGrid';
 import CategoryFilter from './components/CategoryFilter';
 import Footer from './components/Footer';
-import Testimonials from './components/Testimonials';
-import ProductDetailModal from './components/ProductDetailModal';
-import SideModal from './components/SideModal';
-import Cart from './components/Cart';
-import Wishlist from './components/Wishlist';
 import ToastContainer from './components/ToastContainer';
-import SocialProofNotifications from './components/SocialProofNotifications';
-import MobileMenu from './components/MobileMenu';
 import PromotionalBanner from './components/PromotionalBanner';
 import SortDropdown from './components/SortDropdown';
-import AdvancedFilters from './components/AdvancedFilters';
-import AuthModal from './components/AuthModal';
-import CheckoutPage from './components/CheckoutPage';
-import UserProfile from './components/UserProfile';
-import AdminDashboard from './components/AdminDashboard';
-import PrivacyPolicyPage from './components/PrivacyPolicyPage';
-import RefundPolicyPage from './components/RefundPolicyPage';
-import TermsOfServicePage from './components/TermsOfServicePage';
-import AboutPage from './components/AboutPage';
-import FAQsPage from './components/FAQsPage';
-import ContactPage from './components/ContactPage';
-import ComparisonBar from './components/ComparisonBar';
-import ComparisonModal from './components/ComparisonModal';
-import ExitIntentModal from './components/ExitIntentModal';
-import RecipesPage from './components/RecipesPage';
-import RecipeDetailModal from './components/RecipeDetailModal';
-import QuizModule from './components/QuizModule';
-import BlogPage from './components/BlogPage';
-import BlogPostPage from './components/BlogPostPage';
+
+// Lazy-Loaded Components (Load on Demand)
+const Testimonials = React.lazy(() => import('./components/Testimonials'));
+const ProductDetailModal = React.lazy(() => import('./components/ProductDetailModal'));
+const SideModal = React.lazy(() => import('./components/SideModal'));
+const Cart = React.lazy(() => import('./components/Cart'));
+const Wishlist = React.lazy(() => import('./components/Wishlist'));
+const SocialProofNotifications = React.lazy(() => import('./components/SocialProofNotifications'));
+const MobileMenu = React.lazy(() => import('./components/MobileMenu'));
+const AdvancedFilters = React.lazy(() => import('./components/AdvancedFilters'));
+const AuthModal = React.lazy(() => import('./components/AuthModal'));
+const ComparisonBar = React.lazy(() => import('./components/ComparisonBar'));
+const ComparisonModal = React.lazy(() => import('./components/ComparisonModal'));
+const ExitIntentModal = React.lazy(() => import('./components/ExitIntentModal'));
+const RecipeDetailModal = React.lazy(() => import('./components/RecipeDetailModal'));
+const QuizModule = React.lazy(() => import('./components/QuizModule'));
+
+// Lazy-Loaded Pages (Route-Based Code Splitting)
+const CheckoutPage = React.lazy(() => import('./components/CheckoutPage'));
+const UserProfile = React.lazy(() => import('./components/UserProfile'));
+const AdminDashboard = React.lazy(() => import('./components/AdminDashboard'));
+const PrivacyPolicyPage = React.lazy(() => import('./components/PrivacyPolicyPage'));
+const RefundPolicyPage = React.lazy(() => import('./components/RefundPolicyPage'));
+const TermsOfServicePage = React.lazy(() => import('./components/TermsOfServicePage'));
+const AboutPage = React.lazy(() => import('./components/AboutPage'));
+const FAQsPage = React.lazy(() => import('./components/FAQsPage'));
+const ContactPage = React.lazy(() => import('./components/ContactPage'));
+const RecipesPage = React.lazy(() => import('./components/RecipesPage'));
+const BlogPage = React.lazy(() => import('./components/BlogPage'));
+const BlogPostPage = React.lazy(() => import('./components/BlogPostPage'));
 
 const App: React.FC = () => {
   // Enable performance monitoring
@@ -407,23 +411,35 @@ const App: React.FC = () => {
   }, [filteredProducts, showOnSale, selectedTags]);
 
   const renderView = () => {
+    // Loading fallback for lazy-loaded pages
+    const PageLoader = () => (
+      <div className="flex items-center justify-center min-h-[60vh]">
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-brand-primary"></div>
+          <p className="mt-4 text-gray-600">Loading...</p>
+        </div>
+      </div>
+    );
+
     if (currentView.startsWith('order-confirmation')) {
       const orderId = currentView.split('/')[1];
       const order = orders.find((o) => o.id === orderId);
       // This is a trick to show the confirmation page by re-using the CheckoutPage component structure
       return order ? (
-        <CheckoutPage
-          cartItems={[]}
-          user={currentUser}
-          onPlaceOrder={handlePlaceOrder}
-          addToast={addToast}
-          discount={0}
-          promoCode=""
-          onApplyPromoCode={() => {}}
-          onRemovePromoCode={() => {}}
-          subtotal={0}
-          shippingCost={0}
-        />
+        <React.Suspense fallback={<PageLoader />}>
+          <CheckoutPage
+            cartItems={[]}
+            user={currentUser}
+            onPlaceOrder={handlePlaceOrder}
+            addToast={addToast}
+            discount={0}
+            promoCode=""
+            onApplyPromoCode={() => {}}
+            onRemovePromoCode={() => {}}
+            subtotal={0}
+            shippingCost={0}
+          />
+        </React.Suspense>
       ) : (
         <div className="text-center py-20">
           <h2>Order not found</h2>
@@ -435,7 +451,9 @@ const App: React.FC = () => {
       const slug = currentView.split('/')[1];
       const post = posts.find((p) => p.slug === slug);
       return post ? (
-        <BlogPostPage post={post} />
+        <React.Suspense fallback={<PageLoader />}>
+          <BlogPostPage post={post} />
+        </React.Suspense>
       ) : (
         <div className="text-center py-20">
           <h2>Post not found</h2>
@@ -446,22 +464,26 @@ const App: React.FC = () => {
     switch (currentView) {
       case 'checkout':
         return (
-          <CheckoutPage
-            cartItems={cartItems}
-            user={currentUser}
-            onPlaceOrder={handlePlaceOrder}
-            addToast={addToast}
-            discount={discount}
-            promoCode={promoCode}
-            onApplyPromoCode={handleApplyPromoCode}
-            onRemovePromoCode={handleRemovePromoCode}
-            subtotal={subtotal}
-            shippingCost={shippingCost}
-          />
+          <React.Suspense fallback={<PageLoader />}>
+            <CheckoutPage
+              cartItems={cartItems}
+              user={currentUser}
+              onPlaceOrder={handlePlaceOrder}
+              addToast={addToast}
+              discount={discount}
+              promoCode={promoCode}
+              onApplyPromoCode={handleApplyPromoCode}
+              onRemovePromoCode={handleRemovePromoCode}
+              subtotal={subtotal}
+              shippingCost={shippingCost}
+            />
+          </React.Suspense>
         );
       case 'profile':
         return currentUser ? (
-          <UserProfile user={currentUser} orders={orders} />
+          <React.Suspense fallback={<PageLoader />}>
+            <UserProfile user={currentUser} orders={orders} />
+          </React.Suspense>
         ) : (
           <div className="text-center py-20">
             <h2>Please log in to view your profile.</h2>
@@ -469,39 +491,71 @@ const App: React.FC = () => {
         );
       case 'admin':
         return currentUser?.isAdmin ? (
-          <AdminDashboard
-            products={products}
-            orders={orders}
-            analytics={MOCK_ANALYTICS}
-            onSaveProduct={handleSaveProduct}
-            onDeleteProduct={handleDeleteProduct}
-            onUpdateOrderStatus={handleUpdateOrderStatus}
-          />
+          <React.Suspense fallback={<PageLoader />}>
+            <AdminDashboard
+              products={products}
+              orders={orders}
+              analytics={MOCK_ANALYTICS}
+              onSaveProduct={handleSaveProduct}
+              onDeleteProduct={handleDeleteProduct}
+              onUpdateOrderStatus={handleUpdateOrderStatus}
+            />
+          </React.Suspense>
         ) : (
           <div className="text-center py-20">
             <h2>Access Denied.</h2>
           </div>
         );
       case 'privacy-policy':
-        return <PrivacyPolicyPage />;
+        return (
+          <React.Suspense fallback={<PageLoader />}>
+            <PrivacyPolicyPage />
+          </React.Suspense>
+        );
       case 'refund-policy':
-        return <RefundPolicyPage />;
+        return (
+          <React.Suspense fallback={<PageLoader />}>
+            <RefundPolicyPage />
+          </React.Suspense>
+        );
       case 'terms-of-service':
-        return <TermsOfServicePage />;
+        return (
+          <React.Suspense fallback={<PageLoader />}>
+            <TermsOfServicePage />
+          </React.Suspense>
+        );
       case 'about':
-        return <AboutPage />;
+        return (
+          <React.Suspense fallback={<PageLoader />}>
+            <AboutPage />
+          </React.Suspense>
+        );
       case 'faqs':
-        return <FAQsPage />;
+        return (
+          <React.Suspense fallback={<PageLoader />}>
+            <FAQsPage />
+          </React.Suspense>
+        );
       case 'contact':
-        return <ContactPage />;
+        return (
+          <React.Suspense fallback={<PageLoader />}>
+            <ContactPage />
+          </React.Suspense>
+        );
       case 'recipes':
-        return <RecipesPage onSelectRecipe={setSelectedRecipe} />;
+        return (
+          <React.Suspense fallback={<PageLoader />}>
+            <RecipesPage onSelectRecipe={setSelectedRecipe} />
+          </React.Suspense>
+        );
       case 'blog':
         return (
-          <BlogPage
-            posts={posts}
-            onSelectPost={(slug) => (window.location.hash = `#/blog/${slug}`)}
-          />
+          <React.Suspense fallback={<PageLoader />}>
+            <BlogPage
+              posts={posts}
+              onSelectPost={(slug) => (window.location.hash = `#/blog/${slug}`)}
+            />
+          </React.Suspense>
         );
       case 'home':
       default:
@@ -519,25 +573,27 @@ const App: React.FC = () => {
                   onSelectCategory={setSelectedCategory}
                 />
               </div>
-              <div className="flex flex-col gap-6 mb-8 animate-fade-in-up stagger-1">
-                <AdvancedFilters
-                  showOnSale={showOnSale}
-                  onToggleOnSale={() => setShowOnSale((v) => !v)}
-                  showInStock={showInStock}
-                  onToggleInStock={() => setShowInStock((v) => !v)}
-                  availableTags={availableTags}
-                  selectedTags={selectedTags}
-                  onToggleTag={(tag) =>
-                    setSelectedTags((prev) =>
-                      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
-                    )
-                  }
-                  priceRange={priceRange}
-                  maxPrice={maxPrice}
-                  onPriceChange={(val) => setPriceRange((prev) => ({ ...prev, max: val }))}
-                />
-                <SortDropdown currentSort={sortOrder} onSortChange={setSortOrder} />
-              </div>
+              <React.Suspense fallback={null}>
+                <div className="flex flex-col gap-6 mb-8 animate-fade-in-up stagger-1">
+                  <AdvancedFilters
+                    showOnSale={showOnSale}
+                    onToggleOnSale={() => setShowOnSale((v) => !v)}
+                    showInStock={showInStock}
+                    onToggleInStock={() => setShowInStock((v) => !v)}
+                    availableTags={availableTags}
+                    selectedTags={selectedTags}
+                    onToggleTag={(tag) =>
+                      setSelectedTags((prev) =>
+                        prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
+                      )
+                    }
+                    priceRange={priceRange}
+                    maxPrice={maxPrice}
+                    onPriceChange={(val) => setPriceRange((prev) => ({ ...prev, max: val }))}
+                  />
+                </div>
+              </React.Suspense>
+              <SortDropdown currentSort={sortOrder} onSortChange={setSortOrder} />
               <ProductGrid
                 products={filteredAndSortedProducts}
                 onAddToCart={handleAddToCart}
@@ -550,18 +606,20 @@ const App: React.FC = () => {
                 onNotifyMe={handleNotifyMe}
               />
             </main>
-            <Testimonials testimonials={MOCK_TESTIMONIALS} />
+            <React.Suspense fallback={null}>
+              <Testimonials testimonials={MOCK_TESTIMONIALS} />
+            </React.Suspense>
             <section className="bg-brand-secondary/30 py-16">
               <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                <QuizModule addToast={addToast} />
+                <React.Suspense fallback={null}>
+                  <QuizModule addToast={addToast} />
+                </React.Suspense>
               </div>
             </section>
           </>
         );
     }
-  };
-
-  return (
+  };  return (
     <div className="flex flex-col min-h-screen">
       {/* SEO Meta Tags and Structured Data */}
       <SEO
@@ -608,102 +666,104 @@ const App: React.FC = () => {
       </div>
       <Footer onSelectCategory={setSelectedCategory} />
 
-      {/* Modals & Overlays */}
-      {selectedProduct && (
-        <>
-          {/* Product-specific SEO */}
-          <SEO
-            {...pageSEO.product(selectedProduct.name, selectedProduct.description)}
-            structuredData={generateProductSchema(selectedProduct)}
-            structuredDataId="product-schema"
-          />
-          <ProductDetailModal
-            product={selectedProduct}
-            allProducts={MOCK_PRODUCTS}
-            onClose={() => setSelectedProduct(null)}
-            onAddToCart={handleAddToCart}
-            onAddReview={handleAddReview}
-            onDeleteReview={handleDeleteReview}
-            onSelectCategoryAndClose={handleSelectCategoryAndClose}
-            addToast={addToast}
-            onAskQuestion={handleAskQuestion}
-            onSelectProduct={setSelectedProduct}
-            onNotifyMe={handleNotifyMe}
-          />
-        </>
-      )}
+      {/* Modals & Overlays - Wrapped in Suspense for lazy loading */}
+      <React.Suspense fallback={null}>
+        {selectedProduct && (
+          <>
+            {/* Product-specific SEO */}
+            <SEO
+              {...pageSEO.product(selectedProduct.name, selectedProduct.description)}
+              structuredData={generateProductSchema(selectedProduct)}
+              structuredDataId="product-schema"
+            />
+            <ProductDetailModal
+              product={selectedProduct}
+              allProducts={MOCK_PRODUCTS}
+              onClose={() => setSelectedProduct(null)}
+              onAddToCart={handleAddToCart}
+              onAddReview={handleAddReview}
+              onDeleteReview={handleDeleteReview}
+              onSelectCategoryAndClose={handleSelectCategoryAndClose}
+              addToast={addToast}
+              onAskQuestion={handleAskQuestion}
+              onSelectProduct={setSelectedProduct}
+              onNotifyMe={handleNotifyMe}
+            />
+          </>
+        )}
 
-      {selectedRecipe && (
-        <RecipeDetailModal recipe={selectedRecipe} onClose={() => setSelectedRecipe(null)} />
-      )}
+        {selectedRecipe && (
+          <RecipeDetailModal recipe={selectedRecipe} onClose={() => setSelectedRecipe(null)} />
+        )}
 
-      <SideModal
-        isOpen={isCartOpen}
-        onClose={() => setIsCartOpen(false)}
-        title="Your Shopping Cart"
-      >
-        <Cart
-          items={cartItems}
-          onUpdateQuantity={handleUpdateQuantity}
+        <SideModal
+          isOpen={isCartOpen}
           onClose={() => setIsCartOpen(false)}
-          isLoggedIn={isLoggedIn}
-          promoCode={promoCode}
-          onPromoCodeChange={setPromoCode}
-          onApplyPromoCode={handleApplyPromoCode}
-          discount={discount}
-          subtotal={subtotal}
-          shippingCost={shippingCost}
-        />
-      </SideModal>
+          title="Your Shopping Cart"
+        >
+          <Cart
+            items={cartItems}
+            onUpdateQuantity={handleUpdateQuantity}
+            onClose={() => setIsCartOpen(false)}
+            isLoggedIn={isLoggedIn}
+            promoCode={promoCode}
+            onPromoCodeChange={setPromoCode}
+            onApplyPromoCode={handleApplyPromoCode}
+            discount={discount}
+            subtotal={subtotal}
+            shippingCost={shippingCost}
+          />
+        </SideModal>
 
-      <SideModal
-        isOpen={isWishlistOpen}
-        onClose={() => setIsWishlistOpen(false)}
-        title="Your Wishlist"
-      >
-        <Wishlist
-          items={wishlistItems}
-          onToggleWishlist={handleToggleWishlist}
-          onAddToCart={handleAddToCart}
+        <SideModal
+          isOpen={isWishlistOpen}
           onClose={() => setIsWishlistOpen(false)}
+          title="Your Wishlist"
+        >
+          <Wishlist
+            items={wishlistItems}
+            onToggleWishlist={handleToggleWishlist}
+            onAddToCart={handleAddToCart}
+            onClose={() => setIsWishlistOpen(false)}
+          />
+        </SideModal>
+
+        <MobileMenu
+          isOpen={isMobileMenuOpen}
+          onClose={() => setIsMobileMenuOpen(false)}
+          searchQuery={searchQuery}
+          onSearchChange={setSearchQuery}
         />
-      </SideModal>
 
-      <MobileMenu
-        isOpen={isMobileMenuOpen}
-        onClose={() => setIsMobileMenuOpen(false)}
-        searchQuery={searchQuery}
-        onSearchChange={setSearchQuery}
-      />
-
-      <ToastContainer
-        toasts={toasts}
-        onClose={(id) => setToasts((current) => current.filter((t) => t.id !== id))}
-      />
-
-      <SocialProofNotifications />
-
-      {isAuthModalOpen && (
-        <AuthModal onClose={() => setAuthModalOpen(false)} onLogin={handleLogin} />
-      )}
-
-      <ComparisonBar
-        items={comparisonItems}
-        onRemove={(p) => setComparisonItems((prev) => prev.filter((item) => item.id !== p.id))}
-        onClear={() => setComparisonItems([])}
-        onCompare={() => setIsComparisonModalOpen(true)}
-      />
-
-      {isComparisonModalOpen && (
-        <ComparisonModal items={comparisonItems} onClose={() => setIsComparisonModalOpen(false)} />
-      )}
-
-      {isExitIntentModalOpen && (
-        <ExitIntentModal
-          onClose={() => setIsExitIntentModalOpen(false)}
-          onApplyPromo={handleApplyPromoCode}
+        <ToastContainer
+          toasts={toasts}
+          onClose={(id) => setToasts((current) => current.filter((t) => t.id !== id))}
         />
-      )}
+
+        <SocialProofNotifications />
+
+        {isAuthModalOpen && (
+          <AuthModal onClose={() => setAuthModalOpen(false)} onLogin={handleLogin} />
+        )}
+
+        <ComparisonBar
+          items={comparisonItems}
+          onRemove={(p) => setComparisonItems((prev) => prev.filter((item) => item.id !== p.id))}
+          onClear={() => setComparisonItems([])}
+          onCompare={() => setIsComparisonModalOpen(true)}
+        />
+
+        {isComparisonModalOpen && (
+          <ComparisonModal items={comparisonItems} onClose={() => setIsComparisonModalOpen(false)} />
+        )}
+
+        {isExitIntentModalOpen && (
+          <ExitIntentModal
+            onClose={() => setIsExitIntentModalOpen(false)}
+            onApplyPromo={handleApplyPromoCode}
+          />
+        )}
+      </React.Suspense>
     </div>
   );
 };
