@@ -72,6 +72,31 @@ const App: React.FC = () => {
   // Enable performance monitoring
   usePerformanceMonitoring();
 
+  // Register Service Worker (PWA)
+  useEffect(() => {
+    if ('serviceWorker' in navigator) {
+      // Import workbox-window dynamically
+      import('workbox-window').then(({ Workbox }) => {
+        const wb = new Workbox('/sw.js');
+
+        wb.addEventListener('installed', (event) => {
+          if (event.isUpdate) {
+            // New content available, show update notification
+            if (window.confirm('New version available! Click OK to update.')) {
+              window.location.reload();
+            }
+          }
+        });
+
+        wb.register().catch((error) => {
+          console.warn('Service Worker registration failed:', error);
+        });
+      }).catch((error) => {
+        console.warn('Workbox import failed:', error);
+      });
+    }
+  }, []);
+
   // Custom hooks for cart, wishlist, filtering, and products
   const { cartItems, subtotal, addToCart, updateQuantity, clearCart } = useCart();
 
