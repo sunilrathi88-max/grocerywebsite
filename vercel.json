@@ -98,21 +98,7 @@
     }
   ],
 
-  "functions": {
-    "api/**/*": {
-      "memory": 1024,
-      "maxDuration": 10
-    }
-  },
-
   "env": {
     "NODE_ENV": "production"
-  },
-
-  "build": {
-    "env": {
-      "VITE_APP_NAME": "@tattva-co",
-      "VITE_API_URL": "https://api.tattva-co.com"
-    }
   }
 }

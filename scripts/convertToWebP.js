@@ -17,13 +17,18 @@
  * - Progress logging
  */
 
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Check if sharp is installed
 let sharp;
 try {
-  sharp = require('sharp');
+  const sharpModule = await import('sharp');
+  sharp = sharpModule.default;
 } catch (err) {
   console.error('❌ Error: sharp is not installed');
   console.log('\n📦 Please install sharp:');
