@@ -94,13 +94,14 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
       { rootMargin: '0px', threshold: 0.1 }
     );
 
-    if (mainButtonRef.current) {
-      observer.observe(mainButtonRef.current);
+    const currentButton = mainButtonRef.current;
+    if (currentButton) {
+      observer.observe(currentButton);
     }
 
     return () => {
-      if (mainButtonRef.current) {
-        observer.unobserve(mainButtonRef.current);
+      if (currentButton) {
+        observer.unobserve(currentButton);
       }
     };
   }, [mainButtonRef]);
