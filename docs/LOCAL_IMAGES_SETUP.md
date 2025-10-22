@@ -54,19 +54,18 @@ public/
 ### 1. **data.ts** - Updated All Image URLs
 
 **Before:**
+
 ```typescript
 images: [
   'https://images.unsplash.com/photo-1626202157971-e9703f89e5a2?q=80&w=800',
   'https://images.unsplash.com/photo-1626202157971-e9703f89e5a2?q=80&w=800',
-]
+];
 ```
 
 **After:**
+
 ```typescript
-images: [
-  '/images/products/saffron-1.svg',
-  '/images/products/saffron-2.svg',
-]
+images: ['/images/products/saffron-1.svg', '/images/products/saffron-2.svg'];
 ```
 
 ✅ **All 8 products updated**  
@@ -75,6 +74,7 @@ images: [
 ### 2. **utils/imageHelpers.ts** - Local Fallback URLs
 
 **Before:**
+
 ```typescript
 export const PLACEHOLDER_URLS = {
   product: 'https://via.placeholder.com/400x400/F8E3D9/333333?text=Tattva+Co.',
@@ -83,6 +83,7 @@ export const PLACEHOLDER_URLS = {
 ```
 
 **After:**
+
 ```typescript
 export const PLACEHOLDER_URLS = {
   product: '/images/fallbacks/product-fallback.svg',
@@ -100,32 +101,37 @@ export const PLACEHOLDER_URLS = {
 ### ✅ Method 1: Public Folder (Current Setup - RECOMMENDED)
 
 **File structure:**
+
 ```
 public/images/products/saffron-1.svg
 ```
 
 **In your React component:**
+
 ```jsx
 <img src="/images/products/saffron-1.svg" alt="Saffron" />
 ```
 
 **In data.ts:**
+
 ```typescript
-images: ['/images/products/saffron-1.svg']
+images: ['/images/products/saffron-1.svg'];
 ```
 
 ### ✅ Method 2: Import from src/assets (Alternative)
 
 **File structure:**
+
 ```
 src/assets/images/saffron.jpg
 ```
 
 **In your React component:**
+
 ```jsx
 import saffronImg from '../assets/images/saffron.jpg';
 
-<img src={saffronImg} alt="Saffron" />
+<img src={saffronImg} alt="Saffron" />;
 ```
 
 ---
@@ -133,6 +139,7 @@ import saffronImg from '../assets/images/saffron.jpg';
 ## 🎯 Current Image Format: SVG
 
 Right now, all images are **SVG placeholders** with:
+
 - ✅ Your brand colors (#F8E3D9 background, #333333 text)
 - ✅ Product names
 - ✅ Relevant emojis
@@ -153,9 +160,9 @@ Right now, all images are **SVG placeholders** with:
 4. **Update data.ts:**
    ```typescript
    images: [
-     '/images/products/saffron-1.jpg',  // Change .svg to .jpg
+     '/images/products/saffron-1.jpg', // Change .svg to .jpg
      '/images/products/saffron-2.jpg',
-   ]
+   ];
    ```
 
 No code changes needed—just replace the files and update extensions!
@@ -165,17 +172,20 @@ No code changes needed—just replace the files and update extensions!
 ## ✅ Benefits of Local Images
 
 ### Performance
+
 - ✅ **No external requests** → faster load times
 - ✅ **No CORS issues** → reliable loading
 - ✅ **No rate limiting** → unlimited requests
 - ✅ **Works offline** → PWA ready
 
 ### Development
+
 - ✅ **No broken URLs** → consistent development experience
 - ✅ **No internet required** → work anywhere
 - ✅ **Version controlled** → images tracked in Git
 
 ### Production
+
 - ✅ **Better SEO** → images on same domain
 - ✅ **Better caching** → CDN can cache all assets
 - ✅ **Full control** → no third-party dependencies
@@ -192,6 +202,7 @@ No code changes needed—just replace the files and update extensions!
 4. **Reload page** (Ctrl+R)
 
 **What to check:**
+
 - ✅ All images return **200 status** (not 404)
 - ✅ Images load from `/images/` path
 - ✅ No external image requests (except maybe CDN)
@@ -200,6 +211,7 @@ No code changes needed—just replace the files and update extensions!
 ### Visual Testing
 
 Navigate to:
+
 - ✅ **Homepage** → Product grid displays images
 - ✅ **Product Detail Modal** → Image gallery works
 - ✅ **Cart** → Cart items show thumbnails
@@ -240,15 +252,17 @@ mkdir -p public/images/products
 images: [
   'https://cdn.yoursite.com/products/saffron-1.jpg',
   'https://cdn.yoursite.com/products/saffron-2.jpg',
-]
+];
 ```
 
 **Benefits:**
+
 - Global CDN edge caching
 - Automatic image optimization
 - Responsive image variants
 
 **Services:**
+
 - Cloudinary (free tier: 25GB storage)
 - Imgix (free trial)
 - AWS CloudFront + S3
@@ -257,15 +271,16 @@ images: [
 
 ## 📊 Image Size Guidelines
 
-| Type | Dimensions | Format | Max Size |
-|------|-----------|--------|----------|
-| **Product Card** | 400x400 | JPG/WebP | 50KB |
-| **Product Detail** | 800x800 | JPG/WebP | 150KB |
-| **Thumbnail** | 100x100 | JPG/WebP | 10KB |
-| **Blog Hero** | 1200x600 | JPG/WebP | 200KB |
-| **Recipe** | 800x600 | JPG/WebP | 100KB |
+| Type               | Dimensions | Format   | Max Size |
+| ------------------ | ---------- | -------- | -------- |
+| **Product Card**   | 400x400    | JPG/WebP | 50KB     |
+| **Product Detail** | 800x800    | JPG/WebP | 150KB    |
+| **Thumbnail**      | 100x100    | JPG/WebP | 10KB     |
+| **Blog Hero**      | 1200x600   | JPG/WebP | 200KB    |
+| **Recipe**         | 800x600    | JPG/WebP | 100KB    |
 
 **Optimization tips:**
+
 - Use **WebP** format for better compression (30% smaller)
 - Compress JPGs to 80-85% quality (unnoticeable quality loss)
 - Use lazy loading (already implemented in components)
@@ -280,6 +295,7 @@ images: [
 **Problem:** Images show fallback instead of actual image
 
 **Solution:**
+
 1. Check file path in DevTools Network tab
 2. Verify file exists in `/public/images/`
 3. Check filename spelling (case-sensitive on Linux)
@@ -291,6 +307,7 @@ images: [
 **Problem:** Browser shows 404 for `/images/products/...`
 
 **Solution:**
+
 ```bash
 # Check if files exist
 ls public/images/products/
@@ -304,6 +321,7 @@ npm run dev
 **Problem:** SVG shows as broken image
 
 **Solution:**
+
 - Check SVG has valid XML syntax
 - Open SVG in browser directly: `http://localhost:3000/images/products/saffron-1.svg`
 - Verify `xmlns` attribute: `<svg xmlns="http://www.w3.org/2000/svg">`
@@ -325,6 +343,7 @@ Want to change the placeholder design? Edit the SVG files directly:
 ```
 
 **What you can customize:**
+
 - Background color: `fill="#F8E3D9"`
 - Text color: `fill="#333"`
 - Font size: `font-size="36"`
@@ -343,6 +362,7 @@ Want to change the placeholder design? Edit the SVG files directly:
 ## ✅ Summary
 
 ### What We Did
+
 1. ✅ Created `/public/images/` folder structure
 2. ✅ Generated 16 product SVG placeholders
 3. ✅ Generated 2 blog SVG placeholders
@@ -352,6 +372,7 @@ Want to change the placeholder design? Edit the SVG files directly:
 7. ✅ Updated `utils/imageHelpers.ts` with local fallback paths
 
 ### What Works Now
+
 - ✅ All images load from local `/images/` directory
 - ✅ No external image dependencies
 - ✅ Fallback system uses local SVG files
@@ -360,6 +381,7 @@ Want to change the placeholder design? Edit the SVG files directly:
 - ✅ Brand-consistent placeholders
 
 ### Next Steps (Optional)
+
 1. Replace SVG placeholders with real product photos
 2. Optimize images for production (WebP, compression)
 3. Set up CDN for global distribution

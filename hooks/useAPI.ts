@@ -134,9 +134,7 @@ export function useAPIMutation<TData, TVariables = void>(
 ) {
   const { onSuccess, onError } = options;
 
-  const [state, setState] = useState<
-    UseAPIState<TData> & { isIdle: boolean }
-  >({
+  const [state, setState] = useState<UseAPIState<TData> & { isIdle: boolean }>({
     data: null,
     loading: false,
     error: null,
@@ -229,20 +227,17 @@ export function usePaginatedAPI<T>(
   const [allData, setAllData] = useState<T[]>([]);
   const [hasMore, setHasMore] = useState(true);
 
-  const { data, loading, error, refetch } = useAPI(
-    () => apiFunction(page, pageSize),
-    {
-      immediate: true,
-      onSuccess: (response) => {
-        if (page === 1) {
-          setAllData(response.data);
-        } else {
-          setAllData((prev) => [...prev, ...response.data]);
-        }
-        setHasMore(response.data.length === pageSize);
-      },
-    }
-  );
+  const { loading, error, refetch } = useAPI(() => apiFunction(page, pageSize), {
+    immediate: true,
+    onSuccess: (response) => {
+      if (page === 1) {
+        setAllData(response.data);
+      } else {
+        setAllData((prev) => [...prev, ...response.data]);
+      }
+      setHasMore(response.data.length === pageSize);
+    },
+  });
 
   const loadMore = useCallback(() => {
     if (!loading && hasMore) {

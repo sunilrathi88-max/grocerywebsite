@@ -8,6 +8,7 @@
 ## ✅ **What's Already Excellent**
 
 ### Features Implemented:
+
 - ✅ **Dark Mode Toggle** - System preference detection, localStorage persistence
 - ✅ **Code Quality** - ESLint 9 + Prettier fully configured
 - ✅ **172+ Cypress Tests** - 9 comprehensive test suites
@@ -20,6 +21,7 @@
 - ✅ **Mobile Responsive** - Full mobile menu, touch-optimized
 
 ### Tech Stack Score:
+
 - React 18: ✅ Modern
 - Vite 6.4: ✅ Fast builds
 - Tailwind CSS: ✅ Excellent choice (better than Chakra UI for this use case)
@@ -32,9 +34,11 @@
 ## 🎯 **Priority 1: Critical Improvements** (2-3 hours)
 
 ### 1. Clean Up Git Repository ⚠️ URGENT
+
 **Why:** 89MB push included cypress artifacts (screenshots, videos, results)  
 **Impact:** Slow git operations, bloated repository  
 **Fix:**
+
 ```bash
 # Remove from tracking
 git rm --cached -r cypress/results cypress/screenshots cypress/videos
@@ -43,15 +47,18 @@ git rm --cached -r cypress/results cypress/screenshots cypress/videos
 git commit -m "chore: Remove cypress artifacts from git tracking"
 git push origin main
 ```
+
 **Status:** .gitignore updated ✅ | Need to remove existing files
 
 ---
 
 ### 2. Setup Analytics 📊 HIGH VALUE
+
 **Why:** Currently no tracking of user behavior, conversions, or performance  
-**Impact:** Can't measure ROI, optimize conversion rate, or track Core Web Vitals  
+**Impact:** Can't measure ROI, optimize conversion rate, or track Core Web Vitals
 
 **Steps:**
+
 1. Get Google Analytics 4 ID from https://analytics.google.com
 2. Create `.env` file:
    ```bash
@@ -72,8 +79,10 @@ git push origin main
 ---
 
 ### 3. Test Dark Mode Thoroughly 🌙
+
 **Why:** Just implemented, needs validation  
 **What to test:**
+
 - [ ] Toggle works on all pages (home, product, cart, checkout, blog, recipes)
 - [ ] LocalStorage persists preference
 - [ ] System preference detection works
@@ -87,9 +96,11 @@ git push origin main
 ---
 
 ### 4. Monitor GitHub Actions 🔍
+
 **Why:** Latest commit pushed, CI/CD may have new test failures  
 **URL:** https://github.com/sunilrathi88-max/grocerywebsite/actions  
 **Check:**
+
 - [ ] Workflow triggered for commit `4b53739`
 - [ ] All jobs pass (build, test, lint)
 - [ ] No new test failures
@@ -102,12 +113,15 @@ git push origin main
 ## 🚀 **Priority 2: Quick Wins** (4-6 hours)
 
 ### 5. Add Trust Badges to Footer 🛡️
+
 **Why:** Increases checkout conversion by 20-30%  
 **Components to create:**
+
 - `components/TrustBadges.tsx`
 - Icons: SSL, payment methods (Visa, Mastercard, PayPal, Amex), shipping (FedEx, UPS)
 
 **Example:**
+
 ```tsx
 <div className="flex items-center gap-6 justify-center py-4">
   <ShieldCheckIcon className="h-8 w-8 text-green-600" />
@@ -124,8 +138,10 @@ git push origin main
 ---
 
 ### 6. Micro-interactions for Cart 🎨
+
 **Why:** Makes actions feel responsive and satisfying  
 **Animations to add:**
+
 1. **Add to Cart Button:**
    - Loading spinner while adding
    - Success checkmark animation
@@ -144,10 +160,12 @@ git push origin main
 ---
 
 ### 7. Extract Custom Hooks 🪝
+
 **Why:** Better code organization, easier testing, reusability  
 **Hooks to create:**
 
 1. **`hooks/useCart.ts`**
+
    ```tsx
    export const useCart = () => {
      const [cart, setCart] = useState([]);
@@ -170,9 +188,11 @@ git push origin main
 ---
 
 ### 8. Fix Test Suite 3 (Performance Vitals) ⚡
+
 **Why:** Test vitals monitoring and performance budgets  
 **Tests:** 12 tests for LCP, FID, CLS, bundle size  
 **Steps:**
+
 1. Run locally: `npx cypress run --spec "cypress/e2e/03-performance-vitals.cy.ts"`
 2. Update assertions if needed (thresholds may need adjustment)
 3. Verify all pass
@@ -185,18 +205,19 @@ git push origin main
 ## 📊 **Priority 3: Testing & Quality** (8-10 hours)
 
 ### 9. Fix Remaining Test Suites
+
 **Current:** 2/9 passing (Test Suite 1 & 2) ✅  
 **Target:** 9/9 passing
 
-| Suite | Tests | Status | Time |
-|-------|-------|--------|------|
-| 03-performance-vitals | 12 | ❌ | 1h |
-| 04-lazy-loading | 13 | ❌ | 1.5h |
-| 05-social-proof | 14 | ❌ | 1.5h |
-| 06-checkout-flow | 17 | ❌ | 2h |
-| 07-mobile-responsive | 30+ | ❌ | 2h |
-| 08-visual-regression | 14 | ❌ | 30m (needs Percy token) |
-| 09-advanced-scenarios | 60+ | ❌ | 3h |
+| Suite                 | Tests | Status | Time                    |
+| --------------------- | ----- | ------ | ----------------------- |
+| 03-performance-vitals | 12    | ❌     | 1h                      |
+| 04-lazy-loading       | 13    | ❌     | 1.5h                    |
+| 05-social-proof       | 14    | ❌     | 1.5h                    |
+| 06-checkout-flow      | 17    | ❌     | 2h                      |
+| 07-mobile-responsive  | 30+   | ❌     | 2h                      |
+| 08-visual-regression  | 14    | ❌     | 30m (needs Percy token) |
+| 09-advanced-scenarios | 60+   | ❌     | 3h                      |
 
 **Total time:** 11-12 hours  
 **Approach:** Fix 1-2 suites per day
@@ -204,13 +225,16 @@ git push origin main
 ---
 
 ### 10. Unit Testing Setup 🧪
+
 **Why:** E2E tests are slow, unit tests catch bugs earlier  
 **Setup:**
+
 ```bash
 npm install --save-dev jest @testing-library/react @testing-library/jest-dom @testing-library/user-event
 ```
 
 **Tests to write:**
+
 1. **Hooks:**
    - `useDarkMode.test.ts` - localStorage, system preference, toggle
    - `useCart.test.ts` - add, remove, update, clear, total
@@ -232,10 +256,12 @@ npm install --save-dev jest @testing-library/react @testing-library/jest-dom @te
 ## 🎨 **Priority 4: Features & UX** (6-8 hours)
 
 ### 11. Accessibility Audit ♿
+
 **Current score:** ~75% (estimated)  
 **Target:** 95%+
 
 **Checklist:**
+
 - [ ] All interactive elements keyboard accessible
 - [ ] Focus indicators visible
 - [ ] ARIA labels on all icons/buttons
@@ -245,6 +271,7 @@ npm install --save-dev jest @testing-library/react @testing-library/jest-dom @te
 - [ ] Skip to main content link
 
 **Tools:**
+
 - Lighthouse accessibility report
 - axe DevTools extension
 - WAVE browser extension
@@ -254,10 +281,12 @@ npm install --save-dev jest @testing-library/react @testing-library/jest-dom @te
 ---
 
 ### 12. SEO Optimization 🔍
+
 **Current:** Basic HTML structure  
 **Need:**
 
 1. **Meta Tags** (all pages):
+
    ```tsx
    <Helmet>
      <title>Premium Indian Spices | Tattva & Co.</title>
@@ -284,8 +313,10 @@ npm install --save-dev jest @testing-library/react @testing-library/jest-dom @te
 ---
 
 ### 13. Loading States & Skeletons 💀
+
 **Why:** Better perceived performance  
 **Add skeletons for:**
+
 - Product cards (already have ProductCardSkeleton ✅)
 - Product detail modal
 - Cart items
@@ -299,10 +330,12 @@ npm install --save-dev jest @testing-library/react @testing-library/jest-dom @te
 ## ⚡ **Priority 5: Performance** (4-6 hours)
 
 ### 14. Image Optimization 🖼️
+
 **Current:** External SVG placeholders  
 **Target:** Self-hosted WebP images
 
 **Strategy:**
+
 1. Create `public/images/` folder
 2. Convert images to WebP (60-80% smaller than PNG/JPG)
 3. Add responsive images:
@@ -325,10 +358,12 @@ npm install --save-dev jest @testing-library/react @testing-library/jest-dom @te
 ---
 
 ### 15. Code Splitting 📦
+
 **Current bundle:** ~200KB (good, but can be better)  
 **Target:** ~150KB
 
 **Strategy:**
+
 ```tsx
 // Heavy components loaded on-demand
 const AdminDashboard = lazy(() => import('./components/AdminDashboard'));
@@ -339,7 +374,7 @@ const BlogPage = lazy(() => import('./components/BlogPage'));
 // Wrap in Suspense
 <Suspense fallback={<LoadingSpinner />}>
   <Route path="/admin" element={<AdminDashboard />} />
-</Suspense>
+</Suspense>;
 ```
 
 **Time:** 2 hours  
@@ -348,6 +383,7 @@ const BlogPage = lazy(() => import('./components/BlogPage'));
 ---
 
 ### 16. Bundle Analysis 📊
+
 ```bash
 # Install analyzer
 npm install --save-dev rollup-plugin-visualizer
@@ -362,6 +398,7 @@ npm run build
 ```
 
 **Find:**
+
 - Large dependencies (can any be removed?)
 - Duplicate code (can be deduplicated)
 - Unused exports (can be tree-shaken)
@@ -373,13 +410,16 @@ npm run build
 ## 🔌 **Priority 6: Backend Integration** (Future - 20+ hours)
 
 ### 17. Authentication System 🔐
+
 **Options:**
+
 - Firebase Auth (easiest)
 - Auth0 (enterprise)
 - Supabase (open source)
 - Custom JWT
 
 **Features:**
+
 - Email/password signup
 - Google/Facebook OAuth
 - Password reset
@@ -391,13 +431,16 @@ npm run build
 ---
 
 ### 18. Database Setup 💾
+
 **Options:**
+
 - Firebase Firestore (NoSQL, real-time)
 - Supabase PostgreSQL (SQL, open source)
 - MongoDB Atlas (NoSQL, scalable)
 - Prisma + PostgreSQL (type-safe)
 
 **Collections/Tables needed:**
+
 - Users (profile, points, badges)
 - Products (inventory, pricing)
 - Orders (checkout history)
@@ -410,13 +453,16 @@ npm run build
 ---
 
 ### 19. Payment Integration 💳
+
 **Options:**
+
 - Stripe (best for US/EU)
 - PayPal (global)
 - Razorpay (India)
 - Square (US)
 
 **Features:**
+
 - Credit card processing
 - Apple Pay / Google Pay
 - Subscription billing (if needed)
@@ -429,7 +475,9 @@ npm run build
 ## 🚀 **Priority 7: Deployment** (4-6 hours)
 
 ### 20. Production Hosting 🌐
+
 **Best options for this stack:**
+
 1. **Vercel** (recommended)
    - Zero-config deployment
    - Automatic HTTPS
@@ -447,6 +495,7 @@ npm run build
    - Cheaper for high traffic
 
 **Steps:**
+
 1. Connect GitHub repo
 2. Configure build command: `npm run build`
 3. Set environment variables
@@ -457,12 +506,15 @@ npm run build
 ---
 
 ### 21. CDN for Images 🖼️
+
 **Options:**
+
 - Cloudflare Images ($5/month for 100k images)
 - Cloudinary (free tier: 25GB)
 - ImageKit (free tier: 20GB)
 
 **Benefits:**
+
 - Automatic WebP/AVIF conversion
 - On-the-fly resizing
 - Global CDN
@@ -473,8 +525,11 @@ npm run build
 ---
 
 ### 22. Monitoring & Error Tracking 📊
+
 **Setup:**
+
 1. **Sentry** (error tracking)
+
    ```bash
    npm install @sentry/react
    ```
@@ -494,8 +549,11 @@ npm run build
 ## 📱 **Priority 8: Mobile Experience** (4-6 hours)
 
 ### 23. PWA Features 📲
+
 **Make it installable:**
+
 1. Create `public/manifest.json`:
+
    ```json
    {
      "name": "Tattva & Co. - Indian Spices",
@@ -520,12 +578,15 @@ npm run build
 ---
 
 ### 24. Mobile Payments 📱
+
 **Integrate:**
+
 - Apple Pay (iOS)
 - Google Pay (Android)
 - Samsung Pay
 
 **Benefits:**
+
 - Faster checkout
 - Higher conversion (40%+ on mobile)
 - No card details entry
@@ -537,6 +598,7 @@ npm run build
 ## 🎯 **Recommended Timeline**
 
 ### **Week 1** (High Priority)
+
 - ✅ Day 1: Clean up Git repo, setup analytics, test dark mode (DONE)
 - Day 2: Add trust badges, fix Test Suite 3
 - Day 3: Micro-interactions for cart
@@ -544,17 +606,20 @@ npm run build
 - Day 5: Fix Test Suites 4 & 5
 
 ### **Week 2** (Testing & Quality)
+
 - Day 6-7: Fix Test Suites 6 & 7
 - Day 8: Fix Test Suites 8 & 9
 - Day 9-10: Unit testing setup
 
 ### **Week 3** (UX & Performance)
+
 - Day 11: Accessibility audit
 - Day 12: SEO optimization
 - Day 13-14: Image optimization & code splitting
 - Day 15: Loading states & skeletons
 
 ### **Week 4** (Deployment)
+
 - Day 16-17: Choose hosting, configure domain
 - Day 18: CDN setup for images
 - Day 19: Monitoring & error tracking
@@ -565,6 +630,7 @@ npm run build
 ## 💰 **Estimated Costs**
 
 ### **Development (if hiring):**
+
 - Week 1: $2,000 - $3,000
 - Week 2: $2,000 - $3,000
 - Week 3: $2,000 - $3,000
@@ -572,6 +638,7 @@ npm run build
 - **Total:** $7,500 - $11,500
 
 ### **Ongoing Services:**
+
 - Hosting (Vercel Pro): $20/month
 - Domain: $15/year
 - CDN (Cloudinary): $0-49/month
@@ -584,6 +651,7 @@ npm run build
 ## 🎉 **Summary**
 
 ### **You Have:**
+
 - ✅ Solid foundation (React, Vite, Tailwind)
 - ✅ Modern UI with animations
 - ✅ E-commerce features working
@@ -593,6 +661,7 @@ npm run build
 - ✅ Dark mode toggle
 
 ### **You Need:**
+
 - ⚠️ Clean up git repository (cypress artifacts)
 - 📊 Analytics setup (track conversions)
 - 🧪 Fix remaining test suites (7 of 9)
@@ -602,6 +671,7 @@ npm run build
 - 🚀 Production deployment
 
 ### **Priority Order:**
+
 1. **This week:** Git cleanup, analytics, test fixes, trust badges
 2. **Next 2 weeks:** All tests passing, unit tests, accessibility
 3. **Month 2:** Performance optimization, SEO, backend integration

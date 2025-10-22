@@ -34,13 +34,13 @@ beforeEach(() => {
   // Clear cookies and local storage before each test
   cy.clearCookies();
   cy.clearLocalStorage();
-  
+
   // Set viewport to desktop by default
   cy.viewport(1280, 720);
 });
 
 // Global afterEach hook - runs after each test
-afterEach(function() {
+afterEach(function () {
   // Take screenshot on test failure
   if (this.currentTest && this.currentTest.state === 'failed') {
     cy.screenshot(`FAILED-${this.currentTest.title}`, { capture: 'fullPage' });

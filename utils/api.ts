@@ -144,7 +144,10 @@ export const apiRequest = async <T>(
         // Check if we should retry
         if (attempt < retries && isRetriableError(error)) {
           // eslint-disable-next-line no-console
-          console.warn(`API request failed (attempt ${attempt + 1}/${retries + 1}):`, error.message);
+          console.warn(
+            `API request failed (attempt ${attempt + 1}/${retries + 1}):`,
+            error.message
+          );
           await sleep(RETRY_DELAY * Math.pow(2, attempt)); // Exponential backoff
           lastError = error;
           continue;

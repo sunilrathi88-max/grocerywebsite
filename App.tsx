@@ -23,16 +23,10 @@ import { pageSEO, generateOrganizationSchema, generateProductSchema } from './ut
 import { useCart } from './hooks/useCart';
 import { useWishlist } from './hooks/useWishlist';
 import { useProductFilter } from './hooks/useProductFilter';
+import { useProducts } from './hooks/useProducts';
 
 // Mock Data
-import {
-  MOCK_PRODUCTS,
-  MOCK_USER,
-  MOCK_ORDERS,
-  MOCK_TESTIMONIALS,
-  MOCK_ANALYTICS,
-  MOCK_POSTS,
-} from './data';
+import { MOCK_USER, MOCK_ORDERS, MOCK_TESTIMONIALS, MOCK_ANALYTICS, MOCK_POSTS } from './data';
 
 // Core Components (Eagerly Loaded - Always Visible)
 import Header from './components/Header';
@@ -78,13 +72,25 @@ const App: React.FC = () => {
   // Enable performance monitoring
   usePerformanceMonitoring();
 
-  // Custom hooks for cart, wishlist, and filtering
+  // Custom hooks for cart, wishlist, filtering, and products
   const { cartItems, subtotal, addToCart, updateQuantity, clearCart } = useCart();
 
   const { wishlistItems, wishlistItemCount, toggleWishlist, isInWishlist } = useWishlist();
 
+  // Use the products hook with mock data fallback (set useMockData: true for now)
+  const {
+    products,
+    isLoading: _productsLoading,
+    error: _productsError,
+    addProduct: addProductAPI,
+    updateProduct: updateProductAPI,
+    deleteProduct: deleteProductAPI,
+    addReview,
+    addQuestion,
+    // refreshProducts, // Available if needed for manual refresh
+  } = useProducts({ useMockData: true, autoFetch: true });
+
   // State management
-  const [products, setProducts] = useState<Product[]>(MOCK_PRODUCTS);
   const [posts] = useState<BlogPost[]>(MOCK_POSTS);
   const [orders, setOrders] = useState<Order[]>(MOCK_ORDERS);
   const [searchQuery, setSearchQuery] = useState('');
@@ -106,8 +112,8 @@ const App: React.FC = () => {
   const [showInStock, setShowInStock] = useState(false);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const maxPrice = useMemo(
-    () => Math.ceil(Math.max(...MOCK_PRODUCTS.flatMap((p) => p.variants.map((v) => v.price)))),
-    []
+    () => Math.ceil(Math.max(...products.flatMap((p) => p.variants.map((v) => v.price)), 0)),
+    [products]
   );
   const [priceRange, setPriceRange] = useState({ min: 0, max: maxPrice });
 
@@ -158,12 +164,12 @@ const App: React.FC = () => {
 
   // Memoized values
   const categories = useMemo(
-    () => ['All', ...Array.from(new Set(MOCK_PRODUCTS.map((p) => p.category)))],
-    []
+    () => ['All', ...Array.from(new Set(products.map((p) => p.category)))],
+    [products]
   );
   const availableTags = useMemo(
-    () => Array.from(new Set(MOCK_PRODUCTS.flatMap((p) => p.tags || []))),
-    []
+    () => Array.from(new Set(products.flatMap((p) => p.tags || []))),
+    [products]
   );
   const wishlistedIds = useMemo(() => new Set(wishlistItems.map((p) => p.id)), [wishlistItems]);
   const comparisonIds = useMemo(() => new Set(comparisonItems.map((p) => p.id)), [comparisonItems]);
@@ -227,46 +233,38 @@ const App: React.FC = () => {
   }, []);
 
   const handleAddReview = useCallback(
-    (productId: number, review: Omit<Review, 'id'>) => {
-      setProducts((prev) =>
-        prev.map((p) => {
-          if (p.id === productId) {
-            const newReview = { ...review, id: Date.now(), verifiedPurchase: isLoggedIn };
-            return { ...p, reviews: [newReview, ...p.reviews] };
-          }
-          return p;
-        })
-      );
-      addToast('Thank you for your review!', 'success');
+    async (productId: number, review: Omit<Review, 'id'>) => {
+      try {
+        const newReview = { ...review, id: Date.now(), verifiedPurchase: isLoggedIn };
+        await addReview(productId, newReview);
+        addToast('Thank you for your review!', 'success');
+      } catch {
+        addToast('Failed to add review. Please try again.', 'error');
+      }
     },
-    [isLoggedIn, addToast]
+    [isLoggedIn, addToast, addReview]
   );
 
-  const handleDeleteReview = useCallback((productId: number, reviewId: number) => {
-    setProducts((prev) =>
-      prev.map((p) => {
-        if (p.id === productId) {
-          return { ...p, reviews: p.reviews.filter((r) => r.id !== reviewId) };
-        }
-        return p;
-      })
-    );
-  }, []);
-
-  const handleAskQuestion = useCallback(
-    (productId: number, question: { author: string; question: string }) => {
-      setProducts((prev) =>
-        prev.map((p) => {
-          if (p.id === productId) {
-            const newQnA: QnAType = { ...question, id: Date.now() };
-            return { ...p, qna: [...(p.qna || []), newQnA] };
-          }
-          return p;
-        })
-      );
-      addToast('Your question has been submitted.', 'success');
+  const handleDeleteReview = useCallback(
+    (_productId: number, _reviewId: number) => {
+      // Since useProducts doesn't have deleteReview yet, we'll skip this for now
+      // or implement it as a no-op in mock mode
+      addToast('Review deletion not yet implemented', 'info');
     },
     [addToast]
+  );
+
+  const handleAskQuestion = useCallback(
+    async (productId: number, question: { author: string; question: string }) => {
+      try {
+        const newQnA: QnAType = { ...question, id: Date.now() };
+        await addQuestion(productId, newQnA);
+        addToast('Your question has been submitted.', 'success');
+      } catch {
+        addToast('Failed to submit question. Please try again.', 'error');
+      }
+    },
+    [addToast, addQuestion]
   );
 
   const handleNotifyMe = useCallback(
@@ -324,30 +322,35 @@ const App: React.FC = () => {
 
   // Admin handlers
   const handleSaveProduct = useCallback(
-    (product: Product) => {
-      setProducts((prev) => {
+    async (product: Product) => {
+      try {
         if (product.id === 0) {
           // New product
-          const newProduct = { ...product, id: Date.now() };
-          return [newProduct, ...prev];
+          await addProductAPI(product);
         } else {
           // Existing product
-          return prev.map((p) => (p.id === product.id ? product : p));
+          await updateProductAPI(product.id, product);
         }
-      });
-      addToast(`Product "${product.name}" saved successfully!`, 'success');
+        addToast(`Product "${product.name}" saved successfully!`, 'success');
+      } catch {
+        addToast('Failed to save product. Please try again.', 'error');
+      }
     },
-    [addToast]
+    [addToast, addProductAPI, updateProductAPI]
   );
 
   const handleDeleteProduct = useCallback(
-    (productId: number) => {
+    async (productId: number) => {
       if (window.confirm('Are you sure you want to delete this product?')) {
-        setProducts((prev) => prev.filter((p) => p.id !== productId));
-        addToast('Product deleted.', 'info');
+        const success = await deleteProductAPI(productId);
+        if (success) {
+          addToast('Product deleted.', 'info');
+        } else {
+          addToast('Failed to delete product.', 'error');
+        }
       }
     },
-    [addToast]
+    [addToast, deleteProductAPI]
   );
 
   const handleUpdateOrderStatus = useCallback((orderId: string, status: OrderStatus) => {
@@ -383,7 +386,7 @@ const App: React.FC = () => {
     featured: undefined,
   };
 
-  const { filteredProducts } = useProductFilter(MOCK_PRODUCTS, {
+  const { filteredProducts } = useProductFilter(products, {
     category: selectedCategory,
     searchQuery,
     priceRange: [priceRange.min, priceRange.max],
@@ -653,7 +656,7 @@ const App: React.FC = () => {
         isAdmin={!!currentUser?.isAdmin}
         onLoginClick={() => setAuthModalOpen(true)}
         onLogoutClick={handleLogout}
-        allProducts={MOCK_PRODUCTS}
+        allProducts={products}
         onSelectProduct={setSelectedProduct}
         subtotal={subtotal}
         categories={categories}
@@ -676,7 +679,7 @@ const App: React.FC = () => {
             />
             <ProductDetailModal
               product={selectedProduct}
-              allProducts={MOCK_PRODUCTS}
+              allProducts={products}
               onClose={() => setSelectedProduct(null)}
               onAddToCart={handleAddToCart}
               onAddReview={handleAddReview}

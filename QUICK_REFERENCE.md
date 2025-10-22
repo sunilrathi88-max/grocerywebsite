@@ -55,15 +55,15 @@ npx cypress run --spec "cypress/e2e/01-*.cy.ts,cypress/e2e/02-*.cy.ts"
 
 ## Test Suites Overview
 
-| # | File | Focus | Tests |
-|---|------|-------|-------|
-| 01 | `dropdown-navigation.cy.ts` | Products hover delay | 5 |
-| 02 | `quiz-promo-codes.cy.ts` | Quiz & discount codes | 7 |
-| 03 | `performance-vitals.cy.ts` | Web Vitals, load time | 12 |
-| 04 | `lazy-loading.cy.ts` | Image optimization | 13 |
-| 05 | `social-proof.cy.ts` | Purchase notifications | 14 |
-| 06 | `checkout-flow.cy.ts` | End-to-end purchase | 17 |
-| 07 | `mobile-responsive.cy.ts` | Multi-device testing | 30+ |
+| #   | File                        | Focus                  | Tests |
+| --- | --------------------------- | ---------------------- | ----- |
+| 01  | `dropdown-navigation.cy.ts` | Products hover delay   | 5     |
+| 02  | `quiz-promo-codes.cy.ts`    | Quiz & discount codes  | 7     |
+| 03  | `performance-vitals.cy.ts`  | Web Vitals, load time  | 12    |
+| 04  | `lazy-loading.cy.ts`        | Image optimization     | 13    |
+| 05  | `social-proof.cy.ts`        | Purchase notifications | 14    |
+| 06  | `checkout-flow.cy.ts`       | End-to-end purchase    | 17    |
+| 07  | `mobile-responsive.cy.ts`   | Multi-device testing   | 30+   |
 
 **Total: 98+ automated tests**
 
@@ -86,7 +86,7 @@ cy.addProductToCart('Himalayan Saffron');
 cy.navigateTo('About');
 
 // Complete quiz
-cy.completeQuiz(true);  // correct answers
+cy.completeQuiz(true); // correct answers
 cy.completeQuiz(false); // wrong answers
 
 // Apply promo code
@@ -120,13 +120,13 @@ cy.applyPromoCode('QUIZMASTER15');
 
 ## Configuration Files
 
-| File | Purpose |
-|------|---------|
-| `cypress.config.ts` | Cypress settings |
-| `cypress/support/commands.ts` | Custom commands |
-| `cypress/support/e2e.ts` | Global hooks |
-| `lighthouserc.js` | Performance budgets |
-| `.github/workflows/cypress.yml` | CI/CD pipeline |
+| File                            | Purpose             |
+| ------------------------------- | ------------------- |
+| `cypress.config.ts`             | Cypress settings    |
+| `cypress/support/commands.ts`   | Custom commands     |
+| `cypress/support/e2e.ts`        | Global hooks        |
+| `lighthouserc.js`               | Performance budgets |
+| `.github/workflows/cypress.yml` | CI/CD pipeline      |
 
 ## Performance Budgets
 
@@ -147,22 +147,26 @@ cy.applyPromoCode('QUIZMASTER15');
 ## Troubleshooting
 
 **Tests failing?**
+
 ```bash
 npm run cypress:open  # Visual debugging
 ```
 
 **Need more time?**
+
 ```javascript
 // In test file
-cy.wait(1000);  // Add explicit wait
+cy.wait(1000); // Add explicit wait
 ```
 
 **Flaky tests?**
+
 - Tests retry 2x automatically in CI
 - Check for timing issues
 - Use custom commands
 
 **CI failing?**
+
 1. Check GitHub Actions logs
 2. Download artifacts
 3. Review videos/screenshots
@@ -170,12 +174,14 @@ cy.wait(1000);  // Add explicit wait
 ## Pro Tips
 
 ✅ **DO:**
+
 - Run `cypress:open` when writing tests
 - Use custom commands for reusability
 - Check videos on CI failures
 - Keep tests independent
 
 ❌ **DON'T:**
+
 - Use long `cy.wait()` without reason
 - Ignore TypeScript warnings
 - Skip test documentation
@@ -184,6 +190,7 @@ cy.wait(1000);  // Add explicit wait
 ---
 
 **Quick Start:**
+
 ```bash
 npm run cypress:open    # Start testing!
 ```

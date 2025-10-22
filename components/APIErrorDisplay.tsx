@@ -97,9 +97,7 @@ export const APIErrorDisplay: React.FC<APIErrorDisplayProps> = ({
         <div className="ml-3 flex-1">
           <h3 className="text-lg font-semibold text-red-900">{getErrorTitle()}</h3>
           <p className="mt-2 text-sm text-red-700">{getErrorDescription()}</p>
-          {error.code && (
-            <p className="mt-1 text-xs text-red-600 font-mono">Error: {error.code}</p>
-          )}
+          {error.code && <p className="mt-1 text-xs text-red-600 font-mono">Error: {error.code}</p>}
         </div>
         <div className="ml-4 flex gap-2">
           {onRetry && (

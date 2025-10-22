@@ -12,49 +12,49 @@ on:
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
-    
+
     strategy:
       fail-fast: false
       matrix:
         browser: [chrome, firefox, edge]
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
           cache: 'npm'
-      
+
       - name: Install dependencies
         run: npm ci
-      
+
       - name: Verify Cypress installation
         run: npx cypress verify
-      
+
       - name: Cypress info
         run: npx cypress info
-      
+
       - name: Create directories for artifacts
         run: |
           mkdir -p cypress/videos
           mkdir -p cypress/screenshots
           mkdir -p cypress/results
-      
+
       - name: Start dev server
         run: npm run dev &
         env:
           CI: true
           PORT: 3001
-      
+
       - name: Wait for server to be ready
         run: npx wait-on http://localhost:3001 --timeout 120000 --interval 1000 --verbose
-      
+
       - name: Check server is responding
         run: curl http://localhost:3001 || echo "Server check failed"
-      
+
       - name: Run Cypress tests
         uses: cypress-io/github-action@v6
         with:
@@ -67,7 +67,7 @@ jobs:
         env:
           CYPRESS_baseUrl: http://localhost:3001
           DEBUG: 'cypress:*'
-      
+
       - name: Upload screenshots
         uses: actions/upload-artifact@v4
         if: failure()
@@ -76,7 +76,7 @@ jobs:
           path: cypress/screenshots
           if-no-files-found: ignore
           retention-days: 7
-      
+
       - name: Upload videos
         uses: actions/upload-artifact@v4
         if: always()
@@ -85,7 +85,7 @@ jobs:
           path: cypress/videos
           if-no-files-found: ignore
           retention-days: 7
-      
+
       - name: Upload test results
         uses: actions/upload-artifact@v4
         if: always()
@@ -98,33 +98,33 @@ jobs:
   percy-visual-tests:
     runs-on: ubuntu-latest
     needs: cypress-run
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
           cache: 'npm'
-      
+
       - name: Install dependencies
         run: npm ci
-      
+
       - name: Start dev server
         run: npm run dev &
         env:
           CI: true
-      
+
       - name: Wait for server
         run: npx wait-on http://localhost:3001 --timeout 60000
-      
+
       - name: Run Percy visual tests
         run: npm run percy:snapshot
         env:
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
-      
+
       - name: Upload Percy results
         uses: actions/upload-artifact@v4
         if: always()
@@ -136,39 +136,39 @@ jobs:
   lighthouse-ci:
     runs-on: ubuntu-latest
     needs: cypress-run
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
           cache: 'npm'
-      
+
       - name: Install dependencies
         run: npm ci
-      
+
       - name: Build application
         run: npm run build
-      
+
       - name: Install Lighthouse CI
         run: npm install -g @lhci/cli
-      
+
       - name: Start preview server
         run: npm run preview &
         env:
           CI: true
-      
+
       - name: Wait for preview server
         run: npx wait-on http://localhost:4173 --timeout 60000
-      
+
       - name: Run Lighthouse CI
         run: lhci autorun
         env:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
-      
+
       - name: Upload Lighthouse results
         uses: actions/upload-artifact@v4
         if: always()
@@ -181,11 +181,11 @@ jobs:
     runs-on: ubuntu-latest
     needs: [cypress-run, lighthouse-ci]
     if: always()
-    
+
     steps:
       - name: Download all artifacts
         uses: actions/download-artifact@v4
-      
+
       - name: Create test summary
         run: |
           echo "## Test Summary" >> $GITHUB_STEP_SUMMARY

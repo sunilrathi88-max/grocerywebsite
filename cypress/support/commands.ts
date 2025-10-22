@@ -11,12 +11,12 @@ Cypress.Commands.add('checkWebVitals', () => {
     // Check for performance entries
     const perfEntries = win.performance.getEntries();
     cy.log(`Performance Entries: ${perfEntries.length}`);
-    
+
     // Log navigation timing
     const navTiming = win.performance.timing;
     const pageLoadTime = navTiming.loadEventEnd - navTiming.navigationStart;
     cy.log(`Page Load Time: ${pageLoadTime}ms`);
-    
+
     expect(pageLoadTime).to.be.lessThan(5000, 'Page should load in less than 5 seconds');
   });
 });
@@ -40,9 +40,11 @@ Cypress.Commands.add('addProductToCart', (productName?: string) => {
       cy.get('button').contains('Add to Cart').click();
     });
   } else {
-    cy.get('.product-card').first().within(() => {
-      cy.get('button').contains('Add to Cart').click();
-    });
+    cy.get('.product-card')
+      .first()
+      .within(() => {
+        cy.get('button').contains('Add to Cart').click();
+      });
   }
   cy.contains('Added to cart').should('be.visible');
 });
@@ -57,14 +59,17 @@ Cypress.Commands.add('navigateTo', (page: string) => {
 // Custom command for completing quiz
 Cypress.Commands.add('completeQuiz', (correctAnswers: boolean = true) => {
   // Answer all 8 questions
-  const answers = correctAnswers 
+  const answers = correctAnswers
     ? [0, 2, 1, 1, 2, 1, 1, 1] // Correct answers
     : [1, 0, 0, 0, 0, 0, 0, 0]; // Wrong answers
-  
+
   answers.forEach((answerIndex, questionIndex) => {
     cy.get('[class*="quiz"]').within(() => {
-      cy.get('button').contains(/Option|Choice/).eq(answerIndex).click();
-      
+      cy.get('button')
+        .contains(/Option|Choice/)
+        .eq(answerIndex)
+        .click();
+
       if (questionIndex < answers.length - 1) {
         cy.get('button').contains('Next').click();
       }
@@ -75,9 +80,7 @@ Cypress.Commands.add('completeQuiz', (correctAnswers: boolean = true) => {
 
 // Custom command for applying promo code
 Cypress.Commands.add('applyPromoCode', (code: string) => {
-  cy.get('input[placeholder*="promo" i], input[placeholder*="code" i]')
-    .clear()
-    .type(code);
+  cy.get('input[placeholder*="promo" i], input[placeholder*="code" i]').clear().type(code);
   cy.get('button').contains(/apply/i).click();
 });
 
