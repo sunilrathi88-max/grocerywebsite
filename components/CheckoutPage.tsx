@@ -21,7 +21,7 @@ interface CheckoutPageProps {
 }
 
 const OrderConfirmation: React.FC<{ order: Order }> = ({ order }) => {
-  const estimatedDeliveryDate = order.deliverySlot 
+  const estimatedDeliveryDate = order.deliverySlot
     ? `${order.deliverySlot.date}, between ${order.deliverySlot.time}`
     : 'in 3-5 business days';
 
@@ -30,48 +30,72 @@ const OrderConfirmation: React.FC<{ order: Order }> = ({ order }) => {
       <div className="max-w-2xl w-full bg-white p-8 rounded-lg shadow-lg text-center animate-fade-in">
         <CheckCircleIcon className="h-16 w-16 text-green-500 mx-auto mb-4" />
         <h2 className="text-3xl font-serif font-bold text-brand-dark">Thank you for your order!</h2>
-        <p className="mt-2 text-gray-600">Your order has been placed successfully. A confirmation email has been sent.</p>
-        
+        <p className="mt-2 text-gray-600">
+          Your order has been placed successfully. A confirmation email has been sent.
+        </p>
+
         <div className="mt-6 text-left bg-brand-accent/50 p-4 rounded-lg space-y-1">
-          <p><strong>Order ID:</strong> <span className="font-mono">{order.id}</span></p>
-          <p><strong>Estimated Delivery:</strong> {estimatedDeliveryDate}</p>
-          <p><strong>Payment Method:</strong> {order.paymentMethod}</p>
+          <p>
+            <strong>Order ID:</strong> <span className="font-mono">{order.id}</span>
+          </p>
+          <p>
+            <strong>Estimated Delivery:</strong> {estimatedDeliveryDate}
+          </p>
+          <p>
+            <strong>Payment Method:</strong> {order.paymentMethod}
+          </p>
         </div>
 
         <div className="mt-6 border-t pt-6">
           <h3 className="text-xl font-serif font-bold text-left mb-4">Order Summary</h3>
           <div className="space-y-4 max-h-60 overflow-y-auto text-left pr-2">
-            {order.items.map(item => (
-              <div key={`${item.product.id}-${item.selectedVariant.id}`} className="flex justify-between items-start gap-4">
-                <OptimizedImage 
-                  src={item.product.images[0]} 
-                  alt={item.product.name} 
-                  className="w-16 h-16 object-cover rounded-md flex-shrink-0" 
+            {order.items.map((item) => (
+              <div
+                key={`${item.product.id}-${item.selectedVariant.id}`}
+                className="flex justify-between items-start gap-4"
+              >
+                <OptimizedImage
+                  src={item.product.images[0]}
+                  alt={item.product.name}
+                  className="w-16 h-16 object-cover rounded-md flex-shrink-0"
                   type="thumbnail"
                   priority="high"
                   width={64}
                   height={64}
-                  onError={imageErrorHandlers.thumb} 
+                  onError={imageErrorHandlers.thumb}
                 />
                 <div className="flex-grow">
                   <p className="font-bold text-sm leading-tight">{item.product.name}</p>
-                  <p className="text-xs text-gray-500">{item.selectedVariant.name} x {item.quantity}</p>
+                  <p className="text-xs text-gray-500">
+                    {item.selectedVariant.name} x {item.quantity}
+                  </p>
                 </div>
-                <p className="text-sm font-bold flex-shrink-0">${((item.selectedVariant.salePrice ?? item.selectedVariant.price) * item.quantity).toFixed(2)}</p>
+                <p className="text-sm font-bold flex-shrink-0">
+                  $
+                  {(
+                    (item.selectedVariant.salePrice ?? item.selectedVariant.price) * item.quantity
+                  ).toFixed(2)}
+                </p>
               </div>
             ))}
           </div>
-           <div className="flex justify-between font-bold text-lg text-brand-dark mt-4 pt-4 border-t">
-              <span>Total Paid</span>
-              <span>${order.total.toFixed(2)}</span>
-            </div>
+          <div className="flex justify-between font-bold text-lg text-brand-dark mt-4 pt-4 border-t">
+            <span>Total Paid</span>
+            <span>${order.total.toFixed(2)}</span>
+          </div>
         </div>
 
         <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4">
-          <a href="#/" className="bg-brand-primary text-white font-bold py-3 px-6 rounded-full shadow-lg hover:bg-opacity-90 transform hover:scale-105 transition-all duration-300">
+          <a
+            href="#/"
+            className="bg-brand-primary text-white font-bold py-3 px-6 rounded-full shadow-lg hover:bg-opacity-90 transform hover:scale-105 transition-all duration-300"
+          >
             Continue Shopping
           </a>
-          <a href="#/profile" className="bg-brand-dark text-white font-bold py-3 px-6 rounded-full shadow-lg hover:bg-opacity-90 transform hover:scale-105 transition-all duration-300">
+          <a
+            href="#/profile"
+            className="bg-brand-dark text-white font-bold py-3 px-6 rounded-full shadow-lg hover:bg-opacity-90 transform hover:scale-105 transition-all duration-300"
+          >
             View My Orders
           </a>
         </div>
@@ -99,43 +123,45 @@ const DeliverySlotPicker: React.FC<{
     const dates = [];
     const today = new Date();
     for (let i = 0; i < 5; i++) {
-        const date = new Date(today);
-        date.setDate(today.getDate() + i);
-        dates.push({
-            value: date.toISOString().split('T')[0],
-            label: date.toLocaleDateString('en-US', { weekday: 'short'}),
-            day: date.getDate()
-        });
+      const date = new Date(today);
+      date.setDate(today.getDate() + i);
+      dates.push({
+        value: date.toISOString().split('T')[0],
+        label: date.toLocaleDateString('en-US', { weekday: 'short' }),
+        day: date.getDate(),
+      });
     }
     return dates;
   }, []);
 
   const timeSlots = useMemo(() => {
-      if (!selectedDate) return [];
-      const day = new Date(selectedDate).getDay();
-      if (day % 2 === 0) { 
-          return [
-              { time: '09:00 AM - 11:00 AM', available: true },
-              { time: '11:00 AM - 01:00 PM', available: true },
-              { time: '01:00 PM - 03:00 PM', available: false },
-              { time: '03:00 PM - 05:00 PM', available: true },
-          ];
-      }
-      return [ 
-          { time: '10:00 AM - 12:00 PM', available: true },
-          { time: '12:00 PM - 02:00 PM', available: false },
-          { time: '02:00 PM - 04:00 PM', available: true },
-          { time: '04:00 PM - 06:00 PM', available: true },
+    if (!selectedDate) return [];
+    const day = new Date(selectedDate).getDay();
+    if (day % 2 === 0) {
+      return [
+        { time: '09:00 AM - 11:00 AM', available: true },
+        { time: '11:00 AM - 01:00 PM', available: true },
+        { time: '01:00 PM - 03:00 PM', available: false },
+        { time: '03:00 PM - 05:00 PM', available: true },
       ];
+    }
+    return [
+      { time: '10:00 AM - 12:00 PM', available: true },
+      { time: '12:00 PM - 02:00 PM', available: false },
+      { time: '02:00 PM - 04:00 PM', available: true },
+      { time: '04:00 PM - 06:00 PM', available: true },
+    ];
   }, [selectedDate]);
 
   return (
     <div className="space-y-4">
-      <h3 className="text-lg font-serif font-bold flex items-center gap-2"><CalendarIcon /> Delivery Slot</h3>
+      <h3 className="text-lg font-serif font-bold flex items-center gap-2">
+        <CalendarIcon /> Delivery Slot
+      </h3>
       <div>
         <h4 className="font-bold text-sm text-gray-600 mb-2">Select a Date:</h4>
         <div className="flex flex-wrap gap-2">
-          {deliveryDates.map(date => (
+          {deliveryDates.map((date) => (
             <button
               key={date.value}
               type="button"
@@ -152,7 +178,7 @@ const DeliverySlotPicker: React.FC<{
         <div>
           <h4 className="font-bold text-sm text-gray-600 mb-2">Select a Time:</h4>
           <div className="grid grid-cols-2 gap-2">
-            {timeSlots.map(slot => (
+            {timeSlots.map((slot) => (
               <button
                 key={slot.time}
                 type="button"
@@ -170,12 +196,25 @@ const DeliverySlotPicker: React.FC<{
   );
 };
 
+const CheckoutPage: React.FC<CheckoutPageProps> = ({
+  cartItems,
+  user,
+  onPlaceOrder,
+  addToast,
+  discount,
+  promoCode,
+  onApplyPromoCode,
+  onRemovePromoCode,
+  subtotal,
+  shippingCost,
+}) => {
+  const defaultShipping = user?.addresses.find((a) => a.isDefault && a.type === 'Shipping') ||
+    user?.addresses[0] || { street: '', city: '', state: '', zip: '', country: '' };
 
-const CheckoutPage: React.FC<CheckoutPageProps> = ({ cartItems, user, onPlaceOrder, addToast, discount, promoCode, onApplyPromoCode, onRemovePromoCode, subtotal, shippingCost }) => {
-  const defaultShipping = user?.addresses.find(a => a.isDefault && a.type === 'Shipping') || user?.addresses[0] || { street: '', city: '', state: '', zip: '', country: '' };
-
-  const [shippingAddress, setShippingAddress] = useState<Omit<Address, 'id' | 'type' | 'isDefault'>>(defaultShipping);
-  const [billingAddress, setBillingAddress] = useState<Omit<Address, 'id' | 'type' | 'isDefault'>>(defaultShipping);
+  const [shippingAddress, setShippingAddress] =
+    useState<Omit<Address, 'id' | 'type' | 'isDefault'>>(defaultShipping);
+  const [billingAddress, setBillingAddress] =
+    useState<Omit<Address, 'id' | 'type' | 'isDefault'>>(defaultShipping);
   const [useSameAddress, setUseSameAddress] = useState(true);
   const [paymentMethod, setPaymentMethod] = useState('');
   const [orderConfirmation, setOrderConfirmation] = useState<Order | null>(null);
@@ -184,65 +223,139 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ cartItems, user, onPlaceOrd
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
 
   const tax = useMemo(() => (subtotal - discount) * 0.08, [subtotal, discount]);
-  const total = useMemo(() => subtotal + shippingCost + tax - discount, [subtotal, shippingCost, tax, discount]);
-  
-  const handleInputChange = (setter: React.Dispatch<React.SetStateAction<any>>) => (e: React.ChangeEvent<HTMLInputElement>) => {
-    setter(prev => ({ ...prev, [e.target.name]: e.target.value }));
-  };
-  
+  const total = useMemo(
+    () => subtotal + shippingCost + tax - discount,
+    [subtotal, shippingCost, tax, discount]
+  );
+
+  const handleInputChange =
+    (setter: React.Dispatch<React.SetStateAction<any>>) =>
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setter((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (cartItems.length === 0) {
-      addToast('Your cart is empty.', 'error'); return;
+      addToast('Your cart is empty.', 'error');
+      return;
     }
     if (!selectedDate || !selectedTime) {
-      addToast('Please select a delivery slot.', 'error'); return;
+      addToast('Please select a delivery slot.', 'error');
+      return;
     }
     if (!paymentMethod) {
-      addToast('Please select a payment method.', 'error'); return;
+      addToast('Please select a payment method.', 'error');
+      return;
     }
-    
+
     const confirmedOrder = onPlaceOrder({
       items: cartItems,
       total: total,
-      shippingAddress: { ...shippingAddress, id: 0, type: 'Shipping'},
-      billingAddress: useSameAddress ? { ...shippingAddress, id: 0, type: 'Billing' } : { ...billingAddress, id: 0, type: 'Billing'},
-      deliveryMethod: "Standard",
+      shippingAddress: { ...shippingAddress, id: 0, type: 'Shipping' },
+      billingAddress: useSameAddress
+        ? { ...shippingAddress, id: 0, type: 'Billing' }
+        : { ...billingAddress, id: 0, type: 'Billing' },
+      deliveryMethod: 'Standard',
       paymentMethod: paymentMethod,
       shippingCost: shippingCost,
       discount,
-      deliverySlot: { date: new Date(selectedDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }), time: selectedTime },
+      deliverySlot: {
+        date: new Date(selectedDate).toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        }),
+        time: selectedTime,
+      },
     });
     setOrderConfirmation(confirmedOrder);
   };
 
-  const AddressForm: React.FC<{ address: Omit<Address, 'id' | 'type' | 'isDefault'>, onChange: (e: React.ChangeEvent<HTMLInputElement>) => void, title: string }> = ({ address, onChange, title }) => (
+  const AddressForm: React.FC<{
+    address: Omit<Address, 'id' | 'type' | 'isDefault'>;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    title: string;
+  }> = ({ address, onChange, title }) => (
     <div className="space-y-4">
       <h3 className="text-lg font-serif font-bold">{title}</h3>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700">Full Name</label>
-            <input type="text" name="name" defaultValue={user?.name || ''} className="mt-1 input-field" required />
+          <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+            Full Name
+          </label>
+          <input
+            type="text"
+            name="name"
+            defaultValue={user?.name || ''}
+            className="mt-1 input-field"
+            required
+          />
         </div>
         <div>
-            <label htmlFor="street" className="block text-sm font-medium text-gray-700">Street Address</label>
-            <input type="text" name="street" value={address.street} onChange={onChange} className="mt-1 input-field" required />
+          <label htmlFor="street" className="block text-sm font-medium text-gray-700">
+            Street Address
+          </label>
+          <input
+            type="text"
+            name="street"
+            value={address.street}
+            onChange={onChange}
+            className="mt-1 input-field"
+            required
+          />
         </div>
         <div>
-            <label htmlFor="city" className="block text-sm font-medium text-gray-700">City</label>
-            <input type="text" name="city" value={address.city} onChange={onChange} className="mt-1 input-field" required />
+          <label htmlFor="city" className="block text-sm font-medium text-gray-700">
+            City
+          </label>
+          <input
+            type="text"
+            name="city"
+            value={address.city}
+            onChange={onChange}
+            className="mt-1 input-field"
+            required
+          />
         </div>
         <div>
-            <label htmlFor="state" className="block text-sm font-medium text-gray-700">State / Province</label>
-            <input type="text" name="state" value={address.state} onChange={onChange} className="mt-1 input-field" required />
+          <label htmlFor="state" className="block text-sm font-medium text-gray-700">
+            State / Province
+          </label>
+          <input
+            type="text"
+            name="state"
+            value={address.state}
+            onChange={onChange}
+            className="mt-1 input-field"
+            required
+          />
         </div>
         <div>
-            <label htmlFor="zip" className="block text-sm font-medium text-gray-700">ZIP / Postal Code</label>
-            <input type="text" name="zip" value={address.zip} onChange={onChange} className="mt-1 input-field" required />
+          <label htmlFor="zip" className="block text-sm font-medium text-gray-700">
+            ZIP / Postal Code
+          </label>
+          <input
+            type="text"
+            name="zip"
+            value={address.zip}
+            onChange={onChange}
+            className="mt-1 input-field"
+            required
+          />
         </div>
         <div>
-            <label htmlFor="country" className="block text-sm font-medium text-gray-700">Country</label>
-            <input type="text" name="country" value={address.country} onChange={onChange} className="mt-1 input-field" required />
+          <label htmlFor="country" className="block text-sm font-medium text-gray-700">
+            Country
+          </label>
+          <input
+            type="text"
+            name="country"
+            value={address.country}
+            onChange={onChange}
+            className="mt-1 input-field"
+            required
+          />
         </div>
       </div>
     </div>
@@ -254,121 +367,181 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ cartItems, user, onPlaceOrd
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h2 className="text-3xl md:text-4xl font-serif font-bold text-center text-brand-dark mb-12">Checkout</h2>
-        <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-          {/* Left/Main Column */}
-          <div className="lg:col-span-2 space-y-8">
-            <AddressForm address={shippingAddress} onChange={handleInputChange(setShippingAddress)} title="Shipping Address" />
-            
-            <div className="flex items-center">
-              <input id="same-address" name="same-address" type="checkbox" checked={useSameAddress} onChange={() => setUseSameAddress(!useSameAddress)} className="h-4 w-4 text-brand-primary border-gray-300 rounded focus:ring-brand-primary" />
-              <label htmlFor="same-address" className="ml-2 block text-sm text-gray-900">Billing address is the same as my shipping address</label>
-            </div>
-            
-            {!useSameAddress && <AddressForm address={billingAddress} onChange={handleInputChange(setBillingAddress)} title="Billing Address" />}
+      <h2 className="text-3xl md:text-4xl font-serif font-bold text-center text-brand-dark mb-12">
+        Checkout
+      </h2>
+      <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+        {/* Left/Main Column */}
+        <div className="lg:col-span-2 space-y-8">
+          <AddressForm
+            address={shippingAddress}
+            onChange={handleInputChange(setShippingAddress)}
+            title="Shipping Address"
+          />
 
-            <DeliverySlotPicker 
-              selectedDate={selectedDate}
-              selectedTime={selectedTime}
-              onSelectDate={(date) => { setSelectedDate(date); setSelectedTime(null); }}
-              onSelectTime={setSelectedTime}
+          <div className="flex items-center">
+            <input
+              id="same-address"
+              name="same-address"
+              type="checkbox"
+              checked={useSameAddress}
+              onChange={() => setUseSameAddress(!useSameAddress)}
+              className="h-4 w-4 text-brand-primary border-gray-300 rounded focus:ring-brand-primary"
             />
-            
-             <div>
-              <h3 className="text-lg font-serif font-bold mb-4">Payment Method</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {['Credit Card', 'PayPal', 'Google Pay', 'Cash on Delivery'].map(method => (
-                  <button
-                    key={method}
-                    type="button"
-                    onClick={() => setPaymentMethod(method)}
-                    className={`px-4 py-3 font-bold rounded-lg transition-all duration-300 border-2 text-center ${paymentMethod === method ? 'bg-brand-primary text-white border-brand-primary shadow-lg' : 'bg-white text-brand-dark hover:bg-brand-secondary/50 border-gray-300'}`}
-                  >
-                    {method}
-                  </button>
-                ))}
-              </div>
-            </div>
-
+            <label htmlFor="same-address" className="ml-2 block text-sm text-gray-900">
+              Billing address is the same as my shipping address
+            </label>
           </div>
-          
-          {/* Right/Sidebar Column */}
-          <div className="lg:col-span-1">
-            <div className="bg-brand-accent/50 p-6 rounded-lg sticky top-28">
-              <h3 className="text-xl font-serif font-bold mb-4">Order Summary</h3>
-              <div className="space-y-4 max-h-60 overflow-y-auto pr-2">
-                {cartItems.map(item => (
-                  <div key={`${item.product.id}-${item.selectedVariant.id}`} className="flex justify-between items-start gap-4">
-                    <OptimizedImage 
-                      src={item.product.images[0]} 
-                      alt={item.product.name} 
-                      className="w-16 h-16 object-cover rounded-md flex-shrink-0" 
-                      type="thumbnail"
-                      priority="high"
-                      width={64}
-                      height={64}
-                      onError={imageErrorHandlers.thumb} 
-                    />
-                    <div className="flex-grow">
-                      <p className="font-bold text-sm leading-tight">{item.product.name}</p>
-                      <p className="text-xs text-gray-500">{item.selectedVariant.name} x {item.quantity}</p>
-                    </div>
-                    <p className="text-sm font-bold flex-shrink-0">${((item.selectedVariant.salePrice ?? item.selectedVariant.price) * item.quantity).toFixed(2)}</p>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-4 border-t pt-4 space-y-2">
-                <div className="flex justify-between text-sm text-gray-600"><span>Subtotal</span><span>${subtotal.toFixed(2)}</span></div>
-                {discount > 0 && (
-                    <div className="flex justify-between text-sm text-green-600">
-                        <span>Discount ({promoCode})</span>
-                        <span>-${discount.toFixed(2)}</span>
-                    </div>
-                )}
-                <div className="flex justify-between text-sm text-gray-600">
-                  <span>Shipping</span>
-                  <span className={shippingCost === 0 ? 'text-green-600 font-bold' : ''}>
-                    {shippingCost === 0 ? 'Free' : `$${shippingCost.toFixed(2)}`}
-                  </span>
-                </div>
-                <div className="flex justify-between text-sm text-gray-600"><span>Taxes (8%)</span><span>${tax.toFixed(2)}</span></div>
-                <div className="flex justify-between font-bold text-lg text-brand-dark mt-2 pt-2 border-t"><span>Total</span><span>${total.toFixed(2)}</span></div>
-              </div>
 
-              <div className="mt-4">
-                {promoCode ? (
-                    <div className="flex justify-between items-center bg-green-100 text-green-800 text-sm p-2 rounded-md">
-                        <span>Code "{promoCode}" applied!</span>
-                        <button type="button" onClick={onRemovePromoCode} className="p-1 rounded-full hover:bg-green-200"><XIcon className="h-4 w-4"/></button>
-                    </div>
-                ) : (
-                    <div className="flex rounded-md shadow-sm">
-                        <input type="text" value={localPromoCode} onChange={(e) => setLocalPromoCode(e.target.value)} placeholder="Promo code" className="flex-1 block w-full rounded-none rounded-l-md border-gray-300 focus:ring-brand-primary focus:border-brand-primary sm:text-sm" />
-                        <button type="button" onClick={() => onApplyPromoCode(localPromoCode)} className="inline-flex items-center px-4 py-2 border border-l-0 border-gray-300 rounded-r-md bg-gray-50 text-sm font-medium text-gray-700 hover:bg-gray-100">Apply</button>
-                    </div>
-                )}
-              </div>
+          {!useSameAddress && (
+            <AddressForm
+              address={billingAddress}
+              onChange={handleInputChange(setBillingAddress)}
+              title="Billing Address"
+            />
+          )}
 
-              <div className="mt-6 border-t pt-4 text-center text-brand-dark">
-                <div className="flex items-center justify-center gap-3 text-sm">
-                    <ShieldCheckIcon className="h-6 w-6 text-green-600"/>
-                    <span className="font-bold">Secure SSL Checkout</span>
-                </div>
-              </div>
-              
-              <div className="mt-4">
-                <button 
-                  type="submit" 
-                  disabled={!selectedDate || !selectedTime || !paymentMethod}
-                  className="w-full bg-brand-dark text-white font-bold py-3 rounded-full shadow-lg hover:bg-opacity-90 transform hover:scale-105 transition-all duration-300 disabled:bg-gray-400 disabled:cursor-not-allowed"
+          <DeliverySlotPicker
+            selectedDate={selectedDate}
+            selectedTime={selectedTime}
+            onSelectDate={(date) => {
+              setSelectedDate(date);
+              setSelectedTime(null);
+            }}
+            onSelectTime={setSelectedTime}
+          />
+
+          <div>
+            <h3 className="text-lg font-serif font-bold mb-4">Payment Method</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {['Credit Card', 'PayPal', 'Google Pay', 'Cash on Delivery'].map((method) => (
+                <button
+                  key={method}
+                  type="button"
+                  onClick={() => setPaymentMethod(method)}
+                  className={`px-4 py-3 font-bold rounded-lg transition-all duration-300 border-2 text-center ${paymentMethod === method ? 'bg-brand-primary text-white border-brand-primary shadow-lg' : 'bg-white text-brand-dark hover:bg-brand-secondary/50 border-gray-300'}`}
                 >
-                  Place Order
+                  {method}
                 </button>
-              </div>
+              ))}
             </div>
           </div>
-        </form>
-         <style>{`
+        </div>
+
+        {/* Right/Sidebar Column */}
+        <div className="lg:col-span-1">
+          <div className="bg-brand-accent/50 p-6 rounded-lg sticky top-28">
+            <h3 className="text-xl font-serif font-bold mb-4">Order Summary</h3>
+            <div className="space-y-4 max-h-60 overflow-y-auto pr-2">
+              {cartItems.map((item) => (
+                <div
+                  key={`${item.product.id}-${item.selectedVariant.id}`}
+                  className="flex justify-between items-start gap-4"
+                >
+                  <OptimizedImage
+                    src={item.product.images[0]}
+                    alt={item.product.name}
+                    className="w-16 h-16 object-cover rounded-md flex-shrink-0"
+                    type="thumbnail"
+                    priority="high"
+                    width={64}
+                    height={64}
+                    onError={imageErrorHandlers.thumb}
+                  />
+                  <div className="flex-grow">
+                    <p className="font-bold text-sm leading-tight">{item.product.name}</p>
+                    <p className="text-xs text-gray-500">
+                      {item.selectedVariant.name} x {item.quantity}
+                    </p>
+                  </div>
+                  <p className="text-sm font-bold flex-shrink-0">
+                    $
+                    {(
+                      (item.selectedVariant.salePrice ?? item.selectedVariant.price) * item.quantity
+                    ).toFixed(2)}
+                  </p>
+                </div>
+              ))}
+            </div>
+            <div className="mt-4 border-t pt-4 space-y-2">
+              <div className="flex justify-between text-sm text-gray-600">
+                <span>Subtotal</span>
+                <span>${subtotal.toFixed(2)}</span>
+              </div>
+              {discount > 0 && (
+                <div className="flex justify-between text-sm text-green-600">
+                  <span>Discount ({promoCode})</span>
+                  <span>-${discount.toFixed(2)}</span>
+                </div>
+              )}
+              <div className="flex justify-between text-sm text-gray-600">
+                <span>Shipping</span>
+                <span className={shippingCost === 0 ? 'text-green-600 font-bold' : ''}>
+                  {shippingCost === 0 ? 'Free' : `$${shippingCost.toFixed(2)}`}
+                </span>
+              </div>
+              <div className="flex justify-between text-sm text-gray-600">
+                <span>Taxes (8%)</span>
+                <span>${tax.toFixed(2)}</span>
+              </div>
+              <div className="flex justify-between font-bold text-lg text-brand-dark mt-2 pt-2 border-t">
+                <span>Total</span>
+                <span>${total.toFixed(2)}</span>
+              </div>
+            </div>
+
+            <div className="mt-4">
+              {promoCode ? (
+                <div className="flex justify-between items-center bg-green-100 text-green-800 text-sm p-2 rounded-md">
+                  <span>Code "{promoCode}" applied!</span>
+                  <button
+                    type="button"
+                    onClick={onRemovePromoCode}
+                    className="p-1 rounded-full hover:bg-green-200"
+                  >
+                    <XIcon className="h-4 w-4" />
+                  </button>
+                </div>
+              ) : (
+                <div className="flex rounded-md shadow-sm">
+                  <input
+                    type="text"
+                    value={localPromoCode}
+                    onChange={(e) => setLocalPromoCode(e.target.value)}
+                    placeholder="Promo code"
+                    className="flex-1 block w-full rounded-none rounded-l-md border-gray-300 focus:ring-brand-primary focus:border-brand-primary sm:text-sm"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => onApplyPromoCode(localPromoCode)}
+                    className="inline-flex items-center px-4 py-2 border border-l-0 border-gray-300 rounded-r-md bg-gray-50 text-sm font-medium text-gray-700 hover:bg-gray-100"
+                  >
+                    Apply
+                  </button>
+                </div>
+              )}
+            </div>
+
+            <div className="mt-6 border-t pt-4 text-center text-brand-dark">
+              <div className="flex items-center justify-center gap-3 text-sm">
+                <ShieldCheckIcon className="h-6 w-6 text-green-600" />
+                <span className="font-bold">Secure SSL Checkout</span>
+              </div>
+            </div>
+
+            <div className="mt-4">
+              <button
+                type="submit"
+                disabled={!selectedDate || !selectedTime || !paymentMethod}
+                className="w-full bg-brand-dark text-white font-bold py-3 rounded-full shadow-lg hover:bg-opacity-90 transform hover:scale-105 transition-all duration-300 disabled:bg-gray-400 disabled:cursor-not-allowed"
+              >
+                Place Order
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+      <style>{`
           .input-field {
             display: block;
             width: 100%;

@@ -81,7 +81,8 @@ export interface OrganizationStructuredData {
  */
 export const getDefaultSEO = (): SEOConfig => ({
   title: 'Tattva Co. - Authentic Indian Gourmet Products | Premium Spices & Organic Foods',
-  description: 'Discover authentic Indian gourmet products including premium saffron, spices, nuts, and organic ingredients. Free shipping on orders over $50. Shop now!',
+  description:
+    'Discover authentic Indian gourmet products including premium saffron, spices, nuts, and organic ingredients. Free shipping on orders over $50. Shop now!',
   keywords: [
     'indian spices',
     'gourmet products',
@@ -92,7 +93,7 @@ export const getDefaultSEO = (): SEOConfig => ({
     'spices online',
     'organic spices',
     'kashmiri saffron',
-    'indian superfoods'
+    'indian superfoods',
   ],
   ogType: 'website',
   ogImage: '/images/og-image.jpg',
@@ -182,7 +183,8 @@ export const generateOrganizationSchema = (): OrganizationStructuredData => ({
   name: 'Tattva Co.',
   url: 'https://tattva-co.com',
   logo: 'https://tattva-co.com/images/logo.png',
-  description: 'Premium Indian gourmet products including authentic spices, saffron, nuts, and organic ingredients.',
+  description:
+    'Premium Indian gourmet products including authentic spices, saffron, nuts, and organic ingredients.',
   contactPoint: {
     '@type': 'ContactPoint',
     telephone: '+1-555-TATTVA',
@@ -208,13 +210,12 @@ export const generateProductSchema = (product: {
   variants: Array<{ price: number; salePrice?: number; stock: number }>;
   reviews: Array<{ rating: number; author: string; comment: string }>;
 }): ProductStructuredData => {
-  const lowestPrice = Math.min(
-    ...product.variants.map(v => v.salePrice ?? v.price)
-  );
-  const inStock = product.variants.some(v => v.stock > 0);
-  const avgRating = product.reviews.length > 0
-    ? product.reviews.reduce((sum, r) => sum + r.rating, 0) / product.reviews.length
-    : 0;
+  const lowestPrice = Math.min(...product.variants.map((v) => v.salePrice ?? v.price));
+  const inStock = product.variants.some((v) => v.stock > 0);
+  const avgRating =
+    product.reviews.length > 0
+      ? product.reviews.reduce((sum, r) => sum + r.rating, 0) / product.reviews.length
+      : 0;
 
   return {
     '@context': 'https://schema.org',
@@ -230,9 +231,7 @@ export const generateProductSchema = (product: {
       '@type': 'Offer',
       price: lowestPrice,
       priceCurrency: 'USD',
-      availability: inStock
-        ? 'https://schema.org/InStock'
-        : 'https://schema.org/OutOfStock',
+      availability: inStock ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
       url: `https://tattva-co.com/product/${product.id}`,
     },
     ...(product.reviews.length > 0 && {
@@ -241,7 +240,7 @@ export const generateProductSchema = (product: {
         ratingValue: avgRating,
         reviewCount: product.reviews.length,
       },
-      review: product.reviews.slice(0, 5).map(review => ({
+      review: product.reviews.slice(0, 5).map((review) => ({
         '@type': 'Review',
         reviewRating: {
           '@type': 'Rating',
@@ -275,7 +274,18 @@ export const generateBreadcrumbSchema = (items: Array<{ name: string; url: strin
  * Apply SEO configuration
  */
 export const applySEO = (config: SEOConfig): void => {
-  const { title, description, keywords, canonical, ogType, ogImage, ogImageAlt, twitterCard, noindex, nofollow } = config;
+  const {
+    title,
+    description,
+    keywords,
+    canonical,
+    ogType,
+    ogImage,
+    ogImageAlt,
+    twitterCard,
+    noindex,
+    nofollow,
+  } = config;
 
   // Update title
   updateTitle(title);
@@ -315,10 +325,9 @@ export const applySEO = (config: SEOConfig): void => {
 
   // Robots meta
   if (noindex || nofollow) {
-    const robotsContent = [
-      noindex ? 'noindex' : 'index',
-      nofollow ? 'nofollow' : 'follow',
-    ].join(', ');
+    const robotsContent = [noindex ? 'noindex' : 'index', nofollow ? 'nofollow' : 'follow'].join(
+      ', '
+    );
     updateMetaTag('robots', robotsContent);
   }
 };
@@ -329,8 +338,16 @@ export const applySEO = (config: SEOConfig): void => {
 export const pageSEO = {
   home: (): SEOConfig => ({
     title: 'Tattva Co. - Authentic Indian Gourmet Products | Premium Spices & Organic Foods',
-    description: 'Shop authentic Indian gourmet products including premium saffron, spices, nuts, and organic ingredients. Free shipping on orders over $50. 100% satisfaction guaranteed.',
-    keywords: ['indian grocery online', 'premium spices', 'organic food', 'saffron', 'indian gourmet', 'spices delivery'],
+    description:
+      'Shop authentic Indian gourmet products including premium saffron, spices, nuts, and organic ingredients. Free shipping on orders over $50. 100% satisfaction guaranteed.',
+    keywords: [
+      'indian grocery online',
+      'premium spices',
+      'organic food',
+      'saffron',
+      'indian gourmet',
+      'spices delivery',
+    ],
     canonical: 'https://tattva-co.com',
     ogType: 'website',
     ogImage: '/images/og-home.jpg',
@@ -345,7 +362,9 @@ export const pageSEO = {
       ? `Browse our selection of premium ${category.toLowerCase()}. Authentic, organic, and sourced directly from India. Free shipping on orders over $50.`
       : 'Explore our complete collection of authentic Indian gourmet products. Premium spices, nuts, organic ingredients, and more. Shop now!',
     keywords: ['indian products', 'shop indian spices', category?.toLowerCase(), 'buy online'],
-    canonical: category ? `https://tattva-co.com/products/${category}` : 'https://tattva-co.com/products',
+    canonical: category
+      ? `https://tattva-co.com/products/${category}`
+      : 'https://tattva-co.com/products',
     ogType: 'website',
   }),
 
@@ -359,7 +378,8 @@ export const pageSEO = {
 
   recipes: (): SEOConfig => ({
     title: 'Indian Recipes & Cooking Tips | Tattva Co.',
-    description: 'Discover authentic Indian recipes, cooking tips, and culinary inspiration. Learn to cook traditional dishes with our premium ingredients.',
+    description:
+      'Discover authentic Indian recipes, cooking tips, and culinary inspiration. Learn to cook traditional dishes with our premium ingredients.',
     keywords: ['indian recipes', 'cooking tips', 'authentic indian food', 'recipe ideas'],
     canonical: 'https://tattva-co.com/recipes',
     ogType: 'website',
@@ -367,7 +387,8 @@ export const pageSEO = {
 
   blog: (): SEOConfig => ({
     title: 'Blog - Indian Cuisine & Culture | Tattva Co.',
-    description: 'Read about Indian cuisine, spices, cooking techniques, and the cultural heritage behind our gourmet products.',
+    description:
+      'Read about Indian cuisine, spices, cooking techniques, and the cultural heritage behind our gourmet products.',
     keywords: ['indian cuisine blog', 'spice guide', 'cooking blog', 'food culture'],
     canonical: 'https://tattva-co.com/blog',
     ogType: 'website',
@@ -375,7 +396,8 @@ export const pageSEO = {
 
   about: (): SEOConfig => ({
     title: 'About Us - Our Story & Mission | Tattva Co.',
-    description: 'Learn about Tattva Co.\'s mission to bring authentic Indian gourmet products to your kitchen. Discover our commitment to quality and sustainability.',
+    description:
+      "Learn about Tattva Co.'s mission to bring authentic Indian gourmet products to your kitchen. Discover our commitment to quality and sustainability.",
     keywords: ['about tattva co', 'our story', 'indian gourmet mission'],
     canonical: 'https://tattva-co.com/about',
     ogType: 'website',
@@ -383,7 +405,8 @@ export const pageSEO = {
 
   contact: (): SEOConfig => ({
     title: 'Contact Us - Get in Touch | Tattva Co.',
-    description: 'Have questions? Contact Tattva Co. for support, inquiries, or feedback. We\'re here to help with your gourmet Indian product needs.',
+    description:
+      "Have questions? Contact Tattva Co. for support, inquiries, or feedback. We're here to help with your gourmet Indian product needs.",
     keywords: ['contact', 'customer support', 'get in touch'],
     canonical: 'https://tattva-co.com/contact',
     ogType: 'website',

@@ -5,7 +5,7 @@ export const useDarkMode = () => {
   const [darkMode, setDarkMode] = useState(() => {
     // Check if we're in a browser environment
     if (typeof window === 'undefined') return false;
-    
+
     const savedMode = localStorage.getItem('darkMode');
     if (savedMode !== null) {
       return savedMode === 'true';
@@ -16,13 +16,13 @@ export const useDarkMode = () => {
 
   useEffect(() => {
     const root = window.document.documentElement;
-    
+
     if (darkMode) {
       root.classList.add('dark');
     } else {
       root.classList.remove('dark');
     }
-    
+
     // Save preference to localStorage
     localStorage.setItem('darkMode', darkMode.toString());
   }, [darkMode]);

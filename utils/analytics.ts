@@ -3,11 +3,7 @@
 
 declare global {
   interface Window {
-    gtag?: (
-      command: string,
-      targetId: string,
-      config?: Record<string, any>
-    ) => void;
+    gtag?: (command: string, targetId: string, config?: Record<string, any>) => void;
     dataLayer?: any[];
   }
 }
@@ -55,12 +51,7 @@ export const trackPageView = (path: string, title?: string) => {
 /**
  * Track custom events
  */
-export const trackEvent = (
-  category: string,
-  action: string,
-  label?: string,
-  value?: number
-) => {
+export const trackEvent = (category: string, action: string, label?: string, value?: number) => {
   if (typeof window === 'undefined' || !window.gtag) return;
 
   window.gtag('event', action, {
@@ -256,7 +247,7 @@ export const initHotjar = (hjid: number, hjsv: number) => {
 
 /**
  * Example .env configuration:
- * 
+ *
  * VITE_GA_MEASUREMENT_ID=G-XXXXXXXXXX
  * VITE_HOTJAR_ID=1234567
  * VITE_HOTJAR_SV=6

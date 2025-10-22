@@ -17,11 +17,11 @@ export interface UseProductFilterReturn {
 
 /**
  * Custom hook for filtering and sorting products
- * 
+ *
  * @param products - Array of all products to filter
  * @param filters - Filter criteria
  * @returns {UseProductFilterReturn} Filtered and sorted products
- * 
+ *
  * @example
  * const { filteredProducts } = useProductFilter(allProducts, {
  *   category: 'Spices',
@@ -39,24 +39,25 @@ export const useProductFilter = (
 
     // Filter by category
     if (filters.category && filters.category !== 'All') {
-      result = result.filter(product => product.category === filters.category);
+      result = result.filter((product) => product.category === filters.category);
     }
 
     // Filter by search query
     if (filters.searchQuery) {
       const query = filters.searchQuery.toLowerCase();
-      result = result.filter(product =>
-        product.name.toLowerCase().includes(query) ||
-        product.description.toLowerCase().includes(query) ||
-        product.category.toLowerCase().includes(query) ||
-        product.tags.some(tag => tag.toLowerCase().includes(query))
+      result = result.filter(
+        (product) =>
+          product.name.toLowerCase().includes(query) ||
+          product.description.toLowerCase().includes(query) ||
+          product.category.toLowerCase().includes(query) ||
+          product.tags.some((tag) => tag.toLowerCase().includes(query))
       );
     }
 
     // Filter by price range
     if (filters.priceRange) {
       const [minPrice, maxPrice] = filters.priceRange;
-      result = result.filter(product => {
+      result = result.filter((product) => {
         const price = product.variants[0].salePrice ?? product.variants[0].price;
         return price >= minPrice && price <= maxPrice;
       });
@@ -64,19 +65,18 @@ export const useProductFilter = (
 
     // Filter by minimum rating
     if (filters.minRating !== undefined) {
-      result = result.filter(product => {
-        const avgRating = product.reviews.length > 0
-          ? product.reviews.reduce((sum, r) => sum + r.rating, 0) / product.reviews.length
-          : 0;
+      result = result.filter((product) => {
+        const avgRating =
+          product.reviews.length > 0
+            ? product.reviews.reduce((sum, r) => sum + r.rating, 0) / product.reviews.length
+            : 0;
         return avgRating >= filters.minRating!;
       });
     }
 
     // Filter by stock availability
     if (filters.inStockOnly) {
-      result = result.filter(product => 
-        product.variants.some(variant => variant.stock > 0)
-      );
+      result = result.filter((product) => product.variants.some((variant) => variant.stock > 0));
     }
 
     // Sort products
@@ -101,12 +101,14 @@ export const useProductFilter = (
           break;
         case 'rating':
           result.sort((a, b) => {
-            const ratingA = a.reviews.length > 0
-              ? a.reviews.reduce((sum, r) => sum + r.rating, 0) / a.reviews.length
-              : 0;
-            const ratingB = b.reviews.length > 0
-              ? b.reviews.reduce((sum, r) => sum + r.rating, 0) / b.reviews.length
-              : 0;
+            const ratingA =
+              a.reviews.length > 0
+                ? a.reviews.reduce((sum, r) => sum + r.rating, 0) / a.reviews.length
+                : 0;
+            const ratingB =
+              b.reviews.length > 0
+                ? b.reviews.reduce((sum, r) => sum + r.rating, 0) / b.reviews.length
+                : 0;
             return ratingB - ratingA;
           });
           break;
@@ -121,7 +123,7 @@ export const useProductFilter = (
 
   return {
     filteredProducts,
-    productCount: filteredProducts.length
+    productCount: filteredProducts.length,
   };
 };
 
@@ -130,7 +132,7 @@ export const useProductFilter = (
  */
 export const useCategories = (products: Product[]): string[] => {
   return useMemo(() => {
-    const categories = products.map(p => p.category);
+    const categories = products.map((p) => p.category);
     return ['All', ...Array.from(new Set(categories))];
   }, [products]);
 };
@@ -141,11 +143,11 @@ export const useCategories = (products: Product[]): string[] => {
 export const usePriceRange = (products: Product[]): [number, number] => {
   return useMemo(() => {
     if (products.length === 0) return [0, 100];
-    
-    const prices = products.map(p => p.variants[0].salePrice ?? p.variants[0].price);
+
+    const prices = products.map((p) => p.variants[0].salePrice ?? p.variants[0].price);
     const minPrice = Math.floor(Math.min(...prices));
     const maxPrice = Math.ceil(Math.max(...prices));
-    
+
     return [minPrice, maxPrice];
   }, [products]);
 };

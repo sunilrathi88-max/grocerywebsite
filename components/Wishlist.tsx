@@ -20,9 +20,11 @@ const Wishlist: React.FC<WishlistProps> = ({ items, onToggleWishlist, onAddToCar
     return (
       <div className="flex-grow flex flex-col items-center justify-center text-center">
         <HeartIcon className="h-20 w-20 text-gray-300" />
-        <h3 className="mt-4 text-xl font-serif font-bold text-brand-dark">Your Wishlist is Empty</h3>
+        <h3 className="mt-4 text-xl font-serif font-bold text-brand-dark">
+          Your Wishlist is Empty
+        </h3>
         <p className="mt-2 text-gray-500">Explore our products and save your favorites!</p>
-        <button 
+        <button
           onClick={onClose}
           className="mt-6 bg-brand-primary text-white font-bold py-3 px-6 rounded-full shadow-lg hover:bg-opacity-90 transform hover:scale-105 transition-all duration-300"
         >
@@ -34,55 +36,78 @@ const Wishlist: React.FC<WishlistProps> = ({ items, onToggleWishlist, onAddToCar
 
   return (
     <div className="h-full flex flex-col">
-        <div className="flex-grow space-y-4 pr-2 -mr-2 overflow-y-auto">
-        {items.map(item => (
-            <div key={item.id} className="flex flex-col sm:flex-row items-center justify-between border-b pb-4 last:border-b-0 last:pb-0 gap-4">
+      <div className="flex-grow space-y-4 pr-2 -mr-2 overflow-y-auto">
+        {items.map((item) => (
+          <div
+            key={item.id}
+            className="flex flex-col sm:flex-row items-center justify-between border-b pb-4 last:border-b-0 last:pb-0 gap-4"
+          >
             <div className="flex items-center gap-4 flex-grow">
-                <OptimizedImage 
-                src={item.images[0]} 
-                alt={item.name} 
-                className="w-20 h-20 object-cover rounded-md bg-gray-200" 
+              <OptimizedImage
+                src={item.images[0]}
+                alt={item.name}
+                className="w-20 h-20 object-cover rounded-md bg-gray-200"
                 type="thumbnail"
                 priority="high"
                 width={80}
                 height={80}
                 onError={imageErrorHandlers.thumb}
-                />
-                <div className="flex-grow">
+              />
+              <div className="flex-grow">
                 <p className="font-bold text-brand-dark text-lg">{item.name}</p>
-                <p className="text-xl font-bold text-brand-primary font-sans">${(item.variants[0].salePrice ?? item.variants[0].price).toFixed(2)}</p>
-                </div>
+                <p className="text-xl font-bold text-brand-primary font-sans">
+                  ${(item.variants[0].salePrice ?? item.variants[0].price).toFixed(2)}
+                </p>
+              </div>
             </div>
             <div className="flex items-center gap-4 flex-shrink-0">
-                <button 
+              <button
                 onClick={() => onAddToCart(item, item.variants[0])}
-                disabled={item.variants.every(v => v.stock === 0)}
+                disabled={item.variants.every((v) => v.stock === 0)}
                 className="flex items-center gap-2 bg-brand-primary text-white font-bold py-2 px-4 rounded-full shadow-md hover:bg-brand-primary/90 transform hover:scale-105 transition-all duration-300 disabled:bg-gray-400 disabled:cursor-not-allowed"
                 aria-label={`Add ${item.name} to cart`}
-                >
+              >
                 <PlusIcon />
                 Add to Cart
-                </button>
-                <button 
+              </button>
+              <button
                 onClick={() => onToggleWishlist(item)}
                 className="p-2 rounded-full text-red-500 hover:bg-red-100 transition-colors"
                 aria-label={`Remove ${item.name} from wishlist`}
-                >
+              >
                 <HeartIcon className="h-6 w-6 fill-current" />
-                </button>
+              </button>
             </div>
-            </div>
+          </div>
         ))}
+      </div>
+
+      <div className="mt-8 border-t pt-6 text-center">
+        <h4 className="font-bold text-brand-dark mb-4">Share Your Wishlist</h4>
+        <div className="flex justify-center items-center gap-4">
+          <a
+            href="#"
+            aria-label="Share on Facebook"
+            className="text-gray-500 hover:text-brand-dark transition-colors"
+          >
+            <FacebookIcon />
+          </a>
+          <a
+            href="#"
+            aria-label="Share on Twitter"
+            className="text-gray-500 hover:text-brand-dark transition-colors"
+          >
+            <TwitterIcon />
+          </a>
+          <a
+            href="#"
+            aria-label="Share on Pinterest"
+            className="text-gray-500 hover:text-brand-dark transition-colors"
+          >
+            <PinterestIcon />
+          </a>
         </div>
-        
-        <div className="mt-8 border-t pt-6 text-center">
-            <h4 className="font-bold text-brand-dark mb-4">Share Your Wishlist</h4>
-            <div className="flex justify-center items-center gap-4">
-                <a href="#" aria-label="Share on Facebook" className="text-gray-500 hover:text-brand-dark transition-colors"><FacebookIcon /></a>
-                <a href="#" aria-label="Share on Twitter" className="text-gray-500 hover:text-brand-dark transition-colors"><TwitterIcon /></a>
-                <a href="#" aria-label="Share on Pinterest" className="text-gray-500 hover:text-brand-dark transition-colors"><PinterestIcon /></a>
-            </div>
-        </div>
+      </div>
     </div>
   );
 };

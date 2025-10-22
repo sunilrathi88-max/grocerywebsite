@@ -25,7 +25,9 @@ const QnA: React.FC<QnAProps> = ({ qna, onAskQuestion }) => {
         <h4 className="font-bold text-brand-dark mb-4">Ask a Question</h4>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="qna-author" className="block text-sm font-medium text-gray-700">Your Name</label>
+            <label htmlFor="qna-author" className="block text-sm font-medium text-gray-700">
+              Your Name
+            </label>
             <input
               type="text"
               id="qna-author"
@@ -36,7 +38,9 @@ const QnA: React.FC<QnAProps> = ({ qna, onAskQuestion }) => {
             />
           </div>
           <div>
-            <label htmlFor="qna-question" className="block text-sm font-medium text-gray-700">Your Question</label>
+            <label htmlFor="qna-question" className="block text-sm font-medium text-gray-700">
+              Your Question
+            </label>
             <textarea
               id="qna-question"
               rows={3}
@@ -67,7 +71,9 @@ const QnA: React.FC<QnAProps> = ({ qna, onAskQuestion }) => {
                     <span className="font-bold">A:</span> {item.answer}
                   </p>
                 ) : (
-                  <p className="text-gray-400 italic pl-4 border-l-2 border-gray-200">Awaiting answer...</p>
+                  <p className="text-gray-400 italic pl-4 border-l-2 border-gray-200">
+                    Awaiting answer...
+                  </p>
                 )}
               </div>
             ))

@@ -89,7 +89,7 @@ export const preloadCriticalResources = () => {
   const heroImages = [
     '/images/hero/slide-essence.svg',
     '/images/hero/slide-saffron.svg',
-    '/images/hero/slide-spices.svg'
+    '/images/hero/slide-spices.svg',
   ];
 
   heroImages.forEach((src) => {

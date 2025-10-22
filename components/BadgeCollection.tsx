@@ -100,9 +100,10 @@ export const BadgeCollection: React.FC = () => {
 
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
 
-  const filteredBadges = selectedCategory === 'all'
-    ? badges
-    : badges.filter((badge) => badge.category === selectedCategory);
+  const filteredBadges =
+    selectedCategory === 'all'
+      ? badges
+      : badges.filter((badge) => badge.category === selectedCategory);
 
   const unlockedCount = badges.filter((b) => b.unlockedAt).length;
 
@@ -210,7 +211,11 @@ const BadgeCard: React.FC<BadgeCardProps> = ({ badge, index }) => {
         <div className="text-center">
           <div className="inline-flex items-center gap-2 bg-green-50 text-green-700 px-3 py-1 rounded-full text-xs font-medium">
             <StarIcon className="w-4 h-4" />
-            Unlocked {new Date(badge.unlockedAt!).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
+            Unlocked{' '}
+            {new Date(badge.unlockedAt!).toLocaleDateString('en-US', {
+              month: 'short',
+              year: 'numeric',
+            })}
           </div>
         </div>
       ) : (

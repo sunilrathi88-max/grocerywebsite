@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { XIcon } from './icons/XIcon';
 import { UserIcon } from './icons/UserIcon';
@@ -32,56 +31,102 @@ const AuthModal: React.FC<AuthModalProps> = ({ onClose, onLogin }) => {
             <UserIcon className="h-8 w-8 text-brand-primary" />
             <h2 className="text-xl font-serif font-bold">My Account</h2>
           </div>
-          <button onClick={onClose} className="p-2 rounded-full hover:bg-gray-200" aria-label="Close">
+          <button
+            onClick={onClose}
+            className="p-2 rounded-full hover:bg-gray-200"
+            aria-label="Close"
+          >
             <XIcon className="h-6 w-6" />
           </button>
         </div>
-        
+
         <div className="border-b border-gray-200">
-            <nav className="-mb-px flex" aria-label="Tabs">
-                <button onClick={() => setActiveTab('login')} className={`w-1/2 py-4 px-1 text-center border-b-2 font-medium text-sm ${activeTab === 'login' ? 'border-brand-primary text-brand-primary' : 'border-transparent text-gray-500 hover:text-gray-700'}`}>
-                    Login
-                </button>
-                <button onClick={() => setActiveTab('register')} className={`w-1/2 py-4 px-1 text-center border-b-2 font-medium text-sm ${activeTab === 'register' ? 'border-brand-primary text-brand-primary' : 'border-transparent text-gray-500 hover:text-gray-700'}`}>
-                    Register
-                </button>
-            </nav>
+          <nav className="-mb-px flex" aria-label="Tabs">
+            <button
+              onClick={() => setActiveTab('login')}
+              className={`w-1/2 py-4 px-1 text-center border-b-2 font-medium text-sm ${activeTab === 'login' ? 'border-brand-primary text-brand-primary' : 'border-transparent text-gray-500 hover:text-gray-700'}`}
+            >
+              Login
+            </button>
+            <button
+              onClick={() => setActiveTab('register')}
+              className={`w-1/2 py-4 px-1 text-center border-b-2 font-medium text-sm ${activeTab === 'register' ? 'border-brand-primary text-brand-primary' : 'border-transparent text-gray-500 hover:text-gray-700'}`}
+            >
+              Register
+            </button>
+          </nav>
         </div>
 
         <div className="p-6">
-            {activeTab === 'login' ? (
-                <form onSubmit={handleSimulatedAuth} className="space-y-4">
-                    <div>
-                        <label htmlFor="email-login" className="block text-sm font-medium text-gray-700">Email Address</label>
-                        <input type="email" id="email-login" defaultValue="anika.sharma@example.com" className="mt-1 input-field" required />
-                    </div>
-                    <div>
-                        <label htmlFor="password-login" className="block text-sm font-medium text-gray-700">Password</label>
-                        <input type="password" id="password-login" defaultValue="password123" className="mt-1 input-field" required />
-                    </div>
-                    <button type="submit" className="w-full bg-brand-dark text-white font-bold py-3 rounded-full shadow-lg hover:bg-opacity-90 transition-all duration-300">
-                        Login
-                    </button>
-                </form>
-            ) : (
-                <form onSubmit={handleSimulatedAuth} className="space-y-4">
-                     <div>
-                        <label htmlFor="name-register" className="block text-sm font-medium text-gray-700">Full Name</label>
-                        <input type="text" id="name-register" className="mt-1 input-field" required />
-                    </div>
-                    <div>
-                        <label htmlFor="email-register" className="block text-sm font-medium text-gray-700">Email Address</label>
-                        <input type="email" id="email-register" className="mt-1 input-field" required />
-                    </div>
-                    <div>
-                        <label htmlFor="password-register" className="block text-sm font-medium text-gray-700">Password</label>
-                        <input type="password" id="password-register" className="mt-1 input-field" required />
-                    </div>
-                    <button type="submit" className="w-full bg-brand-dark text-white font-bold py-3 rounded-full shadow-lg hover:bg-opacity-90 transition-all duration-300">
-                        Create Account
-                    </button>
-                </form>
-            )}
+          {activeTab === 'login' ? (
+            <form onSubmit={handleSimulatedAuth} className="space-y-4">
+              <div>
+                <label htmlFor="email-login" className="block text-sm font-medium text-gray-700">
+                  Email Address
+                </label>
+                <input
+                  type="email"
+                  id="email-login"
+                  defaultValue="anika.sharma@example.com"
+                  className="mt-1 input-field"
+                  required
+                />
+              </div>
+              <div>
+                <label htmlFor="password-login" className="block text-sm font-medium text-gray-700">
+                  Password
+                </label>
+                <input
+                  type="password"
+                  id="password-login"
+                  defaultValue="password123"
+                  className="mt-1 input-field"
+                  required
+                />
+              </div>
+              <button
+                type="submit"
+                className="w-full bg-brand-dark text-white font-bold py-3 rounded-full shadow-lg hover:bg-opacity-90 transition-all duration-300"
+              >
+                Login
+              </button>
+            </form>
+          ) : (
+            <form onSubmit={handleSimulatedAuth} className="space-y-4">
+              <div>
+                <label htmlFor="name-register" className="block text-sm font-medium text-gray-700">
+                  Full Name
+                </label>
+                <input type="text" id="name-register" className="mt-1 input-field" required />
+              </div>
+              <div>
+                <label htmlFor="email-register" className="block text-sm font-medium text-gray-700">
+                  Email Address
+                </label>
+                <input type="email" id="email-register" className="mt-1 input-field" required />
+              </div>
+              <div>
+                <label
+                  htmlFor="password-register"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Password
+                </label>
+                <input
+                  type="password"
+                  id="password-register"
+                  className="mt-1 input-field"
+                  required
+                />
+              </div>
+              <button
+                type="submit"
+                className="w-full bg-brand-dark text-white font-bold py-3 rounded-full shadow-lg hover:bg-opacity-90 transition-all duration-300"
+              >
+                Create Account
+              </button>
+            </form>
+          )}
         </div>
       </div>
       <style>{`

@@ -13,9 +13,9 @@ const WISHLIST_STORAGE_KEY = 'tattva_wishlist';
 
 /**
  * Custom hook for managing wishlist state with localStorage persistence
- * 
+ *
  * @returns {UseWishlistReturn} Wishlist state and methods
- * 
+ *
  * @example
  * const { wishlistItems, toggleWishlist, isInWishlist } = useWishlist();
  * toggleWishlist(product);
@@ -57,12 +57,12 @@ export const useWishlist = (): UseWishlistReturn => {
    * Toggle product in wishlist (add if not present, remove if present)
    */
   const toggleWishlist = useCallback((product: Product) => {
-    setWishlistItems(prev => {
-      const isPresent = prev.some(item => item.id === product.id);
-      
+    setWishlistItems((prev) => {
+      const isPresent = prev.some((item) => item.id === product.id);
+
       if (isPresent) {
         // Remove from wishlist
-        return prev.filter(item => item.id !== product.id);
+        return prev.filter((item) => item.id !== product.id);
       } else {
         // Add to wishlist
         return [...prev, product];
@@ -73,9 +73,12 @@ export const useWishlist = (): UseWishlistReturn => {
   /**
    * Check if a product is in the wishlist
    */
-  const isInWishlist = useCallback((productId: number): boolean => {
-    return wishlistItems.some(item => item.id === productId);
-  }, [wishlistItems]);
+  const isInWishlist = useCallback(
+    (productId: number): boolean => {
+      return wishlistItems.some((item) => item.id === productId);
+    },
+    [wishlistItems]
+  );
 
   /**
    * Clear all items from wishlist
@@ -89,6 +92,6 @@ export const useWishlist = (): UseWishlistReturn => {
     wishlistItemCount,
     toggleWishlist,
     isInWishlist,
-    clearWishlist
+    clearWishlist,
   };
 };

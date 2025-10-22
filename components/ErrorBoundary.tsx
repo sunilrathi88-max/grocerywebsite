@@ -23,7 +23,7 @@ class ErrorBoundary extends React.Component<Props, State> {
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error("Uncaught error:", error, errorInfo);
+    console.error('Uncaught error:', error, errorInfo);
     // In a real app, you would log this to an error reporting service
   }
 
@@ -36,9 +36,12 @@ class ErrorBoundary extends React.Component<Props, State> {
       return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-brand-accent p-8 text-center">
           <AlertTriangleIcon className="h-20 w-20 text-red-500 mb-6" />
-          <h1 className="text-4xl font-serif font-bold text-brand-dark">Oops! Something went wrong.</h1>
+          <h1 className="text-4xl font-serif font-bold text-brand-dark">
+            Oops! Something went wrong.
+          </h1>
           <p className="mt-4 text-lg text-gray-600 max-w-lg">
-            We've encountered an unexpected issue. Our team has been notified. Please try refreshing the page.
+            We've encountered an unexpected issue. Our team has been notified. Please try refreshing
+            the page.
           </p>
           <button
             onClick={this.handleRefresh}

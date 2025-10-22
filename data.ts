@@ -4,11 +4,9 @@ export const MOCK_PRODUCTS: Product[] = [
   {
     id: 1,
     name: 'Himalayan Saffron',
-    description: 'The finest, hand-picked saffron from the valleys of Kashmir. Known for its deep red color, strong aroma, and rich flavor. Perfect for biryanis, desserts, and milk-based sweets.',
-    images: [
-      '/images/products/saffron-1.svg',
-      '/images/products/saffron-2.svg',
-    ],
+    description:
+      'The finest, hand-picked saffron from the valleys of Kashmir. Known for its deep red color, strong aroma, and rich flavor. Perfect for biryanis, desserts, and milk-based sweets.',
+    images: ['/images/products/saffron-1.svg', '/images/products/saffron-2.svg'],
     videos: ['https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4'],
     category: 'Spices',
     variants: [
@@ -16,10 +14,29 @@ export const MOCK_PRODUCTS: Product[] = [
       { id: 102, name: '5g', price: 65.99, stock: 8 },
     ],
     reviews: [
-      { id: 1, author: 'Priya K.', rating: 5, comment: 'Absolutely divine! The aroma filled my kitchen. Best saffron I have ever used.', verifiedPurchase: true },
-      { id: 2, author: 'Raj S.', rating: 5, comment: 'Top quality product. Worth every penny.', verifiedPurchase: true },
+      {
+        id: 1,
+        author: 'Priya K.',
+        rating: 5,
+        comment: 'Absolutely divine! The aroma filled my kitchen. Best saffron I have ever used.',
+        verifiedPurchase: true,
+      },
+      {
+        id: 2,
+        author: 'Raj S.',
+        rating: 5,
+        comment: 'Top quality product. Worth every penny.',
+        verifiedPurchase: true,
+      },
     ],
-    qna: [{ id: 1, author: 'Amit', question: 'Is this Grade A saffron?', answer: 'Yes, this is Grade A Mongra saffron, which is the highest quality available.' }],
+    qna: [
+      {
+        id: 1,
+        author: 'Amit',
+        question: 'Is this Grade A saffron?',
+        answer: 'Yes, this is Grade A Mongra saffron, which is the highest quality available.',
+      },
+    ],
     nutrition: [{ key: 'Rich in', value: 'Antioxidants' }],
     origin: 'Kashmir, India',
     tags: ['Premium', 'Aromatic'],
@@ -27,48 +44,70 @@ export const MOCK_PRODUCTS: Product[] = [
   {
     id: 2,
     name: 'Malabar Black Pepper',
-    description: 'Bold and pungent Tellicherry peppercorns from the Malabar Coast of Kerala. Sun-dried and hand-sorted to ensure only the best make it to your table.',
-    images: [
-      '/images/products/pepper-1.svg',
-      '/images/products/pepper-2.svg',
-    ],
+    description:
+      'Bold and pungent Tellicherry peppercorns from the Malabar Coast of Kerala. Sun-dried and hand-sorted to ensure only the best make it to your table.',
+    images: ['/images/products/pepper-1.svg', '/images/products/pepper-2.svg'],
     category: 'Spices',
     variants: [{ id: 201, name: '250g', price: 8.99, stock: 30 }],
-    reviews: [{ id: 3, author: 'Chef Maria', rating: 5, comment: 'As a chef, I can tell the difference. This is the real deal.', verifiedPurchase: false }],
+    reviews: [
+      {
+        id: 3,
+        author: 'Chef Maria',
+        rating: 5,
+        comment: 'As a chef, I can tell the difference. This is the real deal.',
+        verifiedPurchase: false,
+      },
+    ],
     origin: 'Kerala, India',
     tags: ['Single-Origin'],
   },
   {
     id: 3,
     name: 'Kashmiri Almonds',
-    description: 'Sweet, nutrient-rich Mamra almonds from the Kashmir valley. They are smaller than their Californian counterparts but packed with more flavor and natural oils.',
-    images: [
-      '/images/products/almonds-1.svg',
-      '/images/products/almonds-2.svg',
-    ],
+    description:
+      'Sweet, nutrient-rich Mamra almonds from the Kashmir valley. They are smaller than their Californian counterparts but packed with more flavor and natural oils.',
+    images: ['/images/products/almonds-1.svg', '/images/products/almonds-2.svg'],
     category: 'Nuts',
     variants: [
-        { id: 301, name: '500g', price: 22.50, stock: 20 },
-        { id: 302, name: '1kg', price: 40.00, stock: 10 }
+      { id: 301, name: '500g', price: 22.5, stock: 20 },
+      { id: 302, name: '1kg', price: 40.0, stock: 10 },
     ],
-    reviews: [{ id: 4, author: 'Anjali P.', rating: 5, comment: 'So delicious and crunchy. You can taste the quality.', verifiedPurchase: true }],
+    reviews: [
+      {
+        id: 4,
+        author: 'Anjali P.',
+        rating: 5,
+        comment: 'So delicious and crunchy. You can taste the quality.',
+        verifiedPurchase: true,
+      },
+    ],
     nutrition: [{ key: 'High in', value: 'Vitamin E & Protein' }],
     origin: 'Kashmir, India',
     tags: ['Premium', 'Gluten-Free'],
   },
-   {
+  {
     id: 4,
     name: 'Organic Turmeric Powder',
-    description: 'Vibrant, earthy, and potent turmeric powder with high curcumin content, sourced from organic farms in Andhra Pradesh. A staple for curries and a healthy boost for lattes.',
-    images: [
-      '/images/products/turmeric-1.svg',
-      '/images/products/turmeric-2.svg',
-    ],
+    description:
+      'Vibrant, earthy, and potent turmeric powder with high curcumin content, sourced from organic farms in Andhra Pradesh. A staple for curries and a healthy boost for lattes.',
+    images: ['/images/products/turmeric-1.svg', '/images/products/turmeric-2.svg'],
     category: 'Spices',
     variants: [{ id: 401, name: '200g', price: 6.99, stock: 5 }],
     reviews: [
-      { id: 5, author: 'John D.', rating: 5, comment: 'The color and smell are so much richer than store-bought turmeric. Excellent!', verifiedPurchase: true },
-      { id: 6, author: 'Emily R.', rating: 4, comment: 'Great product, makes a wonderful turmeric latte.', verifiedPurchase: true },
+      {
+        id: 5,
+        author: 'John D.',
+        rating: 5,
+        comment: 'The color and smell are so much richer than store-bought turmeric. Excellent!',
+        verifiedPurchase: true,
+      },
+      {
+        id: 6,
+        author: 'Emily R.',
+        rating: 4,
+        comment: 'Great product, makes a wonderful turmeric latte.',
+        verifiedPurchase: true,
+      },
     ],
     nutrition: [{ key: 'High in', value: 'Curcumin' }],
     origin: 'Andhra Pradesh, India',
@@ -77,41 +116,59 @@ export const MOCK_PRODUCTS: Product[] = [
   {
     id: 5,
     name: 'Darjeeling First Flush Tea',
-    description: 'The "Champagne of Teas" from the first harvest of the season in Darjeeling. This tea has a light, floral aroma with a hint of astringency and a muscatel finish.',
-    images: [
-      '/images/products/tea-1.svg',
-      '/images/products/tea-2.svg',
-    ],
+    description:
+      'The "Champagne of Teas" from the first harvest of the season in Darjeeling. This tea has a light, floral aroma with a hint of astringency and a muscatel finish.',
+    images: ['/images/products/tea-1.svg', '/images/products/tea-2.svg'],
     category: 'Beverages',
-    variants: [{ id: 501, name: '100g', price: 19.99, salePrice: 17.50, stock: 25 }],
-    reviews: [{ id: 7, author: 'Sophie L.', rating: 5, comment: 'An exquisite tea. Delicate and so refreshing.', verifiedPurchase: true }],
+    variants: [{ id: 501, name: '100g', price: 19.99, salePrice: 17.5, stock: 25 }],
+    reviews: [
+      {
+        id: 7,
+        author: 'Sophie L.',
+        rating: 5,
+        comment: 'An exquisite tea. Delicate and so refreshing.',
+        verifiedPurchase: true,
+      },
+    ],
     origin: 'Darjeeling, India',
     tags: ['Premium', 'Single-Origin'],
   },
   {
     id: 6,
     name: 'Gourmet Garam Masala',
-    description: 'Our signature blend of 12 aromatic spices, including cinnamon, cardamom, and cloves, roasted and ground in small batches for the perfect, balanced flavor profile.',
-    images: [
-      '/images/products/masala-1.svg',
-      '/images/products/masala-2.svg',
-    ],
+    description:
+      'Our signature blend of 12 aromatic spices, including cinnamon, cardamom, and cloves, roasted and ground in small batches for the perfect, balanced flavor profile.',
+    images: ['/images/products/masala-1.svg', '/images/products/masala-2.svg'],
     category: 'Spices',
-    variants: [{ id: 601, name: '100g', price: 9.50, stock: 40 }],
-    reviews: [{ id: 8, author: 'David C.', rating: 5, comment: 'This has elevated my home cooking. I put it in everything!', verifiedPurchase: true }],
-    qna: [{id: 2, author: 'Lisa', question: 'Is this very spicy/hot?', answer: 'Our Garam Masala is aromatic and flavorful, not primarily hot. The heat level is mild.'}],
+    variants: [{ id: 601, name: '100g', price: 9.5, stock: 40 }],
+    reviews: [
+      {
+        id: 8,
+        author: 'David C.',
+        rating: 5,
+        comment: 'This has elevated my home cooking. I put it in everything!',
+        verifiedPurchase: true,
+      },
+    ],
+    qna: [
+      {
+        id: 2,
+        author: 'Lisa',
+        question: 'Is this very spicy/hot?',
+        answer:
+          'Our Garam Masala is aromatic and flavorful, not primarily hot. The heat level is mild.',
+      },
+    ],
     tags: ['Aromatic', 'House Blend'],
   },
   {
     id: 7,
     name: 'Organic Dried Apricots',
-    description: 'Sun-dried, unsulphured apricots from Ladakh. These are naturally sweet, chewy, and packed with fiber and vitamins. A perfect healthy snack.',
-    images: [
-      '/images/products/apricots-1.svg',
-      '/images/products/apricots-2.svg',
-    ],
+    description:
+      'Sun-dried, unsulphured apricots from Ladakh. These are naturally sweet, chewy, and packed with fiber and vitamins. A perfect healthy snack.',
+    images: ['/images/products/apricots-1.svg', '/images/products/apricots-2.svg'],
     category: 'Dry Fruits',
-    variants: [{ id: 701, name: '400g', price: 14.00, stock: 18 }],
+    variants: [{ id: 701, name: '400g', price: 14.0, stock: 18 }],
     reviews: [],
     origin: 'Ladakh, India',
     tags: ['Organic', 'Gluten-Free'],
@@ -119,17 +176,23 @@ export const MOCK_PRODUCTS: Product[] = [
   {
     id: 8,
     name: 'Goan Cashew Nuts',
-    description: 'Large, creamy, and crunchy W240 grade cashew nuts from the sunny orchards of Goa. Perfectly roasted and lightly salted to bring out their natural sweetness.',
-    images: [
-      '/images/products/cashews-1.svg',
-      '/images/products/cashews-2.svg',
-    ],
+    description:
+      'Large, creamy, and crunchy W240 grade cashew nuts from the sunny orchards of Goa. Perfectly roasted and lightly salted to bring out their natural sweetness.',
+    images: ['/images/products/cashews-1.svg', '/images/products/cashews-2.svg'],
     category: 'Nuts',
     variants: [
       { id: 801, name: '250g', price: 11.99, stock: 0 },
       { id: 802, name: '500g', price: 20.99, stock: 0 },
     ],
-    reviews: [{ id: 9, author: 'Michael B.', rating: 5, comment: 'Best cashews I have ever had. So fresh and crunchy.', verifiedPurchase: true }],
+    reviews: [
+      {
+        id: 9,
+        author: 'Michael B.',
+        rating: 5,
+        comment: 'Best cashews I have ever had. So fresh and crunchy.',
+        verifiedPurchase: true,
+      },
+    ],
     origin: 'Goa, India',
     tags: ['Premium'],
   },
@@ -141,58 +204,94 @@ export const MOCK_USER: User = {
   email: 'anika.sharma@example.com',
   isAdmin: true,
   addresses: [
-    { id: 1, type: 'Shipping', street: '42, Lotus Boulevard', city: 'Mumbai', state: 'MH', zip: '400001', country: 'India', isDefault: true },
-    { id: 2, type: 'Billing', street: '15, Park Avenue', city: 'Delhi', state: 'DL', zip: '110001', country: 'India' },
-  ]
+    {
+      id: 1,
+      type: 'Shipping',
+      street: '42, Lotus Boulevard',
+      city: 'Mumbai',
+      state: 'MH',
+      zip: '400001',
+      country: 'India',
+      isDefault: true,
+    },
+    {
+      id: 2,
+      type: 'Billing',
+      street: '15, Park Avenue',
+      city: 'Delhi',
+      state: 'DL',
+      zip: '110001',
+      country: 'India',
+    },
+  ],
 };
 
 export const MOCK_ORDERS: Order[] = [
-    {
-        id: 'TC1001-2024',
-        date: '2024-05-15T10:00:00Z',
-        items: [
-            { product: MOCK_PRODUCTS[0], selectedVariant: MOCK_PRODUCTS[0].variants[0], quantity: 1 },
-            { product: MOCK_PRODUCTS[1], selectedVariant: MOCK_PRODUCTS[1].variants[0], quantity: 2 },
-        ],
-        total: 40.97,
-        status: 'Delivered',
-        shippingAddress: MOCK_USER.addresses[0],
-        billingAddress: MOCK_USER.addresses[0],
-        deliveryMethod: 'Standard',
-        paymentMethod: 'Credit Card',
-        shippingCost: 5.00,
-    },
-    {
-        id: 'TC1002-2024',
-        date: '2024-06-01T14:30:00Z',
-        items: [
-            { product: MOCK_PRODUCTS[4], selectedVariant: MOCK_PRODUCTS[4].variants[0], quantity: 1 },
-        ],
-        total: 22.50,
-        status: 'Shipped',
-        shippingAddress: MOCK_USER.addresses[0],
-        billingAddress: MOCK_USER.addresses[0],
-        deliveryMethod: 'Standard',
-        paymentMethod: 'PayPal',
-        shippingCost: 5.00,
-    }
+  {
+    id: 'TC1001-2024',
+    date: '2024-05-15T10:00:00Z',
+    items: [
+      { product: MOCK_PRODUCTS[0], selectedVariant: MOCK_PRODUCTS[0].variants[0], quantity: 1 },
+      { product: MOCK_PRODUCTS[1], selectedVariant: MOCK_PRODUCTS[1].variants[0], quantity: 2 },
+    ],
+    total: 40.97,
+    status: 'Delivered',
+    shippingAddress: MOCK_USER.addresses[0],
+    billingAddress: MOCK_USER.addresses[0],
+    deliveryMethod: 'Standard',
+    paymentMethod: 'Credit Card',
+    shippingCost: 5.0,
+  },
+  {
+    id: 'TC1002-2024',
+    date: '2024-06-01T14:30:00Z',
+    items: [
+      { product: MOCK_PRODUCTS[4], selectedVariant: MOCK_PRODUCTS[4].variants[0], quantity: 1 },
+    ],
+    total: 22.5,
+    status: 'Shipped',
+    shippingAddress: MOCK_USER.addresses[0],
+    billingAddress: MOCK_USER.addresses[0],
+    deliveryMethod: 'Standard',
+    paymentMethod: 'PayPal',
+    shippingCost: 5.0,
+  },
 ];
 
 export const MOCK_TESTIMONIALS: Testimonial[] = [
-    { id: 1, name: 'Aarav Chen', quote: 'Tattva Co. has completely transformed my cooking. The freshness and quality of the spices are unparalleled.', rating: 5 },
-    { id: 2, name: 'Isabelle Rodriguez', quote: 'I ordered the Himalayan Saffron and it was magical. The packaging is beautiful and the product is even better. Highly recommend!', rating: 5 },
-    { id: 3, name: 'Ben Carter', quote: 'Fast shipping and incredible customer service. The Malabar Pepper has a kick I haven\'t found anywhere else.', rating: 4 },
+  {
+    id: 1,
+    name: 'Aarav Chen',
+    quote:
+      'Tattva Co. has completely transformed my cooking. The freshness and quality of the spices are unparalleled.',
+    rating: 5,
+  },
+  {
+    id: 2,
+    name: 'Isabelle Rodriguez',
+    quote:
+      'I ordered the Himalayan Saffron and it was magical. The packaging is beautiful and the product is even better. Highly recommend!',
+    rating: 5,
+  },
+  {
+    id: 3,
+    name: 'Ben Carter',
+    quote:
+      "Fast shipping and incredible customer service. The Malabar Pepper has a kick I haven't found anywhere else.",
+    rating: 4,
+  },
 ];
 
 export const MOCK_POSTS: BlogPost[] = [
   {
     id: 1,
     slug: 'the-secret-to-perfect-biryani',
-    title: 'The Secret to Perfect Biryani: It\'s All in the Saffron',
+    title: "The Secret to Perfect Biryani: It's All in the Saffron",
     author: 'Anika Sharma',
     date: 'July 15, 2024',
     image: '/images/blog/biryani.svg',
-    excerpt: 'Unlock the secrets to a truly aromatic and flavorful biryani. We dive deep into why high-quality saffron, like our Himalayan variety, is the game-changer you need in your kitchen.',
+    excerpt:
+      'Unlock the secrets to a truly aromatic and flavorful biryani. We dive deep into why high-quality saffron, like our Himalayan variety, is the game-changer you need in your kitchen.',
     content: `
       <p>Biryani is more than just a dish; it's a celebration. And at the heart of every great biryani is the quality of its ingredients. While the blend of spices is crucial, the one element that elevates it from good to unforgettable is saffron.</p>
       <p>Our <strong>Tattva Co. Himalayan Saffron</strong> is sourced from the pristine valleys of Kashmir, where it is hand-picked and carefully dried to preserve its potent aroma, vibrant color, and distinct flavor. A few strands are enough to infuse your entire dish with a golden hue and a fragrance that is simply intoxicating.</p>
@@ -214,7 +313,8 @@ export const MOCK_POSTS: BlogPost[] = [
     author: 'Rohan Gupta',
     date: 'June 28, 2024',
     image: '/images/blog/pepper.svg',
-    excerpt: 'Think all pepper is the same? Think again. We explore the bold, complex flavors of Tellicherry peppercorns from the Malabar Coast and why they deserve a prime spot in your spice rack.',
+    excerpt:
+      'Think all pepper is the same? Think again. We explore the bold, complex flavors of Tellicherry peppercorns from the Malabar Coast and why they deserve a prime spot in your spice rack.',
     content: `
       <p>Pepper is one of the most common spices in the world, but it's often overlooked. We're here to change that. The <strong>Tattva Co. Malabar Black Pepper</strong> features Tellicherry peppercorns, the largest and most aromatic of all peppercorns.</p>
       <p>Grown on the lush Malabar Coast in Kerala, these peppercorns are left on the vine longer to develop a deep, rich, and complex flavor profile with notes of citrus and pine. When you grind it fresh, the difference is undeniable.</p>
@@ -225,17 +325,16 @@ export const MOCK_POSTS: BlogPost[] = [
   },
 ];
 
-
 export const MOCK_ANALYTICS = {
-    totalRevenue: 12543.50,
-    totalOrders: 320,
-    uniqueCustomers: 180,
-    salesData: [
-        { name: 'Jan', sales: 1200 },
-        { name: 'Feb', sales: 1800 },
-        { name: 'Mar', sales: 1500 },
-        { name: 'Apr', sales: 2500 },
-        { name: 'May', sales: 2100 },
-        { name: 'Jun', sales: 3443.50 },
-    ]
+  totalRevenue: 12543.5,
+  totalOrders: 320,
+  uniqueCustomers: 180,
+  salesData: [
+    { name: 'Jan', sales: 1200 },
+    { name: 'Feb', sales: 1800 },
+    { name: 'Mar', sales: 1500 },
+    { name: 'Apr', sales: 2500 },
+    { name: 'May', sales: 2100 },
+    { name: 'Jun', sales: 3443.5 },
+  ],
 };

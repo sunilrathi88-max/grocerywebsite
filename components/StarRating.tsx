@@ -14,18 +14,18 @@ export const StarRating: React.FC<StarRatingProps> = ({
   size = 'md',
   showNumber = false,
   interactive = false,
-  onRate
+  onRate,
 }) => {
   const sizeClasses = {
     sm: 'h-3 w-3',
     md: 'h-4 w-4',
-    lg: 'h-5 w-5'
+    lg: 'h-5 w-5',
   };
 
   const textSizeClasses = {
     sm: 'text-xs',
     md: 'text-sm',
-    lg: 'text-base'
+    lg: 'text-base',
   };
 
   const [hoverRating, setHoverRating] = React.useState<number | null>(null);
@@ -55,7 +55,7 @@ export const StarRating: React.FC<StarRatingProps> = ({
       <div className="flex items-center gap-0.5">
         {[1, 2, 3, 4, 5].map((value) => {
           const fillPercentage = Math.min(Math.max(displayRating - (value - 1), 0), 1) * 100;
-          
+
           return (
             <div
               key={value}
@@ -66,17 +66,15 @@ export const StarRating: React.FC<StarRatingProps> = ({
             >
               {/* Background (empty) star */}
               <StarIcon className={`${sizeClasses[size]} text-gray-300`} />
-              
+
               {/* Foreground (filled) star */}
               <div
                 className="absolute inset-0 overflow-hidden"
                 style={{ width: `${fillPercentage}%` }}
               >
-                <StarIcon 
+                <StarIcon
                   className={`${sizeClasses[size]} ${
-                    interactive && hoverRating !== null 
-                      ? 'text-yellow-400' 
-                      : 'text-yellow-500'
+                    interactive && hoverRating !== null ? 'text-yellow-400' : 'text-yellow-500'
                   }`}
                 />
               </div>
@@ -84,7 +82,7 @@ export const StarRating: React.FC<StarRatingProps> = ({
           );
         })}
       </div>
-      
+
       {showNumber && (
         <span className={`font-medium text-gray-700 ml-1 ${textSizeClasses[size]}`}>
           {rating.toFixed(1)}

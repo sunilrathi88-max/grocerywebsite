@@ -92,10 +92,10 @@ export interface Order {
 }
 // FIX: Added Testimonial interface to be shared across components.
 export interface Testimonial {
-    id: number;
-    name: string;
-    quote: string;
-    rating: number;
+  id: number;
+  name: string;
+  quote: string;
+  rating: number;
 }
 
 export interface BlogPost {

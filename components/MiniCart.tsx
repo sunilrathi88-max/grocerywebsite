@@ -20,19 +20,30 @@ const MiniCart: React.FC<MiniCartProps> = ({ items, subtotal }) => {
         <>
           <h4 className="font-bold text-brand-dark mb-3">Your Cart</h4>
           <div className="space-y-3 max-h-60 overflow-y-auto pr-2 -mr-2">
-            {items.map(item => (
-              <div key={`${item.product.id}-${item.selectedVariant.id}`} className="flex items-center gap-3">
-                <img 
-                  src={item.product.images[0]} 
+            {items.map((item) => (
+              <div
+                key={`${item.product.id}-${item.selectedVariant.id}`}
+                className="flex items-center gap-3"
+              >
+                <img
+                  src={item.product.images[0]}
                   alt={item.product.name}
                   className="w-12 h-12 object-cover rounded-md flex-shrink-0"
                   onError={imageErrorHandlers.thumb}
                 />
                 <div className="flex-grow min-w-0">
                   <p className="text-sm font-bold truncate">{item.product.name}</p>
-                  <p className="text-xs text-gray-500">{item.quantity} x ${(item.selectedVariant.salePrice ?? item.selectedVariant.price).toFixed(2)}</p>
+                  <p className="text-xs text-gray-500">
+                    {item.quantity} x $
+                    {(item.selectedVariant.salePrice ?? item.selectedVariant.price).toFixed(2)}
+                  </p>
                 </div>
-                <p className="text-sm font-bold flex-shrink-0">${(item.quantity * (item.selectedVariant.salePrice ?? item.selectedVariant.price)).toFixed(2)}</p>
+                <p className="text-sm font-bold flex-shrink-0">
+                  $
+                  {(
+                    item.quantity * (item.selectedVariant.salePrice ?? item.selectedVariant.price)
+                  ).toFixed(2)}
+                </p>
               </div>
             ))}
           </div>
@@ -41,8 +52,8 @@ const MiniCart: React.FC<MiniCartProps> = ({ items, subtotal }) => {
               <span>Subtotal:</span>
               <span>${subtotal.toFixed(2)}</span>
             </div>
-            <a 
-              href="#/checkout" 
+            <a
+              href="#/checkout"
               className="mt-3 block w-full text-center bg-brand-primary text-white font-bold py-2 rounded-full shadow-lg hover:bg-opacity-90 transition-all text-sm"
             >
               Checkout

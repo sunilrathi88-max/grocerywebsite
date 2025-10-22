@@ -17,31 +17,34 @@ const Hero: React.FC = () => {
   const slides: HeroSlide[] = [
     {
       id: 1,
-      title: "The Essence of India",
-      subtitle: "Premium Organic Spices",
-      description: "Experience authentic flavors from the Himalayan valleys to the Malabar coast. Hand-picked, ethically sourced.",
-      buttonText: "Explore Collection",
-      image: "/images/hero/slide-essence.svg",
-      gradient: "from-amber-600/90 via-orange-700/90 to-red-800/90"
+      title: 'The Essence of India',
+      subtitle: 'Premium Organic Spices',
+      description:
+        'Experience authentic flavors from the Himalayan valleys to the Malabar coast. Hand-picked, ethically sourced.',
+      buttonText: 'Explore Collection',
+      image: '/images/hero/slide-essence.svg',
+      gradient: 'from-amber-600/90 via-orange-700/90 to-red-800/90',
     },
     {
       id: 2,
-      title: "Himalayan Saffron",
+      title: 'Himalayan Saffron',
       subtitle: "World's Finest Grade A",
-      description: "Pure Kashmiri Mongra saffron. Hand-harvested at dawn for maximum potency and aroma.",
-      buttonText: "Shop Saffron",
-      image: "/images/hero/slide-saffron.svg",
-      gradient: "from-purple-600/90 via-pink-700/90 to-red-700/90"
+      description:
+        'Pure Kashmiri Mongra saffron. Hand-harvested at dawn for maximum potency and aroma.',
+      buttonText: 'Shop Saffron',
+      image: '/images/hero/slide-saffron.svg',
+      gradient: 'from-purple-600/90 via-pink-700/90 to-red-700/90',
     },
     {
       id: 3,
-      title: "Artisan Collections",
-      subtitle: "Rare Indian Ingredients",
-      description: "Discover heritage spices and ingredients passed down through generations of Indian artisans.",
-      buttonText: "Browse Recipes",
-      image: "/images/hero/slide-spices.svg",
-      gradient: "from-green-600/90 via-teal-700/90 to-cyan-800/90"
-    }
+      title: 'Artisan Collections',
+      subtitle: 'Rare Indian Ingredients',
+      description:
+        'Discover heritage spices and ingredients passed down through generations of Indian artisans.',
+      buttonText: 'Browse Recipes',
+      image: '/images/hero/slide-spices.svg',
+      gradient: 'from-green-600/90 via-teal-700/90 to-cyan-800/90',
+    },
   ];
 
   const settings = {
@@ -72,7 +75,7 @@ const Hero: React.FC = () => {
           <div key={slide.id}>
             <div className="relative h-[500px] md:h-[600px] lg:h-[650px]">
               {/* Background Image */}
-              <div 
+              <div
                 className="absolute inset-0 bg-cover bg-center"
                 style={{ backgroundImage: `url('${slide.image}')` }}
               >
@@ -91,7 +94,10 @@ const Hero: React.FC = () => {
                     </div>
 
                     {/* Title */}
-                    <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-6 leading-tight drop-shadow-2xl" style={{ fontFamily: "'Playfair Display', serif" }}>
+                    <h1
+                      className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-6 leading-tight drop-shadow-2xl"
+                      style={{ fontFamily: "'Playfair Display', serif" }}
+                    >
                       {slide.title}
                     </h1>
 
@@ -106,8 +112,18 @@ const Hero: React.FC = () => {
                       className="group relative inline-flex items-center gap-2 bg-white text-gray-900 font-bold text-base md:text-lg py-4 px-8 md:px-10 rounded-full shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300 ease-out overflow-hidden"
                     >
                       <span className="relative z-10">{slide.buttonText}</span>
-                      <svg className="relative z-10 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      <svg
+                        className="relative z-10 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M9 5l7 7-7 7"
+                        />
                       </svg>
                       <div className="absolute inset-0 bg-gradient-to-r from-brand-primary to-amber-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </button>

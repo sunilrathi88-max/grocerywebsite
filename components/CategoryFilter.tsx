@@ -6,10 +6,14 @@ interface CategoryFilterProps {
   onSelectCategory: (category: string) => void;
 }
 
-const CategoryFilter: React.FC<CategoryFilterProps> = ({ categories, selectedCategory, onSelectCategory }) => {
+const CategoryFilter: React.FC<CategoryFilterProps> = ({
+  categories,
+  selectedCategory,
+  onSelectCategory,
+}) => {
   return (
     <div className="flex justify-center flex-wrap gap-2 sm:gap-4 mb-8">
-      {categories.map(category => (
+      {categories.map((category) => (
         <button
           key={category}
           onClick={() => onSelectCategory(category)}

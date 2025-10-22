@@ -38,19 +38,18 @@ const Toast: React.FC<ToastProps> = ({ toast, onClose }) => {
   return (
     <motion.div
       // FIX: Wrapped framer-motion props in a spread object to resolve TypeScript errors.
-      {...{
+      {...({
         layout: true,
         initial: { opacity: 0, y: 50, scale: 0.3 },
         animate: { opacity: 1, y: 0, scale: 1 },
         exit: { opacity: 0, scale: 0.5, transition: { duration: 0.2 } },
-        className: "max-w-sm w-full bg-white shadow-lg rounded-lg pointer-events-auto ring-1 ring-black ring-opacity-5 overflow-hidden"
-      } as any}
+        className:
+          'max-w-sm w-full bg-white shadow-lg rounded-lg pointer-events-auto ring-1 ring-black ring-opacity-5 overflow-hidden',
+      } as any)}
     >
       <div className="p-4">
         <div className="flex items-start">
-          <div className="flex-shrink-0">
-            {getIcon()}
-          </div>
+          <div className="flex-shrink-0">{getIcon()}</div>
           <div className="ml-3 w-0 flex-1 pt-0.5">
             <p className="text-sm font-medium text-brand-dark">{toast.message}</p>
           </div>

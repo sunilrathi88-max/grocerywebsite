@@ -30,7 +30,13 @@ export const LoyaltyPointsTracker: React.FC = () => {
   const [history, setHistory] = useState<PointsHistory[]>([
     { id: '1', date: '2024-01-15', description: 'Purchase #1234', points: 150, type: 'earned' },
     { id: '2', date: '2024-01-10', description: 'Product Review', points: 50, type: 'earned' },
-    { id: '3', date: '2024-01-08', description: '10% Discount Redeemed', points: -200, type: 'redeemed' },
+    {
+      id: '3',
+      date: '2024-01-08',
+      description: '10% Discount Redeemed',
+      points: -200,
+      type: 'redeemed',
+    },
     { id: '4', date: '2024-01-05', description: 'Purchase #1233', points: 220, type: 'earned' },
     { id: '5', date: '2024-01-01', description: 'Welcome Bonus', points: 100, type: 'earned' },
   ]);
@@ -47,18 +53,34 @@ export const LoyaltyPointsTracker: React.FC = () => {
   const tierBenefits = {
     Bronze: ['1 point per $1', 'Birthday reward', 'Exclusive sales'],
     Silver: ['1.5 points per $1', 'Free shipping', 'Early access', 'Birthday reward'],
-    Gold: ['2 points per $1', 'Priority support', 'Free shipping', 'Early access', 'Surprise gifts'],
-    Platinum: ['2.5 points per $1', 'VIP events', 'Priority support', 'Free shipping', 'Personal shopper'],
+    Gold: [
+      '2 points per $1',
+      'Priority support',
+      'Free shipping',
+      'Early access',
+      'Surprise gifts',
+    ],
+    Platinum: [
+      '2.5 points per $1',
+      'VIP events',
+      'Priority support',
+      'Free shipping',
+      'Personal shopper',
+    ],
   };
 
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       {/* Points Overview Card */}
-      <div className={`bg-gradient-to-br ${tierColors[points.tier]} text-white rounded-2xl p-8 shadow-xl`}>
+      <div
+        className={`bg-gradient-to-br ${tierColors[points.tier]} text-white rounded-2xl p-8 shadow-xl`}
+      >
         <div className="flex items-center justify-between mb-6">
           <div>
             <h2 className="text-3xl font-bold mb-1">{points.current.toLocaleString()} Points</h2>
-            <p className="text-white/80 text-sm">Lifetime: {points.lifetime.toLocaleString()} points</p>
+            <p className="text-white/80 text-sm">
+              Lifetime: {points.lifetime.toLocaleString()} points
+            </p>
           </div>
           <div className="bg-white/20 backdrop-blur-sm rounded-full px-6 py-3">
             <SparklesIcon className="w-6 h-6 inline mr-2" />
@@ -69,7 +91,10 @@ export const LoyaltyPointsTracker: React.FC = () => {
         {/* Progress to Next Tier */}
         <div>
           <div className="flex items-center justify-between mb-2 text-sm">
-            <span>Progress to {points.tier === 'Bronze' ? 'Silver' : points.tier === 'Silver' ? 'Gold' : 'Platinum'}</span>
+            <span>
+              Progress to{' '}
+              {points.tier === 'Bronze' ? 'Silver' : points.tier === 'Silver' ? 'Gold' : 'Platinum'}
+            </span>
             <span>{progressToNextTier}%</span>
           </div>
           <div className="bg-white/20 rounded-full h-3 overflow-hidden">

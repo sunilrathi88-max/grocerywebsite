@@ -20,14 +20,14 @@ interface OptimizedImageProps {
 
 /**
  * OptimizedImage Component
- * 
+ *
  * Features:
  * - WebP support with fallback
  * - Responsive images with srcSet
  * - Lazy loading with IntersectionObserver
  * - Blur-up effect during load
  * - Error handling with fallback
- * 
+ *
  * @example
  * <OptimizedImage
  *   src="/images/product.jpg"
@@ -102,21 +102,14 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
     <picture>
       {/* WebP source for modern browsers */}
       {!hasError && imageConfig.webpSrcSet && isInView && (
-        <source
-          type="image/webp"
-          srcSet={imageConfig.webpSrcSet}
-          sizes={imageConfig.sizes}
-        />
+        <source type="image/webp" srcSet={imageConfig.webpSrcSet} sizes={imageConfig.sizes} />
       )}
-      
+
       {/* Standard format fallback */}
       {!hasError && imageConfig.srcSet && isInView && (
-        <source
-          srcSet={imageConfig.srcSet}
-          sizes={imageConfig.sizes}
-        />
+        <source srcSet={imageConfig.srcSet} sizes={imageConfig.sizes} />
       )}
-      
+
       {/* Main image element */}
       <img
         ref={imgRef}
