@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Product, Variant } from '../types';
 import { OptimizedImage } from './OptimizedImage';
+import { PLACEHOLDER_URLS, imageErrorHandlers } from '../utils/imageHelpers';
 import { PlusIcon } from './icons/PlusIcon';
 import { HeartIcon } from './icons/HeartIcon';
 import { StarIcon } from './icons/StarIcon';
@@ -33,14 +34,9 @@ const ProductCard: React.FC<ProductCardProps> = ({
   console.log('ProductCard props:', product);
   console.log('Product images array:', product.images);
 
-  const placeholderImage = 'https://via.placeholder.com/400x400/F8E3D9/333333?text=Tattva+Co.';
-  // Guarantee a branded fallback if remote assets fail to load.
-  const handleImageError = (event: React.SyntheticEvent<HTMLImageElement>) => {
-    const img = event.currentTarget;
-    if (img.src !== placeholderImage) {
-      img.src = placeholderImage;
-    }
-  };
+  const placeholderImage = PLACEHOLDER_URLS.product;
+  // Use shared image error handler to swap to local fallback
+  const handleImageError = imageErrorHandlers.product;
 
   const averageRating =
     product.reviews.length > 0
@@ -72,6 +68,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
             type="card"
             priority="auto"
             fallbackSrc={placeholderImage}
+            onError={handleImageError}
             width={400}
             height={300}
           />

@@ -38,8 +38,10 @@ interface ProductDetailModalProps {
   onNotifyMe: (productName: string) => void;
 }
 
-const PLACEHOLDER_THUMB = 'https://via.placeholder.com/100x100/F8E3D9/333333?text=Tattva+Co.';
-const PLACEHOLDER_IMAGE = 'https://via.placeholder.com/600x600/F8E3D9/333333?text=Tattva+Co.';
+import { PLACEHOLDER_URLS, imageErrorHandlers } from '../utils/imageHelpers';
+
+const PLACEHOLDER_THUMB = PLACEHOLDER_URLS.thumb;
+const PLACEHOLDER_IMAGE = PLACEHOLDER_URLS.product;
 
 // Mock data for "Frequently Bought Together"
 const FBT_MOCK: { [key: number]: number[] } = {
@@ -72,19 +74,9 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
   const [isStickyButtonVisible, setStickyButtonVisible] = useState(false);
 
   // Image error handlers
-  const handleMainImageError = (event: React.SyntheticEvent<HTMLImageElement>) => {
-    const img = event.currentTarget;
-    if (img.src !== PLACEHOLDER_IMAGE) {
-      img.src = PLACEHOLDER_IMAGE;
-    }
-  };
+  const handleMainImageError = imageErrorHandlers.product;
 
-  const handleThumbImageError = (event: React.SyntheticEvent<HTMLImageElement>) => {
-    const img = event.currentTarget;
-    if (img.src !== PLACEHOLDER_THUMB) {
-      img.src = PLACEHOLDER_THUMB;
-    }
-  };
+  const handleThumbImageError = imageErrorHandlers.thumb;
 
   const mainButtonRef = useRef<HTMLButtonElement>(null);
 
