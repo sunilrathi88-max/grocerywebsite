@@ -172,10 +172,7 @@ describe('ProductCard', () => {
     it('should show "From" prefix when multiple variants exist', () => {
       const productMultipleVariants = {
         ...mockProduct,
-        variants: [
-          mockVariant,
-          { id: 2, name: '200g', price: 499, stock: 5 },
-        ],
+        variants: [mockVariant, { id: 2, name: '200g', price: 499, stock: 5 }],
       };
 
       render(

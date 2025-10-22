@@ -72,7 +72,7 @@ describe('useWishlist', () => {
       // Should initialize with empty array and not crash
       expect(result.current.wishlistItems).toEqual([]);
       // Console.error might or might not be called depending on JSON.parse error handling
-      
+
       consoleSpy.mockRestore();
       localStorage.getItem = originalGetItem;
     });
@@ -123,11 +123,7 @@ describe('useWishlist', () => {
       });
 
       expect(result.current.wishlistItems).toHaveLength(3);
-      expect(result.current.wishlistItems).toEqual([
-        mockProduct1,
-        mockProduct2,
-        mockProduct3,
-      ]);
+      expect(result.current.wishlistItems).toEqual([mockProduct1, mockProduct2, mockProduct3]);
     });
 
     it('should only remove specified product', () => {
@@ -329,7 +325,7 @@ describe('useWishlist', () => {
     it('should handle localStorage errors gracefully when saving', () => {
       const { result } = renderHook(() => useWishlist());
       const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
-      
+
       // Temporarily break setItem
       const originalSetItem = localStorage.setItem;
       localStorage.setItem = jest.fn().mockImplementation(() => {
@@ -343,7 +339,7 @@ describe('useWishlist', () => {
       // Should not crash - wishlist state should still update in memory
       expect(result.current.wishlistItems).toHaveLength(1);
       // Console.error might be called depending on error handling
-      
+
       consoleSpy.mockRestore();
       localStorage.setItem = originalSetItem;
     });

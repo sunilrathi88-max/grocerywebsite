@@ -439,12 +439,12 @@ describe('useCart', () => {
       // Quantity is only capped when updating existing items
       // This test documents current behavior - should be fixed in hook
       expect(result.current.cartItems[0].quantity).toBe(5);
-      
+
       // But updating should cap to stock
       act(() => {
         result.current.updateQuantity(mockProduct.id, outOfStockVariant.id, 10);
       });
-      
+
       expect(result.current.cartItems[0].quantity).toBe(0);
     });
 

@@ -55,6 +55,22 @@ export default [
         require: 'readonly',
         __dirname: 'readonly',
         __filename: 'readonly',
+        HTMLImageElement: 'readonly',
+        HTMLMetaElement: 'readonly',
+        HTMLLinkElement: 'readonly',
+        HTMLScriptElement: 'readonly',
+        HTMLInputElement: 'readonly',
+        HTMLTextAreaElement: 'readonly',
+        HTMLSelectElement: 'readonly',
+        HTMLFormElement: 'readonly',
+        HTMLButtonElement: 'readonly',
+        HTMLDivElement: 'readonly',
+        HTMLAnchorElement: 'readonly',
+        Image: 'readonly',
+        PerformanceObserver: 'readonly',
+        NodeJS: 'readonly',
+        React: 'readonly',
+        alert: 'readonly',
       },
     },
     plugins: {
@@ -82,6 +98,42 @@ export default [
       react: {
         version: 'detect',
       },
+    },
+  },
+  // Test files configuration
+  {
+    files: ['**/__tests__/**/*', '**/*.test.{ts,tsx}', '**/*.spec.{ts,tsx}', 'jest.setup.ts'],
+    languageOptions: {
+      globals: {
+        jest: 'readonly',
+        describe: 'readonly',
+        it: 'readonly',
+        expect: 'readonly',
+        beforeEach: 'readonly',
+        afterEach: 'readonly',
+        beforeAll: 'readonly',
+        afterAll: 'readonly',
+        test: 'readonly',
+        global: 'readonly',
+      },
+    },
+  },
+  // Node scripts configuration
+  {
+    files: ['scripts/**/*.{js,cjs}'],
+    languageOptions: {
+      globals: {
+        console: 'readonly',
+        process: 'readonly',
+        require: 'readonly',
+        module: 'readonly',
+        __dirname: 'readonly',
+        document: 'readonly',
+      },
+    },
+    rules: {
+      '@typescript-eslint/no-require-imports': 'off',
+      'no-console': 'off',
     },
   },
   {

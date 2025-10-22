@@ -113,9 +113,7 @@ describe('Cart', () => {
       render(<Cart {...defaultProps} items={[]} subtotal={0} />);
 
       expect(screen.getByText('Your Cart is Empty')).toBeInTheDocument();
-      expect(
-        screen.getByText('Add some delicious products to get started.')
-      ).toBeInTheDocument();
+      expect(screen.getByText('Add some delicious products to get started.')).toBeInTheDocument();
     });
 
     it('should show Continue Shopping button in empty cart', () => {
