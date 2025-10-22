@@ -79,14 +79,7 @@ const App: React.FC = () => {
   usePerformanceMonitoring();
 
   // Custom hooks for cart, wishlist, and filtering
-  const {
-    cartItems,
-    cartItemCount: _cartItemCount,
-    subtotal,
-    addToCart,
-    updateQuantity,
-    clearCart,
-  } = useCart();
+  const { cartItems, subtotal, addToCart, updateQuantity, clearCart } = useCart();
 
   const { wishlistItems, wishlistItemCount, toggleWishlist, isInWishlist } = useWishlist();
 

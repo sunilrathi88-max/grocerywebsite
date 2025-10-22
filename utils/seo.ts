@@ -16,7 +16,7 @@ export interface SEOConfig {
   nofollow?: boolean;
 }
 
-export interface ProductStructuredData {
+export interface ProductStructuredData extends Record<string, unknown> {
   '@context': string;
   '@type': 'Product';
   name: string;
@@ -52,7 +52,7 @@ export interface ProductStructuredData {
   }>;
 }
 
-export interface OrganizationStructuredData {
+export interface OrganizationStructuredData extends Record<string, unknown> {
   '@context': string;
   '@type': 'Organization';
   name: string;

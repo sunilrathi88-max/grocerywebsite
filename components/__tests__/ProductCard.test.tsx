@@ -5,6 +5,7 @@ import ProductCard from '../ProductCard';
 import { Product, Variant } from '../../types';
 
 // Mock framer-motion to avoid animation issues in tests
+/* eslint-disable @typescript-eslint/no-explicit-any */
 jest.mock('framer-motion', () => ({
   motion: {
     button: ({ children, onClick, className, ...props }: any) => (
@@ -27,6 +28,7 @@ jest.mock('../OptimizedImage', () => ({
     />
   ),
 }));
+/* eslint-enable @typescript-eslint/no-explicit-any */
 
 describe('ProductCard', () => {
   // Mock functions

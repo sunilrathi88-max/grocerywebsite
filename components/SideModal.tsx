@@ -24,10 +24,12 @@ const SideModal: React.FC<SideModalProps> = ({ isOpen, onClose, title, children 
 
   return (
     <AnimatePresence>
+      {/* eslint-disable @typescript-eslint/no-explicit-any */}
       {isOpen && [
         <motion.div
           key="backdrop"
           // FIX: Wrapped framer-motion props in a spread object to resolve TypeScript error.
+
           {...({
             initial: { opacity: 0 },
             animate: { opacity: 1 },
@@ -41,6 +43,7 @@ const SideModal: React.FC<SideModalProps> = ({ isOpen, onClose, title, children 
         <motion.div
           key="modal"
           // FIX: Wrapped framer-motion props in a spread object to resolve TypeScript error.
+
           {...({
             initial: { x: '100%' },
             animate: { x: '0%' },
@@ -68,6 +71,7 @@ const SideModal: React.FC<SideModalProps> = ({ isOpen, onClose, title, children 
           <div className="flex-grow overflow-y-auto p-6">{children}</div>
         </motion.div>,
       ]}
+      {/* eslint-enable @typescript-eslint/no-explicit-any */}
     </AnimatePresence>
   );
 };

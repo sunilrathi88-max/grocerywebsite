@@ -123,6 +123,7 @@ const Cart: React.FC<CartProps> = ({
                     exit={{ opacity: 0, x: 20, height: 0 }}
                     transition={{ duration: 0.3 }}
                     layout
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     {...({} as any)}
                   >
                     <div className="flex items-center gap-4">
@@ -158,6 +159,7 @@ const Cart: React.FC<CartProps> = ({
                         </div>
                       ) : (
                         <>
+                          {/* eslint-disable @typescript-eslint/no-explicit-any */}
                           <motion.button
                             onClick={() => handleQuantityChange(item, item.quantity - 1)}
                             className="p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
@@ -193,6 +195,7 @@ const Cart: React.FC<CartProps> = ({
                           >
                             <TrashIcon />
                           </motion.button>
+                          {/* eslint-enable @typescript-eslint/no-explicit-any */}
                         </>
                       )}
                     </div>

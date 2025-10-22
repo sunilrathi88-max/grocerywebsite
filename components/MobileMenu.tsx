@@ -73,11 +73,13 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
             className: 'fixed inset-0 bg-black bg-opacity-50 z-[80]',
             onClick: onClose,
             'aria-hidden': 'true',
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
           } as any)}
         />,
         <motion.div
           key="menu"
           // FIX: Wrapped framer-motion props in a spread object to resolve TypeScript error.
+
           {...({
             initial: 'hidden',
             animate: 'visible',
@@ -89,6 +91,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
             role: 'dialog',
             'aria-modal': 'true',
             'aria-labelledby': 'mobile-menu-title',
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
           } as any)}
         >
           <div className="flex items-center justify-between p-4 border-b">
@@ -119,6 +122,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
               <motion.a
                 key={link.name}
                 // FIX: Wrapped framer-motion props in a spread object to resolve TypeScript error.
+
                 {...({
                   custom: i,
                   variants: navItemVariants,
@@ -129,6 +133,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
                   className:
                     'text-2xl font-serif text-brand-dark hover:text-brand-primary transition-colors',
                   onClick: onClose,
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 } as any)}
               >
                 {link.name}
