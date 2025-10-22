@@ -10,31 +10,43 @@ interface ComparisonModalProps {
 }
 
 const ComparisonModal: React.FC<ComparisonModalProps> = ({ items, onClose }) => {
-    
   const getAverageRating = (product: Product) => {
     if (product.reviews.length === 0) return { avg: 0, count: 0 };
     const total = product.reviews.reduce((acc, r) => acc + r.rating, 0);
     return { avg: total / product.reviews.length, count: product.reviews.length };
   };
-  
+
   const features = [
-    { name: 'Price', getValue: (p: Product) => `$${(p.variants[0].salePrice ?? p.variants[0].price).toFixed(2)}` },
-    { name: 'Rating', getValue: (p: Product) => {
+    {
+      name: 'Price',
+      getValue: (p: Product) => `$${(p.variants[0].salePrice ?? p.variants[0].price).toFixed(2)}`,
+    },
+    {
+      name: 'Rating',
+      getValue: (p: Product) => {
         const rating = getAverageRating(p);
         if (rating.count === 0) return <span className="text-gray-400">N/A</span>;
         return (
-            <div className="flex items-center gap-1">
-                <StarIcon className="w-5 h-5 text-yellow-400" />
-                <span>{rating.avg.toFixed(1)} ({rating.count})</span>
-            </div>
+          <div className="flex items-center gap-1">
+            <StarIcon className="w-5 h-5 text-yellow-400" />
+            <span>
+              {rating.avg.toFixed(1)} ({rating.count})
+            </span>
+          </div>
         );
-    }},
-    { name: 'Stock', getValue: (p: Product) => {
+      },
+    },
+    {
+      name: 'Stock',
+      getValue: (p: Product) => {
         const totalStock = p.variants.reduce((sum, v) => sum + v.stock, 0);
-        return totalStock > 0 
-            ? <span className="text-green-600 font-bold">In Stock</span> 
-            : <span className="text-red-500 font-bold">Out of Stock</span>;
-    }},
+        return totalStock > 0 ? (
+          <span className="text-green-600 font-bold">In Stock</span>
+        ) : (
+          <span className="text-red-500 font-bold">Out of Stock</span>
+        );
+      },
+    },
     { name: 'Category', getValue: (p: Product) => p.category },
     { name: 'Origin', getValue: (p: Product) => p.origin || 'N/A' },
     { name: 'Tags', getValue: (p: Product) => (p.tags || []).join(', ') || 'None' },
@@ -53,7 +65,11 @@ const ComparisonModal: React.FC<ComparisonModalProps> = ({ items, onClose }) => 
       >
         <div className="flex justify-between items-center p-4 border-b">
           <h2 className="text-2xl font-serif font-bold text-brand-dark">Compare Products</h2>
-          <button onClick={onClose} className="p-2 rounded-full hover:bg-gray-200" aria-label="Close">
+          <button
+            onClick={onClose}
+            className="p-2 rounded-full hover:bg-gray-200"
+            aria-label="Close"
+          >
             <XIcon className="h-6 w-6" />
           </button>
         </div>
@@ -63,19 +79,24 @@ const ComparisonModal: React.FC<ComparisonModalProps> = ({ items, onClose }) => 
             <thead className="sticky top-0 bg-white shadow-sm">
               <tr>
                 <th className="p-4 font-bold w-1/5">Feature</th>
-                {items.map(item => (
+                {items.map((item) => (
                   <th key={item.id} className="p-4 text-center">
-                    <img src={item.images[0]} alt={item.name} className="w-24 h-24 object-cover mx-auto rounded-md" onError={imageErrorHandlers.thumb} />
+                    <img
+                      src={item.images[0]}
+                      alt={item.name}
+                      className="w-24 h-24 object-cover mx-auto rounded-md"
+                      onError={imageErrorHandlers.thumb}
+                    />
                     <p className="font-bold mt-2 text-brand-dark">{item.name}</p>
                   </th>
                 ))}
               </tr>
             </thead>
             <tbody className="divide-y">
-              {features.map(feature => (
+              {features.map((feature) => (
                 <tr key={feature.name} className="hover:bg-brand-secondary/20">
                   <td className="p-4 font-semibold text-gray-600">{feature.name}</td>
-                  {items.map(item => (
+                  {items.map((item) => (
                     <td key={item.id} className="p-4 text-center">
                       {feature.getValue(item)}
                     </td>

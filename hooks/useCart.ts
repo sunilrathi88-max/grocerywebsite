@@ -15,9 +15,9 @@ export interface UseCartReturn {
 
 /**
  * Custom hook for managing shopping cart state and operations
- * 
+ *
  * @returns {UseCartReturn} Cart state and methods
- * 
+ *
  * @example
  * const { cartItems, addToCart, subtotal } = useCart();
  * addToCart(product, variant, 2);
@@ -37,10 +37,11 @@ export const useCart = (): UseCartReturn => {
    * Calculate cart subtotal
    */
   const subtotal = useMemo(
-    () => cartItems.reduce((total, item) => {
-      const price = item.selectedVariant.salePrice ?? item.selectedVariant.price;
-      return total + price * item.quantity;
-    }, 0),
+    () =>
+      cartItems.reduce((total, item) => {
+        const price = item.selectedVariant.salePrice ?? item.selectedVariant.price;
+        return total + price * item.quantity;
+      }, 0),
     [cartItems]
   );
 
@@ -48,20 +49,20 @@ export const useCart = (): UseCartReturn => {
    * Add product to cart or update quantity if already exists
    */
   const addToCart = useCallback((product: Product, variant: Variant, quantity: number = 1) => {
-    setCartItems(prevItems => {
+    setCartItems((prevItems) => {
       const existingItem = prevItems.find(
-        item => item.product.id === product.id && item.selectedVariant.id === variant.id
+        (item) => item.product.id === product.id && item.selectedVariant.id === variant.id
       );
-      
+
       if (existingItem) {
         // Update quantity, respecting stock limits
-        return prevItems.map(item =>
+        return prevItems.map((item) =>
           item.product.id === product.id && item.selectedVariant.id === variant.id
             ? { ...item, quantity: Math.min(item.quantity + quantity, variant.stock) }
             : item
         );
       }
-      
+
       // Add new item
       return [...prevItems, { product, selectedVariant: variant, quantity }];
     });
@@ -71,25 +72,32 @@ export const useCart = (): UseCartReturn => {
    * Remove product from cart completely
    */
   const removeFromCart = useCallback((productId: number, variantId: number) => {
-    setCartItems(prev => 
-      prev.filter(item => !(item.product.id === productId && item.selectedVariant.id === variantId))
+    setCartItems((prev) =>
+      prev.filter(
+        (item) => !(item.product.id === productId && item.selectedVariant.id === variantId)
+      )
     );
   }, []);
 
   /**
    * Update quantity of a cart item (or remove if quantity <= 0)
    */
-  const updateQuantity = useCallback((productId: number, variantId: number, quantity: number) => {
-    if (quantity <= 0) {
-      removeFromCart(productId, variantId);
-    } else {
-      setCartItems(prev => prev.map(item =>
-        item.product.id === productId && item.selectedVariant.id === variantId
-          ? { ...item, quantity: Math.min(quantity, item.selectedVariant.stock) }
-          : item
-      ));
-    }
-  }, [removeFromCart]);
+  const updateQuantity = useCallback(
+    (productId: number, variantId: number, quantity: number) => {
+      if (quantity <= 0) {
+        removeFromCart(productId, variantId);
+      } else {
+        setCartItems((prev) =>
+          prev.map((item) =>
+            item.product.id === productId && item.selectedVariant.id === variantId
+              ? { ...item, quantity: Math.min(quantity, item.selectedVariant.stock) }
+              : item
+          )
+        );
+      }
+    },
+    [removeFromCart]
+  );
 
   /**
    * Clear all items from cart
@@ -101,21 +109,27 @@ export const useCart = (): UseCartReturn => {
   /**
    * Check if a product variant is in the cart
    */
-  const isInCart = useCallback((productId: number, variantId: number): boolean => {
-    return cartItems.some(
-      item => item.product.id === productId && item.selectedVariant.id === variantId
-    );
-  }, [cartItems]);
+  const isInCart = useCallback(
+    (productId: number, variantId: number): boolean => {
+      return cartItems.some(
+        (item) => item.product.id === productId && item.selectedVariant.id === variantId
+      );
+    },
+    [cartItems]
+  );
 
   /**
    * Get quantity of a specific product variant in cart
    */
-  const getCartItemQuantity = useCallback((productId: number, variantId: number): number => {
-    const item = cartItems.find(
-      item => item.product.id === productId && item.selectedVariant.id === variantId
-    );
-    return item?.quantity ?? 0;
-  }, [cartItems]);
+  const getCartItemQuantity = useCallback(
+    (productId: number, variantId: number): number => {
+      const item = cartItems.find(
+        (item) => item.product.id === productId && item.selectedVariant.id === variantId
+      );
+      return item?.quantity ?? 0;
+    },
+    [cartItems]
+  );
 
   return {
     cartItems,
@@ -126,6 +140,6 @@ export const useCart = (): UseCartReturn => {
     updateQuantity,
     clearCart,
     isInCart,
-    getCartItemQuantity
+    getCartItemQuantity,
   };
 };

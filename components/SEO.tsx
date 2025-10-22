@@ -8,9 +8,9 @@ interface SEOProps extends SEOConfig {
 
 /**
  * SEO Component
- * 
+ *
  * Manages meta tags, Open Graph, Twitter Cards, and structured data for a page
- * 
+ *
  * @example
  * <SEO
  *   title="Product Name"

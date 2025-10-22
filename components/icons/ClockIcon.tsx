@@ -16,4 +16,3 @@ export const ClockIcon: React.FC<{ className?: string }> = ({ className = 'h-6 w
     />
   </svg>
 );
-

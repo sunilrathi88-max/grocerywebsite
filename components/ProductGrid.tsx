@@ -15,16 +15,16 @@ interface ProductGridProps {
   onNotifyMe: (productName: string) => void;
 }
 
-const ProductGrid: React.FC<ProductGridProps> = ({ 
-  products, 
-  onAddToCart, 
-  onToggleWishlist, 
-  wishlistedIds, 
+const ProductGrid: React.FC<ProductGridProps> = ({
+  products,
+  onAddToCart,
+  onToggleWishlist,
+  wishlistedIds,
   onSelectProduct,
   onToggleCompare,
   comparisonIds,
   isLoading,
-  onNotifyMe
+  onNotifyMe,
 }) => {
   // Debugging log as requested
   console.log('Product grid data:', products);
@@ -41,31 +41,31 @@ const ProductGrid: React.FC<ProductGridProps> = ({
     );
   }
 
-  if(products.length === 0) {
+  if (products.length === 0) {
     return (
-        <div className="text-center py-20 animate-fade-in-up">
-            <div className="max-w-md mx-auto">
-              <div className="text-6xl mb-4">🔍</div>
-              <h3 className="text-3xl font-serif font-bold text-gray-900 mb-2">No Products Found</h3>
-              <p className="text-lg text-gray-500">Try adjusting your filters or search query.</p>
-            </div>
+      <div className="text-center py-20 animate-fade-in-up">
+        <div className="max-w-md mx-auto">
+          <div className="text-6xl mb-4">🔍</div>
+          <h3 className="text-3xl font-serif font-bold text-gray-900 mb-2">No Products Found</h3>
+          <p className="text-lg text-gray-500">Try adjusting your filters or search query.</p>
         </div>
+      </div>
     );
   }
-  
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
       {products.map((product, index) => (
         <div key={product.id} className={`animate-fade-in-up stagger-${(index % 6) + 1}`}>
-          <ProductCard 
-              product={product} 
-              onAddToCart={onAddToCart} 
-              onToggleWishlist={onToggleWishlist}
-              isWishlisted={wishlistedIds.has(product.id)}
-              onSelectProduct={onSelectProduct}
-              onToggleCompare={onToggleCompare}
-              isCompared={comparisonIds.has(product.id)}
-              onNotifyMe={onNotifyMe}
+          <ProductCard
+            product={product}
+            onAddToCart={onAddToCart}
+            onToggleWishlist={onToggleWishlist}
+            isWishlisted={wishlistedIds.has(product.id)}
+            onSelectProduct={onSelectProduct}
+            onToggleCompare={onToggleCompare}
+            isCompared={comparisonIds.has(product.id)}
+            onNotifyMe={onNotifyMe}
           />
         </div>
       ))}

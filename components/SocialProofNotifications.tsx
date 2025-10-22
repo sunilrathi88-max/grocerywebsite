@@ -11,14 +11,33 @@ interface PurchaseNotification {
 
 // Mock data - in production, this would come from real purchase events
 const MOCK_CITIES = [
-  'Mumbai', 'Delhi', 'Bangalore', 'Hyderabad', 'Chennai', 'Kolkata',
-  'Pune', 'Ahmedabad', 'Jaipur', 'Lucknow', 'Chandigarh', 'Kochi'
+  'Mumbai',
+  'Delhi',
+  'Bangalore',
+  'Hyderabad',
+  'Chennai',
+  'Kolkata',
+  'Pune',
+  'Ahmedabad',
+  'Jaipur',
+  'Lucknow',
+  'Chandigarh',
+  'Kochi',
 ];
 
 const PRODUCT_NAMES = [
-  'Premium Saffron', 'Kashmiri Chili', 'Turmeric Powder', 'Cardamom',
-  'Black Pepper', 'Cinnamon Sticks', 'Cloves', 'Bay Leaves',
-  'Cashews', 'Almonds', 'Pistachios', 'Dried Figs'
+  'Premium Saffron',
+  'Kashmiri Chili',
+  'Turmeric Powder',
+  'Cardamom',
+  'Black Pepper',
+  'Cinnamon Sticks',
+  'Cloves',
+  'Bay Leaves',
+  'Cashews',
+  'Almonds',
+  'Pistachios',
+  'Dried Figs',
 ];
 
 export const SocialProofNotifications: React.FC = () => {
@@ -32,9 +51,12 @@ export const SocialProofNotifications: React.FC = () => {
     }, 3000);
 
     // Then show notifications every 10-15 seconds
-    const interval = setInterval(() => {
-      showNotification();
-    }, Math.random() * 5000 + 10000); // 10-15 seconds
+    const interval = setInterval(
+      () => {
+        showNotification();
+      },
+      Math.random() * 5000 + 10000
+    ); // 10-15 seconds
 
     return () => {
       clearTimeout(initialDelay);
@@ -47,11 +69,11 @@ export const SocialProofNotifications: React.FC = () => {
       id: nextId,
       productName: PRODUCT_NAMES[Math.floor(Math.random() * PRODUCT_NAMES.length)],
       location: MOCK_CITIES[Math.floor(Math.random() * MOCK_CITIES.length)],
-      timeAgo: Math.floor(Math.random() * 30 + 1) + ' minutes ago'
+      timeAgo: Math.floor(Math.random() * 30 + 1) + ' minutes ago',
     };
 
-    setNotifications(prev => [...prev, notification]);
-    setNextId(prev => prev + 1);
+    setNotifications((prev) => [...prev, notification]);
+    setNextId((prev) => prev + 1);
 
     // Auto-dismiss after 5 seconds
     setTimeout(() => {
@@ -60,7 +82,7 @@ export const SocialProofNotifications: React.FC = () => {
   };
 
   const dismissNotification = (id: number) => {
-    setNotifications(prev => prev.filter(n => n.id !== id));
+    setNotifications((prev) => prev.filter((n) => n.id !== id));
   };
 
   return (
@@ -78,7 +100,8 @@ export const SocialProofNotifications: React.FC = () => {
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-sm font-medium text-gray-900">
-                Someone in <span className="font-bold text-brand-primary">{notification.location}</span>
+                Someone in{' '}
+                <span className="font-bold text-brand-primary">{notification.location}</span>
               </p>
               <p className="text-sm text-gray-600 truncate">
                 purchased <span className="font-semibold">{notification.productName}</span>
@@ -95,7 +118,7 @@ export const SocialProofNotifications: React.FC = () => {
           </div>
         </div>
       ))}
-      
+
       <style>{`
         @keyframes slide-in-left {
           from {

@@ -15,27 +15,27 @@ module.exports = {
         'total-blocking-time': ['error', { maxNumericValue: 300 }],
         'max-potential-fid': ['error', { maxNumericValue: 100 }],
         'speed-index': ['error', { maxNumericValue: 3400 }],
-        'interactive': ['error', { maxNumericValue: 3800 }],
-        
+        interactive: ['error', { maxNumericValue: 3800 }],
+
         // Performance budgets
         'resource-summary:script:size': ['error', { maxNumericValue: 500000 }],
         'resource-summary:stylesheet:size': ['error', { maxNumericValue: 100000 }],
         'resource-summary:image:size': ['error', { maxNumericValue: 2000000 }],
         'resource-summary:font:size': ['error', { maxNumericValue: 150000 }],
         'resource-summary:total:size': ['error', { maxNumericValue: 3000000 }],
-        
+
         // Accessibility
         'categories:accessibility': ['error', { minScore: 0.9 }],
-        
+
         // Best practices
         'categories:best-practices': ['error', { minScore: 0.9 }],
-        
+
         // SEO
         'categories:seo': ['error', { minScore: 0.9 }],
-        
+
         // PWA
         'categories:pwa': ['warn', { minScore: 0.5 }],
-        
+
         // Other metrics
         'uses-long-cache-ttl': 'off',
         'uses-optimized-images': 'off',
