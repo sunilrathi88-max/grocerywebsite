@@ -235,7 +235,7 @@ describe('Cart', () => {
 
       const plusButtons = screen.getAllByRole('button', { name: '' }).filter((btn) => {
         const svg = btn.querySelector('svg');
-        return svg && btn.disabled;
+        return svg && (btn as HTMLButtonElement).disabled;
       });
 
       expect(plusButtons.length).toBeGreaterThan(0);

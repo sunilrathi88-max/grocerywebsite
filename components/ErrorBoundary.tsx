@@ -1,7 +1,7 @@
 import React, { ErrorInfo, PropsWithChildren } from 'react';
 import { AlertTriangleIcon } from './icons/AlertTriangleIcon';
 
-type Props = PropsWithChildren<Record<string, never>>;
+type Props = PropsWithChildren<object>;
 
 interface State {
   hasError: boolean;
