@@ -32,9 +32,9 @@ const ExitIntentModal: React.FC<ExitIntentModalProps> = ({ onClose, onApplyPromo
           <XIcon className="h-6 w-6" />
         </button>
         <GiftIcon className="h-16 w-16 text-brand-primary" />
-        <h2 className="text-3xl font-serif font-bold mt-4">Wait, Don't Go!</h2>
+        <h2 className="text-3xl font-serif font-bold mt-4">Wait, Don&apos;t Go!</h2>
         <p className="text-gray-600 mt-2">
-          You've got great taste. Complete your order now and enjoy{' '}
+          You&apos;ve got great taste. Complete your order now and enjoy{' '}
           <span className="font-bold">15% off</span> on us!
         </p>
         <div className="mt-6 w-full">

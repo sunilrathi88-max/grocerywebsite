@@ -155,7 +155,7 @@ const QuizModule: React.FC<QuizModuleProps> = ({ addToast }) => {
         <div className="mb-6">
           {result.score === questions.length && (
             <p className="text-xl text-green-600 font-bold mb-2">
-              🎉 Perfect Score! You're a Spice Master!
+              🎉 Perfect Score! You&apos;re a Spice Master!
             </p>
           )}
           {result.score >= questions.length - 2 && result.score < questions.length && (

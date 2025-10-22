@@ -10,9 +10,10 @@ const PrivacyPolicyPage: React.FC = () => {
         <p>Last updated: {new Date().toLocaleDateString()}</p>
 
         <p>
-          Tattva Co. ("us", "we", or "our") operates the Tattva Co. website (the "Service"). This
-          page informs you of our policies regarding the collection, use, and disclosure of personal
-          data when you use our Service and the choices you have associated with that data.
+          Tattva Co. (&quot;us&quot;, &quot;we&quot;, or &quot;our&quot;) operates the Tattva Co.
+          website (the &quot;Service&quot;). This page informs you of our policies regarding the
+          collection, use, and disclosure of personal data when you use our Service and the choices
+          you have associated with that data.
         </p>
 
         <h3>1. Information Collection and Use</h3>

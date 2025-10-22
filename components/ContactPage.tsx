@@ -14,7 +14,7 @@ const ContactPage: React.FC = () => {
       <div className="text-center mb-12">
         <h2 className="text-3xl md:text-4xl font-serif font-bold text-brand-dark">Get in Touch</h2>
         <p className="mt-4 text-lg text-gray-600">
-          We'd love to hear from you. Please fill out the form below or contact us directly.
+          We&apos;d love to hear from you. Please fill out the form below or contact us directly.
         </p>
       </div>
 
