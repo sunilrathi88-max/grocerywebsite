@@ -174,8 +174,6 @@ const Header: React.FC<HeaderProps> = ({
                       <li key={category}>
                         <button
                           onClick={() => {
-                            console.log('Category clicked:', category);
-
                             // Close dropdown immediately
                             setProductsOpen(false);
 
@@ -187,13 +185,6 @@ const Header: React.FC<HeaderProps> = ({
                             const needsNavigation =
                               currentHash !== '#/' && currentHash !== '' && currentHash !== '#';
 
-                            console.log(
-                              'Current hash:',
-                              currentHash,
-                              'Needs navigation:',
-                              needsNavigation
-                            );
-
                             if (needsNavigation) {
                               // Navigate to home page first
                               window.location.hash = '#/';
@@ -203,15 +194,12 @@ const Header: React.FC<HeaderProps> = ({
                             const scrollDelay = needsNavigation ? 500 : 150;
                             setTimeout(() => {
                               const productsSection = document.getElementById('products-section');
-                              console.log('Products section found:', !!productsSection);
 
                               if (productsSection) {
                                 const headerOffset = 100;
                                 const elementPosition = productsSection.getBoundingClientRect().top;
                                 const offsetPosition =
                                   elementPosition + window.pageYOffset - headerOffset;
-
-                                console.log('Scrolling to:', offsetPosition);
 
                                 window.scrollTo({
                                   top: offsetPosition,

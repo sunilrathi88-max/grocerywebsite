@@ -30,10 +30,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
   isCompared,
   onNotifyMe,
 }) => {
-  // Debugging logs as requested
-  console.log('ProductCard props:', product);
-  console.log('Product images array:', product.images);
-
   const placeholderImage = PLACEHOLDER_URLS.product;
   // Use shared image error handler to swap to local fallback
   const handleImageError = imageErrorHandlers.product;

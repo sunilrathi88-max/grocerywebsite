@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { applySEO, SEOConfig, addStructuredData, removeStructuredData } from '../utils/seo';
 
 interface SEOProps extends SEOConfig {
-  structuredData?: any;
+  structuredData?: Record<string, unknown>;
   structuredDataId?: string;
 }
 

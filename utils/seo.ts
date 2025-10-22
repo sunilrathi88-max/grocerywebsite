@@ -148,7 +148,7 @@ export const updateCanonical = (url: string): void => {
 /**
  * Add structured data (JSON-LD)
  */
-export const addStructuredData = (data: any, id?: string): void => {
+export const addStructuredData = (data: Record<string, unknown>, id?: string): void => {
   if (typeof document === 'undefined') return;
 
   const scriptId = id || 'structured-data';

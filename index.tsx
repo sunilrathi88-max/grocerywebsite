@@ -9,7 +9,6 @@ import './animations.css';
 const gaId = (import.meta as any).env?.VITE_GA_MEASUREMENT_ID;
 if (gaId && gaId !== 'G-XXXXXXXXXX') {
   initGA(gaId);
-  console.log('📊 Google Analytics initialized');
 }
 
 // Add smooth scroll behavior globally

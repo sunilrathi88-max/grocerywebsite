@@ -380,7 +380,10 @@ const App: React.FC = () => {
   );
 
   // Filtering and sorting logic (delegated to useProductFilter hook)
-  const sortMap: any = {
+  const sortMap: Record<
+    string,
+    'rating' | 'price-asc' | 'price-desc' | 'name' | 'newest' | undefined
+  > = {
     'price-asc': 'price-asc',
     'price-desc': 'price-desc',
     'rating-desc': 'rating',
@@ -619,7 +622,9 @@ const App: React.FC = () => {
           </>
         );
     }
-  };  return (
+  };
+
+  return (
     <div className="flex flex-col min-h-screen">
       {/* SEO Meta Tags and Structured Data */}
       <SEO
@@ -754,7 +759,10 @@ const App: React.FC = () => {
         />
 
         {isComparisonModalOpen && (
-          <ComparisonModal items={comparisonItems} onClose={() => setIsComparisonModalOpen(false)} />
+          <ComparisonModal
+            items={comparisonItems}
+            onClose={() => setIsComparisonModalOpen(false)}
+          />
         )}
 
         {isExitIntentModalOpen && (
