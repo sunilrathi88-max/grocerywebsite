@@ -28,16 +28,17 @@ This guide explains how to use WebP image format for optimal performance. WebP p
 <picture>
   <!-- WebP for modern browsers -->
   <source type="image/webp" srcset="image-400w.webp 400w, image-640w.webp 640w, ..." />
-  
+
   <!-- Fallback for older browsers -->
   <source srcset="image-400w.jpg 400w, image-640w.jpg 640w, ..." />
-  
+
   <!-- Default image -->
   <img src="image.jpg" alt="Description" />
 </picture>
 ```
 
 **Browser behavior:**
+
 - Modern browsers: Load WebP (smaller, faster)
 - Older browsers: Load original format (JPEG/PNG)
 - All browsers: See the image!
@@ -60,6 +61,7 @@ node scripts/convertToWebP.js --responsive
 ```
 
 **What it does:**
+
 - ✅ Converts all JPG/PNG images to WebP (80% quality)
 - ✅ Preserves original files (for fallback)
 - ✅ Skips already-converted images
@@ -67,6 +69,7 @@ node scripts/convertToWebP.js --responsive
 - ✅ Reports file size savings
 
 **Example output:**
+
 ```
 ✅ product-1.jpg → product-1.webp (32.4% smaller)
    📐 Generated 12 responsive variants
@@ -107,6 +110,7 @@ const imageUrl = 'https://res.cloudinary.com/demo/image/upload/f_auto,q_auto/sam
 ## File Structure
 
 ### Before Conversion
+
 ```
 public/images/
   ├── product-1.jpg
@@ -115,6 +119,7 @@ public/images/
 ```
 
 ### After Conversion (Basic)
+
 ```
 public/images/
   ├── product-1.jpg      # Original (fallback)
@@ -126,6 +131,7 @@ public/images/
 ```
 
 ### After Conversion (With Responsive)
+
 ```
 public/images/
   ├── product-1.jpg
@@ -150,13 +156,14 @@ import { OptimizedImage } from './components/OptimizedImage';
 
 // This automatically uses WebP if available
 <OptimizedImage
-  src="/images/product-1.jpg"  // Will load product-1.webp in modern browsers
+  src="/images/product-1.jpg" // Will load product-1.webp in modern browsers
   alt="Product"
   type="card"
-/>
+/>;
 ```
 
 ### Already Implemented In:
+
 - ✅ `ProductCard.tsx`
 - ✅ `ProductDetailModal.tsx`
 - ✅ `Cart.tsx`
@@ -169,12 +176,12 @@ import { OptimizedImage } from './components/OptimizedImage';
 
 ### Expected Improvements
 
-| Metric | Before WebP | After WebP | Improvement |
-|--------|------------|------------|-------------|
-| **Image Size** | 100 KB | 70 KB | -30% |
-| **Page Weight** | 2.5 MB | 1.8 MB | -28% |
-| **LCP** | 2.8s | 2.1s | -0.7s |
-| **Load Time** | 4.2s | 3.3s | -21% |
+| Metric          | Before WebP | After WebP | Improvement |
+| --------------- | ----------- | ---------- | ----------- |
+| **Image Size**  | 100 KB      | 70 KB      | -30%        |
+| **Page Weight** | 2.5 MB      | 1.8 MB     | -28%        |
+| **LCP**         | 2.8s        | 2.1s       | -0.7s       |
+| **Load Time**   | 4.2s        | 3.3s       | -21%        |
 
 ### Browser Support
 
@@ -190,6 +197,7 @@ import { OptimizedImage } from './components/OptimizedImage';
 ## Best Practices
 
 ### 1. Always Keep Original Files
+
 ```bash
 # ✅ Good: Keep both
 product.jpg      # Fallback for older browsers
@@ -200,6 +208,7 @@ product.webp     # Optimized for modern browsers
 ```
 
 ### 2. Optimize Quality Setting
+
 ```javascript
 // 80% quality is the sweet spot
 await sharp(input).webp({ quality: 80 }).toFile(output);
@@ -210,6 +219,7 @@ await sharp(input).webp({ quality: 80 }).toFile(output);
 ```
 
 ### 3. Generate Responsive Sizes
+
 ```bash
 # Creates multiple sizes for different screens
 node scripts/convertToWebP.js --responsive
@@ -218,6 +228,7 @@ node scripts/convertToWebP.js --responsive
 ```
 
 ### 4. Use Lazy Loading
+
 ```tsx
 <OptimizedImage
   src="/images/product.jpg"
@@ -235,21 +246,25 @@ node scripts/convertToWebP.js --responsive
 ## Troubleshooting
 
 ### "Images not loading in Safari 13"
+
 - Safari 14+ required for WebP
 - Original format automatically used as fallback
 - No action needed!
 
 ### "WebP images not found (404)"
+
 - Run the conversion script: `node scripts/convertToWebP.js`
 - Ensure WebP files exist in `public/images/`
 - Check file naming: `image.jpg` → `image.webp`
 
 ### "Images still large after conversion"
+
 - Check quality setting (default: 80)
 - Ensure responsive sizes are generated (`--responsive` flag)
 - Verify WebP srcSet in dev tools (Network tab)
 
 ### "Script fails with 'sharp not installed'"
+
 ```bash
 # Install sharp
 npm install sharp --save-dev
@@ -273,6 +288,7 @@ Add to `package.json`:
 ```
 
 Now you can run:
+
 ```bash
 npm run images:convert              # Basic conversion
 npm run images:convert:responsive   # With responsive sizes
@@ -282,6 +298,7 @@ npm run build                       # Auto-converts before building
 ## Next Steps
 
 1. **Convert Existing Images**
+
    ```bash
    npm install sharp --save-dev
    node scripts/convertToWebP.js --responsive

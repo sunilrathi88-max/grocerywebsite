@@ -1,14 +1,14 @@
 /**
  * Image to WebP Converter Script
- * 
+ *
  * Converts all PNG/JPG/JPEG images in public/images to WebP format
  * Preserves original files and creates .webp versions alongside them
- * 
+ *
  * Usage: node scripts/convertToWebP.js
- * 
+ *
  * Requirements:
  * - npm install sharp --save-dev
- * 
+ *
  * Features:
  * - Batch conversion of all images
  * - Quality optimization (80% default)
@@ -24,7 +24,7 @@ const path = require('path');
 let sharp;
 try {
   sharp = require('sharp');
-} catch (error) {
+} catch (err) {
   console.error('❌ Error: sharp is not installed');
   console.log('\n📦 Please install sharp:');
   console.log('   npm install sharp --save-dev');
@@ -77,7 +77,7 @@ async function convertToWebP(inputPath) {
     if (fs.existsSync(outputPath)) {
       const sourceStats = fs.statSync(inputPath);
       const webpStats = fs.statSync(outputPath);
-      
+
       if (webpStats.mtime > sourceStats.mtime) {
         console.log(`⏭️  Skipping ${path.basename(inputPath)} (WebP already exists)`);
         return { skipped: true };
@@ -85,9 +85,7 @@ async function convertToWebP(inputPath) {
     }
 
     // Convert to WebP
-    await sharp(inputPath)
-      .webp({ quality: CONFIG.quality })
-      .toFile(outputPath);
+    await sharp(inputPath).webp({ quality: CONFIG.quality }).toFile(outputPath);
 
     const originalSize = fs.statSync(inputPath).size;
     const webpSize = fs.statSync(outputPath).size;
@@ -127,10 +125,7 @@ async function generateResponsiveSizes(inputPath) {
       await sharp(inputPath).resize(width).toFile(outputPath);
 
       // Generate WebP format
-      await sharp(inputPath)
-        .resize(width)
-        .webp({ quality: CONFIG.quality })
-        .toFile(webpOutputPath);
+      await sharp(inputPath).resize(width).webp({ quality: CONFIG.quality }).toFile(webpOutputPath);
 
       generated += 2;
     }

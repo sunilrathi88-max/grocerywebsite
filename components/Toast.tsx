@@ -15,7 +15,7 @@ const Toast: React.FC<ToastProps> = ({ toast, onClose }) => {
 
   useEffect(() => {
     // Trigger entrance animation
-    requestAnimationFrame(() => {
+    window.requestAnimationFrame(() => {
       setIsVisible(true);
     });
 
