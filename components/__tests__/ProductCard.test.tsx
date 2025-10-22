@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import ProductCard from '../ProductCard';
 import { Product, Variant } from '../../types';
@@ -7,7 +7,7 @@ import { Product, Variant } from '../../types';
 // Mock framer-motion to avoid animation issues in tests
 jest.mock('framer-motion', () => ({
   motion: {
-    button: ({ children, onClick, className, whileTap, ...props }: any) => (
+    button: ({ children, onClick, className, ...props }: any) => (
       <button onClick={onClick} className={className} {...props}>
         {children}
       </button>
@@ -433,7 +433,7 @@ describe('ProductCard', () => {
 
   describe('Wishlist State', () => {
     it('should show filled heart icon when product is wishlisted', () => {
-      const { container } = render(
+      render(
         <ProductCard
           product={mockProduct}
           onAddToCart={mockOnAddToCart}
@@ -456,7 +456,7 @@ describe('ProductCard', () => {
     });
 
     it('should show outline heart icon when product is not wishlisted', () => {
-      const { container } = render(
+      render(
         <ProductCard
           product={mockProduct}
           onAddToCart={mockOnAddToCart}

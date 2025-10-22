@@ -1,5 +1,5 @@
 import React from 'react';
-import { PLACEHOLDER_URLS, imageErrorHandlers } from '../utils/imageHelpers';
+import { PLACEHOLDER_URLS } from '../utils/imageHelpers';
 
 interface ResponsiveImageProps {
   src: string;
@@ -27,7 +27,7 @@ const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
   onLoad,
   onError,
   sizes = '(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw',
-  breakpoints = {},
+  breakpoints: _breakpoints = {},
 }) => {
   // Generate srcSet for different screen sizes
   const generateSrcSet = (baseSrc: string): string => {

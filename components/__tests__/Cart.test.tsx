@@ -7,8 +7,8 @@ import { CartItem, Product, Variant } from '../../types';
 // Mock framer-motion
 jest.mock('framer-motion', () => ({
   motion: {
-    div: ({ children, layout, ...props }: any) => <div {...props}>{children}</div>,
-    button: ({ children, onClick, className, whileTap, whileHover, disabled, ...props }: any) => (
+    div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
+    button: ({ children, onClick, className, disabled, ...props }: any) => (
       <button onClick={onClick} className={className} disabled={disabled} {...props}>
         {children}
       </button>

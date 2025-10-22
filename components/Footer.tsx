@@ -13,13 +13,6 @@ interface FooterProps {
 }
 
 const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
-  const handleNewsletterSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    // In a real app, you'd handle the submission here (e.g., API call)
-    alert('Thank you for subscribing!');
-    (e.target as HTMLFormElement).reset();
-  };
-
   const handleCategoryClick = (e: React.MouseEvent<HTMLAnchorElement>, category: string) => {
     e.preventDefault();
     onSelectCategory(category);

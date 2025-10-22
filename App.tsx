@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import {
   Product,
-  CartItem,
   ToastMessage,
   Review,
   Variant,
@@ -76,13 +75,20 @@ const App: React.FC = () => {
   usePerformanceMonitoring();
 
   // Custom hooks for cart, wishlist, and filtering
-  const { cartItems, cartItemCount, subtotal, addToCart, updateQuantity, clearCart } = useCart();
+  const {
+    cartItems,
+    cartItemCount: _cartItemCount,
+    subtotal,
+    addToCart,
+    updateQuantity,
+    clearCart,
+  } = useCart();
 
   const { wishlistItems, wishlistItemCount, toggleWishlist, isInWishlist } = useWishlist();
 
   // State management
   const [products, setProducts] = useState<Product[]>(MOCK_PRODUCTS);
-  const [posts, setPosts] = useState<BlogPost[]>(MOCK_POSTS);
+  const [posts] = useState<BlogPost[]>(MOCK_POSTS);
   const [orders, setOrders] = useState<Order[]>(MOCK_ORDERS);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');

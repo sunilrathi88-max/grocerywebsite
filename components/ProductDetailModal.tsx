@@ -1,5 +1,5 @@
 import React, { useState, useRef, useMemo, useEffect } from 'react';
-import { Product, Review, ToastMessage, Variant, QnA as QnAType } from '../types';
+import { Product, Review, ToastMessage, Variant } from '../types';
 import { XIcon } from './icons/XIcon';
 import { OptimizedImage } from './OptimizedImage';
 import ReviewList from './ReviewList';
@@ -41,7 +41,6 @@ interface ProductDetailModalProps {
 import { PLACEHOLDER_URLS, imageErrorHandlers } from '../utils/imageHelpers';
 
 const PLACEHOLDER_THUMB = PLACEHOLDER_URLS.thumb;
-const PLACEHOLDER_IMAGE = PLACEHOLDER_URLS.product;
 
 // Mock data for "Frequently Bought Together"
 const FBT_MOCK: { [key: number]: number[] } = {
@@ -167,7 +166,7 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
     [selectedVariant]
   );
 
-  const [zoomStyle, setZoomStyle] = useState({});
+  const [, setZoomStyle] = useState({});
   const imageRef = useRef<HTMLImageElement>(null);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
