@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { CheckBadgeIcon } from './icons/CheckBadgeIcon';
 import { XIcon } from './icons/XIcon';
 
@@ -43,6 +43,32 @@ const PRODUCT_NAMES = [
 export const SocialProofNotifications: React.FC = () => {
   const [notifications, setNotifications] = useState<PurchaseNotification[]>([]);
   const [nextId, setNextId] = useState(1);
+  const intervalRef = React.useRef<number | undefined>(undefined);
+
+  const dismissNotification = useCallback((id: number) => {
+    setNotifications((prev) => prev.filter((n) => n.id !== id));
+  }, []);
+
+  const showNotification = useCallback(() => {
+    // Generate random values inside the callback (not during render)
+    setNextId((currentId) => {
+      const notification: PurchaseNotification = {
+        id: currentId,
+        productName: PRODUCT_NAMES[Math.floor(Math.random() * PRODUCT_NAMES.length)],
+        location: MOCK_CITIES[Math.floor(Math.random() * MOCK_CITIES.length)],
+        timeAgo: Math.floor(Math.random() * 30 + 1) + ' minutes ago',
+      };
+
+      setNotifications((prev) => [...prev, notification]);
+
+      // Auto-dismiss after 5 seconds
+      setTimeout(() => {
+        dismissNotification(notification.id);
+      }, 5000);
+
+      return currentId + 1;
+    });
+  }, [dismissNotification]);
 
   useEffect(() => {
     // Show first notification after 3 seconds
@@ -50,40 +76,24 @@ export const SocialProofNotifications: React.FC = () => {
       showNotification();
     }, 3000);
 
-    // Then show notifications every 10-15 seconds
-    const interval = setInterval(
-      () => {
+    // Then show notifications every 10-15 seconds (random interval)
+    const scheduleNext = (): number => {
+      const delay = Math.random() * 5000 + 10000; // 10-15 seconds
+      return window.setTimeout(() => {
         showNotification();
-      },
-      Math.random() * 5000 + 10000
-    ); // 10-15 seconds
+        intervalRef.current = scheduleNext();
+      }, delay);
+    };
+
+    intervalRef.current = scheduleNext();
 
     return () => {
       clearTimeout(initialDelay);
-      clearInterval(interval);
+      if (intervalRef.current) {
+        clearTimeout(intervalRef.current);
+      }
     };
-  }, []);
-
-  const showNotification = () => {
-    const notification: PurchaseNotification = {
-      id: nextId,
-      productName: PRODUCT_NAMES[Math.floor(Math.random() * PRODUCT_NAMES.length)],
-      location: MOCK_CITIES[Math.floor(Math.random() * MOCK_CITIES.length)],
-      timeAgo: Math.floor(Math.random() * 30 + 1) + ' minutes ago',
-    };
-
-    setNotifications((prev) => [...prev, notification]);
-    setNextId((prev) => prev + 1);
-
-    // Auto-dismiss after 5 seconds
-    setTimeout(() => {
-      dismissNotification(notification.id);
-    }, 5000);
-  };
-
-  const dismissNotification = (id: number) => {
-    setNotifications((prev) => prev.filter((n) => n.id !== id));
-  };
+  }, [showNotification]);
 
   return (
     <div className="fixed bottom-4 left-4 z-50 space-y-3 pointer-events-none">
