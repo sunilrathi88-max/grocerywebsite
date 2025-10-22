@@ -218,9 +218,7 @@ describe('useProductFilter', () => {
       const { result } = renderHook(() => useProductFilter(mockProducts, filters));
 
       // Should exclude Turmeric (3.5 avg rating)
-      expect(result.current.filteredProducts.some((p) => p.name === 'Turmeric Powder')).toBe(
-        false
-      );
+      expect(result.current.filteredProducts.some((p) => p.name === 'Turmeric Powder')).toBe(false);
     });
 
     it('should include products with no reviews when minRating is 0', () => {
@@ -260,9 +258,9 @@ describe('useProductFilter', () => {
       const { result } = renderHook(() => useProductFilter(mockProducts, filters));
 
       expect(result.current.filteredProducts).toHaveLength(4);
-      expect(result.current.filteredProducts.every((p) => p.variants.some((v) => v.stock > 0))).toBe(
-        true
-      );
+      expect(
+        result.current.filteredProducts.every((p) => p.variants.some((v) => v.stock > 0))
+      ).toBe(true);
     });
 
     it('should exclude out-of-stock products', () => {
@@ -454,9 +452,7 @@ describe('useProductFilter', () => {
         // No price filter - avoids accessing variants[0]
       };
 
-      const { result } = renderHook(() =>
-        useProductFilter([productWithoutVariants], filters)
-      );
+      const { result } = renderHook(() => useProductFilter([productWithoutVariants], filters));
 
       // Product should pass through if no variant-dependent filters
       expect(result.current.filteredProducts).toHaveLength(1);
@@ -611,7 +607,7 @@ describe('usePriceRange', () => {
       },
       {
         ...mockProducts[1],
-        variants: [{ id: 2, name: '100g', price: 500.50, stock: 10 }],
+        variants: [{ id: 2, name: '100g', price: 500.5, stock: 10 }],
       },
     ];
 
