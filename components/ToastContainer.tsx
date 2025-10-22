@@ -1,5 +1,4 @@
 import React from 'react';
-import { AnimatePresence } from 'framer-motion';
 import Toast from './Toast';
 import { ToastMessage } from '../types';
 
@@ -15,11 +14,9 @@ const ToastContainer: React.FC<ToastContainerProps> = ({ toasts, onClose }) => {
       className="fixed inset-0 flex items-end px-4 py-6 pointer-events-none sm:p-6 sm:items-start z-[100]"
     >
       <div className="w-full flex flex-col items-center space-y-4 sm:items-end">
-        <AnimatePresence>
-          {toasts.map((toast) => (
-            <Toast key={toast.id} toast={toast} onClose={onClose} />
-          ))}
-        </AnimatePresence>
+        {toasts.map((toast) => (
+          <Toast key={toast.id} toast={toast} onClose={onClose} />
+        ))}
       </div>
     </div>
   );

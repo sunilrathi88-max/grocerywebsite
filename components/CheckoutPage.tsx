@@ -6,6 +6,8 @@ import { XIcon } from './icons/XIcon';
 import { ShieldCheckIcon } from './icons/ShieldCheckIcon';
 import { OptimizedImage } from './OptimizedImage';
 import { imageErrorHandlers } from '../utils/imageHelpers';
+import { orderAPI } from '../utils/apiService';
+import { APIErrorDisplay } from './APIErrorDisplay';
 
 interface CheckoutPageProps {
   cartItems: CartItem[];
@@ -312,6 +314,8 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
   const [localPromoCode, setLocalPromoCode] = useState('');
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const tax = useMemo(() => (subtotal - discount) * 0.08, [subtotal, discount]);
   const total = useMemo(
@@ -326,7 +330,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
         setter((prev) => ({ ...prev, [e.target.name]: e.target.value }));
       };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (cartItems.length === 0) {
       addToast('Your cart is empty.', 'error');
@@ -341,27 +345,63 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
       return;
     }
 
-    const confirmedOrder = onPlaceOrder({
-      items: cartItems,
-      total: total,
-      shippingAddress: { ...shippingAddress, id: 0, type: 'Shipping' },
-      billingAddress: useSameAddress
-        ? { ...shippingAddress, id: 0, type: 'Billing' }
-        : { ...billingAddress, id: 0, type: 'Billing' },
-      deliveryMethod: 'Standard',
-      paymentMethod: paymentMethod,
-      shippingCost: shippingCost,
-      discount,
-      deliverySlot: {
-        date: new Date(selectedDate).toLocaleDateString('en-US', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-        }),
-        time: selectedTime,
-      },
-    });
-    setOrderConfirmation(confirmedOrder);
+    setIsSubmitting(true);
+    setSubmitError(null);
+
+    try {
+      const orderData = {
+        items: cartItems,
+        total: total,
+        shippingAddress: { ...shippingAddress, id: 0, type: 'Shipping' as const },
+        billingAddress: useSameAddress
+          ? { ...shippingAddress, id: 0, type: 'Billing' as const }
+          : { ...billingAddress, id: 0, type: 'Billing' as const },
+        deliveryMethod: 'Standard' as const,
+        paymentMethod: paymentMethod,
+        shippingCost: shippingCost,
+        discount,
+        deliverySlot: {
+          date: new Date(selectedDate).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          }),
+          time: selectedTime,
+        },
+      };
+
+      // Try API first
+      const confirmedOrder = await orderAPI.create(orderData);
+      setOrderConfirmation(confirmedOrder);
+      addToast('Order placed successfully!', 'success');
+    } catch (error) {
+      // Fallback to local order creation
+      console.warn('API order creation failed, using fallback:', error);
+      const confirmedOrder = onPlaceOrder({
+        items: cartItems,
+        total: total,
+        shippingAddress: { ...shippingAddress, id: 0, type: 'Shipping' },
+        billingAddress: useSameAddress
+          ? { ...shippingAddress, id: 0, type: 'Billing' }
+          : { ...billingAddress, id: 0, type: 'Billing' },
+        deliveryMethod: 'Standard',
+        paymentMethod: paymentMethod,
+        shippingCost: shippingCost,
+        discount,
+        deliverySlot: {
+          date: new Date(selectedDate).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          }),
+          time: selectedTime,
+        },
+      });
+      setOrderConfirmation(confirmedOrder);
+      addToast('Order placed locally (API unavailable)', 'success');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (orderConfirmation) {
@@ -373,6 +413,17 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
       <h2 className="text-3xl md:text-4xl font-serif font-bold text-center text-brand-dark mb-12">
         Checkout
       </h2>
+
+      {submitError && (
+        <div className="mb-6 max-w-4xl mx-auto">
+          <APIErrorDisplay
+            error={{ message: submitError }}
+            onRetry={() => setSubmitError(null)}
+            onDismiss={() => setSubmitError(null)}
+          />
+        </div>
+      )}
+
       <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-3 gap-12">
         {/* Left/Main Column */}
         <div className="lg:col-span-2 space-y-8">
@@ -537,10 +588,17 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
             <div className="mt-4">
               <button
                 type="submit"
-                disabled={!selectedDate || !selectedTime || !paymentMethod}
-                className="w-full bg-brand-dark text-white font-bold py-3 rounded-full shadow-lg hover:bg-opacity-90 transform hover:scale-105 transition-all duration-300 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                disabled={!selectedDate || !selectedTime || !paymentMethod || isSubmitting}
+                className="w-full bg-brand-dark text-white font-bold py-3 rounded-full shadow-lg hover:bg-opacity-90 transform hover:scale-105 transition-all duration-300 disabled:bg-gray-400 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center gap-2"
               >
-                Place Order
+                {isSubmitting ? (
+                  <>
+                    <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white"></div>
+                    <span>Processing...</span>
+                  </>
+                ) : (
+                  'Place Order'
+                )}
               </button>
             </div>
           </div>
