@@ -28,6 +28,8 @@
     "percy:test": "percy exec -- cypress run",
     "percy:open": "percy exec -- cypress open",
     "percy:snapshot": "percy exec -- cypress run --spec 'cypress/e2e/08-visual-regression.cy.ts'",
+    "images:convert": "node scripts/convertToWebP.js",
+    "images:convert:responsive": "node scripts/convertToWebP.js --responsive",
     "lighthouse": "lhci autorun",
     "lighthouse:local": "npm run build && npm run preview & wait-on http://localhost:4173 && lhci autorun && kill %1",
     "test:all": "npm run test:unit && npm run test:e2e && npm run lighthouse"
@@ -73,6 +75,8 @@
     "ts-node": "^10.9.2",
     "typescript": "~5.8.2",
     "vite": "^6.2.0",
-    "wait-on": "^9.0.1"
+    "vite-plugin-pwa": "^1.1.0",
+    "wait-on": "^9.0.1",
+    "workbox-window": "^7.3.0"
   }
 }
