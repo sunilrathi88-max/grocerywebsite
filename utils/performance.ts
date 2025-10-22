@@ -69,11 +69,12 @@ export const useLazyImage = (ref: { current: HTMLImageElement | null }, src: str
       }
     );
 
-    observer.observe(ref.current);
+    const currentRef = ref.current;
+    observer.observe(currentRef);
 
     return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
+      if (currentRef) {
+        observer.unobserve(currentRef);
       }
     };
   }, [ref, src]);

@@ -3,7 +3,7 @@
 
 declare global {
   interface Window {
-    gtag?: (command: string, targetId: string, config?: Record<string, unknown>) => void;
+    gtag?: (command: string, ...args: unknown[]) => void;
     dataLayer?: unknown[];
   }
 }
@@ -23,10 +23,10 @@ export const initGA = (measurementId: string) => {
 
   // Initialize dataLayer
   window.dataLayer = window.dataLayer || [];
-  window.gtag = function gtag() {
-    window.dataLayer!.push(arguments);
+  window.gtag = function gtag(...args: unknown[]) {
+    window.dataLayer!.push(args);
   };
-  (window.gtag as any)('js', new Date());
+  window.gtag('js', new Date());
   window.gtag('config', measurementId, {
     page_path: window.location.pathname,
   });
