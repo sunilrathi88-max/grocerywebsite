@@ -44,10 +44,22 @@ const OAuthButtons: React.FC<OAuthButtonsProps> = ({ onSuccess, onError, mode = 
     const state = generateState();
     sessionStorage.setItem('oauth_state', state);
 
-    // In production, replace with your OAuth config
-    const CLIENT_ID = 'YOUR_GOOGLE_CLIENT_ID';
-    const REDIRECT_URI = `${window.location.origin}${window.location.pathname}#/oauth-callback`;
+    // Get OAuth config from environment variables
+    const CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+    const REDIRECT_URI =
+      import.meta.env.VITE_GOOGLE_REDIRECT_URI ||
+      `${window.location.origin}${window.location.pathname}#/oauth-callback`;
     const SCOPE = 'email profile';
+
+    // Check if OAuth is configured
+    if (!CLIENT_ID || CLIENT_ID === 'your_google_client_id_here') {
+      // Mock implementation for demo/testing
+      console.warn('Google OAuth not configured. Using mock flow.');
+      setTimeout(() => {
+        mockOAuthFlow('google');
+      }, 1000);
+      return;
+    }
 
     // Build OAuth URL
     const authUrl =
@@ -60,13 +72,8 @@ const OAuthButtons: React.FC<OAuthButtonsProps> = ({ onSuccess, onError, mode = 
       `access_type=offline&` +
       `prompt=consent`;
 
-    // Mock implementation for demo
-    setTimeout(() => {
-      mockOAuthFlow('google');
-    }, 1000);
-
-    // In production, redirect to OAuth provider:
-    // window.location.href = authUrl;
+    // Redirect to OAuth provider
+    window.location.href = authUrl;
   };
 
   const handleFacebookLogin = () => {
@@ -75,10 +82,22 @@ const OAuthButtons: React.FC<OAuthButtonsProps> = ({ onSuccess, onError, mode = 
     const state = generateState();
     sessionStorage.setItem('oauth_state', state);
 
-    // In production, replace with your OAuth config
-    const APP_ID = 'YOUR_FACEBOOK_APP_ID';
-    const REDIRECT_URI = `${window.location.origin}${window.location.pathname}#/oauth-callback`;
+    // Get OAuth config from environment variables
+    const APP_ID = import.meta.env.VITE_FACEBOOK_APP_ID;
+    const REDIRECT_URI =
+      import.meta.env.VITE_FACEBOOK_REDIRECT_URI ||
+      `${window.location.origin}${window.location.pathname}#/oauth-callback`;
     const SCOPE = 'email,public_profile';
+
+    // Check if OAuth is configured
+    if (!APP_ID || APP_ID === 'your_facebook_app_id_here') {
+      // Mock implementation for demo/testing
+      console.warn('Facebook OAuth not configured. Using mock flow.');
+      setTimeout(() => {
+        mockOAuthFlow('facebook');
+      }, 1000);
+      return;
+    }
 
     const authUrl =
       `https://www.facebook.com/v12.0/dialog/oauth?` +
@@ -88,13 +107,8 @@ const OAuthButtons: React.FC<OAuthButtonsProps> = ({ onSuccess, onError, mode = 
       `state=${state}&` +
       `response_type=code`;
 
-    // Mock implementation for demo
-    setTimeout(() => {
-      mockOAuthFlow('facebook');
-    }, 1000);
-
-    // In production, redirect to OAuth provider:
-    // window.location.href = authUrl;
+    // Redirect to OAuth provider
+    window.location.href = authUrl;
   };
 
   const mockOAuthFlow = async (provider: 'google' | 'facebook') => {
