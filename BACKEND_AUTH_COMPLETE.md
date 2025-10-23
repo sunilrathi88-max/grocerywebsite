@@ -5,6 +5,7 @@
 A **production-ready authentication system** with:
 
 ### ✅ Core Features
+
 1. **JWT Token Management**
    - Access tokens with 1-hour expiration
    - Refresh tokens for seamless re-authentication
@@ -39,9 +40,11 @@ A **production-ready authentication system** with:
 ## 📁 New Files Created
 
 ### 1. `utils/authService.ts` (544 lines)
+
 **Purpose**: Central authentication service with all auth operations
 
 **Key Classes**:
+
 - `TokenStorage`: Manages JWT tokens in localStorage
   - `setTokens(tokens)` - Store access & refresh tokens
   - `getAccessToken()` - Retrieve current access token
@@ -68,6 +71,7 @@ A **production-ready authentication system** with:
   - `disable2FA(password)` - Turn off 2FA
 
 **Interfaces**:
+
 ```typescript
 AuthUser {
   id: number
@@ -88,9 +92,11 @@ AuthTokens {
 ```
 
 ### 2. `components/EmailVerificationPage.tsx` (211 lines)
+
 **Purpose**: Email verification flow after signup
 
 **Features**:
+
 - Automatic token detection from URL
 - Verification success screen with auto-redirect
 - Resend email with 60-second cooldown
@@ -98,6 +104,7 @@ AuthTokens {
 - Troubleshooting tips for users
 
 **Props**:
+
 ```typescript
 {
   email: string              // User email to verify
@@ -109,9 +116,11 @@ AuthTokens {
 **URL Format**: `#/verify-email?email=user@example.com&token=abc123`
 
 ### 3. `components/OAuthButtons.tsx` (196 lines)
+
 **Purpose**: Google and Facebook OAuth login buttons
 
 **Features**:
+
 - Pre-built Google and Facebook UI buttons
 - CSRF protection with state parameter
 - OAuth callback handling
@@ -119,6 +128,7 @@ AuthTokens {
 - Error handling and reporting
 
 **Props**:
+
 ```typescript
 {
   onSuccess: (user: AuthUser, isNewUser: boolean) => void
@@ -128,6 +138,7 @@ AuthTokens {
 ```
 
 **OAuth Flow**:
+
 1. User clicks OAuth button
 2. Generate CSRF state token
 3. Redirect to OAuth provider (Google/Facebook)
@@ -137,9 +148,11 @@ AuthTokens {
 7. Create/login user with profile data
 
 ### 4. `components/TwoFactorSetupPage.tsx` (354 lines)
+
 **Purpose**: 2FA setup wizard with TOTP support
 
 **Steps**:
+
 1. **Intro**: Explain 2FA benefits and requirements
 2. **Scan**: Display QR code for authenticator app
 3. **Verify**: Enter 6-digit code to confirm
@@ -147,6 +160,7 @@ AuthTokens {
 5. **Complete**: Success message and redirect
 
 **Features**:
+
 - QR code generation (uses QR Server API)
 - Manual secret entry option
 - Backup code generation (10 codes)
@@ -154,6 +168,7 @@ AuthTokens {
 - Download backup codes as text file
 
 **Props**:
+
 ```typescript
 {
   onComplete: () => void  // Called after successful setup
@@ -164,33 +179,39 @@ AuthTokens {
 ## 🔄 Modified Files
 
 ### `components/LoginPage.tsx`
+
 **Changes**:
+
 - Added OAuth buttons below login form
 - Integrated `AuthService.login()` for JWT authentication
 - Handle 2FA requirement redirect
 - Added proper error handling
 
 **New Flow**:
+
 ```
 Email/Password → AuthService.login()
                  ↓
            Success with tokens
                  ↓
          Store tokens → Navigate home
-         
+
          OR
-         
+
          Requires 2FA → Navigate to #/2fa-verify
 ```
 
 ### `components/SignUpPage.tsx`
+
 **Changes**:
+
 - Added OAuth buttons below signup form
 - Integrated `AuthService.signUp()` for registration
 - Redirect to email verification after signup
 - Handle existing OAuth users
 
 **New Flow**:
+
 ```
 Fill Form → AuthService.signUp()
             ↓
@@ -202,12 +223,15 @@ Navigate to #/verify-email?email=...
 ```
 
 ### `App.tsx`
+
 **Changes**:
+
 - Added routes for email verification and 2FA setup
 - Imported new pages (EmailVerificationPage, TwoFactorSetupPage)
 - Fixed toast notifications for new pages
 
 **New Routes**:
+
 - `#/verify-email?email=...` - Email verification page
 - `#/2fa-setup` - 2FA setup wizard
 
@@ -244,25 +268,41 @@ Response: { id, email, name, isAdmin, isEmailVerified, has2FA }
 #### 2. OAuth Endpoints
 
 ```typescript
-POST /api/auth/oauth/google
-Body: { code, state }
-Response: { success, user, tokens, isNewUser }
+POST / api / auth / oauth / google;
+Body: {
+  (code, state);
+}
+Response: {
+  (success, user, tokens, isNewUser);
+}
 
-POST /api/auth/oauth/facebook
-Body: { code, state }
-Response: { success, user, tokens, isNewUser }
+POST / api / auth / oauth / facebook;
+Body: {
+  (code, state);
+}
+Response: {
+  (success, user, tokens, isNewUser);
+}
 ```
 
 #### 3. Email Verification Endpoints
 
 ```typescript
-POST /api/auth/send-verification
-Body: { email }
-Response: { success, message }
+POST / api / auth / send - verification;
+Body: {
+  email;
+}
+Response: {
+  (success, message);
+}
 
-POST /api/auth/verify-email
-Body: { token }
-Response: { success, message }
+POST / api / auth / verify - email;
+Body: {
+  token;
+}
+Response: {
+  (success, message);
+}
 ```
 
 #### 4. 2FA Endpoints
@@ -311,6 +351,7 @@ VITE_API_URL=https://api.yoursite.com
 ### OAuth Setup Steps
 
 #### Google OAuth 2.0
+
 1. Go to [Google Cloud Console](https://console.cloud.google.com/)
 2. Create new project or select existing
 3. Enable Google+ API
@@ -321,6 +362,7 @@ VITE_API_URL=https://api.yoursite.com
 6. Copy Client ID and Client Secret
 
 #### Facebook Login
+
 1. Go to [Facebook Developers](https://developers.facebook.com/)
 2. Create new app or select existing
 3. Add Facebook Login product
@@ -359,6 +401,7 @@ VITE_API_URL=https://api.yoursite.com
 ## 🧪 Testing
 
 ### Test Credentials (Mock Mode)
+
 ```
 Email: anika.sharma@example.com
 Password: password123
@@ -367,6 +410,7 @@ Password: password123
 ### Test Flows
 
 #### 1. Email/Password Login
+
 ```bash
 # Navigate to login page
 window.location.hash = '#/login'
@@ -377,6 +421,7 @@ window.location.hash = '#/login'
 ```
 
 #### 2. Email/Password Signup
+
 ```bash
 # Navigate to signup page
 window.location.hash = '#/signup'
@@ -387,6 +432,7 @@ window.location.hash = '#/signup'
 ```
 
 #### 3. OAuth Login
+
 ```bash
 # Click "Sign in with Google"
 # Mock flow completes after 1s
@@ -394,6 +440,7 @@ window.location.hash = '#/signup'
 ```
 
 #### 4. Email Verification
+
 ```bash
 # After signup, on verification page
 # Click "Resend Verification Email"
@@ -402,6 +449,7 @@ window.location.hash = '#/signup'
 ```
 
 #### 5. 2FA Setup
+
 ```bash
 # Navigate to 2FA setup
 window.location.hash = '#/2fa-setup'
@@ -416,19 +464,20 @@ window.location.hash = '#/2fa-setup'
 ### Browser DevTools Testing
 
 Check token storage:
+
 ```javascript
 // Check if tokens exist
-localStorage.getItem('auth_access_token')
-localStorage.getItem('auth_refresh_token')
-localStorage.getItem('auth_token_expiry')
+localStorage.getItem('auth_access_token');
+localStorage.getItem('auth_refresh_token');
+localStorage.getItem('auth_token_expiry');
 
 // Check token expiry
-new Date(parseInt(localStorage.getItem('auth_token_expiry')))
+new Date(parseInt(localStorage.getItem('auth_token_expiry')));
 
 // Clear tokens (logout)
-localStorage.removeItem('auth_access_token')
-localStorage.removeItem('auth_refresh_token')
-localStorage.removeItem('auth_token_expiry')
+localStorage.removeItem('auth_access_token');
+localStorage.removeItem('auth_refresh_token');
+localStorage.removeItem('auth_token_expiry');
 ```
 
 ## 📊 Architecture Diagram
@@ -487,22 +536,24 @@ localStorage.removeItem('auth_token_expiry')
 ## 🔐 Security Features
 
 ### Implemented
+
 ✅ JWT token-based authentication  
 ✅ Token expiration and auto-refresh  
 ✅ Password strength validation  
 ✅ CSRF protection for OAuth  
 ✅ Email verification workflow  
 ✅ TOTP 2FA with backup codes  
-✅ OAuth state verification  
+✅ OAuth state verification
 
 ### Recommended for Production
+
 🔒 Rate limiting on login attempts  
 🔒 Captcha on signup/login forms  
 🔒 Account lockout after failed attempts  
 🔒 IP-based suspicious activity detection  
 🔒 Email notifications for security events  
 🔒 Password breach checking (HaveIBeenPwned API)  
-🔒 Device fingerprinting  
+🔒 Device fingerprinting
 
 ## 📈 Next Steps
 
