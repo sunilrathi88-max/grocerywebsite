@@ -107,7 +107,7 @@ const App: React.FC = () => {
   // Use the products hook with mock data fallback (set useMockData: true for now)
   const {
     products,
-    // isLoading: _productsLoading, // Unused but available for future
+    isLoading: productsLoading, // useProducts loading state
     // error: _productsError, // Unused but available for future
     addProduct: addProductAPI,
     updateProduct: updateProductAPI,
@@ -143,11 +143,14 @@ const App: React.FC = () => {
   const [showOnSale, setShowOnSale] = useState(false);
   const [showInStock, setShowInStock] = useState(false);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const maxPrice = useMemo(
-    () => Math.ceil(Math.max(...products.flatMap((p) => p.variants.map((v) => v.price)), 0)),
-    [products]
-  );
-  const [priceRange, setPriceRange] = useState({ min: 0, max: maxPrice });
+  const maxPrice = useMemo(() => {
+    const vals = products.flatMap((p) => p.variants.map((v) => v.price));
+    const max = vals.length > 0 ? Math.max(...vals) : 0;
+    return Math.ceil(max);
+  }, [products]);
+
+  // Initialize priceRange to use computed maxPrice once products are available
+  const [priceRange, setPriceRange] = useState(() => ({ min: 0, max: maxPrice }));
 
   // Comparison state
   const [comparisonItems, setComparisonItems] = useState<Product[]>([]);
@@ -158,9 +161,6 @@ const App: React.FC = () => {
 
   // Recipe page state
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
-
-  // Loading state
-  const [isLoading, setIsLoading] = useState(true);
 
   // Promo code state
   const [promoCode, setPromoCode] = useState('');
@@ -178,10 +178,20 @@ const App: React.FC = () => {
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
-  // Simulate loading
+  // Use the products hook's loading state instead of a local simulated timeout
+  // (prevents showing skeletons while filters are being initialized)
+
+  // Ensure price range is updated after products load. On initial render
+  // maxPrice can be 0 (products empty), so we sync priceRange when maxPrice updates
   useEffect(() => {
-    setTimeout(() => setIsLoading(false), 1000);
-  }, []);
+    setPriceRange((prev) => {
+      // If user hasn't adjusted the max yet (initially equal to previous max), set to computed maxPrice
+      if (prev.max === 0) return { ...prev, max: maxPrice };
+      // If product set increases maxPrice beyond current range, expand it
+      if (prev.max < maxPrice) return { ...prev, max: maxPrice };
+      return prev;
+    });
+  }, [maxPrice]);
 
   // Exit-intent listener
   useEffect(() => {
@@ -643,7 +653,7 @@ const App: React.FC = () => {
                 onSelectProduct={setSelectedProduct}
                 onToggleCompare={handleToggleCompare}
                 comparisonIds={comparisonIds}
-                isLoading={isLoading}
+                isLoading={productsLoading}
                 onNotifyMe={handleNotifyMe}
               />
             </main>
