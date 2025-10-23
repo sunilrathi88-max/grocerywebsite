@@ -495,6 +495,7 @@ Scenarios:
    - Expected 25-35% size reduction
 
 5. **Run Production Lighthouse Audit** (15 min)
+
    ```bash
    npx lighthouse https://your-url.vercel.app --view
    ```

@@ -70,6 +70,8 @@ const BlogPostPage = React.lazy(() => import('./components/BlogPostPage'));
 const LoginPage = React.lazy(() => import('./components/LoginPage'));
 const SignUpPage = React.lazy(() => import('./components/SignUpPage'));
 const ForgotPasswordPage = React.lazy(() => import('./components/ForgotPasswordPage'));
+const EmailVerificationPage = React.lazy(() => import('./components/EmailVerificationPage'));
+const TwoFactorSetupPage = React.lazy(() => import('./components/TwoFactorSetupPage'));
 
 const App: React.FC = () => {
   // Enable performance monitoring
@@ -647,6 +649,33 @@ const App: React.FC = () => {
         return (
           <React.Suspense fallback={<PageLoader />}>
             <ForgotPasswordPage onNavigateToLogin={() => (window.location.hash = '#/login')} />
+          </React.Suspense>
+        );
+      case 'verify-email': {
+        const params = new URLSearchParams(window.location.hash.split('?')[1] || '');
+        const email = params.get('email') || currentUser?.email || '';
+        return (
+          <React.Suspense fallback={<PageLoader />}>
+            <EmailVerificationPage
+              email={email}
+              onNavigateToHome={() => (window.location.hash = '#/')}
+              onResendEmail={() => {
+                addToast('Verification email sent!', 'success');
+              }}
+            />
+          </React.Suspense>
+        );
+      }
+      case '2fa-setup':
+        return (
+          <React.Suspense fallback={<PageLoader />}>
+            <TwoFactorSetupPage
+              onComplete={() => {
+                addToast('2FA enabled successfully!', 'success');
+                window.location.hash = '#/profile';
+              }}
+              onCancel={() => (window.location.hash = '#/profile')}
+            />
           </React.Suspense>
         );
       case 'home':
