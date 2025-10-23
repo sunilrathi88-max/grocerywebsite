@@ -30,6 +30,7 @@ vercel login
 ```
 
 This will open your browser to authenticate with Vercel. Choose your preferred login method:
+
 - GitHub (Recommended - enables auto-deployments)
 - GitLab
 - Bitbucket
@@ -44,6 +45,7 @@ vercel
 ```
 
 This will:
+
 1. Link your project (or create a new one)
 2. Upload your code
 3. Build the project
@@ -82,6 +84,7 @@ vercel domains add yourdomain.com
 ```
 
 Then configure DNS:
+
 - Type: `CNAME`
 - Name: `@` (or `www`)
 - Value: `cname.vercel-dns.com`
@@ -232,6 +235,7 @@ This generates multiple sizes (400w, 600w, 800w, 1024w, 1536w) for responsive im
 ### Verify Conversion
 
 Check the output:
+
 - [ ] Original images still exist
 - [ ] `.webp` files created alongside originals
 - [ ] File sizes reduced by ~25-35%
@@ -262,6 +266,7 @@ npx lighthouse https://your-production-url.vercel.app --view
 ```
 
 Options:
+
 - `--view`: Opens report in browser
 - `--output=html`: Save HTML report
 - `--output=json`: Save JSON report
@@ -269,13 +274,13 @@ Options:
 
 ### Expected Scores
 
-| Category | Target | Status |
-|----------|--------|--------|
-| Performance | ≥ 85 | ⏳ |
-| Accessibility | ≥ 90 | ⏳ |
-| Best Practices | ≥ 90 | ⏳ |
-| SEO | ≥ 90 | ⏳ |
-| PWA | ≥ 80 | ⏳ |
+| Category       | Target | Status |
+| -------------- | ------ | ------ |
+| Performance    | ≥ 85   | ⏳     |
+| Accessibility  | ≥ 90   | ⏳     |
+| Best Practices | ≥ 90   | ⏳     |
+| SEO            | ≥ 90   | ⏳     |
+| PWA            | ≥ 80   | ⏳     |
 
 ### Key Metrics to Check
 
@@ -314,6 +319,7 @@ Options:
 4. Enable Real User Monitoring (if not already enabled)
 
 Metrics available:
+
 - Page views
 - Unique visitors
 - Top pages
@@ -345,6 +351,7 @@ If you need to add environment variables:
 ## ✅ Completion Checklist
 
 ### Deployment
+
 - [ ] Vercel login successful
 - [ ] Preview deployment tested
 - [ ] Production deployment successful
@@ -353,12 +360,14 @@ If you need to add environment variables:
 - [ ] All pages load correctly
 
 ### GitHub Secrets
+
 - [ ] VERCEL_TOKEN added
 - [ ] VERCEL_ORG_ID added
 - [ ] VERCEL_PROJECT_ID added
 - [ ] Test push triggers auto-deployment
 
 ### PWA Testing
+
 - [ ] Service Worker registered
 - [ ] Offline mode works
 - [ ] Cache storage populated
@@ -368,6 +377,7 @@ If you need to add environment variables:
 - [ ] Update notification works
 
 ### Image Optimization
+
 - [ ] Sharp installed
 - [ ] Images converted to WebP
 - [ ] File sizes reduced
@@ -375,6 +385,7 @@ If you need to add environment variables:
 - [ ] Changes committed and deployed
 
 ### Performance Audit
+
 - [ ] Lighthouse run on production URL
 - [ ] Performance score ≥ 85
 - [ ] Accessibility score ≥ 90
@@ -392,7 +403,7 @@ Your deployment is successful when:
 ✅ **PWA features active** (offline, installable)  
 ✅ **Performance score** ≥ 85  
 ✅ **Auto-deployments work** (push to main → deploy)  
-✅ **Images optimized** (WebP conversion complete)  
+✅ **Images optimized** (WebP conversion complete)
 
 ---
 
@@ -401,6 +412,7 @@ Your deployment is successful when:
 ### Build Fails on Vercel
 
 **Error:** "Build failed"
+
 - Check build logs in Vercel Dashboard
 - Ensure all dependencies are in `package.json`
 - Try building locally: `npm run build`
@@ -408,6 +420,7 @@ Your deployment is successful when:
 ### Service Worker Not Updating
 
 **Issue:** Old version loads after deployment
+
 - Hard refresh: `Ctrl+Shift+R` (Windows) or `Cmd+Shift+R` (Mac)
 - Unregister SW in DevTools → Application → Service Workers
 - Check `sw.js` has `Cache-Control: max-age=0`
@@ -415,6 +428,7 @@ Your deployment is successful when:
 ### 404 on Page Refresh
 
 **Issue:** Direct URLs return 404
+
 - Vercel should handle this automatically with `vercel.json`
 - Verify `vercel.json` has rewrites configured
 - Check deployment logs for routing issues
@@ -422,6 +436,7 @@ Your deployment is successful when:
 ### Images Not Loading
 
 **Issue:** 404 for images
+
 - Verify images are in `public/` folder
 - Check file paths are correct
 - Ensure images are committed to git

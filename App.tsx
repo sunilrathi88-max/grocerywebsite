@@ -67,6 +67,9 @@ const ContactPage = React.lazy(() => import('./components/ContactPage'));
 const RecipesPage = React.lazy(() => import('./components/RecipesPage'));
 const BlogPage = React.lazy(() => import('./components/BlogPage'));
 const BlogPostPage = React.lazy(() => import('./components/BlogPostPage'));
+const LoginPage = React.lazy(() => import('./components/LoginPage'));
+const SignUpPage = React.lazy(() => import('./components/SignUpPage'));
+const ForgotPasswordPage = React.lazy(() => import('./components/ForgotPasswordPage'));
 
 const App: React.FC = () => {
   // Enable performance monitoring
@@ -250,16 +253,44 @@ const App: React.FC = () => {
     [toggleWishlist, isInWishlist, addToast]
   );
 
-  const handleLogin = useCallback(() => {
-    setIsLoggedIn(true);
-    setCurrentUser(MOCK_USER);
-    setAuthModalOpen(false);
-    addToast(`Welcome back, ${MOCK_USER.name}!`, 'success');
-  }, [addToast]);
+  const handleLogin = useCallback(
+    (email: string, password: string, rememberMe: boolean) => {
+      // In production, this would validate against a backend API
+      setIsLoggedIn(true);
+      setCurrentUser({ ...MOCK_USER, email });
+      setAuthModalOpen(false);
+      window.location.hash = '#/';
+      addToast(`Welcome back, ${MOCK_USER.name}!`, 'success');
+
+      // Store session if remember me is checked
+      if (rememberMe) {
+        localStorage.setItem('rememberedEmail', email);
+      }
+    },
+    [addToast]
+  );
+
+  const handleSignUp = useCallback(
+    (name: string, email: string, password: string) => {
+      // In production, this would create a new user via backend API
+      const newUser = {
+        ...MOCK_USER,
+        name,
+        email,
+        isAdmin: false,
+      };
+      setIsLoggedIn(true);
+      setCurrentUser(newUser);
+      window.location.hash = '#/';
+      addToast(`Welcome to Tattva Co., ${name}! Your account has been created.`, 'success');
+    },
+    [addToast]
+  );
 
   const handleLogout = useCallback(() => {
     setIsLoggedIn(false);
     setCurrentUser(null);
+    localStorage.removeItem('rememberedEmail');
     addToast('You have been logged out.', 'info');
   }, [addToast]);
 
@@ -593,6 +624,31 @@ const App: React.FC = () => {
             />
           </React.Suspense>
         );
+      case 'login':
+        return (
+          <React.Suspense fallback={<PageLoader />}>
+            <LoginPage
+              onLogin={handleLogin}
+              onNavigateToSignup={() => (window.location.hash = '#/signup')}
+              onNavigateToForgotPassword={() => (window.location.hash = '#/forgot-password')}
+            />
+          </React.Suspense>
+        );
+      case 'signup':
+        return (
+          <React.Suspense fallback={<PageLoader />}>
+            <SignUpPage
+              onSignUp={handleSignUp}
+              onNavigateToLogin={() => (window.location.hash = '#/login')}
+            />
+          </React.Suspense>
+        );
+      case 'forgot-password':
+        return (
+          <React.Suspense fallback={<PageLoader />}>
+            <ForgotPasswordPage onNavigateToLogin={() => (window.location.hash = '#/login')} />
+          </React.Suspense>
+        );
       case 'home':
       default:
         return (
@@ -781,7 +837,12 @@ const App: React.FC = () => {
         <SocialProofNotifications />
 
         {isAuthModalOpen && (
-          <AuthModal onClose={() => setAuthModalOpen(false)} onLogin={handleLogin} />
+          <AuthModal
+            onClose={() => setAuthModalOpen(false)}
+            onLogin={() => {
+              handleLogin('anika.sharma@example.com', 'password123', false);
+            }}
+          />
         )}
 
         <ComparisonBar
