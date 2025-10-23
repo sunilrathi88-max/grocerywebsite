@@ -4,6 +4,8 @@ import { MailIcon } from './icons/MailIcon';
 import { EyeIcon } from './icons/EyeIcon';
 import { AlertTriangleIcon } from './icons/AlertTriangleIcon';
 import { CheckCircleIcon } from './icons/CheckCircleIcon';
+import OAuthButtons from './OAuthButtons';
+import { AuthService } from '../utils/authService';
 
 interface SignUpPageProps {
   onSignUp: (name: string, email: string, password: string) => void;
@@ -102,13 +104,25 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ onSignUp, onNavigateToLogin }) 
       return;
     }
 
-    // Simulate API call
+    // Call authentication service
     setIsLoading(true);
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      onSignUp(name, email, password);
+      const response = await AuthService.signUp(name, email, password);
+
+      if (response.success) {
+        if (response.verificationEmailSent) {
+          // Redirect to email verification page
+          window.location.hash = `#/verify-email?email=${encodeURIComponent(email)}`;
+        } else {
+          onSignUp(name, email, password);
+        }
+      } else {
+        setErrors({ general: response.message || 'Sign up failed' });
+      }
     } catch (error) {
-      setErrors({ general: 'An error occurred. Please try again.' });
+      setErrors({
+        general: error instanceof Error ? error.message : 'An error occurred. Please try again.',
+      });
     } finally {
       setIsLoading(false);
     }
@@ -377,6 +391,35 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ onSignUp, onNavigateToLogin }) 
               )}
             </button>
           </form>
+
+          {/* OAuth Buttons */}
+          <div className="mt-6">
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-300"></div>
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="px-2 bg-white text-gray-500">Or sign up with</span>
+              </div>
+            </div>
+
+            <div className="mt-6">
+              <OAuthButtons
+                onSuccess={(user, isNewUser) => {
+                  if (isNewUser) {
+                    onSignUp(user.name, user.email, '');
+                  } else {
+                    // User already exists, redirect to home
+                    window.location.hash = '#/';
+                  }
+                }}
+                onError={(error) => {
+                  setErrors({ general: error });
+                }}
+                mode="signup"
+              />
+            </div>
+          </div>
         </div>
 
         {/* Login Link */}

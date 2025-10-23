@@ -3,6 +3,8 @@ import { UserIcon } from './icons/UserIcon';
 import { MailIcon } from './icons/MailIcon';
 import { EyeIcon } from './icons/EyeIcon';
 import { AlertTriangleIcon } from './icons/AlertTriangleIcon';
+import OAuthButtons from './OAuthButtons';
+import { AuthService } from '../utils/authService';
 
 interface LoginPageProps {
   onLogin: (email: string, password: string, rememberMe: boolean) => void;
@@ -51,23 +53,23 @@ const LoginPage: React.FC<LoginPageProps> = ({
       return;
     }
 
-    // Simulate API call
+    // Call authentication service
     setIsLoading(true);
     try {
-      // In a real app, you'd call your authentication API here
-      await new Promise((resolve) => setTimeout(resolve, 800));
+      const response = await AuthService.login(email, password, rememberMe);
 
-      // Mock validation: accept demo credentials or any email with password
-      if (
-        (email === 'anika.sharma@example.com' && password === 'password123') ||
-        password.length >= 6
-      ) {
+      if (response.success) {
         onLogin(email, password, rememberMe);
+      } else if (response.requires2FA) {
+        // Redirect to 2FA verification page
+        window.location.hash = '#/2fa-verify';
       } else {
-        setErrors({ general: 'Invalid email or password' });
+        setErrors({ general: response.message || 'Invalid email or password' });
       }
     } catch (error) {
-      setErrors({ general: 'An error occurred. Please try again.' });
+      setErrors({
+        general: error instanceof Error ? error.message : 'An error occurred. Please try again.',
+      });
     } finally {
       setIsLoading(false);
     }
@@ -228,6 +230,30 @@ const LoginPage: React.FC<LoginPageProps> = ({
               )}
             </button>
           </form>
+
+          {/* OAuth Buttons */}
+          <div className="mt-6">
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-300"></div>
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="px-2 bg-white text-gray-500">Or continue with</span>
+              </div>
+            </div>
+
+            <div className="mt-6">
+              <OAuthButtons
+                onSuccess={(user, isNewUser) => {
+                  onLogin(user.email, '', false);
+                }}
+                onError={(error) => {
+                  setErrors({ general: error });
+                }}
+                mode="login"
+              />
+            </div>
+          </div>
 
           {/* Demo Credentials */}
           <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
