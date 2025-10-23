@@ -19,6 +19,7 @@
 ```
 
 **What to check:**
+
 - Are products loaded? (Should be 8 products from MOCK_PRODUCTS)
 - What's the filtered products count?
 - Check the filter details (category, search, tags, etc.)
@@ -28,7 +29,9 @@
 ### Step 2: Common Issues
 
 #### Issue A: Products array is empty (0 products)
+
 **Possible causes:**
+
 - useProducts hook not loading MOCK_PRODUCTS
 - Import error in data.ts
 
@@ -36,7 +39,9 @@
 Check console for error messages about imports
 
 #### Issue B: Products loaded but filtered to 0
+
 **Possible causes:**
+
 - Category filter active (not "All")
 - Search query filtering everything out
 - Price range too restrictive
@@ -44,6 +49,7 @@ Check console for error messages about imports
 - "On Sale" filter active with no sales
 
 **Check in console:**
+
 ```javascript
 🎯 Filtered products: 0 {
   total: 8,           // Products loaded ✅
@@ -56,13 +62,16 @@ Check console for error messages about imports
 
 **Fix:**
 Reset filters on the page:
+
 - Click "All" category
 - Clear search box
 - Uncheck "On Sale" if active
 - Uncheck "In Stock Only" if active
 
 #### Issue C: Still loading (isLoading = true)
+
 **Check:**
+
 - Wait 1 second (there's a setTimeout)
 - If still showing skeletons after 1 second, check console for errors
 
@@ -73,6 +82,7 @@ Reset filters on the page:
 If products still don't show, try these fixes:
 
 #### Fix 1: Clear Browser Cache
+
 ```
 1. Press Ctrl+Shift+Delete
 2. Select "Cached images and files"
@@ -81,12 +91,14 @@ If products still don't show, try these fixes:
 ```
 
 #### Fix 2: Hard Refresh
+
 ```
 Press: Ctrl+Shift+R (Windows)
 or: Cmd+Shift+R (Mac)
 ```
 
 #### Fix 3: Restart Dev Server
+
 ```powershell
 # Stop the server (Ctrl+C in terminal)
 # Then restart:
@@ -98,6 +110,7 @@ npm run dev
 ## Expected Console Output
 
 ### Good ✅ (Products showing)
+
 ```
 🔍 Products loaded: 8 [Array with 8 products]
 🎯 Filtered products: 8 {
@@ -112,6 +125,7 @@ npm run dev
 ```
 
 ### Bad ❌ (Products not showing - filtered out)
+
 ```
 🔍 Products loaded: 8 [Array with 8 products]
 🎯 Filtered products: 0 {
@@ -132,6 +146,7 @@ npm run dev
 I've added debug logging to help identify the issue:
 
 ### In App.tsx (line ~117):
+
 ```typescript
 // Debug: Log products to console
 useEffect(() => {
@@ -142,6 +157,7 @@ useEffect(() => {
 This logs when products are loaded from useProducts hook.
 
 ### In App.tsx (line ~440):
+
 ```typescript
 console.log('🎯 Filtered products:', result.length, {
   total: products.length,
@@ -155,6 +171,7 @@ console.log('🎯 Filtered products:', result.length, {
 ```
 
 This logs the filtering pipeline:
+
 - `total`: Products from useProducts
 - `afterFilter`: After category, search, price, stock filters
 - `final`: After "On Sale" and tag filters

@@ -423,7 +423,7 @@ const Header: React.FC<HeaderProps> = ({
               {isMiniCartOpen && <MiniCart items={cartItems} subtotal={subtotal} />}
             </div>
             <button
-              onClick={isLoggedIn ? onLogoutClick : onLoginClick}
+              onClick={isLoggedIn ? onLogoutClick : () => (window.location.hash = '#/login')}
               className="hidden sm:block bg-brand-dark text-white font-bold py-2 px-4 rounded-full text-sm hover:bg-opacity-80 transition-colors"
             >
               {isLoggedIn ? 'Logout' : 'Login'}

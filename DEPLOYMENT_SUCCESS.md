@@ -8,13 +8,16 @@
 ## 🚀 Deployment Details
 
 ### Production URL
+
 **https://grocerywebsite-ccl1t74v7-sunilrathi88-1974s-projects.vercel.app**
 
 You can also access via:
+
 - Direct link: Click the URL above
 - Vercel Dashboard: https://vercel.com/sunilrathi88-1974s-projects/grocerywebsite
 
 ### Deployment Summary
+
 ```
 ✅ Build successful (11 minutes)
 ✅ Service Worker generated
@@ -25,6 +28,7 @@ You can also access via:
 ```
 
 ### Project Information
+
 - **Project ID:** `prj_kho97rvS5t2jYb6ODzjuCvVJrkU8`
 - **Org ID:** `team_fa2BYXCyJGOZTIJEI1`
 - **Vercel CLI:** v48.2.9
@@ -41,6 +45,7 @@ You can also access via:
 **Result:** Live at production URL
 
 **What was done:**
+
 - Fixed `vercel.json` configuration issues
 - Removed invalid environment variable references
 - Removed non-existent API functions configuration
@@ -127,10 +132,12 @@ To enable automatic deployments on every push to `main`:
 ### Step 1: Get Your Tokens
 
 Already available from your local `.vercel/project.json`:
+
 - **VERCEL_ORG_ID:** `team_fa2BYXCyJGOZTIJEI1`
 - **VERCEL_PROJECT_ID:** `prj_kho97rvS5t2jYb6ODzjuCvVJrkU8`
 
 Get your **VERCEL_TOKEN** from:
+
 1. Go to https://vercel.com/account/tokens
 2. Click "Create Token"
 3. Name it "GitHub Actions"
@@ -155,6 +162,7 @@ Value: prj_kho97rvS5t2jYb6ODzjuCvVJrkU8
 ### Step 3: Test Auto-Deploy
 
 Make any small change and push:
+
 ```powershell
 git commit --allow-empty -m "test: trigger auto-deployment"
 git push origin main
@@ -175,6 +183,7 @@ npx lighthouse https://grocerywebsite-ccl1t74v7-sunilrathi88-1974s-projects.verc
 ```
 
 This will:
+
 - Run performance audit
 - Check Core Web Vitals
 - Test PWA features
@@ -182,17 +191,18 @@ This will:
 
 ### Expected Scores
 
-| Category | Target | Status |
-|----------|--------|--------|
-| Performance | ≥ 85 | ⏳ Run audit to check |
-| Accessibility | ≥ 90 | ⏳ Run audit to check |
-| Best Practices | ≥ 90 | ⏳ Run audit to check |
-| SEO | ≥ 90 | ⏳ Run audit to check |
-| PWA | ≥ 80 | ⏳ Run audit to check |
+| Category       | Target | Status                |
+| -------------- | ------ | --------------------- |
+| Performance    | ≥ 85   | ⏳ Run audit to check |
+| Accessibility  | ≥ 90   | ⏳ Run audit to check |
+| Best Practices | ≥ 90   | ⏳ Run audit to check |
+| SEO            | ≥ 90   | ⏳ Run audit to check |
+| PWA            | ≥ 80   | ⏳ Run audit to check |
 
 ### Quick Online Check
 
 You can also use:
+
 - **PageSpeed Insights:** https://pagespeed.web.dev/
 - Paste your URL
 - Click "Analyze"
@@ -202,6 +212,7 @@ You can also use:
 ## 📊 Current Metrics
 
 ### Bundle Size
+
 ```
 Main Bundle:   28.37 KB gzipped (91.01 KB raw)
 React Vendor:  45.68 KB gzipped (142.38 KB raw)
@@ -211,12 +222,14 @@ Total Initial: ~109 KB gzipped ✅
 ```
 
 ### Code Splitting
+
 - 40+ lazy-loaded chunks
 - Hero component deferred (-18 KB)
 - Modal components on-demand
 - Route-based splitting active
 
 ### PWA Assets
+
 - 70 precached entries
 - 951.26 KB total cache
 - Service Worker: 5.76 KB
@@ -229,6 +242,7 @@ Total Initial: ~109 KB gzipped ✅
 ### Immediate (Do Now)
 
 1. **Test PWA Features** (15 minutes)
+
    ```
    ☐ Open site in Chrome
    ☐ Check Service Worker status
@@ -238,6 +252,7 @@ Total Initial: ~109 KB gzipped ✅
    ```
 
 2. **Run Lighthouse Audit** (5 minutes)
+
    ```powershell
    npx lighthouse https://grocerywebsite-ccl1t74v7-sunilrathi88-1974s-projects.vercel.app --view
    ```
@@ -292,28 +307,32 @@ Your deployment is successful because:
 ✅ **Optimized** - 109 KB gzipped bundle  
 ✅ **Tested** - All 158 tests passing  
 ✅ **Secure** - HTTPS enabled automatically  
-✅ **Cached** - 951 KB precached for offline  
+✅ **Cached** - 951 KB precached for offline
 
 ---
 
 ## 🆘 Troubleshooting
 
 ### Site not loading?
+
 - Check URL is correct
 - Clear browser cache
 - Try incognito mode
 
 ### Service Worker issues?
+
 - Hard refresh: `Ctrl+Shift+R`
 - Check DevTools → Application → Service Workers
 - Look for errors in Console
 
 ### Performance issues?
+
 - Run Lighthouse audit to identify
 - Check Network tab for slow resources
 - Verify bundle size hasn't increased
 
 ### Need help?
+
 - Check `DEPLOYMENT.md` for detailed guides
 - Check `PRODUCTION_READINESS_REPORT.md` for complete documentation
 - Visit Vercel Dashboard for deployment logs
@@ -337,6 +356,7 @@ Your grocery website is now **LIVE** and accessible to the world! 🌍
 https://grocerywebsite-ccl1t74v7-sunilrathi88-1974s-projects.vercel.app
 
 ### What you've achieved:
+
 - ✅ Optimized performance (14.2% bundle reduction)
 - ✅ PWA capabilities (offline support)
 - ✅ Production deployment (live on Vercel)
@@ -348,6 +368,6 @@ https://grocerywebsite-ccl1t74v7-sunilrathi88-1974s-projects.vercel.app
 
 ---
 
-*Generated: October 23, 2025*  
-*Deployment Platform: Vercel*  
-*Status: Production Ready ✅*
+_Generated: October 23, 2025_  
+_Deployment Platform: Vercel_  
+_Status: Production Ready ✅_
