@@ -411,4 +411,12 @@ export const pageSEO = {
     canonical: 'https://tattva-co.com/contact',
     ogType: 'website',
   }),
+
+  privacyPolicy: (): SEOConfig => ({
+    title: 'Privacy Policy | Tattva Co.',
+    description: 'Read the privacy policy for Tattva Co. to understand how we collect, use, and protect your personal information.',
+    keywords: ['privacy policy', 'data protection', 'terms'],
+    canonical: 'https://tattva-co.com/privacy-policy',
+    noindex: true, // It's common to noindex legal pages
+  }),
 };
