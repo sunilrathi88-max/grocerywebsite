@@ -65,7 +65,58 @@ describe('useProductFilter', () => {
       ],
       tags: ['organic', 'natural', 'raw'],
     },
+    {
+      id: 6,
+      name: 'Ginger Powder',
+      description: 'Aromatic ginger powder',
+      category: 'Spices',
+      images: ['/images/products/ginger-1.svg'],
+      variants: [
+        { id: 6, name: '50g', price: 250, stock: 30 },
+        { id: 7, name: '250g', price: 900, stock: 15 },
+        { id: 8, name: '1kg', price: 3200, salePrice: 2800, stock: 5 },
+      ],
+      reviews: [],
+      tags: ['natural', 'fresh'],
+    },
   ];
+
+  describe('Multi-Variant Product Filtering', () => {
+    it('should include a product if any of its variants are within the price range', () => {
+      const filters: FilterOptions = {
+        category: 'All',
+        searchQuery: '',
+        priceRange: [800, 1000],
+      };
+
+      const { result } = renderHook(() => useProductFilter(mockProducts, filters));
+
+      // Current buggy implementation will fail this test
+      // It checks only the first variant (price: 250), so Ginger Powder is excluded.
+      // The correct implementation should check all variants and include it because of the 250g variant (price: 900).
+      const names = result.current.filteredProducts.map((p) => p.name);
+      expect(names).toContain('Ginger Powder');
+      expect(names).not.toContain('Organic Honey'); // price: 799 - should be out of range
+    });
+
+    it('should sort multi-variant products based on their lowest price', () => {
+      const filters: FilterOptions = {
+        category: 'All',
+        searchQuery: '',
+        sortBy: 'price-asc',
+      };
+
+      const { result } = renderHook(() => useProductFilter(mockProducts, filters));
+
+      const names = result.current.filteredProducts.map((p) => p.name);
+
+      // Current buggy implementation will use the first variant's price (250) for Ginger Powder.
+      // This will place it incorrectly before Black Pepper (salePrice: 249).
+      const indexOfGinger = names.indexOf('Ginger Powder');
+      const indexOfPepper = names.indexOf('Black Pepper');
+      expect(indexOfGinger).toBeGreaterThan(indexOfPepper);
+    });
+  });
 
   describe('Basic Filtering', () => {
     it('should return all products when no filters applied', () => {

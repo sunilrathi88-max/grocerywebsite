@@ -23,7 +23,24 @@ export interface UseCartReturn {
  * addToCart(product, variant, 2);
  */
 export const useCart = (): UseCartReturn => {
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [cartItems, setCartItems] = useState<CartItem[]>(() => {
+    try {
+      const storedCart = localStorage.getItem('tattva-cart');
+      return storedCart ? JSON.parse(storedCart) : [];
+    } catch (error) {
+      console.error('Error parsing cart from localStorage:', error);
+      return [];
+    }
+  });
+
+  // Persist cart to localStorage whenever it changes
+  useEffect(() => {
+    try {
+      localStorage.setItem('tattva-cart', JSON.stringify(cartItems));
+    } catch (error) {
+      console.error('Error saving cart to localStorage:', error);
+    }
+  }, [cartItems]);
 
   /**
    * Calculate total number of items in cart

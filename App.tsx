@@ -756,11 +756,13 @@ const App: React.FC = () => {
                 ? pageSEO.about()
                 : currentView === 'contact'
                   ? pageSEO.contact()
-                  : currentView === 'faqs'
-                    ? pageSEO.home()
-                    : selectedCategory !== 'All'
-                      ? pageSEO.products(selectedCategory)
-                      : pageSEO.home())}
+                  : currentView === 'privacy-policy'
+                    ? pageSEO.privacyPolicy()
+                    : currentView === 'faqs'
+                      ? pageSEO.home()
+                      : selectedCategory !== 'All'
+                        ? pageSEO.products(selectedCategory)
+                        : pageSEO.home())}
         structuredData={generateOrganizationSchema()}
         structuredDataId="organization-schema"
       />

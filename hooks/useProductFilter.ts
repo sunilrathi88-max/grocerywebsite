@@ -58,8 +58,10 @@ export const useProductFilter = (
     if (filters.priceRange) {
       const [minPrice, maxPrice] = filters.priceRange;
       result = result.filter((product) => {
-        const price = product.variants[0].salePrice ?? product.variants[0].price;
-        return price >= minPrice && price <= maxPrice;
+        return product.variants.some((variant) => {
+          const price = variant.salePrice ?? variant.price;
+          return price >= minPrice && price <= maxPrice;
+        });
       });
     }
 
@@ -87,15 +89,15 @@ export const useProductFilter = (
           break;
         case 'price-asc':
           result.sort((a, b) => {
-            const priceA = a.variants[0].salePrice ?? a.variants[0].price;
-            const priceB = b.variants[0].salePrice ?? b.variants[0].price;
+            const priceA = Math.min(...a.variants.map((v) => v.salePrice ?? v.price));
+            const priceB = Math.min(...b.variants.map((v) => v.salePrice ?? v.price));
             return priceA - priceB;
           });
           break;
         case 'price-desc':
           result.sort((a, b) => {
-            const priceA = a.variants[0].salePrice ?? a.variants[0].price;
-            const priceB = b.variants[0].salePrice ?? b.variants[0].price;
+            const priceA = Math.min(...a.variants.map((v) => v.salePrice ?? v.price));
+            const priceB = Math.min(...b.variants.map((v) => v.salePrice ?? v.price));
             return priceB - priceA;
           });
           break;
