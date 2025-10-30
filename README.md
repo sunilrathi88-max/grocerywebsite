@@ -568,3 +568,9 @@ This project is licensed under the MIT License.
 [⬆ Back to Top](#-tattva-co---premium-organic-grocery-store)
 
 </div>
+
+#### Backend Integration (Supabase)
+
+- Supabase Project URL: https://rzhdyvdttbeczyavrcvh.supabase.co
+- Supabase Anon Key: See `supabaseClient.ts` for configuration
+- See https://app.supabase.com/project for dashboard and table setup
