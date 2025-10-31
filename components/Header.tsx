@@ -7,6 +7,7 @@ import { CogIcon } from './icons/CogIcon';
 import { MoonIcon } from './icons/MoonIcon';
 import { SunIcon } from './icons/SunIcon';
 import { Product, CartItem } from '../types';
+import SignOutButton from './SignOutButton';
 import MiniCart from './MiniCart';
 import { ChevronDownIcon } from './icons/ChevronDownIcon';
 import { ChevronRightIcon } from './icons/ChevronRightIcon';
@@ -422,12 +423,16 @@ const Header: React.FC<HeaderProps> = ({
               </motion.div>
               {isMiniCartOpen && <MiniCart items={cartItems} subtotal={subtotal} />}
             </div>
-            <button
-              onClick={isLoggedIn ? onLogoutClick : () => (window.location.hash = '#/login')}
-              className="hidden sm:block bg-brand-dark text-white font-bold py-2 px-4 rounded-full text-sm hover:bg-opacity-80 transition-colors"
-            >
-              {isLoggedIn ? 'Logout' : 'Login'}
-            </button>
+            {isLoggedIn ? (
+              <SignOutButton className="bg-brand-dark text-white font-bold py-2 px-4 rounded-full text-sm hover:bg-opacity-80 transition-colors" />
+            ) : (
+              <button
+                onClick={() => (window.location.hash = '#/login')}
+                className="bg-brand-dark text-white font-bold py-2 px-4 rounded-full text-sm hover:bg-opacity-80 transition-colors"
+              >
+                Login
+              </button>
+            )}
             <button
               onClick={onMobileMenuClick}
               className="md:hidden p-2 rounded-full text-brand-dark hover:bg-brand-secondary/30 transition-colors"

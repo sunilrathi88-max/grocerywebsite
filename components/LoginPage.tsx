@@ -244,7 +244,7 @@ const LoginPage: React.FC<LoginPageProps> = ({
 
             <div className="mt-6">
               <OAuthButtons
-                onSuccess={(user, isNewUser) => {
+                onSuccess={(user, _isNewUser) => {
                   onLogin(user.email, '', false);
                 }}
                 onError={(error) => {
@@ -270,7 +270,7 @@ const LoginPage: React.FC<LoginPageProps> = ({
         {/* Sign Up Link */}
         <div className="text-center">
           <p className="text-gray-600">
-            Don't have an account?{' '}
+            Don&apos;t have an account?{' '}
             <button
               onClick={onNavigateToSignup}
               className="font-medium text-brand-primary hover:text-brand-dark transition-colors"

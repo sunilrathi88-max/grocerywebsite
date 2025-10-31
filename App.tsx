@@ -289,7 +289,13 @@ const App: React.FC = () => {
     [addToast]
   );
 
-  const handleLogout = useCallback(() => {
+  const handleLogout = useCallback(async () => {
+    try {
+      const { AuthService } = await import('./utils/authService');
+      await AuthService.logout();
+    } catch (e) {
+      // Ignore logout errors; user state will be cleared locally
+    }
     setIsLoggedIn(false);
     setCurrentUser(null);
     localStorage.removeItem('rememberedEmail');

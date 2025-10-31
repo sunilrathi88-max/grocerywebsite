@@ -113,7 +113,7 @@ const TwoFactorSetupPage: React.FC<TwoFactorSetupPageProps> = ({ onComplete, onC
               <div>
                 <h3 className="font-semibold text-gray-900">Scan QR Code</h3>
                 <p className="text-sm text-gray-600">
-                  Use the app to scan the QR code we'll provide
+                  Use the app to scan the QR code we&apos;ll provide
                 </p>
               </div>
             </div>
@@ -161,7 +161,7 @@ const TwoFactorSetupPage: React.FC<TwoFactorSetupPageProps> = ({ onComplete, onC
           </div>
 
           <div className="bg-gray-50 rounded-lg p-4 mb-6">
-            <p className="text-sm text-gray-600 mb-2">Can't scan? Enter this code manually:</p>
+            <p className="text-sm text-gray-600 mb-2">Can&apos;t scan? Enter this code manually:</p>
             <div className="flex items-center gap-2">
               <code className="flex-1 bg-white px-3 py-2 rounded border border-gray-300 text-sm font-mono break-all">
                 {secret}
@@ -191,7 +191,7 @@ const TwoFactorSetupPage: React.FC<TwoFactorSetupPageProps> = ({ onComplete, onC
             onClick={() => setStep('verify')}
             className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
           >
-            I've Scanned the Code
+            I&apos;ve Scanned the Code
           </button>
         </div>
       </div>
@@ -264,8 +264,8 @@ const TwoFactorSetupPage: React.FC<TwoFactorSetupPageProps> = ({ onComplete, onC
             </div>
             <h2 className="text-2xl font-bold text-gray-900 mb-2">Save Backup Codes</h2>
             <p className="text-gray-600">
-              Store these codes safely. You'll need them if you lose access to your authenticator
-              app.
+              Store these codes safely. You&apos;ll need them if you lose access to your
+              authenticator app.
             </p>
           </div>
 
@@ -325,7 +325,7 @@ const TwoFactorSetupPage: React.FC<TwoFactorSetupPageProps> = ({ onComplete, onC
             <ul className="text-sm text-amber-800 space-y-1">
               <li>• Each code can only be used once</li>
               <li>• Store them in a secure location</li>
-              <li>• Don't share these codes with anyone</li>
+              <li>• Don&apos;t share these codes with anyone</li>
             </ul>
           </div>
 
@@ -333,7 +333,7 @@ const TwoFactorSetupPage: React.FC<TwoFactorSetupPageProps> = ({ onComplete, onC
             onClick={() => setStep('complete')}
             className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
           >
-            I've Saved My Codes
+            I&apos;ve Saved My Codes
           </button>
         </div>
       </div>
@@ -349,8 +349,8 @@ const TwoFactorSetupPage: React.FC<TwoFactorSetupPageProps> = ({ onComplete, onC
           </div>
           <h2 className="text-3xl font-bold text-gray-900 mb-2">All Set!</h2>
           <p className="text-gray-600 mb-8">
-            Two-factor authentication is now enabled on your account. You'll need your authenticator
-            app to sign in.
+            Two-factor authentication is now enabled on your account. You&apos;ll need your
+            authenticator app to sign in.
           </p>
           <button
             onClick={onComplete}

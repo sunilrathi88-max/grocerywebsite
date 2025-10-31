@@ -62,9 +62,11 @@ const ForgotPasswordPage: React.FC<ForgotPasswordPageProps> = ({ onNavigateToLog
           </div>
           <h2 className="text-4xl font-serif font-bold text-gray-900 mb-2">Forgot Password?</h2>
           <p className="text-gray-600">
-            {isSuccess
-              ? 'Check your email for reset instructions'
-              : "No worries, we'll send you reset instructions"}
+            {isSuccess ? (
+              'Check your email for reset instructions'
+            ) : (
+              <>No worries, we&apos;ll send you reset instructions</>
+            )}
           </p>
         </div>
 
@@ -80,13 +82,13 @@ const ForgotPasswordPage: React.FC<ForgotPasswordPageProps> = ({ onNavigateToLog
               <div>
                 <h3 className="text-xl font-bold text-gray-900 mb-2">Email Sent!</h3>
                 <p className="text-gray-600">
-                  We've sent password reset instructions to{' '}
+                  We&apos;ve sent password reset instructions to{' '}
                   <span className="font-medium text-gray-900">{email}</span>
                 </p>
               </div>
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 text-left">
                 <p className="text-sm text-blue-900 mb-2">
-                  <strong>Didn't receive the email?</strong>
+                  <strong>Didn&apos;t receive the email?</strong>
                 </p>
                 <ul className="text-xs text-blue-700 space-y-1 list-disc list-inside">
                   <li>Check your spam or junk folder</li>
