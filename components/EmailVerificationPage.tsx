@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { AuthService } from '../utils/authService';
 import { MailIcon } from './icons/MailIcon';
 import { CheckCircleIcon } from './icons/CheckCircleIcon';
@@ -21,6 +21,31 @@ const EmailVerificationPage: React.FC<EmailVerificationPageProps> = ({
   const [resendCooldown, setResendCooldown] = useState(0);
   const [resendSuccess, setResendSuccess] = useState(false);
 
+  const verifyEmail = useCallback(
+    async (token: string) => {
+      setIsVerifying(true);
+      setError('');
+
+      try {
+        const response = await AuthService.verifyEmail(token);
+        if (response.success) {
+          setIsVerified(true);
+          // Auto-redirect after 3 seconds
+          setTimeout(() => {
+            onNavigateToHome();
+          }, 3000);
+        } else {
+          setError('Verification failed. The link may be expired or invalid.');
+        }
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Verification failed');
+      } finally {
+        setIsVerifying(false);
+      }
+    },
+    [onNavigateToHome]
+  );
+
   // Check for verification token in URL
   useEffect(() => {
     const hash = window.location.hash;
@@ -30,7 +55,7 @@ const EmailVerificationPage: React.FC<EmailVerificationPageProps> = ({
     if (token) {
       verifyEmail(token);
     }
-  }, []);
+  }, [verifyEmail]);
 
   // Resend cooldown timer
   useEffect(() => {
@@ -41,28 +66,6 @@ const EmailVerificationPage: React.FC<EmailVerificationPageProps> = ({
       return () => clearTimeout(timer);
     }
   }, [resendCooldown]);
-
-  const verifyEmail = async (token: string) => {
-    setIsVerifying(true);
-    setError('');
-
-    try {
-      const response = await AuthService.verifyEmail(token);
-      if (response.success) {
-        setIsVerified(true);
-        // Auto-redirect after 3 seconds
-        setTimeout(() => {
-          onNavigateToHome();
-        }, 3000);
-      } else {
-        setError('Verification failed. The link may be expired or invalid.');
-      }
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Verification failed');
-    } finally {
-      setIsVerifying(false);
-    }
-  };
 
   const handleResendEmail = async () => {
     if (resendCooldown > 0) return;
@@ -147,7 +150,7 @@ const EmailVerificationPage: React.FC<EmailVerificationPageProps> = ({
           </div>
           <h2 className="text-3xl font-bold text-gray-900 mb-2">Verify Your Email</h2>
           <p className="text-gray-600">
-            We've sent a verification link to{' '}
+            We&apos;ve sent a verification link to{' '}
             <span className="font-semibold text-gray-900">{email}</span>
           </p>
         </div>
@@ -182,12 +185,12 @@ const EmailVerificationPage: React.FC<EmailVerificationPageProps> = ({
             onClick={onNavigateToHome}
             className="w-full border border-gray-300 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-50 transition-colors"
           >
-            I'll Verify Later
+            I&apos;ll Verify Later
           </button>
         </div>
 
         <div className="mt-8 pt-6 border-t border-gray-200">
-          <h3 className="font-semibold text-gray-900 mb-3">Didn't receive the email?</h3>
+          <h3 className="font-semibold text-gray-900 mb-3">Didn&apos;t receive the email?</h3>
           <ul className="text-sm text-gray-600 space-y-2">
             <li className="flex items-start">
               <span className="text-blue-600 mr-2">•</span>

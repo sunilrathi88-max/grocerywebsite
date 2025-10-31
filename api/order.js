@@ -9,9 +9,7 @@ export default async function handler(req, res) {
   try {
     const orderData = req.body;
     // Insert order into Supabase table 'orders'
-    const { data, error } = await supabase
-      .from('orders')
-      .insert([orderData]);
+    const { data, error } = await supabase.from('orders').insert([orderData]);
     if (error) throw error;
     res.status(200).json({ message: 'Order placed', order: data });
   } catch (err) {

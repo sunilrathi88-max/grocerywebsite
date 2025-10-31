@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { AuthService } from '../utils/authService';
 import { FacebookIcon } from './icons/FacebookIcon';
 
 interface OAuthButtonsProps {
-  onSuccess: (user: any, isNewUser: boolean) => void;
+  onSuccess: (user: { email: string }, isNewUser: boolean) => void;
   onError: (error: string) => void;
   mode?: 'login' | 'signup';
 }
 
 const OAuthButtons: React.FC<OAuthButtonsProps> = ({ onSuccess, onError, mode = 'login' }) => {
   const [isLoading, setIsLoading] = useState<string | null>(null);
+
+  const handleOAuthCallbackWrapped = useCallback(handleOAuthCallback, [onSuccess, onError]);
 
   useEffect(() => {
     // Handle OAuth callback
@@ -23,13 +25,13 @@ const OAuthButtons: React.FC<OAuthButtonsProps> = ({ onSuccess, onError, mode = 
       // Verify state to prevent CSRF attacks
       const savedState = sessionStorage.getItem('oauth_state');
       if (state === savedState) {
-        handleOAuthCallback(provider, code);
+        handleOAuthCallbackWrapped(provider, code);
       } else {
         onError('Invalid OAuth state. Please try again.');
       }
       sessionStorage.removeItem('oauth_state');
     }
-  }, []);
+  }, [handleOAuthCallbackWrapped, onError]);
 
   const generateState = (): string => {
     return (
@@ -129,7 +131,7 @@ const OAuthButtons: React.FC<OAuthButtonsProps> = ({ onSuccess, onError, mode = 
     }
   };
 
-  const handleOAuthCallback = async (provider: 'google' | 'facebook', code: string) => {
+  async function handleOAuthCallback(provider: 'google' | 'facebook', code: string) {
     setIsLoading(provider);
 
     try {
@@ -145,7 +147,7 @@ const OAuthButtons: React.FC<OAuthButtonsProps> = ({ onSuccess, onError, mode = 
     } finally {
       setIsLoading(null);
     }
-  };
+  }
 
   const actionText = mode === 'login' ? 'Sign in' : 'Sign up';
 

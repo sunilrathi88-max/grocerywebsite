@@ -121,7 +121,16 @@ class JWTDecoder {
     try {
       const parts = token.split('.');
       if (parts.length !== 3) return null;
-      const payload = JSON.parse(atob(parts[1]));
+      const base64 = parts[1].replace(/-/g, '+').replace(/_/g, '/');
+      let decoded: string;
+      if (typeof globalThis.atob === 'function') {
+        decoded = globalThis.atob(base64);
+      } else if (typeof (globalThis as any).Buffer !== 'undefined') {
+        decoded = (globalThis as any).Buffer.from(base64, 'base64').toString('utf-8');
+      } else {
+        return null;
+      }
+      const payload = JSON.parse(decoded);
       return payload;
     } catch (error) {
       return null;
@@ -181,16 +190,30 @@ class AuthService {
     rememberMe: boolean = false
   ): Promise<LoginResponse> {
     try {
-      const response = await this.apiRequest<LoginResponse>('/api/auth/login', {
-        method: 'POST',
-        body: JSON.stringify({ email, password, rememberMe }),
-      });
-
-      if (response.success && response.tokens) {
-        TokenStorage.setTokens(response.tokens);
+      const { supabase } = await import('../supabaseClient');
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error || !data.session || !data.user) {
+        throw new Error(error?.message || 'Invalid email or password');
       }
 
-      return response;
+      const tokens: AuthTokens = {
+        accessToken: data.session.access_token,
+        refreshToken: data.session.refresh_token ?? '',
+        expiresIn: data.session.expires_in ?? 3600,
+        tokenType: 'Bearer',
+      };
+      TokenStorage.setTokens(tokens);
+
+      const user: AuthUser = {
+        id: 0,
+        email: data.user.email || '',
+        name: data.user.user_metadata?.name || data.user.email || '',
+        isAdmin: Boolean(data.user.user_metadata?.is_admin),
+        isEmailVerified: Boolean(data.user.email_confirmed_at),
+        has2FA: false,
+      };
+
+      return { success: true, user, tokens };
     } catch (error) {
       throw new Error(error instanceof Error ? error.message : 'Login failed');
     }
@@ -201,16 +224,35 @@ class AuthService {
    */
   static async signUp(name: string, email: string, password: string): Promise<SignUpResponse> {
     try {
-      const response = await this.apiRequest<SignUpResponse>('/api/auth/signup', {
-        method: 'POST',
-        body: JSON.stringify({ name, email, password }),
+      const { supabase } = await import('../supabaseClient');
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: { data: { name } },
       });
-
-      if (response.success && response.tokens) {
-        TokenStorage.setTokens(response.tokens);
+      if (error || !data.user) {
+        throw new Error(error?.message || 'Sign up failed');
       }
 
-      return response;
+      // Supabase may or may not create a session depending on email confirmation settings
+      const tokens: AuthTokens = {
+        accessToken: data.session?.access_token ?? '',
+        refreshToken: data.session?.refresh_token ?? '',
+        expiresIn: data.session?.expires_in ?? 0,
+        tokenType: 'Bearer',
+      };
+      if (tokens.accessToken) TokenStorage.setTokens(tokens);
+
+      const user: AuthUser = {
+        id: 0,
+        email: data.user.email || '',
+        name: name || data.user.email || '',
+        isAdmin: false,
+        isEmailVerified: Boolean(data.user.email_confirmed_at),
+        has2FA: false,
+      };
+
+      return { success: true, user, tokens, verificationEmailSent: !tokens.accessToken };
     } catch (error) {
       throw new Error(error instanceof Error ? error.message : 'Sign up failed');
     }
@@ -221,13 +263,8 @@ class AuthService {
    */
   static async logout(): Promise<void> {
     try {
-      const refreshToken = TokenStorage.getRefreshToken();
-      if (refreshToken) {
-        await this.apiRequest('/api/auth/logout', {
-          method: 'POST',
-          body: JSON.stringify({ refreshToken }),
-        });
-      }
+      const { supabase } = await import('../supabaseClient');
+      await supabase.auth.signOut();
       TokenStorage.clearTokens();
     } catch (error) {
       // Clear tokens anyway
