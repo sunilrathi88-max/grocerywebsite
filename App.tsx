@@ -271,16 +271,36 @@ const App: React.FC = () => {
     },
     [addToast]
   );
-
-// OAuth callback handler - FIX for login state
+// Supabase Authentication State Listener (FIXED)
 useEffect(() => {
-  const handleOAuthCallback = async () => {
+  const initializeAuth = async () => {
     try {
-      if (window.location.hash.includes('access_token')) {
-        const { supabase } = await import('./supabaseClient');
-        setTimeout(async () => {
-          const { data: { session } } = await supabase.auth.getSession();
-          if (session?.user) {
+      const { supabase } = await import('./supabaseClient');
+      
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (session?.user) {
+        const user = session.user;
+        setIsLoggedIn(true);
+        setCurrentUser({
+          ...MOCK_USER,
+          id: user.id,
+          email: user.email || '',
+          name: user.user_metadata?.name || user.email || '',
+          isAdmin: Boolean(user.user_metadata?.is_admin),
+          profilePicture: user.user_metadata?.picture || user.user_metadata?.avatar_url,
+        });
+        
+        if (window.location.hash.includes('access_token') || window.location.hash.includes('type=recovery')) {
+          window.history.replaceState({}, document.title, window.location.pathname + '#/');
+        }
+      }
+
+      const { data: { subscription } } = supabase.auth.onAuthStateChange(
+        async (event, session) => {
+          console.log('Auth state changed:', event, session?.user?.email);
+          
+          if (event === 'SIGNED_IN' && session?.user) {
             const user = session.user;
             setIsLoggedIn(true);
             setCurrentUser({
@@ -291,17 +311,30 @@ useEffect(() => {
               isAdmin: Boolean(user.user_metadata?.is_admin),
               profilePicture: user.user_metadata?.picture || user.user_metadata?.avatar_url,
             });
-            window.history.replaceState({}, document.title, window.location.pathname + '#/');
-            addToast(`Welcome, ${user.user_metadata?.name || user.email}!`, 'success');
+            
+            if (event === 'SIGNED_IN') {
+              addToast(`Welcome back, ${user.user_metadata?.name || user.email}!`, 'success');
+            }
+            
+            if (window.location.hash.includes('access_token')) {
+              window.history.replaceState({}, document.title, window.location.pathname + '#/');
+            }
+          } else if (event === 'SIGNED_OUT' || !session) {
+            setIsLoggedIn(false);
+            setCurrentUser(null);
           }
-        }, 1000);
-      }
+        }
+      );
+
+      return () => subscription.unsubscribe();
     } catch (error) {
-      console.error('OAuth callback error:', error);
+      console.error('Auth initialization error:', error);
     }
   };
-  handleOAuthCallback();
+
+  initializeAuth();
 }, [addToast]);
+
 
   const handleSignUp = useCallback(
     (name: string, email: string, password: string) => {
