@@ -69,6 +69,11 @@ export interface User {
   email: string;
   addresses: Address[];
   isAdmin: boolean;
+    profilePicture?: string;
+  phone?: string;
+  address?: Address;
+  wishlist?: number[];
+  orders?: string[];
 }
 
 export type OrderStatus = 'Processing' | 'Shipped' | 'Delivered' | 'Cancelled';
