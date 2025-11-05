@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 // Mock for framer-motion to avoid warnings in Jest tests
 // This resolves: "React does not recognize the `whileTap` prop on a DOM element"
 
