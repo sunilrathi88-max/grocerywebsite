@@ -307,6 +307,7 @@ id: parseInt(user.id.replace(/-/g, '').slice(0, 15), 16), // Convert UUID to num
                 addresses: [],
               });
       }
+              }
     catch (error) {
       console.error('Auth initialization error:', error);
       }
