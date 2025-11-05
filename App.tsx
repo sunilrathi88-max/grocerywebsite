@@ -294,13 +294,12 @@ useEffect(() => {
         const user = session.user;
         setIsLoggedIn(true);
         setCurrentUser({
-          ...MOCK_USER,
-          id: user.id,
+id: parseInt(user.id.replace(/-/g, '').slice(0, 15), 16), // Convert UUID to number
           email: user.email || '',
           name: user.user_metadata?.name || user.email || '',
           isAdmin: Boolean(user.user_metadata?.is_admin),
-          profilePicture: user.user_metadata?.picture || user.user_metadata?.avatar_url,
-        });
+          profilePicture: user.user_metadata?.picture || user.user_metadata?.avatar_url || undefined,
+          address: undefined, phone: undefined, wishlist: [], orders: [],        });
         
         if (window.location.hash.includes('access_token') || window.location.hash.includes('type=recovery')) {
           window.history.replaceState({}, document.title, window.location.pathname + '#/');
@@ -315,14 +314,13 @@ useEffect(() => {
             const user = session.user;
             setIsLoggedIn(true);
             setCurrentUser({
-              ...MOCK_USER,
-              id: user.id,
+id: parseInt(user.id.replace(/-/g, '').slice(0, 15), 16), // Convert UUID to number
               email: user.email || '',
               name: user.user_metadata?.name || user.email || '',
               isAdmin: Boolean(user.user_metadata?.is_admin),
-              profilePicture: user.user_metadata?.picture || user.user_metadata?.avatar_url,
-            });
-            
+              profilePicture: user.user_metadata?.picture || user.user_metadata?.avatar_url || undefined,
+              address: undefined, phone: undefined, wishlist: [], orders: [],
+            });            
             if (event === 'SIGNED_IN') {
               addToast(`Welcome back, ${user.user_metadata?.name || user.email}!`, 'success');
             }
