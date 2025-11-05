@@ -301,7 +301,9 @@ id: parseInt(user.id.replace(/-/g, '').slice(0, 15), 16), // Convert UUID to num
           profilePicture: user.user_metadata?.picture || user.user_metadata?.avatar_url,
 phone: user.user_metadata?.phone || user.phone || undefined, wishlist: [], orders: [], addresses: [], });        }
       }
-
+      } catch (error) {
+        console.error('Auth initialization error:', error);
+      }
       const { data: { subscription } } = supabase.auth.onAuthStateChange(
         async (event, session) => {
           console.log('Auth state changed:', event, session?.user?.email);
