@@ -272,6 +272,37 @@ const App: React.FC = () => {
     [addToast]
   );
 
+// OAuth callback handler - FIX for login state
+useEffect(() => {
+  const handleOAuthCallback = async () => {
+    try {
+      if (window.location.hash.includes('access_token')) {
+        const { supabase } = await import('./supabaseClient');
+        setTimeout(async () => {
+          const { data: { session } } = await supabase.auth.getSession();
+          if (session?.user) {
+            const user = session.user;
+            setIsLoggedIn(true);
+            setCurrentUser({
+              ...MOCK_USER,
+              id: user.id,
+              email: user.email || '',
+              name: user.user_metadata?.name || user.email || '',
+              isAdmin: Boolean(user.user_metadata?.is_admin),
+              profilePicture: user.user_metadata?.picture || user.user_metadata?.avatar_url,
+            });
+            window.history.replaceState({}, document.title, window.location.pathname + '#/');
+            addToast(`Welcome, ${user.user_metadata?.name || user.email}!`, 'success');
+          }
+        }, 1000);
+      }
+    } catch (error) {
+      console.error('OAuth callback error:', error);
+    }
+  };
+  handleOAuthCallback();
+}, [addToast]);
+
   const handleSignUp = useCallback(
     (name: string, email: string, password: string) => {
       // In production, this would create a new user via backend API
