@@ -26,11 +26,7 @@ const SignOutButton: React.FC<SignOutButtonProps> = ({ redirectTo = '#/', classN
   };
 
   return (
-    <button
-      onClick={handleSignOut}
-      disabled={isLoading}
-      className={className}
-    >
+    <button onClick={handleSignOut} disabled={isLoading} className={className}>
       {isLoading ? 'Signing out...' : 'Sign Out'}
     </button>
   );
