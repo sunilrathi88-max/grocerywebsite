@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AuthService } from '../utils/authService';
+import { supabase } from '../supabaseClient';
 
 interface SignOutButtonProps {
   redirectTo?: string;
@@ -12,8 +12,14 @@ const SignOutButton: React.FC<SignOutButtonProps> = ({ redirectTo = '#/', classN
   const handleSignOut = async () => {
     setIsLoading(true);
     try {
-      await AuthService.logout();
+      await supabase.auth.signOut();
+      // Clear any local storage
+      localStorage.removeItem('auth_access_token');
+      localStorage.removeItem('auth_refresh_token');
+      localStorage.removeItem('auth_token_expiry');
       window.location.hash = redirectTo;
+    } catch (error) {
+      console.error('Sign out error:', error);
     } finally {
       setIsLoading(false);
     }
@@ -21,12 +27,11 @@ const SignOutButton: React.FC<SignOutButtonProps> = ({ redirectTo = '#/', classN
 
   return (
     <button
-      type="button"
       onClick={handleSignOut}
       disabled={isLoading}
-      className={className || 'px-4 py-2 rounded bg-gray-100 hover:bg-gray-200 text-gray-700'}
+      className={className}
     >
-      {isLoading ? 'Signing out...' : 'Sign out'}
+      {isLoading ? 'Signing out...' : 'Sign Out'}
     </button>
   );
 };
