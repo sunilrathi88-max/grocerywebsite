@@ -281,7 +281,8 @@ const App: React.FC = () => {
       }
     },
     [addToast]
-  ); Supabase Authentication State Listener (FIXED)
+  );
+  // Supabase Authentication State Listener (FIXED)
 useEffect(() => {
   const initializeAuth = async () => {
     try {
