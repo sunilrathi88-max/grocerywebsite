@@ -71,7 +71,6 @@ export interface User {
   isAdmin: boolean;
     profilePicture?: string;
   phone?: string;
-  address?: Address;
   wishlist?: number[];
   orders?: string[];
 }
