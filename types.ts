@@ -69,7 +69,7 @@ export interface User {
   email: string;
   addresses: Address[];
   isAdmin: boolean;
-    profilePicture?: string;
+  profilePicture?: string;
   phone?: string;
   wishlist?: number[];
   orders?: string[];

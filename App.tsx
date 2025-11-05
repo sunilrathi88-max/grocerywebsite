@@ -272,7 +272,7 @@ const App: React.FC = () => {
         // Auth state listener will handle setting isLoggedIn and currentUser
         setAuthModalOpen(false);
         window.location.hash = '#/';
-        
+
         if (rememberMe) {
           localStorage.setItem('rememberedEmail', email);
         }
@@ -283,72 +283,70 @@ const App: React.FC = () => {
     [addToast]
   );
   // Supabase Authentication State Listener (FIXED)
-useEffect(() => {
-  const initializeAuth = async () => {
-    const { supabase } = await import('./supabaseClient');
-    try {
-      
-      
-      const { data: { session } } = await supabase.auth.getSession();
-      
-      if (session?.user) {
-        const user = session.user;
-        setIsLoggedIn(true);
-        setCurrentUser({
-id: parseInt(user.id.replace(/-/g, '').slice(0, 15), 16), // Convert UUID to number
-          email: user.email || '',
-          name: user.user_metadata?.name || user.email || '',
-          isAdmin: Boolean(user.user_metadata?.is_admin),
-          profilePicture: user.user_metadata?.picture || user.user_metadata?.avatar_url,
+  useEffect(() => {
+    const initializeAuth = async () => {
+      const { supabase } = await import('./supabaseClient');
+      try {
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
 
-                phone: user.user_metadata?.phone || user.phone || undefined,
-                wishlist: [],
-                orders: [],
-                addresses: [],
-              });
-      }
-              }
-    catch (error) {
-      console.error('Auth initialization error:', error);
-      }
-      const { data: { subscription } } = supabase.auth.onAuthStateChange(
-        async (event, session) => {
-          console.log('Auth state changed:', event, session?.user?.email);
-          
-          if (event === 'SIGNED_IN' && session?.user) {
-            const user = session.user;
-            setIsLoggedIn(true);
-            setCurrentUser({
-id: parseInt(user.id.replace(/-/g, '').slice(0, 15), 16), // Convert UUID to number
-              email: user.email || '',
-              name: user.user_metadata?.name || user.email || '',
-              isAdmin: Boolean(user.user_metadata?.is_admin),
+        if (session?.user) {
+          const user = session.user;
+          setIsLoggedIn(true);
+          setCurrentUser({
+            id: parseInt(user.id.replace(/-/g, '').slice(0, 15), 16), // Convert UUID to number
+            email: user.email || '',
+            name: user.user_metadata?.name || user.email || '',
+            isAdmin: Boolean(user.user_metadata?.is_admin),
             profilePicture: user.user_metadata?.picture || user.user_metadata?.avatar_url,
-                phone: user.user_metadata?.phone || user.phone || undefined,
-                              wishlist: [],
-                              orders: [],
-                              addresses: [],
-                            });
-                    if (event === 'SIGNED_IN') {
-                                addToast(`Welcome back, ${user.user_metadata?.name || user.email}!`, 'success');
-                              }
-            
-            if (window.location.hash.includes('access_token')) {
-              window.history.replaceState({}, document.title, window.location.pathname + '#/');
-            }
-          } else if (event === 'SIGNED_OUT' || !session) {
-            setIsLoggedIn(false);
-            setCurrentUser(null);
-          }
+
+            phone: user.user_metadata?.phone || user.phone || undefined,
+            wishlist: [],
+            orders: [],
+            addresses: [],
+          });
         }
-      );
+      } catch (error) {
+        console.error('Auth initialization error:', error);
+      }
+      const {
+        data: { subscription },
+      } = supabase.auth.onAuthStateChange(async (event, session) => {
+        console.log('Auth state changed:', event, session?.user?.email);
+
+        if (event === 'SIGNED_IN' && session?.user) {
+          const user = session.user;
+          setIsLoggedIn(true);
+          setCurrentUser({
+            id: parseInt(user.id.replace(/-/g, '').slice(0, 15), 16), // Convert UUID to number
+            email: user.email || '',
+            name: user.user_metadata?.name || user.email || '',
+            isAdmin: Boolean(user.user_metadata?.is_admin),
+            profilePicture: user.user_metadata?.picture || user.user_metadata?.avatar_url,
+            phone: user.user_metadata?.phone || user.phone || undefined,
+            wishlist: [],
+            orders: [],
+            addresses: [],
+          });
+          if (event === 'SIGNED_IN') {
+            addToast(`Welcome back, ${user.user_metadata?.name || user.email}!`, 'success');
+          }
+
+          if (window.location.hash.includes('access_token')) {
+            window.history.replaceState({}, document.title, window.location.pathname + '#/');
+          }
+        } else if (event === 'SIGNED_OUT' || !session) {
+          setIsLoggedIn(false);
+          setCurrentUser(null);
+        }
+      });
 
       return () => subscription.unsubscribe();
-  };
+    };
 
-  initializeAuth();
-}, [addToast]);
-
+    initializeAuth();
+  }, [addToast]);
 
   const handleSignUp = useCallback(
     async (name: string, email: string, password: string) => {
@@ -367,7 +365,10 @@ id: parseInt(user.id.replace(/-/g, '').slice(0, 15), 16), // Convert UUID to num
 
         // Auth state listener will handle the rest
         window.location.hash = '#/';
-        addToast(`Welcome to Tattva Co., ${name}! Please check your email to verify your account.`, 'success');
+        addToast(
+          `Welcome to Tattva Co., ${name}! Please check your email to verify your account.`,
+          'success'
+        );
       } catch (error) {
         addToast('Sign up failed. Please try again.', 'error');
       }
