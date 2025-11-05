@@ -256,39 +256,124 @@ const App: React.FC = () => {
   );
 
   const handleLogin = useCallback(
-    (email: string, password: string, rememberMe: boolean) => {
-      // In production, this would validate against a backend API
-      setIsLoggedIn(true);
-      setCurrentUser({ ...MOCK_USER, email });
-      setAuthModalOpen(false);
-      window.location.hash = '#/';
-      addToast(`Welcome back, ${MOCK_USER.name}!`, 'success');
+    async (email: string, password: string, rememberMe: boolean) => {
+      try {
+        const { supabase } = await import('./supabaseClient');
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
 
-      // Store session if remember me is checked
-      if (rememberMe) {
-        localStorage.setItem('rememberedEmail', email);
+        if (error || !data.session || !data.user) {
+          addToast(error?.message || 'Invalid email or password', 'error');
+          return;
+        }
+
+        // Auth state listener will handle setting isLoggedIn and currentUser
+        setAuthModalOpen(false);
+        window.location.hash = '#/';
+        
+        if (rememberMe) {
+          localStorage.setItem('rememberedEmail', email);
+        }
+      } catch (error) {
+        addToast('Login failed. Please try again.', 'error');
       }
     },
     [addToast]
   );
+  // Supabase Authentication State Listener (FIXED)
+useEffect(() => {
+  const initializeAuth = async () => {
+    const { supabase } = await import('./supabaseClient');
+    try {
+      
+      
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (session?.user) {
+        const user = session.user;
+        setIsLoggedIn(true);
+        setCurrentUser({
+id: parseInt(user.id.replace(/-/g, '').slice(0, 15), 16), // Convert UUID to number
+          email: user.email || '',
+          name: user.user_metadata?.name || user.email || '',
+          isAdmin: Boolean(user.user_metadata?.is_admin),
+          profilePicture: user.user_metadata?.picture || user.user_metadata?.avatar_url,
+
+                phone: user.user_metadata?.phone || user.phone || undefined,
+                wishlist: [],
+                orders: [],
+                addresses: [],
+              });
+      }
+              }
+    catch (error) {
+      console.error('Auth initialization error:', error);
+      }
+      const { data: { subscription } } = supabase.auth.onAuthStateChange(
+        async (event, session) => {
+          console.log('Auth state changed:', event, session?.user?.email);
+          
+          if (event === 'SIGNED_IN' && session?.user) {
+            const user = session.user;
+            setIsLoggedIn(true);
+            setCurrentUser({
+id: parseInt(user.id.replace(/-/g, '').slice(0, 15), 16), // Convert UUID to number
+              email: user.email || '',
+              name: user.user_metadata?.name || user.email || '',
+              isAdmin: Boolean(user.user_metadata?.is_admin),
+            profilePicture: user.user_metadata?.picture || user.user_metadata?.avatar_url,
+                phone: user.user_metadata?.phone || user.phone || undefined,
+                              wishlist: [],
+                              orders: [],
+                              addresses: [],
+                            });
+                    if (event === 'SIGNED_IN') {
+                                addToast(`Welcome back, ${user.user_metadata?.name || user.email}!`, 'success');
+                              }
+            
+            if (window.location.hash.includes('access_token')) {
+              window.history.replaceState({}, document.title, window.location.pathname + '#/');
+            }
+          } else if (event === 'SIGNED_OUT' || !session) {
+            setIsLoggedIn(false);
+            setCurrentUser(null);
+          }
+        }
+      );
+
+      return () => subscription.unsubscribe();
+  };
+
+  initializeAuth();
+}, [addToast]);
+
 
   const handleSignUp = useCallback(
-    (name: string, email: string, password: string) => {
-      // In production, this would create a new user via backend API
-      const newUser = {
-        ...MOCK_USER,
-        name,
-        email,
-        isAdmin: false,
-      };
-      setIsLoggedIn(true);
-      setCurrentUser(newUser);
-      window.location.hash = '#/';
-      addToast(`Welcome to Tattva Co., ${name}! Your account has been created.`, 'success');
+    async (name: string, email: string, password: string) => {
+      try {
+        const { supabase } = await import('./supabaseClient');
+        const { data, error } = await supabase.auth.signUp({
+          email,
+          password,
+          options: { data: { name } },
+        });
+
+        if (error || !data.user) {
+          addToast(error?.message || 'Sign up failed', 'error');
+          return;
+        }
+
+        // Auth state listener will handle the rest
+        window.location.hash = '#/';
+        addToast(`Welcome to Tattva Co., ${name}! Please check your email to verify your account.`, 'success');
+      } catch (error) {
+        addToast('Sign up failed. Please try again.', 'error');
+      }
     },
     [addToast]
   );
-
   const handleLogout = useCallback(async () => {
     try {
       const { AuthService } = await import('./utils/authService');
