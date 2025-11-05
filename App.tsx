@@ -319,7 +319,11 @@ id: parseInt(user.id.replace(/-/g, '').slice(0, 15), 16), // Convert UUID to num
               name: user.user_metadata?.name || user.email || '',
               isAdmin: Boolean(user.user_metadata?.is_admin),
             profilePicture: user.user_metadata?.picture || user.user_metadata?.avatar_url,
-phone: user.user_metadata?.phone || user.phone || undefined, wishlist: [], orders: [], addresses: [], });              addToast(`Welcome back, ${user.user_metadata?.name || user.email}!`, 'success');
+                phone: user.user_metadata?.phone || user.phone || undefined,
+                              wishlist: [],
+                              orders: [],
+                              addresses: [],
+                            });
                     if (event === 'SIGNED_IN') {
                                 addToast(`Welcome back, ${user.user_metadata?.name || user.email}!`, 'success');
                               }
