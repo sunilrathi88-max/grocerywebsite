@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { AuthService } from '../utils/authService';
+import React, { useState } from 'react';
+import { supabase } from '../supabaseClient';
 import { FacebookIcon } from './icons/FacebookIcon';
 
 interface OAuthButtonsProps {
@@ -9,158 +9,62 @@ interface OAuthButtonsProps {
 }
 
 const OAuthButtons: React.FC<OAuthButtonsProps> = ({ onSuccess, onError, mode = 'login' }) => {
-  const [isLoading, setIsLoading] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<'google' | 'facebook' | null>(null);
 
-  const handleOAuthCallbackWrapped = useCallback(handleOAuthCallback, [onSuccess, onError]);
-
-  useEffect(() => {
-    // Handle OAuth callback
-    const hash = window.location.hash;
-    const params = new URLSearchParams(hash.split('?')[1] || '');
-    const code = params.get('code');
-    const provider = params.get('provider') as 'google' | 'facebook' | null;
-    const state = params.get('state');
-
-    if (code && provider && state) {
-      // Verify state to prevent CSRF attacks
-      const savedState = sessionStorage.getItem('oauth_state');
-      if (state === savedState) {
-        handleOAuthCallbackWrapped(provider, code);
-      } else {
-        onError('Invalid OAuth state. Please try again.');
-      }
-      sessionStorage.removeItem('oauth_state');
-    }
-  }, [handleOAuthCallbackWrapped, onError]);
-
-  const generateState = (): string => {
-    return (
-      Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
-    );
-  };
-
-  const handleGoogleLogin = () => {
+  const handleGoogleLogin = async () => {
     setIsLoading('google');
+    try {
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}${window.location.pathname}#/`,
+        },
+      });
 
-    // Generate and save state for CSRF protection
-    const state = generateState();
-    sessionStorage.setItem('oauth_state', state);
+      if (error) throw error;
 
-    // Get OAuth config from environment variables
-    const CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
-    const REDIRECT_URI =
-      import.meta.env.VITE_GOOGLE_REDIRECT_URI ||
-      `${window.location.origin}${window.location.pathname}#/oauth-callback`;
-    const SCOPE = 'email profile';
-
-    // Check if OAuth is configured
-    if (!CLIENT_ID || CLIENT_ID === 'your_google_client_id_here') {
-      // Mock implementation for demo/testing
-      console.warn('Google OAuth not configured. Using mock flow.');
-      setTimeout(() => {
-        mockOAuthFlow('google');
-      }, 1000);
-      return;
+      // The redirect will happen automatically
+      // After OAuth callback, Supabase will handle the session
+    } catch (error) {
+      console.error('Google OAuth error:', error);
+      onError(error instanceof Error ? error.message : 'Google sign-in failed');
+      setIsLoading(null);
     }
-
-    // Build OAuth URL
-    const authUrl =
-      `https://accounts.google.com/o/oauth2/v2/auth?` +
-      `client_id=${CLIENT_ID}&` +
-      `redirect_uri=${encodeURIComponent(REDIRECT_URI)}&` +
-      `response_type=code&` +
-      `scope=${encodeURIComponent(SCOPE)}&` +
-      `state=${state}&` +
-      `access_type=offline&` +
-      `prompt=consent`;
-
-    // Redirect to OAuth provider
-    window.location.href = authUrl;
   };
 
-  const handleFacebookLogin = () => {
+  const handleFacebookLogin = async () => {
     setIsLoading('facebook');
-
-    const state = generateState();
-    sessionStorage.setItem('oauth_state', state);
-
-    // Get OAuth config from environment variables
-    const APP_ID = import.meta.env.VITE_FACEBOOK_APP_ID;
-    const REDIRECT_URI =
-      import.meta.env.VITE_FACEBOOK_REDIRECT_URI ||
-      `${window.location.origin}${window.location.pathname}#/oauth-callback`;
-    const SCOPE = 'email,public_profile';
-
-    // Check if OAuth is configured
-    if (!APP_ID || APP_ID === 'your_facebook_app_id_here') {
-      // Mock implementation for demo/testing
-      console.warn('Facebook OAuth not configured. Using mock flow.');
-      setTimeout(() => {
-        mockOAuthFlow('facebook');
-      }, 1000);
-      return;
-    }
-
-    const authUrl =
-      `https://www.facebook.com/v12.0/dialog/oauth?` +
-      `client_id=${APP_ID}&` +
-      `redirect_uri=${encodeURIComponent(REDIRECT_URI)}&` +
-      `scope=${encodeURIComponent(SCOPE)}&` +
-      `state=${state}&` +
-      `response_type=code`;
-
-    // Redirect to OAuth provider
-    window.location.href = authUrl;
-  };
-
-  const mockOAuthFlow = async (provider: 'google' | 'facebook') => {
     try {
-      // Simulate OAuth success
-      const mockCode = 'mock_oauth_code_' + Math.random().toString(36);
-      const response = await AuthService.oauthLogin(provider, mockCode);
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: 'facebook',
+        options: {
+          redirectTo: `${window.location.origin}${window.location.pathname}#/`,
+        },
+      });
 
-      if (response.success) {
-        onSuccess(response.user, response.isNewUser);
-      } else {
-        onError('OAuth login failed');
-      }
+      if (error) throw error;
+
+      // The redirect will happen automatically
     } catch (error) {
-      onError(error instanceof Error ? error.message : 'OAuth login failed');
-    } finally {
+      console.error('Facebook OAuth error:', error);
+      onError(error instanceof Error ? error.message : 'Facebook sign-in failed');
       setIsLoading(null);
     }
   };
-
-  async function handleOAuthCallback(provider: 'google' | 'facebook', code: string) {
-    setIsLoading(provider);
-
-    try {
-      const response = await AuthService.oauthLogin(provider, code);
-
-      if (response.success) {
-        onSuccess(response.user, response.isNewUser);
-      } else {
-        onError('OAuth login failed');
-      }
-    } catch (error) {
-      onError(error instanceof Error ? error.message : 'OAuth login failed');
-    } finally {
-      setIsLoading(null);
-    }
-  }
 
   const actionText = mode === 'login' ? 'Sign in' : 'Sign up';
 
   return (
-    <div className="space-y-3">
+    <div className="grid grid-cols-2 gap-3">
+      {/* Google Button */}
       <button
         type="button"
         onClick={handleGoogleLogin}
-        disabled={isLoading !== null}
-        className="w-full flex items-center justify-center gap-3 px-4 py-3 border border-gray-300 rounded-lg text-gray-700 bg-white hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-medium"
+        disabled={!!isLoading}
+        className="flex items-center justify-center px-4 py-3 border border-gray-300 rounded-lg shadow-sm bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-primary transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {isLoading === 'google' ? (
-          <div className="animate-spin rounded-full h-5 w-5 border-2 border-gray-300 border-t-gray-600"></div>
+          <div className="w-5 h-5 border-2 border-brand-primary border-t-transparent rounded-full animate-spin" />
         ) : (
           <>
             <svg className="w-5 h-5" viewBox="0 0 24 24">
@@ -181,23 +85,24 @@ const OAuthButtons: React.FC<OAuthButtonsProps> = ({ onSuccess, onError, mode = 
                 d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
               />
             </svg>
-            <span>{actionText} with Google</span>
+            <span className="ml-2 text-sm font-medium text-gray-700">Google</span>
           </>
         )}
       </button>
 
+      {/* Facebook Button */}
       <button
         type="button"
         onClick={handleFacebookLogin}
-        disabled={isLoading !== null}
-        className="w-full flex items-center justify-center gap-3 px-4 py-3 border border-gray-300 rounded-lg text-white bg-[#1877F2] hover:bg-[#166FE5] transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-medium"
+        disabled={!!isLoading}
+        className="flex items-center justify-center px-4 py-3 border border-gray-300 rounded-lg shadow-sm bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-primary transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {isLoading === 'facebook' ? (
-          <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent"></div>
+          <div className="w-5 h-5 border-2 border-brand-primary border-t-transparent rounded-full animate-spin" />
         ) : (
           <>
-            <FacebookIcon className="w-5 h-5" />
-            <span>{actionText} with Facebook</span>
+            <FacebookIcon className="w-5 h-5 text-[#1877F2]" />
+            <span className="ml-2 text-sm font-medium text-gray-700">Facebook</span>
           </>
         )}
       </button>
