@@ -256,22 +256,32 @@ const App: React.FC = () => {
   );
 
   const handleLogin = useCallback(
-    (email: string, password: string, rememberMe: boolean) => {
-      // In production, this would validate against a backend API
-      setIsLoggedIn(true);
-      setCurrentUser({ ...MOCK_USER, email });
-      setAuthModalOpen(false);
-      window.location.hash = '#/';
-      addToast(`Welcome back, ${MOCK_USER.name}!`, 'success');
+    async (email: string, password: string, rememberMe: boolean) => {
+      try {
+        const { supabase } = await import('./supabaseClient');
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
 
-      // Store session if remember me is checked
-      if (rememberMe) {
-        localStorage.setItem('rememberedEmail', email);
+        if (error || !data.session || !data.user) {
+          addToast(error?.message || 'Invalid email or password', 'error');
+          return;
+        }
+
+        // Auth state listener will handle setting isLoggedIn and currentUser
+        setAuthModalOpen(false);
+        window.location.hash = '#/';
+        
+        if (rememberMe) {
+          localStorage.setItem('rememberedEmail', email);
+        }
+      } catch (error) {
+        addToast('Login failed. Please try again.', 'error');
       }
     },
     [addToast]
-  );
-// Supabase Authentication State Listener (FIXED)
+  ); Supabase Authentication State Listener (FIXED)
 useEffect(() => {
   const initializeAuth = async () => {
     try {
@@ -337,22 +347,29 @@ useEffect(() => {
 
 
   const handleSignUp = useCallback(
-    (name: string, email: string, password: string) => {
-      // In production, this would create a new user via backend API
-      const newUser = {
-        ...MOCK_USER,
-        name,
-        email,
-        isAdmin: false,
-      };
-      setIsLoggedIn(true);
-      setCurrentUser(newUser);
-      window.location.hash = '#/';
-      addToast(`Welcome to Tattva Co., ${name}! Your account has been created.`, 'success');
+    async (name: string, email: string, password: string) => {
+      try {
+        const { supabase } = await import('./supabaseClient');
+        const { data, error } = await supabase.auth.signUp({
+          email,
+          password,
+          options: { data: { name } },
+        });
+
+        if (error || !data.user) {
+          addToast(error?.message || 'Sign up failed', 'error');
+          return;
+        }
+
+        // Auth state listener will handle the rest
+        window.location.hash = '#/';
+        addToast(`Welcome to Tattva Co., ${name}! Please check your email to verify your account.`, 'success');
+      } catch (error) {
+        addToast('Sign up failed. Please try again.', 'error');
+      }
     },
     [addToast]
   );
-
   const handleLogout = useCallback(async () => {
     try {
       const { AuthService } = await import('./utils/authService');
