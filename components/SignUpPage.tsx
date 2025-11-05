@@ -407,8 +407,7 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ onSignUp, onNavigateToLogin }) 
               <OAuthButtons
                 onSuccess={(user, isNewUser) => {
                   if (isNewUser) {
-                    onSignUp(user.name, user.email, '');
-                  } else {
+onSignUp(user.user_metadata?.name || user.email?.split('@')[0] || '', user.email, '');                  } else {
                     // User already exists, redirect to home
                     window.location.hash = '#/';
                   }
