@@ -36,8 +36,8 @@ export const motion = {
 
 // Mock AnimatePresence component
 export const AnimatePresence: React.FC<{
-   children?: React.ReactNode;
-  }> = ({ children }) => <>{children}</>;
+ children?: React.ReactNode;
+}> = ({ children }) => <>{children}</>;
 // Mock useAnimation hook
 export const useAnimation = () => ({
   start: jest.fn(),
