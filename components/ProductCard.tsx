@@ -8,6 +8,7 @@ import { HeartIcon } from './icons/HeartIcon';
 import { StarIcon } from './icons/StarIcon';
 import { EyeIcon } from './icons/EyeIcon';
 import { CompareIcon } from './icons/CompareIcon';
+import { formatPrice } from '../utils/formatPrice';
 
 interface ProductCardProps {
   product: Product;
@@ -171,11 +172,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
               {hasMultiplePrices && (
                 <span className="text-sm font-normal text-gray-500">From </span>
               )}
-              ${displayPrice.toFixed(2)}
+              ${{formatPrice(displayPrice)}}2
             </span>
             {onSale && (
               <span className="text-lg font-sans text-gray-400 line-through">
-                ${defaultVariant.price.toFixed(2)}
+                ${formatPrice(defaultVariant.price)}}2
               </span>
             )}
           </div>
