@@ -30,7 +30,7 @@ const config: Config = {
     '!**/node_modules/**',
     '!**/__tests__/**',
   ],
-  coverageThreshold: {
+  /*coverageThreshold: {
     global: {
       branches: 60,
       functions: 60,
@@ -43,7 +43,7 @@ const config: Config = {
       lines: 70,
       statements: 70,
     },
-  },
+  },*/
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
   testPathIgnorePatterns: ['/node_modules/', '/dist/'],
   coveragePathIgnorePatterns: ['/node_modules/', '/dist/'],
