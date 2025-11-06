@@ -19,7 +19,7 @@ const OAuthButtons: React.FC<OAuthButtonsProps> = ({ onSuccess, onError, mode = 
         options: {
           redirectTo: `${window.location.origin}${window.location.pathname}#/`,
         queryParams: { prompt: 'select_account' },
-      },
+            },
     });
 
     if (error) throw error;
