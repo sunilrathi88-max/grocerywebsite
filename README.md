@@ -574,3 +574,5 @@ This project is licensed under the MIT License.
 - Supabase Project URL: https://rzhdyvdttbeczyavrcvh.supabase.co
 - Supabase Anon Key: See `supabaseClient.ts` for configuration
 - See https://app.supabase.com/project for dashboard and table setup
+
+<!-- Trigger deployment with updated Vercel secrets -->
