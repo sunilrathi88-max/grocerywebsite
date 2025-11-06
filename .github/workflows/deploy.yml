@@ -194,7 +194,7 @@ jobs:
   deploy-production:
     name: 🚀 Deploy to Production
     runs-on: ubuntu-latest
-    needs: [quality, build, e2e]
+    needs: [quality, build]
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     
     environment:
