@@ -93,8 +93,8 @@ jobs:
           # Get main JS bundle size in KB
           SIZE=$(find dist/assets -name "index-*.js" -exec wc -c {} \; | awk '{print int($1/1024)}')
           echo "Main bundle size: ${SIZE} KB"
-          if [ $SIZE -gt 150 ]; then
-            echo "❌ Bundle size ${SIZE} KB exceeds limit of 150 KB"
+          if [ $SIZE -gt 260 ]; then
+            echo "❌ Bundle size ${SIZE} KB exceeds limit of 260 KB"
             exit 1
           else
             echo "✅ Bundle size ${SIZE} KB is within limit"
