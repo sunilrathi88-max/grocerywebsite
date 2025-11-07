@@ -27,9 +27,7 @@ const FreeShippingBanner: React.FC<FreeShippingBannerProps> = ({
   }
 
   const formattedThreshold = formatPrice(
-    config.freeShippingThreshold,
-    config.currency,
-    config.currencySymbol
+    config.freeShippingThreshold
   );
 
   return (
