@@ -9,7 +9,6 @@
  * - Regional settings
  */
 
-import { useState } from 'react';
 export interface SiteConfig {
   currency: string;
   currencySymbol: string;
