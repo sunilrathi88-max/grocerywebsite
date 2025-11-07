@@ -1,14 +1,3 @@
-/**
- * React Hook for Site Configuration
- * TattvaCo - Indian Market Configuration
- * 
- * Fetches site-wide configuration from Supabase including:
- * - Currency settings (INR)
- * - Currency symbol (₹)
- * - Free shipping threshold
- * - Regional settings
- */
-
 export interface SiteConfig {
   currency: string;
   currencySymbol: string;
@@ -25,10 +14,6 @@ const defaultConfig: SiteConfig = {
   freeShippingRegion: 'India',
 };
 
-/**
- * Custom hook to fetch and manage site configuration
- * @returns {Object} Site configuration and loading state
- */
 export function useSiteConfig() {
   return { config: defaultConfig, loading: false, error: null };
 }
