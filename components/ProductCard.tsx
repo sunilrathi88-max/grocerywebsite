@@ -8,7 +8,6 @@ import { HeartIcon } from './icons/HeartIcon';
 import { StarIcon } from './icons/StarIcon';
 import { EyeIcon } from './icons/EyeIcon';
 import { CompareIcon } from './icons/CompareIcon';
-import { formatPrice } from '../utils/formatPrice';
 
 interface ProductCardProps {
   product: Product;
