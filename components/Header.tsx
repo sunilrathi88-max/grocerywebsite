@@ -15,7 +15,6 @@ import { TagIcon } from './icons/TagIcon';
 import { imageErrorHandlers } from '../utils/imageHelpers';
 import { useDarkMode } from '../hooks/useDarkMode';
 import { motion } from 'framer-motion';
-import FreeShippingBanner from './FreeShippingBanner';
 
 interface HeaderProps {
   cartItems: CartItem[];
@@ -145,7 +144,6 @@ const Header: React.FC<HeaderProps> = ({
           <div className="flex-shrink-0">
             <a
               href="#/"
-                    <FreeShippingBanner />
               className="text-3xl font-serif font-bold text-brand-dark dark:text-gray-100 transition-colors duration-300"
             >
               Tattva Co.
