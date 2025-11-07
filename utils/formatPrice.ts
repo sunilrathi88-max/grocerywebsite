@@ -9,18 +9,15 @@
  * @param symbol - Currency symbol (default: '₹')
  * @returns Formatted price string (e.g., "₹120.00")
  */
-export function formatPrice(
-  price: number,
-  symbol: string = '₹'
-): string {
+export function formatPrice(price: number, symbol: string = '₹'): string {
   // Round to 2 decimal places
   const roundedPrice = Math.round(price * 100) / 100;
-  
+
   // For Indian prices, we don't need decimal places for whole numbers
   if (roundedPrice % 1 === 0) {
     return `${symbol}${roundedPrice.toFixed(0)}`;
   }
-  
+
   return `${symbol}${roundedPrice.toFixed(2)}`;
 }
 
@@ -58,10 +55,8 @@ export function formatPricePerUnit(
 /**
  * Parse price string to number (remove currency symbols)
  * @param priceString - Price string with currency symbol
- * @returns Numeric price value
+ * @returns Numeric value
  */
 export function parsePrice(priceString: string): number {
-  // Remove currency symbols and commas
-  const cleaned = priceString.replace(/[^₹$\d.]/g, '');
-  return parseFloat(cleaned) || 0;
+  return parseFloat(priceString.replace(/[^0-9.]/g, ''));
 }
