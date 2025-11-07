@@ -6,13 +6,11 @@
 /**
  * Format price with Indian Rupee symbol
  * @param price - Price value from database (already in INR)
- * @param currency - Currency code (default: 'INR')
  * @param symbol - Currency symbol (default: '₹')
  * @returns Formatted price string (e.g., "₹120.00")
  */
 export function formatPrice(
   price: number,
-  currency: string = 'INR',
   symbol: string = '₹'
 ): string {
   // Round to 2 decimal places
