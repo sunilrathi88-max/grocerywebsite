@@ -172,7 +172,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
               {hasMultiplePrices && (
                 <span className="text-sm font-normal text-gray-500">From </span>
               )}
-            {formatPrice(displayPrice)}</span>
+            {formatPrice(displayPrice)
+                      }</span>
             {onSale && (
               <span className="text-lg font-sans text-gray-400 line-through">
                 {formatPrice(defaultVariant.price)}
