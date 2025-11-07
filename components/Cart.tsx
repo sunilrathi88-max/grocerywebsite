@@ -7,7 +7,6 @@ import { ShoppingCartIcon } from './icons/ShoppingCartIcon';
 import { OptimizedImage } from './OptimizedImage';
 import { imageErrorHandlers } from '../utils/imageHelpers';
 import { motion, AnimatePresence } from 'framer-motion';
-import { formatPrice } from '../utils/formatPrice';
 
 interface CartProps {
   items: CartItem[];
