@@ -47,6 +47,7 @@ jobs:
         run: npm run dev &
         env:
           CI: true
+          # Note: Port is intentionally set to 5173 to match the dev server config
           PORT: 5173
 
       - name: Wait for server to be ready
