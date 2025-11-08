@@ -169,11 +169,15 @@ const ProductCard: React.FC<ProductCardProps> = ({
             <span
               className={`text-2xl font-bold font-sans transition-all duration-300 ${onSale ? 'text-red-600' : 'text-gray-900 group-hover:text-brand-primary'}`}
             >
-              {hasMultiplePrices && <span className="text-sm font-normal text-gray-500">From </span>}
+              {hasMultiplePrices && (
+                <span className="text-sm font-normal text-gray-500">From </span>
+              )}
               {formatPrice(displayPrice)}
             </span>
             {onSale && (
-              <span className="text-lg font-sans text-gray-400 line-through">{formatPrice(defaultVariant.price)}</span>
+              <span className="text-lg font-sans text-gray-400 line-through">
+                {formatPrice(defaultVariant.price)}
+              </span>
             )}
           </div>
         </div>
