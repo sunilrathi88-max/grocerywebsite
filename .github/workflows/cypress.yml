@@ -47,25 +47,25 @@ jobs:
         run: npm run dev &
         env:
           CI: true
-          PORT: 3001
+          PORT: 5173
 
       - name: Wait for server to be ready
-        run: npx wait-on http://localhost:3001 --timeout 120000 --interval 1000 --verbose
+        run: npx wait-on http://localhost:5173 --timeout 120000 --interval 1000 --verbose
 
       - name: Check server is responding
-        run: curl http://localhost:3001 || echo "Server check failed"
+        run: curl http://localhost:5173 || echo "Server check failed"
 
       - name: Run Cypress tests
         uses: cypress-io/github-action@v6
         with:
           browser: ${{ matrix.browser }}
-          wait-on: 'http://localhost:3001'
+          wait-on: 'http://localhost:5173'
           wait-on-timeout: 120
           record: false
           config-file: cypress.config.ts
           install: false
         env:
-          CYPRESS_baseUrl: http://localhost:3001
+          CYPRESS_baseUrl: http://localhost:5173
           DEBUG: 'cypress:*'
 
       - name: Upload screenshots
@@ -118,7 +118,7 @@ jobs:
           CI: true
 
       - name: Wait for server
-        run: npx wait-on http://localhost:3001 --timeout 60000
+        run: npx wait-on http://localhost:5173 --timeout 60000
 
       - name: Run Percy visual tests
         run: npm run percy:snapshot
