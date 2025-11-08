@@ -131,6 +131,8 @@ jobs:
           wait-on: 'http://localhost:5173'
           browser: ${{ matrix.browser }}
           record: false
+        env:
+          PORT: 5173
           
       - name: 📸 Upload screenshots
         if: failure()
