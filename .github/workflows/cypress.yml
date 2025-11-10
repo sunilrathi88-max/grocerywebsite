@@ -23,10 +23,11 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '18'
           cache: 'npm'
+          cache-dependency-path: '**/package-lock.json'
 
       - name: Install dependencies
         run: npm ci
@@ -43,13 +44,24 @@ jobs:
           mkdir -p cypress/screenshots
           mkdir -p cypress/results
 
+      - name: Start dev server
+        run: npm run dev &
+        env:
+          CI: true
+          PORT: 5173
+
+      - name: Wait for server to be ready
+        run: npx wait-on http://localhost:5173 --timeout 120000 --interval 1000 --verbose
+
+      - name: Check server is responding
+        run: curl http://localhost:5173 || echo "Server check failed"
+
       - name: Run Cypress tests
         uses: cypress-io/github-action@v6
         with:
-          start: npm run dev
+          browser: ${{ matrix.browser }}
           wait-on: 'http://localhost:5173'
           wait-on-timeout: 120
-          browser: ${{ matrix.browser }}
           record: false
           config-file: cypress.config.ts
           install: false
@@ -93,16 +105,25 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '18'
           cache: 'npm'
+          cache-dependency-path: '**/package-lock.json'
 
       - name: Install dependencies
         run: npm ci
 
+      - name: Start dev server
+        run: npm run dev &
+        env:
+          CI: true
+
+      - name: Wait for server
+        run: npx wait-on http://localhost:5173 --timeout 60000
+
       - name: Run Percy visual tests
-        run: npm run test:percy
+        run: npm run percy:snapshot
         env:
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
 
@@ -123,10 +144,11 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '18'
           cache: 'npm'
+          cache-dependency-path: '**/package-lock.json'
 
       - name: Install dependencies
         run: npm ci

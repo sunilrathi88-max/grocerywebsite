@@ -1,8 +1,12 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "types": ["cypress", "@percy/cypress", "@testing-library/cypress"],
+    "types": ["cypress", "node"],
+    "noEmit": true,
     "isolatedModules": false
   },
-  "include": ["**/*.ts", "**/*.tsx"]
+  "include": [
+    "**/*.ts",
+    "**/*.tsx"
+  ]
 }
