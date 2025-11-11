@@ -8,30 +8,30 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-        
+
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
           cache: 'npm'
-          
+
       - name: Install dependencies
         run: npm ci --prefer-offline --no-audit
-        
+
       - name: Generate Prisma Client
         run: npx prisma generate
-        
+
       - name: Build application
         run: npm run build
-        
+
       - name: Install Railway CLI
-      run: npm i -g @railway/cli
+        run: npm i -g @railway/cli
 
       - name: Deploy to Railway
-      run: railway up --service=grocerywebsite
-      env:
-        RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+        run: railway up --service=grocerywebsite
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
