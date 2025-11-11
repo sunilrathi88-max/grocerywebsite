@@ -33,4 +33,4 @@ jobs:
         with:
           railway_token: ${{ secrets.RAILWAY_TOKEN }}
           service: grocerywebsite
-              project_id: 1fad06d2-c29d-4c2b-9ed1-80a1f410683b
+          project_id: 1fad06d2-c29d-4c2b-9ed1-80a1f410683b
