@@ -28,9 +28,10 @@ jobs:
       - name: Build application
         run: npm run build
         
-      - name: Deploy to Railway
-        uses: bervProject/railway-deploy@main
-        with:
-          railway_token: ${{ secrets.RAILWAY_TOKEN }}
-          service: grocerywebsite
-          project_id: 1fad06d2-c29d-4c2b-9ed1-80a1f410683b
+    - name: Install Railway CLI
+      run: npm i -g @railway/cli
+
+    - name: Deploy to Railway
+      run: railway up --service=grocerywebsite
+      env:
+        RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
