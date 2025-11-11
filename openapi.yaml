@@ -1,0 +1,187 @@
+openapi: 3.0.1
+info:
+  title: GroceryWebsite API
+  version: 1.0.0
+  description: OpenAPI spec for core product, category, user, cart, order, recipes, and promo code endpoints
+paths:
+  /api/products:
+    get:
+      summary: Get all products
+      responses:
+        '200': { description: Success }
+    post:
+      summary: Create new product
+      requestBody:
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/Product' }
+      responses:
+        '201': { description: Created }
+  /api/categories:
+    get:
+      summary: Get all categories
+      responses:
+        '200': { description: Success }
+    post:
+      summary: Create new category
+      requestBody:
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/Category' }
+      responses:
+        '201': { description: Created }
+  /api/users:
+    get:
+      summary: Get all users
+      responses:
+        '200': { description: Success }
+    post:
+      summary: Create new user
+      requestBody:
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/User' }
+      responses:
+        '201': { description: Created }
+  /api/promocodes:
+    get:
+      summary: Get all promo codes
+      responses:
+        '200': { description: Success }
+    post:
+      summary: Create new promo code
+      requestBody:
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/PromoCode' }
+      responses:
+        '201': { description: Created }
+  /api/cart:
+    get:
+      summary: Get all cart items for user
+      parameters:
+        - in: query
+          name: userId
+          schema:
+            type: string
+      responses:
+        '200': { description: Success }
+    post:
+      summary: Add or update cart item
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId: { type: string }
+                productId: { type: string }
+                quantity: { type: number }
+      responses:
+        '200': { description: Success }
+    delete:
+      summary: Remove cart item
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId: { type: string }
+                productId: { type: string }
+      responses:
+        '204': { description: Deleted }
+  /api/orders:
+    get:
+      summary: Get all orders (optionally by userId)
+      parameters:
+        - in: query
+          name: userId
+          schema:
+            type: string
+      responses:
+        '200': { description: Success }
+    post:
+      summary: Create order
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId: { type: string }
+                items:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      productId: { type: string }
+                      quantity: { type: number }
+                      price: { type: number }
+                paymentMethod: { type: string }
+                shippingAddress: { type: string }
+                deliverySlot: { type: string }
+      responses:
+        '201': { description: Created }
+  /api/recipes:
+    get:
+      summary: Get all recipes (filterable)
+      parameters:
+        - in: query
+          name: cuisineType
+          schema: { type: string }
+        - in: query
+          name: diet
+          schema: { type: string }
+        - in: query
+          name: season
+          schema: { type: string }
+      responses:
+        '200': { description: Success }
+    post:
+      summary: Create recipe
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title: { type: string }
+                slug: { type: string }
+                instructions: { type: string }
+                ingredients: { type: array, items: { type: object } }
+      responses:
+        '201': { description: Created }
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        id: { type: string }
+        name: { type: string }
+        slug: { type: string }
+        price: { type: number }
+        stock: { type: number }
+        status: { type: string }
+        images: { type: string }
+        categoryId: { type: string }
+    Category:
+      type: object
+      properties:
+        id: { type: string }
+        name: { type: string }
+        slug: { type: string }
+    User:
+      type: object
+      properties:
+        id: { type: string }
+        email: { type: string }
+        password: { type: string }
+    PromoCode:
+      type: object
+      properties:
+        id: { type: string }
+        code: { type: string }
+        discount: { type: number }
+        discountType: { type: string }
+        active: { type: boolean }
