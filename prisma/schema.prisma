@@ -63,6 +63,7 @@ model Product {
   cartItems   CartItem[]
   orderItems  OrderItem[]
   wishlist    WishlistItem[]
+  recipeIngredients RecipeIngredient[]
   metaTitle   String?
   metaDesc    String?
   createdAt   DateTime       @default(now())
