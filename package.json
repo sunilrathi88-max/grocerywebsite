@@ -32,7 +32,9 @@
     "images:convert:responsive": "node scripts/convertToWebP.js --responsive",
     "lighthouse": "lhci autorun",
     "lighthouse:local": "npm run build && npm run preview & wait-on http://localhost:4173 && lhci autorun && kill %1",
-    "test:all": "npm run test:unit && npm run test:e2e && npm run lighthouse"
+    "test:all": "npm run test:unit && npm run test:e2e && npm run lighthouse",
+    "migrate": "prisma migrate deploy",
+    "prisma:generate": "prisma generate"
   },
   "dependencies": {
     "framer-motion": "11.0.8",
