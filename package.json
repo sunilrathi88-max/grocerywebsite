@@ -35,7 +35,7 @@
     "test:all": "npm run test:unit && npm run test:e2e && npm run lighthouse"
   },
   "dependencies": {
-    "framer-motion": "11.0.8",
+    "framer-motion": "11.18.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-slick": "^0.31.0",
