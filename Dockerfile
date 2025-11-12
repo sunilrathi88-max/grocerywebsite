@@ -1,42 +1,27 @@
-# Build stage
-FROM node:18-alpine AS builder
-
-WORKDIR /app
-
-# Copy package files
-COPY package*.json ./
-
-# Install dependencies
-RUN npm ci --prefer-offline --no-audit
-
-# Copy prisma schema
-COPY prisma ./prisma/
-
-# Generate Prisma Client
-RUN npx prisma generate
-
-# Copy source code
-COPY . .
-
-# Build the app
-RUN npm run build
-
-# Production stage
+# Simple static file server for pre-built Vite app
 FROM caddy:2-alpine
 
-# Copy built files from builder
-COPY --from=builder /app/dist /usr/share/caddy
+# Copy pre-built dist folder from GitHub Actions
+COPY dist /usr/share/caddy
 
-# Copy Caddyfile
+# Configure Caddy to serve on Railway's PORT
 COPY <<EOF /etc/caddy/Caddyfile
 :$PORT {
     root * /usr/share/caddy
     try_files {path} /index.html
     file_server
+    
+    # Enable gzip compression
+    encode gzip
+    
+    # Add security headers
+    header {
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "DENY"
+        Referrer-Policy "strict-origin-when-cross-origin"
+    }
 }
 EOF
 
-# Expose port
-EXPOSE 3000
-
+# Caddy will automatically use PORT from environment
 CMD ["caddy", "run", "--config", "/etc/caddy/Caddyfile", "--adapter", "caddyfile"]
