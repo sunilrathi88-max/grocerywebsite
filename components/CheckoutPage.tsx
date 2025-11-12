@@ -374,7 +374,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
       const confirmedOrder = await orderAPI.create(orderData);
       setOrderConfirmation(confirmedOrder.data);
       addToast('Order placed successfully!', 'success');
-    } catch (error) {
+    } catch (_error) {
       // Fallback to local order creation
       console.warn('API order creation failed, using fallback:', error);
       const confirmedOrder = onPlaceOrder({

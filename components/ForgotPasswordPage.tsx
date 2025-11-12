@@ -38,7 +38,7 @@ const ForgotPasswordPage: React.FC<ForgotPasswordPageProps> = ({ onNavigateToLog
     try {
       await new Promise((resolve) => setTimeout(resolve, 1500));
       setIsSuccess(true);
-    } catch (error) {
+    } catch (_error) {
       setErrors({ general: 'An error occurred. Please try again.' });
     } finally {
       setIsLoading(false);

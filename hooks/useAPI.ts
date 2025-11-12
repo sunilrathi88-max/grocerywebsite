@@ -71,7 +71,7 @@ export function useAPI<T>(
           onSuccess(data);
         }
       }
-    } catch (error) {
+    } catch (_error) {
       if (isMountedRef.current) {
         const apiError =
           error instanceof APIException
@@ -171,7 +171,7 @@ export function useAPIMutation<TData, TVariables = void>(
         }
 
         return data;
-      } catch (error) {
+      } catch (_error) {
         const apiError =
           error instanceof APIException
             ? error
