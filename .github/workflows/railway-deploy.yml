@@ -46,6 +46,3 @@ jobs:
           railway up --service=grocerywebsite
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-        run: railway up --service=grocerywebsite
-        env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
