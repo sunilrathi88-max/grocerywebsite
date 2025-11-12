@@ -66,7 +66,7 @@ const LoginPage: React.FC<LoginPageProps> = ({
       } else {
         setErrors({ general: response.message || 'Invalid email or password' });
       }
-    } catch (error) {
+    } catch (_error) {
       setErrors({
         general: error instanceof Error ? error.message : 'An error occurred. Please try again.',
       });

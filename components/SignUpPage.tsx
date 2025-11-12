@@ -119,7 +119,7 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ onSignUp, onNavigateToLogin }) 
       } else {
         setErrors({ general: response.message || 'Sign up failed' });
       }
-    } catch (error) {
+    } catch (_error) {
       setErrors({
         general: error instanceof Error ? error.message : 'An error occurred. Please try again.',
       });

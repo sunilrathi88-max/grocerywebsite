@@ -82,7 +82,7 @@ const ProfileInfo: React.FC<{ user: User }> = ({ user }) => {
       await userAPI.updateProfile({ name: formData.name, email: formData.email });
       setSuccessMessage('Profile updated successfully!');
       setTimeout(() => setSuccessMessage(null), 3000);
-    } catch (error) {
+    } catch (_error) {
       console.warn('Profile update failed:', error);
       setUpdateError(error instanceof Error ? error.message : 'Failed to update profile');
     } finally {
