@@ -84,7 +84,7 @@ const ProfileInfo: React.FC<{ user: User }> = ({ user }) => {
       setTimeout(() => setSuccessMessage(null), 3000);
     } catch (_error) {
       console.warn('Profile update failed:', error);
-      setUpdateError(error instanceof Error ? error.message : 'Failed to update profile');
+      setUpdateError(_error instanceof Error ? _error.message : 'Failed to update profile');
     } finally {
       setIsUpdating(false);
     }

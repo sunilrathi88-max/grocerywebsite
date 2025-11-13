@@ -11,16 +11,31 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         where: {
           ...(cuisineType ? { cuisineType: String(cuisineType) } : {}),
           ...(diet ? { diet: String(diet) } : {}),
-          ...(season ? { season: String(season) } : {})
+          ...(season ? { season: String(season) } : {}),
         },
-        include: { ingredients: true }
+        include: { ingredients: true },
       });
       return res.status(200).json(recipes);
     }
     case 'POST': {
       // Create recipe
-      const { title, slug, description, image, prepTime, servings, difficulty, ingredients, instructions, tips, cuisineType, diet, season } = req.body;
-      if (!title || !slug || !instructions || !Array.isArray(ingredients)) return res.status(400).json({ error: "Missing required fields" });
+      const {
+        title,
+        slug,
+        description,
+        image,
+        prepTime,
+        servings,
+        difficulty,
+        ingredients,
+        instructions,
+        tips,
+        cuisineType,
+        diet,
+        season,
+      } = req.body;
+      if (!title || !slug || !instructions || !Array.isArray(ingredients))
+        return res.status(400).json({ error: 'Missing required fields' });
       const recipe = await prisma.recipe.create({
         data: {
           title,
@@ -35,9 +50,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           cuisineType,
           diet,
           season,
-          ingredients: { create: ingredients.map((i: any) => ({ name: i.name, quantity: i.quantity, unit: i.unit, productId: i.productId })) }
+          ingredients: {
+            create: ingredients.map((i: any) => ({
+              name: i.name,
+              quantity: i.quantity,
+              unit: i.unit,
+              productId: i.productId,
+            })),
+          },
         },
-        include: { ingredients: true }
+        include: { ingredients: true },
       });
       return res.status(201).json(recipe);
     }

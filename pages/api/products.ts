@@ -7,7 +7,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     case 'GET': {
       // Get all products
       const products = await prisma.product.findMany({
-        include: { category: true }
+        include: { category: true },
       });
       return res.status(200).json(products);
     }
@@ -15,7 +15,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       // Create new product
       const { name, slug, description, price, weight, sku, stock, status, categoryId } = req.body;
       const product = await prisma.product.create({
-        data: { name, slug, description, price, weight, sku, stock, status, categoryId }
+        data: { name, slug, description, price, weight, sku, stock, status, categoryId },
       });
       return res.status(201).json(product);
     }

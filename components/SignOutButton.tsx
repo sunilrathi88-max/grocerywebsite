@@ -19,7 +19,7 @@ const SignOutButton: React.FC<SignOutButtonProps> = ({ redirectTo = '#/', classN
       localStorage.removeItem('auth_token_expiry');
       window.location.hash = redirectTo;
     } catch (_error) {
-      console.error('Sign out error:', error);
+      console._error('Sign out _error:', _error);
     } finally {
       setIsLoading(false);
     }

@@ -7,18 +7,23 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     case 'GET': {
       // Get all cart items for a user (userId from query)
       const { userId } = req.query;
-      if (!userId || typeof userId !== 'string') return res.status(400).json({ error: 'Missing userId' });
-      const cartItems = await prisma.cartItem.findMany({ where: { userId }, include: { product: true } });
+      if (!userId || typeof userId !== 'string')
+        return res.status(400).json({ error: 'Missing userId' });
+      const cartItems = await prisma.cartItem.findMany({
+        where: { userId },
+        include: { product: true },
+      });
       return res.status(200).json(cartItems);
     }
     case 'POST': {
       // Add or update cart item
       const { userId, productId, quantity } = req.body;
-      if (!userId || !productId || typeof quantity !== 'number') return res.status(400).json({ error: 'Missing fields' });
+      if (!userId || !productId || typeof quantity !== 'number')
+        return res.status(400).json({ error: 'Missing fields' });
       const cartItem = await prisma.cartItem.upsert({
         where: { userId_productId: { userId, productId } },
         update: { quantity },
-        create: { userId, productId, quantity }
+        create: { userId, productId, quantity },
       });
       return res.status(200).json(cartItem);
     }
