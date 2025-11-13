@@ -75,7 +75,7 @@ export function useAPI<T>(
       if (isMountedRef.current) {
         const apiError =
           _error instanceof APIException
-            ? error
+            ? _error
             : new APIException(_error instanceof Error ? _error.message : 'Unknown error occurred');
 
         setState({
@@ -174,7 +174,7 @@ export function useAPIMutation<TData, TVariables = void>(
       } catch (_error) {
         const apiError =
           _error instanceof APIException
-            ? error
+            ? _error
             : new APIException(_error instanceof Error ? _error.message : 'Unknown error occurred');
 
         setState({
