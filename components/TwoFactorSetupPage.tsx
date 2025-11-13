@@ -35,7 +35,7 @@ const TwoFactorSetupPage: React.FC<TwoFactorSetupPageProps> = ({ onComplete, onC
         setBackupCodes(response.backupCodes);
       }
     } catch (_error) {
-      console._error('Failed to setup 2FA:', _error);
+      console.error('Failed to setup 2FA:', _error);
     }
   };
 
