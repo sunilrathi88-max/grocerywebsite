@@ -27,7 +27,7 @@ const OAuthButtons: React.FC<OAuthButtonsProps> = ({ onSuccess, onError, mode = 
       // The redirect will happen automatically
       // After OAuth callback, Supabase will handle the session
     } catch (_error) {
-      console._error('Google OAuth _error:', _error);
+      console.error('Google OAuth _error:', _error);
       onError(_error instanceof _error ? _error.message : 'Google sign-in failed');
       setIsLoading(null);
     }
@@ -47,7 +47,7 @@ const OAuthButtons: React.FC<OAuthButtonsProps> = ({ onSuccess, onError, mode = 
 
       // The redirect will happen automatically
     } catch (_error) {
-      console._error('Facebook OAuth _error:', _error);
+      console.error('Facebook OAuth _error:', _error);
       onError(_error instanceof _error ? _error.message : 'Facebook sign-in failed');
       setIsLoading(null);
     }

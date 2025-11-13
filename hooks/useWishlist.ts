@@ -28,7 +28,7 @@ export const useWishlist = (): UseWishlistReturn => {
         const saved = localStorage.getItem(WISHLIST_STORAGE_KEY);
         return saved ? JSON.parse(saved) : [];
       } catch (_error) {
-        console._error('Failed to load wishlist from localStorage:', _error);
+        console.error('Failed to load wishlist from localStorage:', _error);
         return [];
       }
     }
@@ -43,7 +43,7 @@ export const useWishlist = (): UseWishlistReturn => {
       try {
         localStorage.setItem(WISHLIST_STORAGE_KEY, JSON.stringify(wishlistItems));
       } catch (_error) {
-        console._error('Failed to save wishlist to localStorage:', _error);
+        console.error('Failed to save wishlist to localStorage:', _error);
       }
     }
   }, [wishlistItems]);
