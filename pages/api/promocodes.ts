@@ -13,7 +13,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       // Create new promo code
       const { code, discount, discountType, active } = req.body;
       const promoCode = await prisma.promoCode.create({
-        data: { code, discount, discountType, active }
+        data: { code, discount, discountType, active },
       });
       return res.status(201).json(promoCode);
     }

@@ -13,7 +13,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       // Create new category
       const { name, slug, image } = req.body;
       const category = await prisma.category.create({
-        data: { name, slug, image }
+        data: { name, slug, image },
       });
       return res.status(201).json(category);
     }

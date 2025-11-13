@@ -76,7 +76,7 @@ export function useAPI<T>(
         const apiError =
           error instanceof APIException
             ? error
-            : new APIException(error instanceof Error ? error.message : 'Unknown error occurred');
+            : new APIException(_error instanceof Error ? _error.message : 'Unknown error occurred');
 
         setState({
           data: null,
@@ -175,7 +175,7 @@ export function useAPIMutation<TData, TVariables = void>(
         const apiError =
           error instanceof APIException
             ? error
-            : new APIException(error instanceof Error ? error.message : 'Unknown error occurred');
+            : new APIException(_error instanceof Error ? _error.message : 'Unknown error occurred');
 
         setState({
           data: null,

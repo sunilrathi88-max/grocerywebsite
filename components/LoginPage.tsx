@@ -68,7 +68,8 @@ const LoginPage: React.FC<LoginPageProps> = ({
       }
     } catch (_error) {
       setErrors({
-        general: error instanceof Error ? error.message : 'An error occurred. Please try again.',
+        general:
+          _error instanceof _error ? _error.message : 'An _error occurred. Please try again.',
       });
     } finally {
       setIsLoading(false);

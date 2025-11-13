@@ -35,7 +35,7 @@ const TwoFactorSetupPage: React.FC<TwoFactorSetupPageProps> = ({ onComplete, onC
         setBackupCodes(response.backupCodes);
       }
     } catch (_error) {
-      console.error('Failed to setup 2FA:', error);
+      console._error('Failed to setup 2FA:', _error);
     }
   };
 
@@ -51,7 +51,7 @@ const TwoFactorSetupPage: React.FC<TwoFactorSetupPageProps> = ({ onComplete, onC
         setVerificationError(response.message || 'Invalid code. Please try again.');
       }
     } catch (_error) {
-      setVerificationError(error instanceof Error ? error.message : 'Verification failed');
+      setVerificationError(_error instanceof _error ? _error.message : 'Verification failed');
     } finally {
       setIsVerifying(false);
     }
