@@ -12,7 +12,7 @@ declare global {
  * Initialize Google Analytics
  * Call this in your index.tsx or main App component
  */
-export const initGA = (measurementId: string) => {
+export const initGA4 = (measurementId: string) => {
   if (typeof window === 'undefined') return;
 
   // Load gtag script
