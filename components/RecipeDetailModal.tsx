@@ -38,27 +38,23 @@ const RecipeDetailModal: React.FC<RecipeDetailModalProps> = ({
     recipe.relatedProductIds?.includes(product.id)
   );
 
+  const MotionDiv = motion.div as any;
+
   return (
     <AnimatePresence>
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
-        <motion.div
-          // @ts-ignore
-          {...({
-            initial: { opacity: 0 },
-            animate: { opacity: 1 },
-            exit: { opacity: 0 },
-            onClick: onClose,
-            className: "absolute inset-0 bg-black/60 backdrop-blur-sm"
-          } as any)}
+        <MotionDiv
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          onClick={onClose}
+          className="absolute inset-0 bg-black/60 backdrop-blur-sm"
         />
-        <motion.div
-          // @ts-ignore
-          {...({
-            initial: { opacity: 0, scale: 0.95, y: 20 },
-            animate: { opacity: 1, scale: 1, y: 0 },
-            exit: { opacity: 0, scale: 0.95, y: 20 },
-            className: "relative w-full max-w-4xl max-h-[90vh] bg-white dark:bg-gray-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col"
-          } as any)}
+        <MotionDiv
+          initial={{ opacity: 0, scale: 0.95, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.95, y: 20 }}
+          className="relative w-full max-w-4xl max-h-[90vh] bg-white dark:bg-gray-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col"
         >
           {/* Header Image */}
           <div className="relative h-64 sm:h-80 shrink-0">
@@ -169,7 +165,7 @@ const RecipeDetailModal: React.FC<RecipeDetailModalProps> = ({
               )}
             </div>
           </div>
-        </motion.div>
+        </MotionDiv>
       </div>
     </AnimatePresence>
   );

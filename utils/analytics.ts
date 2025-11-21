@@ -7,7 +7,6 @@ declare global {
     dataLayer?: unknown[];
   }
 }
-
 /**
  * Initialize Google Analytics
  * Call this in your index.tsx or main App component
