@@ -113,7 +113,7 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
   const imageSrc = hasError ? safeFallbackSrc : isInView ? safeSrc : safeFallbackSrc;
 
   return (
-    <picture>
+    <picture style={{ display: 'contents' }}>
       {/* WebP source for modern browsers */}
       {!hasError && imageConfig.webpSrcSet && isInView && (
         <source type="image/webp" srcSet={imageConfig.webpSrcSet} sizes={imageConfig.sizes} />
