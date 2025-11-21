@@ -798,6 +798,8 @@ const App: React.FC = () => {
           isLoggedIn={isLoggedIn}
           onLoginClick={() => { setIsMobileMenuOpen(false); setAuthModalOpen(true); }}
           onLogoutClick={() => { setIsMobileMenuOpen(false); handleLogout(); }}
+          searchQuery={searchQuery}
+          onSearchChange={setSearchQuery}
         />
         {isAuthModalOpen && (
           <AuthModal
