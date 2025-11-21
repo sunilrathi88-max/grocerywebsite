@@ -75,7 +75,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg overflow-hidden group transform hover:-translate-y-3 transition-all duration-500 border border-gray-100 hover:border-brand-primary/40 hover:shadow-2xl flex flex-col relative">
+    <div className="product-card bg-white rounded-2xl shadow-lg overflow-hidden group transform hover:-translate-y-3 transition-all duration-500 border border-gray-100 hover:border-brand-primary/40 hover:shadow-2xl flex flex-col relative opacity-100">
       {/* Hover Glow Effect */}
       <div className="absolute inset-0 bg-gradient-to-br from-brand-primary/0 via-transparent to-amber-500/0 group-hover:from-brand-primary/5 group-hover:to-amber-500/5 transition-all duration-500 rounded-2xl pointer-events-none"></div>
 

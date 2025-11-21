@@ -30,7 +30,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({
     return (
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
         {Array.from({ length: 8 }).map((_, i) => (
-          <div key={i} className={`animate-fade-in-up stagger-${(i % 6) + 1}`}>
+          <div key={i}>
             <ProductCardSkeleton />
           </div>
         ))}
@@ -52,8 +52,8 @@ const ProductGrid: React.FC<ProductGridProps> = ({
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
-      {products.map((product, index) => (
-        <div key={product.id} className={`animate-fade-in-up stagger-${(index % 6) + 1}`}>
+      {products.map((product) => (
+        <div key={product.id}>
           <ProductCard
             product={product}
             onAddToCart={onAddToCart}
