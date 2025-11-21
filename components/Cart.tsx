@@ -19,6 +19,8 @@ interface CartProps {
   discount: number;
   subtotal: number;
   shippingCost: number;
+  onRemoveItem: (productId: number, variantId: number) => void;
+  onCheckout: () => void;
 }
 
 const Spinner: React.FC<{ className?: string }> = ({ className = 'h-5 w-5' }) => (
@@ -48,6 +50,7 @@ const Cart: React.FC<CartProps> = ({
   items,
   onUpdateQuantity,
   onClose,
+  onCheckout,
   isLoggedIn,
   promoCode,
   onPromoCodeChange,
@@ -95,21 +98,17 @@ const Cart: React.FC<CartProps> = ({
   return (
     <div className="h-full flex flex-col">
       {items.length === 0 ? (
-        <div className="flex-grow flex flex-col items-center justify-center text-center">
-          <ShoppingCartIcon className="h-20 w-20 text-gray-300" />
-          <h3 className="mt-4 text-xl font-serif font-bold text-brand-dark">Your Cart is Empty</h3>
-          <p className="mt-2 text-gray-500">Add some delicious products to get started.</p>
-          <button
-            onClick={onClose}
-            className="mt-6 bg-brand-primary text-white font-bold py-3 px-6 rounded-full shadow-lg hover:bg-opacity-90 transform hover:scale-105 transition-all duration-300"
-          >
-            Continue Shopping
+        <div className="flex-1 flex flex-col items-center justify-center text-gray-500">
+          <ShoppingCartIcon className="h-16 w-16 mb-4 opacity-20" />
+          <p className="text-lg font-medium">Your cart is empty</p>
+          <button onClick={onClose} className="mt-4 text-brand-primary hover:underline">
+            Start Shopping
           </button>
         </div>
       ) : (
         <>
-          <div className="flex-grow space-y-4 pr-2 -mr-2 overflow-y-auto">
-            <AnimatePresence mode="popLayout">
+          <div className="flex-1 overflow-y-auto pr-2 space-y-4">
+            <AnimatePresence>
               {items.map((item) => {
                 const isItemLoading =
                   loadingState.type === 'item' &&
@@ -117,14 +116,13 @@ const Cart: React.FC<CartProps> = ({
                 return (
                   <motion.div
                     key={`${item.product.id}-${item.selectedVariant.id}`}
-                    className="flex items-center justify-between"
+                    // @ts-ignore
+                    className="flex items-center justify-between bg-white p-3 rounded-lg shadow-sm border border-gray-100"
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: 20, height: 0 }}
                     transition={{ duration: 0.3 }}
                     layout
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    {...({} as any)}
                   >
                     <div className="flex items-center gap-4">
                       <OptimizedImage
@@ -145,7 +143,7 @@ const Cart: React.FC<CartProps> = ({
                           {item.selectedVariant.name}
                         </p>
                         <p className="text-sm text-gray-500 dark:text-gray-400">
-                          $
+                          ₹
                           {(item.selectedVariant.salePrice ?? item.selectedVariant.price).toFixed(
                             2
                           )}
@@ -159,43 +157,41 @@ const Cart: React.FC<CartProps> = ({
                         </div>
                       ) : (
                         <>
-                          {/* eslint-disable @typescript-eslint/no-explicit-any */}
                           <motion.button
                             onClick={() => handleQuantityChange(item, item.quantity - 1)}
+                            // @ts-ignore
                             className="p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                             whileTap={{ scale: 0.9 }}
-                            {...({} as any)}
                           >
                             <MinusIcon />
                           </motion.button>
                           <motion.span
+                            // @ts-ignore
                             className="w-8 text-center font-bold"
                             key={item.quantity}
                             initial={{ scale: 1.2 }}
                             animate={{ scale: 1 }}
-                            {...({} as any)}
                           >
                             {item.quantity}
                           </motion.span>
                           <motion.button
                             onClick={() => handleQuantityChange(item, item.quantity + 1)}
+                            // @ts-ignore
                             className="p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors disabled:text-gray-300 disabled:cursor-not-allowed disabled:hover:bg-transparent"
                             disabled={item.quantity >= item.selectedVariant.stock}
                             whileTap={{ scale: 0.9 }}
-                            {...({} as any)}
                           >
                             <PlusIcon />
                           </motion.button>
                           <motion.button
                             onClick={() => handleQuantityChange(item, 0)}
+                            // @ts-ignore
                             className="p-1 rounded-full text-red-500 hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors ml-2"
                             whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.9 }}
-                            {...({} as any)}
                           >
                             <TrashIcon />
                           </motion.button>
-                          {/* eslint-enable @typescript-eslint/no-explicit-any */}
                         </>
                       )}
                     </div>
@@ -203,7 +199,7 @@ const Cart: React.FC<CartProps> = ({
                 );
               })}
             </AnimatePresence>
-          </div>
+          </div >
 
           <div className="mt-4">
             <label htmlFor="promo-code" className="text-sm font-medium text-gray-700">
@@ -233,47 +229,48 @@ const Cart: React.FC<CartProps> = ({
           <div className="mt-6 border-t pt-6 space-y-2">
             <div className="flex justify-between text-gray-600">
               <span>Subtotal</span>
-              <span>${subtotal.toFixed(2)}</span>
+              <span>₹{subtotal.toFixed(2)}</span>
             </div>
             {discount > 0 && (
               <div className="flex justify-between text-green-600">
                 <span>Discount</span>
-                <span>-${discount.toFixed(2)}</span>
+                <span>-₹{discount.toFixed(2)}</span>
               </div>
             )}
             <div className="flex justify-between text-gray-600">
               <span>Shipping</span>
-              <span>{shippingCost === 0 ? 'Free' : `$${shippingCost.toFixed(2)}`}</span>
+              <span>{shippingCost === 0 ? 'Free' : `₹${shippingCost.toFixed(2)}`}</span>
             </div>
             <div className="flex justify-between text-gray-600">
               <span>Taxes (8%)</span>
-              <span>${tax.toFixed(2)}</span>
+              <span>₹{tax.toFixed(2)}</span>
             </div>
             <div className="flex justify-between font-bold text-lg text-brand-dark">
               <span>Total</span>
-              <span>${total.toFixed(2)}</span>
+              <span>₹{total.toFixed(2)}</span>
             </div>
           </div>
-          {!isLoggedIn && items.length > 0 && (
-            <p className="text-center text-sm text-gray-500 mt-4">
-              You can check out as a guest or log in.
-            </p>
-          )}
+          {
+            !isLoggedIn && items.length > 0 && (
+              <p className="text-center text-sm text-gray-500 mt-4">
+                You can check out as a guest or log in.
+              </p>
+            )
+          }
           <a
             href={canCheckout ? '#/checkout' : undefined}
             onClick={canCheckout ? onClose : (e) => e.preventDefault()}
-            className={`mt-4 block w-full text-center bg-brand-primary text-white font-bold py-3 rounded-full shadow-lg transition-all duration-300 ${
-              !canCheckout || !!loadingState.type
-                ? 'bg-gray-400 cursor-not-allowed'
-                : 'hover:bg-opacity-90 transform hover:scale-105'
-            }`}
+            className={`mt-4 block w-full text-center bg-brand-primary text-white font-bold py-3 rounded-full shadow-lg transition-all duration-300 ${!canCheckout || !!loadingState.type
+              ? 'bg-gray-400 cursor-not-allowed'
+              : 'hover:bg-opacity-90 transform hover:scale-105'
+              }`}
             aria-disabled={!canCheckout || !!loadingState.type}
           >
             Proceed to Checkout
           </a>
         </>
       )}
-    </div>
+    </div >
   );
 };
 

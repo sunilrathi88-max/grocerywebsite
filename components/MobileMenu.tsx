@@ -7,6 +7,11 @@ interface MobileMenuProps {
   onClose: () => void;
   searchQuery: string;
   onSearchChange: (query: string) => void;
+  categories: string[];
+  onSelectCategory: (category: string) => void;
+  isLoggedIn: boolean;
+  onLoginClick: () => void;
+  onLogoutClick: () => void;
 }
 
 const MobileMenu: React.FC<MobileMenuProps> = ({
@@ -14,6 +19,11 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
   onClose,
   searchQuery,
   onSearchChange,
+  categories,
+  onSelectCategory,
+  isLoggedIn,
+  onLoginClick,
+  onLogoutClick,
 }) => {
   useEffect(() => {
     const handleEsc = (event: KeyboardEvent) => {
@@ -117,7 +127,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
               className="w-full bg-white border border-gray-300 rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-brand-primary transition-all duration-300"
             />
           </div>
-          <nav className="flex flex-col p-6 pt-0 space-y-4">
+          <nav className="flex flex-col p-6 pt-0 space-y-4 overflow-y-auto max-h-[60vh]">
             {navLinks.map((link, i) => (
               <motion.a
                 key={link.name}
@@ -139,6 +149,64 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
                 {link.name}
               </motion.a>
             ))}
+
+            <div className="border-t border-gray-200 my-4 pt-4">
+              <p className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-2">Categories</p>
+              {categories.map((category, i) => (
+                <motion.button
+                  key={category}
+                  // FIX: Wrapped framer-motion props in a spread object to resolve TypeScript error.
+                  {...({
+                    custom: i + navLinks.length,
+                    variants: navItemVariants,
+                    initial: 'hidden',
+                    animate: 'visible',
+                    className: 'block w-full text-left text-lg text-brand-dark hover:text-brand-primary transition-colors py-1',
+                    onClick: () => {
+                      onSelectCategory(category);
+                      onClose();
+                    },
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  } as any)}
+                >
+                  {category}
+                </motion.button>
+              ))}
+            </div>
+
+            <div className="border-t border-gray-200 pt-4">
+              {isLoggedIn ? (
+                <motion.button
+                  // FIX: Wrapped framer-motion props in a spread object to resolve TypeScript error.
+                  {...({
+                    custom: navLinks.length + categories.length + 1,
+                    variants: navItemVariants,
+                    initial: 'hidden',
+                    animate: 'visible',
+                    className: 'w-full bg-brand-dark text-white font-bold py-3 rounded-full shadow-lg hover:bg-opacity-90 transition-all',
+                    onClick: onLogoutClick,
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  } as any)}
+                >
+                  Sign Out
+                </motion.button>
+              ) : (
+                <motion.button
+                  // FIX: Wrapped framer-motion props in a spread object to resolve TypeScript error.
+                  {...({
+                    custom: navLinks.length + categories.length + 1,
+                    variants: navItemVariants,
+                    initial: 'hidden',
+                    animate: 'visible',
+                    className: 'w-full bg-brand-primary text-white font-bold py-3 rounded-full shadow-lg hover:bg-opacity-90 transition-all',
+                    onClick: onLoginClick,
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  } as any)}
+                >
+                  Login / Sign Up
+                </motion.button>
+              )}
+            </div>
           </nav>
         </motion.div>,
       ]}

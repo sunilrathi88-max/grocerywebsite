@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import { Review } from '../types';
 import { TrashIcon } from './icons/TrashIcon';
 import StarRating from './StarRating';
 import VerifiedBadge from './VerifiedBadge';
+import { OptimizedImage } from './OptimizedImage';
+import { imageErrorHandlers } from '../utils/imageHelpers';
 
 interface ReviewListProps {
   reviews: Review[];
@@ -10,46 +12,154 @@ interface ReviewListProps {
   onDelete: (productId: number, reviewId: number) => void;
 }
 
+type SortOption = 'newest' | 'highest' | 'lowest';
+type FilterOption = 'all' | '5' | '4' | '3' | '2' | '1' | 'with_photos';
+
 const ReviewList: React.FC<ReviewListProps> = ({ reviews, productId, onDelete }) => {
+  const [sortBy, setSortBy] = useState<SortOption>('newest');
+  const [filterBy, setFilterBy] = useState<FilterOption>('all');
+
+  const filteredAndSortedReviews = useMemo(() => {
+    let result = [...reviews];
+
+    // Filter
+    if (filterBy !== 'all') {
+      if (filterBy === 'with_photos') {
+        result = result.filter((r) => r.images && r.images.length > 0);
+      } else {
+        const rating = parseInt(filterBy);
+        result = result.filter((r) => Math.round(r.rating) === rating);
+      }
+    }
+
+    // Sort
+    result.sort((a, b) => {
+      switch (sortBy) {
+        case 'newest':
+          return new Date(b.date || 0).getTime() - new Date(a.date || 0).getTime();
+        case 'highest':
+          return b.rating - a.rating;
+        case 'lowest':
+          return a.rating - b.rating;
+        default:
+          return 0;
+      }
+    });
+
+    return result;
+  }, [reviews, sortBy, filterBy]);
+
   if (reviews.length === 0) {
     return (
-      <p className="text-gray-500 text-sm">No reviews yet. Be the first to share your thoughts!</p>
+      <p className="text-gray-500 text-sm italic">No reviews yet. Be the first to share your thoughts!</p>
     );
   }
 
   return (
     <div className="space-y-6">
-      {reviews.map((review) => (
-        <div
-          key={review.id}
-          className="border-b pb-4 last:border-0 last:pb-0 hover:bg-gray-50 p-3 rounded-lg transition-colors"
-        >
-          <div className="flex items-center justify-between mb-2">
-            <div className="flex items-center gap-2">
-              <p className="font-bold text-brand-dark">{review.author}</p>
-              {review.verifiedPurchase && <VerifiedBadge size="sm" />}
-            </div>
-            <button
-              onClick={() => onDelete(productId, review.id)}
-              className="p-1 rounded-full text-gray-400 hover:text-red-500 hover:bg-red-100 transition-colors"
-              aria-label="Delete review"
-            >
-              <TrashIcon />
-            </button>
-          </div>
-          <div className="mb-2">
-            <StarRating rating={review.rating} size="sm" />
-          </div>
-          <p className="text-gray-700 leading-relaxed">{review.comment}</p>
-          <p className="text-xs text-gray-400 mt-2">
-            {new Date(review.date).toLocaleDateString('en-US', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-            })}
-          </p>
+      {/* Controls */}
+      <div className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center bg-white p-4 rounded-lg border border-gray-100 shadow-sm">
+        <div className="flex items-center gap-2">
+          <span className="text-sm font-medium text-gray-700">Sort by:</span>
+          <select
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value as SortOption)}
+            className="text-sm border-gray-300 rounded-md focus:ring-brand-primary focus:border-brand-primary"
+          >
+            <option value="newest">Newest First</option>
+            <option value="highest">Highest Rated</option>
+            <option value="lowest">Lowest Rated</option>
+          </select>
         </div>
-      ))}
+        <div className="flex items-center gap-2">
+          <span className="text-sm font-medium text-gray-700">Filter:</span>
+          <select
+            value={filterBy}
+            onChange={(e) => setFilterBy(e.target.value as FilterOption)}
+            className="text-sm border-gray-300 rounded-md focus:ring-brand-primary focus:border-brand-primary"
+          >
+            <option value="all">All Reviews</option>
+            <option value="with_photos">With Photos</option>
+            <option value="5">5 Stars</option>
+            <option value="4">4 Stars</option>
+            <option value="3">3 Stars</option>
+            <option value="2">2 Stars</option>
+            <option value="1">1 Star</option>
+          </select>
+        </div>
+      </div>
+
+      {/* List */}
+      <div className="space-y-4">
+        {filteredAndSortedReviews.length > 0 ? (
+          filteredAndSortedReviews.map((review) => (
+            <div
+              key={review.id}
+              className="border-b pb-6 last:border-0 last:pb-0 bg-white p-4 rounded-lg hover:shadow-sm transition-shadow"
+            >
+              <div className="flex items-start justify-between mb-2">
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <p className="font-bold text-brand-dark">{review.author}</p>
+                    {review.verifiedPurchase && <VerifiedBadge size="sm" />}
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <StarRating rating={review.rating} size="sm" />
+                    <span className="text-xs text-gray-400">
+                      {review.date
+                        ? new Date(review.date).toLocaleDateString('en-US', {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric',
+                        })
+                        : 'Unknown Date'}
+                    </span>
+                  </div>
+                </div>
+                <button
+                  onClick={() => onDelete(productId, review.id)}
+                  className="p-1.5 rounded-full text-gray-400 hover:text-red-500 hover:bg-red-50 transition-colors"
+                  aria-label="Delete review"
+                >
+                  <TrashIcon className="h-4 w-4" />
+                </button>
+              </div>
+
+              <p className="text-gray-700 leading-relaxed mt-3">{review.comment}</p>
+
+              {/* Review Images */}
+              {review.images && review.images.length > 0 && (
+                <div className="flex gap-2 mt-4 overflow-x-auto pb-2">
+                  {review.images.map((img, idx) => (
+                    <div key={idx} className="w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden border border-gray-200">
+                      <OptimizedImage
+                        src={img}
+                        alt={`Review image ${idx + 1}`}
+                        className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
+                        type="thumbnail"
+                        width={80}
+                        height={80}
+                        onError={imageErrorHandlers.thumb}
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Helpful Count (Future Feature) */}
+              {review.helpful && review.helpful > 0 && (
+                <div className="mt-3 text-xs text-gray-500 flex items-center gap-1">
+                  <span>👍 {review.helpful} people found this helpful</span>
+                </div>
+              )}
+            </div>
+          ))
+        ) : (
+          <div className="text-center py-8 text-gray-500">
+            No reviews match your selected filters.
+          </div>
+        )}
+      </div>
     </div>
   );
 };

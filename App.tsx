@@ -9,8 +9,8 @@ import {
   OrderStatus,
   QnA as QnAType,
   BlogPost,
+  Recipe
 } from './types';
-import { Recipe } from './components/RecipesPage';
 
 // Performance Utils
 import { usePerformanceMonitoring } from './utils/performance';
@@ -26,7 +26,7 @@ import { useProductFilter } from './hooks/useProductFilter';
 import { useProducts } from './hooks/useProducts';
 
 // Mock Data
-import { MOCK_USER, MOCK_ORDERS, MOCK_TESTIMONIALS, MOCK_ANALYTICS, MOCK_POSTS } from './data';
+import { MOCK_USER, MOCK_ORDERS, MOCK_TESTIMONIALS, MOCK_ANALYTICS, MOCK_POSTS, MOCK_RECIPES } from './data';
 
 // Core Components (Eagerly Loaded - Always Visible)
 import Header from './components/Header';
@@ -53,6 +53,7 @@ const ComparisonModal = React.lazy(() => import('./components/ComparisonModal'))
 const ExitIntentModal = React.lazy(() => import('./components/ExitIntentModal'));
 const RecipeDetailModal = React.lazy(() => import('./components/RecipeDetailModal'));
 const QuizModule = React.lazy(() => import('./components/QuizModule'));
+const DatabaseSeeder = React.lazy(() => import('./components/DatabaseSeeder'));
 
 // Lazy-Loaded Pages (Route-Based Code Splitting)
 const CheckoutPage = React.lazy(() => import('./components/CheckoutPage'));
@@ -80,14 +81,12 @@ const App: React.FC = () => {
   // Register Service Worker (PWA)
   useEffect(() => {
     if ('serviceWorker' in navigator) {
-      // Import workbox-window dynamically
       import('workbox-window')
         .then(({ Workbox }) => {
           const wb = new Workbox('/sw.js');
 
           wb.addEventListener('installed', (event) => {
             if (event.isUpdate) {
-              // New content available, show update notification
               if (window.confirm('New version available! Click OK to update.')) {
                 window.location.reload();
               }
@@ -104,67 +103,68 @@ const App: React.FC = () => {
     }
   }, []);
 
-  // Custom hooks for cart, wishlist, filtering, and products
-  const { cartItems, subtotal, addToCart, updateQuantity, clearCart } = useCart();
+  // --- State Definitions ---
 
+  // Navigation & View State
+  const [currentView, setCurrentView] = useState('home');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  // Auth State
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [isAuthModalOpen, setAuthModalOpen] = useState(false);
+
+  // Cart & Wishlist UI State
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isWishlistOpen, setIsWishlistOpen] = useState(false);
+
+  // Product & Filter State
+  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [sortOrder, setSortOrder] = useState<'name' | 'price-asc' | 'price-desc' | 'rating' | 'newest'>('newest');
+
+  // Advanced Filters State
+  const [showOnSale, setShowOnSale] = useState(false);
+  const [showInStock, setShowInStock] = useState(false);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [priceRange, setPriceRange] = useState<{ min: number; max: number }>({ min: 0, max: 0 });
+
+  // New Filters State
+  const [selectedOrigins, setSelectedOrigins] = useState<string[]>([]);
+  const [selectedHeatLevels, setSelectedHeatLevels] = useState<string[]>([]);
+  const [selectedCuisines, setSelectedCuisines] = useState<string[]>([]);
+  const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
+  const [selectedGrinds, setSelectedGrinds] = useState<string[]>([]);
+
+  // Data State
+  const [orders, setOrders] = useState<Order[]>(MOCK_ORDERS);
+  const [toasts, setToasts] = useState<ToastMessage[]>([]);
+  const [showPromoBanner, setShowPromoBanner] = useState(true);
+  const [comparisonItems, setComparisonItems] = useState<Product[]>([]);
+  const [isComparisonModalOpen, setIsComparisonModalOpen] = useState(false);
+
+  // Feature Specific State
+  const [isExitIntentModalOpen, setIsExitIntentModalOpen] = useState(false);
+  const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
+  const [promoCode, setPromoCode] = useState('');
+  const [discount, setDiscount] = useState(0);
+
+  // Custom hooks
+  const { cartItems, subtotal, addToCart, updateQuantity, clearCart } = useCart();
   const { wishlistItems, wishlistItemCount, toggleWishlist, isInWishlist } = useWishlist();
 
-  // Use the products hook with mock data fallback (set useMockData: true for now)
   const {
     products,
-    isLoading: productsLoading, // useProducts loading state
-    // error: _productsError, // Unused but available for future
+    isLoading: productsLoading,
     addProduct: addProductAPI,
     updateProduct: updateProductAPI,
     deleteProduct: deleteProductAPI,
     addReview,
     addQuestion,
-    // refreshProducts, // Available if needed for manual refresh
-  } = useProducts({ useMockData: true, autoFetch: true });
+  } = useProducts({ useMockData: true });
 
-  // State management
-  const [posts] = useState<BlogPost[]>(MOCK_POSTS);
-  const [orders, setOrders] = useState<Order[]>(MOCK_ORDERS);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('All');
-  const [sortOrder, setSortOrder] = useState('featured');
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  const [isWishlistOpen, setIsWishlistOpen] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const [toasts, setToasts] = useState<ToastMessage[]>([]);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
-  const [isAuthModalOpen, setAuthModalOpen] = useState(false);
-  const [showPromoBanner, setShowPromoBanner] = useState(true);
-  const [currentView, setCurrentView] = useState('home');
-
-  // Advanced filters state
-  const [showOnSale, setShowOnSale] = useState(false);
-  const [showInStock, setShowInStock] = useState(false);
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const maxPrice = useMemo(() => {
-    const vals = products.flatMap((p) => p.variants.map((v) => v.price));
-    const max = vals.length > 0 ? Math.max(...vals) : 0;
-    return Math.ceil(max);
-  }, [products]);
-
-  // Initialize priceRange to use computed maxPrice once products are available
-  const [priceRange, setPriceRange] = useState(() => ({ min: 0, max: maxPrice }));
-
-  // Comparison state
-  const [comparisonItems, setComparisonItems] = useState<Product[]>([]);
-  const [isComparisonModalOpen, setIsComparisonModalOpen] = useState(false);
-
-  // Exit-intent modal state
-  const [isExitIntentModalOpen, setIsExitIntentModalOpen] = useState(false);
-
-  // Recipe page state
-  const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
-
-  // Promo code state
-  const [promoCode, setPromoCode] = useState('');
-  const [discount, setDiscount] = useState(0);
+  // --- Computed Values & Effects ---
 
   // Routing
   useEffect(() => {
@@ -178,22 +178,21 @@ const App: React.FC = () => {
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
-  // Use the products hook's loading state instead of a local simulated timeout
-  // (prevents showing skeletons while filters are being initialized)
+  // Calculate Max Price from Products
+  const maxPrice = useMemo(() => {
+    if (products.length === 0) return 1000;
+    return Math.ceil(Math.max(...products.map(p => p.variants[0].salePrice ?? p.variants[0].price)));
+  }, [products]);
 
-  // Ensure price range is updated after products load. On initial render
-  // maxPrice can be 0 (products empty), so we sync priceRange when maxPrice updates
+  // Sync Price Range
   useEffect(() => {
     setPriceRange((prev) => {
-      // If user hasn't adjusted the max yet (initially equal to previous max), set to computed maxPrice
-      if (prev.max === 0) return { ...prev, max: maxPrice };
-      // If product set increases maxPrice beyond current range, expand it
-      if (prev.max < maxPrice) return { ...prev, max: maxPrice };
+      if (prev.max === 0 || prev.max < maxPrice) return { ...prev, max: maxPrice };
       return prev;
     });
   }, [maxPrice]);
 
-  // Exit-intent listener
+  // Exit Intent
   useEffect(() => {
     const handleMouseLeave = (e: MouseEvent) => {
       if (e.clientY <= 0 && !isExitIntentModalOpen && cartItems.length > 0) {
@@ -204,21 +203,61 @@ const App: React.FC = () => {
     return () => document.removeEventListener('mouseleave', handleMouseLeave);
   }, [isExitIntentModalOpen, cartItems.length]);
 
-  // Memoized values
+  // Derived Data for Filters
   const categories = useMemo(
     () => ['All', ...Array.from(new Set(products.map((p) => p.category)))],
     [products]
   );
+
   const availableTags = useMemo(
     () => Array.from(new Set(products.flatMap((p) => p.tags || []))),
     [products]
   );
+
+  const availableOrigins = useMemo(
+    () => Array.from(new Set(products.map((p) => p.origin).filter(Boolean) as string[])),
+    [products]
+  );
+
+  const availableSizes = useMemo(
+    () => Array.from(new Set(products.flatMap((p) => p.variants.map((v) => v.name)))),
+    [products]
+  );
+
+  const availableGrinds = useMemo(
+    () => Array.from(new Set(products.map((p) => p.grind).filter(Boolean) as string[])),
+    [products]
+  );
+
+  const availableHeatLevels = ['Mild', 'Medium', 'Spicy', 'Extra Spicy']; // Static for now, or derive from tags
+  const availableCuisines: string[] = []; // Placeholder, to be populated from tags or new field
+
   const wishlistedIds = useMemo(() => new Set(wishlistItems.map((p) => p.id)), [wishlistItems]);
   const comparisonIds = useMemo(() => new Set(comparisonItems.map((p) => p.id)), [comparisonItems]);
+  const shippingCost = useMemo(() => (subtotal > 999 || subtotal === 0 ? 0 : 50), [subtotal]);
 
-  const shippingCost = useMemo(() => (subtotal > 50 || subtotal === 0 ? 0 : 10), [subtotal]);
+  // --- Filter Hook Integration ---
+  const { filteredProducts } = useProductFilter(products, {
+    category: selectedCategory,
+    searchQuery,
+    priceRange: [priceRange.min, priceRange.max],
+    inStockOnly: showInStock,
+    sortBy: sortOrder,
+    origin: selectedOrigins,
+    heatLevel: selectedHeatLevels,
+    cuisine: selectedCuisines,
+    size: selectedSizes,
+    grind: selectedGrinds,
+    showOnSale,
+    tags: selectedTags,
+  });
 
-  // Handlers
+  // Use filteredProducts directly as the final result
+  const finalFilteredProducts = filteredProducts;
+
+
+  // --- Handlers ---
+
   const addToast = useCallback(
     (message: string, type: ToastMessage['type'], icon?: React.ReactNode) => {
       const newToast = { id: Date.now(), message, type, icon };
@@ -235,13 +274,6 @@ const App: React.FC = () => {
     [addToCart, addToast]
   );
 
-  const handleUpdateQuantity = useCallback(
-    (productId: number, variantId: number, quantity: number) => {
-      updateQuantity(productId, variantId, quantity);
-    },
-    [updateQuantity]
-  );
-
   const handleToggleWishlist = useCallback(
     (product: Product) => {
       const wasInWishlist = isInWishlist(product.id);
@@ -254,6 +286,46 @@ const App: React.FC = () => {
     },
     [toggleWishlist, isInWishlist, addToast]
   );
+
+  const handleLogout = useCallback(async () => {
+    const { supabase } = await import('./supabaseClient');
+    await supabase.auth.signOut();
+    setIsLoggedIn(false);
+    setCurrentUser(null);
+    addToast('Logged out successfully.', 'success');
+    window.location.hash = '#/';
+  }, [addToast]);
+
+  const handleSelectCategoryAndClose = useCallback((category: string) => {
+    setSelectedCategory(category);
+    setIsMobileMenuOpen(false);
+    window.scrollTo(0, 0);
+  }, []);
+
+  const handleAddReview = useCallback((productId: number, review: Omit<Review, 'id'>) => {
+    const newReview: Review = { ...review, id: Date.now() };
+    addReview(productId, newReview);
+    addToast('Review submitted successfully!', 'success');
+  }, [addReview, addToast]);
+
+  const handleDeleteReview = useCallback((productId: number, reviewId: number) => {
+    console.log('Delete review:', productId, reviewId);
+    addToast('Review deleted.', 'info');
+  }, [addToast]);
+
+  const handleAskQuestion = useCallback((productId: number, question: { author: string; question: string }) => {
+    const newQuestion: QnAType = { ...question, id: Date.now(), answer: '', date: new Date().toISOString() };
+    addQuestion(productId, newQuestion);
+    addToast('Question submitted!', 'success');
+  }, [addQuestion, addToast]);
+
+  const handleUpdateQuantity = useCallback((productId: number, variantId: number, quantity: number) => {
+    updateQuantity(productId, variantId, quantity);
+  }, [updateQuantity]);
+
+  const handleNotifyMe = useCallback((productId: number | string) => {
+    addToast('We will notify you when this product is back in stock!', 'success');
+  }, [addToast]);
 
   const handleLogin = useCallback(
     async (email: string, password: string, rememberMe: boolean) => {
@@ -269,7 +341,6 @@ const App: React.FC = () => {
           return;
         }
 
-        // Auth state listener will handle setting isLoggedIn and currentUser
         setAuthModalOpen(false);
         window.location.hash = '#/';
 
@@ -282,25 +353,22 @@ const App: React.FC = () => {
     },
     [addToast]
   );
-  // Supabase Authentication State Listener (FIXED)
+
+  // Supabase Auth Listener
   useEffect(() => {
     const initializeAuth = async () => {
       const { supabase } = await import('./supabaseClient');
       try {
-        const {
-          data: { session },
-        } = await supabase.auth.getSession();
-
+        const { data: { session } } = await supabase.auth.getSession();
         if (session?.user) {
           const user = session.user;
           setIsLoggedIn(true);
           setCurrentUser({
-            id: parseInt(user.id.replace(/-/g, '').slice(0, 15), 16), // Convert UUID to number
+            id: parseInt(user.id.replace(/-/g, '').slice(0, 15), 16),
             email: user.email || '',
             name: user.user_metadata?.name || user.email || '',
             isAdmin: Boolean(user.user_metadata?.is_admin),
             profilePicture: user.user_metadata?.picture || user.user_metadata?.avatar_url,
-
             phone: user.user_metadata?.phone || user.phone || undefined,
             wishlist: [],
             orders: [],
@@ -310,16 +378,13 @@ const App: React.FC = () => {
       } catch (error) {
         console.error('Auth initialization error:', error);
       }
-      const {
-        data: { subscription },
-      } = supabase.auth.onAuthStateChange(async (event, session) => {
-        console.log('Auth state changed:', event, session?.user?.email);
 
+      const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
         if (event === 'SIGNED_IN' && session?.user) {
           const user = session.user;
           setIsLoggedIn(true);
           setCurrentUser({
-            id: parseInt(user.id.replace(/-/g, '').slice(0, 15), 16), // Convert UUID to number
+            id: parseInt(user.id.replace(/-/g, '').slice(0, 15), 16),
             email: user.email || '',
             name: user.user_metadata?.name || user.email || '',
             isAdmin: Boolean(user.user_metadata?.is_admin),
@@ -332,7 +397,6 @@ const App: React.FC = () => {
           if (event === 'SIGNED_IN') {
             addToast(`Welcome back, ${user.user_metadata?.name || user.email}!`, 'success');
           }
-
           if (window.location.hash.includes('access_token')) {
             window.history.replaceState({}, document.title, window.location.pathname + '#/');
           }
@@ -363,216 +427,108 @@ const App: React.FC = () => {
           return;
         }
 
-        // Auth state listener will handle the rest
         window.location.hash = '#/';
-        addToast(
-          `Welcome to Tattva Co., ${name}! Please check your email to verify your account.`,
-          'success'
-        );
+        addToast(`Welcome, ${name}! Please check your email.`, 'success');
       } catch (error) {
         addToast('Sign up failed. Please try again.', 'error');
       }
     },
     [addToast]
   );
-  const handleLogout = useCallback(async () => {
-    try {
-      const { AuthService } = await import('./utils/authService');
-      await AuthService.logout();
-    } catch (e) {
-      // Ignore logout errors; user state will be cleared locally
+
+  const handleApplyPromoCode = useCallback((code: string) => {
+    if (['TATTVA10', 'SPICEFAN10'].includes(code.toUpperCase())) {
+      setDiscount(subtotal * 0.1);
+      setPromoCode(code);
+      addToast('Promo code applied!', 'success');
+    } else if (['COMEBACK15', 'QUIZMASTER15'].includes(code.toUpperCase())) {
+      setDiscount(subtotal * 0.15);
+      setPromoCode(code);
+      addToast('Promo code applied!', 'success');
+    } else {
+      addToast('Invalid promo code.', 'error');
     }
-    setIsLoggedIn(false);
-    setCurrentUser(null);
-    localStorage.removeItem('rememberedEmail');
-    addToast('You have been logged out.', 'info');
-  }, [addToast]);
-
-  const handleSelectCategoryAndClose = useCallback((category: string) => {
-    setSelectedCategory(category);
-    setSelectedProduct(null);
-    window.location.hash = '#/';
-  }, []);
-
-  const handleAddReview = useCallback(
-    async (productId: number, review: Omit<Review, 'id'>) => {
-      try {
-        const newReview = { ...review, id: Date.now(), verifiedPurchase: isLoggedIn };
-        await addReview(productId, newReview);
-        addToast('Thank you for your review!', 'success');
-      } catch {
-        addToast('Failed to add review. Please try again.', 'error');
-      }
-    },
-    [isLoggedIn, addToast, addReview]
-  );
-
-  const handleDeleteReview = useCallback(
-    (_productId: number, _reviewId: number) => {
-      // Since useProducts doesn't have deleteReview yet, we'll skip this for now
-      // or implement it as a no-op in mock mode
-      addToast('Review deletion not yet implemented', 'info');
-    },
-    [addToast]
-  );
-
-  const handleAskQuestion = useCallback(
-    async (productId: number, question: { author: string; question: string }) => {
-      try {
-        const newQnA: QnAType = { ...question, id: Date.now() };
-        await addQuestion(productId, newQnA);
-        addToast('Your question has been submitted.', 'success');
-      } catch {
-        addToast('Failed to submit question. Please try again.', 'error');
-      }
-    },
-    [addToast, addQuestion]
-  );
-
-  const handleNotifyMe = useCallback(
-    (productName: string) => {
-      addToast(`We'll notify you when ${productName} is back in stock!`, 'success');
-      setSelectedProduct(null);
-    },
-    [addToast]
-  );
-
-  const handleApplyPromoCode = useCallback(
-    (code: string) => {
-      if (code.toUpperCase() === 'TATTVA10') {
-        setDiscount(subtotal * 0.1);
-        setPromoCode(code);
-        addToast('Promo code applied!', 'success');
-      } else if (code.toUpperCase() === 'COMEBACK15' || code.toUpperCase() === 'QUIZMASTER15') {
-        setDiscount(subtotal * 0.15);
-        setPromoCode(code);
-        addToast('Promo code applied!', 'success');
-      } else if (code.toUpperCase() === 'SPICEFAN10') {
-        setDiscount(subtotal * 0.1);
-        setPromoCode(code);
-        addToast('Promo code applied!', 'success');
-      } else {
-        addToast('Invalid promo code.', 'error');
-      }
-    },
-    [subtotal, addToast]
-  );
+  }, [subtotal, addToast]);
 
   const handleRemovePromoCode = useCallback(() => {
     setDiscount(0);
     setPromoCode('');
   }, []);
 
-  const handlePlaceOrder = useCallback(
-    (orderData: Omit<Order, 'id' | 'date' | 'status'>): Order => {
-      const newOrder: Order = {
-        ...orderData,
-        id: `TC${1003 + orders.length}-${new Date().getFullYear()}`,
-        date: new Date().toISOString(),
-        status: 'Processing',
-      };
-      setOrders((prev) => [newOrder, ...prev]);
-      clearCart();
-      setDiscount(0);
-      setPromoCode('');
-      setCurrentView('home'); // Prevent staying on checkout page
-      window.location.hash = `#/order-confirmation/${newOrder.id}`;
-      return newOrder;
-    },
-    [orders.length, clearCart]
-  );
+  const handlePlaceOrder = useCallback((orderData: Omit<Order, 'id' | 'date' | 'status'>): Order => {
+    const newOrder: Order = {
+      ...orderData,
+      id: `TC${1003 + orders.length}-${new Date().getFullYear()}`,
+      date: new Date().toISOString(),
+      status: 'Processing',
+    };
+    setOrders((prev) => [newOrder, ...prev]);
+    clearCart();
+    setDiscount(0);
+    setPromoCode('');
+    setCurrentView('home');
+    window.location.hash = `#/order-confirmation/${newOrder.id}`;
+    return newOrder;
+  }, [orders.length, clearCart]);
 
-  // Admin handlers
-  const handleSaveProduct = useCallback(
-    async (product: Product) => {
-      try {
-        if (product.id === 0) {
-          // New product
-          await addProductAPI(product);
-        } else {
-          // Existing product
-          await updateProductAPI(product.id, product);
-        }
-        addToast(`Product "${product.name}" saved successfully!`, 'success');
-      } catch {
-        addToast('Failed to save product. Please try again.', 'error');
+  const handleSaveProduct = useCallback(async (product: Product) => {
+    try {
+      if (product.id === 0) {
+        await addProductAPI(product);
+      } else {
+        await updateProductAPI(product.id, product);
       }
-    },
-    [addToast, addProductAPI, updateProductAPI]
-  );
+      addToast(`Product "${product.name}" saved successfully!`, 'success');
+    } catch {
+      addToast('Failed to save product.', 'error');
+    }
+  }, [addToast, addProductAPI, updateProductAPI]);
 
-  const handleDeleteProduct = useCallback(
-    async (productId: number) => {
-      if (window.confirm('Are you sure you want to delete this product?')) {
-        const success = await deleteProductAPI(productId);
-        if (success) {
-          addToast('Product deleted.', 'info');
-        } else {
-          addToast('Failed to delete product.', 'error');
-        }
-      }
-    },
-    [addToast, deleteProductAPI]
-  );
+  const handleDeleteProduct = useCallback(async (productId: number) => {
+    if (window.confirm('Are you sure?')) {
+      const success = await deleteProductAPI(productId);
+      if (success) addToast('Product deleted.', 'info');
+      else addToast('Failed to delete product.', 'error');
+    }
+  }, [addToast, deleteProductAPI]);
 
   const handleUpdateOrderStatus = useCallback((orderId: string, status: OrderStatus) => {
     setOrders((prev) => prev.map((o) => (o.id === orderId ? { ...o, status } : o)));
   }, []);
 
-  // Comparison handlers
-  const handleToggleCompare = useCallback(
-    (product: Product) => {
-      setComparisonItems((prev) => {
-        const isCompared = prev.some((item) => item.id === product.id);
-        if (isCompared) {
-          return prev.filter((item) => item.id !== product.id);
-        } else if (prev.length < 4) {
-          return [...prev, product];
-        } else {
-          addToast('You can only compare up to 4 products.', 'info');
-          return prev;
-        }
-      });
-    },
-    [addToast]
-  );
+  const handleToggleCompare = useCallback((product: Product) => {
+    setComparisonItems((prev) => {
+      const isCompared = prev.some((item) => item.id === product.id);
+      if (isCompared) return prev.filter((item) => item.id !== product.id);
+      if (prev.length < 4) return [...prev, product];
+      addToast('You can only compare up to 4 products.', 'info');
+      return prev;
+    });
+  }, [addToast]);
 
-  // Filtering and sorting logic (delegated to useProductFilter hook)
-  const sortMap: Record<
-    string,
-    'rating' | 'price-asc' | 'price-desc' | 'name' | 'newest' | undefined
-  > = {
-    'price-asc': 'price-asc',
-    'price-desc': 'price-desc',
-    'rating-desc': 'rating',
-    featured: undefined,
+  // Filter Toggles
+  const handleToggleOrigin = (origin: string) => {
+    setSelectedOrigins(prev => prev.includes(origin) ? prev.filter(o => o !== origin) : [...prev, origin]);
+  };
+  const handleToggleHeatLevel = (level: string) => {
+    setSelectedHeatLevels(prev => prev.includes(level) ? prev.filter(l => l !== level) : [...prev, level]);
+  };
+  const handleToggleCuisine = (cuisine: string) => {
+    setSelectedCuisines(prev => prev.includes(cuisine) ? prev.filter(c => c !== cuisine) : [...prev, cuisine]);
+  };
+  const handleToggleSize = (size: string) => {
+    setSelectedSizes(prev => prev.includes(size) ? prev.filter(s => s !== size) : [...prev, size]);
+  };
+  const handleToggleGrind = (grind: string) => {
+    setSelectedGrinds(prev => prev.includes(grind) ? prev.filter(g => g !== grind) : [...prev, grind]);
+  };
+  const handleToggleTag = (tag: string) => {
+    setSelectedTags(prev => prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]);
   };
 
-  const { filteredProducts } = useProductFilter(products, {
-    category: selectedCategory,
-    searchQuery,
-    priceRange: [priceRange.min, priceRange.max],
-    inStockOnly: showInStock,
-    sortBy: sortMap[sortOrder],
-  });
-
-  // Additional filters not yet in useProductFilter hook
-  const filteredAndSortedProducts = useMemo(() => {
-    let result = filteredProducts;
-
-    if (showOnSale) {
-      result = result.filter((p) => p.variants.some((v) => v.salePrice && v.salePrice < v.price));
-    }
-
-    if (selectedTags.length > 0) {
-      result = result.filter((p) => selectedTags.every((tag) => p.tags?.includes(tag)));
-    }
-
-    return result;
-  }, [filteredProducts, showOnSale, selectedTags, products.length, selectedCategory, searchQuery]);
+  // --- Render Views ---
 
   const renderView = () => {
-    // Loading fallback for lazy-loaded pages
     const PageLoader = () => (
       <div className="flex items-center justify-center min-h-[60vh]">
         <div className="text-center">
@@ -585,7 +541,6 @@ const App: React.FC = () => {
     if (currentView.startsWith('order-confirmation')) {
       const orderId = currentView.split('/')[1];
       const order = orders.find((o) => o.id === orderId);
-      // This is a trick to show the confirmation page by re-using the CheckoutPage component structure
       return order ? (
         <React.Suspense fallback={<PageLoader />}>
           <CheckoutPage
@@ -595,30 +550,26 @@ const App: React.FC = () => {
             addToast={addToast}
             discount={0}
             promoCode=""
-            onApplyPromoCode={() => {}}
-            onRemovePromoCode={() => {}}
+            onApplyPromoCode={() => { }}
+            onRemovePromoCode={() => { }}
             subtotal={0}
             shippingCost={0}
           />
         </React.Suspense>
       ) : (
-        <div className="text-center py-20">
-          <h2>Order not found</h2>
-        </div>
+        <div className="text-center py-20"><h2>Order not found</h2></div>
       );
     }
 
     if (currentView.startsWith('blog/')) {
       const slug = currentView.split('/')[1];
-      const post = posts.find((p) => p.slug === slug);
+      const post = MOCK_POSTS.find((p) => p.slug === slug);
       return post ? (
         <React.Suspense fallback={<PageLoader />}>
           <BlogPostPage post={post} />
         </React.Suspense>
       ) : (
-        <div className="text-center py-20">
-          <h2>Post not found</h2>
-        </div>
+        <div className="text-center py-20"><h2>Post not found</h2></div>
       );
     }
 
@@ -646,169 +597,82 @@ const App: React.FC = () => {
             <UserProfile user={currentUser} orders={orders} />
           </React.Suspense>
         ) : (
-          <div className="text-center py-20">
-            <h2>Please log in to view your profile.</h2>
-          </div>
+          <div className="text-center py-20"><h2>Please log in to view your profile.</h2></div>
         );
       case 'admin':
         return currentUser?.isAdmin ? (
           <React.Suspense fallback={<PageLoader />}>
-            <AdminDashboard
-              products={products}
-              orders={orders}
-              analytics={MOCK_ANALYTICS}
-              onSaveProduct={handleSaveProduct}
-              onDeleteProduct={handleDeleteProduct}
-              onUpdateOrderStatus={handleUpdateOrderStatus}
-            />
+            <AdminDashboard />
           </React.Suspense>
         ) : (
-          <div className="text-center py-20">
-            <h2>Access Denied.</h2>
-          </div>
+          <div className="text-center py-20"><h2>Access Denied.</h2></div>
         );
-      case 'privacy-policy':
-        return (
-          <React.Suspense fallback={<PageLoader />}>
-            <PrivacyPolicyPage />
-          </React.Suspense>
-        );
-      case 'refund-policy':
-        return (
-          <React.Suspense fallback={<PageLoader />}>
-            <RefundPolicyPage />
-          </React.Suspense>
-        );
-      case 'terms-of-service':
-        return (
-          <React.Suspense fallback={<PageLoader />}>
-            <TermsOfServicePage />
-          </React.Suspense>
-        );
-      case 'about':
-        return (
-          <React.Suspense fallback={<PageLoader />}>
-            <AboutPage />
-          </React.Suspense>
-        );
-      case 'faqs':
-        return (
-          <React.Suspense fallback={<PageLoader />}>
-            <FAQsPage />
-          </React.Suspense>
-        );
-      case 'contact':
-        return (
-          <React.Suspense fallback={<PageLoader />}>
-            <ContactPage />
-          </React.Suspense>
-        );
-      case 'recipes':
-        return (
-          <React.Suspense fallback={<PageLoader />}>
-            <RecipesPage onSelectRecipe={setSelectedRecipe} />
-          </React.Suspense>
-        );
-      case 'blog':
-        return (
-          <React.Suspense fallback={<PageLoader />}>
-            <BlogPage
-              posts={posts}
-              onSelectPost={(slug) => (window.location.hash = `#/blog/${slug}`)}
-            />
-          </React.Suspense>
-        );
-      case 'login':
-        return (
-          <React.Suspense fallback={<PageLoader />}>
-            <LoginPage
-              onLogin={handleLogin}
-              onNavigateToSignup={() => (window.location.hash = '#/signup')}
-              onNavigateToForgotPassword={() => (window.location.hash = '#/forgot-password')}
-            />
-          </React.Suspense>
-        );
-      case 'signup':
-        return (
-          <React.Suspense fallback={<PageLoader />}>
-            <SignUpPage
-              onSignUp={handleSignUp}
-              onNavigateToLogin={() => (window.location.hash = '#/login')}
-            />
-          </React.Suspense>
-        );
-      case 'forgot-password':
-        return (
-          <React.Suspense fallback={<PageLoader />}>
-            <ForgotPasswordPage onNavigateToLogin={() => (window.location.hash = '#/login')} />
-          </React.Suspense>
-        );
+      case 'privacy-policy': return <React.Suspense fallback={<PageLoader />}><PrivacyPolicyPage /></React.Suspense>;
+      case 'refund-policy': return <React.Suspense fallback={<PageLoader />}><RefundPolicyPage /></React.Suspense>;
+      case 'terms-of-service': return <React.Suspense fallback={<PageLoader />}><TermsOfServicePage /></React.Suspense>;
+      case 'about': return <React.Suspense fallback={<PageLoader />}><AboutPage /></React.Suspense>;
+      case 'faqs': return <React.Suspense fallback={<PageLoader />}><FAQsPage /></React.Suspense>;
+      case 'contact': return <React.Suspense fallback={<PageLoader />}><ContactPage /></React.Suspense>;
+      case 'recipes': return <React.Suspense fallback={<PageLoader />}><RecipesPage recipes={MOCK_RECIPES} onSelectRecipe={setSelectedRecipe} /></React.Suspense>;
+      case 'blog': return <React.Suspense fallback={<PageLoader />}><BlogPage posts={MOCK_POSTS} onSelectPost={(slug) => (window.location.hash = `#/blog/${slug}`)} /></React.Suspense>;
+      case 'login': return <React.Suspense fallback={<PageLoader />}><LoginPage onLogin={handleLogin} onNavigateToSignup={() => (window.location.hash = '#/signup')} onNavigateToForgotPassword={() => (window.location.hash = '#/forgot-password')} /></React.Suspense>;
+      case 'signup': return <React.Suspense fallback={<PageLoader />}><SignUpPage onSignUp={handleSignUp} onNavigateToLogin={() => (window.location.hash = '#/login')} /></React.Suspense>;
+      case 'forgot-password': return <React.Suspense fallback={<PageLoader />}><ForgotPasswordPage onNavigateToLogin={() => (window.location.hash = '#/login')} /></React.Suspense>;
       case 'verify-email': {
         const params = new URLSearchParams(window.location.hash.split('?')[1] || '');
         const email = params.get('email') || currentUser?.email || '';
-        return (
-          <React.Suspense fallback={<PageLoader />}>
-            <EmailVerificationPage
-              email={email}
-              onNavigateToHome={() => (window.location.hash = '#/')}
-              onResendEmail={() => {
-                addToast('Verification email sent!', 'success');
-              }}
-            />
-          </React.Suspense>
-        );
+        return <React.Suspense fallback={<PageLoader />}><EmailVerificationPage email={email} onNavigateToHome={() => (window.location.hash = '#/')} onResendEmail={() => addToast('Verification email sent!', 'success')} /></React.Suspense>;
       }
-      case '2fa-setup':
-        return (
-          <React.Suspense fallback={<PageLoader />}>
-            <TwoFactorSetupPage
-              onComplete={() => {
-                addToast('2FA enabled successfully!', 'success');
-                window.location.hash = '#/profile';
-              }}
-              onCancel={() => (window.location.hash = '#/profile')}
-            />
-          </React.Suspense>
-        );
+      case '2fa-setup': return <React.Suspense fallback={<PageLoader />}><TwoFactorSetupPage onComplete={() => { addToast('2FA enabled successfully!', 'success'); window.location.hash = '#/profile'; }} onCancel={() => (window.location.hash = '#/profile')} /></React.Suspense>;
       case 'home':
       default:
         return (
-          <>
-            <Hero />
-            <main
-              id="products-section"
-              className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16 animate-fade-in"
-            >
-              <div className="mb-8 animate-fade-in-up">
-                <CategoryFilter
-                  categories={categories}
-                  selectedCategory={selectedCategory}
-                  onSelectCategory={setSelectedCategory}
+          <div className="flex flex-col md:flex-row gap-8 items-start container mx-auto px-4 py-8">
+            <aside className="w-full md:w-64 flex-shrink-0 sticky top-24">
+              <React.Suspense fallback={<div className="h-64 bg-gray-100 rounded-xl animate-pulse" />}>
+                <AdvancedFilters
+                  showOnSale={showOnSale}
+                  onToggleOnSale={() => setShowOnSale(!showOnSale)}
+                  showInStock={showInStock}
+                  onToggleInStock={() => setShowInStock(!showInStock)}
+                  availableTags={availableTags}
+                  selectedTags={selectedTags}
+                  onToggleTag={handleToggleTag}
+                  priceRange={priceRange}
+                  maxPrice={maxPrice}
+                  onPriceChange={(max) => setPriceRange(prev => ({ ...prev, max }))}
+                  origins={availableOrigins}
+                  selectedOrigins={selectedOrigins}
+                  onToggleOrigin={handleToggleOrigin}
+                  heatLevels={availableHeatLevels}
+                  selectedHeatLevels={selectedHeatLevels}
+                  onToggleHeatLevel={handleToggleHeatLevel}
+                  cuisines={availableCuisines}
+                  selectedCuisines={selectedCuisines}
+                  onToggleCuisine={handleToggleCuisine}
+                  sizes={availableSizes}
+                  selectedSizes={selectedSizes}
+                  onToggleSize={handleToggleSize}
+                  grinds={availableGrinds}
+                  selectedGrinds={selectedGrinds}
+                  onToggleGrind={handleToggleGrind}
+                />
+              </React.Suspense>
+            </aside>
+
+            <div className="flex-1">
+              <div className="flex justify-between items-center mb-6">
+                <p className="text-gray-600">
+                  Showing {finalFilteredProducts.length} results
+                </p>
+                <SortDropdown
+                  currentSort={sortOrder}
+                  onSortChange={(val) => setSortOrder(val as typeof sortOrder)}
                 />
               </div>
-              <React.Suspense fallback={null}>
-                <div className="flex flex-col gap-6 mb-8 animate-fade-in-up stagger-1">
-                  <AdvancedFilters
-                    showOnSale={showOnSale}
-                    onToggleOnSale={() => setShowOnSale((v) => !v)}
-                    showInStock={showInStock}
-                    onToggleInStock={() => setShowInStock((v) => !v)}
-                    availableTags={availableTags}
-                    selectedTags={selectedTags}
-                    onToggleTag={(tag) =>
-                      setSelectedTags((prev) =>
-                        prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
-                      )
-                    }
-                    priceRange={priceRange}
-                    maxPrice={maxPrice}
-                    onPriceChange={(val) => setPriceRange((prev) => ({ ...prev, max: val }))}
-                  />
-                </div>
-              </React.Suspense>
-              <SortDropdown currentSort={sortOrder} onSortChange={setSortOrder} />
+
               <ProductGrid
-                products={filteredAndSortedProducts}
+                products={finalFilteredProducts}
                 onAddToCart={handleAddToCart}
                 onToggleWishlist={handleToggleWishlist}
                 wishlistedIds={wishlistedIds}
@@ -818,46 +682,41 @@ const App: React.FC = () => {
                 isLoading={productsLoading}
                 onNotifyMe={handleNotifyMe}
               />
-            </main>
-            <React.Suspense fallback={null}>
-              <Testimonials testimonials={MOCK_TESTIMONIALS} />
-            </React.Suspense>
-            <section className="bg-brand-secondary/30 py-16">
-              <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                <React.Suspense fallback={null}>
-                  <QuizModule addToast={addToast} />
-                </React.Suspense>
-              </div>
-            </section>
-          </>
+            </div>
+
+            <div className="w-full mt-16">
+              <React.Suspense fallback={null}>
+                <Testimonials testimonials={MOCK_TESTIMONIALS} />
+              </React.Suspense>
+              <section className="bg-brand-secondary/30 py-16 mt-16 rounded-xl">
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                  <React.Suspense fallback={null}>
+                    <QuizModule addToast={addToast} />
+                  </React.Suspense>
+                </div>
+              </section>
+            </div>
+          </div>
         );
     }
   };
 
   return (
     <div className="flex flex-col min-h-screen">
-      {/* SEO Meta Tags and Structured Data */}
       <SEO
-        {...(currentView === 'home'
-          ? pageSEO.home()
-          : currentView === 'recipes'
-            ? pageSEO.recipes()
-            : currentView === 'blog'
-              ? pageSEO.blog()
-              : currentView === 'about'
-                ? pageSEO.about()
-                : currentView === 'contact'
-                  ? pageSEO.contact()
-                  : currentView === 'faqs'
-                    ? pageSEO.home()
-                    : selectedCategory !== 'All'
-                      ? pageSEO.products(selectedCategory)
-                      : pageSEO.home())}
+        {...(currentView === 'home' ? pageSEO.home() :
+          currentView === 'recipes' ? pageSEO.recipes() :
+            currentView === 'blog' ? pageSEO.blog() :
+              currentView === 'about' ? pageSEO.about() :
+                currentView === 'contact' ? pageSEO.contact() :
+                  currentView === 'faqs' ? pageSEO.home() :
+                    selectedCategory !== 'All' ? pageSEO.products(selectedCategory) : pageSEO.home())}
         structuredData={generateOrganizationSchema()}
         structuredDataId="organization-schema"
       />
 
       {showPromoBanner && <PromotionalBanner onClose={() => setShowPromoBanner(false)} />}
+
       <Header
         cartItems={cartItems}
         wishlistItemCount={wishlistItemCount}
@@ -874,71 +733,59 @@ const App: React.FC = () => {
         onSelectProduct={setSelectedProduct}
         subtotal={subtotal}
         categories={categories}
-        onSelectCategory={setSelectedCategory}
+        onSelectCategory={handleSelectCategoryAndClose}
       />
-      <div className={`pt-20 flex-grow ${comparisonItems.length > 0 ? 'pb-24' : ''}`}>
-        {renderView()}
-      </div>
-      <Footer onSelectCategory={setSelectedCategory} />
 
-      {/* Modals & Overlays - Wrapped in Suspense for lazy loading */}
+      {renderView()}
+
+      <Footer onSelectCategory={handleSelectCategoryAndClose} />
+
+      <ToastContainer toasts={toasts} onClose={(id) => setToasts(t => t.filter(toast => toast.id !== id))} />
+
+      {/* Modals */}
       <React.Suspense fallback={null}>
         {selectedProduct && (
-          <>
-            {/* Product-specific SEO */}
-            <SEO
-              {...pageSEO.product(selectedProduct.name, selectedProduct.description)}
-              structuredData={generateProductSchema(selectedProduct)}
-              structuredDataId="product-schema"
-            />
-            <ProductDetailModal
-              product={selectedProduct}
-              allProducts={products}
-              onClose={() => setSelectedProduct(null)}
-              onAddToCart={handleAddToCart}
-              onAddReview={handleAddReview}
-              onDeleteReview={handleDeleteReview}
-              onSelectCategoryAndClose={handleSelectCategoryAndClose}
-              addToast={addToast}
-              onAskQuestion={handleAskQuestion}
-              onSelectProduct={setSelectedProduct}
-              onNotifyMe={handleNotifyMe}
-            />
-          </>
+          <ProductDetailModal
+            product={selectedProduct}
+            allProducts={products}
+            recipes={MOCK_RECIPES}
+            onClose={() => setSelectedProduct(null)}
+            onAddToCart={handleAddToCart}
+            onToggleWishlist={handleToggleWishlist}
+            isWishlisted={isInWishlist(selectedProduct.id)}
+            onAddReview={handleAddReview}
+            onDeleteReview={handleDeleteReview}
+            onSelectCategoryAndClose={handleSelectCategoryAndClose}
+            addToast={addToast}
+            onAskQuestion={handleAskQuestion}
+            onSelectProduct={setSelectedProduct}
+            onNotifyMe={handleNotifyMe}
+          />
         )}
 
-        {selectedRecipe && (
-          <RecipeDetailModal recipe={selectedRecipe} onClose={() => setSelectedRecipe(null)} />
-        )}
-
-        <SideModal
-          isOpen={isCartOpen}
-          onClose={() => setIsCartOpen(false)}
-          title="Your Shopping Cart"
-        >
+        <SideModal isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} title="Your Cart">
           <Cart
             items={cartItems}
             onUpdateQuantity={handleUpdateQuantity}
+            onRemoveItem={(pId, vId) => updateQuantity(pId, vId, 0)}
+            onCheckout={() => { setIsCartOpen(false); window.location.hash = '#/checkout'; }}
+            subtotal={subtotal}
             onClose={() => setIsCartOpen(false)}
             isLoggedIn={isLoggedIn}
             promoCode={promoCode}
             onPromoCodeChange={setPromoCode}
             onApplyPromoCode={handleApplyPromoCode}
             discount={discount}
-            subtotal={subtotal}
             shippingCost={shippingCost}
           />
         </SideModal>
 
-        <SideModal
-          isOpen={isWishlistOpen}
-          onClose={() => setIsWishlistOpen(false)}
-          title="Your Wishlist"
-        >
+        <SideModal isOpen={isWishlistOpen} onClose={() => setIsWishlistOpen(false)} title="Your Wishlist">
           <Wishlist
             items={wishlistItems}
+            onRemove={(id) => toggleWishlist(products.find(p => p.id === id)!)}
+            onAddToCart={(p) => { handleAddToCart(p, p.variants[0]); toggleWishlist(p); }}
             onToggleWishlist={handleToggleWishlist}
-            onAddToCart={handleAddToCart}
             onClose={() => setIsWishlistOpen(false)}
           />
         </SideModal>
@@ -946,46 +793,68 @@ const App: React.FC = () => {
         <MobileMenu
           isOpen={isMobileMenuOpen}
           onClose={() => setIsMobileMenuOpen(false)}
-          searchQuery={searchQuery}
-          onSearchChange={setSearchQuery}
+          categories={categories}
+          onSelectCategory={handleSelectCategoryAndClose}
+          isLoggedIn={isLoggedIn}
+          onLoginClick={() => { setIsMobileMenuOpen(false); setAuthModalOpen(true); }}
+          onLogoutClick={() => { setIsMobileMenuOpen(false); handleLogout(); }}
         />
-
-        <ToastContainer
-          toasts={toasts}
-          onClose={(id) => setToasts((current) => current.filter((t) => t.id !== id))}
-        />
-
-        <SocialProofNotifications />
-
         {isAuthModalOpen && (
           <AuthModal
             onClose={() => setAuthModalOpen(false)}
-            onLogin={() => {
-              handleLogin('anika.sharma@example.com', 'password123', false);
-            }}
+            onLogin={handleLogin}
+            onSignUp={handleSignUp}
           />
         )}
 
-        <ComparisonBar
-          items={comparisonItems}
-          onRemove={(p) => setComparisonItems((prev) => prev.filter((item) => item.id !== p.id))}
-          onClear={() => setComparisonItems([])}
-          onCompare={() => setIsComparisonModalOpen(true)}
-        />
+        {comparisonItems.length > 0 && (
+          <ComparisonBar
+            items={comparisonItems}
+            onRemove={(product) => setComparisonItems(prev => prev.filter(p => p.id !== product.id))}
+            onCompare={() => setIsComparisonModalOpen(true)}
+            onClear={() => setComparisonItems([])}
+          />
+        )}
 
         {isComparisonModalOpen && (
           <ComparisonModal
             items={comparisonItems}
             onClose={() => setIsComparisonModalOpen(false)}
+            onAddToCart={handleAddToCart}
           />
         )}
 
         {isExitIntentModalOpen && (
           <ExitIntentModal
             onClose={() => setIsExitIntentModalOpen(false)}
-            onApplyPromo={handleApplyPromoCode}
+            onApplyPromo={() => {
+              handleApplyPromoCode('COMEBACK15');
+              setIsExitIntentModalOpen(false);
+            }}
           />
         )}
+
+        {selectedRecipe && (
+          <RecipeDetailModal
+            recipe={selectedRecipe}
+            allProducts={products}
+            onClose={() => setSelectedRecipe(null)}
+            onAddToCart={(product) => handleAddToCart(product, product.variants[0], 1)}
+            onSelectProduct={setSelectedProduct}
+            onNotifyMe={(product) => handleNotifyMe(product.id)}
+            onToggleWishlist={handleToggleWishlist}
+            isWishlisted={(id) => wishlistItems.some((p) => p.id === id)}
+            onToggleCompare={handleToggleCompare}
+            isCompared={(id) => comparisonItems.some((p) => p.id === id)}
+          />
+        )}
+
+        {/* Database Seeder - Only for development/admin */}
+        <React.Suspense fallback={null}>
+          {currentUser?.isAdmin && <DatabaseSeeder />}
+        </React.Suspense>
+
+        <SocialProofNotifications />
       </React.Suspense>
     </div>
   );

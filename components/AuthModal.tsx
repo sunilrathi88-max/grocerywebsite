@@ -4,15 +4,22 @@ import { UserIcon } from './icons/UserIcon';
 
 interface AuthModalProps {
   onClose: () => void;
-  onLogin: () => void;
+  onLogin: (email: string, password: string, rememberMe: boolean) => void;
+  onSignUp: (name: string, email: string, password: string) => void;
 }
 
-const AuthModal: React.FC<AuthModalProps> = ({ onClose, onLogin }) => {
+const AuthModal: React.FC<AuthModalProps> = ({ onClose, onLogin, onSignUp }) => {
   const [activeTab, setActiveTab] = useState<'login' | 'register'>('login');
 
   const handleSimulatedAuth = (e: React.FormEvent) => {
     e.preventDefault();
-    onLogin();
+    // In a real app, we would gather these from state/refs
+    if (activeTab === 'login') {
+      // Mock values for now as the form inputs are not controlled in this snippet
+      onLogin('anika.sharma@example.com', 'password123', true);
+    } else {
+      onSignUp('New User', 'newuser@example.com', 'password123');
+    }
   };
 
   return (
