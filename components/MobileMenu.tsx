@@ -151,7 +151,9 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
             ))}
 
             <div className="border-t border-gray-200 my-4 pt-4">
-              <p className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-2">Categories</p>
+              <p className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-2">
+                Categories
+              </p>
               {categories.map((category, i) => (
                 <motion.button
                   key={category}
@@ -161,7 +163,8 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
                     variants: navItemVariants,
                     initial: 'hidden',
                     animate: 'visible',
-                    className: 'block w-full text-left text-lg text-brand-dark hover:text-brand-primary transition-colors py-1',
+                    className:
+                      'block w-full text-left text-lg text-brand-dark hover:text-brand-primary transition-colors py-1',
                     onClick: () => {
                       onSelectCategory(category);
                       onClose();
@@ -183,7 +186,8 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
                     variants: navItemVariants,
                     initial: 'hidden',
                     animate: 'visible',
-                    className: 'w-full bg-brand-dark text-white font-bold py-3 rounded-full shadow-lg hover:bg-opacity-90 transition-all',
+                    className:
+                      'w-full bg-brand-dark text-white font-bold py-3 rounded-full shadow-lg hover:bg-opacity-90 transition-all',
                     onClick: onLogoutClick,
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   } as any)}
@@ -198,7 +202,8 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
                     variants: navItemVariants,
                     initial: 'hidden',
                     animate: 'visible',
-                    className: 'w-full bg-brand-primary text-white font-bold py-3 rounded-full shadow-lg hover:bg-opacity-90 transition-all',
+                    className:
+                      'w-full bg-brand-primary text-white font-bold py-3 rounded-full shadow-lg hover:bg-opacity-90 transition-all',
                     onClick: onLoginClick,
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   } as any)}

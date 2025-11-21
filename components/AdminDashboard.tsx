@@ -91,7 +91,7 @@ const AdminDashboard: React.FC = () => {
     totalRevenue: 0,
     totalOrders: 0,
     uniqueCustomers: 0,
-    salesData: []
+    salesData: [],
   });
   const [loading, setLoading] = useState(true);
 
@@ -100,7 +100,7 @@ const AdminDashboard: React.FC = () => {
     try {
       const [productsData, ordersData] = await Promise.all([
         productAPI.getAll(),
-        orderAPI.getAll()
+        orderAPI.getAll(),
       ]);
 
       setProducts(productsData);
@@ -108,26 +108,31 @@ const AdminDashboard: React.FC = () => {
 
       // Calculate Analytics
       const totalRevenue = ordersData.data.reduce((sum, o) => sum + o.total, 0);
-      const uniqueCustomers = new Set(ordersData.data.map(o => o.userId || o.guestEmail)).size;
+      const uniqueCustomers = new Set(ordersData.data.map((o) => o.userId || o.guestEmail)).size;
 
       // Simple monthly sales aggregation
-      const salesByMonth = ordersData.data.reduce((acc, order) => {
-        const month = new Date(order.date).toLocaleString('default', { month: 'short' });
-        acc[month] = (acc[month] || 0) + order.total;
-        return acc;
-      }, {} as Record<string, number>);
+      const salesByMonth = ordersData.data.reduce(
+        (acc, order) => {
+          const month = new Date(order.date).toLocaleString('default', { month: 'short' });
+          acc[month] = (acc[month] || 0) + order.total;
+          return acc;
+        },
+        {} as Record<string, number>
+      );
 
-      const salesData = Object.entries(salesByMonth).map(([name, sales]) => ({ name, sales: Number(sales) }));
+      const salesData = Object.entries(salesByMonth).map(([name, sales]) => ({
+        name,
+        sales: Number(sales),
+      }));
 
       setAnalytics({
         totalRevenue,
         totalOrders: ordersData.data.length,
         uniqueCustomers,
-        salesData
+        salesData,
       });
-
     } catch (error) {
-      console.error("Failed to fetch admin data", error);
+      console.error('Failed to fetch admin data', error);
     } finally {
       setLoading(false);
     }
@@ -158,18 +163,18 @@ const AdminDashboard: React.FC = () => {
       setIsModalOpen(false);
       setEditingProduct(null);
     } catch (error) {
-      console.error("Failed to save product", error);
-      alert("Failed to save product");
+      console.error('Failed to save product', error);
+      alert('Failed to save product');
     }
   };
 
   const handleDelete = async (productId: number) => {
-    if (!window.confirm("Are you sure you want to delete this product?")) return;
+    if (!window.confirm('Are you sure you want to delete this product?')) return;
     try {
       await productAPI.delete(productId);
       fetchData();
     } catch (error) {
-      console.error("Failed to delete product", error);
+      console.error('Failed to delete product', error);
     }
   };
 
@@ -178,7 +183,7 @@ const AdminDashboard: React.FC = () => {
       await orderAPI.updateStatus(orderId, status);
       fetchData();
     } catch (error) {
-      console.error("Failed to update order status", error);
+      console.error('Failed to update order status', error);
     }
   };
 

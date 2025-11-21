@@ -199,7 +199,7 @@ const Cart: React.FC<CartProps> = ({
                 );
               })}
             </AnimatePresence>
-          </div >
+          </div>
 
           <div className="mt-4">
             <label htmlFor="promo-code" className="text-sm font-medium text-gray-700">
@@ -250,27 +250,26 @@ const Cart: React.FC<CartProps> = ({
               <span>₹{total.toFixed(2)}</span>
             </div>
           </div>
-          {
-            !isLoggedIn && items.length > 0 && (
-              <p className="text-center text-sm text-gray-500 mt-4">
-                You can check out as a guest or log in.
-              </p>
-            )
-          }
+          {!isLoggedIn && items.length > 0 && (
+            <p className="text-center text-sm text-gray-500 mt-4">
+              You can check out as a guest or log in.
+            </p>
+          )}
           <a
             href={canCheckout ? '#/checkout' : undefined}
             onClick={canCheckout ? onClose : (e) => e.preventDefault()}
-            className={`mt-4 block w-full text-center bg-brand-primary text-white font-bold py-3 rounded-full shadow-lg transition-all duration-300 ${!canCheckout || !!loadingState.type
-              ? 'bg-gray-400 cursor-not-allowed'
-              : 'hover:bg-opacity-90 transform hover:scale-105'
-              }`}
+            className={`mt-4 block w-full text-center bg-brand-primary text-white font-bold py-3 rounded-full shadow-lg transition-all duration-300 ${
+              !canCheckout || !!loadingState.type
+                ? 'bg-gray-400 cursor-not-allowed'
+                : 'hover:bg-opacity-90 transform hover:scale-105'
+            }`}
             aria-disabled={!canCheckout || !!loadingState.type}
           >
             Proceed to Checkout
           </a>
         </>
       )}
-    </div >
+    </div>
   );
 };
 

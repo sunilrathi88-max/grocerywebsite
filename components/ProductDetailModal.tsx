@@ -116,10 +116,11 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
 
   const isOutOfStock = selectedVariant.stock === 0;
   const isLowStock = selectedVariant.stock > 0 && selectedVariant.stock < 10;
-  const onSale = selectedVariant.salePrice !== undefined && selectedVariant.salePrice < selectedVariant.price;
+  const onSale =
+    selectedVariant.salePrice !== undefined && selectedVariant.salePrice < selectedVariant.price;
 
   const relatedRecipes = useMemo(() => {
-    return recipes ? recipes.filter(r => r.relatedProductIds.includes(product.id)) : [];
+    return recipes ? recipes.filter((r) => r.relatedProductIds.includes(product.id)) : [];
   }, [recipes, product.id]);
 
   const media = useMemo(() => {
@@ -168,8 +169,6 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
     return mainPrice + extrasPrice;
   }, [selectedVariant, fbtSelection, frequentlyBoughtTogetherProducts]);
 
-
-
   const breadcrumbItems = [
     { label: 'Home', onClick: () => onSelectCategoryAndClose('All') },
     { label: 'Products', onClick: () => onSelectCategoryAndClose('All') },
@@ -215,11 +214,7 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-6">
             {/* Left Column: Media Gallery */}
             <div>
-              <ImageGallery
-                media={media}
-                productName={product.name}
-                isOutOfStock={isOutOfStock}
-              />
+              <ImageGallery media={media} productName={product.name} isOutOfStock={isOutOfStock} />
             </div>
 
             {/* Right Column: Details & Actions */}
@@ -238,10 +233,11 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                       <button
                         key={variant.id}
                         onClick={() => setSelectedVariant(variant)}
-                        className={`px-4 py-2 text-sm font-bold rounded-full transition-all duration-300 border ${selectedVariant.id === variant.id
-                          ? 'bg-brand-primary text-white border-brand-primary shadow-md'
-                          : 'bg-white text-brand-dark hover:bg-brand-secondary/50 border-gray-300'
-                          } ${variant.stock === 0 ? 'line-through text-gray-400 cursor-not-allowed' : ''}`}
+                        className={`px-4 py-2 text-sm font-bold rounded-full transition-all duration-300 border ${
+                          selectedVariant.id === variant.id
+                            ? 'bg-brand-primary text-white border-brand-primary shadow-md'
+                            : 'bg-white text-brand-dark hover:bg-brand-secondary/50 border-gray-300'
+                        } ${variant.stock === 0 ? 'line-through text-gray-400 cursor-not-allowed' : ''}`}
                         disabled={variant.stock === 0}
                       >
                         {variant.name}
@@ -516,9 +512,7 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                           <SparklesIcon className="h-8 w-8 text-yellow-500 flex-shrink-0" />
                           <div>
                             <h3 className="text-xl font-bold text-brand-dark mb-2">Grade</h3>
-                            <p className="text-brand-dark text-lg font-semibold">
-                              {product.grade}
-                            </p>
+                            <p className="text-brand-dark text-lg font-semibold">{product.grade}</p>
                           </div>
                         </div>
                       )}
@@ -572,7 +566,10 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
               {activeTab === 'recipes' && (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {relatedRecipes.map((recipe) => (
-                    <div key={recipe.id} className="bg-white border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all">
+                    <div
+                      key={recipe.id}
+                      className="bg-white border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all"
+                    >
                       <div className="h-48 overflow-hidden">
                         <img
                           src={recipe.image}
@@ -582,8 +579,12 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                         />
                       </div>
                       <div className="p-4">
-                        <h4 className="font-serif font-bold text-lg text-brand-dark mb-2">{recipe.title}</h4>
-                        <p className="text-sm text-gray-600 line-clamp-2 mb-4">{recipe.description}</p>
+                        <h4 className="font-serif font-bold text-lg text-brand-dark mb-2">
+                          {recipe.title}
+                        </h4>
+                        <p className="text-sm text-gray-600 line-clamp-2 mb-4">
+                          {recipe.description}
+                        </p>
                         <div className="flex justify-between items-center text-xs text-gray-500 font-medium">
                           <span>{recipe.prepTime} Prep</span>
                           <span>{recipe.cookTime} Cook</span>
@@ -699,7 +700,7 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                 title="Customers Also Viewed"
                 products={recommendations}
                 onAddToCart={(p, v) => onAddToCart(p, v)}
-                onToggleWishlist={() => { }}
+                onToggleWishlist={() => {}}
                 wishlistedIds={new Set()}
                 onSelectProduct={onSelectProduct}
                 onNotifyMe={onNotifyMe}
@@ -708,20 +709,18 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
           )}
         </div>
         {/* Sticky add to cart button */}
-        {
-          isStickyButtonVisible && !isOutOfStock && (
-            <div className="sticky bottom-0 left-0 right-0 md:hidden bg-white p-4 border-t shadow-lg-top animate-slide-up">
-              <button
-                onClick={() => onAddToCart(product, selectedVariant)}
-                className="w-full bg-brand-primary text-white font-bold py-3 px-6 rounded-full shadow-lg transition-all duration-300"
-              >
-                Add to Cart - ₹
-                {onSale ? selectedVariant.salePrice!.toFixed(2) : selectedVariant.price.toFixed(2)}
-              </button>
-            </div>
-          )
-        }
-      </div >
+        {isStickyButtonVisible && !isOutOfStock && (
+          <div className="sticky bottom-0 left-0 right-0 md:hidden bg-white p-4 border-t shadow-lg-top animate-slide-up">
+            <button
+              onClick={() => onAddToCart(product, selectedVariant)}
+              className="w-full bg-brand-primary text-white font-bold py-3 px-6 rounded-full shadow-lg transition-all duration-300"
+            >
+              Add to Cart - ₹
+              {onSale ? selectedVariant.salePrice!.toFixed(2) : selectedVariant.price.toFixed(2)}
+            </button>
+          </div>
+        )}
+      </div>
       <style>{`
         @keyframes fade-in {
           from { opacity: 0; transform: scale(0.95); }
@@ -737,7 +736,7 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
         .shadow-lg-top { box-shadow: 0 -4px 6px -1px rgb(0 0 0 / 0.1), 0 -2px 4px -2px rgb(0 0 0 / 0.1); }
         .prose { max-width: none; }
       `}</style>
-    </div >
+    </div>
   );
 };
 
