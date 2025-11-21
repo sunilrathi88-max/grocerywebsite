@@ -7,6 +7,7 @@ import { ShieldCheckIcon } from './icons/ShieldCheckIcon';
 import { OptimizedImage } from './OptimizedImage';
 import { imageErrorHandlers } from '../utils/imageHelpers';
 import { orderAPI } from '../utils/apiService';
+import { paymentService } from '../utils/paymentService';
 import { APIErrorDisplay } from './APIErrorDisplay';
 
 interface CheckoutPageProps {
@@ -202,9 +203,11 @@ const DeliverySlotPicker: React.FC<{
 const AddressForm: React.FC<{
   address: Omit<Address, 'id' | 'type' | 'isDefault'>;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
+  errors?: Record<string, string>;
   title: string;
   userName?: string;
-}> = ({ address, onChange, title, userName }) => (
+}> = ({ address, onChange, onBlur, errors = {}, title, userName }) => (
   <div className="space-y-4">
     <h3 className="text-lg font-serif font-bold">{title}</h3>
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -229,9 +232,11 @@ const AddressForm: React.FC<{
           name="street"
           value={address.street}
           onChange={onChange}
-          className="mt-1 input-field"
+          onBlur={onBlur}
+          className={`mt-1 input-field ${errors.street ? 'border-red-500' : ''}`}
           required
         />
+        {errors.street && <p className="text-xs text-red-500 mt-1">{errors.street}</p>}
       </div>
       <div>
         <label htmlFor="city" className="block text-sm font-medium text-gray-700">
@@ -242,9 +247,11 @@ const AddressForm: React.FC<{
           name="city"
           value={address.city}
           onChange={onChange}
-          className="mt-1 input-field"
+          onBlur={onBlur}
+          className={`mt-1 input-field ${errors.city ? 'border-red-500' : ''}`}
           required
         />
+        {errors.city && <p className="text-xs text-red-500 mt-1">{errors.city}</p>}
       </div>
       <div>
         <label htmlFor="state" className="block text-sm font-medium text-gray-700">
@@ -255,22 +262,26 @@ const AddressForm: React.FC<{
           name="state"
           value={address.state}
           onChange={onChange}
-          className="mt-1 input-field"
+          onBlur={onBlur}
+          className={`mt-1 input-field ${errors.state ? 'border-red-500' : ''}`}
           required
         />
+        {errors.state && <p className="text-xs text-red-500 mt-1">{errors.state}</p>}
       </div>
       <div>
         <label htmlFor="zip" className="block text-sm font-medium text-gray-700">
-          ZIP / Postal Code
+          PIN Code
         </label>
         <input
           type="text"
           name="zip"
           value={address.zip}
           onChange={onChange}
-          className="mt-1 input-field"
+          onBlur={onBlur}
+          className={`mt-1 input-field ${errors.zip ? 'border-red-500' : ''}`}
           required
         />
+        {errors.zip && <p className="text-xs text-red-500 mt-1">{errors.zip}</p>}
       </div>
       <div>
         <label htmlFor="country" className="block text-sm font-medium text-gray-700">
@@ -281,6 +292,7 @@ const AddressForm: React.FC<{
           name="country"
           value={address.country}
           onChange={onChange}
+          onBlur={onBlur}
           className="mt-1 input-field"
           required
         />
@@ -311,11 +323,14 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
   const [useSameAddress, setUseSameAddress] = useState(true);
   const [paymentMethod, setPaymentMethod] = useState('');
   const [orderConfirmation, setOrderConfirmation] = useState<Order | null>(null);
-  const [localPromoCode, setLocalPromoCode] = useState('');
+  const [guestEmail, setGuestEmail] = useState('');
+  const [guestPhone, setGuestPhone] = useState('');
+  const [upiId, setUpiId] = useState('');
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [localPromoCode, setLocalPromoCode] = useState('');
 
   const tax = useMemo(() => (subtotal - discount) * 0.08, [subtotal, discount]);
   const total = useMemo(
@@ -323,17 +338,70 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
     [subtotal, shippingCost, tax, discount]
   );
 
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const validateField = (name: string, value: string) => {
+    let error = '';
+    if (!value && name !== 'address2') {
+      error = 'This field is required';
+    } else if (name === 'guestEmail' && !/\S+@\S+\.\S+/.test(value)) {
+      error = 'Invalid email address';
+    } else if (name === 'guestPhone' && !/^\+?[\d\s-]{10,}$/.test(value)) {
+      error = 'Invalid phone number';
+    } else if (name === 'zip' && !/^\d{6}$/.test(value)) {
+      error = 'Invalid PIN code';
+    }
+    return error;
+  };
+
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    const error = validateField(name, value);
+    setErrors((prev) => ({ ...prev, [name]: error }));
+  };
+
   const handleInputChange =
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (setter: React.Dispatch<React.SetStateAction<any>>) =>
       (e: React.ChangeEvent<HTMLInputElement>) => {
-        setter((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+        const { name, value } = e.target;
+        setter((prev) => ({ ...prev, [name]: value }));
+        if (errors[name]) {
+          setErrors((prev) => ({ ...prev, [name]: '' }));
+        }
       };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Validate all fields
+    const newErrors: Record<string, string> = {};
+    if (!user) {
+      if (!guestEmail) newErrors.guestEmail = 'Email is required';
+      else if (!/\S+@\S+\.\S+/.test(guestEmail)) newErrors.guestEmail = 'Invalid email';
+
+      if (!guestPhone) newErrors.guestPhone = 'Phone is required';
+      else if (!/^\+?[\d\s-]{10,}$/.test(guestPhone)) newErrors.guestPhone = 'Invalid phone';
+    }
+
+    // Basic address validation (simplified for brevity)
+    if (!shippingAddress.street) newErrors.street = 'Street is required';
+    if (!shippingAddress.city) newErrors.city = 'City is required';
+    if (!shippingAddress.state) newErrors.state = 'State is required';
+    if (!shippingAddress.zip) newErrors.zip = 'ZIP is required';
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      addToast('Please fix the errors in the form.', 'error');
+      return;
+    }
+
     if (cartItems.length === 0) {
       addToast('Your cart is empty.', 'error');
+      return;
+    }
+    if (!user && (!guestEmail || !guestPhone)) {
+      addToast('Please provide your contact information.', 'error');
       return;
     }
     if (!selectedDate || !selectedTime) {
@@ -344,63 +412,74 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
       addToast('Please select a payment method.', 'error');
       return;
     }
+    if (paymentMethod === 'UPI' && !upiId) {
+      addToast('Please enter your UPI ID.', 'error');
+      return;
+    }
 
     setIsSubmitting(true);
     setSubmitError(null);
 
-    try {
-      const orderData = {
-        items: cartItems,
-        total: total,
-        shippingAddress: { ...shippingAddress, id: 0, type: 'Shipping' as const },
-        billingAddress: useSameAddress
-          ? { ...shippingAddress, id: 0, type: 'Billing' as const }
-          : { ...billingAddress, id: 0, type: 'Billing' as const },
-        deliveryMethod: 'Standard' as const,
-        paymentMethod: paymentMethod,
-        shippingCost: shippingCost,
-        discount,
-        deliverySlot: {
-          date: new Date(selectedDate).toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-          }),
-          time: selectedTime,
-        },
-      };
+    const processOrder = async (paymentId?: string) => {
+      try {
+        const orderData = {
+          items: cartItems,
+          total: total,
+          shippingAddress: { ...shippingAddress, id: 0, type: 'Shipping' as const },
+          billingAddress: useSameAddress
+            ? { ...shippingAddress, id: 0, type: 'Billing' as const }
+            : { ...billingAddress, id: 0, type: 'Billing' as const },
+          deliveryMethod: 'Standard' as const,
+          paymentMethod: paymentMethod,
+          shippingCost: shippingCost,
+          discount,
+          deliverySlot: {
+            date: new Date(selectedDate).toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            }),
+            time: selectedTime,
+          },
+          guestEmail: !user ? guestEmail : undefined,
+          guestPhone: !user ? guestPhone : undefined,
+          paymentId: paymentId,
+          userId: user?.id.toString(), // Pass user ID if logged in
+        };
 
-      // Try API first
-      const confirmedOrder = await orderAPI.create(orderData);
-      setOrderConfirmation(confirmedOrder.data);
-      addToast('Order placed successfully!', 'success');
-    } catch (_error) {
-      // Fallback to local order creation
-      console.warn('API order creation failed, using fallback:', _error);
-      const confirmedOrder = onPlaceOrder({
-        items: cartItems,
-        total: total,
-        shippingAddress: { ...shippingAddress, id: 0, type: 'Shipping' },
-        billingAddress: useSameAddress
-          ? { ...shippingAddress, id: 0, type: 'Billing' }
-          : { ...billingAddress, id: 0, type: 'Billing' },
-        deliveryMethod: 'Standard',
-        paymentMethod: paymentMethod,
-        shippingCost: shippingCost,
-        discount,
-        deliverySlot: {
-          date: new Date(selectedDate).toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-          }),
-          time: selectedTime,
+        // Try API first
+        const confirmedOrder = await orderAPI.create(orderData);
+        setOrderConfirmation(confirmedOrder.data);
+        addToast('Order placed successfully!', 'success');
+      } catch (_error) {
+        console.error('Order creation failed:', _error);
+        setSubmitError(_error instanceof Error ? _error.message : 'Failed to create order');
+      } finally {
+        setIsSubmitting(false);
+      }
+    };
+
+    if (paymentMethod === 'Cash on Delivery') {
+      processOrder();
+    } else {
+      // Initialize Razorpay
+      paymentService.initializePayment(
+        total,
+        {
+          name: user?.name || 'Guest',
+          email: user?.email || guestEmail,
+          phone: user?.phone || guestPhone,
         },
-      });
-      setOrderConfirmation(confirmedOrder);
-      addToast('Order placed locally (API unavailable)', 'success');
-    } finally {
-      setIsSubmitting(false);
+        (response) => {
+          // Payment Success
+          processOrder(response.razorpay_payment_id);
+        },
+        (error) => {
+          // Payment Failed
+          addToast(typeof error === 'string' ? error : 'Payment failed', 'error');
+          setIsSubmitting(false);
+        }
+      );
     }
   };
 
@@ -427,9 +506,48 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
       <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-3 gap-12">
         {/* Left/Main Column */}
         <div className="lg:col-span-2 space-y-8">
+          {/* Guest Checkout Contact Info */}
+          {!user && (
+            <div className="space-y-4">
+              <h3 className="text-lg font-serif font-bold">Contact Information</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label htmlFor="guestEmail" className="block text-sm font-medium text-gray-700">
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    name="guestEmail"
+                    value={guestEmail}
+                    onChange={(e) => setGuestEmail(e.target.value)}
+                    className="mt-1 input-field"
+                    required
+                    placeholder="john@example.com"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="guestPhone" className="block text-sm font-medium text-gray-700">
+                    Phone Number
+                  </label>
+                  <input
+                    type="tel"
+                    name="guestPhone"
+                    value={guestPhone}
+                    onChange={(e) => setGuestPhone(e.target.value)}
+                    className="mt-1 input-field"
+                    required
+                    placeholder="+91 98765 43210"
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+
           <AddressForm
             address={shippingAddress}
             onChange={handleInputChange(setShippingAddress)}
+            onBlur={handleBlur}
+            errors={errors}
             title="Shipping Address"
             userName={user?.name}
           />
@@ -452,6 +570,8 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
             <AddressForm
               address={billingAddress}
               onChange={handleInputChange(setBillingAddress)}
+              onBlur={handleBlur}
+              errors={errors}
               title="Billing Address"
               userName={user?.name}
             />
@@ -470,7 +590,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
           <div>
             <h3 className="text-lg font-serif font-bold mb-4">Payment Method</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {['Credit Card', 'PayPal', 'Google Pay', 'Cash on Delivery'].map((method) => (
+              {['UPI', 'Credit Card', 'PayPal', 'Cash on Delivery'].map((method) => (
                 <button
                   key={method}
                   type="button"
@@ -481,6 +601,25 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
                 </button>
               ))}
             </div>
+            {paymentMethod === 'UPI' && (
+              <div className="mt-4 animate-fade-in">
+                <label htmlFor="upiId" className="block text-sm font-medium text-gray-700">
+                  UPI ID / VPA
+                </label>
+                <input
+                  type="text"
+                  name="upiId"
+                  value={upiId}
+                  onChange={(e) => setUpiId(e.target.value)}
+                  className="mt-1 input-field"
+                  placeholder="username@upi"
+                  required
+                />
+                <p className="text-xs text-gray-500 mt-1">
+                  Enter your UPI ID (e.g., mobile@upi, name@bank)
+                </p>
+              </div>
+            )}
           </div>
         </div>
 
@@ -511,7 +650,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
                     </p>
                   </div>
                   <p className="text-sm font-bold flex-shrink-0">
-                    $
+                    ₹
                     {(
                       (item.selectedVariant.salePrice ?? item.selectedVariant.price) * item.quantity
                     ).toFixed(2)}
@@ -522,27 +661,27 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
             <div className="mt-4 border-t pt-4 space-y-2">
               <div className="flex justify-between text-sm text-gray-600">
                 <span>Subtotal</span>
-                <span>${subtotal.toFixed(2)}</span>
+                <span>₹{subtotal.toFixed(2)}</span>
               </div>
               {discount > 0 && (
                 <div className="flex justify-between text-sm text-green-600">
                   <span>Discount ({promoCode})</span>
-                  <span>-${discount.toFixed(2)}</span>
+                  <span>-₹{discount.toFixed(2)}</span>
                 </div>
               )}
               <div className="flex justify-between text-sm text-gray-600">
                 <span>Shipping</span>
                 <span className={shippingCost === 0 ? 'text-green-600 font-bold' : ''}>
-                  {shippingCost === 0 ? 'Free' : `$${shippingCost.toFixed(2)}`}
+                  {shippingCost === 0 ? 'Free' : `₹${shippingCost.toFixed(2)}`}
                 </span>
               </div>
               <div className="flex justify-between text-sm text-gray-600">
                 <span>Taxes (8%)</span>
-                <span>${tax.toFixed(2)}</span>
+                <span>₹{tax.toFixed(2)}</span>
               </div>
               <div className="flex justify-between font-bold text-lg text-brand-dark mt-2 pt-2 border-t">
                 <span>Total</span>
-                <span>${total.toFixed(2)}</span>
+                <span>₹{total.toFixed(2)}</span>
               </div>
             </div>
 

@@ -12,6 +12,21 @@ interface AdvancedFiltersProps {
   priceRange: { min: number; max: number };
   maxPrice: number;
   onPriceChange: (value: number) => void;
+  origins: string[];
+  selectedOrigins: string[];
+  onToggleOrigin: (origin: string) => void;
+  heatLevels: string[];
+  selectedHeatLevels: string[];
+  onToggleHeatLevel: (level: string) => void;
+  cuisines: string[];
+  selectedCuisines: string[];
+  onToggleCuisine: (cuisine: string) => void;
+  sizes: string[];
+  selectedSizes: string[];
+  onToggleSize: (size: string) => void;
+  grinds: string[];
+  selectedGrinds: string[];
+  onToggleGrind: (grind: string) => void;
 }
 
 // Move FilterButton outside to avoid creating component during render
@@ -22,11 +37,10 @@ const FilterButton: React.FC<{
 }> = ({ isActive, onClick, children }) => (
   <button
     onClick={onClick}
-    className={`px-5 py-2.5 text-sm font-bold rounded-xl transition-all duration-300 border-2 transform hover:scale-105 hover:shadow-md ${
-      isActive
-        ? 'bg-gradient-to-r from-brand-primary to-amber-500 text-white border-transparent shadow-lg'
-        : 'bg-white text-gray-700 hover:bg-gray-50 border-gray-200 hover:border-brand-primary/30'
-    }`}
+    className={`px-5 py-2.5 text-sm font-bold rounded-xl transition-all duration-300 border-2 transform hover:scale-105 hover:shadow-md ${isActive
+      ? 'bg-gradient-to-r from-brand-primary to-amber-500 text-white border-transparent shadow-lg'
+      : 'bg-white text-gray-700 hover:bg-gray-50 border-gray-200 hover:border-brand-primary/30'
+      }`}
   >
     {children}
   </button>
@@ -43,6 +57,21 @@ const AdvancedFilters: React.FC<AdvancedFiltersProps> = ({
   priceRange,
   maxPrice,
   onPriceChange,
+  origins,
+  selectedOrigins,
+  onToggleOrigin,
+  heatLevels,
+  selectedHeatLevels,
+  onToggleHeatLevel,
+  cuisines,
+  selectedCuisines,
+  onToggleCuisine,
+  sizes,
+  selectedSizes,
+  onToggleSize,
+  grinds,
+  selectedGrinds,
+  onToggleGrind,
 }) => {
   const [isExpanded, setIsExpanded] = useState(true);
 
@@ -50,6 +79,11 @@ const AdvancedFilters: React.FC<AdvancedFiltersProps> = ({
     (showOnSale ? 1 : 0) +
     (showInStock ? 1 : 0) +
     selectedTags.length +
+    selectedOrigins.length +
+    selectedHeatLevels.length +
+    selectedCuisines.length +
+    selectedSizes.length +
+    selectedGrinds.length +
     (priceRange.max < maxPrice ? 1 : 0);
 
   return (
@@ -112,6 +146,106 @@ const AdvancedFilters: React.FC<AdvancedFiltersProps> = ({
             </div>
           )}
 
+          {/* Origin */}
+          {origins.length > 0 && (
+            <div className="space-y-3">
+              <h3 className="text-sm font-semibold text-gray-600 uppercase tracking-wide">
+                Origin
+              </h3>
+              <div className="flex items-center flex-wrap gap-3">
+                {origins.map((origin) => (
+                  <FilterButton
+                    key={origin}
+                    isActive={selectedOrigins.includes(origin)}
+                    onClick={() => onToggleOrigin(origin)}
+                  >
+                    {origin}
+                  </FilterButton>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Heat Level */}
+          {heatLevels.length > 0 && (
+            <div className="space-y-3">
+              <h3 className="text-sm font-semibold text-gray-600 uppercase tracking-wide">
+                Heat Level
+              </h3>
+              <div className="flex items-center flex-wrap gap-3">
+                {heatLevels.map((level) => (
+                  <FilterButton
+                    key={level}
+                    isActive={selectedHeatLevels.includes(level)}
+                    onClick={() => onToggleHeatLevel(level)}
+                  >
+                    {level}
+                  </FilterButton>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Cuisine */}
+          {cuisines.length > 0 && (
+            <div className="space-y-3">
+              <h3 className="text-sm font-semibold text-gray-600 uppercase tracking-wide">
+                Cuisine
+              </h3>
+              <div className="flex items-center flex-wrap gap-3">
+                {cuisines.map((cuisine) => (
+                  <FilterButton
+                    key={cuisine}
+                    isActive={selectedCuisines.includes(cuisine)}
+                    onClick={() => onToggleCuisine(cuisine)}
+                  >
+                    {cuisine}
+                  </FilterButton>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Size */}
+          {sizes.length > 0 && (
+            <div className="space-y-3">
+              <h3 className="text-sm font-semibold text-gray-600 uppercase tracking-wide">
+                Size
+              </h3>
+              <div className="flex items-center flex-wrap gap-3">
+                {sizes.map((size) => (
+                  <FilterButton
+                    key={size}
+                    isActive={selectedSizes.includes(size)}
+                    onClick={() => onToggleSize(size)}
+                  >
+                    {size}
+                  </FilterButton>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Grind */}
+          {grinds.length > 0 && (
+            <div className="space-y-3">
+              <h3 className="text-sm font-semibold text-gray-600 uppercase tracking-wide">
+                Grind
+              </h3>
+              <div className="flex items-center flex-wrap gap-3">
+                {grinds.map((grind) => (
+                  <FilterButton
+                    key={grind}
+                    isActive={selectedGrinds.includes(grind)}
+                    onClick={() => onToggleGrind(grind)}
+                  >
+                    {grind}
+                  </FilterButton>
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* Price Range */}
           <div className="space-y-3">
             <div className="flex items-center justify-between">
@@ -119,7 +253,7 @@ const AdvancedFilters: React.FC<AdvancedFiltersProps> = ({
                 Price Range
               </h3>
               <span className="text-lg font-bold text-brand-primary">
-                ${priceRange.max.toFixed(2)}
+                ₹{priceRange.max.toFixed(2)}
               </span>
             </div>
             <div className="relative">
@@ -136,8 +270,8 @@ const AdvancedFilters: React.FC<AdvancedFiltersProps> = ({
                 }}
               />
               <div className="flex justify-between mt-2 text-xs text-gray-500">
-                <span>$0</span>
-                <span>${maxPrice.toFixed(2)}</span>
+                <span>₹0</span>
+                <span>₹{maxPrice.toFixed(2)}</span>
               </div>
             </div>
           </div>

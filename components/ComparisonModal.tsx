@@ -1,5 +1,5 @@
 import React from 'react';
-import { Product } from '../types';
+import { Product, Variant } from '../types';
 import { XIcon } from './icons/XIcon';
 import { StarIcon } from './icons/StarIcon';
 import { imageErrorHandlers } from '../utils/imageHelpers';
@@ -7,9 +7,10 @@ import { imageErrorHandlers } from '../utils/imageHelpers';
 interface ComparisonModalProps {
   items: Product[];
   onClose: () => void;
+  onAddToCart: (product: Product, variant: Variant, quantity?: number) => void;
 }
 
-const ComparisonModal: React.FC<ComparisonModalProps> = ({ items, onClose }) => {
+const ComparisonModal: React.FC<ComparisonModalProps> = ({ items, onClose, onAddToCart }) => {
   const getAverageRating = (product: Product) => {
     if (product.reviews.length === 0) return { avg: 0, count: 0 };
     const total = product.reviews.reduce((acc, r) => acc + r.rating, 0);

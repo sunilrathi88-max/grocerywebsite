@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Product, Order, OrderStatus } from '../types';
 import ProductFormModal from './ProductFormModal';
 import { PlusIcon } from './icons/PlusIcon';
@@ -7,21 +7,13 @@ import { PencilIcon } from './icons/PencilIcon';
 import { CurrencyDollarIcon } from './icons/CurrencyDollarIcon';
 import { ShoppingBagIcon } from './icons/ShoppingBagIcon';
 import { UsersIcon } from './icons/UsersIcon';
+import { orderAPI, productAPI } from '../utils/apiService';
 
 interface AnalyticsProps {
   totalRevenue: number;
   totalOrders: number;
   uniqueCustomers: number;
   salesData: { name: string; sales: number }[];
-}
-
-interface AdminDashboardProps {
-  products: Product[];
-  orders: Order[];
-  analytics: AnalyticsProps;
-  onSaveProduct: (product: Product) => void;
-  onDeleteProduct: (productId: number) => void;
-  onUpdateOrderStatus: (orderId: string, status: OrderStatus) => void;
 }
 
 const StatCard: React.FC<{ title: string; value: string | number; icon: React.ReactNode }> = ({
@@ -87,10 +79,63 @@ const AnalyticsDashboard: React.FC<{ analytics: AnalyticsProps }> = ({ analytics
   </div>
 );
 
-const AdminDashboard: React.FC<AdminDashboardProps> = (props) => {
+const AdminDashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'products' | 'orders' | 'analytics'>('products');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+
+  // State for data
+  const [products, setProducts] = useState<Product[]>([]);
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [analytics, setAnalytics] = useState<AnalyticsProps>({
+    totalRevenue: 0,
+    totalOrders: 0,
+    uniqueCustomers: 0,
+    salesData: []
+  });
+  const [loading, setLoading] = useState(true);
+
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const [productsData, ordersData] = await Promise.all([
+        productAPI.getAll(),
+        orderAPI.getAll()
+      ]);
+
+      setProducts(productsData);
+      setOrders(ordersData.data);
+
+      // Calculate Analytics
+      const totalRevenue = ordersData.data.reduce((sum, o) => sum + o.total, 0);
+      const uniqueCustomers = new Set(ordersData.data.map(o => o.userId || o.guestEmail)).size;
+
+      // Simple monthly sales aggregation
+      const salesByMonth = ordersData.data.reduce((acc, order) => {
+        const month = new Date(order.date).toLocaleString('default', { month: 'short' });
+        acc[month] = (acc[month] || 0) + order.total;
+        return acc;
+      }, {} as Record<string, number>);
+
+      const salesData = Object.entries(salesByMonth).map(([name, sales]) => ({ name, sales: Number(sales) }));
+
+      setAnalytics({
+        totalRevenue,
+        totalOrders: ordersData.data.length,
+        uniqueCustomers,
+        salesData
+      });
+
+    } catch (error) {
+      console.error("Failed to fetch admin data", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const handleAddNew = () => {
     setEditingProduct(null);
@@ -102,11 +147,44 @@ const AdminDashboard: React.FC<AdminDashboardProps> = (props) => {
     setIsModalOpen(true);
   };
 
-  const handleSave = (product: Product) => {
-    props.onSaveProduct(product);
-    setIsModalOpen(false);
-    setEditingProduct(null);
+  const handleSave = async (product: Product) => {
+    try {
+      if (product.id) {
+        await productAPI.update(product.id, product);
+      } else {
+        await productAPI.create(product);
+      }
+      fetchData(); // Refresh data
+      setIsModalOpen(false);
+      setEditingProduct(null);
+    } catch (error) {
+      console.error("Failed to save product", error);
+      alert("Failed to save product");
+    }
   };
+
+  const handleDelete = async (productId: number) => {
+    if (!window.confirm("Are you sure you want to delete this product?")) return;
+    try {
+      await productAPI.delete(productId);
+      fetchData();
+    } catch (error) {
+      console.error("Failed to delete product", error);
+    }
+  };
+
+  const handleUpdateOrderStatus = async (orderId: string, status: OrderStatus) => {
+    try {
+      await orderAPI.updateStatus(orderId, status);
+      fetchData();
+    } catch (error) {
+      console.error("Failed to update order status", error);
+    }
+  };
+
+  if (loading) {
+    return <div className="flex justify-center items-center h-96">Loading Dashboard...</div>;
+  }
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -139,16 +217,16 @@ const AdminDashboard: React.FC<AdminDashboardProps> = (props) => {
       <div className="mt-8">
         {activeTab === 'products' && (
           <ProductManagement
-            products={props.products}
+            products={products}
             onAddNew={handleAddNew}
             onEdit={handleEdit}
-            onDelete={props.onDeleteProduct}
+            onDelete={handleDelete}
           />
         )}
         {activeTab === 'orders' && (
-          <OrderManagement orders={props.orders} onUpdateStatus={props.onUpdateOrderStatus} />
+          <OrderManagement orders={orders} onUpdateStatus={handleUpdateOrderStatus} />
         )}
-        {activeTab === 'analytics' && <AnalyticsDashboard analytics={props.analytics} />}
+        {activeTab === 'analytics' && <AnalyticsDashboard analytics={analytics} />}
       </div>
 
       {isModalOpen && (
@@ -208,7 +286,7 @@ const ProductManagement: React.FC<{
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{p.category}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  ${p.variants[0].price.toFixed(2)}
+                  ${p.variants[0]?.price.toFixed(2)}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   {p.variants.reduce((sum, v) => sum + v.stock, 0)}
@@ -268,13 +346,13 @@ const OrderManagement: React.FC<{
             {orders.map((order) => (
               <tr key={order.id}>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                  {order.id}
+                  {order.id.slice(0, 8)}...
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   {new Date(order.date).toLocaleDateString()}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {order.shippingAddress.street}
+                  {order.shippingAddress?.street || 'N/A'}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   ${order.total.toFixed(2)}
@@ -285,10 +363,11 @@ const OrderManagement: React.FC<{
                     onChange={(e) => onUpdateStatus(order.id, e.target.value as OrderStatus)}
                     className="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-brand-primary focus:border-brand-primary sm:text-sm rounded-md"
                   >
-                    <option>Processing</option>
-                    <option>Shipped</option>
-                    <option>Delivered</option>
-                    <option>Cancelled</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Processing">Processing</option>
+                    <option value="Shipped">Shipped</option>
+                    <option value="Delivered">Delivered</option>
+                    <option value="Cancelled">Cancelled</option>
                   </select>
                 </td>
               </tr>

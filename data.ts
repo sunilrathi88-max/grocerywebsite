@@ -1,4 +1,4 @@
-import { Product, User, Order, Testimonial, BlogPost } from './types';
+import { Product, User, Order, Testimonial, BlogPost, Recipe } from './types';
 
 export const MOCK_PRODUCTS: Product[] = [
   {
@@ -10,8 +10,8 @@ export const MOCK_PRODUCTS: Product[] = [
     videos: ['https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4'],
     category: 'Spices',
     variants: [
-      { id: 101, name: '1g', price: 15.99, salePrice: 12.99, stock: 15 },
-      { id: 102, name: '5g', price: 65.99, stock: 8 },
+      { id: 101, name: '1g', price: 599, salePrice: 499, stock: 15 },
+      { id: 102, name: '5g', price: 2899, stock: 8 },
     ],
     reviews: [
       {
@@ -20,6 +20,11 @@ export const MOCK_PRODUCTS: Product[] = [
         rating: 5,
         comment: 'Absolutely divine! The aroma filled my kitchen. Best saffron I have ever used.',
         verifiedPurchase: true,
+        date: '2023-10-15',
+        images: [
+          'https://images.unsplash.com/photo-1532336414038-cf19250c5757?auto=format&fit=crop&w=300&q=80',
+        ],
+        helpful: 12,
       },
       {
         id: 2,
@@ -39,7 +44,13 @@ export const MOCK_PRODUCTS: Product[] = [
     ],
     nutrition: [{ key: 'Rich in', value: 'Antioxidants' }],
     origin: 'Kashmir, India',
-    tags: ['Premium', 'Aromatic'],
+    harvestDate: 'October 2024',
+    grade: 'Mongra (Grade A)',
+    purityTest: 'Lab Tested for Safranal & Crocin',
+    storage: 'Store in a cool, dry place away from sunlight',
+    shelfLife: '24 Months',
+    grind: 'Whole',
+    tags: ['Premium', 'Aromatic', 'Organic', 'Indian', 'Middle Eastern'],
   },
   {
     id: 2,
@@ -48,7 +59,7 @@ export const MOCK_PRODUCTS: Product[] = [
       'Bold and pungent Tellicherry peppercorns from the Malabar Coast of Kerala. Sun-dried and hand-sorted to ensure only the best make it to your table.',
     images: ['/images/products/pepper-1.svg', '/images/products/pepper-2.svg'],
     category: 'Spices',
-    variants: [{ id: 201, name: '250g', price: 8.99, stock: 30 }],
+    variants: [{ id: 201, name: '250g', price: 399, stock: 30 }],
     reviews: [
       {
         id: 3,
@@ -59,7 +70,13 @@ export const MOCK_PRODUCTS: Product[] = [
       },
     ],
     origin: 'Kerala, India',
-    tags: ['Single-Origin'],
+    harvestDate: 'January 2025',
+    grade: 'Tellicherry Garbled Special Extra Bold (TGSEB)',
+    purityTest: 'Pesticide Free',
+    storage: 'Airtight container',
+    shelfLife: '18 Months',
+    grind: 'Whole',
+    tags: ['Single-Origin', 'Spicy', 'Indian', 'International'],
   },
   {
     id: 3,
@@ -69,8 +86,8 @@ export const MOCK_PRODUCTS: Product[] = [
     images: ['/images/products/almonds-1.svg', '/images/products/almonds-2.svg'],
     category: 'Nuts',
     variants: [
-      { id: 301, name: '500g', price: 22.5, stock: 20 },
-      { id: 302, name: '1kg', price: 40.0, stock: 10 },
+      { id: 301, name: '500g', price: 899, stock: 20 },
+      { id: 302, name: '1kg', price: 1699, stock: 10 },
     ],
     reviews: [
       {
@@ -83,7 +100,13 @@ export const MOCK_PRODUCTS: Product[] = [
     ],
     nutrition: [{ key: 'High in', value: 'Vitamin E & Protein' }],
     origin: 'Kashmir, India',
-    tags: ['Premium', 'Gluten-Free'],
+    harvestDate: 'September 2024',
+    grade: 'Mamra Premium',
+    purityTest: 'Natural & Unpolished',
+    storage: 'Refrigerate for long-term freshness',
+    shelfLife: '12 Months',
+    grind: 'Whole',
+    tags: ['Premium', 'Gluten-Free', 'Keto'],
   },
   {
     id: 4,
@@ -92,7 +115,7 @@ export const MOCK_PRODUCTS: Product[] = [
       'Vibrant, earthy, and potent turmeric powder with high curcumin content, sourced from organic farms in Andhra Pradesh. A staple for curries and a healthy boost for lattes.',
     images: ['/images/products/turmeric-1.svg', '/images/products/turmeric-2.svg'],
     category: 'Spices',
-    variants: [{ id: 401, name: '200g', price: 6.99, stock: 5 }],
+    variants: [{ id: 401, name: '200g', price: 249, stock: 5 }],
     reviews: [
       {
         id: 5,
@@ -111,7 +134,12 @@ export const MOCK_PRODUCTS: Product[] = [
     ],
     nutrition: [{ key: 'High in', value: 'Curcumin' }],
     origin: 'Andhra Pradesh, India',
-    tags: ['Organic', 'Gluten-Free'],
+    harvestDate: 'February 2025',
+    grade: 'High Curcumin (5%+)',
+    purityTest: 'Certified Organic',
+    storage: 'Cool, dark place',
+    shelfLife: '12 Months',
+    tags: ['Organic', 'Gluten-Free', 'Healthy'],
   },
   {
     id: 5,
@@ -120,7 +148,7 @@ export const MOCK_PRODUCTS: Product[] = [
       'The "Champagne of Teas" from the first harvest of the season in Darjeeling. This tea has a light, floral aroma with a hint of astringency and a muscatel finish.',
     images: ['/images/products/tea-1.svg', '/images/products/tea-2.svg'],
     category: 'Beverages',
-    variants: [{ id: 501, name: '100g', price: 19.99, salePrice: 17.5, stock: 25 }],
+    variants: [{ id: 501, name: '100g', price: 1299, salePrice: 1099, stock: 25 }],
     reviews: [
       {
         id: 7,
@@ -131,7 +159,12 @@ export const MOCK_PRODUCTS: Product[] = [
       },
     ],
     origin: 'Darjeeling, India',
-    tags: ['Premium', 'Single-Origin'],
+    harvestDate: 'March 2025',
+    grade: 'FTGFOP1',
+    purityTest: 'Single Estate',
+    storage: 'Airtight tin',
+    shelfLife: '24 Months',
+    tags: ['Premium', 'Single-Origin', 'Tea'],
   },
   {
     id: 6,
@@ -140,7 +173,7 @@ export const MOCK_PRODUCTS: Product[] = [
       'Our signature blend of 12 aromatic spices, including cinnamon, cardamom, and cloves, roasted and ground in small batches for the perfect, balanced flavor profile.',
     images: ['/images/products/masala-1.svg', '/images/products/masala-2.svg'],
     category: 'Spices',
-    variants: [{ id: 601, name: '100g', price: 9.5, stock: 40 }],
+    variants: [{ id: 601, name: '100g', price: 349, stock: 40 }],
     reviews: [
       {
         id: 8,
@@ -159,7 +192,13 @@ export const MOCK_PRODUCTS: Product[] = [
           'Our Garam Masala is aromatic and flavorful, not primarily hot. The heat level is mild.',
       },
     ],
-    tags: ['Aromatic', 'House Blend'],
+    origin: 'India (House Blend)',
+    harvestDate: 'Freshly Ground Monthly',
+    grade: 'Artisanal Blend',
+    purityTest: 'No Fillers',
+    storage: 'Airtight container',
+    shelfLife: '9 Months',
+    tags: ['Aromatic', 'House Blend', 'Spices'],
   },
   {
     id: 7,
@@ -168,10 +207,15 @@ export const MOCK_PRODUCTS: Product[] = [
       'Sun-dried, unsulphured apricots from Ladakh. These are naturally sweet, chewy, and packed with fiber and vitamins. A perfect healthy snack.',
     images: ['/images/products/apricots-1.svg', '/images/products/apricots-2.svg'],
     category: 'Dry Fruits',
-    variants: [{ id: 701, name: '400g', price: 14.0, stock: 18 }],
+    variants: [{ id: 701, name: '400g', price: 649, stock: 18 }],
     reviews: [],
     origin: 'Ladakh, India',
-    tags: ['Organic', 'Gluten-Free'],
+    harvestDate: 'August 2024',
+    grade: 'Jumbo',
+    purityTest: 'Unsulphured',
+    storage: 'Refrigerate',
+    shelfLife: '12 Months',
+    tags: ['Organic', 'Gluten-Free', 'Snack'],
   },
   {
     id: 8,
@@ -181,8 +225,8 @@ export const MOCK_PRODUCTS: Product[] = [
     images: ['/images/products/cashews-1.svg', '/images/products/cashews-2.svg'],
     category: 'Nuts',
     variants: [
-      { id: 801, name: '250g', price: 11.99, stock: 0 },
-      { id: 802, name: '500g', price: 20.99, stock: 0 },
+      { id: 801, name: '250g', price: 499, stock: 0 },
+      { id: 802, name: '500g', price: 949, stock: 0 },
     ],
     reviews: [
       {
@@ -194,7 +238,12 @@ export const MOCK_PRODUCTS: Product[] = [
       },
     ],
     origin: 'Goa, India',
-    tags: ['Premium'],
+    harvestDate: 'April 2025',
+    grade: 'W240',
+    purityTest: 'Premium Roast',
+    storage: 'Airtight container',
+    shelfLife: '6 Months',
+    tags: ['Premium', 'Snack', 'Indian'],
   },
 ];
 
@@ -338,3 +387,108 @@ export const MOCK_ANALYTICS = {
     { name: 'Jun', sales: 3443.5 },
   ],
 };
+
+export const MOCK_RECIPES: Recipe[] = [
+  {
+    id: 1,
+    title: 'Classic Chicken Biryani',
+    image:
+      'https://images.unsplash.com/photo-1631515243349-e0cb75fb8da7?q=80&w=600&h=400&auto=format&fit=crop',
+    prepTime: '20 mins',
+    cookTime: '40 mins',
+    serves: 4,
+    description:
+      'Aromatic and flavorful one-pot meal made with saffron-infused rice, tender chicken, and a blend of Tattva Co. spices.',
+    ingredients: [
+      '500g Chicken',
+      '2 cups Basmati Rice',
+      '1 pinch Tattva Co. Himalayan Saffron',
+      '2 tbsp Tattva Co. Garam Masala',
+      '1 cup Yogurt',
+      '2 Onions, sliced',
+      'Ginger-garlic paste',
+    ],
+    instructions: [
+      'Marinate chicken with yogurt and spices.',
+      'Par-boil the rice with saffron.',
+      'Layer the chicken and rice in a heavy-bottomed pot.',
+      'Cook on low heat (dum) for 30-40 minutes.',
+    ],
+    relatedProductIds: [1], // Saffron
+  },
+  {
+    id: 2,
+    title: 'Spicy Malabar Pepper Prawns',
+    image:
+      'https://images.unsplash.com/photo-1598494822832-7cb319d9b8e2?q=80&w=600&h=400&auto=format&fit=crop',
+    prepTime: '15 mins',
+    cookTime: '10 mins',
+    serves: 2,
+    description:
+      'A quick and fiery appetizer featuring fresh prawns coated in freshly ground Malabar black pepper and other spices.',
+    ingredients: [
+      '250g Prawns, deveined',
+      '2 tbsp Tattva Co. Malabar Black Pepper, coarsely ground',
+      '1 tsp Tattva Co. Turmeric Powder',
+      'Curry leaves',
+      'Coconut oil',
+    ],
+    instructions: [
+      'Marinate prawns with turmeric and salt.',
+      'Heat coconut oil, add curry leaves and sauté.',
+      'Add prawns and cook until pink.',
+      'Sprinkle generously with black pepper and toss well.',
+    ],
+    relatedProductIds: [2], // Pepper
+  },
+  {
+    id: 3,
+    title: 'Creamy Turmeric Latte',
+    image:
+      'https://images.unsplash.com/photo-1566435942040-566b613e1a67?q=80&w=600&h=400&auto=format&fit=crop',
+    prepTime: '5 mins',
+    cookTime: '5 mins',
+    serves: 1,
+    description:
+      'A comforting and healthy beverage made with our organic turmeric powder, milk, and a hint of sweetness.',
+    ingredients: [
+      '1 cup Milk (of choice)',
+      '1 tsp Tattva Co. Organic Turmeric Powder',
+      '1/4 tsp Cinnamon powder',
+      'Pinch of black pepper',
+      '1 tsp Honey or Maple Syrup',
+    ],
+    instructions: [
+      'Gently heat the milk in a small saucepan.',
+      'Whisk in turmeric, cinnamon, and pepper.',
+      'Heat until warm but not boiling.',
+      'Remove from heat, stir in sweetener, and enjoy.',
+    ],
+    relatedProductIds: [], // Turmeric not in mock products yet
+  },
+  {
+    id: 4,
+    title: 'Garam Masala Spiced Nuts',
+    image:
+      'https://images.unsplash.com/photo-1583624320433-40e9d6519548?q=80&w=600&h=400&auto=format&fit=crop',
+    prepTime: '5 mins',
+    cookTime: '15 mins',
+    serves: 6,
+    description:
+      'An addictive snack of mixed nuts roasted with Tattva Co. Garam Masala, a little salt, and a touch of maple syrup.',
+    ingredients: [
+      '2 cups Mixed Nuts (Tattva Co. Almonds, Cashews)',
+      '1 tbsp Coconut oil, melted',
+      '1.5 tsp Tattva Co. Garam Masala',
+      '1/2 tsp Salt',
+      '1 tbsp Maple syrup',
+    ],
+    instructions: [
+      'Preheat oven to 350°F (175°C).',
+      'Toss nuts with all other ingredients until well-coated.',
+      'Spread on a baking sheet in a single layer.',
+      'Roast for 10-15 minutes, stirring halfway, until fragrant.',
+    ],
+    relatedProductIds: [3], // Almonds
+  },
+];

@@ -17,6 +17,7 @@ interface OptimizedImageProps {
   onError?: (event: React.SyntheticEvent<HTMLImageElement>) => void;
   width?: number;
   height?: number;
+  style?: React.CSSProperties;
 }
 
 /**
@@ -48,6 +49,7 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
   onError,
   width,
   height,
+  style,
 }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
@@ -127,15 +129,15 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
         ref={imgRef}
         src={imageSrc}
         alt={alt}
-        className={`${className} ${
-          isLoaded ? 'opacity-100' : 'opacity-0'
-        } transition-opacity duration-500 ease-in-out`}
+        className={`${className} ${isLoaded ? 'opacity-100' : 'opacity-0'
+          } transition-opacity duration-500 ease-in-out`}
         loading={loading}
         width={width}
         height={height}
         onLoad={handleLoad}
         onError={handleError}
         decoding="async"
+        style={style}
       />
     </picture>
   );

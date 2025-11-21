@@ -9,26 +9,26 @@ const TrustBadges: React.FC = () => {
     {
       icon: <ShieldCheckIcon className="h-8 w-8" />,
       title: 'Secure Payment',
-      description: '256-bit SSL encryption',
+      description: 'UPI, Cards, COD Available',
       color: 'text-green-500 dark:text-green-400',
     },
     {
       icon: <TruckIcon className="h-8 w-8" />,
       title: 'Fast Delivery',
-      description: 'Free shipping over $50',
+      description: 'Free shipping over ₹999',
       color: 'text-blue-500 dark:text-blue-400',
     },
     {
-      icon: <CurrencyDollarIcon className="h-8 w-8" />,
-      title: 'Money Back',
-      description: '30-day guarantee',
-      color: 'text-purple-500 dark:text-purple-400',
+      icon: <CheckBadgeIcon className="h-8 w-8" />,
+      title: 'Authentic Origin',
+      description: 'Direct from Indian Farms',
+      color: 'text-orange-500 dark:text-orange-400',
     },
     {
-      icon: <CheckBadgeIcon className="h-8 w-8" />,
-      title: 'Quality Assured',
-      description: 'Fresh & organic',
-      color: 'text-orange-500 dark:text-orange-400',
+      icon: <CurrencyDollarIcon className="h-8 w-8" />,
+      title: 'Quality Guarantee',
+      description: 'Lab Tested & FSSAI Compliant',
+      color: 'text-purple-500 dark:text-purple-400',
     },
   ];
 

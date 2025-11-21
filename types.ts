@@ -7,6 +7,8 @@ export interface Review {
   comment: string;
   verifiedPurchase?: boolean;
   date?: string;
+  images?: string[];
+  helpful?: number;
 }
 
 export interface QnA {
@@ -14,6 +16,7 @@ export interface QnA {
   author: string;
   question: string;
   answer?: string;
+  date?: string;
 }
 
 export interface Variant {
@@ -36,6 +39,12 @@ export interface Product {
   qna?: QnA[];
   nutrition?: { key: string; value: string }[];
   origin?: string;
+  harvestDate?: string;
+  grade?: string;
+  purityTest?: string;
+  storage?: string;
+  shelfLife?: string;
+  grind?: string;
   tags?: string[];
 }
 
@@ -93,6 +102,8 @@ export interface Order {
     date: string;
     time: string;
   };
+  guestEmail?: string;
+  guestPhone?: string;
 }
 // FIX: Added Testimonial interface to be shared across components.
 export interface Testimonial {
@@ -112,4 +123,17 @@ export interface BlogPost {
   excerpt: string;
   content: string; // This could be markdown or HTML string
   tags: string[];
+}
+
+export interface Recipe {
+  id: number;
+  title: string;
+  image: string;
+  prepTime: string;
+  cookTime: string;
+  serves: number;
+  description: string;
+  ingredients: string[];
+  instructions: string[];
+  relatedProductIds?: number[];
 }

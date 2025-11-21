@@ -13,6 +13,7 @@ interface WishlistProps {
   onToggleWishlist: (product: Product) => void;
   onAddToCart: (product: Product, variant: Variant) => void;
   onClose: () => void;
+  onRemove: (productId: number) => void;
 }
 
 const Wishlist: React.FC<WishlistProps> = ({ items, onToggleWishlist, onAddToCart, onClose }) => {

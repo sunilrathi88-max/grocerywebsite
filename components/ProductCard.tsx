@@ -3,6 +3,8 @@ import { motion } from 'framer-motion';
 import { Product, Variant } from '../types';
 import { OptimizedImage } from './OptimizedImage';
 import { PLACEHOLDER_URLS, imageErrorHandlers } from '../utils/imageHelpers';
+import { CheckCircleIcon } from './icons/CheckCircleIcon';
+
 import { PlusIcon } from './icons/PlusIcon';
 import { HeartIcon } from './icons/HeartIcon';
 import { StarIcon } from './icons/StarIcon';
@@ -50,6 +52,27 @@ const ProductCard: React.FC<ProductCardProps> = ({
   const hasMultiplePrices = product.variants.length > 1;
 
   const displayPrice = defaultVariant.salePrice ?? defaultVariant.price;
+  const [isAdding, setIsAdding] = React.useState(false);
+  const [isSuccess, setIsSuccess] = React.useState(false);
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (isAdding || isSuccess) return;
+
+    setIsAdding(true);
+    onAddToCart(product, defaultVariant);
+
+    // Simulate network delay for better UX (or wait for actual promise if available)
+    setTimeout(() => {
+      setIsAdding(false);
+      setIsSuccess(true);
+
+      // Reset success state after 1.5 seconds
+      setTimeout(() => {
+        setIsSuccess(false);
+      }, 1500);
+    }, 600);
+  };
 
   return (
     <div className="bg-white rounded-2xl shadow-lg overflow-hidden group transform hover:-translate-y-3 transition-all duration-500 border border-gray-100 hover:border-brand-primary/40 hover:shadow-2xl flex flex-col relative">
@@ -72,31 +95,52 @@ const ProductCard: React.FC<ProductCardProps> = ({
           {/* Dark Overlay on Hover */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-black/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
-          {/* Action Buttons - Slide Up on Hover */}
-          <div className="absolute inset-x-0 bottom-0 flex items-center justify-center gap-3 p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out">
+          {/* Action Buttons - Slide Up on Hover (Always visible on mobile) */}
+          <div className="absolute inset-x-0 bottom-0 flex items-center justify-center gap-3 p-6 translate-y-0 lg:translate-y-full lg:group-hover:translate-y-0 transition-transform duration-500 ease-out bg-gradient-to-t from-black/40 to-transparent lg:bg-none">
             <button
-              onClick={() => onSelectProduct(product)}
+              onClick={(e) => {
+                e.stopPropagation();
+                onSelectProduct(product);
+              }}
               className="flex items-center gap-2 bg-white text-gray-900 font-bold py-3 px-6 rounded-xl shadow-xl hover:shadow-2xl hover:bg-gradient-to-r hover:from-brand-primary hover:to-amber-500 hover:text-white transform hover:scale-110 transition-all duration-300"
               aria-label={`Quick view ${product.name}`}
             >
               <EyeIcon className="h-5 w-5" />
-              <span className="text-sm">Quick View</span>
+              <span className="text-sm hidden sm:inline">View</span>
             </button>
             {isOutOfStock ? (
               <button
-                onClick={() => onNotifyMe(product.name)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onNotifyMe(product.name);
+                }}
                 className="bg-gray-900 text-white font-bold py-3 px-6 rounded-xl shadow-xl hover:shadow-2xl hover:bg-gray-800 transform hover:scale-110 transition-all duration-300"
               >
-                <span className="text-sm">Notify Me</span>
+                <span className="text-sm">Notify</span>
               </button>
             ) : (
               <button
-                onClick={() => onAddToCart(product, defaultVariant)}
-                className="flex items-center gap-2 bg-gradient-to-r from-brand-primary to-amber-500 text-white font-bold py-3 px-6 rounded-xl shadow-xl hover:shadow-2xl hover:from-amber-500 hover:to-brand-primary transform hover:scale-110 transition-all duration-300"
-                aria-label={`Add ${product.name} to cart`}
+                onClick={handleAddToCart}
+                disabled={isAdding || isSuccess}
+                className={`flex items-center gap-2 font-bold py-3 px-6 rounded-xl shadow-xl transition-all duration-300 transform hover:scale-105
+                  ${isSuccess
+                    ? 'bg-green-500 text-white hover:bg-green-600'
+                    : 'bg-gradient-to-r from-brand-primary to-amber-500 text-white hover:shadow-2xl hover:from-amber-500 hover:to-brand-primary'
+                  } 
+                  ${isAdding ? 'opacity-90 cursor-wait' : ''}
+                `}
+                aria-label={isSuccess ? 'Added to cart' : `Add ${product.name} to cart`}
               >
-                <PlusIcon />
-                <span className="text-sm">Add</span>
+                {isAdding ? (
+                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                ) : isSuccess ? (
+                  <CheckCircleIcon className="w-5 h-5 animate-bounce" />
+                ) : (
+                  <PlusIcon />
+                )}
+                <span className="text-sm">
+                  {isAdding ? 'Adding...' : isSuccess ? 'Added' : 'Add'}
+                </span>
               </button>
             )}
           </div>
@@ -112,7 +156,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
         </div>
 
         {/* Wishlist Button - Enhanced */}
-        {}
         <motion.button
           {...({
             whileTap: { scale: 1.2 },

@@ -8,6 +8,13 @@ export interface FilterOptions {
   minRating?: number;
   inStockOnly?: boolean;
   sortBy?: 'name' | 'price-asc' | 'price-desc' | 'rating' | 'newest';
+  origin?: string[];
+  heatLevel?: string[];
+  cuisine?: string[];
+  size?: string[];
+  grind?: string[];
+  showOnSale?: boolean;
+  tags?: string[];
 }
 
 export interface UseProductFilterReturn {
@@ -15,21 +22,6 @@ export interface UseProductFilterReturn {
   productCount: number;
 }
 
-/**
- * Custom hook for filtering and sorting products
- *
- * @param products - Array of all products to filter
- * @param filters - Filter criteria
- * @returns {UseProductFilterReturn} Filtered and sorted products
- *
- * @example
- * const { filteredProducts } = useProductFilter(allProducts, {
- *   category: 'Spices',
- *   searchQuery: 'turmeric',
- *   minRating: 4,
- *   sortBy: 'price-asc'
- * });
- */
 export const useProductFilter = (
   products: Product[],
   filters: FilterOptions
@@ -50,7 +42,7 @@ export const useProductFilter = (
           product.name.toLowerCase().includes(query) ||
           product.description.toLowerCase().includes(query) ||
           product.category.toLowerCase().includes(query) ||
-          product.tags.some((tag) => tag.toLowerCase().includes(query))
+          product.tags?.some((tag) => tag.toLowerCase().includes(query))
       );
     }
 
@@ -77,6 +69,53 @@ export const useProductFilter = (
     // Filter by stock availability
     if (filters.inStockOnly) {
       result = result.filter((product) => product.variants.some((variant) => variant.stock > 0));
+    }
+
+    // Filter by On Sale
+    if (filters.showOnSale) {
+      result = result.filter((product) =>
+        product.variants.some(
+          (variant) => variant.salePrice && variant.salePrice < variant.price
+        )
+      );
+    }
+
+    // Filter by Tags (Generic)
+    if (filters.tags && filters.tags.length > 0) {
+      result = result.filter((product) =>
+        filters.tags?.every((tag) => product.tags?.includes(tag))
+      );
+    }
+
+    // Filter by Origin
+    if (filters.origin && filters.origin.length > 0) {
+      result = result.filter((product) => product.origin && filters.origin?.includes(product.origin));
+    }
+
+    // Filter by Heat Level (Tags)
+    if (filters.heatLevel && filters.heatLevel.length > 0) {
+      result = result.filter((product) =>
+        product.tags?.some((tag) => filters.heatLevel?.includes(tag))
+      );
+    }
+
+    // Filter by Cuisine (Tags)
+    if (filters.cuisine && filters.cuisine.length > 0) {
+      result = result.filter((product) =>
+        product.tags?.some((tag) => filters.cuisine?.includes(tag))
+      );
+    }
+
+    // Filter by Size (Variants)
+    if (filters.size && filters.size.length > 0) {
+      result = result.filter((product) =>
+        product.variants.some((variant) => filters.size?.includes(variant.name))
+      );
+    }
+
+    // Filter by Grind
+    if (filters.grind && filters.grind.length > 0) {
+      result = result.filter((product) => product.grind && filters.grind?.includes(product.grind));
     }
 
     // Sort products
