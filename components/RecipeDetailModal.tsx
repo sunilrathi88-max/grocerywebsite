@@ -16,9 +16,9 @@ interface RecipeDetailModalProps {
   onSelectProduct: (product: Product) => void;
   onNotifyMe: (product: Product) => void;
   onToggleWishlist: (product: Product) => void;
-  isWishlisted: (productId: string) => boolean;
+  isWishlisted: (productId: number) => boolean;
   onToggleCompare: (product: Product) => void;
-  isCompared: (productId: string) => boolean;
+  isCompared: (productId: number) => boolean;
 }
 
 const RecipeDetailModal: React.FC<RecipeDetailModalProps> = ({
