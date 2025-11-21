@@ -35,13 +35,14 @@ const RecipeDetailModal: React.FC<RecipeDetailModalProps> = ({
 }) => {
   // Filter products that are related to this recipe
   const relatedProducts = allProducts.filter((product) =>
-    recipe.relatedProductIds.includes(product.id)
+    recipe.relatedProductIds?.includes(product.id)
   );
 
   return (
     <AnimatePresence>
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
         <motion.div
+          // @ts-ignore
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -49,6 +50,7 @@ const RecipeDetailModal: React.FC<RecipeDetailModalProps> = ({
           className="absolute inset-0 bg-black/60 backdrop-blur-sm"
         />
         <motion.div
+          // @ts-ignore
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -58,7 +60,7 @@ const RecipeDetailModal: React.FC<RecipeDetailModalProps> = ({
           <div className="relative h-64 sm:h-80 shrink-0">
             <OptimizedImage
               src={recipe.image}
-              alt={recipe.name}
+              alt={recipe.title}
               className="w-full h-full object-cover"
               priority="high"
             />
@@ -71,7 +73,7 @@ const RecipeDetailModal: React.FC<RecipeDetailModalProps> = ({
             </button>
             <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
               <h2 className="text-3xl sm:text-4xl font-bold font-serif mb-2">
-                {recipe.name}
+                {recipe.title}
               </h2>
               <p className="text-gray-200 text-lg max-w-2xl line-clamp-2">
                 {recipe.description}
@@ -90,12 +92,7 @@ const RecipeDetailModal: React.FC<RecipeDetailModalProps> = ({
                 </div>
                 <div className="flex items-center gap-2">
                   <UsersIcon className="w-5 h-5 text-brand-primary" />
-                  <span className="font-medium">{recipe.servings} Servings</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="px-3 py-1 bg-brand-primary/10 text-brand-primary rounded-full text-sm font-medium">
-                    {recipe.difficulty}
-                  </span>
+                  <span className="font-medium">{recipe.serves} Servings</span>
                 </div>
               </div>
 
@@ -160,7 +157,7 @@ const RecipeDetailModal: React.FC<RecipeDetailModalProps> = ({
                         }}
                         onToggleCompare={onToggleCompare}
                         isCompared={isCompared(product.id)}
-                        onNotifyMe={onNotifyMe}
+                        onNotifyMe={() => onNotifyMe(product)}
                       />
                     ))}
                   </div>
