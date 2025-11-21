@@ -100,6 +100,8 @@ describe('Cart', () => {
     discount: 0,
     subtotal: 747, // (249 * 2) + 499
     shippingCost: 0,
+    onRemoveItem: jest.fn(),
+    onCheckout: jest.fn(),
   };
 
   beforeEach(() => {
