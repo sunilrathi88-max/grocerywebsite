@@ -51,7 +51,9 @@ const ReviewList: React.FC<ReviewListProps> = ({ reviews, productId, onDelete })
 
   if (reviews.length === 0) {
     return (
-      <p className="text-gray-500 text-sm italic">No reviews yet. Be the first to share your thoughts!</p>
+      <p className="text-gray-500 text-sm italic">
+        No reviews yet. Be the first to share your thoughts!
+      </p>
     );
   }
 
@@ -108,10 +110,10 @@ const ReviewList: React.FC<ReviewListProps> = ({ reviews, productId, onDelete })
                     <span className="text-xs text-gray-400">
                       {review.date
                         ? new Date(review.date).toLocaleDateString('en-US', {
-                          year: 'numeric',
-                          month: 'long',
-                          day: 'numeric',
-                        })
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
+                          })
                         : 'Unknown Date'}
                     </span>
                   </div>
@@ -131,7 +133,10 @@ const ReviewList: React.FC<ReviewListProps> = ({ reviews, productId, onDelete })
               {review.images && review.images.length > 0 && (
                 <div className="flex gap-2 mt-4 overflow-x-auto pb-2">
                   {review.images.map((img, idx) => (
-                    <div key={idx} className="w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden border border-gray-200">
+                    <div
+                      key={idx}
+                      className="w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden border border-gray-200"
+                    >
                       <OptimizedImage
                         src={img}
                         alt={`Review image ${idx + 1}`}

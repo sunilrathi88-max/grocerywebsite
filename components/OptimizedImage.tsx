@@ -129,8 +129,9 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
         ref={imgRef}
         src={imageSrc}
         alt={alt}
-        className={`${className} ${isLoaded ? 'opacity-100' : 'opacity-0'
-          } transition-opacity duration-500 ease-in-out`}
+        className={`${className} ${
+          isLoaded ? 'opacity-100' : 'opacity-0'
+        } transition-opacity duration-500 ease-in-out`}
         loading={loading}
         width={width}
         height={height}

@@ -54,7 +54,10 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ onSubmit, addToast }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 bg-gray-50 p-6 rounded-xl border border-gray-200">
+    <form
+      onSubmit={handleSubmit}
+      className="space-y-4 bg-gray-50 p-6 rounded-xl border border-gray-200"
+    >
       <div>
         <label htmlFor="author" className="block text-sm font-medium text-gray-700 mb-1">
           Your Name
@@ -94,7 +97,9 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ onSubmit, addToast }) => {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">Add Photos (Optional)</label>
+        <label className="block text-sm font-medium text-gray-700 mb-2">
+          Add Photos (Optional)
+        </label>
         <div className="flex items-center gap-4">
           <button
             type="button"

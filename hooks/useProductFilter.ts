@@ -74,9 +74,7 @@ export const useProductFilter = (
     // Filter by On Sale
     if (filters.showOnSale) {
       result = result.filter((product) =>
-        product.variants.some(
-          (variant) => variant.salePrice && variant.salePrice < variant.price
-        )
+        product.variants.some((variant) => variant.salePrice && variant.salePrice < variant.price)
       );
     }
 
@@ -89,7 +87,9 @@ export const useProductFilter = (
 
     // Filter by Origin
     if (filters.origin && filters.origin.length > 0) {
-      result = result.filter((product) => product.origin && filters.origin?.includes(product.origin));
+      result = result.filter(
+        (product) => product.origin && filters.origin?.includes(product.origin)
+      );
     }
 
     // Filter by Heat Level (Tags)

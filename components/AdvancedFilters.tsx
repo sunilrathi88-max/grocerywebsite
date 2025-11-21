@@ -37,10 +37,11 @@ const FilterButton: React.FC<{
 }> = ({ isActive, onClick, children }) => (
   <button
     onClick={onClick}
-    className={`px-5 py-2.5 text-sm font-bold rounded-xl transition-all duration-300 border-2 transform hover:scale-105 hover:shadow-md ${isActive
-      ? 'bg-gradient-to-r from-brand-primary to-amber-500 text-white border-transparent shadow-lg'
-      : 'bg-white text-gray-700 hover:bg-gray-50 border-gray-200 hover:border-brand-primary/30'
-      }`}
+    className={`px-5 py-2.5 text-sm font-bold rounded-xl transition-all duration-300 border-2 transform hover:scale-105 hover:shadow-md ${
+      isActive
+        ? 'bg-gradient-to-r from-brand-primary to-amber-500 text-white border-transparent shadow-lg'
+        : 'bg-white text-gray-700 hover:bg-gray-50 border-gray-200 hover:border-brand-primary/30'
+    }`}
   >
     {children}
   </button>
@@ -209,9 +210,7 @@ const AdvancedFilters: React.FC<AdvancedFiltersProps> = ({
           {/* Size */}
           {sizes.length > 0 && (
             <div className="space-y-3">
-              <h3 className="text-sm font-semibold text-gray-600 uppercase tracking-wide">
-                Size
-              </h3>
+              <h3 className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Size</h3>
               <div className="flex items-center flex-wrap gap-3">
                 {sizes.map((size) => (
                   <FilterButton
@@ -229,9 +228,7 @@ const AdvancedFilters: React.FC<AdvancedFiltersProps> = ({
           {/* Grind */}
           {grinds.length > 0 && (
             <div className="space-y-3">
-              <h3 className="text-sm font-semibold text-gray-600 uppercase tracking-wide">
-                Grind
-              </h3>
+              <h3 className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Grind</h3>
               <div className="flex items-center flex-wrap gap-3">
                 {grinds.map((grind) => (
                   <FilterButton

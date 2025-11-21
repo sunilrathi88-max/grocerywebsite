@@ -123,9 +123,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
                 onClick={handleAddToCart}
                 disabled={isAdding || isSuccess}
                 className={`flex items-center gap-2 font-bold py-3 px-6 rounded-xl shadow-xl transition-all duration-300 transform hover:scale-105
-                  ${isSuccess
-                    ? 'bg-green-500 text-white hover:bg-green-600'
-                    : 'bg-gradient-to-r from-brand-primary to-amber-500 text-white hover:shadow-2xl hover:from-amber-500 hover:to-brand-primary'
+                  ${
+                    isSuccess
+                      ? 'bg-green-500 text-white hover:bg-green-600'
+                      : 'bg-gradient-to-r from-brand-primary to-amber-500 text-white hover:shadow-2xl hover:from-amber-500 hover:to-brand-primary'
                   } 
                   ${isAdding ? 'opacity-90 cursor-wait' : ''}
                 `}

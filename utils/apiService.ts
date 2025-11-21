@@ -27,9 +27,7 @@ export const productAPI = {
     page?: number;
     limit?: number;
   }): Promise<Product[]> => {
-    let query = supabase
-      .from('products')
-      .select(`
+    let query = supabase.from('products').select(`
         *,
         variants (*),
         reviews (*),
@@ -56,11 +54,11 @@ export const productAPI = {
     if (error) throw new Error(error.message);
 
     // Transform data to match Product interface (Supabase returns snake_case, we need camelCase if not auto-mapped)
-    // Assuming we mapped columns in SQL or will map here. 
+    // Assuming we mapped columns in SQL or will map here.
     // For simplicity, let's assume we need to map snake_case to camelCase manually if they differ.
     // Our SQL used snake_case for some fields (harvest_date, purity_test, shelf_life).
 
-    return (data as any[]).map(p => ({
+    return (data as any[]).map((p) => ({
       ...p,
       harvestDate: p.harvest_date,
       purityTest: p.purity_test,
@@ -71,7 +69,7 @@ export const productAPI = {
       tags: p.tags || [],
       variants: p.variants || [],
       reviews: p.reviews || [],
-      qna: p.qna || []
+      qna: p.qna || [],
     }));
   },
 
@@ -81,12 +79,14 @@ export const productAPI = {
   getById: async (id: number): Promise<Product> => {
     const { data, error } = await supabase
       .from('products')
-      .select(`
+      .select(
+        `
         *,
         variants (*),
         reviews (*),
         qna (*)
-      `)
+      `
+      )
       .eq('id', id)
       .single();
 
@@ -103,7 +103,7 @@ export const productAPI = {
       tags: p.tags || [],
       variants: p.variants || [],
       reviews: p.reviews || [],
-      qna: p.qna || []
+      qna: p.qna || [],
     };
   },
 
@@ -230,7 +230,7 @@ export const orderAPI = {
     // Transform snake_case to camelCase if needed, or rely on frontend to handle it.
     // For consistency with types, we should map it.
     return {
-      data: data.map(o => ({
+      data: data.map((o) => ({
         ...o,
         shippingAddress: o.shipping_address,
         billingAddress: o.billing_address,
@@ -239,10 +239,10 @@ export const orderAPI = {
         items: o.items.map((i: any) => ({
           product: i.product,
           selectedVariant: i.variant,
-          quantity: i.quantity
-        }))
+          quantity: i.quantity,
+        })),
       })),
-      total: data.length
+      total: data.length,
     };
   },
 
@@ -266,16 +266,22 @@ export const orderAPI = {
         items: data.items.map((i: any) => ({
           product: i.product,
           selectedVariant: i.variant,
-          quantity: i.quantity
-        }))
-      }
+          quantity: i.quantity,
+        })),
+      },
     };
   },
 
   /**
    * Create new order
    */
-  create: async (order: Omit<Order, 'id' | 'date' | 'status'> & { userId?: string; guestEmail?: string; paymentId?: string }) => {
+  create: async (
+    order: Omit<Order, 'id' | 'date' | 'status'> & {
+      userId?: string;
+      guestEmail?: string;
+      paymentId?: string;
+    }
+  ) => {
     // 1. Insert Order
     const { data: orderData, error: orderError } = await supabase
       .from('orders')
@@ -295,17 +301,15 @@ export const orderAPI = {
     if (orderError) throw new Error(orderError.message);
 
     // 2. Insert Order Items
-    const itemsToInsert = order.items.map(item => ({
+    const itemsToInsert = order.items.map((item) => ({
       order_id: orderData.id,
       product_id: item.product.id,
       variant_id: item.selectedVariant.id,
       quantity: item.quantity,
-      price_at_purchase: item.selectedVariant.salePrice ?? item.selectedVariant.price
+      price_at_purchase: item.selectedVariant.salePrice ?? item.selectedVariant.price,
     }));
 
-    const { error: itemsError } = await supabase
-      .from('order_items')
-      .insert(itemsToInsert);
+    const { error: itemsError } = await supabase.from('order_items').insert(itemsToInsert);
 
     if (itemsError) throw new Error(itemsError.message);
 
@@ -314,7 +318,7 @@ export const orderAPI = {
       id: orderData.id,
       items: order.items,
       date: orderData.created_at,
-      status: orderData.status
+      status: orderData.status,
     };
   },
 

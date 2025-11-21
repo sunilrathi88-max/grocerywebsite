@@ -72,12 +72,8 @@ const RecipeDetailModal: React.FC<RecipeDetailModalProps> = ({
               <XIcon className="w-6 h-6" />
             </button>
             <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-              <h2 className="text-3xl sm:text-4xl font-bold font-serif mb-2">
-                {recipe.title}
-              </h2>
-              <p className="text-gray-200 text-lg max-w-2xl line-clamp-2">
-                {recipe.description}
-              </p>
+              <h2 className="text-3xl sm:text-4xl font-bold font-serif mb-2">{recipe.title}</h2>
+              <p className="text-gray-200 text-lg max-w-2xl line-clamp-2">{recipe.description}</p>
             </div>
           </div>
 
@@ -128,9 +124,7 @@ const RecipeDetailModal: React.FC<RecipeDetailModalProps> = ({
                         <span className="flex-shrink-0 w-8 h-8 flex items-center justify-center bg-brand-primary/10 text-brand-primary font-bold rounded-full text-sm">
                           {index + 1}
                         </span>
-                        <p className="text-gray-700 dark:text-gray-300 mt-1">
-                          {step}
-                        </p>
+                        <p className="text-gray-700 dark:text-gray-300 mt-1">{step}</p>
                       </li>
                     ))}
                   </ol>
