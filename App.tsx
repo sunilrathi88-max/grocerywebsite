@@ -600,8 +600,8 @@ const App: React.FC = () => {
             addToast={addToast}
             discount={0}
             promoCode=""
-            onApplyPromoCode={() => { }}
-            onRemovePromoCode={() => { }}
+            onApplyPromoCode={() => {}}
+            onRemovePromoCode={() => {}}
             subtotal={0}
             shippingCost={0}
           />
