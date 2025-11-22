@@ -8,6 +8,7 @@ import { CurrencyDollarIcon } from './icons/CurrencyDollarIcon';
 import { ShoppingBagIcon } from './icons/ShoppingBagIcon';
 import { UsersIcon } from './icons/UsersIcon';
 import { orderAPI, productAPI } from '../utils/apiService';
+import OrderDetailModal from './OrderDetailModal';
 
 interface AnalyticsProps {
   totalRevenue: number;
@@ -250,138 +251,232 @@ const ProductManagement: React.FC<{
   onAddNew: () => void;
   onEdit: (p: Product) => void;
   onDelete: (id: number) => void;
-}> = ({ products, onAddNew, onEdit, onDelete }) => (
-  <div>
-    <div className="flex justify-between items-center mb-4">
-      <h3 className="text-xl font-serif font-bold">Manage Products</h3>
-      <button
-        onClick={onAddNew}
-        className="flex items-center gap-2 bg-brand-dark text-white font-bold py-2 px-4 rounded-full shadow-md hover:bg-opacity-90 transition-colors"
-      >
-        <PlusIcon /> Add New
-      </button>
-    </div>
-    <div className="bg-white shadow overflow-hidden sm:rounded-lg">
-      <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Name
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Category
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Price
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Stock
-              </th>
-              <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {products.map((p) => (
-              <tr key={p.id}>
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                  {p.name}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{p.category}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  ${p.variants[0]?.price.toFixed(2)}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {p.variants.reduce((sum, v) => sum + v.stock, 0)}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-right space-x-2">
-                  <button
-                    onClick={() => onEdit(p)}
-                    className="text-brand-primary hover:text-brand-dark"
-                  >
-                    <PencilIcon />
-                  </button>
-                  <button
-                    onClick={() => onDelete(p.id)}
-                    className="text-red-600 hover:text-red-900"
-                  >
-                    <TrashIcon />
-                  </button>
-                </td>
-              </tr>
+}> = ({ products, onAddNew, onEdit, onDelete }) => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [categoryFilter, setCategoryFilter] = useState('All');
+
+  const filteredProducts = products.filter((product) => {
+    const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCategory = categoryFilter === 'All' || product.category === categoryFilter;
+    return matchesSearch && matchesCategory;
+  });
+
+  const categories = ['All', ...Array.from(new Set(products.map((p) => p.category)))];
+
+  return (
+    <div>
+      <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
+        <h3 className="text-xl font-serif font-bold">Manage Products</h3>
+        <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+          <input
+            type="text"
+            placeholder="Search products..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-brand-primary focus:border-brand-primary"
+          />
+          <select
+            value={categoryFilter}
+            onChange={(e) => setCategoryFilter(e.target.value)}
+            className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-brand-primary focus:border-brand-primary"
+          >
+            {categories.map((cat) => (
+              <option key={cat} value={cat}>
+                {cat}
+              </option>
             ))}
-          </tbody>
-        </table>
+          </select>
+          <button
+            onClick={onAddNew}
+            className="flex items-center justify-center gap-2 bg-brand-dark text-white font-bold py-2 px-4 rounded-full shadow-md hover:bg-opacity-90 transition-colors whitespace-nowrap"
+          >
+            <PlusIcon /> Add New
+          </button>
+        </div>
+      </div>
+      <div className="bg-white shadow overflow-hidden sm:rounded-lg">
+        <div className="overflow-x-auto">
+          <table className="min-w-full divide-y divide-gray-200">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Name
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Category
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Price
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Stock
+                </th>
+                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {filteredProducts.map((p) => (
+                <tr key={p.id}>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    {p.name}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{p.category}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    ${p.variants[0]?.price.toFixed(2)}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {p.variants.reduce((sum, v) => sum + v.stock, 0)}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-right space-x-2">
+                    <button
+                      onClick={() => onEdit(p)}
+                      className="text-brand-primary hover:text-brand-dark"
+                    >
+                      <PencilIcon />
+                    </button>
+                    <button
+                      onClick={() => onDelete(p.id)}
+                      className="text-red-600 hover:text-red-900"
+                    >
+                      <TrashIcon />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+              {filteredProducts.length === 0 && (
+                <tr>
+                  <td colSpan={5} className="px-6 py-4 text-center text-gray-500">
+                    No products found matching your filters.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 const OrderManagement: React.FC<{
   orders: Order[];
   onUpdateStatus: (id: string, s: OrderStatus) => void;
-}> = ({ orders, onUpdateStatus }) => (
-  <div>
-    <h3 className="text-xl font-serif font-bold mb-4">Manage Orders</h3>
-    <div className="bg-white shadow overflow-hidden sm:rounded-lg">
-      <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Order ID
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Date
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Customer
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Total
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Status
-              </th>
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {orders.map((order) => (
-              <tr key={order.id}>
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                  {order.id.slice(0, 8)}...
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {new Date(order.date).toLocaleDateString()}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {order.shippingAddress?.street || 'N/A'}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  ${order.total.toFixed(2)}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm">
-                  <select
-                    value={order.status}
-                    onChange={(e) => onUpdateStatus(order.id, e.target.value as OrderStatus)}
-                    className="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-brand-primary focus:border-brand-primary sm:text-sm rounded-md"
-                  >
-                    <option value="Pending">Pending</option>
-                    <option value="Processing">Processing</option>
-                    <option value="Shipped">Shipped</option>
-                    <option value="Delivered">Delivered</option>
-                    <option value="Cancelled">Cancelled</option>
-                  </select>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+}> = ({ orders, onUpdateStatus }) => {
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState('All');
+
+  const filteredOrders = orders.filter((order) => {
+    const matchesSearch =
+      order.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (order.shippingAddress?.street || '').toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesStatus = statusFilter === 'All' || order.status === statusFilter;
+    return matchesSearch && matchesStatus;
+  });
+
+  return (
+    <div>
+      <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
+        <h3 className="text-xl font-serif font-bold">Manage Orders</h3>
+        <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+          <input
+            type="text"
+            placeholder="Search Order ID or Address..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-brand-primary focus:border-brand-primary w-full sm:w-64"
+          />
+          <select
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
+            className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-brand-primary focus:border-brand-primary"
+          >
+            <option value="All">All Statuses</option>
+            <option value="Pending">Pending</option>
+            <option value="Processing">Processing</option>
+            <option value="Shipped">Shipped</option>
+            <option value="Delivered">Delivered</option>
+            <option value="Cancelled">Cancelled</option>
+          </select>
+        </div>
       </div>
+      <div className="bg-white shadow overflow-hidden sm:rounded-lg">
+        <div className="overflow-x-auto">
+          <table className="min-w-full divide-y divide-gray-200">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Order ID
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Date
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Customer
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Total
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Status
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {filteredOrders.map((order) => (
+                <tr key={order.id}>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    {order.id.slice(0, 8)}...
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {new Date(order.date).toLocaleDateString()}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {order.shippingAddress?.street || 'N/A'}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    ${order.total.toFixed(2)}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm">
+                    <select
+                      value={order.status}
+                      onChange={(e) => onUpdateStatus(order.id, e.target.value as OrderStatus)}
+                      className="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-brand-primary focus:border-brand-primary sm:text-sm rounded-md"
+                    >
+                      <option value="Pending">Pending</option>
+                      <option value="Processing">Processing</option>
+                      <option value="Shipped">Shipped</option>
+                      <option value="Delivered">Delivered</option>
+                      <option value="Cancelled">Cancelled</option>
+                    </select>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <button
+                      onClick={() => setSelectedOrder(order)}
+                      className="text-brand-primary hover:text-brand-dark font-medium"
+                    >
+                      View
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      {selectedOrder && (
+        <OrderDetailModal
+          order={selectedOrder}
+          onClose={() => setSelectedOrder(null)}
+        />
+      )}
     </div>
-  </div>
-);
+  );
+};
 
 export default AdminDashboard;

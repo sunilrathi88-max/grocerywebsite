@@ -134,7 +134,7 @@ export default defineConfig(({ mode }) => {
             'react-vendor': ['react', 'react-dom'],
             'framer-motion': ['framer-motion'],
             'react-slick': ['react-slick', 'slick-carousel'],
-            'supabase': ['@supabase/supabase-js'],
+            supabase: ['@supabase/supabase-js'],
           },
         },
       },

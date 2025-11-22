@@ -43,6 +43,7 @@ interface ProductDetailModalProps {
   onNotifyMe: (productName: string) => void;
   onToggleWishlist: (product: Product) => void;
   isWishlisted: boolean;
+  isOpen: boolean;
 }
 
 import { PLACEHOLDER_URLS, imageErrorHandlers } from '../utils/imageHelpers';
@@ -57,6 +58,7 @@ const FBT_MOCK: { [key: number]: number[] } = {
 
 const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
   product,
+  isOpen,
   allProducts,
   recipes,
   onClose,

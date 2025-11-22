@@ -219,137 +219,399 @@ export const orderAPI = {
   /**
    * Get all orders for current user
    */
-  getAll: async (params?: { page?: number; limit?: number; status?: string }) => {
-    const { data, error } = await supabase
-      .from('orders')
-      .select('*, items:order_items(*, product:products(*), variant:variants(*))')
-      .order('created_at', { ascending: false });
+  getAll: async (params?: {
+    page?: number;
+    limit?: number;
+    status?: string;
+  }): Promise<APIResponse<Order[]>> => {
+    try {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
 
-    if (error) throw new Error(error.message);
+      let query = supabase
+        .from('orders')
+        .select('*, order_items(*)')
+        .order('created_at', { ascending: false });
 
-    // Transform snake_case to camelCase if needed, or rely on frontend to handle it.
-    // For consistency with types, we should map it.
-    return {
-      data: data.map((o) => ({
-        ...o,
-        shippingAddress: o.shipping_address,
-        billingAddress: o.billing_address,
-        paymentMethod: o.payment_provider,
-        shippingCost: 0, // stored in total usually
-        items: o.items.map((i: any) => ({
-          product: i.product,
-          selectedVariant: i.variant,
-          quantity: i.quantity,
+      // Filter by user if authenticated
+      if (user) {
+        query = query.eq('user_id', user.id);
+      }
+
+      // Filter by status if provided
+      if (params?.status && params.status !== 'all') {
+        query = query.eq('status', params.status);
+      }
+
+      const { data, error } = await query;
+
+      if (error) throw error;
+
+      // Transform to Order type
+      const orders: Order[] = data.map((o: any) => ({
+        id: o.id,
+        date: o.created_at,
+        status: o.status,
+        total: parseFloat(o.total),
+        shippingAddress: {
+          id: 0,
+          street: o.shipping_street,
+          city: o.shipping_city,
+          state: o.shipping_state,
+          zip: o.shipping_zip,
+          country: o.shipping_country || 'India',
+          type: 'Shipping',
+          isDefault: false,
+        },
+        billingAddress: o.billing_street
+          ? {
+              id: 0,
+              street: o.billing_street,
+              city: o.billing_city,
+              state: o.billing_state,
+              zip: o.billing_zip,
+              country: o.billing_country || 'India',
+              type: 'Billing',
+              isDefault: false,
+            }
+          : {
+              id: 0,
+              street: o.shipping_street,
+              city: o.shipping_city,
+              state: o.shipping_state,
+              zip: o.shipping_zip,
+              country: o.shipping_country || 'India',
+              type: 'Billing',
+              isDefault: false,
+            },
+        deliveryMethod: (o.delivery_method as any) || 'Standard',
+        paymentMethod: o.payment_method,
+        shippingCost: parseFloat(o.shipping_cost) || 0,
+        discount: parseFloat(o.discount) || 0,
+        deliverySlot: o.delivery_date
+          ? {
+              date: o.delivery_date,
+              time: o.delivery_time || '',
+            }
+          : undefined,
+        trackingNumber: o.tracking_number,
+        items: o.order_items.map((item: any) => ({
+          product: {
+            id: item.product_id,
+            name: item.product_name,
+            images: [item.product_image],
+            // Add minimal product data for display
+          } as any,
+          selectedVariant: {
+            id: item.variant_id,
+            name: item.variant_name,
+            price: parseFloat(item.unit_price),
+            salePrice: item.sale_price ? parseFloat(item.sale_price) : undefined,
+          } as any,
+          quantity: item.quantity,
         })),
-      })),
-      total: data.length,
-    };
+      }));
+
+      return {
+        data: orders,
+        message: 'Orders fetched successfully',
+        success: true,
+      };
+    } catch (error) {
+      console.error('Error fetching orders:', error);
+      throw error;
+    }
   },
 
   /**
    * Get single order by ID
    */
-  getById: async (id: string) => {
-    const { data, error } = await supabase
-      .from('orders')
-      .select('*, items:order_items(*, product:products(*), variant:variants(*))')
-      .eq('id', id)
-      .single();
+  getById: async (id: string): Promise<APIResponse<Order>> => {
+    try {
+      const { data, error } = await supabase
+        .from('orders')
+        .select('*, order_items(*)')
+        .eq('id', id)
+        .single();
 
-    if (error) throw new Error(error.message);
-    return {
-      data: {
-        ...data,
-        shippingAddress: data.shipping_address,
-        billingAddress: data.billing_address,
-        paymentMethod: data.payment_provider,
-        items: data.items.map((i: any) => ({
-          product: i.product,
-          selectedVariant: i.variant,
-          quantity: i.quantity,
+      if (error) throw error;
+
+      const order: Order = {
+        id: data.id,
+        date: data.created_at,
+        status: data.status,
+        total: parseFloat(data.total),
+        shippingAddress: {
+          id: 0,
+          street: data.shipping_street,
+          city: data.shipping_city,
+          state: data.shipping_state,
+          zip: data.shipping_zip,
+          country: data.shipping_country || 'India',
+          type: 'Shipping',
+          isDefault: false,
+        },
+        billingAddress: data.billing_street
+          ? {
+              id: 0,
+              street: data.billing_street,
+              city: data.billing_city,
+              state: data.billing_state,
+              zip: data.billing_zip,
+              country: data.billing_country || 'India',
+              type: 'Billing',
+              isDefault: false,
+            }
+          : {
+              id: 0,
+              street: data.shipping_street,
+              city: data.shipping_city,
+              state: data.shipping_state,
+              zip: data.shipping_zip,
+              country: data.shipping_country || 'India',
+              type: 'Billing',
+              isDefault: false,
+            },
+        deliveryMethod: (data.delivery_method as any) || 'Standard',
+        paymentMethod: data.payment_method,
+        shippingCost: parseFloat(data.shipping_cost) || 0,
+        discount: parseFloat(data.discount) || 0,
+        deliverySlot: data.delivery_date
+          ? {
+              date: data.delivery_date,
+              time: data.delivery_time || '',
+            }
+          : undefined,
+        trackingNumber: data.tracking_number,
+        items: data.order_items.map((item: any) => ({
+          product: {
+            id: item.product_id,
+            name: item.product_name,
+            images: [item.product_image],
+          } as any,
+          selectedVariant: {
+            id: item.variant_id,
+            name: item.variant_name,
+            price: parseFloat(item.unit_price),
+            salePrice: item.sale_price ? parseFloat(item.sale_price) : undefined,
+          } as any,
+          quantity: item.quantity,
         })),
-      },
-    };
+      };
+
+      return {
+        data: order,
+        message: 'Order fetched successfully',
+        success: true,
+      };
+    } catch (error) {
+      console.error('Error fetching order:', error);
+      throw error;
+    }
   },
 
   /**
    * Create new order
    */
   create: async (
-    order: Omit<Order, 'id' | 'date' | 'status'> & {
+    orderData: Omit<Order, 'id' | 'date' | 'status'> & {
       userId?: string;
       guestEmail?: string;
+      guestPhone?: string;
       paymentId?: string;
     }
-  ) => {
-    // 1. Insert Order
-    const { data: orderData, error: orderError } = await supabase
-      .from('orders')
-      .insert({
-        user_id: order.userId,
-        guest_email: order.guestEmail,
-        total: order.total,
-        status: 'paid', // Assuming success if we are here
-        payment_id: order.paymentId,
-        payment_provider: 'razorpay',
-        shipping_address: order.shippingAddress,
-        billing_address: order.billingAddress,
-      })
-      .select()
-      .single();
+  ): Promise<APIResponse<Order>> => {
+    try {
+      // Generate order ID
+      const orderId = `ORD-${Date.now()}-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
 
-    if (orderError) throw new Error(orderError.message);
+      // Calculate tax (8%)
+      const tax = (orderData.total - orderData.discount) * 0.08;
 
-    // 2. Insert Order Items
-    const itemsToInsert = order.items.map((item) => ({
-      order_id: orderData.id,
-      product_id: item.product.id,
-      variant_id: item.selectedVariant.id,
-      quantity: item.quantity,
-      price_at_purchase: item.selectedVariant.salePrice ?? item.selectedVariant.price,
-    }));
+      // 1. Insert Order
+      const { data: order, error: orderError } = await supabase
+        .from('orders')
+        .insert({
+          id: orderId,
+          user_id: orderData.userId || null,
+          guest_email: orderData.guestEmail || null,
+          guest_phone: orderData.guestPhone || null,
+          status: 'Processing',
+          total: orderData.total,
+          subtotal:
+            orderData.total - (orderData.shippingCost || 0) - tax + (orderData.discount || 0),
+          shipping_cost: orderData.shippingCost || 0,
+          tax,
+          discount: orderData.discount || 0,
+          payment_method: orderData.paymentMethod,
+          payment_id: orderData.paymentId || null,
+          delivery_method: orderData.deliveryMethod || 'Standard',
+          promo_code: null,
+          shipping_street: orderData.shippingAddress.street,
+          shipping_city: orderData.shippingAddress.city,
+          shipping_state: orderData.shippingAddress.state,
+          shipping_zip: orderData.shippingAddress.zip,
+          shipping_country: orderData.shippingAddress.country || 'India',
+          billing_street: orderData.billingAddress.street,
+          billing_city: orderData.billingAddress.city,
+          billing_state: orderData.billingAddress.state,
+          billing_zip: orderData.billingAddress.zip,
+          billing_country: orderData.billingAddress.country || 'India',
+          delivery_date: orderData.deliverySlot?.date || null,
+          delivery_time: orderData.deliverySlot?.time || null,
+        })
+        .select()
+        .single();
 
-    const { error: itemsError } = await supabase.from('order_items').insert(itemsToInsert);
+      if (orderError) {
+        console.error('Order creation error:', orderError);
+        throw orderError;
+      }
 
-    if (itemsError) throw new Error(itemsError.message);
+      // 2. Insert Order Items
+      const itemsToInsert = orderData.items.map((item) => ({
+        order_id: orderId,
+        product_id: item.product.id,
+        product_name: item.product.name,
+        product_image: item.product.images[0] || null,
+        variant_id: item.selectedVariant.id,
+        variant_name: item.selectedVariant.name,
+        quantity: item.quantity,
+        unit_price: item.selectedVariant.price,
+        sale_price: item.selectedVariant.salePrice || null,
+        total: (item.selectedVariant.salePrice || item.selectedVariant.price) * item.quantity,
+      }));
 
-    return {
-      ...orderData,
-      id: orderData.id,
-      items: order.items,
-      date: orderData.created_at,
-      status: orderData.status,
-    };
+      const { error: itemsError } = await supabase.from('order_items').insert(itemsToInsert);
+
+      if (itemsError) {
+        console.error('Order items error:', itemsError);
+        // Rollback order if items fail
+        await supabase.from('orders').delete().eq('id', orderId);
+        throw itemsError;
+      }
+
+      // 3. Return created order
+      const createdOrder: Order = {
+        id: orderId,
+        date: order.created_at,
+        status: 'Processing',
+        total: orderData.total,
+        shippingAddress: orderData.shippingAddress,
+        billingAddress: orderData.billingAddress,
+        deliveryMethod: orderData.deliveryMethod || 'Standard',
+        paymentMethod: orderData.paymentMethod,
+        shippingCost: orderData.shippingCost || 0,
+        discount: orderData.discount || 0,
+        deliverySlot: orderData.deliverySlot,
+        items: orderData.items,
+      };
+
+      return {
+        data: createdOrder,
+        message: 'Order created successfully',
+        success: true,
+      };
+    } catch (error) {
+      console.error('Error creating order:', error);
+      throw error;
+    }
   },
 
   /**
-   * Update order status (admin only)
+   * Update order status
    */
-  updateStatus: async (id: string, status: Order['status']) => {
-    const { data, error } = await supabase
-      .from('orders')
-      .update({ status })
-      .eq('id', id)
-      .select()
-      .single();
+  updateStatus: async (orderId: string, status: Order['status']): Promise<APIResponse<Order>> => {
+    try {
+      const { data, error } = await supabase
+        .from('orders')
+        .update({ status, updated_at: new Date().toISOString() })
+        .eq('id', orderId)
+        .select('*, order_items(*)')
+        .single();
 
-    if (error) throw new Error(error.message);
-    return { data };
+      if (error) throw error;
+
+      // Transform to Order type (reuse logic from getById)
+      const order: Order = {
+        id: data.id,
+        date: data.created_at,
+        status: data.status,
+        total: parseFloat(data.total),
+        shippingAddress: {
+          id: 0,
+          street: data.shipping_street,
+          city: data.shipping_city,
+          state: data.shipping_state,
+          zip: data.shipping_zip,
+          country: data.shipping_country || 'India',
+          type: 'Shipping',
+          isDefault: false,
+        },
+        billingAddress: {
+          id: 0,
+          street: data.billing_street || data.shipping_street,
+          city: data.billing_city || data.shipping_city,
+          state: data.billing_state || data.shipping_state,
+          zip: data.billing_zip || data.shipping_zip,
+          country: data.billing_country || data.shipping_country || 'India',
+          type: 'Billing',
+          isDefault: false,
+        },
+        deliveryMethod: (data.delivery_method as any) || 'Standard',
+        paymentMethod: data.payment_method,
+        shippingCost: parseFloat(data.shipping_cost) || 0,
+        discount: parseFloat(data.discount) || 0,
+        items: data.order_items.map((item: any) => ({
+          product: {
+            id: item.product_id,
+            name: item.product_name,
+            images: [item.product_image],
+          } as any,
+          selectedVariant: {
+            id: item.variant_id,
+            name: item.variant_name,
+            price: parseFloat(item.unit_price),
+            salePrice: item.sale_price ? parseFloat(item.sale_price) : undefined,
+          } as any,
+          quantity: item.quantity,
+        })),
+      };
+
+      return {
+        data: order,
+        message: 'Order status updated successfully',
+        success: true,
+      };
+    } catch (error) {
+      console.error('Error updating order status:', error);
+      throw error;
+    }
   },
 
   /**
    * Cancel order
    */
-  cancel: async (id: string) => {
-    const { data, error } = await supabase
-      .from('orders')
-      .update({ status: 'Cancelled' })
-      .eq('id', id)
-      .select()
-      .single();
+  cancel: async (orderId: string): Promise<APIResponse<void>> => {
+    try {
+      const { error } = await supabase
+        .from('orders')
+        .update({ status: 'Cancelled', updated_at: new Date().toISOString() })
+        .eq('id', orderId)
+        .eq('status', 'Processing'); // Can only cancel if still processing
 
-    if (error) throw new Error(error.message);
-    return { data };
+      if (error) throw error;
+
+      return {
+        data: undefined,
+        message: 'Order cancelled successfully',
+        success: true,
+      };
+    } catch (error) {
+      console.error('Error cancelling order:', error);
+      throw error;
+    }
   },
 };
 

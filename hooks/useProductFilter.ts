@@ -22,6 +22,20 @@ export interface UseProductFilterReturn {
   productCount: number;
 }
 
+/**
+ * Custom hook for filtering and sorting products
+ *
+ * @param products - Array of products to filter
+ * @param filters - Filter options object
+ * @returns {UseProductFilterReturn} Filtered products and count
+ *
+ * @example
+ * const { filteredProducts, productCount } = useProductFilter(allProducts, {
+ *   category: 'Spices',
+ *   minRating: 4,
+ *   sortBy: 'price-asc'
+ * });
+ */
 export const useProductFilter = (
   products: Product[],
   filters: FilterOptions

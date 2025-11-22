@@ -11,6 +11,7 @@ import { StarIcon } from './icons/StarIcon';
 import { EyeIcon } from './icons/EyeIcon';
 import { CompareIcon } from './icons/CompareIcon';
 import { formatPrice } from '../utils/formatPrice';
+import StockBadge from './StockBadge';
 
 interface ProductCardProps {
   product: Product;
@@ -21,6 +22,7 @@ interface ProductCardProps {
   onToggleCompare: (product: Product) => void;
   isCompared: boolean;
   onNotifyMe: (productName: string) => void;
+  priority?: 'high' | 'low' | 'auto';
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({
@@ -32,6 +34,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   onToggleCompare,
   isCompared,
   onNotifyMe,
+  priority = 'auto',
 }) => {
   const placeholderImage = PLACEHOLDER_URLS.product;
   // Use shared image error handler to swap to local fallback
@@ -86,7 +89,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
             src={product.images?.[0] || placeholderImage}
             alt={product.name}
             type="card"
-            priority="auto"
+            priority={priority}
             fallbackSrc={placeholderImage}
             onError={handleImageError}
             width={400}
@@ -155,6 +158,14 @@ const ProductCard: React.FC<ProductCardProps> = ({
             </div>
           )}
         </div>
+
+        {/* Stock Badge */}
+        <StockBadge
+          stock={totalStock}
+          lowStockThreshold={defaultVariant.lowStockThreshold || 5}
+          restockDate={defaultVariant.restockDate}
+          className="absolute top-2 left-2 z-10"
+        />
 
         {/* Wishlist Button - Enhanced */}
         <motion.button

@@ -132,7 +132,7 @@ class JWTDecoder {
       }
       const payload = JSON.parse(decoded);
       return payload;
-    } catch (error) {
+    } catch (_error) {
       return null;
     }
   }
@@ -266,7 +266,7 @@ class AuthService {
       const { supabase } = await import('../supabaseClient');
       await supabase.auth.signOut();
       TokenStorage.clearTokens();
-    } catch (error) {
+    } catch (_error) {
       // Clear tokens anyway
       TokenStorage.clearTokens();
     }
@@ -318,7 +318,7 @@ class AuthService {
       });
 
       return response;
-    } catch (error) {
+    } catch (_error) {
       return null;
     }
   }

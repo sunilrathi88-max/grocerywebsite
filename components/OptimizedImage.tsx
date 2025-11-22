@@ -1,3 +1,4 @@
+/* global requestAnimationFrame */
 import React, { useState, useEffect, useRef } from 'react';
 import {
   createResponsiveImage,
@@ -51,7 +52,7 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
   height,
   style,
 }) => {
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(priority === 'high');
   const [hasError, setHasError] = useState(false);
   const [isInView, setIsInView] = useState(priority === 'high');
   const imgRef = useRef<HTMLImageElement>(null);
@@ -91,6 +92,16 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
       }
     };
   }, [priority]);
+
+  // Check if image is already loaded (e.g. from cache)
+  useEffect(() => {
+    if (imgRef.current?.complete) {
+      // Use requestAnimationFrame to avoid cascading renders warning
+      requestAnimationFrame(() => {
+        setIsLoaded(true);
+      });
+    }
+  }, []);
 
   const handleLoad = () => {
     setIsLoaded(true);
