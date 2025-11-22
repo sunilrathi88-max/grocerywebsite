@@ -27,6 +27,7 @@ Navigate to your Supabase project dashboard:
 4. Execute the query
 
 Alternatively, via CLI:
+
 ```bash
 supabase db push
 ```
@@ -34,6 +35,7 @@ supabase db push
 ### 1.2 Verify Tables Created
 
 Check that the following tables exist:
+
 - [x] `payment_transactions`
 - [x] `order_status_history`
 - [x] `returns`
@@ -51,6 +53,7 @@ Navigate to **Storage** → Verify `return-images` bucket exists with public acc
 ### 2.1 Local Development
 
 Create `.env.local`:
+
 ```env
 VITE_RAZORPAY_KEY_ID=rzp_test_YOUR_TEST_KEY
 ```
@@ -58,6 +61,7 @@ VITE_RAZORPAY_KEY_ID=rzp_test_YOUR_TEST_KEY
 ### 2.2 Supabase Edge Functions
 
 Set secrets for Edge Functions:
+
 ```bash
 # Razorpay credentials
 supabase secrets set RAZORPAY_KEY_ID=rzp_test_YOUR_KEY
@@ -72,6 +76,7 @@ supabase secrets set SUPABASE_SERVICE_ROLE_KEY=YOUR_SERVICE_ROLE_KEY
 ### 2.3 Production
 
 For production deployment:
+
 1. Replace test keys with live Razorpay keys
 2. Update `VITE_RAZORPAY_KEY_ID` in hosting platform (Vercel/Netlify)
 3. Ensure webhook secrets match Razorpay dashboard configuration
@@ -106,6 +111,7 @@ supabase functions deploy razorpay-webhook
 Check function URLs in Supabase Dashboard → **Edge Functions**
 
 Expected URLs:
+
 - `https://YOUR_PROJECT.supabase.co/functions/v1/create-razorpay-order`
 - `https://YOUR_PROJECT.supabase.co/functions/v1/verify-razorpay-payment`
 - `https://YOUR_PROJECT.supabase.co/functions/v1/razorpay-webhook`
@@ -133,6 +139,7 @@ Expected URLs:
 ### 4.3 Update Webhook Secret
 
 Update the secret in Supabase:
+
 ```bash
 supabase secrets set RAZORPAY_WEBHOOK_SECRET=<secret-from-razorpay>
 ```
@@ -156,20 +163,20 @@ async createOrder(amount: number): Promise<PaymentOrderResponse> {
   const { data, error } = await supabase.functions.invoke('create-razorpay-order', {
     body: { amount: Math.round(amount * 100) }
   });
-  
+
   if (error) throw error;
   return data;
 }
 
 async verifyPayment(orderId: string, paymentId: string, signature: string): Promise<boolean> {
   const { data, error } = await supabase.functions.invoke('verify-razorpay-payment', {
-    body: { 
-      razorpay_order_id: orderId, 
-      razorpay_payment_id: paymentId, 
-      razorpay_signature: signature 
+    body: {
+      razorpay_order_id: orderId,
+      razorpay_payment_id: paymentId,
+      razorpay_signature: signature
     }
   });
-  
+
   if (error) throw error;
   return data.verified;
 }
@@ -192,6 +199,7 @@ async verifyPayment(orderId: string, paymentId: string, signature: string): Prom
 ### 6.1 Database Check
 
 Query `payment_transactions` table:
+
 ```sql
 SELECT * FROM payment_transactions ORDER BY created_at DESC LIMIT 10;
 ```
@@ -199,6 +207,7 @@ SELECT * FROM payment_transactions ORDER BY created_at DESC LIMIT 10;
 ### 6.2 Webhook Logs
 
 Check Edge Function logs:
+
 ```bash
 supabase functions logs razorpay-webhook
 ```
@@ -206,6 +215,7 @@ supabase functions logs razorpay-webhook
 ### 6.3 Test Flows
 
 **Payment Flow:**
+
 1. Add items to cart
 2. Complete checkout
 3. Pay with Razorpay (test card: `4111 1111 1111 1111`)
@@ -213,6 +223,7 @@ supabase functions logs razorpay-webhook
 5. Check payment transaction logged
 
 **Return Flow:**
+
 1. Navigate to order history
 2. Open delivered order
 3. Initiate return
@@ -227,11 +238,13 @@ supabase functions logs razorpay-webhook
 ### 7.1 Enable Logging
 
 Supabase automatically logs Edge Function execution. Access via:
+
 - **Dashboard** → **Edge Functions** → **Logs**
 
 ### 7.2 Payment Failure Alerts
 
 Set up email alerts for payment failures:
+
 1. Create a Database Webhook for `payment_transactions` inserts where `status = 'failed'`
 2. Configure email notification service
 
@@ -249,16 +262,19 @@ Set up email alerts for payment failures:
 ### Test Card Details
 
 **Success Flow:**
+
 - Card: `4111 1111 1111 1111`
 - CVV: Any 3 digits
 - Expiry: Any future date
 - OTP: `123456`
 
 **Failure Flow:**
+
 - Card: `4000 0000 0000 0002`
 - This will trigger a payment failure
 
 **UPI Testing:**
+
 - Use `success@razorpay` for success
 - Use `failure@razorpay` for failure
 
@@ -269,6 +285,7 @@ Set up email alerts for payment failures:
 Before going live:
 
 ### Security
+
 - [ ] Replace all test keys with production keys
 - [ ] Verify RLS policies are enabled on all tables
 - [ ] Test authentication flows
@@ -276,18 +293,21 @@ Before going live:
 - [ ] Validate webhook signature verification
 
 ### Performance
+
 - [ ] Enable database indexes (already in schema)
 - [ ] Set up CDN for static assets
 - [ ] Configure caching headers
 - [ ] Test under load
 
 ### Compliance
+
 - [ ] Add terms & conditions for returns
 - [ ] Privacy policy updated for payment data
 - [ ] PCI compliance check (Razorpay handles this)
 - [ ] GDPR compliance for user data
 
 ### Operations
+
 - [ ] Set up error monitoring (Sentry/LogRocket)
 - [ ] Configure backup schedule
 - [ ] Document rollback procedure
@@ -300,6 +320,7 @@ Before going live:
 ### Issue: Payment verification fails
 
 **Solution:**
+
 - Verify `RAZORPAY_KEY_SECRET` is correctly set
 - Check signature generation logic
 - Review Edge Function logs
@@ -307,6 +328,7 @@ Before going live:
 ### Issue: Webhook not receiving events
 
 **Solution:**
+
 - Verify webhook URL in Razorpay dashboard
 - Check Edge Function deployment status
 - Test webhook with Razorpay test events
@@ -315,6 +337,7 @@ Before going live:
 ### Issue: Return images not uploading
 
 **Solution:**
+
 - Check storage bucket permissions
 - Verify `return-images` bucket exists
 - Review RLS policies on storage
@@ -322,6 +345,7 @@ Before going live:
 ### Issue: Database RLS blocking queries
 
 **Solution:**
+
 - Verify user is authenticated
 - Check policy conditions
 - Use service_role key for admin operations
@@ -333,6 +357,7 @@ Before going live:
 If issues arise post-deployment:
 
 1. **Revert Edge Functions:**
+
    ```bash
    supabase functions delete create-razorpay-order
    supabase functions delete verify-razorpay-payment

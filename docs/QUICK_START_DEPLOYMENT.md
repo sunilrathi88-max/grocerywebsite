@@ -30,6 +30,7 @@ chmod +x scripts/deploy-phase1.sh
 ```
 
 The script will:
+
 1. ✅ Link to your Supabase project
 2. ✅ Configure all secrets
 3. ✅ Deploy all 3 Edge Functions
@@ -42,6 +43,7 @@ The script will:
 ### Step 1: Database Migration (5 min)
 
 **Via Supabase Dashboard:**
+
 1. Open [Supabase Dashboard](https://app.supabase.com)
 2. Navigate to **SQL Editor**
 3. Click **New Query**
@@ -49,15 +51,16 @@ The script will:
 5. Click **Run**
 
 **Verify tables created:**
+
 ```sql
-SELECT table_name 
-FROM information_schema.tables 
-WHERE table_schema = 'public' 
+SELECT table_name
+FROM information_schema.tables
+WHERE table_schema = 'public'
 AND table_name IN (
-  'payment_transactions', 
-  'order_status_history', 
-  'returns', 
-  'return_items', 
+  'payment_transactions',
+  'order_status_history',
+  'returns',
+  'return_items',
   'stock_notifications'
 );
 ```
@@ -67,11 +70,13 @@ AND table_name IN (
 ### Step 2: Configure Secrets (3 min)
 
 Link to your project:
+
 ```bash
 supabase link --project-ref YOUR_PROJECT_REF
 ```
 
 Set secrets:
+
 ```bash
 # Razorpay credentials
 supabase secrets set RAZORPAY_KEY_ID=rzp_test_YOUR_KEY
@@ -84,6 +89,7 @@ supabase secrets set SUPABASE_SERVICE_ROLE_KEY=YOUR_SERVICE_ROLE_KEY
 ```
 
 **Get these values:**
+
 - **Razorpay**: Dashboard → Settings → API Keys
 - **Supabase URL**: Dashboard → Settings → API
 - **Service Role Key**: Dashboard → Settings → API → `service_role` key
@@ -100,6 +106,7 @@ supabase functions deploy razorpay-webhook
 ```
 
 **Verify deployment:**
+
 ```bash
 supabase functions list
 ```
@@ -126,12 +133,14 @@ supabase functions list
 ### Step 5: Update Client Environment (1 min)
 
 Create `.env.local`:
+
 ```env
 VITE_RAZORPAY_KEY_ID=rzp_test_YOUR_KEY_ID
 ```
 
 VITE_RAZORPAY_KEY_ID=rzp_test_YOUR_KEY_ID
-```
+
+````
 
 ---
 
@@ -142,9 +151,10 @@ VITE_RAZORPAY_KEY_ID=rzp_test_YOUR_KEY_ID
 1. **Install Vercel CLI** (Optional, or use dashboard):
    ```bash
    npm i -g vercel
-   ```
+````
 
 2. **Deploy**:
+
    ```bash
    vercel
    ```
@@ -182,6 +192,7 @@ VITE_RAZORPAY_KEY_ID=rzp_test_YOUR_KEY_ID
 ### Test Payment Flow
 
 1. **Start dev server:**
+
    ```bash
    npm run dev
    ```
@@ -204,6 +215,7 @@ VITE_RAZORPAY_KEY_ID=rzp_test_YOUR_KEY_ID
 ### Test Webhook
 
 Send test event from Razorpay Dashboard:
+
 1. Webhooks → Your webhook → **Send Test Webhook**
 2. Select `payment.captured`
 3. Check Edge Function logs:
@@ -226,21 +238,25 @@ Send test event from Razorpay Dashboard:
 After deployment, verify:
 
 ### Database
+
 - [ ] All 5 tables created
 - [ ] RLS policies enabled
 - [ ] Storage bucket `return-images` exists
 
 ### Edge Functions
+
 - [ ] All 3 functions deployed
 - [ ] Functions accessible via URL
 - [ ] Secrets configured correctly
 
 ### Razorpay
+
 - [ ] Webhook configured
 - [ ] Webhook receiving events (check logs)
 - [ ] Test payment successful
 
 ### Client
+
 - [ ] Environment variable set
 - [ ] Build successful
 - [ ] Payment flow working
@@ -254,12 +270,13 @@ After deployment, verify:
 
 **Error:** `FunctionsRelayError` or `not found`
 
-**Solution:** 
+**Solution:**
 The client code will automatically fall back to mock implementations for development. Deploy Edge Functions to enable production mode.
 
 ### Payment Verification Failed
 
 **Check:**
+
 1. Webhook secret matches in both Razorpay and Supabase
 2. Edge Function `verify-razorpay-payment` is deployed
 3. Function logs for error details:
@@ -270,6 +287,7 @@ The client code will automatically fall back to mock implementations for develop
 ### Database Permission Denied
 
 **Check:**
+
 1. RLS policies are correctly configured
 2. User is authenticated
 3. Using correct API key (anon key for client, service_role for admin)
@@ -277,6 +295,7 @@ The client code will automatically fall back to mock implementations for develop
 ### Webhook Not Receiving Events
 
 **Check:**
+
 1. Webhook URL is correct
 2. Webhook is active in Razorpay dashboard
 3. Events are selected
@@ -306,15 +325,15 @@ supabase functions logs --since 1h
 
 ```sql
 -- Payment transactions today
-SELECT COUNT(*), status 
-FROM payment_transactions 
-WHERE created_at > CURRENT_DATE 
+SELECT COUNT(*), status
+FROM payment_transactions
+WHERE created_at > CURRENT_DATE
 GROUP BY status;
 
 -- Return requests this week
-SELECT COUNT(*), status 
-FROM returns 
-WHERE created_at > CURRENT_DATE - INTERVAL '7 days' 
+SELECT COUNT(*), status
+FROM returns
+WHERE created_at > CURRENT_DATE - INTERVAL '7 days'
 GROUP BY status;
 ```
 
@@ -329,6 +348,7 @@ Razorpay Dashboard → Webhooks → Your Webhook → **Logs**
 If you need to rollback:
 
 ### Delete Edge Functions
+
 ```bash
 supabase functions delete create-razorpay-order
 supabase functions delete verify-razorpay-payment
@@ -336,9 +356,11 @@ supabase functions delete razorpay-webhook
 ```
 
 ### Disable Webhook
+
 Razorpay Dashboard → Webhooks → Disable webhook
 
 ### Client Fallback
+
 The client code automatically falls back to mock implementations if Edge Functions are not available.
 
 ---
@@ -348,6 +370,7 @@ The client code automatically falls back to mock implementations if Edge Functio
 Before going to production:
 
 ### Security
+
 - [ ] Replace test Razorpay keys with production keys
 - [ ] Review and update RLS policies
 - [ ] Enable MFA on Supabase account
@@ -355,18 +378,21 @@ Before going to production:
 - [ ] Rotate secrets regularly
 
 ### Performance
+
 - [ ] Enable database connection pooling
 - [ ] Set up CDN for static assets
 - [ ] Configure caching headers
 - [ ] Optimize database indexes (already in schema)
 
 ### Monitoring
+
 - [ ] Set up error tracking (Sentry)
 - [ ] Configure uptime monitoring
 - [ ] Set up payment failure alerts
 - [ ] Enable webhook delivery monitoring
 
 ### Operations
+
 - [ ] Document support procedures
 - [ ] Train customer service team
 - [ ] Set up backup schedule
@@ -390,6 +416,7 @@ Before going to production:
 **Components:** 3 Edge Functions, 5 Database Tables, 1 Webhook
 
 **After completion:**
+
 - ✅ Secure payment processing
 - ✅ Server-side verification
 - ✅ Automated webhook handling
