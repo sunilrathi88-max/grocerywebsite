@@ -322,7 +322,9 @@ const ProductManagement: React.FC<{
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                     {p.name}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{p.category}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {p.category}
+                  </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     ${p.variants[0]?.price.toFixed(2)}
                   </td>
@@ -470,10 +472,7 @@ const OrderManagement: React.FC<{
         </div>
       </div>
       {selectedOrder && (
-        <OrderDetailModal
-          order={selectedOrder}
-          onClose={() => setSelectedOrder(null)}
-        />
+        <OrderDetailModal order={selectedOrder} onClose={() => setSelectedOrder(null)} />
       )}
     </div>
   );
