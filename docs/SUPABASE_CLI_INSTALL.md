@@ -2,7 +2,7 @@
 
 ## ⚠️ Important Note
 
-The Supabase CLI **cannot** be installed via `npm install -g supabase` anymore. 
+The Supabase CLI **cannot** be installed via `npm install -g supabase` anymore.
 
 Use one of the methods below instead.
 
@@ -15,18 +15,21 @@ Use one of the methods below instead.
 **Step 1: Install Scoop (if not already installed)**
 
 Open PowerShell and run:
+
 ```powershell
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
 ```
 
 **Step 2: Install Supabase CLI**
+
 ```powershell
 scoop bucket add supabase https://github.com/supabase/scoop-bucket.git
 scoop install supabase
 ```
 
 **Step 3: Verify Installation**
+
 ```powershell
 supabase --version
 ```
