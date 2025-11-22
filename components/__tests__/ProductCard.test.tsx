@@ -5,16 +5,33 @@ import ProductCard from '../ProductCard';
 import { Product, Variant } from '../../types';
 
 // Mock framer-motion to avoid animation issues in tests
-/* eslint-disable @typescript-eslint/no-explicit-any */
-jest.mock('framer-motion', () => ({
-  motion: {
-    button: ({ children, onClick, className, ...props }: any) => (
-      <button onClick={onClick} className={className} {...props}>
+// Mock framer-motion to avoid animation issues in tests
+jest.mock('framer-motion', () => {
+  const React = require('react');
+  const motion = {
+    div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
+    button: ({ children, onClick, className, disabled, ...props }: any) => (
+      <button onClick={onClick} className={className} disabled={disabled} {...props}>
         {children}
       </button>
     ),
-  },
-}));
+    span: ({ children, ...props }: any) => <span {...props}>{children}</span>,
+    a: ({ children, ...props }: any) => <a {...props}>{children}</a>,
+    p: ({ children, ...props }: any) => <p {...props}>{children}</p>,
+  };
+
+  const AnimatePresence = ({ children }: any) => <>{children}</>;
+
+  return {
+    motion,
+    AnimatePresence,
+    useAnimation: () => ({
+      start: jest.fn(),
+      stop: jest.fn(),
+      set: jest.fn(),
+    }),
+  };
+});
 
 // Mock OptimizedImage to simplify testing
 jest.mock('../OptimizedImage', () => ({
@@ -64,7 +81,7 @@ describe('ProductCard', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     // Suppress console.log from ProductCard
-    jest.spyOn(console, 'log').mockImplementation(() => {});
+    jest.spyOn(console, 'log').mockImplementation(() => { });
   });
 
   afterEach(() => {

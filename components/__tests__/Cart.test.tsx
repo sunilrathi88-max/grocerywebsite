@@ -5,8 +5,9 @@ import Cart from '../Cart';
 import { CartItem, Product, Variant } from '../../types';
 
 // Mock framer-motion
-/* eslint-disable @typescript-eslint/no-explicit-any */
+// Mock framer-motion
 jest.mock('framer-motion', () => {
+  const React = require('react');
   const motion = {
     div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
     button: ({ children, onClick, className, disabled, ...props }: any) => (
@@ -15,19 +16,34 @@ jest.mock('framer-motion', () => {
       </button>
     ),
     span: ({ children, ...props }: any) => <span {...props}>{children}</span>,
+    a: ({ children, ...props }: any) => <a {...props}>{children}</a>,
+    p: ({ children, ...props }: any) => <p {...props}>{children}</p>,
   };
 
   const AnimatePresence = ({ children }: any) => <>{children}</>;
 
-  return { motion, AnimatePresence };
+  return {
+    motion,
+    AnimatePresence,
+    useAnimation: () => ({
+      start: jest.fn(),
+      stop: jest.fn(),
+      set: jest.fn(),
+    }),
+  };
 });
-/* eslint-enable @typescript-eslint/no-explicit-any */
 
 // Mock OptimizedImage
 /* eslint-disable @typescript-eslint/no-explicit-any */
 jest.mock('../OptimizedImage', () => ({
-  OptimizedImage: ({ src, alt, className }: any) => (
-    <img src={src} alt={alt} className={className} data-testid="cart-item-image" />
+  OptimizedImage: ({ src, alt, onError, className }: any) => (
+    <img
+      src={src}
+      alt={alt}
+      onError={onError}
+      className={className}
+      data-testid="optimized-image"
+    />
   ),
 }));
 /* eslint-enable @typescript-eslint/no-explicit-any */
@@ -121,21 +137,20 @@ describe('Cart', () => {
     it('should display empty cart message when no items', () => {
       render(<Cart {...defaultProps} items={[]} subtotal={0} />);
 
-      expect(screen.getByText('Your Cart is Empty')).toBeInTheDocument();
-      expect(screen.getByText('Add some delicious products to get started.')).toBeInTheDocument();
+      expect(screen.getByText('Your cart is empty')).toBeInTheDocument();
     });
 
     it('should show Continue Shopping button in empty cart', () => {
       render(<Cart {...defaultProps} items={[]} subtotal={0} />);
 
-      const continueButton = screen.getByRole('button', { name: /Continue Shopping/i });
+      const continueButton = screen.getByRole('button', { name: /Start Shopping/i });
       expect(continueButton).toBeInTheDocument();
     });
 
     it('should call onClose when Continue Shopping is clicked', () => {
       render(<Cart {...defaultProps} items={[]} subtotal={0} />);
 
-      const continueButton = screen.getByRole('button', { name: /Continue Shopping/i });
+      const continueButton = screen.getByRole('button', { name: /Start Shopping/i });
       fireEvent.click(continueButton);
 
       expect(mockOnClose).toHaveBeenCalledTimes(1);
@@ -160,8 +175,8 @@ describe('Cart', () => {
     it('should display item prices', () => {
       render(<Cart {...defaultProps} />);
 
-      expect(screen.getByText('$249.00')).toBeInTheDocument();
-      expect(screen.getByText('$499.00')).toBeInTheDocument();
+      expect(screen.getByText('₹249.00')).toBeInTheDocument();
+      expect(screen.getByText('₹499.00')).toBeInTheDocument();
     });
 
     it('should display item quantities', () => {
@@ -176,7 +191,7 @@ describe('Cart', () => {
     it('should render product images', () => {
       render(<Cart {...defaultProps} />);
 
-      const images = screen.getAllByTestId('cart-item-image');
+      const images = screen.getAllByTestId('optimized-image');
       expect(images).toHaveLength(2);
       expect(images[0]).toHaveAttribute('src', '/images/products/saffron-1.svg');
       expect(images[1]).toHaveAttribute('src', '/images/products/pepper-1.svg');
@@ -369,14 +384,14 @@ describe('Cart', () => {
       render(<Cart {...defaultProps} />);
 
       expect(screen.getByText('Subtotal')).toBeInTheDocument();
-      expect(screen.getByText('$747.00')).toBeInTheDocument();
+      expect(screen.getByText('₹747.00')).toBeInTheDocument();
     });
 
     it('should display discount when applied', () => {
       render(<Cart {...defaultProps} discount={50} />);
 
       expect(screen.getByText('Discount')).toBeInTheDocument();
-      expect(screen.getByText('-$50.00')).toBeInTheDocument();
+      expect(screen.getByText('-₹50.00')).toBeInTheDocument();
     });
 
     it('should not display discount row when discount is zero', () => {
@@ -396,7 +411,7 @@ describe('Cart', () => {
       render(<Cart {...defaultProps} shippingCost={10} />);
 
       expect(screen.getByText('Shipping')).toBeInTheDocument();
-      expect(screen.getByText('$10.00')).toBeInTheDocument();
+      expect(screen.getByText('₹10.00')).toBeInTheDocument();
     });
 
     it('should calculate and display tax (8%)', () => {
@@ -404,7 +419,7 @@ describe('Cart', () => {
       render(<Cart {...defaultProps} />);
 
       expect(screen.getByText('Taxes (8%)')).toBeInTheDocument();
-      expect(screen.getByText('$59.76')).toBeInTheDocument();
+      expect(screen.getByText('₹59.76')).toBeInTheDocument();
     });
 
     it('should calculate total correctly', () => {
@@ -413,14 +428,14 @@ describe('Cart', () => {
       render(<Cart {...defaultProps} />);
 
       expect(screen.getByText('Total')).toBeInTheDocument();
-      expect(screen.getByText('$806.76')).toBeInTheDocument();
+      expect(screen.getByText('₹806.76')).toBeInTheDocument();
     });
 
     it('should calculate total with discount and shipping', () => {
       // Total = 747 - 50 + 15 + ((747 - 50) * 0.08) = 747 - 50 + 15 + 55.76 = 767.76
       render(<Cart {...defaultProps} discount={50} shippingCost={15} />);
 
-      const totalText = screen.getByText('$767.76');
+      const totalText = screen.getByText('₹767.76');
       expect(totalText).toBeInTheDocument();
     });
   });
@@ -500,13 +515,13 @@ describe('Cart', () => {
     it('should handle very large subtotals', () => {
       render(<Cart {...defaultProps} subtotal={9999.99} />);
 
-      expect(screen.getByText('$9999.99')).toBeInTheDocument();
+      expect(screen.getByText('₹9999.99')).toBeInTheDocument();
     });
 
     it('should format decimal prices correctly', () => {
       render(<Cart {...defaultProps} subtotal={123.456} />);
 
-      expect(screen.getByText('$123.46')).toBeInTheDocument();
+      expect(screen.getByText('₹123.46')).toBeInTheDocument();
     });
   });
 });
