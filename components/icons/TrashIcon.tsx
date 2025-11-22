@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const TrashIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+export const TrashIcon: React.FC<React.ComponentProps<'svg'>> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"

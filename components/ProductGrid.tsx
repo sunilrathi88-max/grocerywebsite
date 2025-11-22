@@ -51,8 +51,8 @@ const ProductGrid: React.FC<ProductGridProps> = ({
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
-      {products.map((product) => (
+    <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
+      {products.map((product, index) => (
         <div key={product.id} className="w-full">
           <ProductCard
             product={product}
@@ -63,6 +63,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({
             onToggleCompare={onToggleCompare}
             isCompared={comparisonIds.has(product.id)}
             onNotifyMe={onNotifyMe}
+            priority={index < 6 ? 'high' : 'auto'}
           />
         </div>
       ))}

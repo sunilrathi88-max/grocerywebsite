@@ -8,7 +8,7 @@ import {
   Order,
   OrderStatus,
   QnA as QnAType,
-  Recipe
+  Recipe,
 } from './types';
 
 // Performance Utils
@@ -25,12 +25,7 @@ import { useProductFilter } from './hooks/useProductFilter';
 import { useProducts } from './hooks/useProducts';
 
 // Mock Data
-import {
-  MOCK_ORDERS,
-  MOCK_TESTIMONIALS,
-  MOCK_POSTS,
-  MOCK_RECIPES,
-} from './data';
+import { MOCK_ORDERS, MOCK_TESTIMONIALS, MOCK_POSTS, MOCK_RECIPES } from './data';
 
 // Core Components (Eagerly Loaded - Always Visible)
 import Header from './components/Header';
@@ -371,7 +366,7 @@ const App: React.FC = () => {
         if (rememberMe) {
           localStorage.setItem('rememberedEmail', email);
         }
-      } catch (error) {
+      } catch (_error) {
         addToast('Login failed. Please try again.', 'error');
       }
     },
@@ -457,7 +452,7 @@ const App: React.FC = () => {
 
         window.location.hash = '#/';
         addToast(`Welcome, ${name}! Please check your email.`, 'success');
-      } catch (error) {
+      } catch (_error) {
         addToast('Sign up failed. Please try again.', 'error');
       }
     },
@@ -505,7 +500,7 @@ const App: React.FC = () => {
     [orders.length, clearCart]
   );
 
-  const handleSaveProduct = useCallback(
+  const _handleSaveProduct = useCallback(
     async (product: Product) => {
       try {
         if (product.id === 0) {
@@ -521,7 +516,7 @@ const App: React.FC = () => {
     [addToast, addProductAPI, updateProductAPI]
   );
 
-  const handleDeleteProduct = useCallback(
+  const _handleDeleteProduct = useCallback(
     async (productId: number) => {
       if (window.confirm('Are you sure?')) {
         const success = await deleteProductAPI(productId);
@@ -532,7 +527,7 @@ const App: React.FC = () => {
     [addToast, deleteProductAPI]
   );
 
-  const handleUpdateOrderStatus = useCallback((orderId: string, status: OrderStatus) => {
+  const _handleUpdateOrderStatus = useCallback((orderId: string, status: OrderStatus) => {
     setOrders((prev) => prev.map((o) => (o.id === orderId ? { ...o, status } : o)));
   }, []);
 
@@ -774,61 +769,63 @@ const App: React.FC = () => {
       case 'home':
       default:
         return (
-          <div className="flex flex-col md:flex-row gap-8 items-start container mx-auto px-4 py-8">
-            <aside className="w-full md:w-64 flex-shrink-0 sticky top-24">
-              <React.Suspense
-                fallback={<div className="h-64 bg-gray-100 rounded-xl animate-pulse" />}
-              >
-                <AdvancedFilters
-                  showOnSale={showOnSale}
-                  onToggleOnSale={() => setShowOnSale(!showOnSale)}
-                  showInStock={showInStock}
-                  onToggleInStock={() => setShowInStock(!showInStock)}
-                  availableTags={availableTags}
-                  selectedTags={selectedTags}
-                  onToggleTag={handleToggleTag}
-                  priceRange={priceRange}
-                  maxPrice={maxPrice}
-                  onPriceChange={(max) => setPriceRange((prev) => ({ ...prev, max }))}
-                  origins={availableOrigins}
-                  selectedOrigins={selectedOrigins}
-                  onToggleOrigin={handleToggleOrigin}
-                  heatLevels={availableHeatLevels}
-                  selectedHeatLevels={selectedHeatLevels}
-                  onToggleHeatLevel={handleToggleHeatLevel}
-                  cuisines={availableCuisines}
-                  selectedCuisines={selectedCuisines}
-                  onToggleCuisine={handleToggleCuisine}
-                  sizes={availableSizes}
-                  selectedSizes={selectedSizes}
-                  onToggleSize={handleToggleSize}
-                  grinds={availableGrinds}
-                  selectedGrinds={selectedGrinds}
-                  onToggleGrind={handleToggleGrind}
-                />
-              </React.Suspense>
-            </aside>
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-[16rem_1fr] gap-8 container mx-auto px-4 py-8">
+              <aside className="sticky top-24 h-fit">
+                <React.Suspense
+                  fallback={<div className="h-64 bg-gray-100 rounded-xl animate-pulse" />}
+                >
+                  <AdvancedFilters
+                    showOnSale={showOnSale}
+                    onToggleOnSale={() => setShowOnSale(!showOnSale)}
+                    showInStock={showInStock}
+                    onToggleInStock={() => setShowInStock(!showInStock)}
+                    availableTags={availableTags}
+                    selectedTags={selectedTags}
+                    onToggleTag={handleToggleTag}
+                    priceRange={priceRange}
+                    maxPrice={maxPrice}
+                    onPriceChange={(max) => setPriceRange((prev) => ({ ...prev, max }))}
+                    origins={availableOrigins}
+                    selectedOrigins={selectedOrigins}
+                    onToggleOrigin={handleToggleOrigin}
+                    heatLevels={availableHeatLevels}
+                    selectedHeatLevels={selectedHeatLevels}
+                    onToggleHeatLevel={handleToggleHeatLevel}
+                    cuisines={availableCuisines}
+                    selectedCuisines={selectedCuisines}
+                    onToggleCuisine={handleToggleCuisine}
+                    sizes={availableSizes}
+                    selectedSizes={selectedSizes}
+                    onToggleSize={handleToggleSize}
+                    grinds={availableGrinds}
+                    selectedGrinds={selectedGrinds}
+                    onToggleGrind={handleToggleGrind}
+                  />
+                </React.Suspense>
+              </aside>
 
-            <div className="flex-1">
-              <div className="flex justify-between items-center mb-6">
-                <p className="text-gray-600">Showing {finalFilteredProducts.length} results</p>
-                <SortDropdown
-                  currentSort={sortOrder}
-                  onSortChange={(val) => setSortOrder(val as typeof sortOrder)}
+              <div className="min-w-0">
+                <div className="flex justify-between items-center mb-6">
+                  <p className="text-gray-600">Showing {finalFilteredProducts.length} results</p>
+                  <SortDropdown
+                    currentSort={sortOrder}
+                    onSortChange={(val) => setSortOrder(val as typeof sortOrder)}
+                  />
+                </div>
+
+                <ProductGrid
+                  products={finalFilteredProducts}
+                  onAddToCart={handleAddToCart}
+                  onToggleWishlist={handleToggleWishlist}
+                  wishlistedIds={wishlistedIds}
+                  onSelectProduct={setSelectedProduct}
+                  onToggleCompare={handleToggleCompare}
+                  comparisonIds={comparisonIds}
+                  isLoading={productsLoading}
+                  onNotifyMe={handleNotifyMe}
                 />
               </div>
-
-              <ProductGrid
-                products={finalFilteredProducts}
-                onAddToCart={handleAddToCart}
-                onToggleWishlist={handleToggleWishlist}
-                wishlistedIds={wishlistedIds}
-                onSelectProduct={setSelectedProduct}
-                onToggleCompare={handleToggleCompare}
-                comparisonIds={comparisonIds}
-                isLoading={productsLoading}
-                onNotifyMe={handleNotifyMe}
-              />
             </div>
 
             <div className="w-full mt-16">
@@ -843,7 +840,7 @@ const App: React.FC = () => {
                 </div>
               </section>
             </div>
-          </div>
+          </>
         );
     }
   };
@@ -911,6 +908,7 @@ const App: React.FC = () => {
             onAddToCart={handleAddToCart}
             onToggleWishlist={handleToggleWishlist}
             isWishlisted={isInWishlist(selectedProduct.id)}
+            isOpen={true}
             onAddReview={handleAddReview}
             onDeleteReview={handleDeleteReview}
             onSelectCategoryAndClose={handleSelectCategoryAndClose}

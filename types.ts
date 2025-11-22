@@ -25,6 +25,9 @@ export interface Variant {
   price: number;
   salePrice?: number;
   stock: number;
+  lowStockThreshold?: number;
+  restockDate?: string;
+  isAvailable?: boolean;
 }
 
 export interface Product {
@@ -104,6 +107,9 @@ export interface Order {
   };
   guestEmail?: string;
   guestPhone?: string;
+  trackingNumber?: string;
+  carrier?: string;
+  userId?: string;
 }
 // FIX: Added Testimonial interface to be shared across components.
 export interface Testimonial {

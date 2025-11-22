@@ -20,7 +20,7 @@ const questions = [
     options: ['Assam', 'Kashmir', 'Kerala'],
     correct: 2,
     feedback:
-      "That's right! The Malabar Coast in Kerala is renowned for producing the world's finest pepper.",
+      'That&apos;s right! The Malabar Coast in Kerala is renowned for producing the world&apos;s finest pepper.',
     points: 10,
   },
   {
@@ -64,7 +64,7 @@ const questions = [
     options: ['Largest size', 'All of the above', 'Perfect color and shape'],
     correct: 1,
     feedback:
-      "That's right! Our premium cashews meet the highest standards in size, color, and shape.",
+      'That&apos;s right! Our premium cashews meet the highest standards in size, color, and shape.',
     points: 10,
   },
 ];
