@@ -312,7 +312,7 @@ const App: React.FC = () => {
   );
 
   const handleDeleteReview = useCallback(
-    (productId: number, reviewId: number) => {
+    (_productId: number, _reviewId: number) => {
       addToast('Review deleted.', 'info');
     },
     [addToast]
@@ -340,7 +340,7 @@ const App: React.FC = () => {
   );
 
   const handleNotifyMe = useCallback(
-    (productId: number | string) => {
+    (_productId: number | string) => {
       addToast('We will notify you when this product is back in stock!', 'success');
     },
     [addToast]
