@@ -32,7 +32,7 @@ const DatabaseSeeder: React.FC = () => {
           stock: product.stock,
           status: product.status || 'active',
           images: product.images,
-          categoryId: defaultCategoryId, // Update with actual category
+          category_id: defaultCategoryId, // Update with actual category
           
           // Existing custom fields
           weight: product.weight_value,
