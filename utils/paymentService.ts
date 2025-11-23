@@ -1,5 +1,4 @@
 import { supabase } from '../supabaseClient';
-import { Order } from '../types';
 
 // Types for Razorpay
 interface RazorpayOptions {
@@ -125,6 +124,7 @@ export const paymentService = {
           error.message?.includes('not found')
         ) {
           console.warn('⚠️ Edge Function not found. Using MOCK verification for development.');
+          // eslint-disable-next-line no-console
           console.log('Payment Details:', { orderId, paymentId, signature });
           return true;
         }
@@ -272,6 +272,7 @@ export const paymentService = {
 
     //DEMO/MOCK implementation
     console.warn('Using MOCK Refund Creation. In production, process refunds server-side.');
+    // eslint-disable-next-line no-console
     console.log('Refund request:', { paymentId, amount, reason });
 
     return {

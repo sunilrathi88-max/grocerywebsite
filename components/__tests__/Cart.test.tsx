@@ -7,6 +7,7 @@ import { CartItem, Product, Variant } from '../../types';
 // Mock framer-motion
 // Mock framer-motion
 jest.mock('framer-motion', () => {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   const React = require('react');
   const motion = {
     div: ({ children, ...props }: any) => <div {...props}>{children}</div>,

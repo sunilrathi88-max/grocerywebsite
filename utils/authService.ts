@@ -132,7 +132,7 @@ class JWTDecoder {
       }
       const payload = JSON.parse(decoded);
       return payload;
-    } catch (_error) {
+    } catch {
       return null;
     }
   }
@@ -187,7 +187,7 @@ class AuthService {
   static async login(
     email: string,
     password: string,
-    rememberMe: boolean = false
+    _rememberMe: boolean = false
   ): Promise<LoginResponse> {
     try {
       const { supabase } = await import('../supabaseClient');
@@ -266,7 +266,7 @@ class AuthService {
       const { supabase } = await import('../supabaseClient');
       await supabase.auth.signOut();
       TokenStorage.clearTokens();
-    } catch (_error) {
+    } catch {
       // Clear tokens anyway
       TokenStorage.clearTokens();
     }
@@ -318,7 +318,7 @@ class AuthService {
       });
 
       return response;
-    } catch (_error) {
+    } catch {
       return null;
     }
   }
