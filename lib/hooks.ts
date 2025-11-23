@@ -1,11 +1,5 @@
 import { useState, useEffect } from 'react';
-import {
-  getProducts,
-  getCategories,
-  getPromoCodes,
-  getUsers,
-  getPromoCodes as getRecipes,
-} from '../lib/api';
+import { getProducts, getCategories, getPromoCodes, getUsers } from '../lib/api';
 import { Product, Category, PromoCode, User } from '../lib/types';
 
 export function useProducts() {

@@ -3,7 +3,7 @@
  * Business logic for API calls with proper typing
  */
 
-import { api, APIResponse, PaginatedResponse } from './api';
+import { api, APIResponse } from './api';
 import { Product, Order, User, Review, QnA } from '../types';
 
 /**
