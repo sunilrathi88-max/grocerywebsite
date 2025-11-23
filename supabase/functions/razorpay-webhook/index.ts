@@ -35,7 +35,7 @@ serve(async (req) => {
     }
 
     const event = JSON.parse(body);
-    console.log('Webhook event:', event.event);
+    console.error('Webhook event:', event.event);
 
     const supabase = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
@@ -52,7 +52,7 @@ serve(async (req) => {
           .eq('payment_id', event.payload.payment.entity.id);
 
         // Optionally: Update order status to 'Processing'
-        console.log('Payment captured:', event.payload.payment.entity.id);
+        console.error('Payment captured:', event.payload.payment.entity.id);
         break;
 
       case 'payment.failed':
@@ -66,7 +66,7 @@ serve(async (req) => {
           })
           .eq('payment_id', event.payload.payment.entity.id);
 
-        console.log('Payment failed:', event.payload.payment.entity.id);
+        console.error('Payment failed:', event.payload.payment.entity.id);
         break;
 
       case 'refund.processed':
@@ -85,11 +85,11 @@ serve(async (req) => {
           })
           .eq('refund_id', event.payload.refund.entity.id);
 
-        console.log('Refund processed:', event.payload.refund.entity.id);
+        console.error('Refund processed:', event.payload.refund.entity.id);
         break;
 
       default:
-        console.log('Unhandled event:', event.event);
+        console.error('Unhandled event:', event.event);
     }
 
     return new Response(JSON.stringify({ received: true }), {

@@ -1,4 +1,4 @@
-import { Product, Category, User, PromoCode, CartItem, Order } from './types';
+import { Product, Category, User, PromoCode } from './types';
 
 async function fetcher<T>(url: string, options?: RequestInit): Promise<T> {
   const res = await fetch(url, {
