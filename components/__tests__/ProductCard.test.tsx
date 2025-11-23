@@ -7,6 +7,7 @@ import { Product, Variant } from '../../types';
 // Mock framer-motion to avoid animation issues in tests
 // Mock framer-motion to avoid animation issues in tests
 jest.mock('framer-motion', () => {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   const React = require('react');
   const motion = {
     div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
@@ -45,7 +46,6 @@ jest.mock('../OptimizedImage', () => ({
     />
   ),
 }));
-/* eslint-enable @typescript-eslint/no-explicit-any */
 
 describe('ProductCard', () => {
   // Mock functions
@@ -270,7 +270,7 @@ describe('ProductCard', () => {
         />
       );
 
-      expect(screen.getByText('Out of Stock')).toBeInTheDocument();
+      expect(screen.getAllByText('Out of Stock')).toHaveLength(2);
     });
   });
 
@@ -441,7 +441,7 @@ describe('ProductCard', () => {
         />
       );
 
-      const notifyButton = screen.getByRole('button', { name: /Notify Me/i });
+      const notifyButton = screen.getByRole('button', { name: /Notify/i });
       fireEvent.click(notifyButton);
 
       expect(mockOnNotifyMe).toHaveBeenCalledWith('Premium Saffron');
