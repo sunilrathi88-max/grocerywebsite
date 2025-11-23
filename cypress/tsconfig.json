@@ -1,26 +1,14 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "types": [
-      "cypress",
-      "@percy/cypress",
-      "@testing-library/cypress"
-    ],
+    "types": ["cypress", "@percy/cypress", "@testing-library/cypress"],
     "isolatedModules": false,
     "noEmit": true,
     "moduleResolution": "node",
     "target": "es5",
-    "lib": [
-      "es5",
-      "dom"
-    ],
+    "lib": ["es5", "dom"],
     "allowJs": true
   },
-  "include": [
-    "**/*.ts",
-    "**/*.tsx"
-  ],
-  "exclude": [
-    "../node_modules"
-  ]
+  "include": ["**/*.ts", "**/*.tsx"],
+  "exclude": ["../node_modules"]
 }
