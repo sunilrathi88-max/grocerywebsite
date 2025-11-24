@@ -50,7 +50,6 @@ const ComparisonModal = React.lazy(() => import('./components/ComparisonModal'))
 const ExitIntentModal = React.lazy(() => import('./components/ExitIntentModal'));
 const RecipeDetailModal = React.lazy(() => import('./components/RecipeDetailModal'));
 const QuizModule = React.lazy(() => import('./components/QuizModule'));
-const DatabaseSeeder = React.lazy(() => import('./components/DatabaseSeeder'));
 
 // Lazy-Loaded Pages (Route-Based Code Splitting)
 const CheckoutPage = React.lazy(() => import('./components/CheckoutPage'));
@@ -1025,10 +1024,6 @@ const App: React.FC = () => {
           />
         )}
 
-        {/* Database Seeder - Only for development/admin */}
-        <React.Suspense fallback={null}>
-          {currentUser?.isAdmin && <DatabaseSeeder />}
-        </React.Suspense>
 
         <SocialProofNotifications />
       </React.Suspense>
