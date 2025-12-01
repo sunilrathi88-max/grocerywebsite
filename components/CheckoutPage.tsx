@@ -463,17 +463,18 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
     if (paymentMethod === 'Cash on Delivery') {
       processOrder();
     } else {
-      // Initialize Razorpay
+      // Initialize Payment (Cashfree)
       paymentService.initializePayment(
         total,
         {
+          id: user?.id.toString() || 'guest',
           name: user?.name || 'Guest',
           email: user?.email || guestEmail,
           phone: user?.phone || guestPhone,
         },
-        (response) => {
+        (orderId) => {
           // Payment Success
-          processOrder(response.razorpay_payment_id);
+          processOrder(orderId);
         },
         (error) => {
           // Payment Failed
