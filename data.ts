@@ -6,7 +6,10 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Himalayan Saffron',
     description:
       'The finest, hand-picked saffron from the valleys of Kashmir. Known for its deep red color, strong aroma, and rich flavor. Perfect for biryanis, desserts, and milk-based sweets.',
-    images: ['/images/products/saffron-1.svg', '/images/products/saffron-2.svg'],
+    images: [
+      'https://images.unsplash.com/photo-1532336414038-cf19250c5757?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=800&q=80',
+    ],
     videos: ['https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4'],
     category: 'Spices',
     variants: [
@@ -57,7 +60,10 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Malabar Black Pepper',
     description:
       'Bold and pungent Tellicherry peppercorns from the Malabar Coast of Kerala. Sun-dried and hand-sorted to ensure only the best make it to your table.',
-    images: ['/images/products/pepper-1.svg', '/images/products/pepper-2.svg'],
+    images: [
+      'https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
+    ],
     category: 'Spices',
     variants: [{ id: 201, name: '250g', price: 399, stock: 30 }],
     reviews: [
@@ -83,7 +89,10 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Kashmiri Almonds',
     description:
       'Sweet, nutrient-rich Mamra almonds from the Kashmir valley. They are smaller than their Californian counterparts but packed with more flavor and natural oils.',
-    images: ['/images/products/almonds-1.svg', '/images/products/almonds-2.svg'],
+    images: [
+      'https://images.unsplash.com/photo-1508061253366-f7da158b6d6b?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1623428187969-5da2dcea5ebf?auto=format&fit=crop&w=800&q=80',
+    ],
     category: 'Nuts',
     variants: [
       { id: 301, name: '500g', price: 899, stock: 20 },
@@ -113,7 +122,10 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Organic Turmeric Powder',
     description:
       'Vibrant, earthy, and potent turmeric powder with high curcumin content, sourced from organic farms in Andhra Pradesh. A staple for curries and a healthy boost for lattes.',
-    images: ['/images/products/turmeric-1.svg', '/images/products/turmeric-2.svg'],
+    images: [
+      'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1615485500704-8e990f9900f7?auto=format&fit=crop&w=800&q=80',
+    ],
     category: 'Spices',
     variants: [{ id: 401, name: '200g', price: 249, stock: 5 }],
     reviews: [
@@ -146,7 +158,10 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Darjeeling First Flush Tea',
     description:
       'The "Champagne of Teas" from the first harvest of the season in Darjeeling. This tea has a light, floral aroma with a hint of astringency and a muscatel finish.',
-    images: ['/images/products/tea-1.svg', '/images/products/tea-2.svg'],
+    images: [
+      'https://images.unsplash.com/photo-1594631252845-29fc4cc8cde9?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=800&q=80',
+    ],
     category: 'Beverages',
     variants: [{ id: 501, name: '100g', price: 1299, salePrice: 1099, stock: 25 }],
     reviews: [
@@ -171,7 +186,10 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Gourmet Garam Masala',
     description:
       'Our signature blend of 12 aromatic spices, including cinnamon, cardamom, and cloves, roasted and ground in small batches for the perfect, balanced flavor profile.',
-    images: ['/images/products/masala-1.svg', '/images/products/masala-2.svg'],
+    images: [
+      'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=800&q=80',
+    ],
     category: 'Spices',
     variants: [{ id: 601, name: '100g', price: 349, stock: 40 }],
     reviews: [
@@ -205,7 +223,10 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Organic Dried Apricots',
     description:
       'Sun-dried, unsulphured apricots from Ladakh. These are naturally sweet, chewy, and packed with fiber and vitamins. A perfect healthy snack.',
-    images: ['/images/products/apricots-1.svg', '/images/products/apricots-2.svg'],
+    images: [
+      'https://images.unsplash.com/photo-1606913084603-3e7702b01627?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1595413667362-722923769976?auto=format&fit=crop&w=800&q=80',
+    ],
     category: 'Dry Fruits',
     variants: [{ id: 701, name: '400g', price: 649, stock: 18 }],
     reviews: [],
@@ -222,7 +243,10 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Goan Cashew Nuts',
     description:
       'Large, creamy, and crunchy W240 grade cashew nuts from the sunny orchards of Goa. Perfectly roasted and lightly salted to bring out their natural sweetness.',
-    images: ['/images/products/cashews-1.svg', '/images/products/cashews-2.svg'],
+    images: [
+      'https://images.unsplash.com/photo-1536591375315-1988d6960545?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1595413667362-722923769976?auto=format&fit=crop&w=800&q=80',
+    ],
     category: 'Nuts',
     variants: [
       { id: 801, name: '250g', price: 499, stock: 0 },
@@ -338,7 +362,7 @@ export const MOCK_POSTS: BlogPost[] = [
     title: "The Secret to Perfect Biryani: It's All in the Saffron",
     author: 'Anika Sharma',
     date: 'July 15, 2024',
-    image: '/images/blog/biryani.svg',
+    image: 'https://images.unsplash.com/photo-1589302168068-964664d93dc0?auto=format&fit=crop&w=800&q=80',
     excerpt:
       'Unlock the secrets to a truly aromatic and flavorful biryani. We dive deep into why high-quality saffron, like our Himalayan variety, is the game-changer you need in your kitchen.',
     content: `
@@ -361,7 +385,7 @@ export const MOCK_POSTS: BlogPost[] = [
     title: 'Beyond the Grind: The Power of Malabar Pepper',
     author: 'Rohan Gupta',
     date: 'June 28, 2024',
-    image: '/images/blog/pepper.svg',
+    image: 'https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=800&q=80',
     excerpt:
       'Think all pepper is the same? Think again. We explore the bold, complex flavors of Tellicherry peppercorns from the Malabar Coast and why they deserve a prime spot in your spice rack.',
     content: `

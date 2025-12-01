@@ -27,16 +27,38 @@ echo ""
 # Step 1: Link to Supabase project
 echo "📡 Step 1: Linking to Supabase project"
 echo "---------------------------------------"
-read -p "Enter your Supabase project reference ID: " PROJECT_REF
 
-if [ -z "$PROJECT_REF" ]; then
-    echo -e "${RED}❌ Project reference is required${NC}"
-    exit 1
+if [ -f "supabase/config.toml" ]; then
+    echo "Found existing supabase/config.toml"
+    read -p "Are you already linked to the correct project? (y/n): " SKIP_LINK
+    if [[ "$SKIP_LINK" =~ ^[Yy]$ ]]; then
+        echo -e "${GREEN}✓ Skipping link step${NC}"
+        PROJECT_REF=$(grep "project_id" supabase/config.toml | cut -d '"' -f 2)
+        if [ -z "$PROJECT_REF" ]; then
+             echo -e "${YELLOW}Could not auto-detect project ID from config.toml. You might need it later.${NC}"
+        else
+             echo "Detected Project ID: $PROJECT_REF"
+        fi
+        echo ""
+    else
+        PERFORM_LINK=true
+    fi
+else
+    PERFORM_LINK=true
 fi
 
-supabase link --project-ref "$PROJECT_REF"
-echo -e "${GREEN}✓ Linked to Supabase project${NC}"
-echo ""
+if [ "$PERFORM_LINK" = true ]; then
+    read -p "Enter your Supabase project reference ID: " PROJECT_REF
+
+    if [ -z "$PROJECT_REF" ]; then
+        echo -e "${RED}❌ Project reference is required${NC}"
+        exit 1
+    fi
+
+    supabase link --project-ref "$PROJECT_REF"
+    echo -e "${GREEN}✓ Linked to Supabase project${NC}"
+    echo ""
+fi
 
 # Step 2: Configure secrets
 echo "🔐 Step 2: Configuring secrets"
