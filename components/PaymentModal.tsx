@@ -116,7 +116,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
               <button
                 onClick={() => {
                   setIsProcessing(true);
-                  // The actual Razorpay modal will be opened by the parent component
+                  // The actual Cashfree modal/redirect will be handled by the parent component
                   onPaymentSuccess();
                 }}
                 disabled={isProcessing}
@@ -159,13 +159,10 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
 
             {/* Payment Gateway Logos */}
             <div className="mt-6 pt-6 border-t border-gray-200">
-              <p className="text-xs text-gray-500 text-center mb-3">Powered by Razorpay</p>
+              <p className="text-xs text-gray-500 text-center mb-3">Secured by Cashfree Payments</p>
               <div className="flex items-center justify-center gap-4 opacity-60">
-                <img
-                  src="https://cdn.razorpay.com/static/assets/logo/payment.svg"
-                  alt="Payment Methods"
-                  className="h-6"
-                />
+                {/* Add Cashfree logo or generic secure payment icons here if available */}
+                <span className="text-xs font-bold text-gray-400">100% Secure Payments</span>
               </div>
             </div>
           </motion.div>
