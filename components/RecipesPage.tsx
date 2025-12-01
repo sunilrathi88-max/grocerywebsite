@@ -47,7 +47,7 @@ const RecipesPage: React.FC<RecipesPageProps> = ({ recipes, onSelectRecipe }) =>
                 <span className="font-bold">Cook: {recipe.cookTime}</span>
                 <span className="font-bold">Serves: {recipe.serves}</span>
               </div>
-              <button className="mt-4 w-full flex items-center justify-center gap-2 bg-brand-primary text-white font-bold py-2 px-4 rounded-full shadow-md hover:bg-opacity-90 transition-colors">
+              <button className="mt-4 w-full flex items-center justify-center gap-2 bg-brand-primary text-brand-dark font-bold py-2 px-4 rounded-full shadow-md hover:bg-opacity-90 transition-colors">
                 <ChefHatIcon className="h-5 w-5" /> View Recipe
               </button>
             </div>

@@ -48,6 +48,9 @@ interface ProductDetailModalProps {
 
 import { PLACEHOLDER_URLS, imageErrorHandlers } from '../utils/imageHelpers';
 
+import { SEO } from './SEO';
+import { pageSEO, generateProductSchema } from '../utils/seo';
+
 const PLACEHOLDER_THUMB = PLACEHOLDER_URLS.thumb;
 
 // Mock data for "Frequently Bought Together"
@@ -189,10 +192,16 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
       .filter((p) => p.category === product.category && p.id !== product.id)
       .slice(0, 5);
   }, [allProducts, product]);
+
+  // SEO Configuration
+  const seoConfig = useMemo(() => pageSEO.product(product.name, product.description), [product]);
+  const productSchema = useMemo(() => generateProductSchema(product), [product]);
+
   if (!isOpen || !product) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
+      <SEO {...seoConfig} structuredData={productSchema} structuredDataId="product-schema" />
       <div
         className="absolute inset-0 bg-black bg-opacity-50 transition-opacity"
         onClick={onClose}
@@ -237,7 +246,7 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                         onClick={() => setSelectedVariant(variant)}
                         className={`px-4 py-2 text-sm font-bold rounded-full transition-all duration-300 border ${
                           selectedVariant.id === variant.id
-                            ? 'bg-brand-primary text-white border-brand-primary shadow-md'
+                            ? 'bg-brand-primary text-brand-dark border-brand-primary shadow-md'
                             : 'bg-white text-brand-dark hover:bg-brand-secondary/50 border-gray-300'
                         } ${variant.stock === 0 ? 'line-through text-gray-400 cursor-not-allowed' : ''}`}
                         disabled={variant.stock === 0}
@@ -307,7 +316,7 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                   <button
                     ref={mainButtonRef}
                     onClick={() => onAddToCart(product, selectedVariant)}
-                    className="w-full bg-brand-primary text-white font-bold py-3 px-6 rounded-full shadow-lg hover:bg-opacity-90 transform hover:scale-105 transition-all duration-300"
+                    className="w-full bg-brand-primary text-brand-dark font-bold py-3 px-6 rounded-full shadow-lg hover:bg-opacity-90 transform hover:scale-105 transition-all duration-300"
                   >
                     Add to Cart
                   </button>
@@ -686,7 +695,7 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                   </p>
                   <button
                     onClick={handleAddFbtToCart}
-                    className="mt-2 bg-brand-primary text-white font-bold py-2 px-6 rounded-full shadow-lg hover:bg-opacity-90 transform hover:scale-105 transition-all duration-300"
+                    className="mt-2 bg-brand-primary text-brand-dark font-bold py-2 px-6 rounded-full shadow-lg hover:bg-opacity-90 transform hover:scale-105 transition-all duration-300"
                   >
                     Add Selected to Cart
                   </button>
@@ -715,7 +724,7 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
           <div className="sticky bottom-0 left-0 right-0 md:hidden bg-white p-4 border-t shadow-lg-top animate-slide-up">
             <button
               onClick={() => onAddToCart(product, selectedVariant)}
-              className="w-full bg-brand-primary text-white font-bold py-3 px-6 rounded-full shadow-lg transition-all duration-300"
+              className="w-full bg-brand-primary text-brand-dark font-bold py-3 px-6 rounded-full shadow-lg transition-all duration-300"
             >
               Add to Cart - ₹
               {onSale ? selectedVariant.salePrice!.toFixed(2) : selectedVariant.price.toFixed(2)}

@@ -4,7 +4,7 @@
  */
 
 import { api, APIResponse } from './api';
-import { Product, Order, User, Review, QnA } from '../types';
+import { Product, Order, User, Review, QnA, Variant, OrderStatus } from '../types';
 
 /**
  * Product API endpoints
@@ -58,19 +58,22 @@ export const productAPI = {
     // For simplicity, let's assume we need to map snake_case to camelCase manually if they differ.
     // Our SQL used snake_case for some fields (harvest_date, purity_test, shelf_life).
 
-    return (data as any[]).map((p) => ({
-      ...p,
-      harvestDate: p.harvest_date,
-      purityTest: p.purity_test,
-      shelfLife: p.shelf_life,
-      // Ensure arrays are arrays
-      images: p.images || [],
-      videos: p.videos || [],
-      tags: p.tags || [],
-      variants: p.variants || [],
-      reviews: p.reviews || [],
-      qna: p.qna || [],
-    }));
+    return (data as Record<string, unknown>[]).map(
+      (p) =>
+        ({
+          ...p,
+          harvestDate: p.harvest_date as string | null,
+          purityTest: p.purity_test as string | null,
+          shelfLife: p.shelf_life as number | null,
+          // Ensure arrays are arrays
+          images: p.images || [],
+          videos: p.videos || [],
+          tags: p.tags || [],
+          variants: p.variants || [],
+          reviews: p.reviews || [],
+          qna: p.qna || [],
+        }) as unknown as Product
+    );
   },
 
   /**
@@ -92,7 +95,7 @@ export const productAPI = {
 
     if (error) throw new Error(error.message);
 
-    const p = data as any;
+    const p = data as Record<string, unknown>;
     return {
       ...p,
       harvestDate: p.harvest_date,
@@ -104,7 +107,7 @@ export const productAPI = {
       variants: p.variants || [],
       reviews: p.reviews || [],
       qna: p.qna || [],
-    };
+    } as Product;
   },
 
   /**
@@ -137,7 +140,7 @@ export const productAPI = {
       .single();
 
     if (error) throw new Error(error.message);
-    return data as any; // simplified
+    return data as Product; // simplified
   },
 
   /**
@@ -157,7 +160,7 @@ export const productAPI = {
       .single();
 
     if (error) throw new Error(error.message);
-    return data as any;
+    return data as Product;
   },
 
   /**
@@ -188,7 +191,7 @@ export const productAPI = {
       .single();
 
     if (error) throw new Error(error.message);
-    return data as any;
+    return data as Review;
   },
 
   /**
@@ -208,7 +211,7 @@ export const productAPI = {
       .single();
 
     if (error) throw new Error(error.message);
-    return data as any;
+    return data as QnA;
   },
 };
 
@@ -249,68 +252,70 @@ export const orderAPI = {
       if (error) throw error;
 
       // Transform to Order type
-      const orders: Order[] = data.map((o: any) => ({
-        id: o.id,
-        date: o.created_at,
-        status: o.status,
-        total: parseFloat(o.total),
+      const orders: Order[] = data.map((o: Record<string, unknown>) => ({
+        id: o.id as string,
+        date: o.created_at as string,
+        status: o.status as OrderStatus,
+        total: parseFloat(o.total as string),
         shippingAddress: {
           id: 0,
-          street: o.shipping_street,
-          city: o.shipping_city,
-          state: o.shipping_state,
-          zip: o.shipping_zip,
-          country: o.shipping_country || 'India',
+          street: o.shipping_street as string,
+          city: o.shipping_city as string,
+          state: o.shipping_state as string,
+          zip: o.shipping_zip as string,
+          country: (o.shipping_country as string) || 'India',
           type: 'Shipping',
           isDefault: false,
         },
         billingAddress: o.billing_street
           ? {
               id: 0,
-              street: o.billing_street,
-              city: o.billing_city,
-              state: o.billing_state,
-              zip: o.billing_zip,
-              country: o.billing_country || 'India',
+              street: o.billing_street as string,
+              city: o.billing_city as string,
+              state: o.billing_state as string,
+              zip: o.billing_zip as string,
+              country: (o.billing_country as string) || 'India',
               type: 'Billing',
               isDefault: false,
             }
           : {
               id: 0,
-              street: o.shipping_street,
-              city: o.shipping_city,
-              state: o.shipping_state,
-              zip: o.shipping_zip,
-              country: o.shipping_country || 'India',
+              street: o.shipping_street as string,
+              city: o.shipping_city as string,
+              state: o.shipping_state as string,
+              zip: o.shipping_zip as string,
+              country: (o.shipping_country as string) || 'India',
               type: 'Billing',
               isDefault: false,
             },
-        deliveryMethod: (o.delivery_method as any) || 'Standard',
-        paymentMethod: o.payment_method,
-        shippingCost: parseFloat(o.shipping_cost) || 0,
-        discount: parseFloat(o.discount) || 0,
+        deliveryMethod: (o.delivery_method as Order['deliveryMethod']) || 'Standard',
+        paymentMethod: o.payment_method as string,
+        shippingCost: parseFloat(o.shipping_cost as string) || 0,
+        discount: parseFloat(o.discount as string) || 0,
         deliverySlot: o.delivery_date
           ? {
-              date: o.delivery_date,
-              time: o.delivery_time || '',
+              date: o.delivery_date as string,
+              time: (o.delivery_time as string) || '',
             }
           : undefined,
-        trackingNumber: o.tracking_number,
-        items: o.order_items.map((item: any) => ({
-          product: {
-            id: item.product_id,
-            name: item.product_name,
-            images: [item.product_image],
-            // Add minimal product data for display
-          } as any,
-          selectedVariant: {
-            id: item.variant_id,
-            name: item.variant_name,
-            price: parseFloat(item.unit_price),
-            salePrice: item.sale_price ? parseFloat(item.sale_price) : undefined,
-          } as any,
-          quantity: item.quantity,
-        })),
+        trackingNumber: o.tracking_number as string,
+        items: (o.order_items as Record<string, unknown>[]).map(
+          (item: Record<string, unknown>) => ({
+            product: {
+              id: item.product_id as string,
+              name: item.product_name as string,
+              images: [item.product_image as string],
+              // Add minimal product data for display
+            } as unknown as Product,
+            selectedVariant: {
+              id: item.variant_id as string,
+              name: item.variant_name as string,
+              price: parseFloat(item.unit_price as string),
+              salePrice: item.sale_price ? parseFloat(item.sale_price as string) : undefined,
+            } as unknown as Variant,
+            quantity: item.quantity as number,
+          })
+        ),
       }));
 
       return {
@@ -373,7 +378,7 @@ export const orderAPI = {
               type: 'Billing',
               isDefault: false,
             },
-        deliveryMethod: (data.delivery_method as any) || 'Standard',
+        deliveryMethod: (data.delivery_method as Order['deliveryMethod']) || 'Standard',
         paymentMethod: data.payment_method,
         shippingCost: parseFloat(data.shipping_cost) || 0,
         discount: parseFloat(data.discount) || 0,
@@ -384,20 +389,22 @@ export const orderAPI = {
             }
           : undefined,
         trackingNumber: data.tracking_number,
-        items: data.order_items.map((item: any) => ({
-          product: {
-            id: item.product_id,
-            name: item.product_name,
-            images: [item.product_image],
-          } as any,
-          selectedVariant: {
-            id: item.variant_id,
-            name: item.variant_name,
-            price: parseFloat(item.unit_price),
-            salePrice: item.sale_price ? parseFloat(item.sale_price) : undefined,
-          } as any,
-          quantity: item.quantity,
-        })),
+        items: (data.order_items as Record<string, unknown>[]).map(
+          (item: Record<string, unknown>) => ({
+            product: {
+              id: item.product_id as string,
+              name: item.product_name as string,
+              images: [item.product_image as string],
+            } as unknown as Product,
+            selectedVariant: {
+              id: item.variant_id as string,
+              name: item.variant_name as string,
+              price: parseFloat(item.unit_price as string),
+              salePrice: item.sale_price ? parseFloat(item.sale_price as string) : undefined,
+            } as unknown as Variant,
+            quantity: item.quantity as number,
+          })
+        ),
       };
 
       return {
@@ -559,24 +566,26 @@ export const orderAPI = {
           type: 'Billing',
           isDefault: false,
         },
-        deliveryMethod: (data.delivery_method as any) || 'Standard',
+        deliveryMethod: (data.delivery_method as Order['deliveryMethod']) || 'Standard',
         paymentMethod: data.payment_method,
         shippingCost: parseFloat(data.shipping_cost) || 0,
         discount: parseFloat(data.discount) || 0,
-        items: data.order_items.map((item: any) => ({
-          product: {
-            id: item.product_id,
-            name: item.product_name,
-            images: [item.product_image],
-          } as any,
-          selectedVariant: {
-            id: item.variant_id,
-            name: item.variant_name,
-            price: parseFloat(item.unit_price),
-            salePrice: item.sale_price ? parseFloat(item.sale_price) : undefined,
-          } as any,
-          quantity: item.quantity,
-        })),
+        items: (data.order_items as Record<string, unknown>[]).map(
+          (item: Record<string, unknown>) => ({
+            product: {
+              id: item.product_id as string,
+              name: item.product_name as string,
+              images: [item.product_image as string],
+            } as unknown as Product,
+            selectedVariant: {
+              id: item.variant_id as string,
+              name: item.variant_name as string,
+              price: parseFloat(item.unit_price as string),
+              salePrice: item.sale_price ? parseFloat(item.sale_price as string) : undefined,
+            } as unknown as Variant,
+            quantity: item.quantity as number,
+          })
+        ),
       };
 
       return {
@@ -622,47 +631,162 @@ export const userAPI = {
   /**
    * Login user
    */
-  login: (credentials: { email: string; password: string }) =>
-    api.post<APIResponse<{ user: User; token: string }>>('/auth/login', credentials),
+  login: async (credentials: { email: string; password: string }) => {
+    const { data, error } = await supabase.auth.signInWithPassword(credentials);
+    if (error) throw error;
+    return {
+      data: {
+        user: {
+          id: parseInt(data.user.id.replace(/-/g, '').slice(0, 15), 16),
+          email: data.user.email || '',
+          name: data.user.user_metadata?.name || '',
+          isAdmin: false,
+          isEmailVerified: !!data.user.email_confirmed_at,
+          has2FA: false,
+          addresses: data.user.user_metadata?.addresses || [],
+          orders: [],
+          wishlist: [],
+        } as User,
+        token: data.session?.access_token || '',
+      },
+      success: true,
+    };
+  },
 
   /**
    * Register new user
    */
-  register: (userData: { name: string; email: string; password: string; phone?: string }) =>
-    api.post<APIResponse<{ user: User; token: string }>>('/auth/register', userData),
+  register: async (userData: { name: string; email: string; password: string; phone?: string }) => {
+    const { data, error } = await supabase.auth.signUp({
+      email: userData.email,
+      password: userData.password,
+      options: {
+        data: {
+          name: userData.name,
+          phone: userData.phone,
+          addresses: [],
+        },
+      },
+    });
+    if (error) throw error;
+    return {
+      data: {
+        user: {
+          id: data.user ? parseInt(data.user.id.replace(/-/g, '').slice(0, 15), 16) : 0,
+          email: data.user?.email || '',
+          name: userData.name,
+          isAdmin: false,
+          isEmailVerified: false,
+          has2FA: false,
+          addresses: [],
+          orders: [],
+          wishlist: [],
+        } as User,
+        token: data.session?.access_token || '',
+      },
+      success: true,
+    };
+  },
 
   /**
    * Logout user
    */
-  logout: () => api.post<APIResponse<void>>('/auth/logout'),
+  logout: async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) throw error;
+    return { success: true, data: undefined };
+  },
 
   /**
    * Get current user profile
    */
-  getProfile: () => api.get<APIResponse<User>>('/users/me'),
+  getProfile: async () => {
+    const {
+      data: { user },
+      error,
+    } = await supabase.auth.getUser();
+    if (error) throw error;
+    if (!user) throw new Error('No user found');
+
+    return {
+      data: {
+        id: parseInt(user.id.replace(/-/g, '').slice(0, 15), 16),
+        email: user.email || '',
+        name: user.user_metadata?.name || '',
+        isAdmin: false,
+        isEmailVerified: !!user.email_confirmed_at,
+        has2FA: false,
+        addresses: user.user_metadata?.addresses || [],
+        orders: [],
+        wishlist: [],
+      } as User,
+      success: true,
+    };
+  },
 
   /**
-   * Update user profile
+   * Update user profile (including addresses)
    */
-  updateProfile: (userData: Partial<User>) => api.put<APIResponse<User>>('/users/me', userData),
+  updateProfile: async (userData: Partial<User>) => {
+    const updates: Record<string, unknown> = {};
+    if (userData.name) updates.name = userData.name;
+    if (userData.phone) updates.phone = userData.phone;
+    if (userData.addresses) updates.addresses = userData.addresses;
+
+    const { data, error } = await supabase.auth.updateUser({
+      data: updates,
+    });
+
+    if (error) throw error;
+
+    return {
+      data: {
+        id: parseInt(data.user.id.replace(/-/g, '').slice(0, 15), 16),
+        email: data.user.email || '',
+        name: data.user.user_metadata?.name || '',
+        isAdmin: false,
+        isEmailVerified: !!data.user.email_confirmed_at,
+        has2FA: false,
+        addresses: data.user.user_metadata?.addresses || [],
+        orders: [],
+        wishlist: [],
+      } as User,
+      success: true,
+    };
+  },
 
   /**
    * Change password
    */
-  changePassword: (data: { currentPassword: string; newPassword: string }) =>
-    api.post<APIResponse<void>>('/users/me/password', data),
+  changePassword: async (data: { currentPassword: string; newPassword: string }) => {
+    // Supabase doesn't require current password for update if logged in,
+    // but for security we might want to re-auth. For now, just update.
+    const { error } = await supabase.auth.updateUser({ password: data.newPassword });
+    if (error) throw error;
+    return { success: true, data: undefined };
+  },
 
   /**
    * Request password reset
    */
-  requestPasswordReset: (email: string) =>
-    api.post<APIResponse<void>>('/auth/forgot-password', { email }),
+  requestPasswordReset: async (email: string) => {
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: window.location.origin + '/#/reset-password',
+    });
+    if (error) throw error;
+    return { success: true, data: undefined };
+  },
 
   /**
    * Reset password with token
+   * Note: Supabase handles token via URL hash. This function assumes session is established via link.
    */
-  resetPassword: (token: string, newPassword: string) =>
-    api.post<APIResponse<void>>('/auth/reset-password', { token, newPassword }),
+  resetPassword: async (token: string, newPassword: string) => {
+    // In Supabase, you just update the user after clicking the link
+    const { error } = await supabase.auth.updateUser({ password: newPassword });
+    if (error) throw error;
+    return { success: true, data: undefined };
+  },
 };
 
 /**

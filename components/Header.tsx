@@ -222,6 +222,12 @@ const Header: React.FC<HeaderProps> = ({
               )}
             </div>
             <a
+              href="#/offers"
+              className="text-brand-dark hover:text-brand-primary transition-colors duration-300"
+            >
+              Offers
+            </a>
+            <a
               href="#/recipes"
               className="text-brand-dark hover:text-brand-primary transition-colors duration-300"
             >
@@ -377,7 +383,7 @@ const Header: React.FC<HeaderProps> = ({
             >
               <HeartIcon className="h-6 w-6" />
               {wishlistItemCount > 0 && (
-                <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-brand-primary text-white text-xs font-bold">
+                <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-brand-primary text-brand-dark text-xs font-bold">
                   {wishlistItemCount}
                 </span>
               )}
@@ -391,9 +397,9 @@ const Header: React.FC<HeaderProps> = ({
                 animate={
                   cartBounce
                     ? {
-                        scale: [1, 1.2, 0.9, 1.1, 1],
-                        rotate: [0, -10, 10, -5, 0],
-                      }
+                      scale: [1, 1.2, 0.9, 1.1, 1],
+                      rotate: [0, -10, 10, -5, 0],
+                    }
                     : {}
                 }
                 transition={{ duration: 0.6, ease: 'easeInOut' }}
@@ -401,6 +407,7 @@ const Header: React.FC<HeaderProps> = ({
                 {...({} as any)}
               >
                 <button
+                  data-testid="header-cart-btn"
                   onClick={onCartClick}
                   className="relative p-2 rounded-full text-brand-dark dark:text-gray-100 hover:bg-brand-secondary/30 dark:hover:bg-gray-700 transition-colors"
                   aria-label={`View your cart (${cartItemCount} items)`}
@@ -408,7 +415,7 @@ const Header: React.FC<HeaderProps> = ({
                   <ShoppingCartIcon className="h-6 w-6" />
                   {cartItemCount > 0 && (
                     <motion.span
-                      className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-brand-primary text-white text-xs font-bold"
+                      className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-brand-primary text-brand-dark text-xs font-bold"
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                       key={cartItemCount}

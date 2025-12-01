@@ -10,18 +10,32 @@ jest.mock('framer-motion', () => {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
   const React = require('react');
   const motion = {
-    div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
-    button: ({ children, onClick, className, disabled, ...props }: any) => (
+    div: ({ children, ...props }: React.ComponentProps<'div'> & Record<string, unknown>) => (
+      <div {...props}>{children}</div>
+    ),
+    button: ({
+      children,
+      onClick,
+      className,
+      disabled,
+      ...props
+    }: React.ComponentProps<'button'> & Record<string, unknown>) => (
       <button onClick={onClick} className={className} disabled={disabled} {...props}>
         {children}
       </button>
     ),
-    span: ({ children, ...props }: any) => <span {...props}>{children}</span>,
-    a: ({ children, ...props }: any) => <a {...props}>{children}</a>,
-    p: ({ children, ...props }: any) => <p {...props}>{children}</p>,
+    span: ({ children, ...props }: React.ComponentProps<'span'> & Record<string, unknown>) => (
+      <span {...props}>{children}</span>
+    ),
+    a: ({ children, ...props }: React.ComponentProps<'a'> & Record<string, unknown>) => (
+      <a {...props}>{children}</a>
+    ),
+    p: ({ children, ...props }: React.ComponentProps<'p'> & Record<string, unknown>) => (
+      <p {...props}>{children}</p>
+    ),
   };
 
-  const AnimatePresence = ({ children }: any) => <>{children}</>;
+  const AnimatePresence = ({ children }: { children: React.ReactNode }) => <>{children}</>;
 
   return {
     motion,
@@ -36,7 +50,17 @@ jest.mock('framer-motion', () => {
 
 // Mock OptimizedImage to simplify testing
 jest.mock('../OptimizedImage', () => ({
-  OptimizedImage: ({ src, alt, onError, className }: any) => (
+  OptimizedImage: ({
+    src,
+    alt,
+    onError,
+    className,
+  }: {
+    src: string;
+    alt: string;
+    onError?: () => void;
+    className?: string;
+  }) => (
     <img
       src={src}
       alt={alt}

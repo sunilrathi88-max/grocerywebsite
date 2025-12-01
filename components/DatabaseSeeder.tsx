@@ -33,7 +33,7 @@ const DatabaseSeeder: React.FC = () => {
           status: product.status || 'active',
           images: product.images,
           category_id: defaultCategoryId, // Update with actual category
-          
+
           // Existing custom fields
           weight: product.weight_value,
           sku: product.sku,
@@ -41,7 +41,7 @@ const DatabaseSeeder: React.FC = () => {
           grade: product.grade,
           certification: product.certifications?.join(', '),
           spicelevel: product.spicelevel,
-          
+
           // New e-commerce fields
           tags: product.tags,
           brand: product.brand,
@@ -57,18 +57,18 @@ const DatabaseSeeder: React.FC = () => {
           review_count: product.review_count || 0,
           meta_title: product.meta_title,
           meta_description: product.meta_description,
-          
+
           // Weight & dimensions
           weight_value: product.weight_value,
           weight_unit: product.weight_unit,
           dimensions: product.dimensions,
-          
+
           // Product specifics
           origin_country: product.origin_country,
           certifications: product.certifications,
           allergen_info: product.allergen_info,
           nutritional_info: product.nutritional_info,
-          
+
           // Timestamps
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),
@@ -89,7 +89,9 @@ const DatabaseSeeder: React.FC = () => {
         successCount++;
       }
 
-      setStatus(`✅ Seeding Complete! Successfully seeded ${successCount}/${SAMPLE_PRODUCTS.length} products.`);
+      setStatus(
+        `✅ Seeding Complete! Successfully seeded ${successCount}/${SAMPLE_PRODUCTS.length} products.`
+      );
     } catch (err) {
       console.error('Seeding error:', err);
       setError(err instanceof Error ? err.message : 'Unknown error occurred');
@@ -100,7 +102,9 @@ const DatabaseSeeder: React.FC = () => {
   };
 
   const clearProducts = async () => {
-    if (!window.confirm('⚠️ Are you sure you want to delete ALL products? This cannot be undone!')) {
+    if (
+      !window.confirm('⚠️ Are you sure you want to delete ALL products? This cannot be undone!')
+    ) {
       return;
     }
 
@@ -157,9 +161,7 @@ const DatabaseSeeder: React.FC = () => {
           onClick={seedDatabase}
           disabled={isLoading}
           className={`w-full py-2 px-4 rounded-md text-white font-medium transition-colors ${
-            isLoading
-              ? 'bg-gray-400 cursor-not-allowed'
-              : 'bg-green-600 hover:bg-green-700'
+            isLoading ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-600 hover:bg-green-700'
           }`}
         >
           {isLoading ? '⏳ Seeding...' : '🚀 Seed Database'}
@@ -169,9 +171,7 @@ const DatabaseSeeder: React.FC = () => {
           onClick={clearProducts}
           disabled={isLoading}
           className={`w-full py-2 px-4 rounded-md text-white font-medium transition-colors ${
-            isLoading
-              ? 'bg-gray-400 cursor-not-allowed'
-              : 'bg-red-600 hover:bg-red-700'
+            isLoading ? 'bg-gray-400 cursor-not-allowed' : 'bg-red-600 hover:bg-red-700'
           }`}
         >
           {isLoading ? '⏳ Clearing...' : '🗑️ Clear All Products'}

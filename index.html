@@ -54,44 +54,6 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Playfair+Display:wght@400;700;900&family=Nunito:wght@400;700&display=swap"
     rel="stylesheet" />
-
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Lato', 'sans-serif'],
-            serif: ['Playfair Display', 'serif'],
-          },
-          colors: {
-            'brand-primary': '#FFB7C1', // Light Pink
-            'brand-secondary': '#F8E3D9', // Light Peach
-            'brand-light': '#FFFFFF', // White
-            'brand-dark': '#333333', // Dark Gray for text
-            'brand-accent': '#F5F5F5', // Light gray background
-          },
-        },
-      },
-    };
-  </script>
-
-  <!-- Import Maps -->
-  <script type="importmap">
-      {
-        "imports": {
-          "react": "https://esm.sh/react@18.2.0",
-          "react/jsx-runtime": "https://esm.sh/react@18.2.0/jsx-runtime",
-          "react-dom": "https://esm.sh/react-dom@18.2.0",
-          "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
-          "framer-motion": "https://esm.sh/framer-motion@11.0.8?deps=react@18.2.0",
-          "react/": "https://esm.sh/react@18.2.0/",
-          "react-dom/": "https://esm.sh/react-dom@18.2.0/"
-        }
-      }
-    </script>
 </head>
 
 <body class="bg-white dark:bg-gray-900 text-brand-dark dark:text-gray-100 font-sans transition-colors duration-300">

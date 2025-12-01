@@ -10,7 +10,7 @@ export interface Product {
   status: string;
   images: string;
   categoryId: string;
-  
+
   // Existing Custom Fields
   weight?: number;
   sku?: string;
@@ -18,7 +18,7 @@ export interface Product {
   grade?: string;
   certification?: string;
   spicelevel?: string;
-  
+
   // New E-commerce Fields
   tags?: string[];
   brand?: string;
@@ -36,7 +36,7 @@ export interface Product {
   meta_description?: string;
   variants?: ProductVariant[];
   related_products?: string[];
-  
+
   // Weight & Dimensions
   weight_value?: number;
   weight_unit?: string;
@@ -46,7 +46,7 @@ export interface Product {
     height?: number;
     unit?: string;
   };
-  
+
   // Product Specifics
   origin_country?: string;
   certifications?: string[];
@@ -58,9 +58,9 @@ export interface Product {
     fat?: number;
     fiber?: number;
     sodium?: number;
-    [key: string]: any;
+    [key: string]: unknown;
   };
-  
+
   // Relations
   category?: Category;
   createdAt?: string;

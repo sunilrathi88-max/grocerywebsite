@@ -137,9 +137,7 @@ describe('Complete Checkout Flow', () => {
     cy.get('input[name*="name"], input[placeholder*="name" i]').first().type('John Doe');
     cy.get('input[name*="email"], input[placeholder*="email" i]').first().type('john@example.com');
     cy.get('input[name*="phone"], input[placeholder*="phone" i]').first().type('9876543210');
-    cy.get('input[name*="address"], textarea[name*="address"]')
-      .first()
-      .type('123 Test Street, Mumbai');
+    cy.get('input[name="street"]').first().type('123 Test Street, Mumbai');
 
     // Verify entered
     cy.get('input[name*="name"]').should('have.value', 'John Doe');
@@ -184,7 +182,7 @@ describe('Complete Checkout Flow', () => {
     cy.get('input[name*="name"], input[placeholder*="name" i]').first().type('Jane Smith');
     cy.get('input[name*="email"], input[placeholder*="email" i]').first().type('jane@example.com');
     cy.get('input[name*="phone"], input[placeholder*="phone" i]').first().type('9876543210');
-    cy.get('input[name*="address"], textarea').first().type('456 Test Road, Delhi');
+    cy.get('input[name="street"]').first().type('456 Test Road, Delhi');
 
     // Place order
     cy.contains('button', /place order|confirm|submit/i).click({ force: true });

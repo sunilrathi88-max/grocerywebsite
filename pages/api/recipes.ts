@@ -2,6 +2,13 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
+interface IngredientInput {
+  name: string;
+  quantity: number;
+  unit: string;
+  productId?: number;
+}
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   switch (req.method) {
     case 'GET': {
@@ -51,7 +58,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           diet,
           season,
           ingredients: {
-            create: ingredients.map((i: any) => ({
+            create: (ingredients as IngredientInput[]).map((i) => ({
               name: i.name,
               quantity: i.quantity,
               unit: i.unit,

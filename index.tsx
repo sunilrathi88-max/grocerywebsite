@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import ErrorBoundary from './components/ErrorBoundary';
 import { initGA4 } from './utils/analytics';
+import './src/index.css';
 import './animations.css';
 
 // Initialize Google Analytics if measurement ID is provided

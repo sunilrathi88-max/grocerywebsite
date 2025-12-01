@@ -2,6 +2,8 @@ import React from 'react';
 import { BlogPost } from '../types';
 import Breadcrumbs from './Breadcrumbs';
 import { imageErrorHandlers } from '../utils/imageHelpers';
+import { SEO } from './SEO';
+import { pageSEO, generateBlogPostingSchema } from '../utils/seo';
 
 interface BlogPostPageProps {
   post: BlogPost;
@@ -22,8 +24,19 @@ const BlogPostPage: React.FC<BlogPostPageProps> = ({ post }) => {
     { label: post.title },
   ];
 
+  // SEO Configuration
+  const seoConfig = React.useMemo(() => pageSEO.product(post.title, post.excerpt), [post]);
+  const blogSchema = React.useMemo(() => generateBlogPostingSchema(post), [post]);
+
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <SEO
+        {...seoConfig}
+        ogType="article"
+        ogImage={post.image}
+        structuredData={blogSchema}
+        structuredDataId="blog-schema"
+      />
       <div className="max-w-3xl mx-auto">
         <Breadcrumbs items={breadcrumbItems} />
         <h1 className="text-4xl md:text-5xl font-serif font-bold text-brand-dark my-6">

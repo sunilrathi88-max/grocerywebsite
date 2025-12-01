@@ -78,7 +78,7 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
         });
       },
       {
-        rootMargin: '100px', // Start loading 100px before visible
+        rootMargin: '200px', // Start loading 200px before visible
         threshold: 0.01,
       }
     );
@@ -142,7 +142,7 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
         alt={alt}
         className={`${className} ${
           isLoaded ? 'opacity-100' : 'opacity-0'
-        } transition-opacity duration-500 ease-in-out`}
+        } transition-opacity duration-300 ease-in-out`}
         loading={loading}
         width={width}
         height={height}

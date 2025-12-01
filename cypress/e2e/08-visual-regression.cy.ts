@@ -62,7 +62,7 @@ describe('Visual Regression Tests', () => {
     cy.get('.product-card')
       .first()
       .within(() => {
-        cy.contains('button', /add to cart/i).click({ force: true });
+        cy.contains('button', 'Add').click({ force: true });
       });
     cy.wait(1000);
 
@@ -78,7 +78,7 @@ describe('Visual Regression Tests', () => {
     cy.get('.product-card')
       .first()
       .within(() => {
-        cy.contains('button', /add to cart/i).click({ force: true });
+        cy.contains('button', 'Add').click({ force: true });
       });
     cy.wait(1000);
 
@@ -167,7 +167,7 @@ describe('Visual Regression Tests', () => {
     cy.get('.product-card')
       .first()
       .within(() => {
-        cy.contains('button', /add to cart/i).click({ force: true });
+        cy.contains('button', 'Add').click({ force: true });
       });
     cy.wait(1000);
 

@@ -7,6 +7,8 @@ import { UsersIcon } from './icons/UsersIcon';
 import ProductCard from './ProductCard';
 import OptimizedImage from './OptimizedImage';
 import { imageErrorHandlers } from '../utils/imageHelpers';
+import { SEO } from './SEO';
+import { generateRecipeSchema } from '../utils/seo';
 
 interface RecipeDetailModalProps {
   recipe: Recipe;
@@ -38,11 +40,21 @@ const RecipeDetailModal: React.FC<RecipeDetailModalProps> = ({
     recipe.relatedProductIds?.includes(product.id)
   );
 
+  const recipeSchema = React.useMemo(() => generateRecipeSchema(recipe), [recipe]);
+
   const MotionDiv = motion.div as any;
 
   return (
     <AnimatePresence>
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
+        <SEO
+          title={`${recipe.title} - Recipe | Tattva Co.`}
+          description={recipe.description}
+          ogType="article"
+          ogImage={recipe.image}
+          structuredData={recipeSchema}
+          structuredDataId="recipe-schema"
+        />
         <MotionDiv
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

@@ -69,16 +69,20 @@ const Hero: React.FC = () => {
   };
 
   return (
-    <section className="relative overflow-hidden bg-gray-900">
+    <section className="hero-section relative overflow-hidden bg-gray-900 h-[600px]">
       <Slider {...settings}>
-        {slides.map((slide) => (
+        {slides.map((slide, index) => (
           <div key={slide.id}>
             <div className="relative h-[500px] md:h-[600px] lg:h-[650px]">
               {/* Background Image */}
-              <div
-                className="absolute inset-0 bg-cover bg-center"
-                style={{ backgroundImage: `url('${slide.image}')` }}
-              >
+              <div className="absolute inset-0">
+                <img
+                  src={slide.image}
+                  alt={slide.title}
+                  className="w-full h-full object-cover"
+                  fetchPriority={index === 0 ? 'high' : 'auto'}
+                  loading={index === 0 ? 'eager' : 'lazy'}
+                />
                 <div className={`absolute inset-0 bg-gradient-to-r ${slide.gradient}`}></div>
               </div>
 

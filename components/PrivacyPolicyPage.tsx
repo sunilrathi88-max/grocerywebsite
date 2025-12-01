@@ -1,8 +1,13 @@
 import React from 'react';
+import { SEO } from './SEO';
 
 const PrivacyPolicyPage: React.FC = () => {
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <SEO
+        title="Privacy Policy | Tattva Co."
+        description="Privacy Policy for Tattva Co. Learn how we collect, use, and protect your data."
+      />
       <div className="prose max-w-3xl mx-auto">
         <h2 className="text-3xl md:text-4xl font-serif font-bold text-brand-dark mb-8">
           Privacy Policy

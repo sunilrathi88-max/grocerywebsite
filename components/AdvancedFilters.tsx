@@ -37,6 +37,7 @@ const FilterButton: React.FC<{
 }> = ({ isActive, onClick, children }) => (
   <button
     onClick={onClick}
+    aria-pressed={isActive}
     className={`px-5 py-2.5 text-sm font-bold rounded-xl transition-all duration-300 border-2 transform hover:scale-105 hover:shadow-md ${
       isActive
         ? 'bg-gradient-to-r from-brand-primary to-amber-500 text-white border-transparent shadow-lg'
@@ -92,6 +93,8 @@ const AdvancedFilters: React.FC<AdvancedFiltersProps> = ({
       {/* Header */}
       <button
         onClick={() => setIsExpanded(!isExpanded)}
+        aria-expanded={isExpanded}
+        aria-controls="filters-content"
         className="w-full flex items-center justify-between p-5 hover:bg-gray-50 transition-colors duration-200"
       >
         <div className="flex items-center gap-3">
@@ -109,6 +112,7 @@ const AdvancedFilters: React.FC<AdvancedFiltersProps> = ({
 
       {/* Filters Content */}
       <div
+        id="filters-content"
         className={`transition-all duration-500 ease-in-out overflow-hidden ${isExpanded ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}
       >
         <div className="p-5 pt-0 space-y-6">
@@ -261,6 +265,7 @@ const AdvancedFilters: React.FC<AdvancedFiltersProps> = ({
                 max={maxPrice}
                 value={priceRange.max}
                 onChange={(e) => onPriceChange(Number(e.target.value))}
+                aria-label="Filter by maximum price"
                 className="w-full h-3 bg-gradient-to-r from-gray-200 via-gray-200 to-gray-200 rounded-full appearance-none cursor-pointer slider-thumb"
                 style={{
                   background: `linear-gradient(to right, #9b6d3f 0%, #9b6d3f ${(priceRange.max / maxPrice) * 100}%, #e5e7eb ${(priceRange.max / maxPrice) * 100}%, #e5e7eb 100%)`,

@@ -63,7 +63,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({
             onToggleCompare={onToggleCompare}
             isCompared={comparisonIds.has(product.id)}
             onNotifyMe={onNotifyMe}
-            priority={index < 6 ? 'high' : 'auto'}
+            priority={index < 4 ? 'high' : 'auto'}
           />
         </div>
       ))}

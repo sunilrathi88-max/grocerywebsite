@@ -7,7 +7,7 @@ interface PromotionalBannerProps {
 
 const PromotionalBanner: React.FC<PromotionalBannerProps> = ({ onClose }) => {
   return (
-    <div className="bg-brand-dark text-white text-center py-3 px-4 relative text-sm">
+    <div className="bg-brand-dark text-white text-center py-3 px-4 relative text-sm h-12 flex items-center justify-center">
       <span>🎉 Free shipping on all orders over $50! 🎉</span>
       <button
         onClick={onClose}
