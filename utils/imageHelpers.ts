@@ -6,11 +6,11 @@ import React from 'react';
  */
 
 export const PLACEHOLDER_URLS = {
-  product: '/images/fallbacks/product-fallback.svg',
-  thumb: '/images/fallbacks/thumb-fallback.svg',
-  hero: '/images/fallbacks/hero-fallback.svg',
-  blog: '/images/fallbacks/blog-fallback.svg',
-  recipe: '/images/fallbacks/recipe-fallback.svg',
+  product: 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
+  thumb: 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=200&q=80',
+  hero: 'https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=1200&q=80',
+  blog: 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=800&q=80',
+  recipe: 'https://images.unsplash.com/photo-1495521821757-a1efb6729352?auto=format&fit=crop&w=800&q=80',
 };
 
 /**

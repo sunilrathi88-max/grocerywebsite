@@ -1,58 +1,41 @@
 import { supabase } from '../supabaseClient';
 
-// Types for Razorpay
-interface RazorpayOptions {
-  key: string;
-  amount: number;
-  currency: string;
-  name: string;
-  description: string;
-  image?: string;
-  order_id: string;
-  handler: (response: RazorpayResponse) => void;
-  prefill?: {
-    name?: string;
-    email?: string;
-    contact?: string;
-  };
-  theme?: {
-    color?: string;
-  };
-  modal?: {
-    ondismiss?: () => void;
-  };
+// Types for Cashfree
+interface CashfreeOptions {
+  mode: 'sandbox' | 'production';
 }
 
-interface RazorpayResponse {
-  razorpay_payment_id: string;
-  razorpay_order_id: string;
-  razorpay_signature: string;
-}
-
-interface PaymentOrderResponse {
-  id: string;
-  amount: number;
-  currency: string;
+interface CashfreeCheckoutOptions {
+  paymentSessionId: string;
+  returnUrl?: string;
+  redirectTarget?: '_self' | '_blank' | '_top';
 }
 
 declare global {
   interface Window {
-    Razorpay: new (options: RazorpayOptions) => { open: () => void };
+    Cashfree: new (options: CashfreeOptions) => {
+      checkout: (options: CashfreeCheckoutOptions) => Promise<void>;
+    };
   }
+}
+
+interface PaymentOrderResponse {
+  payment_session_id: string;
+  order_id: string;
 }
 
 export const paymentService = {
   /**
-   * Load Razorpay Script
+   * Load Cashfree Script
    */
   loadScript: async (): Promise<boolean> => {
     return new Promise((resolve) => {
-      if (window.Razorpay) {
+      if (window.Cashfree) {
         resolve(true);
         return;
       }
       const script = document.createElement('script');
-      script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+      script.src = 'https://sdk.cashfree.com/js/v3/cashfree.js';
       script.onload = () => resolve(true);
       script.onerror = () => resolve(false);
       document.body.appendChild(script);
@@ -61,13 +44,22 @@ export const paymentService = {
 
   /**
    * Create Order on Server (via Supabase Edge Function)
-   * This calls the server-side Edge Function to create a Razorpay order securely.
+   * This calls the server-side Edge Function to create a Cashfree order securely.
    */
-  createOrder: async (amount: number): Promise<PaymentOrderResponse> => {
+  createOrder: async (
+    amount: number,
+    customer: { id: string; phone: string; name?: string; email?: string }
+  ): Promise<PaymentOrderResponse> => {
     try {
       // Call Edge Function for secure order creation
-      const { data, error } = await supabase.functions.invoke('create-razorpay-order', {
-        body: { amount: Math.round(amount * 100) }, // Amount in paise
+      const { data, error } = await supabase.functions.invoke('create-cashfree-order', {
+        body: {
+          order_amount: amount,
+          customer_id: customer.id,
+          customer_phone: customer.phone,
+          customer_name: customer.name,
+          customer_email: customer.email,
+        },
       });
 
       if (error) {
@@ -76,13 +68,13 @@ export const paymentService = {
         // Fallback to mock for development if Edge Function not deployed
         if (
           error.message?.includes('FunctionsRelayError') ||
-          error.message?.includes('not found')
+          error.message?.includes('not found') ||
+          error.message?.includes('Failed to fetch')
         ) {
           console.warn('⚠️ Edge Function not found. Using MOCK order creation for development.');
           return {
-            id: `order_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-            amount: Math.round(amount * 100),
-            currency: 'INR',
+            payment_session_id: `session_${Date.now()}_mock`,
+            order_id: `order_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
           };
         }
         throw error;
@@ -96,25 +88,14 @@ export const paymentService = {
   },
 
   /**
-   * Verify Payment Signature (server-side via Edge Function)
-   * This calls the server-side Edge Function for secure signature verification.
+   * Verify Payment (server-side via Edge Function)
+   * This calls the server-side Edge Function for secure status verification.
    */
-  verifyPayment: async (
-    orderId: string,
-    paymentId: string,
-    signature: string,
-    amount?: number
-  ): Promise<boolean> => {
+  verifyPayment: async (orderId: string): Promise<boolean> => {
     try {
-      // Call Edge Function for secure signature verification
-      const { data, error } = await supabase.functions.invoke('verify-razorpay-payment', {
-        body: {
-          razorpay_order_id: orderId,
-          razorpay_payment_id: paymentId,
-          razorpay_signature: signature,
-          order_id: orderId, // For database logging
-          amount: amount || 0,
-        },
+      // Call Edge Function for secure verification
+      const { data, error } = await supabase.functions.invoke('verify-cashfree-payment', {
+        body: { order_id: orderId },
       });
 
       if (error) {
@@ -125,14 +106,12 @@ export const paymentService = {
           error.message?.includes('not found')
         ) {
           console.warn('⚠️ Edge Function not found. Using MOCK verification for development.');
-          // eslint-disable-next-line no-console
-          console.log('Payment Details:', { orderId, paymentId, signature });
           return true;
         }
         throw error;
       }
 
-      return data?.verified === true;
+      return data?.status === 'SUCCESS';
     } catch (error) {
       console.error('Failed to verify payment:', error);
       throw new Error('Payment verification failed. Please contact support.');
@@ -145,22 +124,20 @@ export const paymentService = {
   savePaymentTransaction: async (
     orderId: string,
     paymentDetails: {
-      razorpay_payment_id: string;
-      razorpay_order_id: string;
-      razorpay_signature: string;
+      payment_id?: string; // Cashfree doesn't always give a payment ID immediately on frontend
+      order_id: string;
       amount: number;
-      status: 'success' | 'failed';
+      status: 'success' | 'failed' | 'pending';
     }
   ) => {
     try {
       const { data, error } = await supabase.from('payment_transactions').insert({
-        order_id: orderId,
-        payment_id: paymentDetails.razorpay_payment_id,
-        payment_order_id: paymentDetails.razorpay_order_id,
-        payment_signature: paymentDetails.razorpay_signature,
+        order_id: orderId, // Our internal order ID (if different) or Cashfree order ID
+        payment_id: paymentDetails.payment_id || 'pending',
+        payment_order_id: paymentDetails.order_id,
         amount: paymentDetails.amount,
         status: paymentDetails.status,
-        gateway: 'razorpay',
+        gateway: 'cashfree',
         created_at: new Date().toISOString(),
       });
 
@@ -182,103 +159,49 @@ export const paymentService = {
    */
   initializePayment: async (
     amount: number,
-    user: { name: string; email: string; phone?: string },
-    onSuccess: (response: RazorpayResponse) => void,
-    onError: (error: string) => void,
-    onDismiss?: () => void
+    user: { id: string; name: string; email: string; phone: string },
+    onSuccess: (orderId: string) => void,
+    onError: (error: string) => void
   ) => {
     try {
-      // 1. Load Razorpay SDK
+      // 1. Load Cashfree SDK
       const scriptLoaded = await paymentService.loadScript();
       if (!scriptLoaded) {
-        onError('Razorpay SDK failed to load. Please check your internet connection.');
+        onError('Cashfree SDK failed to load. Please check your internet connection.');
         return;
       }
 
       // 2. Create Order on server
-      const orderData = await paymentService.createOrder(amount);
+      const orderData = await paymentService.createOrder(amount, {
+        id: user.id || 'guest_' + Date.now(),
+        phone: user.phone,
+        name: user.name,
+        email: user.email,
+      });
 
-      // 3. Configure Razorpay options
-      const razorpayKey = import.meta.env.VITE_RAZORPAY_KEY_ID;
-      if (!razorpayKey || razorpayKey === 'rzp_test_YOUR_KEY_HERE') {
-        console.warn('Razorpay Key not configured. Set VITE_RAZORPAY_KEY_ID in .env file.');
-      }
+      // 3. Initialize Cashfree
+      const isProduction = import.meta.env.PROD; // Or use a specific env var
+      const cashfree = new window.Cashfree({
+        mode: isProduction ? 'production' : 'sandbox',
+      });
 
-      const options: RazorpayOptions = {
-        key: razorpayKey || 'rzp_test_demo_key',
-        amount: orderData.amount,
-        currency: orderData.currency,
-        name: 'TattvaCo - Premium Indian Groceries',
-        description: 'Grocery Order Payment',
-        image: '/logo.png',
-        order_id: orderData.id,
-        handler: async (response) => {
-          // Payment successful - verify and process
-          try {
-            const isVerified = await paymentService.verifyPayment(
-              response.razorpay_order_id,
-              response.razorpay_payment_id,
-              response.razorpay_signature
-            );
+      // 4. Checkout
+      // Note: Cashfree v3 redirects or opens a modal.
+      // For SPA, we might want to handle the return URL or use a popup if supported/configured.
+      // Here we assume standard checkout which might redirect.
+      await cashfree.checkout({
+        paymentSessionId: orderData.payment_session_id,
+        redirectTarget: '_self', // or _blank
+        returnUrl: window.location.origin + '/#/checkout?order_id=' + orderData.order_id, // Example return URL
+      });
 
-            if (isVerified) {
-              onSuccess(response);
-            } else {
-              onError('Payment verification failed. Please contact support.');
-            }
-          } catch (error) {
-            console.error('Payment verification error:', error);
-            onError('Payment verification failed. Please try again.');
-          }
-        },
-        prefill: {
-          name: user.name,
-          email: user.email,
-          contact: user.phone,
-        },
-        theme: {
-          color: '#10B981', // Brand primary green
-        },
-        modal: {
-          ondismiss: () => {
-            if (onDismiss) {
-              onDismiss();
-            }
-          },
-        },
-      };
+      // Note: Since Cashfree redirects, onSuccess might not be called directly here unless we use a popup/iframe mode that returns control.
+      // If redirecting, the verification happens on the return URL page (CheckoutPage).
+      // For now, we'll assume the caller handles the redirect behavior or we just let it redirect.
 
-      // 4. Open Razorpay Checkout
-      const paymentObject = new window.Razorpay(options);
-      paymentObject.open();
     } catch (error) {
       console.error('Payment initialization error:', error);
       onError('Failed to initialize payment. Please try again.');
     }
-  },
-
-  /**
-   * Initiate Refund (must be called from server in production)
-   */
-  initiateRefund: async (
-    paymentId: string,
-    amount: number,
-    reason: string
-  ): Promise<{ success: boolean; refund_id?: string }> => {
-    // In production, call your backend:
-    // const { data } = await supabase.functions.invoke('create-razorpay-refund', {
-    //   body: { payment_id: paymentId, amount: Math.round(amount * 100), reason }
-    // });
-    // return data;
-
-    //DEMO/MOCK implementation
-    console.warn('Using MOCK Refund Creation. In production, process refunds server-side.');
-    // eslint-disable-next-line no-console
-    console.log('Refund request:', { paymentId, amount, reason });
-
-    return {
-      success: true,
-      refund_id: `rfnd_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-    };
   },
 };

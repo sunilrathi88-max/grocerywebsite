@@ -61,7 +61,7 @@ const UserProfile = React.lazy(() => import('./components/UserProfile'));
 const AdminDashboard = React.lazy(() => import('./components/AdminDashboard'));
 const PrivacyPolicyPage = React.lazy(() => import('./components/PrivacyPolicyPage'));
 const RefundPolicyPage = React.lazy(() => import('./components/RefundPolicyPage'));
-const TermsOfServicePage = React.lazy(() => import('./components/TermsOfServicePage'));
+import TermsOfServicePage from './components/TermsOfServicePage';
 const AboutPage = React.lazy(() => import('./components/AboutPage'));
 const FAQsPage = React.lazy(() => import('./components/FAQsPage'));
 const ContactPage = React.lazy(() => import('./components/ContactPage'));
@@ -203,6 +203,13 @@ const App: React.FC = () => {
     handleHashChange(); // Initial load
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
+
+  // Automatically enable "On Sale" filter when on Offers page
+  useEffect(() => {
+    if (currentView === 'offers') {
+      setShowOnSale(true);
+    }
+  }, [currentView]);
 
   // Calculate Max Price from Products
   const maxPrice = useMemo(() => {
@@ -615,8 +622,8 @@ const App: React.FC = () => {
             addToast={addToast}
             discount={0}
             promoCode=""
-            onApplyPromoCode={() => {}}
-            onRemovePromoCode={() => {}}
+            onApplyPromoCode={() => { }}
+            onRemovePromoCode={() => { }}
             subtotal={0}
             shippingCost={0}
           />
@@ -787,12 +794,111 @@ const App: React.FC = () => {
             />
           </React.Suspense>
         );
+      case 'offers':
+        return (
+          <>
+            <div className="bg-brand-secondary/20 py-12 mb-8">
+              <div className="container mx-auto px-4 text-center">
+                <h1 className="text-4xl md:text-5xl font-serif font-bold text-brand-dark mb-4">
+                  Special Offers
+                </h1>
+                <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                  Exclusive deals on our premium spices and ingredients. Limited time only.
+                </p>
+              </div>
+            </div>
+            <div
+              id="products-section"
+              className="grid grid-cols-1 md:grid-cols-[16rem_1fr] gap-8 container mx-auto px-4 py-8"
+            >
+              <aside className="sticky top-24 h-fit">
+                <React.Suspense
+                  fallback={
+                    <div
+                      className="bg-gray-100 rounded-xl animate-pulse"
+                      style={{ height: '450px' }}
+                    />
+                  }
+                >
+                  <AdvancedFilters
+                    showOnSale={showOnSale}
+                    onToggleOnSale={() => setShowOnSale(!showOnSale)}
+                    showInStock={showInStock}
+                    onToggleInStock={() => setShowInStock(!showInStock)}
+                    availableTags={availableTags}
+                    selectedTags={selectedTags}
+                    onToggleTag={handleToggleTag}
+                    priceRange={priceRange}
+                    maxPrice={maxPrice}
+                    onPriceChange={(max) => setPriceRange((prev) => ({ ...prev, max }))}
+                    origins={availableOrigins}
+                    selectedOrigins={selectedOrigins}
+                    onToggleOrigin={handleToggleOrigin}
+                    heatLevels={availableHeatLevels}
+                    selectedHeatLevels={selectedHeatLevels}
+                    onToggleHeatLevel={handleToggleHeatLevel}
+                    cuisines={availableCuisines}
+                    selectedCuisines={selectedCuisines}
+                    onToggleCuisine={handleToggleCuisine}
+                    sizes={availableSizes}
+                    selectedSizes={selectedSizes}
+                    onToggleSize={handleToggleSize}
+                    grinds={availableGrinds}
+                    selectedGrinds={selectedGrinds}
+                    onToggleGrind={handleToggleGrind}
+                  />
+                </React.Suspense>
+              </aside>
+
+              <div className="min-w-0">
+                <div className="flex justify-between items-center mb-6">
+                  <p className="text-gray-600">Showing {finalFilteredProducts.length} results</p>
+                  <SortDropdown
+                    currentSort={sortOrder}
+                    onSortChange={(val) => setSortOrder(val as typeof sortOrder)}
+                  />
+                </div>
+
+                <ProductGrid
+                  products={finalFilteredProducts}
+                  onAddToCart={handleAddToCart}
+                  onToggleWishlist={handleToggleWishlist}
+                  wishlistedIds={wishlistedIds}
+                  onSelectProduct={setSelectedProduct}
+                  onToggleCompare={handleToggleCompare}
+                  comparisonIds={comparisonIds}
+                  isLoading={productsLoading}
+                  onNotifyMe={handleNotifyMe}
+                />
+              </div>
+            </div>
+
+            <div className="w-full mt-16">
+              <React.Suspense fallback={null}>
+                <Testimonials testimonials={MOCK_TESTIMONIALS} />
+              </React.Suspense>
+              <section
+                data-testid="quiz-section"
+                className="bg-brand-secondary/30 py-16 mt-16 rounded-xl"
+              >
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                  <React.Suspense fallback={null}>
+                    <QuizModule addToast={addToast} />
+                  </React.Suspense>
+                </div>
+              </section>
+            </div>
+          </>
+        );
       case 'home':
       default:
         return (
           <>
             <Hero />
-            <div className="grid grid-cols-1 md:grid-cols-[16rem_1fr] gap-8 container mx-auto px-4 py-8">
+            <div
+              id="products-section"
+              className="grid grid-cols-1 md:grid-cols-[16rem_1fr] gap-8 container mx-auto px-4 py-8"
+            >
               <aside className="sticky top-24 h-fit">
                 <React.Suspense
                   fallback={

@@ -348,6 +348,14 @@ const Header: React.FC<HeaderProps> = ({
                     )}
                   </div>
                 )}
+              {isAutocompleteOpen &&
+                searchQuery &&
+                autocompleteResults.products.length === 0 &&
+                autocompleteResults.categories.length === 0 && (
+                  <div className="absolute top-full mt-2 w-80 bg-white rounded-lg shadow-2xl border border-gray-200 z-50 animate-fade-in-up overflow-hidden p-4 text-center">
+                    <p className="text-gray-500 text-sm">No results found for &quot;{searchQuery}&quot;</p>
+                  </div>
+                )}
             </div>
             {isLoggedIn && (
               <>
@@ -397,9 +405,9 @@ const Header: React.FC<HeaderProps> = ({
                 animate={
                   cartBounce
                     ? {
-                        scale: [1, 1.2, 0.9, 1.1, 1],
-                        rotate: [0, -10, 10, -5, 0],
-                      }
+                      scale: [1, 1.2, 0.9, 1.1, 1],
+                      rotate: [0, -10, 10, -5, 0],
+                    }
                     : {}
                 }
                 transition={{ duration: 0.6, ease: 'easeInOut' }}
