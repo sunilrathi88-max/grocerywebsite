@@ -397,9 +397,9 @@ const Header: React.FC<HeaderProps> = ({
                 animate={
                   cartBounce
                     ? {
-                      scale: [1, 1.2, 0.9, 1.1, 1],
-                      rotate: [0, -10, 10, -5, 0],
-                    }
+                        scale: [1, 1.2, 0.9, 1.1, 1],
+                        rotate: [0, -10, 10, -5, 0],
+                      }
                     : {}
                 }
                 transition={{ duration: 0.6, ease: 'easeInOut' }}

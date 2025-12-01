@@ -21,8 +21,6 @@ describe('Quiz and Promo Code System', () => {
     cy.contains('Test Your Spice Knowledge', { timeout: 30000 }).should('be.visible');
   });
 
-
-
   it('should display quiz with first question', () => {
     cy.get('[data-testid="quiz-question-container"]').should('be.visible');
     cy.contains('Which of our spices gives biryani its beautiful golden hue?').should('be.visible');
@@ -65,7 +63,7 @@ describe('Quiz and Promo Code System', () => {
 
         // Verify next question appears by checking for the next answer buttons
         // We check for the existence of answer buttons for the next question index
-        // Note: The answer buttons for the next question might have different indices, 
+        // Note: The answer buttons for the next question might have different indices,
         // but checking for the container or just waiting for the animation is usually enough.
         // Better: check that the previous feedback is gone or the question text changed.
         // Since we have data-testids for answers now, we can wait for the next question's answers.
