@@ -13,7 +13,7 @@ import { APIErrorDisplay } from './APIErrorDisplay';
 interface CheckoutPageProps {
   cartItems: CartItem[];
   user: User | null;
-  onPlaceOrder: (order: Omit<Order, 'id' | 'date' | 'status'>) => Order;
+  onPlaceOrder: (order: Order) => void;
   addToast: (message: string, type: ToastMessage['type']) => void;
   discount: number;
   promoCode: string;
@@ -91,7 +91,7 @@ const OrderConfirmation: React.FC<{ order: Order }> = ({ order }) => {
         <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4">
           <a
             href="#/"
-            className="bg-brand-primary text-white font-bold py-3 px-6 rounded-full shadow-lg hover:bg-opacity-90 transform hover:scale-105 transition-all duration-300"
+            className="bg-brand-primary text-brand-dark font-bold py-3 px-6 rounded-full shadow-lg hover:bg-opacity-90 transform hover:scale-105 transition-all duration-300"
           >
             Continue Shopping
           </a>
@@ -169,7 +169,7 @@ const DeliverySlotPicker: React.FC<{
               key={date.value}
               type="button"
               onClick={() => onSelectDate(date.value)}
-              className={`px-4 py-2 text-sm font-bold rounded-full transition-all duration-300 border text-center ${selectedDate === date.value ? 'bg-brand-primary text-white border-brand-primary shadow-md' : 'bg-white text-brand-dark hover:bg-brand-secondary/50 border-gray-300'}`}
+              className={`px-4 py-2 text-sm font-bold rounded-full transition-all duration-300 border text-center ${selectedDate === date.value ? 'bg-brand-primary text-brand-dark border-brand-primary shadow-md' : 'bg-white text-brand-dark hover:bg-brand-secondary/50 border-gray-300'}`}
             >
               <span className="block">{date.label}</span>
               <span className="block text-lg">{date.day}</span>
@@ -187,7 +187,7 @@ const DeliverySlotPicker: React.FC<{
                 type="button"
                 onClick={() => onSelectTime(slot.time)}
                 disabled={!slot.available}
-                className={`px-4 py-2 text-sm font-bold rounded-lg transition-all duration-300 border text-center ${selectedTime === slot.time ? 'bg-brand-primary text-white border-brand-primary shadow-md' : 'bg-white text-brand-dark hover:bg-brand-secondary/50 border-gray-300'} ${!slot.available ? 'bg-gray-100 text-gray-400 cursor-not-allowed line-through' : ''}`}
+                className={`px-4 py-2 text-sm font-bold rounded-lg transition-all duration-300 border text-center ${selectedTime === slot.time ? 'bg-brand-primary text-brand-dark border-brand-primary shadow-md' : 'bg-white text-brand-dark hover:bg-brand-secondary/50 border-gray-300'} ${!slot.available ? 'bg-gray-100 text-gray-400 cursor-not-allowed line-through' : ''}`}
               >
                 {slot.time}
               </button>
@@ -450,6 +450,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
         // Try API first
         const confirmedOrder = await orderAPI.create(orderData);
         setOrderConfirmation(confirmedOrder.data);
+        onPlaceOrder(confirmedOrder.data);
         addToast('Order placed successfully!', 'success');
       } catch (_error) {
         console.error('Order creation failed:', _error);
@@ -595,7 +596,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
                   key={method}
                   type="button"
                   onClick={() => setPaymentMethod(method)}
-                  className={`px-4 py-3 font-bold rounded-lg transition-all duration-300 border-2 text-center ${paymentMethod === method ? 'bg-brand-primary text-white border-brand-primary shadow-lg' : 'bg-white text-brand-dark hover:bg-brand-secondary/50 border-gray-300'}`}
+                  className={`px-4 py-3 font-bold rounded-lg transition-all duration-300 border-2 text-center ${paymentMethod === method ? 'bg-brand-primary text-brand-dark border-brand-primary shadow-lg' : 'bg-white text-brand-dark hover:bg-brand-secondary/50 border-gray-300'}`}
                 >
                   {method}
                 </button>

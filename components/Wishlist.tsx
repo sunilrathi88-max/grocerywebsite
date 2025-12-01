@@ -27,7 +27,7 @@ const Wishlist: React.FC<WishlistProps> = ({ items, onToggleWishlist, onAddToCar
         <p className="mt-2 text-gray-500">Explore our products and save your favorites!</p>
         <button
           onClick={onClose}
-          className="mt-6 bg-brand-primary text-white font-bold py-3 px-6 rounded-full shadow-lg hover:bg-opacity-90 transform hover:scale-105 transition-all duration-300"
+          className="mt-6 bg-brand-primary text-brand-dark font-bold py-3 px-6 rounded-full shadow-lg hover:bg-opacity-90 transform hover:scale-105 transition-all duration-300"
         >
           Discover Products
         </button>
@@ -65,7 +65,7 @@ const Wishlist: React.FC<WishlistProps> = ({ items, onToggleWishlist, onAddToCar
               <button
                 onClick={() => onAddToCart(item, item.variants[0])}
                 disabled={item.variants.every((v) => v.stock === 0)}
-                className="flex items-center gap-2 bg-brand-primary text-white font-bold py-2 px-4 rounded-full shadow-md hover:bg-brand-primary/90 transform hover:scale-105 transition-all duration-300 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                className="flex items-center gap-2 bg-brand-primary text-brand-dark font-bold py-2 px-4 rounded-full shadow-md hover:bg-brand-primary/90 transform hover:scale-105 transition-all duration-300 disabled:bg-gray-400 disabled:cursor-not-allowed"
                 aria-label={`Add ${item.name} to cart`}
               >
                 <PlusIcon />

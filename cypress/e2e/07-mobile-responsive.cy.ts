@@ -136,7 +136,7 @@ describe('Mobile Responsiveness', () => {
         cy.get('.product-card')
           .first()
           .within(() => {
-            cy.contains('button', /add to cart/i).click({ force: true });
+            cy.contains('button', 'Add').click({ force: true });
           });
         cy.wait(500);
 
@@ -157,7 +157,7 @@ describe('Mobile Responsiveness', () => {
         cy.get('.product-card')
           .first()
           .within(() => {
-            cy.contains('button', /add to cart/i).click({ force: true });
+            cy.contains('button', 'Add').click({ force: true });
           });
         cy.wait(500);
 
@@ -299,7 +299,8 @@ describe('Mobile Responsiveness', () => {
     });
 
     it('should lazy load images on mobile', () => {
-      cy.get('.product-card img').first().should('have.attr', 'loading', 'lazy');
+      // First 4 images are eager loaded, check 5th
+      cy.get('.product-card img').eq(4).should('have.attr', 'loading', 'lazy');
     });
   });
 });

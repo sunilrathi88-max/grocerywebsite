@@ -1,6 +1,8 @@
 import React from 'react';
 import { MailIcon } from './icons/MailIcon';
 import { PhoneIcon } from './icons/PhoneIcon';
+import { SEO } from './SEO';
+import { pageSEO } from '../utils/seo';
 
 const ContactPage: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
@@ -11,6 +13,7 @@ const ContactPage: React.FC = () => {
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <SEO {...pageSEO.contact()} />
       <div className="text-center mb-12">
         <h2 className="text-3xl md:text-4xl font-serif font-bold text-brand-dark">Get in Touch</h2>
         <p className="mt-4 text-lg text-gray-600">

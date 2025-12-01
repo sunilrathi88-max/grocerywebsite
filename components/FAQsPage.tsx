@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { ChevronDownIcon } from './icons/ChevronDownIcon';
+import { SEO } from './SEO';
+import { generateFAQSchema } from '../utils/seo';
 
 const FAQ_DATA = [
   {
@@ -62,8 +64,16 @@ const FAQsPage: React.FC = () => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
+  const faqSchema = React.useMemo(() => generateFAQSchema(FAQ_DATA), []);
+
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <SEO
+        title="Frequently Asked Questions | Tattva Co."
+        description="Find answers to common questions about our products, shipping, returns, and more."
+        structuredData={faqSchema}
+        structuredDataId="faq-schema"
+      />
       <div className="max-w-3xl mx-auto">
         <h2 className="text-3xl md:text-4xl font-serif font-bold text-center text-brand-dark mb-12">
           Frequently Asked Questions

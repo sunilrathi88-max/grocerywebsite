@@ -72,6 +72,7 @@ export const paymentService = {
 
       if (error) {
         console.error('Order creation error:', error);
+
         // Fallback to mock for development if Edge Function not deployed
         if (
           error.message?.includes('FunctionsRelayError') ||

@@ -64,6 +64,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
   const navLinks = [
     { name: 'Home', href: '#/' },
     { name: 'Products', href: '#/' },
+    { name: 'Offers', href: '#/offers' },
     { name: 'Recipes', href: '#/recipes' },
     { name: 'Blog', href: '#/blog' },
     { name: 'Contact Us', href: '#/contact' },
@@ -203,7 +204,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
                     initial: 'hidden',
                     animate: 'visible',
                     className:
-                      'w-full bg-brand-primary text-white font-bold py-3 rounded-full shadow-lg hover:bg-opacity-90 transition-all',
+                      'w-full bg-brand-primary text-brand-dark font-bold py-3 rounded-full shadow-lg hover:bg-opacity-90 transition-all',
                     onClick: onLoginClick,
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   } as any)}

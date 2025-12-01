@@ -35,3 +35,12 @@ coverage/
 .env.local
 .env.production
 .vercel
+
+# Debug and temporary files
+*.log
+*.txt
+cypress/e2e/debug-*.cy.ts
+cypress/e2e/trivial.cy.ts
+cypress/e2e/diagnostic.cy.ts
+cypress/e2e/test-selector.cy.ts
+cypress_report.json

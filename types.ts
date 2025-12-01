@@ -66,7 +66,7 @@ export interface ToastMessage {
 
 export interface Address {
   id: number;
-  type: 'Shipping' | 'Billing';
+  type: 'Shipping' | 'Billing' | 'Home' | 'Work' | 'Other';
   street: string;
   city: string;
   state: string;

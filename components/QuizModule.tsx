@@ -92,6 +92,7 @@ const QuizModule: React.FC<QuizModuleProps> = ({ addToast }) => {
   };
 
   const handleAnswer = (answerIndex: number) => {
+    console.log('handleAnswer called', answerIndex);
     if (isAnswered) return;
 
     setIsAnswered(true);
@@ -141,11 +142,10 @@ const QuizModule: React.FC<QuizModuleProps> = ({ addToast }) => {
       >
         {/* Trophy or Star Icon */}
         <div
-          className={`w-20 h-20 mx-auto mb-4 rounded-full flex items-center justify-center ${
-            result.score === questions.length
-              ? 'bg-gradient-to-br from-yellow-400 to-yellow-600 animate-pulse-glow'
-              : 'bg-gradient-to-br from-brand-primary to-amber-500'
-          }`}
+          className={`w-20 h-20 mx-auto mb-4 rounded-full flex items-center justify-center ${result.score === questions.length
+            ? 'bg-gradient-to-br from-yellow-400 to-yellow-600 animate-pulse-glow'
+            : 'bg-gradient-to-br from-brand-primary to-amber-500'
+            }`}
         >
           <SparklesIcon className="w-10 h-10 text-white" />
         </div>
@@ -263,7 +263,7 @@ const QuizModule: React.FC<QuizModuleProps> = ({ addToast }) => {
   const { question, options, correct, feedback } = questions[activeQuestion];
 
   return (
-    <div className="bg-white p-8 rounded-lg shadow-lg">
+    <div className="bg-white p-8 rounded-lg shadow-lg" data-testid="quiz-question-container">
       <div className="flex items-center gap-3 mb-6">
         <LightbulbIcon className="h-8 w-8 text-brand-primary" />
         <h3 className="text-2xl font-serif font-bold text-brand-dark">
@@ -282,6 +282,7 @@ const QuizModule: React.FC<QuizModuleProps> = ({ addToast }) => {
           return (
             <li key={option}>
               <button
+                data-testid={`quiz-answer-${activeQuestion}-${index}`}
                 onClick={() => handleAnswer(index)}
                 disabled={isAnswered}
                 className={`w-full text-left p-4 rounded-lg border-2 transition-all duration-300 flex items-center justify-between ${buttonClass} ${isAnswered ? 'cursor-default' : 'cursor-pointer'}`}
@@ -296,18 +297,20 @@ const QuizModule: React.FC<QuizModuleProps> = ({ addToast }) => {
       </ul>
       {isAnswered && (
         <motion.div
+          data-testid="quiz-feedback"
           {...({
             initial: { opacity: 0, y: 10 },
             animate: { opacity: 1, y: 0 },
-            transition: { delay: 0.2 },
+            transition: { duration: 0 },
             className: 'mt-6 p-4 bg-brand-accent rounded-lg',
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
           } as any)}
         >
           <p className="font-semibold text-brand-dark">{feedback}</p>
           <button
+            data-testid="quiz-next-btn"
             onClick={onClickNext}
-            className="mt-4 bg-brand-primary text-white font-bold py-2 px-6 rounded-full shadow-lg hover:bg-opacity-90 transform hover:scale-105 transition-all duration-300"
+            className="mt-4 bg-brand-primary text-brand-dark font-bold py-2 px-6 rounded-full shadow-lg hover:bg-opacity-90 transform hover:scale-105 transition-all duration-300"
           >
             {activeQuestion === questions.length - 1 ? 'Finish Quiz' : 'Next Question'}
           </button>

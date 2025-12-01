@@ -1,8 +1,13 @@
 import React from 'react';
+import { SEO } from './SEO';
 
 const TermsOfServicePage: React.FC = () => {
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <SEO
+        title="Terms of Service | Tattva Co."
+        description="Terms of Service for Tattva Co. Read our agreement, conditions of sale, and user responsibilities."
+      />
       <div className="prose max-w-3xl mx-auto">
         <h2 className="text-3xl md:text-4xl font-serif font-bold text-brand-dark mb-8">
           Terms of Service

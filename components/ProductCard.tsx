@@ -230,7 +230,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
               {formatPrice(displayPrice)}
             </span>
             {onSale && (
-              <span className="text-lg font-sans text-gray-400 line-through">
+              <span className="text-lg font-sans text-gray-500 line-through">
                 {formatPrice(defaultVariant.price)}
               </span>
             )}
@@ -245,7 +245,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
                   {Array.from({ length: 5 }).map((_, index) => (
                     <StarIcon
                       key={index}
-                      className={`w-5 h-5 transition-all duration-300 ${index < roundedRating ? 'text-yellow-400 drop-shadow-sm' : 'text-gray-300'}`}
+                      className={`w-5 h-5 transition-all duration-300 ${index < roundedRating ? 'text-yellow-400 drop-shadow-sm' : 'text-gray-400'}`}
                     />
                   ))}
                 </div>
@@ -254,7 +254,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
                 </span>
               </div>
             ) : (
-              <span className="text-sm text-gray-400 italic">No reviews yet</span>
+              <span className="text-sm text-gray-500 italic">No reviews yet</span>
             )}
           </div>
         </div>

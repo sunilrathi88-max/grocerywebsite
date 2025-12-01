@@ -98,7 +98,7 @@ const Cart: React.FC<CartProps> = ({
   return (
     <div className="h-full flex flex-col">
       {items.length === 0 ? (
-        <div className="flex-1 flex flex-col items-center justify-center text-gray-500">
+        <div className="flex-1 flex flex-col items-center justify-center text-gray-500" data-testid="cart-empty">
           <ShoppingCartIcon className="h-16 w-16 mb-4 opacity-20" />
           <p className="text-lg font-medium">Your cart is empty</p>
           <button onClick={onClose} className="mt-4 text-brand-primary hover:underline">
@@ -123,6 +123,7 @@ const Cart: React.FC<CartProps> = ({
                     exit={{ opacity: 0, x: 20, height: 0 }}
                     transition={{ duration: 0.3 }}
                     layout
+                    data-testid="cart-item"
                   >
                     <div className="flex items-center gap-4">
                       <OptimizedImage
@@ -258,12 +259,12 @@ const Cart: React.FC<CartProps> = ({
           <a
             href={canCheckout ? '#/checkout' : undefined}
             onClick={canCheckout ? onClose : (e) => e.preventDefault()}
-            className={`mt-4 block w-full text-center bg-brand-primary text-white font-bold py-3 rounded-full shadow-lg transition-all duration-300 ${
-              !canCheckout || !!loadingState.type
-                ? 'bg-gray-400 cursor-not-allowed'
-                : 'hover:bg-opacity-90 transform hover:scale-105'
-            }`}
+            className={`mt-4 block w-full text-center bg-brand-primary text-brand-dark font-bold py-3 rounded-full shadow-lg transition-all duration-300 ${!canCheckout || !!loadingState.type
+              ? 'bg-gray-400 cursor-not-allowed'
+              : 'hover:bg-opacity-90 transform hover:scale-105'
+              }`}
             aria-disabled={!canCheckout || !!loadingState.type}
+            data-testid="checkout-btn"
           >
             Proceed to Checkout
           </a>

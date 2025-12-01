@@ -37,16 +37,25 @@ Cypress.Commands.add('waitForSocialProofNotification', () => {
 Cypress.Commands.add('addProductToCart', (productName?: string) => {
   if (productName) {
     cy.contains('.product-card', productName).within(() => {
-      cy.get('button').contains('Add to Cart').click();
+      // Find button with text exactly "Add" (not "Adding..." or "Added")
+      cy.contains('button', /^Add$/).click({ force: true });
+      // Wait for button state to change to "Adding..." then "Added"
+      cy.contains('button', 'Adding...', { timeout: 2000 }).should('exist');
+      cy.contains('button', 'Added', { timeout: 3000 }).should('exist');
     });
   } else {
     cy.get('.product-card')
       .first()
       .within(() => {
-        cy.get('button').contains('Add to Cart').click();
+        // Find button with text exactly "Add" (not "Adding..." or "Added")
+        cy.contains('button', /^Add$/).click({ force: true });
+        // Wait for button state to change to "Adding..." then "Added"
+        cy.contains('button', 'Adding...', { timeout: 2000 }).should('exist');
+        cy.contains('button', 'Added', { timeout: 3000 }).should('exist');
       });
   }
-  cy.contains('Added to cart').should('be.visible');
+  // Optional: check toast if needed, but button state is enough for action verification
+  // cy.contains(/Added/i).should('be.visible');
 });
 
 // Custom command for navigating to page
@@ -99,4 +108,4 @@ declare global {
   }
 }
 
-export {};
+export { };

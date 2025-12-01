@@ -167,7 +167,7 @@ const ReturnRequestModal: React.FC<ReturnRequestModalProps> = ({
                           <div
                             className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm ${
                               isActive
-                                ? 'bg-brand-primary text-white'
+                                ? 'bg-brand-primary text-brand-dark'
                                 : isCompleted
                                   ? 'bg-green-500 text-white'
                                   : 'bg-gray-300 text-gray-600'
@@ -452,7 +452,7 @@ const ReturnRequestModal: React.FC<ReturnRequestModalProps> = ({
                     (currentStep === 'reason' && !canProceedToReview) ||
                     isSubmitting
                   }
-                  className="px-8 py-2 bg-brand-primary text-white rounded-lg hover:bg-opacity-90 transition-all font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-8 py-2 bg-brand-primary text-brand-dark rounded-lg hover:bg-opacity-90 transition-all font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {currentStep === 'review'
                     ? isSubmitting

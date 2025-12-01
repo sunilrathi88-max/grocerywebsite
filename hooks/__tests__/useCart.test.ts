@@ -38,8 +38,36 @@ describe('useCart', () => {
     name: 'Black Pepper',
   };
 
+  // Mock localStorage
+  const localStorageMock = (() => {
+    let store: Record<string, string> = {};
+    return {
+      getItem: (key: string) => store[key] || null,
+      setItem: (key: string, value: string) => {
+        store[key] = value;
+      },
+      removeItem: (key: string) => {
+        delete store[key];
+      },
+      clear: () => {
+        store = {};
+      },
+    };
+  })();
+
   beforeEach(() => {
-    // Clear any previous state
+    // Mock localStorage
+    Object.defineProperty(window, 'localStorage', {
+      value: localStorageMock,
+      writable: true,
+    });
+    // Clear localStorage before each test
+    localStorageMock.clear();
+  });
+
+  afterEach(() => {
+    // Clean up localStorage after each test
+    localStorageMock.clear();
   });
 
   describe('Initial State', () => {

@@ -1,12 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StarIcon } from './icons/StarIcon';
 import { Testimonial } from '../types';
+import { generateTestimonialSchema, addStructuredData, removeStructuredData } from '../utils/seo';
 
 interface TestimonialsProps {
   testimonials: Testimonial[];
 }
 
 const Testimonials: React.FC<TestimonialsProps> = ({ testimonials }) => {
+  useEffect(() => {
+    const schema = generateTestimonialSchema(testimonials);
+    addStructuredData(schema, 'testimonial-schema');
+
+    return () => {
+      removeStructuredData('testimonial-schema');
+    };
+  }, [testimonials]);
+
   return (
     <section className="bg-brand-accent py-16">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">

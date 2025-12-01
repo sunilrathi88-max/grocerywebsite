@@ -86,7 +86,7 @@ const OrderHistory: React.FC<OrderHistoryProps> = ({ user, orders, onSelectOrder
                   onClick={() => setSelectedFilter(filter)}
                   className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
                     selectedFilter === filter
-                      ? 'bg-brand-primary text-white shadow-md'
+                      ? 'bg-brand-primary text-brand-dark shadow-md'
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                   }`}
                 >
@@ -137,7 +137,7 @@ const OrderHistory: React.FC<OrderHistoryProps> = ({ user, orders, onSelectOrder
             {!searchQuery && (
               <a
                 href="#/"
-                className="inline-block bg-brand-primary text-white px-6 py-3 rounded-lg hover:bg-opacity-90 transition-all"
+                className="inline-block bg-brand-primary text-brand-dark px-6 py-3 rounded-lg hover:bg-opacity-90 transition-all"
               >
                 Start Shopping
               </a>
@@ -219,7 +219,7 @@ const OrderHistory: React.FC<OrderHistoryProps> = ({ user, orders, onSelectOrder
                         <>
                           <button
                             onClick={() => onReorder(order.id)}
-                            className="px-4 py-2 bg-brand-primary text-white rounded-lg hover:bg-opacity-90 transition-all font-medium text-sm"
+                            className="px-4 py-2 bg-brand-primary text-brand-dark rounded-lg hover:bg-opacity-90 transition-all font-medium text-sm"
                           >
                             Reorder
                           </button>

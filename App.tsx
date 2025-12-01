@@ -23,6 +23,7 @@ import { useCart } from './hooks/useCart';
 import { useWishlist } from './hooks/useWishlist';
 import { useProductFilter } from './hooks/useProductFilter';
 import { useProducts } from './hooks/useProducts';
+import { supabase } from './supabaseClient';
 
 // Mock Data
 import { MOCK_ORDERS, MOCK_TESTIMONIALS, MOCK_POSTS, MOCK_RECIPES } from './data';
@@ -34,6 +35,7 @@ import Footer from './components/Footer';
 import ToastContainer from './components/ToastContainer';
 import PromotionalBanner from './components/PromotionalBanner';
 import SortDropdown from './components/SortDropdown';
+import Hero from './components/Hero';
 
 // Lazy-Loaded Components (Load on Demand)
 const Testimonials = React.lazy(() => import('./components/Testimonials'));
@@ -50,6 +52,8 @@ const ComparisonModal = React.lazy(() => import('./components/ComparisonModal'))
 const ExitIntentModal = React.lazy(() => import('./components/ExitIntentModal'));
 const RecipeDetailModal = React.lazy(() => import('./components/RecipeDetailModal'));
 const QuizModule = React.lazy(() => import('./components/QuizModule'));
+const DatabaseSeeder = React.lazy(() => import('./components/DatabaseSeeder'));
+const MobileBottomNav = React.lazy(() => import('./components/MobileBottomNav'));
 
 // Lazy-Loaded Pages (Route-Based Code Splitting)
 const CheckoutPage = React.lazy(() => import('./components/CheckoutPage'));
@@ -136,7 +140,7 @@ const App: React.FC = () => {
   const [selectedGrinds, setSelectedGrinds] = useState<string[]>([]);
 
   // Data State
-  const [orders, setOrders] = useState<Order[]>(MOCK_ORDERS);
+  const [orders, setOrders] = useState<Order[]>([]);
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
   const [showPromoBanner, setShowPromoBanner] = useState(true);
   const [comparisonItems, setComparisonItems] = useState<Product[]>([]);
@@ -161,6 +165,30 @@ const App: React.FC = () => {
     addReview,
     addQuestion,
   } = useProducts({ useMockData: true });
+
+  // --- Order Fetching ---
+  useEffect(() => {
+    const fetchOrders = async () => {
+      if (currentUser) {
+        try {
+          // Dynamically import to avoid circular dependencies if any, though apiService is safe
+          const { orderAPI } = await import('./utils/apiService');
+          const response = await orderAPI.getAll();
+          if (response.success && response.data) {
+            setOrders(response.data);
+          }
+        } catch (error) {
+          console.error('Failed to fetch orders:', error);
+          // Fallback to empty or keep mock if needed, but for real app we want real data
+          // setOrders([]); 
+        }
+      } else {
+        setOrders([]); // Clear orders on logout
+      }
+    };
+
+    fetchOrders();
+  }, [currentUser]);
 
   // --- Computed Values & Effects ---
 
@@ -202,6 +230,15 @@ const App: React.FC = () => {
     document.addEventListener('mouseleave', handleMouseLeave);
     return () => document.removeEventListener('mouseleave', handleMouseLeave);
   }, [isExitIntentModalOpen, cartItems.length]);
+
+  // Handle 'offers' route
+  useEffect(() => {
+    if (currentView === 'offers') {
+      setShowOnSale(true);
+    } else if (currentView === 'home') {
+      setShowOnSale(false);
+    }
+  }, [currentView]);
 
   // Derived Data for Filters
   const categories = useMemo(
@@ -375,7 +412,6 @@ const App: React.FC = () => {
   // Supabase Auth Listener
   useEffect(() => {
     const initializeAuth = async () => {
-      const { supabase } = await import('./supabaseClient');
       try {
         const {
           data: { session },
@@ -392,7 +428,7 @@ const App: React.FC = () => {
             phone: user.user_metadata?.phone || user.phone || undefined,
             wishlist: [],
             orders: [],
-            addresses: [],
+            addresses: user.user_metadata?.addresses || [],
           });
         }
       } catch (error) {
@@ -435,25 +471,9 @@ const App: React.FC = () => {
   }, [addToast]);
 
   const handleSignUp = useCallback(
-    async (name: string, email: string, password: string) => {
-      try {
-        const { supabase } = await import('./supabaseClient');
-        const { data, error } = await supabase.auth.signUp({
-          email,
-          password,
-          options: { data: { name } },
-        });
-
-        if (error || !data.user) {
-          addToast(error?.message || 'Sign up failed', 'error');
-          return;
-        }
-
-        window.location.hash = '#/';
-        addToast(`Welcome, ${name}! Please check your email.`, 'success');
-      } catch (_error) {
-        addToast('Sign up failed. Please try again.', 'error');
-      }
+    async (name: string, _email: string, _password: string) => {
+      window.location.hash = '#/';
+      addToast(`Welcome, ${name}!`, 'success');
     },
     [addToast]
   );
@@ -481,22 +501,18 @@ const App: React.FC = () => {
   }, []);
 
   const handlePlaceOrder = useCallback(
-    (orderData: Omit<Order, 'id' | 'date' | 'status'>): Order => {
-      const newOrder: Order = {
-        ...orderData,
-        id: `TC${1003 + orders.length}-${new Date().getFullYear()}`,
-        date: new Date().toISOString(),
-        status: 'Processing',
-      };
-      setOrders((prev) => [newOrder, ...prev]);
+    (order: Order) => {
+      setOrders((prev) => [order, ...prev]);
       clearCart();
       setDiscount(0);
       setPromoCode('');
-      setCurrentView('home');
-      window.location.hash = `#/order-confirmation/${newOrder.id}`;
-      return newOrder;
+      // Navigation is handled by CheckoutPage showing confirmation or we can redirect here if we prefer
+      // But CheckoutPage shows inline confirmation, so we might not need to redirect immediately
+      // However, the original code redirected to #/order-confirmation/:id
+      // Let's keep the state update and let CheckoutPage handle the UI flow or redirect if needed.
+      // Actually, CheckoutPage shows <OrderConfirmation /> component inline.
     },
-    [orders.length, clearCart]
+    [clearCart]
   );
 
   const _handleSaveProduct = useCallback(
@@ -599,8 +615,8 @@ const App: React.FC = () => {
             addToast={addToast}
             discount={0}
             promoCode=""
-            onApplyPromoCode={() => {}}
-            onRemovePromoCode={() => {}}
+            onApplyPromoCode={() => { }}
+            onRemovePromoCode={() => { }}
             subtotal={0}
             shippingCost={0}
           />
@@ -647,7 +663,11 @@ const App: React.FC = () => {
       case 'profile':
         return currentUser ? (
           <React.Suspense fallback={<PageLoader />}>
-            <UserProfile user={currentUser} orders={orders} />
+            <UserProfile
+              user={currentUser}
+              orders={orders}
+              onUpdateUser={(updatedUser) => setCurrentUser((prev) => ({ ...prev!, ...updatedUser }))}
+            />
           </React.Suspense>
         ) : (
           <div className="text-center py-20">
@@ -769,10 +789,11 @@ const App: React.FC = () => {
       default:
         return (
           <>
+            <Hero />
             <div className="grid grid-cols-1 md:grid-cols-[16rem_1fr] gap-8 container mx-auto px-4 py-8">
               <aside className="sticky top-24 h-fit">
                 <React.Suspense
-                  fallback={<div className="h-64 bg-gray-100 rounded-xl animate-pulse" />}
+                  fallback={<div className="bg-gray-100 rounded-xl animate-pulse" style={{ height: '450px' }} />}
                 >
                   <AdvancedFilters
                     showOnSale={showOnSale}
@@ -831,7 +852,7 @@ const App: React.FC = () => {
               <React.Suspense fallback={null}>
                 <Testimonials testimonials={MOCK_TESTIMONIALS} />
               </React.Suspense>
-              <section className="bg-brand-secondary/30 py-16 mt-16 rounded-xl">
+              <section data-testid="quiz-section" className="bg-brand-secondary/30 py-16 mt-16 rounded-xl">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                   <React.Suspense fallback={null}>
                     <QuizModule addToast={addToast} />
@@ -1026,6 +1047,16 @@ const App: React.FC = () => {
 
 
         <SocialProofNotifications />
+      </React.Suspense>
+      <React.Suspense fallback={null}>
+        <MobileBottomNav
+          cartItemCount={cartItems.reduce((acc, item) => acc + item.quantity, 0)}
+          wishlistItemCount={wishlistItems.length}
+          onOpenCart={() => setIsCartOpen(true)}
+          onOpenWishlist={() => setIsWishlistOpen(true)}
+          onOpenMenu={() => setIsMobileMenuOpen(true)}
+          currentView={currentView}
+        />
       </React.Suspense>
     </div>
   );

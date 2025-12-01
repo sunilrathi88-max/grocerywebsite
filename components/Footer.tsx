@@ -31,7 +31,7 @@ const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Facebook"
-                className="text-gray-500 hover:text-brand-dark transition-colors"
+                className="text-gray-600 hover:text-brand-dark transition-colors"
               >
                 <FacebookIcon />
               </a>
@@ -40,7 +40,7 @@ const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Twitter"
-                className="text-gray-500 hover:text-brand-dark transition-colors"
+                className="text-gray-600 hover:text-brand-dark transition-colors"
               >
                 <TwitterIcon />
               </a>
@@ -49,7 +49,7 @@ const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Pinterest"
-                className="text-gray-500 hover:text-brand-dark transition-colors"
+                className="text-gray-600 hover:text-brand-dark transition-colors"
               >
                 <PinterestIcon />
               </a>
@@ -58,14 +58,14 @@ const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"
-                className="text-gray-500 hover:text-brand-dark transition-colors"
+                className="text-gray-600 hover:text-brand-dark transition-colors"
               >
                 <InstagramIcon />
               </a>
             </div>
           </div>
           <div>
-            <h4 className="font-bold tracking-wider uppercase text-gray-500">Shop</h4>
+            <h4 className="font-bold tracking-wider uppercase text-gray-600">Shop</h4>
             <ul className="mt-4 space-y-2 text-sm">
               <li>
                 <a
@@ -106,7 +106,7 @@ const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
             </ul>
           </div>
           <div>
-            <h4 className="font-bold tracking-wider uppercase text-gray-500">About</h4>
+            <h4 className="font-bold tracking-wider uppercase text-gray-600">About</h4>
             <ul className="mt-4 space-y-2 text-sm">
               <li>
                 <a href="#/about" className="hover:text-brand-dark transition-colors">
@@ -131,7 +131,7 @@ const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
             </ul>
           </div>
           <div>
-            <h4 className="font-bold tracking-wider uppercase text-gray-500">Legal</h4>
+            <h4 className="font-bold tracking-wider uppercase text-gray-600">Legal</h4>
             <ul className="mt-4 space-y-2 text-sm">
               <li>
                 <a href="#/privacy-policy" className="hover:text-brand-dark transition-colors">
@@ -151,7 +151,7 @@ const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
             </ul>
           </div>
           <div className="col-span-2 md:col-span-1 lg:col-span-1">
-            <h4 className="font-bold tracking-wider uppercase text-gray-500">Contact Us</h4>
+            <h4 className="font-bold tracking-wider uppercase text-gray-600">Contact Us</h4>
             <address className="mt-4 text-sm text-gray-600 not-italic">
               123 Spice Lane, Mumbai, MH 400001
               <br />
@@ -190,7 +190,7 @@ const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
           {/* Trust Badges with Payment Methods */}
           <TrustBadges />
 
-          <div className="border-t border-gray-200 pt-8 text-center text-sm text-gray-500">
+          <div className="border-t border-gray-200 pt-8 text-center text-sm text-gray-600">
             <p>&copy; {new Date().getFullYear()} Tattva Co. All Rights Reserved.</p>
           </div>
         </div>

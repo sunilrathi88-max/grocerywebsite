@@ -256,6 +256,135 @@ export const generateProductSchema = (product: {
   };
 };
 
+export interface RecipeStructuredData extends Record<string, unknown> {
+  '@context': string;
+  '@type': 'Recipe';
+  name: string;
+  image: string;
+  description: string;
+  prepTime: string;
+  cookTime: string;
+  recipeYield: number;
+  recipeIngredient: string[];
+  recipeInstructions: Array<{
+    '@type': 'HowToStep';
+    text: string;
+  }>;
+}
+
+export const generateRecipeSchema = (recipe: {
+  title: string;
+  image: string;
+  description: string;
+  prepTime: string;
+  cookTime: string;
+  serves: number;
+  ingredients: string[];
+  instructions: string[];
+}): RecipeStructuredData => {
+  // Helper to convert time string (e.g., "15 mins") to ISO 8601 duration (e.g., "PT15M")
+  const toISODuration = (timeStr: string) => {
+    const match = timeStr.match(/(\d+)/);
+    return match ? `PT${match[1]}M` : 'PT0M';
+  };
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Recipe',
+    name: recipe.title,
+    image: recipe.image,
+    description: recipe.description,
+    prepTime: toISODuration(recipe.prepTime),
+    cookTime: toISODuration(recipe.cookTime),
+    recipeYield: recipe.serves,
+    recipeIngredient: recipe.ingredients,
+    recipeInstructions: recipe.instructions.map((step) => ({
+      '@type': 'HowToStep',
+      text: step,
+    })),
+  };
+};
+
+export interface FAQStructuredData extends Record<string, unknown> {
+  '@context': string;
+  '@type': 'FAQPage';
+  mainEntity: Array<{
+    '@type': 'Question';
+    name: string;
+    acceptedAnswer: {
+      '@type': 'Answer';
+      text: string;
+    };
+  }>;
+}
+
+export const generateFAQSchema = (
+  faqs: Array<{ question: string; answer: string }>
+): FAQStructuredData => ({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((faq) => ({
+    '@type': 'Question',
+    name: faq.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: faq.answer,
+    },
+  })),
+});
+
+export interface BlogPostingStructuredData extends Record<string, unknown> {
+  '@context': string;
+  '@type': 'BlogPosting';
+  headline: string;
+  image: string;
+  author: {
+    '@type': 'Person';
+    name: string;
+  };
+  datePublished: string;
+  articleBody: string;
+}
+
+export const generateBlogPostingSchema = (post: {
+  title: string;
+  image: string;
+  author: string;
+  date: string;
+  content: string;
+}): BlogPostingStructuredData => ({
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: post.title,
+  image: post.image,
+  author: {
+    '@type': 'Person',
+    name: post.author,
+  },
+  datePublished: post.date,
+  articleBody: post.content.replace(/<[^>]*>?/gm, ''), // Strip HTML tags for plain text body
+});
+
+export const generateTestimonialSchema = (
+  testimonials: Array<{ name: string; quote: string; rating: number }>
+): Record<string, unknown> => ({
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Tattva Co.',
+  review: testimonials.map((t) => ({
+    '@type': 'Review',
+    reviewRating: {
+      '@type': 'Rating',
+      ratingValue: t.rating,
+    },
+    author: {
+      '@type': 'Person',
+      name: t.name,
+    },
+    reviewBody: t.quote,
+  })),
+});
+
 /**
  * Generate BreadcrumbList structured data
  */
