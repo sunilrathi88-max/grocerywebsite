@@ -4,34 +4,73 @@
 
 import React from 'react';
 
-// Mock motion components as regular HTML elements
+const motionProps = [
+  'initial',
+  'animate',
+  'exit',
+  'transition',
+  'variants',
+  'whileHover',
+  'whileTap',
+  'whileFocus',
+  'whileDrag',
+  'layout',
+  'layoutId',
+  'onAnimationStart',
+  'onAnimationComplete',
+  'onLayoutAnimationStart',
+  'onLayoutAnimationComplete',
+  'drag',
+  'dragConstraints',
+  'dragElastic',
+  'dragMomentum',
+  'dragPropagation',
+  'dragTransition',
+  'onDrag',
+  'onDragStart',
+  'onDragEnd',
+  'onMeasureDragConstraints',
+  'viewport',
+  'onViewportEnter',
+  'onViewportLeave',
+];
+
+const createMockComponent = (Tag: string) => {
+  return React.forwardRef((props: any, ref) => {
+    const validProps = { ...props };
+    motionProps.forEach((prop) => delete validProps[prop]);
+    return <Tag ref={ref} {...validProps} />;
+  });
+};
+
+// Mock motion components
 export const motion = {
-  div: 'div' as any,
-  button: 'button' as any,
-  span: 'span' as any,
-  a: 'a' as any,
-  section: 'section' as any,
-  article: 'article' as any,
-  aside: 'aside' as any,
-  footer: 'footer' as any,
-  header: 'header' as any,
-  main: 'main' as any,
-  nav: 'nav' as any,
-  ul: 'ul' as any,
-  li: 'li' as any,
-  p: 'p' as any,
-  h1: 'h1' as any,
-  h2: 'h2' as any,
-  h3: 'h3' as any,
-  h4: 'h4' as any,
-  h5: 'h5' as any,
-  h6: 'h6' as any,
-  img: 'img' as any,
-  form: 'form' as any,
-  input: 'input' as any,
-  textarea: 'textarea' as any,
-  select: 'select' as any,
-  label: 'label' as any,
+  div: createMockComponent('div'),
+  button: createMockComponent('button'),
+  span: createMockComponent('span'),
+  a: createMockComponent('a'),
+  section: createMockComponent('section'),
+  article: createMockComponent('article'),
+  aside: createMockComponent('aside'),
+  footer: createMockComponent('footer'),
+  header: createMockComponent('header'),
+  main: createMockComponent('main'),
+  nav: createMockComponent('nav'),
+  ul: createMockComponent('ul'),
+  li: createMockComponent('li'),
+  p: createMockComponent('p'),
+  h1: createMockComponent('h1'),
+  h2: createMockComponent('h2'),
+  h3: createMockComponent('h3'),
+  h4: createMockComponent('h4'),
+  h5: createMockComponent('h5'),
+  h6: createMockComponent('h6'),
+  img: createMockComponent('img'),
+  form: createMockComponent('form'),
+  input: createMockComponent('input'),
+  textarea: createMockComponent('textarea'),
+  select: createMockComponent('select'),
+  label: createMockComponent('label'),
 };
 
 // Mock AnimatePresence component
