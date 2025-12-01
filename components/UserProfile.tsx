@@ -237,11 +237,14 @@ const AddressManager: React.FC<{
 
     if (editingAddress) {
       newAddresses = newAddresses.map((a) =>
-        a.id === editingAddress.id ? { ...a, ...formData, id: a.id } : a
+        a.id === editingAddress.id
+          ? { ...a, ...formData, type: formData.type as 'Home' | 'Work' | 'Other', id: a.id }
+          : a
       );
     } else {
       newAddresses.push({
         ...formData,
+        type: formData.type as 'Home' | 'Work' | 'Other',
         id: Date.now(),
       });
     }

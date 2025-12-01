@@ -180,7 +180,7 @@ const App: React.FC = () => {
         } catch (error) {
           console.error('Failed to fetch orders:', error);
           // Fallback to empty or keep mock if needed, but for real app we want real data
-          // setOrders([]); 
+          // setOrders([]);
         }
       } else {
         setOrders([]); // Clear orders on logout
@@ -615,8 +615,8 @@ const App: React.FC = () => {
             addToast={addToast}
             discount={0}
             promoCode=""
-            onApplyPromoCode={() => { }}
-            onRemovePromoCode={() => { }}
+            onApplyPromoCode={() => {}}
+            onRemovePromoCode={() => {}}
             subtotal={0}
             shippingCost={0}
           />
@@ -666,7 +666,9 @@ const App: React.FC = () => {
             <UserProfile
               user={currentUser}
               orders={orders}
-              onUpdateUser={(updatedUser) => setCurrentUser((prev) => ({ ...prev!, ...updatedUser }))}
+              onUpdateUser={(updatedUser) =>
+                setCurrentUser((prev) => ({ ...prev!, ...updatedUser }))
+              }
             />
           </React.Suspense>
         ) : (
@@ -793,7 +795,12 @@ const App: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-[16rem_1fr] gap-8 container mx-auto px-4 py-8">
               <aside className="sticky top-24 h-fit">
                 <React.Suspense
-                  fallback={<div className="bg-gray-100 rounded-xl animate-pulse" style={{ height: '450px' }} />}
+                  fallback={
+                    <div
+                      className="bg-gray-100 rounded-xl animate-pulse"
+                      style={{ height: '450px' }}
+                    />
+                  }
                 >
                   <AdvancedFilters
                     showOnSale={showOnSale}
@@ -852,7 +859,10 @@ const App: React.FC = () => {
               <React.Suspense fallback={null}>
                 <Testimonials testimonials={MOCK_TESTIMONIALS} />
               </React.Suspense>
-              <section data-testid="quiz-section" className="bg-brand-secondary/30 py-16 mt-16 rounded-xl">
+              <section
+                data-testid="quiz-section"
+                className="bg-brand-secondary/30 py-16 mt-16 rounded-xl"
+              >
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                   <React.Suspense fallback={null}>
                     <QuizModule addToast={addToast} />
@@ -1044,7 +1054,6 @@ const App: React.FC = () => {
             isCompared={(id) => comparisonItems.some((p) => p.id === id)}
           />
         )}
-
 
         <SocialProofNotifications />
       </React.Suspense>

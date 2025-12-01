@@ -169,7 +169,10 @@ describe('Performance & Web Vitals', () => {
   it('should load critical CSS inline', () => {
     cy.request('/').then((response) => {
       // Check if HTML contains inline styles (Vite includes them in script tags)
-      const hasInlineStyles = response.body.includes('<style') || response.body.includes('style>') || response.body.includes('stylesheet');
+      const hasInlineStyles =
+        response.body.includes('<style') ||
+        response.body.includes('style>') ||
+        response.body.includes('stylesheet');
       expect(hasInlineStyles).to.be.true;
     });
   });
@@ -183,7 +186,11 @@ describe('Performance & Web Vitals', () => {
       let hasDeferOrAsync = false;
 
       scripts.forEach((script) => {
-        if (script.hasAttribute('defer') || script.hasAttribute('async') || script.getAttribute('type') === 'module') {
+        if (
+          script.hasAttribute('defer') ||
+          script.hasAttribute('async') ||
+          script.getAttribute('type') === 'module'
+        ) {
           hasDeferOrAsync = true;
         }
       });
@@ -208,7 +215,9 @@ describe('Performance & Web Vitals', () => {
     });
 
     // Wait for dropdown categories list to appear
-    cy.get('header').find('ul').first()
+    cy.get('header')
+      .find('ul')
+      .first()
       .should('be.visible')
       .then(() => {
         const tti = Date.now() - startTime;

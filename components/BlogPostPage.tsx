@@ -10,7 +10,14 @@ interface BlogPostPageProps {
 }
 
 const BlogPostPage: React.FC<BlogPostPageProps> = ({ post }) => {
-  if (!post) {
+  // SEO Configuration
+  const seoConfig = React.useMemo(
+    () => (post ? pageSEO.product(post.title, post.excerpt) : null),
+    [post]
+  );
+  const blogSchema = React.useMemo(() => (post ? generateBlogPostingSchema(post) : null), [post]);
+
+  if (!post || !seoConfig || !blogSchema) {
     return (
       <div className="text-center py-20">
         <h2>Post not found</h2>
@@ -23,10 +30,6 @@ const BlogPostPage: React.FC<BlogPostPageProps> = ({ post }) => {
     { label: 'Blog', href: '#/blog' },
     { label: post.title },
   ];
-
-  // SEO Configuration
-  const seoConfig = React.useMemo(() => pageSEO.product(post.title, post.excerpt), [post]);
-  const blogSchema = React.useMemo(() => generateBlogPostingSchema(post), [post]);
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
