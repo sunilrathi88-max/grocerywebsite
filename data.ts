@@ -362,7 +362,8 @@ export const MOCK_POSTS: BlogPost[] = [
     title: "The Secret to Perfect Biryani: It's All in the Saffron",
     author: 'Anika Sharma',
     date: 'July 15, 2024',
-    image: 'https://images.unsplash.com/photo-1589302168068-964664d93dc0?auto=format&fit=crop&w=800&q=80',
+    image:
+      'https://images.unsplash.com/photo-1589302168068-964664d93dc0?auto=format&fit=crop&w=800&q=80',
     excerpt:
       'Unlock the secrets to a truly aromatic and flavorful biryani. We dive deep into why high-quality saffron, like our Himalayan variety, is the game-changer you need in your kitchen.',
     content: `
@@ -385,7 +386,8 @@ export const MOCK_POSTS: BlogPost[] = [
     title: 'Beyond the Grind: The Power of Malabar Pepper',
     author: 'Rohan Gupta',
     date: 'June 28, 2024',
-    image: 'https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=800&q=80',
+    image:
+      'https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=800&q=80',
     excerpt:
       'Think all pepper is the same? Think again. We explore the bold, complex flavors of Tellicherry peppercorns from the Malabar Coast and why they deserve a prime spot in your spice rack.',
     content: `

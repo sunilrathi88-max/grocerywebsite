@@ -15,7 +15,11 @@ YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
 # Check if Supabase CLI is installed
-if ! command -v supabase &> /dev/null; then
+if command -v supabase &> /dev/null; then
+    SUPABASE_CMD="supabase"
+elif command -v supabase.exe &> /dev/null; then
+    SUPABASE_CMD="supabase.exe"
+else
     echo -e "${RED}❌ Supabase CLI not found${NC}"
     echo "Install it with: npm install -g supabase"
     exit 1
@@ -55,7 +59,7 @@ if [ "$PERFORM_LINK" = true ]; then
         exit 1
     fi
 
-    supabase link --project-ref "$PROJECT_REF"
+    $SUPABASE_CMD link --project-ref "$PROJECT_REF"
     echo -e "${GREEN}✓ Linked to Supabase project${NC}"
     echo ""
 fi
@@ -82,11 +86,11 @@ echo ""
 
 # Set secrets
 echo "Setting secrets..."
-supabase secrets set CASHFREE_APP_ID="$CASHFREE_APP_ID"
-supabase secrets set CASHFREE_SECRET_KEY="$CASHFREE_SECRET_KEY"
-supabase secrets set CASHFREE_ENV="$CASHFREE_ENV"
-supabase secrets set SUPABASE_URL="$SUPABASE_URL"
-supabase secrets set SUPABASE_SERVICE_ROLE_KEY="$SUPABASE_SERVICE_ROLE_KEY"
+$SUPABASE_CMD secrets set CASHFREE_APP_ID="$CASHFREE_APP_ID"
+$SUPABASE_CMD secrets set CASHFREE_SECRET_KEY="$CASHFREE_SECRET_KEY"
+$SUPABASE_CMD secrets set CASHFREE_ENV="$CASHFREE_ENV"
+$SUPABASE_CMD secrets set SUPABASE_URL="$SUPABASE_URL"
+$SUPABASE_CMD secrets set SUPABASE_SERVICE_ROLE_KEY="$SUPABASE_SERVICE_ROLE_KEY"
 
 echo -e "${GREEN}✓ Secrets configured${NC}"
 echo ""
@@ -96,13 +100,13 @@ echo "⚡ Step 3: Deploying Edge Functions"
 echo "-----------------------------------"
 
 echo "Deploying create-cashfree-order..."
-supabase functions deploy create-cashfree-order
+$SUPABASE_CMD functions deploy create-cashfree-order
 
 echo "Deploying verify-cashfree-payment..."
-supabase functions deploy verify-cashfree-payment
+$SUPABASE_CMD functions deploy verify-cashfree-payment
 
 echo "Deploying cashfree-webhook..."
-supabase functions deploy cashfree-webhook
+$SUPABASE_CMD functions deploy cashfree-webhook
 
 echo -e "${GREEN}✓ All Edge Functions deployed${NC}"
 echo ""
