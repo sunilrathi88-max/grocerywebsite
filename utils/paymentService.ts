@@ -198,7 +198,6 @@ export const paymentService = {
       // Note: Since Cashfree redirects, onSuccess might not be called directly here unless we use a popup/iframe mode that returns control.
       // If redirecting, the verification happens on the return URL page (CheckoutPage).
       // For now, we'll assume the caller handles the redirect behavior or we just let it redirect.
-
     } catch (error) {
       console.error('Payment initialization error:', error);
       onError('Failed to initialize payment. Please try again.');

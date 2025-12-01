@@ -153,6 +153,7 @@ export default [
       'coverage/**',
       '.vscode/**',
       '.git/**',
+      'supabase/functions/**',
     ],
   },
 ];
