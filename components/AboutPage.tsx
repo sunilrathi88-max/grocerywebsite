@@ -14,10 +14,10 @@ const AboutPage: React.FC = () => {
               Our Story
             </h2>
             <p className="text-lg text-gray-600 mb-6">
-              THE RATHI SPICE CO was born from a passion for authentic Indian flavors and a desire to share
-              them with the world. We travel to the heart of India, from the saffron fields of
-              Kashmir to the pepper vines of the Malabar Coast, to source the finest, most aromatic
-              spices and gourmet products.
+              THE RATHI SPICE CO was born from a passion for authentic Indian flavors and a desire
+              to share them with the world. We travel to the heart of India, from the saffron fields
+              of Kashmir to the pepper vines of the Malabar Coast, to source the finest, most
+              aromatic spices and gourmet products.
             </p>
             <p className="text-gray-600 mb-4">
               Our philosophy is simple: quality, authenticity, and sustainability. We work directly
