@@ -23,7 +23,7 @@ const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
           <div className="col-span-2 md:col-span-3 lg:col-span-1">
-            <h3 className="text-xl font-serif font-bold text-brand-dark">Tattva Co.</h3>
+            <h3 className="text-xl font-serif font-bold text-brand-dark">THE RATHI SPICE CO</h3>
             <p className="mt-4 text-sm text-gray-600">Authentic Indian Gourmet Products.</p>
             <div className="flex mt-4 space-x-4">
               <a
@@ -191,7 +191,7 @@ const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
           <TrustBadges />
 
           <div className="border-t border-gray-200 pt-8 text-center text-sm text-gray-600">
-            <p>&copy; {new Date().getFullYear()} Tattva Co. All Rights Reserved.</p>
+            <p>&copy; {new Date().getFullYear()} THE RATHI SPICE CO. All Rights Reserved.</p>
           </div>
         </div>
       </div>

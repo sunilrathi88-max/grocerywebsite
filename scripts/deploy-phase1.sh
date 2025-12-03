@@ -14,7 +14,13 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-# Check if Supabase CLI is installed
+# Load .env.deploy if it exists
+if [ -f ".env.deploy" ]; then
+    echo "Loading configuration from .env.deploy..."
+    export $(grep -v '^#' .env.deploy | xargs)
+fi
+
+# Check for required tools CLI is installed
 if command -v supabase &> /dev/null; then
     SUPABASE_CMD="supabase"
 elif command -v supabase.exe &> /dev/null; then
@@ -73,16 +79,39 @@ echo "2. Secret Key (Client Secret)"
 echo "3. Environment (sandbox/production)"
 echo ""
 
-read -p "Enter Cashfree App ID: " CASHFREE_APP_ID
-read -s -p "Enter Cashfree Secret Key: " CASHFREE_SECRET_KEY
-echo ""
-read -p "Enter Cashfree Environment (sandbox/production): " CASHFREE_ENV
+if [ -z "$CASHFREE_APP_ID" ]; then
+    read -p "Enter Cashfree App ID: " CASHFREE_APP_ID
+else
+    echo "Using Cashfree App ID from environment"
+fi
+
+if [ -z "$CASHFREE_SECRET_KEY" ]; then
+    read -p "Enter Cashfree Secret Key: " CASHFREE_SECRET_KEY
+    echo ""
+else
+    echo "Using Cashfree Secret Key from environment"
+fi
+
+if [ -z "$CASHFREE_ENV" ]; then
+    read -p "Enter Cashfree Environment (sandbox/production): " CASHFREE_ENV
+else
+    echo "Using Cashfree Environment from environment: $CASHFREE_ENV"
+fi
 echo ""
 
 # Get Supabase credentials
-read -p "Enter Supabase URL: " SUPABASE_URL
-read -s -p "Enter Supabase Service Role Key: " SUPABASE_SERVICE_ROLE_KEY
-echo ""
+if [ -z "$SUPABASE_URL" ]; then
+    read -p "Enter Supabase URL: " SUPABASE_URL
+else
+    echo "Using Supabase URL from environment"
+fi
+
+if [ -z "$SUPABASE_SERVICE_ROLE_KEY" ]; then
+    read -p "Enter Supabase Service Role Key: " SUPABASE_SERVICE_ROLE_KEY
+    echo ""
+else
+    echo "Using Supabase Service Role Key from environment"
+fi
 
 # Set secrets
 echo "Setting secrets..."

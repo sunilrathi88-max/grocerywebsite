@@ -5,8 +5,8 @@ const RefundPolicyPage: React.FC = () => {
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <SEO
-        title="Refund Policy | Tattva Co."
-        description="Refund and Return Policy for Tattva Co. Learn about our 30-day return policy and refund process."
+        title="Refund Policy | THE RATHI SPICE CO"
+        description="Refund and Return Policy for THE RATHI SPICE CO. Learn about our 30-day return policy and refund process."
       />
       <div className="prose max-w-3xl mx-auto">
         <h2 className="text-3xl md:text-4xl font-serif font-bold text-brand-dark mb-8">
