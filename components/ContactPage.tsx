@@ -59,10 +59,10 @@ const ContactPage: React.FC = () => {
               <h3 className="text-lg font-bold text-brand-dark">Email Us</h3>
               <p className="text-gray-600">Our team is here to help.</p>
               <a
-                href="mailto:support@tattvaco.com"
+                href="mailto:sunilrathi88@gmail.com"
                 className="text-brand-primary font-bold hover:underline"
               >
-                support@tattvaco.com
+                sunilrathi88@gmail.com
               </a>
             </div>
           </div>
@@ -73,8 +73,8 @@ const ContactPage: React.FC = () => {
             <div>
               <h3 className="text-lg font-bold text-brand-dark">Call Us</h3>
               <p className="text-gray-600">Mon-Fri from 9am to 5pm.</p>
-              <a href="tel:+912212345678" className="text-brand-primary font-bold hover:underline">
-                +(91) 22 1234 5678
+              <a href="tel:+918890006364" className="text-brand-primary font-bold hover:underline">
+                +91 88900 06364
               </a>
             </div>
           </div>

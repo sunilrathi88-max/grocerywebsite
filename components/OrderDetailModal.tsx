@@ -1,5 +1,6 @@
 import React from 'react';
 import { Order, OrderStatus } from '../types';
+import { imageErrorHandlers } from '../utils/imageHelpers';
 
 interface OrderDetailModalProps {
   order: Order | null;
@@ -129,9 +130,8 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
                   {/* Timeline Dot */}
                   <div className="relative flex-shrink-0">
                     <div
-                      className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                        step.isCompleted ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-400'
-                      }`}
+                      className={`w-10 h-10 rounded-full flex items-center justify-center ${step.isCompleted ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-400'
+                        }`}
                     >
                       {step.isCompleted ? (
                         <svg
@@ -165,9 +165,8 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
                     </div>
                     {index < statusSteps.length - 1 && (
                       <div
-                        className={`absolute left-1/2 top-10 w-0.5 h-12 -ml-px ${
-                          step.isCompleted ? 'bg-green-500' : 'bg-gray-200'
-                        }`}
+                        className={`absolute left-1/2 top-10 w-0.5 h-12 -ml-px ${step.isCompleted ? 'bg-green-500' : 'bg-gray-200'
+                          }`}
                       />
                     )}
                   </div>
@@ -175,9 +174,8 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
                   {/* Timeline Content */}
                   <div className="ml-4 flex-1">
                     <p
-                      className={`font-semibold ${
-                        step.isCompleted ? 'text-gray-900' : 'text-gray-400'
-                      }`}
+                      className={`font-semibold ${step.isCompleted ? 'text-gray-900' : 'text-gray-400'
+                        }`}
                     >
                       {step.status}
                     </p>
@@ -201,11 +199,7 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
                     src={item.product.images[0]}
                     alt={item.product.name}
                     className="w-20 h-20 object-cover rounded-lg"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src =
-                        'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="80" height="80"%3E%3Crect fill="%23f3f4f6" width="80" height="80"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" dy=".3em" fill="%239ca3af"%3EProduct%3C/text%3E%3C/svg%3E';
-                    }}
+                    onError={imageErrorHandlers.thumb}
                   />
                   <div className="flex-1">
                     <h4 className="font-semibold text-gray-900">{item.product.name}</h4>

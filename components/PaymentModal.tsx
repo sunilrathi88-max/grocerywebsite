@@ -32,7 +32,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            // @ts-expect-error - Framer Motion's motion.div types don't properly include className
+
             className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6"
             onClick={(e) => e.stopPropagation()}
           >

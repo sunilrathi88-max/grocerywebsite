@@ -153,17 +153,17 @@ const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
           <div className="col-span-2 md:col-span-1 lg:col-span-1">
             <h4 className="font-bold tracking-wider uppercase text-gray-600">Contact Us</h4>
             <address className="mt-4 text-sm text-gray-600 not-italic">
-              123 Spice Lane, Mumbai, MH 400001
+              125, Main Market, Sangaria, Rajasthan
               <br />
-              <a href="tel:+912212345678" className="hover:text-brand-dark transition-colors">
-                +(91) 22 1234 5678
+              <a href="tel:+918890006364" className="hover:text-brand-dark transition-colors">
+                +91 88900 06364
               </a>
               <br />
               <a
-                href="mailto:support@tattvaco.com"
+                href="mailto:sunilrathi88@gmail.com"
                 className="hover:text-brand-dark transition-colors"
               >
-                support@tattvaco.com
+                sunilrathi88@gmail.com
               </a>
             </address>
           </div>

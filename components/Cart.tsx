@@ -119,7 +119,7 @@ const Cart: React.FC<CartProps> = ({
                 return (
                   <motion.div
                     key={`${item.product.id}-${item.selectedVariant.id}`}
-                    // @ts-expect-error - Framer Motion's motion.div types don't properly include className
+
                     className="flex items-center justify-between bg-white p-3 rounded-lg shadow-sm border border-gray-100"
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
@@ -162,7 +162,7 @@ const Cart: React.FC<CartProps> = ({
                       ) : (
                         <>
                           <motion.button
-                            // @ts-expect-error - Framer Motion's motion.button types don't properly include onClick
+
                             onClick={() => handleQuantityChange(item, item.quantity - 1)}
                             className="p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                             whileTap={{ scale: 0.9 }}
@@ -170,7 +170,7 @@ const Cart: React.FC<CartProps> = ({
                             <MinusIcon />
                           </motion.button>
                           <motion.span
-                            // @ts-expect-error - Framer Motion's motion.span types don't properly include className
+
                             className="w-8 text-center font-bold"
                             key={item.quantity}
                             initial={{ scale: 1.2 }}
@@ -179,7 +179,7 @@ const Cart: React.FC<CartProps> = ({
                             {item.quantity}
                           </motion.span>
                           <motion.button
-                            // @ts-expect-error - Framer Motion's motion.button types don't properly include onClick
+
                             onClick={() => handleQuantityChange(item, item.quantity + 1)}
                             className="p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors disabled:text-gray-300 disabled:cursor-not-allowed disabled:hover:bg-transparent"
                             disabled={item.quantity >= item.selectedVariant.stock}
@@ -188,7 +188,7 @@ const Cart: React.FC<CartProps> = ({
                             <PlusIcon />
                           </motion.button>
                           <motion.button
-                            // @ts-expect-error - Framer Motion's motion.button types don't properly include onClick
+
                             onClick={() => handleQuantityChange(item, 0)}
                             className="p-1 rounded-full text-red-500 hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors ml-2"
                             whileHover={{ scale: 1.1 }}
@@ -262,11 +262,10 @@ const Cart: React.FC<CartProps> = ({
           <a
             href={canCheckout ? '#/checkout' : undefined}
             onClick={canCheckout ? onClose : (e) => e.preventDefault()}
-            className={`mt-4 block w-full text-center bg-brand-primary text-brand-dark font-bold py-3 rounded-full shadow-lg transition-all duration-300 ${
-              !canCheckout || !!loadingState.type
+            className={`mt-4 block w-full text-center bg-brand-primary text-brand-dark font-bold py-3 rounded-full shadow-lg transition-all duration-300 ${!canCheckout || !!loadingState.type
                 ? 'bg-gray-400 cursor-not-allowed'
                 : 'hover:bg-opacity-90 transform hover:scale-105'
-            }`}
+              }`}
             aria-disabled={!canCheckout || !!loadingState.type}
             data-testid="checkout-btn"
           >

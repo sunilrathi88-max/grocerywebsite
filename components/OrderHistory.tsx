@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Order, OrderStatus, User } from '../types';
 import { motion, AnimatePresence } from 'framer-motion';
+import { imageErrorHandlers } from '../utils/imageHelpers';
 
 interface OrderHistoryProps {
   user: User | null;
@@ -84,11 +85,10 @@ const OrderHistory: React.FC<OrderHistoryProps> = ({ user, orders, onSelectOrder
                 <button
                   key={filter}
                   onClick={() => setSelectedFilter(filter)}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                    selectedFilter === filter
-                      ? 'bg-brand-primary text-brand-dark shadow-md'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                  }`}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${selectedFilter === filter
+                    ? 'bg-brand-primary text-brand-dark shadow-md'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    }`}
                 >
                   {filter}
                   {filter === 'All' && ` (${orders.length})`}
@@ -153,7 +153,7 @@ const OrderHistory: React.FC<OrderHistoryProps> = ({ user, orders, onSelectOrder
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
                   transition={{ duration: 0.3, delay: index * 0.05 }}
-                  // @ts-expect-error - Framer Motion's motion.div types don't properly include className
+
                   className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all overflow-hidden"
                 >
                   <div className="p-6">
@@ -190,11 +190,7 @@ const OrderHistory: React.FC<OrderHistoryProps> = ({ user, orders, onSelectOrder
                             src={item.product.images[0]}
                             alt={item.product.name}
                             className="w-16 h-16 object-cover rounded-lg border border-gray-200"
-                            onError={(e) => {
-                              const target = e.target as HTMLImageElement;
-                              target.src =
-                                'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="64" height="64"%3E%3Crect fill="%23f3f4f6" width="64" height="64"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" dy=".3em" fill="%239ca3af" font-size="12"%3EProduct%3C/text%3E%3C/svg%3E';
-                            }}
+                            onError={imageErrorHandlers.thumb}
                           />
                         </div>
                       ))}
