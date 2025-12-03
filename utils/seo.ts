@@ -466,7 +466,8 @@ export const applySEO = (config: SEOConfig): void => {
  */
 export const pageSEO = {
   home: (): SEOConfig => ({
-    title: 'THE RATHI SPICE CO - Authentic Indian Gourmet Products | Premium Spices & Organic Foods',
+    title:
+      'THE RATHI SPICE CO - Authentic Indian Gourmet Products | Premium Spices & Organic Foods',
     description:
       'Shop authentic Indian gourmet products including premium saffron, spices, nuts, and organic ingredients. Free shipping on orders over $50. 100% satisfaction guaranteed.',
     keywords: [

@@ -36,11 +36,13 @@ const motionProps = [
 ];
 
 const createMockComponent = (Tag: string) => {
-  return React.forwardRef((props: any, ref) => {
+  const Component = React.forwardRef((props: any, ref) => {
     const validProps = { ...props };
     motionProps.forEach((prop) => delete validProps[prop]);
     return <Tag ref={ref} {...validProps} />;
   });
+  Component.displayName = `Motion${Tag.charAt(0).toUpperCase() + Tag.slice(1)}`;
+  return Component;
 };
 
 // Mock motion components
