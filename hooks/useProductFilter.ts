@@ -144,24 +144,16 @@ export const useProductFilter = (
         case 'price-asc':
           result.sort((a, b) => {
             // For ascending sort, use the lowest price available for the product
-            const minPriceA = Math.min(
-              ...a.variants.map((v) => v.salePrice ?? v.price)
-            );
-            const minPriceB = Math.min(
-              ...b.variants.map((v) => v.salePrice ?? v.price)
-            );
+            const minPriceA = Math.min(...a.variants.map((v) => v.salePrice ?? v.price));
+            const minPriceB = Math.min(...b.variants.map((v) => v.salePrice ?? v.price));
             return minPriceA - minPriceB;
           });
           break;
         case 'price-desc':
           result.sort((a, b) => {
             // For descending sort, use the highest price available for the product
-            const maxPriceA = Math.max(
-              ...a.variants.map((v) => v.salePrice ?? v.price)
-            );
-            const maxPriceB = Math.max(
-              ...b.variants.map((v) => v.salePrice ?? v.price)
-            );
+            const maxPriceA = Math.max(...a.variants.map((v) => v.salePrice ?? v.price));
+            const maxPriceB = Math.max(...b.variants.map((v) => v.salePrice ?? v.price));
             return maxPriceB - maxPriceA;
           });
           break;
@@ -210,9 +202,7 @@ export const usePriceRange = (products: Product[]): [number, number] => {
   return useMemo(() => {
     if (products.length === 0) return [0, 100];
 
-    const allPrices = products.flatMap((p) =>
-      p.variants.map((v) => v.salePrice ?? v.price)
-    );
+    const allPrices = products.flatMap((p) => p.variants.map((v) => v.salePrice ?? v.price));
     const minPrice = Math.floor(Math.min(...allPrices));
     const maxPrice = Math.ceil(Math.max(...allPrices));
 

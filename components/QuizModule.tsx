@@ -6,7 +6,6 @@ import { CheckCircleIcon } from './icons/CheckCircleIcon';
 import { XCircleIcon } from './icons/XCircleIcon';
 import { SparklesIcon } from './icons/SparklesIcon';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 // const MotionDiv = motion.div as any;
 
 const questions = [
@@ -140,14 +139,15 @@ const QuizModule: React.FC<QuizModuleProps> = ({ addToast }) => {
         className="bg-white p-8 rounded-lg shadow-lg text-center"
       >
         {/* Trophy or Star Icon */}
-        < div
-          className={`w-20 h-20 mx-auto mb-4 rounded-full flex items-center justify-center ${result.score === questions.length
-            ? 'bg-gradient-to-br from-yellow-400 to-yellow-600 animate-pulse-glow'
-            : 'bg-gradient-to-br from-brand-primary to-amber-500'
-            }`}
+        <div
+          className={`w-20 h-20 mx-auto mb-4 rounded-full flex items-center justify-center ${
+            result.score === questions.length
+              ? 'bg-gradient-to-br from-yellow-400 to-yellow-600 animate-pulse-glow'
+              : 'bg-gradient-to-br from-brand-primary to-amber-500'
+          }`}
         >
           <SparklesIcon className="w-10 h-10 text-white" />
-        </div >
+        </div>
 
         <h3 className="text-3xl font-serif font-bold text-brand-dark mb-2">Quiz Completed!</h3>
 
@@ -211,28 +211,25 @@ const QuizModule: React.FC<QuizModuleProps> = ({ addToast }) => {
         </div>
 
         {/* Promo Code */}
-        {
-          promo && (
-
-            <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              className="mt-6 bg-gradient-to-br from-brand-primary to-amber-500 p-6 rounded-lg text-white"
-            >
-              <SparklesIcon className="w-8 h-8 mx-auto mb-2" />
-              <p className="font-bold text-lg mb-2">🎁 Congratulations! You earned a reward!</p>
-              <p className="text-sm mb-3">Use this exclusive discount code at checkout:</p>
-              <div className="bg-white text-brand-dark py-3 px-6 rounded-md font-mono text-2xl font-bold tracking-widest border-2 border-dashed border-white/30">
-                {promo}
-              </div>
-              <p className="text-xs mt-3 text-white/80">
-                {result.score === questions.length
-                  ? '15% off your next order!'
-                  : '10% off your next order!'}
-              </p>
-            </motion.div>
-          )
-        }
+        {promo && (
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            className="mt-6 bg-gradient-to-br from-brand-primary to-amber-500 p-6 rounded-lg text-white"
+          >
+            <SparklesIcon className="w-8 h-8 mx-auto mb-2" />
+            <p className="font-bold text-lg mb-2">🎁 Congratulations! You earned a reward!</p>
+            <p className="text-sm mb-3">Use this exclusive discount code at checkout:</p>
+            <div className="bg-white text-brand-dark py-3 px-6 rounded-md font-mono text-2xl font-bold tracking-widest border-2 border-dashed border-white/30">
+              {promo}
+            </div>
+            <p className="text-xs mt-3 text-white/80">
+              {result.score === questions.length
+                ? '15% off your next order!'
+                : '10% off your next order!'}
+            </p>
+          </motion.div>
+        )}
 
         {/* Action Buttons */}
         <div className="flex gap-4 mt-6">

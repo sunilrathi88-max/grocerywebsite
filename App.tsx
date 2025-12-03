@@ -6,7 +6,6 @@ import {
   Variant,
   User,
   Order,
-  OrderStatus,
   QnA as QnAType,
   Recipe,
 } from './types';
@@ -26,7 +25,7 @@ import { useProducts } from './hooks/useProducts';
 import { supabase } from './supabaseClient';
 
 // Mock Data
-import { MOCK_ORDERS, MOCK_TESTIMONIALS, MOCK_POSTS, MOCK_RECIPES } from './data';
+import { MOCK_TESTIMONIALS, MOCK_POSTS, MOCK_RECIPES } from './data';
 
 // Core Components (Eagerly Loaded - Always Visible)
 import Header from './components/Header';
@@ -52,7 +51,7 @@ const ComparisonModal = React.lazy(() => import('./components/ComparisonModal'))
 const ExitIntentModal = React.lazy(() => import('./components/ExitIntentModal'));
 const RecipeDetailModal = React.lazy(() => import('./components/RecipeDetailModal'));
 const QuizModule = React.lazy(() => import('./components/QuizModule'));
-const DatabaseSeeder = React.lazy(() => import('./components/DatabaseSeeder'));
+
 const MobileBottomNav = React.lazy(() => import('./components/MobileBottomNav'));
 
 // Lazy-Loaded Pages (Route-Based Code Splitting)
@@ -159,9 +158,7 @@ const App: React.FC = () => {
   const {
     products,
     isLoading: productsLoading,
-    addProduct: addProductAPI,
-    updateProduct: updateProductAPI,
-    deleteProduct: deleteProductAPI,
+
     addReview,
     addQuestion,
   } = useProducts({ useMockData: true });
@@ -409,7 +406,7 @@ const App: React.FC = () => {
         if (rememberMe) {
           localStorage.setItem('rememberedEmail', email);
         }
-      } catch (_error) {
+      } catch {
         addToast('Login failed. Please try again.', 'error');
       }
     },
@@ -521,37 +518,6 @@ const App: React.FC = () => {
     },
     [clearCart]
   );
-
-  const _handleSaveProduct = useCallback(
-    async (product: Product) => {
-      try {
-        if (product.id === 0) {
-          await addProductAPI(product);
-        } else {
-          await updateProductAPI(product.id, product);
-        }
-        addToast(`Product "${product.name}" saved successfully!`, 'success');
-      } catch {
-        addToast('Failed to save product.', 'error');
-      }
-    },
-    [addToast, addProductAPI, updateProductAPI]
-  );
-
-  const _handleDeleteProduct = useCallback(
-    async (productId: number) => {
-      if (window.confirm('Are you sure?')) {
-        const success = await deleteProductAPI(productId);
-        if (success) addToast('Product deleted.', 'info');
-        else addToast('Failed to delete product.', 'error');
-      }
-    },
-    [addToast, deleteProductAPI]
-  );
-
-  const _handleUpdateOrderStatus = useCallback((orderId: string, status: OrderStatus) => {
-    setOrders((prev) => prev.map((o) => (o.id === orderId ? { ...o, status } : o)));
-  }, []);
 
   const handleToggleCompare = useCallback(
     (product: Product) => {

@@ -4,7 +4,6 @@ import { MenuIcon } from './icons/MenuIcon';
 import { ShoppingCartIcon } from './icons/ShoppingCartIcon';
 import { HeartIcon } from './icons/HeartIcon';
 import { UserIcon } from './icons/UserIcon';
-import { motion } from 'framer-motion';
 
 interface MobileBottomNavProps {
   cartItemCount: number;

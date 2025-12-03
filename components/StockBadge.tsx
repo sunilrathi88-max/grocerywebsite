@@ -1,5 +1,4 @@
 import React from 'react';
-import { Product, Variant } from '../types';
 
 interface StockBadgeProps {
   stock: number;

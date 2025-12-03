@@ -6,7 +6,6 @@ import { ClockIcon } from './icons/ClockIcon';
 import { UsersIcon } from './icons/UsersIcon';
 import ProductCard from './ProductCard';
 import OptimizedImage from './OptimizedImage';
-import { imageErrorHandlers } from '../utils/imageHelpers';
 import { SEO } from './SEO';
 import { generateRecipeSchema } from '../utils/seo';
 
@@ -42,6 +41,7 @@ const RecipeDetailModal: React.FC<RecipeDetailModalProps> = ({
 
   const recipeSchema = React.useMemo(() => generateRecipeSchema(recipe), [recipe]);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const MotionDiv = motion.div as any;
 
   return (

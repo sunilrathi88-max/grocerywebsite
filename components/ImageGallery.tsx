@@ -118,10 +118,11 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ media, productName, isOutOf
             <button
               key={idx}
               onClick={() => setActiveMedia(item)}
-              className={`relative w-20 h-20 flex-shrink-0 rounded-md overflow-hidden border-2 transition-all ${activeMedia.url === item.url
-                ? 'border-brand-primary ring-2 ring-brand-primary/30'
-                : 'border-transparent hover:border-gray-300'
-                }`}
+              className={`relative w-20 h-20 flex-shrink-0 rounded-md overflow-hidden border-2 transition-all ${
+                activeMedia.url === item.url
+                  ? 'border-brand-primary ring-2 ring-brand-primary/30'
+                  : 'border-transparent hover:border-gray-300'
+              }`}
             >
               <OptimizedImage
                 src={item.thumb}

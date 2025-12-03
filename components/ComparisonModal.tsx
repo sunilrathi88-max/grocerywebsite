@@ -10,7 +10,7 @@ interface ComparisonModalProps {
   onAddToCart: (product: Product, variant: Variant, quantity?: number) => void;
 }
 
-const ComparisonModal: React.FC<ComparisonModalProps> = ({ items, onClose, onAddToCart }) => {
+const ComparisonModal: React.FC<ComparisonModalProps> = ({ items, onClose }) => {
   const getAverageRating = (product: Product) => {
     if (product.reviews.length === 0) return { avg: 0, count: 0 };
     const total = product.reviews.reduce((acc, r) => acc + r.rating, 0);
