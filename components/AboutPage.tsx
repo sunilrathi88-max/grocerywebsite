@@ -14,7 +14,7 @@ const AboutPage: React.FC = () => {
               Our Story
             </h2>
             <p className="text-lg text-gray-600 mb-6">
-              Tattva Co. was born from a passion for authentic Indian flavors and a desire to share
+              THE RATHI SPICE CO was born from a passion for authentic Indian flavors and a desire to share
               them with the world. We travel to the heart of India, from the saffron fields of
               Kashmir to the pepper vines of the Malabar Coast, to source the finest, most aromatic
               spices and gourmet products.

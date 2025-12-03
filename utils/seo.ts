@@ -80,7 +80,7 @@ export interface OrganizationStructuredData extends Record<string, unknown> {
  * Generate default SEO configuration
  */
 export const getDefaultSEO = (): SEOConfig => ({
-  title: 'Tattva Co. - Authentic Indian Gourmet Products | Premium Spices & Organic Foods',
+  title: 'THE RATHI SPICE CO - Authentic Indian Gourmet Products | Premium Spices & Organic Foods',
   description:
     'Discover authentic Indian gourmet products including premium saffron, spices, nuts, and organic ingredients. Free shipping on orders over $50. Shop now!',
   keywords: [
@@ -97,14 +97,14 @@ export const getDefaultSEO = (): SEOConfig => ({
   ],
   ogType: 'website',
   ogImage: '/images/og-image.jpg',
-  ogImageAlt: 'Tattva Co. - Authentic Indian Gourmet Products',
+  ogImageAlt: 'THE RATHI SPICE CO - Authentic Indian Gourmet Products',
   twitterCard: 'summary_large_image',
 });
 
 /**
  * Update document title
  */
-export const updateTitle = (title: string, siteName: string = 'Tattva Co.'): void => {
+export const updateTitle = (title: string, siteName: string = 'THE RATHI SPICE CO'): void => {
   if (typeof document !== 'undefined') {
     document.title = title.includes(siteName) ? title : `${title} | ${siteName}`;
   }
@@ -180,7 +180,7 @@ export const removeStructuredData = (id: string = 'structured-data'): void => {
 export const generateOrganizationSchema = (): OrganizationStructuredData => ({
   '@context': 'https://schema.org',
   '@type': 'Organization',
-  name: 'Tattva Co.',
+  name: 'THE RATHI SPICE CO',
   url: 'https://tattva-co.com',
   logo: 'https://tattva-co.com/images/logo.png',
   description:
@@ -225,7 +225,7 @@ export const generateProductSchema = (product: {
     image: product.images,
     brand: {
       '@type': 'Brand',
-      name: 'Tattva Co.',
+      name: 'THE RATHI SPICE CO',
     },
     offers: {
       '@type': 'Offer',
@@ -370,7 +370,7 @@ export const generateTestimonialSchema = (
 ): Record<string, unknown> => ({
   '@context': 'https://schema.org',
   '@type': 'Organization',
-  name: 'Tattva Co.',
+  name: 'THE RATHI SPICE CO',
   review: testimonials.map((t) => ({
     '@type': 'Review',
     reviewRating: {
@@ -466,7 +466,7 @@ export const applySEO = (config: SEOConfig): void => {
  */
 export const pageSEO = {
   home: (): SEOConfig => ({
-    title: 'Tattva Co. - Authentic Indian Gourmet Products | Premium Spices & Organic Foods',
+    title: 'THE RATHI SPICE CO - Authentic Indian Gourmet Products | Premium Spices & Organic Foods',
     description:
       'Shop authentic Indian gourmet products including premium saffron, spices, nuts, and organic ingredients. Free shipping on orders over $50. 100% satisfaction guaranteed.',
     keywords: [
@@ -485,8 +485,8 @@ export const pageSEO = {
 
   products: (category?: string): SEOConfig => ({
     title: category
-      ? `${category} - Premium Indian ${category} | Tattva Co.`
-      : 'Shop All Products - Authentic Indian Gourmet | Tattva Co.',
+      ? `${category} - Premium Indian ${category} | THE RATHI SPICE CO`
+      : 'Shop All Products - Authentic Indian Gourmet | THE RATHI SPICE CO',
     description: category
       ? `Browse our selection of premium ${category.toLowerCase()}. Authentic, organic, and sourced directly from India. Free shipping on orders over $50.`
       : 'Explore our complete collection of authentic Indian gourmet products. Premium spices, nuts, organic ingredients, and more. Shop now!',
@@ -498,7 +498,7 @@ export const pageSEO = {
   }),
 
   product: (name: string, description: string): SEOConfig => ({
-    title: `${name} - Premium Quality | Tattva Co.`,
+    title: `${name} - Premium Quality | THE RATHI SPICE CO`,
     description: description.substring(0, 160),
     keywords: [name.toLowerCase(), 'buy online', 'authentic', 'premium quality'],
     ogType: 'product',
@@ -506,7 +506,7 @@ export const pageSEO = {
   }),
 
   recipes: (): SEOConfig => ({
-    title: 'Indian Recipes & Cooking Tips | Tattva Co.',
+    title: 'Indian Recipes & Cooking Tips | THE RATHI SPICE CO',
     description:
       'Discover authentic Indian recipes, cooking tips, and culinary inspiration. Learn to cook traditional dishes with our premium ingredients.',
     keywords: ['indian recipes', 'cooking tips', 'authentic indian food', 'recipe ideas'],
@@ -515,7 +515,7 @@ export const pageSEO = {
   }),
 
   blog: (): SEOConfig => ({
-    title: 'Blog - Indian Cuisine & Culture | Tattva Co.',
+    title: 'Blog - Indian Cuisine & Culture | THE RATHI SPICE CO',
     description:
       'Read about Indian cuisine, spices, cooking techniques, and the cultural heritage behind our gourmet products.',
     keywords: ['indian cuisine blog', 'spice guide', 'cooking blog', 'food culture'],
@@ -524,18 +524,18 @@ export const pageSEO = {
   }),
 
   about: (): SEOConfig => ({
-    title: 'About Us - Our Story & Mission | Tattva Co.',
+    title: 'About Us - Our Story & Mission | THE RATHI SPICE CO',
     description:
-      "Learn about Tattva Co.'s mission to bring authentic Indian gourmet products to your kitchen. Discover our commitment to quality and sustainability.",
+      "Learn about THE RATHI SPICE CO's mission to bring authentic Indian gourmet products to your kitchen. Discover our commitment to quality and sustainability.",
     keywords: ['about tattva co', 'our story', 'indian gourmet mission'],
     canonical: 'https://tattva-co.com/about',
     ogType: 'website',
   }),
 
   contact: (): SEOConfig => ({
-    title: 'Contact Us - Get in Touch | Tattva Co.',
+    title: 'Contact Us - Get in Touch | THE RATHI SPICE CO',
     description:
-      "Have questions? Contact Tattva Co. for support, inquiries, or feedback. We're here to help with your gourmet Indian product needs.",
+      "Have questions? Contact THE RATHI SPICE CO for support, inquiries, or feedback. We're here to help with your gourmet Indian product needs.",
     keywords: ['contact', 'customer support', 'get in touch'],
     canonical: 'https://tattva-co.com/contact',
     ogType: 'website',
