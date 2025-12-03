@@ -39,7 +39,7 @@ const RefundPolicyPage: React.FC = () => {
         <h3>4. Contact Us</h3>
         <p>
           If you have any questions about our Refund Policy, please contact us at
-          support@tattvaco.com.
+          sunilrathi88@gmail.com.
         </p>
       </div>
       <style>{`

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, MouseEvent } from 'react';
 import { OptimizedImage } from './OptimizedImage';
+import { imageErrorHandlers } from '../utils/imageHelpers';
 import { ChevronLeftIcon } from './icons/ChevronLeftIcon';
 import { ChevronRightIcon } from './icons/ChevronRightIcon';
 import { PlayIcon } from './icons/PlayIcon';
@@ -49,9 +50,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ media, productName, isOutOf
     setActiveMedia(media[nextIndex]);
   };
 
-  const handleMainImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-    e.currentTarget.src = 'https://placehold.co/600x600?text=No+Image';
-  };
+  const handleMainImageError = imageErrorHandlers.product;
 
   return (
     <div>
@@ -119,11 +118,10 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ media, productName, isOutOf
             <button
               key={idx}
               onClick={() => setActiveMedia(item)}
-              className={`relative w-20 h-20 flex-shrink-0 rounded-md overflow-hidden border-2 transition-all ${
-                activeMedia.url === item.url
-                  ? 'border-brand-primary ring-2 ring-brand-primary/30'
-                  : 'border-transparent hover:border-gray-300'
-              }`}
+              className={`relative w-20 h-20 flex-shrink-0 rounded-md overflow-hidden border-2 transition-all ${activeMedia.url === item.url
+                ? 'border-brand-primary ring-2 ring-brand-primary/30'
+                : 'border-transparent hover:border-gray-300'
+                }`}
             >
               <OptimizedImage
                 src={item.thumb}
@@ -132,6 +130,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ media, productName, isOutOf
                 type="thumbnail"
                 width={80}
                 height={80}
+                onError={imageErrorHandlers.thumb}
               />
               {item.type === 'video' && (
                 <div className="absolute inset-0 flex items-center justify-center bg-black/30">

@@ -2,6 +2,7 @@ import React from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { imageErrorHandlers } from '../utils/imageHelpers';
 
 interface HeroSlide {
   id: number;
@@ -82,6 +83,7 @@ const Hero: React.FC = () => {
                   className="w-full h-full object-cover"
                   fetchPriority={index === 0 ? 'high' : 'auto'}
                   loading={index === 0 ? 'eager' : 'lazy'}
+                  onError={imageErrorHandlers.hero}
                 />
                 <div className={`absolute inset-0 bg-gradient-to-r ${slide.gradient}`}></div>
               </div>

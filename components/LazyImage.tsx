@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
+import { PLACEHOLDER_URLS } from '../utils/imageHelpers';
 
 interface LazyImageProps {
   src: string;
@@ -17,7 +18,7 @@ export const LazyImage: React.FC<LazyImageProps> = ({
   src,
   alt,
   className = '',
-  placeholderSrc = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3Crect fill="%23f3f4f6" width="400" height="300"/%3E%3C/svg%3E',
+  placeholderSrc = PLACEHOLDER_URLS.product,
   width,
   height,
 }) => {
@@ -63,6 +64,12 @@ export const LazyImage: React.FC<LazyImageProps> = ({
       height={height}
       loading="lazy"
       onLoad={() => setIsLoaded(true)}
+      onError={(e) => {
+        const img = e.currentTarget;
+        if (img.src !== placeholderSrc) {
+          img.src = placeholderSrc;
+        }
+      }}
     />
   );
 };
