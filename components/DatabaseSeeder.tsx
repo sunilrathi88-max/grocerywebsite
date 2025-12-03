@@ -75,7 +75,7 @@ const DatabaseSeeder: React.FC = () => {
         };
 
         // Insert product
-        const { data: insertedProduct, error: productError } = await supabase
+        const { error: productError } = await supabase
           .from('products')
           .insert(productData)
           .select()
@@ -159,8 +159,9 @@ const DatabaseSeeder: React.FC = () => {
         <button
           onClick={seedDatabase}
           disabled={isLoading}
-          className={`w-full py-2 px-4 rounded-md text-white font-medium transition-colors ${isLoading ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-600 hover:bg-green-700'
-            }`}
+          className={`w-full py-2 px-4 rounded-md text-white font-medium transition-colors ${
+            isLoading ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-600 hover:bg-green-700'
+          }`}
         >
           {isLoading ? '⏳ Seeding...' : '🚀 Seed Database'}
         </button>
@@ -168,8 +169,9 @@ const DatabaseSeeder: React.FC = () => {
         <button
           onClick={clearProducts}
           disabled={isLoading}
-          className={`w-full py-2 px-4 rounded-md text-white font-medium transition-colors ${isLoading ? 'bg-gray-400 cursor-not-allowed' : 'bg-red-600 hover:bg-red-700'
-            }`}
+          className={`w-full py-2 px-4 rounded-md text-white font-medium transition-colors ${
+            isLoading ? 'bg-gray-400 cursor-not-allowed' : 'bg-red-600 hover:bg-red-700'
+          }`}
         >
           {isLoading ? '⏳ Clearing...' : '🗑️ Clear All Products'}
         </button>

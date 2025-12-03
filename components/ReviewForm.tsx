@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { ToastMessage } from '../types';
 import StarRating from './StarRating';
-import { OptimizedImage } from './OptimizedImage';
+
 import { XIcon } from './icons/XIcon';
 
 interface ReviewFormProps {

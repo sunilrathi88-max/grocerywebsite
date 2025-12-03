@@ -9,9 +9,7 @@ import Breadcrumbs from './Breadcrumbs';
 import { FacebookIcon } from './icons/FacebookIcon';
 import { TwitterIcon } from './icons/TwitterIcon';
 import { PinterestIcon } from './icons/PinterestIcon';
-import { ChevronLeftIcon } from './icons/ChevronLeftIcon';
-import { ChevronRightIcon } from './icons/ChevronRightIcon';
-import { PlayIcon } from './icons/PlayIcon';
+
 import { GlobeIcon } from './icons/GlobeIcon';
 import { TagIcon } from './icons/TagIcon';
 import { SparklesIcon } from './icons/SparklesIcon';
@@ -23,8 +21,7 @@ import { LeafIcon } from './icons/LeafIcon';
 import { UsersIcon } from './icons/UsersIcon';
 import { CheckBadgeIcon } from './icons/CheckBadgeIcon';
 import { CheckCircleIcon } from './icons/CheckCircleIcon';
-import { TruckIcon } from './icons/TruckIcon';
-import { ChefHatIcon } from './icons/ChefHatIcon';
+
 import TrustBadges from './TrustBadges';
 import ImageGallery from './ImageGallery';
 
@@ -86,7 +83,6 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
   const [isStickyButtonVisible, setStickyButtonVisible] = useState(false);
 
   // Image error handlers
-  const handleMainImageError = imageErrorHandlers.product;
 
   const handleThumbImageError = imageErrorHandlers.thumb;
 

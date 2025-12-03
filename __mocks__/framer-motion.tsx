@@ -36,6 +36,7 @@ const motionProps = [
 ];
 
 const createMockComponent = (Tag: string) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const Component = React.forwardRef((props: any, ref) => {
     const validProps = { ...props };
     motionProps.forEach((prop) => delete validProps[prop]);
@@ -87,6 +88,7 @@ export const useAnimation = () => ({
 });
 
 // Mock useMotionValue hook
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const useMotionValue = (initial: any) => ({
   get: () => initial,
   set: jest.fn(),

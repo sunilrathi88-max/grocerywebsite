@@ -14,7 +14,6 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
   isOpen,
   onClose,
   onPaymentSuccess,
-  onPaymentError,
 }) => {
   const [isProcessing, setIsProcessing] = useState(false);
 
@@ -32,7 +31,6 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-
             className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6"
             onClick={(e) => e.stopPropagation()}
           >

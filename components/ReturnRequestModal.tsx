@@ -85,7 +85,7 @@ const ReturnRequestModal: React.FC<ReturnRequestModalProps> = ({
 
       const request: ReturnRequest = {
         order_id: order.id,
-        reason: reason as any,
+        reason: reason as ReturnRequest['reason'],
         detailed_reason: detailedReason,
         refund_amount: refundAmount,
         refund_method: refundMethod,
@@ -133,7 +133,6 @@ const ReturnRequestModal: React.FC<ReturnRequestModalProps> = ({
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
-
             className="bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
@@ -165,12 +164,13 @@ const ReturnRequestModal: React.FC<ReturnRequestModalProps> = ({
                       <React.Fragment key={label}>
                         <div className="flex flex-col items-center">
                           <div
-                            className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm ${isActive
+                            className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm ${
+                              isActive
                                 ? 'bg-brand-primary text-brand-dark'
                                 : isCompleted
                                   ? 'bg-green-500 text-white'
                                   : 'bg-gray-300 text-gray-600'
-                              }`}
+                            }`}
                           >
                             {isCompleted ? '✓' : index + 1}
                           </div>
@@ -273,10 +273,11 @@ const ReturnRequestModal: React.FC<ReturnRequestModalProps> = ({
                           key={r.value}
                           type="button"
                           onClick={() => setReason(r.value)}
-                          className={`p-4 border-2 rounded-lg text-left transition-all ${reason === r.value
+                          className={`p-4 border-2 rounded-lg text-left transition-all ${
+                            reason === r.value
                               ? 'border-brand-primary bg-brand-accent/20'
                               : 'border-gray-200 hover:border-gray-300'
-                            }`}
+                          }`}
                         >
                           <p className="font-semibold text-gray-900">{r.label}</p>
                         </button>
@@ -315,7 +316,9 @@ const ReturnRequestModal: React.FC<ReturnRequestModalProps> = ({
                             name="refundMethod"
                             value={method.value}
                             checked={refundMethod === method.value}
-                            onChange={(e) => setRefundMethod(e.target.value as any)}
+                            onChange={(e) =>
+                              setRefundMethod(e.target.value as ReturnRequest['refund_method'])
+                            }
                             className="w-5 h-5 text-brand-primary"
                           />
                           <span className="font-medium text-gray-900">{method.label}</span>

@@ -45,8 +45,7 @@ const Header: React.FC<HeaderProps> = ({
   onMobileMenuClick,
   isLoggedIn,
   isAdmin,
-  onLoginClick,
-  onLogoutClick,
+
   allProducts,
   onSelectProduct,
   subtotal,

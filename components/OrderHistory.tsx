@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Order, OrderStatus, User } from '../types';
 import { motion, AnimatePresence } from 'framer-motion';
 import { imageErrorHandlers } from '../utils/imageHelpers';
@@ -85,10 +85,11 @@ const OrderHistory: React.FC<OrderHistoryProps> = ({ user, orders, onSelectOrder
                 <button
                   key={filter}
                   onClick={() => setSelectedFilter(filter)}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${selectedFilter === filter
-                    ? 'bg-brand-primary text-brand-dark shadow-md'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                    }`}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                    selectedFilter === filter
+                      ? 'bg-brand-primary text-brand-dark shadow-md'
+                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  }`}
                 >
                   {filter}
                   {filter === 'All' && ` (${orders.length})`}
@@ -153,7 +154,6 @@ const OrderHistory: React.FC<OrderHistoryProps> = ({ user, orders, onSelectOrder
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
                   transition={{ duration: 0.3, delay: index * 0.05 }}
-
                   className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all overflow-hidden"
                 >
                   <div className="p-6">

@@ -8,13 +8,13 @@ interface OAuthButtonsProps {
   mode?: 'login' | 'signup';
 }
 
-const OAuthButtons: React.FC<OAuthButtonsProps> = ({ onSuccess, onError, mode = 'login' }) => {
+const OAuthButtons: React.FC<OAuthButtonsProps> = ({ onError, mode = 'login' }) => {
   const [isLoading, setIsLoading] = useState<'google' | 'facebook' | null>(null);
 
   const handleGoogleLogin = async () => {
     setIsLoading('google');
     try {
-      const { data, error } = await supabase.auth.signInWithOAuth({
+      const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
           redirectTo: `${window.location.origin}${window.location.pathname}#/`,
@@ -36,7 +36,7 @@ const OAuthButtons: React.FC<OAuthButtonsProps> = ({ onSuccess, onError, mode = 
   const handleFacebookLogin = async () => {
     setIsLoading('facebook');
     try {
-      const { data, error } = await supabase.auth.signInWithOAuth({
+      const { error } = await supabase.auth.signInWithOAuth({
         provider: 'facebook',
         options: {
           redirectTo: `${window.location.origin}${window.location.pathname}#/`,

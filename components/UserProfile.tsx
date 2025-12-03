@@ -174,7 +174,7 @@ const AddressManager: React.FC<{
   addresses: User['addresses'];
   onUpdateUser: (u: Partial<User>) => void;
   user: User;
-}> = ({ addresses, onUpdateUser, user }) => {
+}> = ({ addresses, onUpdateUser, user: _user }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingAddress, setEditingAddress] = useState<User['addresses'][0] | null>(null);
   const [formData, setFormData] = useState({

@@ -29,7 +29,7 @@ let sharp;
 try {
   const sharpModule = await import('sharp');
   sharp = sharpModule.default;
-} catch (_err) {
+} catch {
   console.error('❌ Error: sharp is not installed');
   console.log('\n📦 Please install sharp:');
   console.log('   npm install sharp --save-dev');
