@@ -7,6 +7,8 @@ import { PlusIcon } from './icons/PlusIcon';
 import { HeartIcon } from './icons/HeartIcon';
 import { StarIcon } from './icons/StarIcon';
 import { EyeIcon } from './icons/EyeIcon';
+import { CompareIcon } from './icons/CompareIcon';
+import { MailIcon } from './icons/MailIcon';
 import { formatPrice } from '../utils/formatPrice';
 
 interface ProductCardProps {
@@ -27,6 +29,9 @@ const ProductCard: React.FC<ProductCardProps> = ({
   onToggleWishlist,
   isWishlisted,
   onSelectProduct,
+  onToggleCompare,
+  isCompared,
+  onNotifyMe,
   priority = 'auto',
 }) => {
   const placeholderImage = PLACEHOLDER_URLS.product;
@@ -35,6 +40,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
   const defaultVariant = product.variants[0];
   const displayPrice = defaultVariant.salePrice ?? defaultVariant.price;
   const onSale = defaultVariant.salePrice && defaultVariant.salePrice < defaultVariant.price;
+  const isLowStock = defaultVariant.stock <= 5 && defaultVariant.stock > 0;
+  const isOutOfStock = defaultVariant.stock === 0;
 
   const [isAdding, setIsAdding] = React.useState(false);
   const [isSuccess, setIsSuccess] = React.useState(false);
@@ -71,31 +78,57 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
         {/* Badges */}
         <div className="absolute top-3 left-3 flex flex-col gap-2">
-          {onSale && (
-            <span className="bg-brand-secondary text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
-              Sale
+          {isOutOfStock ? (
+            <span className="bg-neutral-900 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+              Out of Stock
             </span>
-          )}
-          {product.grade && (
-            <span className="bg-white/90 backdrop-blur-sm text-neutral-900 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-neutral-200">
-              {product.grade}
-            </span>
+          ) : (
+            <>
+              {onSale && (
+                <span className="bg-brand-secondary text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                  Sale
+                </span>
+              )}
+              {isLowStock && (
+                <span className="bg-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                  LOW STOCK
+                </span>
+              )}
+              {product.grade && (
+                <span className="bg-white/90 backdrop-blur-sm text-neutral-900 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-neutral-200">
+                  {product.grade}
+                </span>
+              )}
+            </>
           )}
         </div>
 
         {/* Wishlist Button */}
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            onToggleWishlist(product);
-          }}
-          className="absolute top-3 right-3 p-2 rounded-full bg-white/80 backdrop-blur-sm text-neutral-600 hover:bg-white hover:text-brand-secondary transition-colors opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 duration-300"
-          aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
-        >
-          <HeartIcon
-            className={`w-5 h-5 ${isWishlisted ? 'fill-brand-secondary text-brand-secondary' : ''}`}
-          />
-        </button>
+        <div className="absolute top-3 right-3 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 duration-300 transition-all z-10">
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onToggleWishlist(product);
+            }}
+            className="p-2 rounded-full bg-white/80 backdrop-blur-sm text-neutral-600 hover:bg-white hover:text-brand-secondary transition-colors shadow-sm"
+            aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
+          >
+            <HeartIcon
+              className={`w-5 h-5 ${isWishlisted ? 'fill-brand-secondary text-brand-secondary' : 'fill-transparent'}`}
+            />
+          </button>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onToggleCompare(product);
+            }}
+            className={`p-2 rounded-full bg-white/80 backdrop-blur-sm hover:bg-white transition-colors shadow-sm ${isCompared ? 'text-brand-primary bg-brand-primary/10' : 'text-neutral-600 hover:text-brand-primary'
+              }`}
+            aria-label={isCompared ? 'Remove from comparison' : 'Add to comparison'}
+          >
+            <CompareIcon className="w-5 h-5" />
+          </button>
+        </div>
 
         {/* Quick Actions Overlay */}
         <div className="absolute inset-x-0 bottom-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 bg-gradient-to-t from-black/50 to-transparent flex gap-2 justify-center">
@@ -105,26 +138,43 @@ const ProductCard: React.FC<ProductCardProps> = ({
               onSelectProduct(product);
             }}
             className="bg-white text-neutral-900 p-3 rounded-full hover:bg-neutral-100 transition-colors shadow-lg"
-            title="Quick View"
+            title={`Quick view ${product.name}`}
+            aria-label={`Quick view ${product.name}`}
           >
             <EyeIcon className="w-5 h-5" />
           </button>
-          <button
-            onClick={handleAddToCart}
-            disabled={isAdding || isSuccess}
-            className={`p-3 rounded-full shadow-lg transition-colors flex items-center gap-2 px-4
-                ${isSuccess ? 'bg-success-green text-white' : 'bg-brand-primary text-white hover:bg-brand-primary/90'}
-              `}
-            title="Add to Cart"
-          >
-            {isAdding ? (
-              <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-            ) : isSuccess ? (
-              <CheckCircleIcon className="w-5 h-5" />
-            ) : (
-              <PlusIcon className="w-5 h-5" />
-            )}
-          </button>
+          {isOutOfStock ? (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onNotifyMe(product.name);
+              }}
+              className="bg-neutral-800 text-white p-3 rounded-full hover:bg-neutral-900 transition-colors shadow-lg px-4 flex items-center gap-2"
+              title="Notify Me"
+              aria-label={`Notify me when ${product.name} is back in stock`}
+            >
+              <MailIcon className="w-5 h-5" />
+              <span className="text-sm font-bold whitespace-nowrap">Notify</span>
+            </button>
+          ) : (
+            <button
+              onClick={handleAddToCart}
+              disabled={isAdding || isSuccess}
+              className={`p-3 rounded-full shadow-lg transition-colors flex items-center gap-2 px-4
+                  ${isSuccess ? 'bg-success-green text-white' : 'bg-brand-primary text-white hover:bg-brand-primary/90'}
+                `}
+              title={`Add ${product.name} to cart`}
+              aria-label={`Add ${product.name} to cart`}
+            >
+              {isAdding ? (
+                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              ) : isSuccess ? (
+                <CheckCircleIcon className="w-5 h-5" />
+              ) : (
+                <PlusIcon className="w-5 h-5" />
+              )}
+            </button>
+          )}
         </div>
       </div>
 
@@ -133,7 +183,17 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <div className="text-xs text-neutral-500 font-medium uppercase tracking-wide">
           {product.category}
         </div>
-        <h3 className="text-lg font-serif font-bold text-neutral-900 leading-tight group-hover:text-brand-primary transition-colors line-clamp-1">
+        <h3
+          className="text-lg font-serif font-bold text-neutral-900 leading-tight group-hover:text-brand-primary transition-colors line-clamp-1 cursor-pointer"
+          role="button"
+          tabIndex={0}
+          aria-label={`View details for ${product.name}`}
+          onClick={(e) => {
+            e.stopPropagation();
+            onSelectProduct(product);
+          }}
+          onKeyDown={(e) => e.key === 'Enter' && onSelectProduct(product)}
+        >
           {product.name}
         </h3>
 
@@ -143,10 +203,17 @@ const ProductCard: React.FC<ProductCardProps> = ({
         </p>
 
         {/* Rating */}
+        {/* Rating */}
         <div className="flex items-center gap-1 mt-1">
-          <StarIcon className="w-4 h-4 text-warning-yellow fill-warning-yellow" />
-          <span className="text-sm text-neutral-600 font-medium">{product.rating || '4.8'}</span>
-          <span className="text-xs text-neutral-400">({product.review_count || 120})</span>
+          {(product.rating || (product.reviews?.length || 0) > 0) ? (
+            <>
+              <StarIcon className="w-4 h-4 text-warning-yellow fill-warning-yellow" />
+              <span className="text-sm text-neutral-600 font-medium">{product.rating || '4.8'}</span>
+              <span className="text-xs text-neutral-400">({product.review_count || product.reviews?.length || 120})</span>
+            </>
+          ) : (
+            <span className="text-sm text-neutral-500 italic">No reviews yet</span>
+          )}
         </div>
 
         <div className="mt-auto pt-4 flex items-center justify-between">
