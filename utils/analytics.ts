@@ -8,6 +8,7 @@ interface AnalyticsEvent {
 export const trackEvent = ({ name, data }: AnalyticsEvent) => {
   // Log to console in development
   if (import.meta.env.DEV) {
+    // eslint-disable-next-line no-console
     console.log(`[Analytics] Event: ${name}`, data);
   }
 

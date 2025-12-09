@@ -9,33 +9,10 @@ import { SunIcon } from './icons/SunIcon';
 import { Product, CartItem } from '../types';
 import SignOutButton from './SignOutButton';
 import MiniCart from './MiniCart';
-import { ChevronDownIcon } from './icons/ChevronDownIcon';
-import { ChevronRightIcon } from './icons/ChevronRightIcon';
 import { TagIcon } from './icons/TagIcon';
 import { SearchIcon } from './icons/SearchIcon';
-import Navigation from './Navigation';
-import { imageErrorHandlers } from '../utils/imageHelpers';
-import { useDarkMode } from '../hooks/useDarkMode';
-import { motion, AnimatePresence } from 'framer-motion';
 
-interface HeaderProps {
-  cartItems: CartItem[];
-  wishlistItemCount: number;
-  searchQuery: string;
-  onSearchChange: (query: string) => void;
-  onCartClick: () => void;
-  onWishlistClick: () => void;
-  onMobileMenuClick: () => void;
-  isLoggedIn: boolean;
-  isAdmin: boolean;
-  onLoginClick: () => void;
-  onLogoutClick: () => void;
-  allProducts: Product[];
-  onSelectProduct: (product: Product) => void;
-  subtotal: number;
-  categories: string[];
-  onSelectCategory: (category: string) => void;
-}
+// ... lines 40-57 skipped (Header props)
 
 const Header: React.FC<HeaderProps> = ({
   cartItems,
@@ -57,7 +34,6 @@ const Header: React.FC<HeaderProps> = ({
 }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [isProductsOpen, setProductsOpen] = useState(false);
   const [darkMode, setDarkMode] = useDarkMode();
   const [isAutocompleteOpen, setAutocompleteOpen] = useState(false);
   const [isMiniCartOpen, setMiniCartOpen] = useState(false);
@@ -127,16 +103,6 @@ const Header: React.FC<HeaderProps> = ({
     miniCartTimeoutRef.current = window.setTimeout(() => setMiniCartOpen(false), 200);
   };
 
-  // Products dropdown hover handling
-  const productsTimeoutRef = useRef<number | undefined>(undefined);
-  const handleProductsEnter = () => {
-    if (productsTimeoutRef.current) clearTimeout(productsTimeoutRef.current);
-    setProductsOpen(true);
-  };
-  const handleProductsLeave = () => {
-    productsTimeoutRef.current = window.setTimeout(() => setProductsOpen(false), 300);
-  };
-
   return (
     <>
       {/* Top Announcement Bar */}
@@ -145,9 +111,8 @@ const Header: React.FC<HeaderProps> = ({
       </div>
 
       <header
-        className={`sticky top-0 z-50 transition-all duration-300 ${
-          isScrolled ? 'bg-white shadow-sm' : 'bg-white border-b border-neutral-200'
-        }`}
+        className={`sticky top-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white shadow-sm' : 'bg-white border-b border-neutral-200'
+          }`}
       >
         <div className="max-w-7xl mx-auto px-4 md:px-16 h-20 flex items-center justify-between gap-8">
           {/* Left: Logo */}

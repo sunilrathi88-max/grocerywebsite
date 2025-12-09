@@ -1,6 +1,6 @@
-import React, { SVGProps } from 'react';
+import React from 'react';
 
-export const PlusIcon: React.FC<SVGProps<SVGSVGElement>> = (props) => (
+export const PlusIcon: React.FC<React.ComponentProps<'svg'>> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
