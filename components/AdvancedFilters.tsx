@@ -27,6 +27,9 @@ interface AdvancedFiltersProps {
   grinds: string[];
   selectedGrinds: string[];
   onToggleGrind: (grind: string) => void;
+  grades: string[];
+  selectedGrades: string[];
+  onToggleGrade: (grade: string) => void;
 }
 
 // Move FilterButton outside to avoid creating component during render
@@ -38,11 +41,10 @@ const FilterButton: React.FC<{
   <button
     onClick={onClick}
     aria-pressed={isActive}
-    className={`px-5 py-2.5 text-sm font-bold rounded-xl transition-all duration-300 border-2 transform hover:scale-105 hover:shadow-md ${
-      isActive
+    className={`px-5 py-2.5 text-sm font-bold rounded-xl transition-all duration-300 border-2 transform hover:scale-105 hover:shadow-md ${isActive
         ? 'bg-gradient-to-r from-brand-primary to-amber-500 text-white border-transparent shadow-lg'
         : 'bg-white text-gray-700 hover:bg-gray-50 border-gray-200 hover:border-brand-primary/30'
-    }`}
+      }`}
   >
     {children}
   </button>
@@ -74,6 +76,9 @@ const AdvancedFilters: React.FC<AdvancedFiltersProps> = ({
   grinds,
   selectedGrinds,
   onToggleGrind,
+  grades,
+  selectedGrades,
+  onToggleGrade,
 }) => {
   const [isExpanded, setIsExpanded] = useState(true);
 
@@ -86,6 +91,7 @@ const AdvancedFilters: React.FC<AdvancedFiltersProps> = ({
     selectedCuisines.length +
     selectedSizes.length +
     selectedGrinds.length +
+    selectedGrades.length +
     (priceRange.max < maxPrice ? 1 : 0);
 
   return (
@@ -145,6 +151,26 @@ const AdvancedFilters: React.FC<AdvancedFiltersProps> = ({
                     onClick={() => onToggleTag(tag)}
                   >
                     {tag}
+                  </FilterButton>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Grade */}
+          {grades && grades.length > 0 && (
+            <div className="space-y-3">
+              <h3 className="text-sm font-semibold text-gray-600 uppercase tracking-wide">
+                Grade
+              </h3>
+              <div className="flex items-center flex-wrap gap-3">
+                {grades.map((grade) => (
+                  <FilterButton
+                    key={grade}
+                    isActive={selectedGrades.includes(grade)}
+                    onClick={() => onToggleGrade(grade)}
+                  >
+                    {grade}
                   </FilterButton>
                 ))}
               </div>

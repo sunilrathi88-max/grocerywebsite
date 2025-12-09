@@ -101,12 +101,14 @@ describe('Address Management', () => {
     cy.contains('button', /login|sign in/i).click();
     cy.contains('button', /sign up|create account/i).click();
 
-    cy.get('input[type="text"]').first().type(testUser.name);
-    cy.get('input[type="email"]').type(testUser.email);
-    cy.get('input[type="password"]').first().type(testUser.password);
-    cy.get('input[id="confirm-password"]').type(testUser.password);
-    cy.get('input[id="accept-terms"]').check();
-    cy.get('form').submit();
+    cy.get('form').within(() => {
+      cy.get('input[type="text"]').first().type(testUser.name);
+      cy.get('input[type="email"]').type(testUser.email);
+      cy.get('input[type="password"]').first().type(testUser.password);
+      cy.get('input[id="confirm-password"]').type(testUser.password);
+      cy.get('input[id="accept-terms"]').check();
+      cy.root().submit();
+    });
 
     // Wait for signup to complete
     cy.wait('@signup');
@@ -125,18 +127,11 @@ describe('Address Management', () => {
 
     // Fill form
     cy.get('select').select(testAddress.type);
-    cy.contains('label', /street/i)
-      .next('input')
-      .type(testAddress.street);
-    cy.contains('label', /city/i).next('input').type(testAddress.city);
-    cy.contains('label', /state/i).next('input').type(testAddress.state);
-    cy.contains('label', /pin code|zip/i)
-      .next('input')
-      .type(testAddress.zip);
-    cy.contains('label', /country/i)
-      .next('input')
-      .clear()
-      .type(testAddress.country);
+    cy.get('input[name="street"]').clear().type(testAddress.street);
+    cy.get('input[name="city"]').clear().type(testAddress.city);
+    cy.get('input[name="state"]').clear().type(testAddress.state);
+    cy.get('input[name="zipCode"]').clear().type(testAddress.zip);
+    cy.get('input[name="country"]').clear().type(testAddress.country);
 
     cy.contains('button', /save address/i).click();
 
@@ -152,10 +147,7 @@ describe('Address Management', () => {
     cy.contains('button', /edit/i).click();
 
     const updatedStreet = '456 Updated St';
-    cy.contains('label', /street/i)
-      .next('input')
-      .clear()
-      .type(updatedStreet);
+    cy.get('input[name="street"]').clear().type(updatedStreet);
     cy.contains('button', /save address/i).click();
 
     // Wait for update

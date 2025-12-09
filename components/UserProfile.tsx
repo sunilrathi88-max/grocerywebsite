@@ -325,6 +325,7 @@ const AddressManager: React.FC<{
                 <label className="block text-sm font-medium text-gray-700">Street Address</label>
                 <input
                   type="text"
+                  name="street"
                   required
                   value={formData.street}
                   onChange={(e) => setFormData({ ...formData, street: e.target.value })}
@@ -336,6 +337,7 @@ const AddressManager: React.FC<{
                   <label className="block text-sm font-medium text-gray-700">City</label>
                   <input
                     type="text"
+                    name="city"
                     required
                     value={formData.city}
                     onChange={(e) => setFormData({ ...formData, city: e.target.value })}
@@ -346,6 +348,7 @@ const AddressManager: React.FC<{
                   <label className="block text-sm font-medium text-gray-700">State</label>
                   <input
                     type="text"
+                    name="state"
                     required
                     value={formData.state}
                     onChange={(e) => setFormData({ ...formData, state: e.target.value })}
@@ -358,6 +361,7 @@ const AddressManager: React.FC<{
                   <label className="block text-sm font-medium text-gray-700">PIN Code</label>
                   <input
                     type="text"
+                    name="zipCode"
                     required
                     value={formData.zip}
                     onChange={(e) => setFormData({ ...formData, zip: e.target.value })}
@@ -368,6 +372,7 @@ const AddressManager: React.FC<{
                   <label className="block text-sm font-medium text-gray-700">Country</label>
                   <input
                     type="text"
+                    name="country"
                     required
                     value={formData.country}
                     onChange={(e) => setFormData({ ...formData, country: e.target.value })}
@@ -465,19 +470,18 @@ const OrderHistory: React.FC<{ orders: Order[] }> = ({ orders }) => {
                     {new Date(order.date).toLocaleDateString()}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    ${order.total.toFixed(2)}
+                    ₹{order.total.toFixed(2)}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm">
                     <span
-                      className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                        order.status === 'Delivered'
-                          ? 'bg-green-100 text-green-800'
-                          : order.status === 'Shipped'
-                            ? 'bg-blue-100 text-blue-800'
-                            : order.status === 'Cancelled'
-                              ? 'bg-red-100 text-red-800'
-                              : 'bg-yellow-100 text-yellow-800'
-                      }`}
+                      className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${order.status === 'Delivered'
+                        ? 'bg-green-100 text-green-800'
+                        : order.status === 'Shipped'
+                          ? 'bg-blue-100 text-blue-800'
+                          : order.status === 'Cancelled'
+                            ? 'bg-red-100 text-red-800'
+                            : 'bg-yellow-100 text-yellow-800'
+                        }`}
                     >
                       {order.status}
                     </span>

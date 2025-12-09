@@ -57,7 +57,7 @@ const Wishlist: React.FC<WishlistProps> = ({ items, onToggleWishlist, onAddToCar
               <div className="flex-grow">
                 <p className="font-bold text-brand-dark text-lg">{item.name}</p>
                 <p className="text-xl font-bold text-brand-primary font-sans">
-                  ${(item.variants[0].salePrice ?? item.variants[0].price).toFixed(2)}
+                  ₹{(item.variants[0].salePrice ?? item.variants[0].price).toFixed(2)}
                 </p>
               </div>
             </div>

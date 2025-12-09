@@ -38,6 +38,17 @@ export interface ProductStructuredData extends Record<string, unknown> {
     ratingValue: number;
     reviewCount: number;
   };
+  weight?: {
+    '@type': 'QuantitativeValue';
+    value: number;
+    unitText: string;
+  };
+  countryOfOrigin?: {
+    '@type': 'Country';
+    name: string;
+  };
+  category?: string;
+  itemCondition?: string;
   review?: Array<{
     '@type': 'Review';
     reviewRating: {
@@ -209,6 +220,10 @@ export const generateProductSchema = (product: {
   images: string[];
   variants: Array<{ price: number; salePrice?: number; stock: number }>;
   reviews: Array<{ rating: number; author: string; comment: string }>;
+  weight?: { value: number; unit: string };
+  origin?: string;
+  category?: string;
+  grade?: string;
 }): ProductStructuredData => {
   const lowestPrice = Math.min(...product.variants.map((v) => v.salePrice ?? v.price));
   const inStock = product.variants.some((v) => v.stock > 0);
@@ -234,6 +249,21 @@ export const generateProductSchema = (product: {
       availability: inStock ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
       url: `https://tattva-co.com/product/${product.id}`,
     },
+    ...(product.weight && {
+      weight: {
+        '@type': 'QuantitativeValue',
+        value: product.weight.value,
+        unitText: product.weight.unit,
+      },
+    }),
+    ...(product.origin && {
+      countryOfOrigin: {
+        '@type': 'Country',
+        name: product.origin,
+      },
+    }),
+    ...(product.category && { category: product.category }),
+    ...(product.grade && { itemCondition: product.grade }),
     ...(product.reviews.length > 0 && {
       aggregateRating: {
         '@type': 'AggregateRating',

@@ -5,7 +5,7 @@ export const MOCK_PRODUCTS: Product[] = [
     id: 1,
     name: 'Himalayan Saffron',
     description:
-      'The finest, hand-picked saffron from the valleys of Kashmir. Known for its deep red color, strong aroma, and rich flavor. Perfect for biryanis, desserts, and milk-based sweets.',
+      'Transform your biryanis from ordinary to unforgettable with just a pinch. Experience the deep, golden aroma that only fresh, unadulterated Kashmiri Mongra can deliver.',
     images: [
       'https://images.unsplash.com/photo-1532336414038-cf19250c5757?auto=format&fit=crop&w=800&q=80',
       'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=800&q=80',
@@ -59,7 +59,7 @@ export const MOCK_PRODUCTS: Product[] = [
     id: 2,
     name: 'Malabar Black Pepper',
     description:
-      'Bold and pungent Tellicherry peppercorns from the Malabar Coast of Kerala. Sun-dried and hand-sorted to ensure only the best make it to your table.',
+      'Give your dishes a bold, aromatic kick that pre-ground pepper simply can\'t match. Taste the difference of sun-dried Tellicherry peppercorns in every bite.',
     images: [
       'https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=800&q=80',
       'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
@@ -88,7 +88,7 @@ export const MOCK_PRODUCTS: Product[] = [
     id: 3,
     name: 'Kashmiri Almonds',
     description:
-      'Sweet, nutrient-rich Mamra almonds from the Kashmir valley. They are smaller than their Californian counterparts but packed with more flavor and natural oils.',
+      'Experience the rich, creamy sweetness of Mamra almonds—far superior to standard varieties. Packed with natural oils, they make healthy snacking feel indulgent.',
     images: [
       'https://images.unsplash.com/photo-1508061253366-f7da158b6d6b?auto=format&fit=crop&w=800&q=80',
       'https://images.unsplash.com/photo-1623428187969-5da2dcea5ebf?auto=format&fit=crop&w=800&q=80',
@@ -121,7 +121,7 @@ export const MOCK_PRODUCTS: Product[] = [
     id: 4,
     name: 'Organic Turmeric Powder',
     description:
-      'Vibrant, earthy, and potent turmeric powder with high curcumin content, sourced from organic farms in Andhra Pradesh. A staple for curries and a healthy boost for lattes.',
+      'Feel confident about what you\'re cooking with—purity you can see in the vibrant color. This high-curcumin turmeric adds earthy richness without the fear of additives.',
     images: [
       'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=800&q=80',
       'https://images.unsplash.com/photo-1615485500704-8e990f9900f7?auto=format&fit=crop&w=800&q=80',
@@ -157,7 +157,7 @@ export const MOCK_PRODUCTS: Product[] = [
     id: 5,
     name: 'Darjeeling First Flush Tea',
     description:
-      'The "Champagne of Teas" from the first harvest of the season in Darjeeling. This tea has a light, floral aroma with a hint of astringency and a muscatel finish.',
+      'Elevate your morning ritual with the "Champagne of Teas"—so delicate effectively it needs no sugar. Enjoy the floral aroma and leave the bitterness behind.',
     images: [
       'https://images.unsplash.com/photo-1594631252845-29fc4cc8cde9?auto=format&fit=crop&w=800&q=80',
       'https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=800&q=80',
@@ -185,7 +185,7 @@ export const MOCK_PRODUCTS: Product[] = [
     id: 6,
     name: 'Gourmet Garam Masala',
     description:
-      'Our signature blend of 12 aromatic spices, including cinnamon, cardamom, and cloves, roasted and ground in small batches for the perfect, balanced flavor profile.',
+      'Stop guessing with store-bought mixes—achieve restaurant-quality flavor effortlessly. This artisanal blend brings perfect balance to your curries every single time.',
     images: [
       'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
       'https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=800&q=80',
@@ -222,7 +222,7 @@ export const MOCK_PRODUCTS: Product[] = [
     id: 7,
     name: 'Organic Dried Apricots',
     description:
-      'Sun-dried, unsulphured apricots from Ladakh. These are naturally sweet, chewy, and packed with fiber and vitamins. A perfect healthy snack.',
+      'Satisfy your sweet tooth guilt-free with nature\'s candy. These unsulphured apricots are naturally sweet and chewy, perfect for a healthy energy boost.',
     images: [
       'https://images.unsplash.com/photo-1606913084603-3e7702b01627?auto=format&fit=crop&w=800&q=80',
       'https://images.unsplash.com/photo-1595413667362-722923769976?auto=format&fit=crop&w=800&q=80',
@@ -242,7 +242,7 @@ export const MOCK_PRODUCTS: Product[] = [
     id: 8,
     name: 'Goan Cashew Nuts',
     description:
-      'Large, creamy, and crunchy W240 grade cashew nuts from the sunny orchards of Goa. Perfectly roasted and lightly salted to bring out their natural sweetness.',
+      'Immerse yourself in the creamy crunch of premium W240 cashews. Perfectly roasted to bring out a natural sweetness that makes ordinary cashews feel bland.',
     images: [
       'https://images.unsplash.com/photo-1536591375315-1988d6960545?auto=format&fit=crop&w=800&q=80',
       'https://images.unsplash.com/photo-1595413667362-722923769976?auto=format&fit=crop&w=800&q=80',
@@ -268,6 +268,206 @@ export const MOCK_PRODUCTS: Product[] = [
     storage: 'Airtight container',
     shelfLife: '6 Months',
     tags: ['Premium', 'Snack', 'Indian'],
+  },
+  {
+    id: 9,
+    name: 'Lakadong Turmeric',
+    description: 'Stop settling for dull, yellow powder. Our high-curcumin turmeric adds vibrant color and potent anti-inflammatory benefits to every spoon.',
+    images: ['https://images.unsplash.com/photo-1615485500704-8e99099928b3?auto=format&fit=crop&w=800&q=80'],
+    category: 'Spices',
+    variants: [{ id: 901, name: '250g', price: 249, stock: 50 }],
+    reviews: [],
+    tags: ['High Curcumin', 'Organic', 'Essential']
+  },
+  {
+    id: 10,
+    name: 'Coorg Green Cardamom',
+    description: 'Breathe life into your chai and desserts with pearls of intense fragrance. Harvested at peak ripeness for an aroma that fills the room.',
+    images: ['https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80'],
+    category: 'Spices',
+    variants: [{ id: 1001, name: '50g', price: 349, stock: 30 }],
+    reviews: [],
+    tags: ['Aromatic', 'Baking', 'Chai']
+  },
+  {
+    id: 11,
+    name: 'Ceylon Cinnamon',
+    description: 'Forget the harsh burn of cassia. Enjoy the delicate, sweet warmth of true cinnamon that elevates your baking without overpowering it.',
+    images: ['https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80'],
+    category: 'Spices',
+    variants: [{ id: 1101, name: '100g', price: 399, stock: 25 }],
+    reviews: [],
+    tags: ['Sweet', 'Baking', 'True Cinnamon']
+  },
+  {
+    id: 12,
+    name: 'Guntur Chilli Powder',
+    description: 'Ignite your palate with authentic fiery heat. Authentic Guntur chillies deliver the punch you crave without the artificial dyes.',
+    images: ['https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80'],
+    category: 'Spices',
+    variants: [{ id: 1201, name: '250g', price: 199, stock: 60 }],
+    reviews: [],
+    tags: ['Spicy', 'Essential', 'Indian']
+  },
+  {
+    id: 13,
+    name: 'Coriander Seeds',
+    description: 'Crush these seeds to release a citrusy, floral burst that transforms curries. Sourced fresh to ensure no flavor is lost to time.',
+    images: ['https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80'],
+    category: 'Spices',
+    variants: [{ id: 1301, name: '200g', price: 149, stock: 45 }],
+    reviews: [],
+    tags: ['Citrusy', 'Essential', 'Whole']
+  },
+  {
+    id: 14,
+    name: 'Cumin Seeds',
+    description: 'The backbone of flavor, revived. Our sun-dried cumin seeds bring a nutty, earthy depth that generic store brands simply lack.',
+    images: ['https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80'],
+    category: 'Spices',
+    variants: [{ id: 1401, name: '200g', price: 199, stock: 50 }],
+    reviews: [],
+    tags: ['Earthy', 'Essential', 'Whole']
+  },
+  {
+    id: 15,
+    name: 'Fennel Seeds',
+    description: 'Refresh your senses with the sweet, licorice-like crunch of Lucknowi fennel. A perfect digestive that tastes as good as it feels.',
+    images: ['https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80'],
+    category: 'Spices',
+    variants: [{ id: 1501, name: '100g', price: 129, stock: 40 }],
+    reviews: [],
+    tags: ['Sweet', 'Digestive', 'Mukhwas']
+  },
+  {
+    id: 16,
+    name: 'Star Anise',
+    description: 'Add a mystical, sweet-spiciness to your broths. Whole stars that guarantee your signature dishes have that secret restaurant-quality depth.',
+    images: ['https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80'],
+    category: 'Spices',
+    variants: [{ id: 1601, name: '50g', price: 249, stock: 30 }],
+    reviews: [],
+    tags: ['Exotic', 'Aromatic', 'Whole']
+  },
+  {
+    id: 17,
+    name: 'Cloves',
+    description: 'Unlock intense, warming aroma with just a few buds. Hand-selected for oil content, ensuring your heavy spices pack a powerful punch.',
+    images: ['https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80'],
+    category: 'Spices',
+    variants: [{ id: 1701, name: '50g', price: 299, stock: 35 }],
+    reviews: [],
+    tags: ['Pungent', 'Aromatic', 'Whole']
+  },
+  {
+    id: 18,
+    name: 'Mustard Seeds',
+    description: 'Hear the pop of freshness. These seeds crackle with pungent flavor, essential for a tempering that wakes up any lentil dish.',
+    images: ['https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80'],
+    category: 'Spices',
+    variants: [{ id: 1801, name: '200g', price: 99, stock: 60 }],
+    reviews: [],
+    tags: ['Pungent', 'Tempering', 'Essential']
+  },
+  {
+    id: 19,
+    name: 'Fenugreek Seeds',
+    description: 'Master the art of subtle bitterness. Essential for pickles and sambar, adding a complex savory note that balances rich flavors.',
+    images: ['https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80'],
+    category: 'Spices',
+    variants: [{ id: 1901, name: '200g', price: 119, stock: 40 }],
+    reviews: [],
+    tags: ['Bitter', 'Pickling', 'Essential']
+  },
+  {
+    id: 20,
+    name: 'Bay Leaf',
+    description: 'Infuse your slow-cooked meals with a subtle, herbal elegance. Whole, unbroken leaves that release flavor slowly and steadily.',
+    images: ['https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80'],
+    category: 'Spices',
+    variants: [{ id: 2001, name: '50g', price: 89, stock: 50 }],
+    reviews: [],
+    tags: ['Aromatic', 'Whole', 'Essential']
+  },
+  {
+    id: 21,
+    name: 'Cashew Nuts',
+    description: 'Creamy, crunchy, and naturally sweet. Whole W320 grade cashews that turn snacking into a moment of pure, guilt-free luxury.',
+    images: ['https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80'],
+    category: 'Nuts',
+    variants: [{ id: 2101, name: '500g', price: 799, stock: 30 }],
+    reviews: [],
+    tags: ['Snack', 'Creamy', 'Premium']
+  },
+  {
+    id: 22,
+    name: 'Pistachios',
+    description: 'Crack open vibrant green delight. Lightly salted and roasted to perfection, making every kernel a savory treasure.',
+    images: ['https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80'],
+    category: 'Nuts',
+    variants: [{ id: 2201, name: '250g', price: 499, stock: 30 }],
+    reviews: [],
+    tags: ['Snack', 'Roasted', 'Salted']
+  },
+  {
+    id: 23,
+    name: 'Walnuts',
+    description: 'Brain food that actually tastes good. Golden, buttery kernels with zero bitterness, perfect for baking or snacking straight from the shell.',
+    images: ['https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80'],
+    category: 'Nuts',
+    variants: [{ id: 2301, name: '500g', price: 899, stock: 20 }],
+    reviews: [],
+    tags: ['Healthy', 'Baking', 'Snack']
+  },
+  {
+    id: 24,
+    name: 'Raisins',
+    description: 'Nature\'s candy, redefined. Plump, juicy, and bursting with natural sweetness—no added sugar needed.',
+    images: ['https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80'],
+    category: 'Dry Fruits',
+    variants: [{ id: 2401, name: '500g', price: 299, stock: 50 }],
+    reviews: [],
+    tags: ['Sweet', 'Snack', 'Natural']
+  },
+  {
+    id: 25,
+    name: 'Dried Figs',
+    description: 'Chewy, honey-like sweetness in every bite. A calcium-rich superfood that satisfies your dessert cravings naturally.',
+    images: ['https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80'],
+    category: 'Dry Fruits',
+    variants: [{ id: 2501, name: '250g', price: 399, stock: 30 }],
+    reviews: [],
+    tags: ['Sweet', 'Healthy', 'Snack']
+  },
+  {
+    id: 26,
+    name: 'Apricots',
+    description: 'Tangy-sweet, sun-kissed goodness. Soft, vibrant apricots that bring a burst of Himalayan sunshine to your pantry.',
+    images: ['https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80'],
+    category: 'Dry Fruits',
+    variants: [{ id: 2601, name: '250g', price: 449, stock: 25 }],
+    reviews: [],
+    tags: ['Tangy', 'Healthy', 'Snack']
+  },
+  {
+    id: 27,
+    name: 'Masala Chai Blend',
+    description: 'Ditch the teabag dust. Brew a cup of comfort with whole spices and premium tea leaves for a ritual that recharges your soul.',
+    images: ['https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80'],
+    category: 'Beverages',
+    variants: [{ id: 2701, name: '250g', price: 349, stock: 40 }],
+    reviews: [],
+    tags: ['Tea', 'Spiced', 'Ritual']
+  },
+  {
+    id: 28,
+    name: 'Garam Masala',
+    description: 'The finishing touch your grandmother would approve of. A secret blend of 12 roasted spices that brings harmony to any Indian curry.',
+    images: ['https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80'],
+    category: 'Spices',
+    variants: [{ id: 2801, name: '100g', price: 299, stock: 35 }],
+    reviews: [],
+    tags: ['Blend', 'Essential', 'Aromatic']
   },
 ];
 

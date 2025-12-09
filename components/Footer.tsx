@@ -23,9 +23,14 @@ const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
           <div className="col-span-2 md:col-span-3 lg:col-span-1">
-            <h3 className="text-xl font-serif font-bold text-brand-dark">THE RATHI SPICE CO</h3>
-            <p className="mt-4 text-sm text-gray-600">Authentic Indian Gourmet Products.</p>
-            <div className="flex mt-4 space-x-4">
+            <h3 className="text-sm font-bold tracking-widest text-brand-primary uppercase mb-2">The Rathi Spice Co.</h3>
+            <p className="text-2xl font-serif font-bold text-brand-dark mb-4 leading-tight">
+              Fresh Spices. <br /> Real Stories.
+            </p>
+            <p className="text-sm text-gray-500 mb-6 max-w-xs">
+              Direct from the farm to your kitchen, retaining the volatile oils that make your food sing.
+            </p>
+            <div className="flex space-x-4">
               <a
                 href="https://facebook.com/tattvaco"
                 target="_blank"
@@ -173,17 +178,17 @@ const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
             <div className="flex flex-col items-center gap-3">
               <ShieldCheckIcon className="h-10 w-10 text-brand-primary" />
               <h5 className="font-bold">Secure Checkout</h5>
-              <p className="text-sm text-gray-600">Guaranteed safe payments</p>
+              <p className="text-sm text-gray-600">Bank-grade encryption</p>
             </div>
             <div className="flex flex-col items-center gap-3">
               <LeafIcon className="h-10 w-10 text-brand-primary" />
-              <h5 className="font-bold">Quality Assured</h5>
-              <p className="text-sm text-gray-600">Sourced from the best</p>
+              <h5 className="font-bold">Lab-Tested Purity</h5>
+              <p className="text-sm text-gray-600">No fillers, ever.</p>
             </div>
             <div className="flex flex-col items-center gap-3">
               <TruckIcon className="h-10 w-10 text-brand-primary" />
               <h5 className="font-bold">Fast Shipping</h5>
-              <p className="text-sm text-gray-600">On orders over $50</p>
+              <p className="text-sm text-gray-600">On orders over ₹999</p>
             </div>
           </div>
 

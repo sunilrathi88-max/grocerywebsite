@@ -49,6 +49,8 @@ export interface Product {
   shelfLife?: string;
   grind?: string;
   tags?: string[];
+  rating?: number;
+  review_count?: number;
 }
 
 export interface CartItem {

@@ -18,6 +18,7 @@ export interface Product {
   grade?: string;
   certification?: string;
   spicelevel?: string;
+  grind?: string;
 
   // New E-commerce Fields
   tags?: string[];
@@ -62,7 +63,7 @@ export interface Product {
   };
 
   // Relations
-  category?: Category;
+  category: string;
   createdAt?: string;
   updatedAt?: string;
 }

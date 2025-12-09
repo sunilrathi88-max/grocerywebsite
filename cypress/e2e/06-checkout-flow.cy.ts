@@ -8,14 +8,21 @@
 describe('Complete Checkout Flow', () => {
   beforeEach(() => {
     cy.visit('/');
+    cy.window().then((win) => {
+      win.localStorage.removeItem('cart-storage');
+    });
+    cy.reload();
   });
 
   it('should add product to cart and navigate to checkout', () => {
     // Add product using custom command
     cy.addProductToCart();
 
+    // Verify cart badge updated (state check)
+    cy.get('[data-testid="cart-badge"]', { timeout: 5000 }).should('contain', '1');
+
     // Navigate to checkout
-    cy.get('[href*="checkout"], [href="#/checkout"]').first().click({ force: true });
+    cy.goToCheckout();
     cy.wait(1000);
 
     // Verify on checkout page
@@ -24,23 +31,25 @@ describe('Complete Checkout Flow', () => {
   });
 
   it('should display cart items in checkout', () => {
+    cy.log('Starting checkout flow test...');
     // Add multiple products
-    cy.get('.product-card')
-      .first()
-      .within(() => {
-        cy.contains('button', /add to cart/i).click({ force: true });
-      });
+    // Wait for products to load
+    cy.log('Waiting for products to load...');
+    cy.get('.product-card', { timeout: 10000 }).should('have.length.gt', 0);
+
+    // Find first available product (not out of stock)
+    cy.log('Finding first product...');
+    cy.get('.product-card button').filter(':contains("Add")').first().click({ force: true });
     cy.wait(500);
 
-    cy.get('.product-card')
-      .eq(1)
-      .within(() => {
-        cy.contains('button', /add to cart/i).click({ force: true });
-      });
+    cy.wait(500);
+
+    // Find second available product
+    cy.get('.product-card button').filter(':contains("Add")').eq(1).click({ force: true });
     cy.wait(500);
 
     // Go to checkout
-    cy.get('[href*="checkout"]').first().click({ force: true });
+    cy.goToCheckout();
     cy.wait(1000);
 
     // Should show cart items
@@ -52,7 +61,7 @@ describe('Complete Checkout Flow', () => {
     cy.addProductToCart();
 
     // Go to checkout
-    cy.get('[href*="checkout"]').first().click({ force: true });
+    cy.goToCheckout();
     cy.wait(1000);
 
     // Check for price display
@@ -64,7 +73,7 @@ describe('Complete Checkout Flow', () => {
     cy.addProductToCart();
 
     // Navigate to checkout
-    cy.get('[href*="checkout"]').first().click({ force: true });
+    cy.goToCheckout();
     cy.wait(1000);
 
     // Apply promo code using custom command
@@ -77,7 +86,7 @@ describe('Complete Checkout Flow', () => {
   it('should apply SPICEFAN10 promo code (10% off)', () => {
     cy.addProductToCart();
 
-    cy.get('[href*="checkout"]').first().click({ force: true });
+    cy.goToCheckout();
     cy.wait(1000);
 
     cy.applyPromoCode('SPICEFAN10');
@@ -88,7 +97,7 @@ describe('Complete Checkout Flow', () => {
   it('should validate promo code and show error for invalid codes', () => {
     cy.addProductToCart();
 
-    cy.get('[href*="checkout"]').first().click({ force: true });
+    cy.goToCheckout();
     cy.wait(1000);
 
     // Try invalid code
@@ -101,7 +110,7 @@ describe('Complete Checkout Flow', () => {
   it('should calculate final price with discount', () => {
     cy.addProductToCart();
 
-    cy.get('[href*="checkout"]').first().click({ force: true });
+    cy.goToCheckout();
     cy.wait(1000);
 
     // Get original price
@@ -130,7 +139,7 @@ describe('Complete Checkout Flow', () => {
   it('should fill in customer information', () => {
     cy.addProductToCart();
 
-    cy.get('[href*="checkout"]').first().click({ force: true });
+    cy.goToCheckout();
     cy.wait(1000);
 
     // Fill form fields
@@ -146,7 +155,7 @@ describe('Complete Checkout Flow', () => {
   it('should validate required fields', () => {
     cy.addProductToCart();
 
-    cy.get('[href*="checkout"]').first().click({ force: true });
+    cy.goToCheckout();
     cy.wait(1000);
 
     // Try to submit without filling
@@ -159,7 +168,7 @@ describe('Complete Checkout Flow', () => {
   it('should select payment method', () => {
     cy.addProductToCart();
 
-    cy.get('[href*="checkout"]').first().click({ force: true });
+    cy.goToCheckout();
     cy.wait(1000);
 
     // Look for payment method options
@@ -171,7 +180,7 @@ describe('Complete Checkout Flow', () => {
     cy.addProductToCart();
 
     // Go to checkout
-    cy.get('[href*="checkout"]').first().click({ force: true });
+    cy.goToCheckout();
     cy.wait(1000);
 
     // Apply promo code
@@ -195,7 +204,7 @@ describe('Complete Checkout Flow', () => {
   it('should update cart quantity in checkout', () => {
     cy.addProductToCart();
 
-    cy.get('[href*="checkout"]').first().click({ force: true });
+    cy.goToCheckout();
     cy.wait(1000);
 
     // Look for quantity controls
@@ -214,7 +223,7 @@ describe('Complete Checkout Flow', () => {
   it('should remove item from cart in checkout', () => {
     cy.addProductToCart();
 
-    cy.get('[href*="checkout"]').first().click({ force: true });
+    cy.goToCheckout();
     cy.wait(1000);
 
     // Look for remove button
@@ -231,7 +240,7 @@ describe('Complete Checkout Flow', () => {
   it('should save customer info to localStorage', () => {
     cy.addProductToCart();
 
-    cy.get('[href*="checkout"]').first().click({ force: true });
+    cy.goToCheckout();
     cy.wait(1000);
 
     // Fill info
@@ -247,7 +256,7 @@ describe('Complete Checkout Flow', () => {
   it('should show order summary before confirmation', () => {
     cy.addProductToCart();
 
-    cy.get('[href*="checkout"]').first().click({ force: true });
+    cy.goToCheckout();
     cy.wait(1000);
 
     // Should display summary
@@ -258,7 +267,7 @@ describe('Complete Checkout Flow', () => {
     cy.visit('/');
 
     // Go directly to checkout without adding items
-    cy.get('[href*="checkout"]').first().click({ force: true });
+    cy.goToCheckout();
     cy.wait(1000);
 
     // Should show empty cart message

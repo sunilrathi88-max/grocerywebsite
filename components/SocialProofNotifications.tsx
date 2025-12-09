@@ -100,7 +100,8 @@ export const SocialProofNotifications: React.FC = () => {
       {notifications.map((notification) => (
         <div
           key={notification.id}
-          className="pointer-events-auto bg-white rounded-lg shadow-2xl border border-gray-200 p-4 max-w-sm animate-slide-in-left"
+          data-testid="social-proof-notification"
+          className="pointer-events-auto bg-white rounded-lg shadow-2xl border border-gray-200 p-4 w-[calc(100%-2rem)] max-w-sm animate-slide-in-left"
         >
           <div className="flex items-start gap-3">
             <div className="flex-shrink-0">
