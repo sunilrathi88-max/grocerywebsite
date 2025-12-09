@@ -122,8 +122,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
               e.stopPropagation();
               onToggleCompare(product);
             }}
-            className={`p-2 rounded-full bg-white/80 backdrop-blur-sm hover:bg-white transition-colors shadow-sm ${isCompared ? 'text-brand-primary bg-brand-primary/10' : 'text-neutral-600 hover:text-brand-primary'
-              }`}
+            className={`p-2 rounded-full bg-white/80 backdrop-blur-sm hover:bg-white transition-colors shadow-sm ${
+              isCompared
+                ? 'text-brand-primary bg-brand-primary/10'
+                : 'text-neutral-600 hover:text-brand-primary'
+            }`}
             aria-label={isCompared ? 'Remove from comparison' : 'Add to comparison'}
           >
             <CompareIcon className="w-5 h-5" />
@@ -205,11 +208,15 @@ const ProductCard: React.FC<ProductCardProps> = ({
         {/* Rating */}
         {/* Rating */}
         <div className="flex items-center gap-1 mt-1">
-          {(product.rating || (product.reviews?.length || 0) > 0) ? (
+          {product.rating || (product.reviews?.length || 0) > 0 ? (
             <>
               <StarIcon className="w-4 h-4 text-warning-yellow fill-warning-yellow" />
-              <span className="text-sm text-neutral-600 font-medium">{product.rating || '4.8'}</span>
-              <span className="text-xs text-neutral-400">({product.review_count || product.reviews?.length || 120})</span>
+              <span className="text-sm text-neutral-600 font-medium">
+                {product.rating || '4.8'}
+              </span>
+              <span className="text-xs text-neutral-400">
+                ({product.review_count || product.reviews?.length || 120})
+              </span>
             </>
           ) : (
             <span className="text-sm text-neutral-500 italic">No reviews yet</span>

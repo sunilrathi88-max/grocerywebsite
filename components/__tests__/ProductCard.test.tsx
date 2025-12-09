@@ -105,7 +105,7 @@ describe('ProductCard', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     // Suppress console.log from ProductCard
-    jest.spyOn(console, 'log').mockImplementation(() => { });
+    jest.spyOn(console, 'log').mockImplementation(() => {});
   });
 
   afterEach(() => {
