@@ -23,12 +23,15 @@ const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
           <div className="col-span-2 md:col-span-3 lg:col-span-1">
-            <h3 className="text-sm font-bold tracking-widest text-brand-primary uppercase mb-2">The Rathi Spice Co.</h3>
+            <h3 className="text-sm font-bold tracking-widest text-brand-primary uppercase mb-2">
+              The Rathi Spice Co.
+            </h3>
             <p className="text-2xl font-serif font-bold text-brand-dark mb-4 leading-tight">
               Fresh Spices. <br /> Real Stories.
             </p>
             <p className="text-sm text-gray-500 mb-6 max-w-xs">
-              Direct from the farm to your kitchen, retaining the volatile oils that make your food sing.
+              Direct from the farm to your kitchen, retaining the volatile oils that make your food
+              sing.
             </p>
             <div className="flex space-x-4">
               <a

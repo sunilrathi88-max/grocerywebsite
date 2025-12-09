@@ -145,8 +145,9 @@ const Header: React.FC<HeaderProps> = ({
       </div>
 
       <header
-        className={`sticky top-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white shadow-sm' : 'bg-white border-b border-neutral-200'
-          }`}
+        className={`sticky top-0 z-50 transition-all duration-300 ${
+          isScrolled ? 'bg-white shadow-sm' : 'bg-white border-b border-neutral-200'
+        }`}
       >
         <div className="max-w-7xl mx-auto px-4 md:px-16 h-20 flex items-center justify-between gap-8">
           {/* Left: Logo */}
@@ -291,9 +292,7 @@ const Header: React.FC<HeaderProps> = ({
             >
               <motion.div
                 animate={
-                  cartBounce
-                    ? { scale: [1, 1.2, 0.9, 1.1, 1], rotate: [0, -10, 10, -5, 0] }
-                    : {}
+                  cartBounce ? { scale: [1, 1.2, 0.9, 1.1, 1], rotate: [0, -10, 10, -5, 0] } : {}
                 }
                 transition={{ duration: 0.6, ease: 'easeInOut' }}
               >
@@ -359,10 +358,7 @@ const Header: React.FC<HeaderProps> = ({
             </button>
 
             {/* Mobile Menu */}
-            <button
-              className="md:hidden p-2 text-neutral-700"
-              onClick={onMobileMenuClick}
-            >
+            <button className="md:hidden p-2 text-neutral-700" onClick={onMobileMenuClick}>
               <MenuIcon className="w-6 h-6" />
             </button>
           </div>

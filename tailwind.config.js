@@ -31,13 +31,13 @@ export default {
         'accent-orange': '#FF6B35',
       },
       boxShadow: {
-        'card': '0 1px 3px 0 rgba(15, 23, 42, 0.1)',
+        card: '0 1px 3px 0 rgba(15, 23, 42, 0.1)',
         'card-hover': '0 4px 12px 0 rgba(15, 23, 42, 0.15)',
-        'button': '0 1px 2px 0 rgba(15, 23, 42, 0.08)',
+        button: '0 1px 2px 0 rgba(15, 23, 42, 0.08)',
       },
       backgroundImage: {
         'gradient-hero': 'linear-gradient(135deg, #8B5CF6 0%, #EF4444 100%)',
-      }
+      },
     },
   },
   plugins: [],

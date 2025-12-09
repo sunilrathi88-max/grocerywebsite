@@ -43,7 +43,7 @@ describe('Advanced Test Scenarios', () => {
         const loyaltyData = win.localStorage.getItem('loyaltyPoints');
         // Points might be string "345" etc.
         expect(loyaltyData).to.exist;
-        expect(Number(loyaltyData)).to. be.gt(0);
+        expect(Number(loyaltyData)).to.be.gt(0);
       });
     });
 
@@ -307,19 +307,30 @@ describe('Advanced Test Scenarios', () => {
       cy.wait(200);
 
       // Use more generic selector as the specific class might vary or be hidden
-      cy.get('.product-card').eq(0).find('button[aria-label="Compare"], [title="Compare"]').click({ force: true });
+      cy.get('.product-card')
+        .eq(0)
+        .find('button[aria-label="Compare"], [title="Compare"]')
+        .click({ force: true });
       cy.wait(300);
 
       cy.get('.product-card').eq(1).trigger('mouseover');
-      cy.get('.product-card').eq(1).find('button[aria-label="Compare"], [title="Compare"]').click({ force: true });
+      cy.get('.product-card')
+        .eq(1)
+        .find('button[aria-label="Compare"], [title="Compare"]')
+        .click({ force: true });
       cy.wait(300);
 
       cy.get('.product-card').eq(2).trigger('mouseover');
-      cy.get('.product-card').eq(2).find('button[aria-label="Compare"], [title="Compare"]').click({ force: true });
+      cy.get('.product-card')
+        .eq(2)
+        .find('button[aria-label="Compare"], [title="Compare"]')
+        .click({ force: true });
       cy.wait(300);
 
       // Open comparison modal
-      cy.get('button').contains(/compare/i).click({ force: true });
+      cy.get('button')
+        .contains(/compare/i)
+        .click({ force: true });
       cy.wait(500);
 
       // Verify comparison modal
@@ -330,7 +341,10 @@ describe('Advanced Test Scenarios', () => {
       // Try to add 5 products
       for (let i = 0; i < 5; i++) {
         cy.get('.product-card').eq(i).trigger('mouseover');
-        cy.get('.product-card').eq(i).find('button[aria-label="Compare"], [title="Compare"]').click({ force: true });
+        cy.get('.product-card')
+          .eq(i)
+          .find('button[aria-label="Compare"], [title="Compare"]')
+          .click({ force: true });
         cy.wait(200);
       }
 
@@ -396,7 +410,9 @@ describe('Advanced Test Scenarios', () => {
 
       // Invalid email
       cy.get('input[name*="email"]').type('invalid-email');
-      cy.get('button').contains(/place order/i).click({ force: true });
+      cy.get('button')
+        .contains(/place order/i)
+        .click({ force: true });
 
       // Should show validation error
       cy.contains(/invalid|valid email/i).should('be.visible');

@@ -33,22 +33,24 @@ const Testimonials: React.FC<TestimonialsProps> = ({ testimonials }) => {
         breakpoint: 1024,
         settings: {
           slidesToShow: 2,
-        }
+        },
       },
       {
         breakpoint: 640,
         settings: {
           slidesToShow: 1,
-        }
-      }
-    ]
+        },
+      },
+    ],
   };
 
   return (
     <section className="bg-white py-20 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 md:px-16">
         <div className="text-center mb-16 space-y-4">
-          <span className="text-brand-primary font-bold tracking-wider uppercase text-sm">Testimonials</span>
+          <span className="text-brand-primary font-bold tracking-wider uppercase text-sm">
+            Testimonials
+          </span>
           <h2 className="text-4xl md:text-5xl font-serif font-bold text-neutral-900">
             What Our Customers Say
           </h2>

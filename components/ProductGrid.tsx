@@ -29,7 +29,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({
   isLoading,
   onNotifyMe,
   enableFilters = false,
-  title
+  title,
 }) => {
   const [activeFilter, setActiveFilter] = useState('All');
 
@@ -37,7 +37,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({
 
   const filteredProducts = useMemo(() => {
     if (!enableFilters || activeFilter === 'All') return products;
-    return products.filter(p => p.category === activeFilter || p.category.includes(activeFilter));
+    return products.filter((p) => p.category === activeFilter || p.category.includes(activeFilter));
   }, [products, activeFilter, enableFilters]);
 
   const displayProducts = enableFilters ? filteredProducts : products;
@@ -46,7 +46,9 @@ const ProductGrid: React.FC<ProductGridProps> = ({
     return (
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
         {Array.from({ length: 8 }).map((_, i) => (
-          <div key={i}><ProductCardSkeleton /></div>
+          <div key={i}>
+            <ProductCardSkeleton />
+          </div>
         ))}
       </div>
     );
@@ -65,14 +67,16 @@ const ProductGrid: React.FC<ProductGridProps> = ({
 
           {enableFilters && (
             <div className="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0 no-scrollbar max-w-full">
-              {filters.map(filter => (
+              {filters.map((filter) => (
                 <button
                   key={filter}
                   onClick={() => setActiveFilter(filter)}
                   className={`px-6 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap
-                    ${activeFilter === filter
-                      ? 'bg-brand-dark text-white shadow-lg'
-                      : 'bg-white text-neutral-600 border border-neutral-200 hover:bg-neutral-50'}
+                    ${
+                      activeFilter === filter
+                        ? 'bg-brand-dark text-white shadow-lg'
+                        : 'bg-white text-neutral-600 border border-neutral-200 hover:bg-neutral-50'
+                    }
                   `}
                 >
                   {filter}
@@ -91,7 +95,10 @@ const ProductGrid: React.FC<ProductGridProps> = ({
               <ProductCard
                 product={product}
                 onAddToCart={(p, v) => {
-                  trackEvent({ name: 'add_to_cart', data: { id: p.id, name: p.name, price: v.salePrice || v.price } });
+                  trackEvent({
+                    name: 'add_to_cart',
+                    data: { id: p.id, name: p.name, price: v.salePrice || v.price },
+                  });
                   onAddToCart(p, v);
                 }}
                 onToggleWishlist={onToggleWishlist}

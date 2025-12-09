@@ -2,16 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import ErrorBoundary from './components/ErrorBoundary';
-import { initGA4 } from './utils/analytics';
+// import { initGA4 } from './utils/analytics';
 import './src/index.css';
 import './animations.css';
 
 // Initialize Google Analytics if measurement ID is provided
-const gaId = (import.meta as { env?: { VITE_GA_MEASUREMENT_ID?: string } }).env
-  ?.VITE_GA_MEASUREMENT_ID;
-if (gaId && gaId !== 'G-XXXXXXXXXX') {
-  initGA4(gaId);
-}
+// const gaId = (import.meta as { env?: { VITE_GA_MEASUREMENT_ID?: string } }).env
+//   ?.VITE_GA_MEASUREMENT_ID;
+// if (gaId && gaId !== 'G-XXXXXXXXXX') {
+//   initGA4(gaId); // TODO: Re-enable when real GA4 is added
+// }
 
 // Add smooth scroll behavior globally
 if (typeof window !== 'undefined') {

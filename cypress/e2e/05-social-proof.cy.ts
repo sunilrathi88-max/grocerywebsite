@@ -37,7 +37,7 @@ describe('Social Proof Notifications', () => {
 
     // Interval should be roughly between 10-15 seconds (allowing for execution overhead)
     // Lower bound: 10s (min interval) - small buffer
-    // Upper bound: 15s (max interval) + 5s (dismissal) + buffer? 
+    // Upper bound: 15s (max interval) + 5s (dismissal) + buffer?
     // Actually the interval is between *appearences*.
     // If interval is 10s: Shows at T0, Dismiss T5. Next T10.
     // So 10000 < interval < 16000.

@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { Product, Variant } from '../types';
 import { OptimizedImage } from './OptimizedImage';
 import { PLACEHOLDER_URLS, imageErrorHandlers } from '../utils/imageHelpers';
@@ -93,13 +92,18 @@ const ProductCard: React.FC<ProductCardProps> = ({
           className="absolute top-3 right-3 p-2 rounded-full bg-white/80 backdrop-blur-sm text-neutral-600 hover:bg-white hover:text-brand-secondary transition-colors opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 duration-300"
           aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
         >
-          <HeartIcon className={`w-5 h-5 ${isWishlisted ? 'fill-brand-secondary text-brand-secondary' : ''}`} />
+          <HeartIcon
+            className={`w-5 h-5 ${isWishlisted ? 'fill-brand-secondary text-brand-secondary' : ''}`}
+          />
         </button>
 
         {/* Quick Actions Overlay */}
         <div className="absolute inset-x-0 bottom-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 bg-gradient-to-t from-black/50 to-transparent flex gap-2 justify-center">
           <button
-            onClick={(e) => { e.stopPropagation(); onSelectProduct(product); }}
+            onClick={(e) => {
+              e.stopPropagation();
+              onSelectProduct(product);
+            }}
             className="bg-white text-neutral-900 p-3 rounded-full hover:bg-neutral-100 transition-colors shadow-lg"
             title="Quick View"
           >
@@ -152,7 +156,9 @@ const ProductCard: React.FC<ProductCardProps> = ({
                 {formatPrice(defaultVariant.price)}
               </span>
             )}
-            <span className={`text-xl font-bold ${onSale ? 'text-brand-secondary' : 'text-neutral-900'}`}>
+            <span
+              className={`text-xl font-bold ${onSale ? 'text-brand-secondary' : 'text-neutral-900'}`}
+            >
               {formatPrice(displayPrice)}
             </span>
           </div>
