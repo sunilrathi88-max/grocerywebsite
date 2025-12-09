@@ -2,7 +2,7 @@ type EventName = 'hero_cta_click' | 'add_to_cart' | 'product_click';
 
 interface AnalyticsEvent {
   name: EventName;
-  data?: Record<string, any>;
+  data?: Record<string, unknown>;
 }
 
 export const trackEvent = ({ name, data }: AnalyticsEvent) => {

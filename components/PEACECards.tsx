@@ -11,7 +11,7 @@ const PEACECards: React.FC = () => {
             Why Tattva Co.?
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            We're not just selling spices. We're fighting the mediocrity in your pantry.
+            We&apos;re not just selling spices. We&apos;re fighting the mediocrity in your pantry.
           </p>
         </div>
 
@@ -36,7 +36,9 @@ const PEACECards: React.FC = () => {
               </div>
 
               {/* The Problem */}
-              <h4 className="text-lg font-bold text-gray-900 mb-2 font-serif">&quot;{item.problem}&quot;</h4>
+              <h4 className="text-lg font-bold text-gray-900 mb-2 font-serif">
+                &quot;{item.problem}&quot;
+              </h4>
 
               <div className="w-12 h-0.5 bg-gray-200 my-4"></div>
 

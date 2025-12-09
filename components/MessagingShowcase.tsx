@@ -21,7 +21,7 @@ const MessagingShowcase: React.FC = () => {
             <h2 className="font-bold text-gray-700">1. Hero Component (PEACE Set 1: Quality)</h2>
             <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">Live</span>
           </div>
-          <Hero onShopNow={() => { }} />
+          <Hero onShopNow={() => {}} />
         </section>
 
         {/* Section 2: Why Cards */}

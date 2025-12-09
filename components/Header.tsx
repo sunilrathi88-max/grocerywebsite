@@ -46,7 +46,7 @@ const Header: React.FC<HeaderProps> = ({
   isLoggedIn,
   isAdmin,
   onLoginClick,
-  onLogoutClick,
+  onLogoutClick: _onLogoutClick,
   allProducts,
   onSelectProduct,
   subtotal,
@@ -133,8 +133,9 @@ const Header: React.FC<HeaderProps> = ({
       </div>
 
       <header
-        className={`sticky top-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white shadow-sm' : 'bg-white border-b border-neutral-200'
-          }`}
+        className={`sticky top-0 z-50 transition-all duration-300 ${
+          isScrolled ? 'bg-white shadow-sm' : 'bg-white border-b border-neutral-200'
+        }`}
       >
         <div className="max-w-7xl mx-auto px-4 md:px-16 h-20 flex items-center justify-between gap-8">
           {/* Left: Logo */}
