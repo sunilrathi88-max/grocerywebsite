@@ -13,6 +13,7 @@ export interface FilterOptions {
   cuisine?: string[];
   size?: string[];
   grind?: string[];
+  grade?: string[];
   showOnSale?: boolean;
   tags?: string[];
 }
@@ -133,6 +134,11 @@ export const useProductFilter = (
     // Filter by Grind
     if (filters.grind && filters.grind.length > 0) {
       result = result.filter((product) => product.grind && filters.grind?.includes(product.grind));
+    }
+
+    // Filter by Grade
+    if (filters.grade && filters.grade.length > 0) {
+      result = result.filter((product) => product.grade && filters.grade?.includes(product.grade));
     }
 
     // Sort products

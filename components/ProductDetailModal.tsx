@@ -240,11 +240,10 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                       <button
                         key={variant.id}
                         onClick={() => setSelectedVariant(variant)}
-                        className={`px-4 py-2 text-sm font-bold rounded-full transition-all duration-300 border ${
-                          selectedVariant.id === variant.id
+                        className={`px-4 py-2 text-sm font-bold rounded-full transition-all duration-300 border ${selectedVariant.id === variant.id
                             ? 'bg-brand-primary text-brand-dark border-brand-primary shadow-md'
                             : 'bg-white text-brand-dark hover:bg-brand-secondary/50 border-gray-300'
-                        } ${variant.stock === 0 ? 'line-through text-gray-400 cursor-not-allowed' : ''}`}
+                          } ${variant.stock === 0 ? 'line-through text-gray-400 cursor-not-allowed' : ''}`}
                         disabled={variant.stock === 0}
                       >
                         {variant.name}
@@ -317,6 +316,25 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                     Add to Cart
                   </button>
                 )}
+
+                <div className="mt-6 border border-gray-100 bg-gray-50 rounded-xl p-4">
+                  <h3 className="font-bold text-gray-900 mb-3 text-sm uppercase tracking-wide">Product Specifications</h3>
+                  <div className="space-y-2 text-sm">
+                    {[
+                      { label: 'Form', value: product.grind },
+                      { label: 'Origin', value: product.origin },
+                      { label: 'Grade', value: product.grade },
+                      { label: 'Spice Level', value: product.spicelevel },
+                      { label: 'Certification', value: product.certification || product.certifications?.join(', ') },
+                      { label: 'Net Weight', value: product.weight_value ? `${product.weight_value}${product.weight_unit}` : null }
+                    ].map((item) => item.value ? (
+                      <div key={item.label} className="flex justify-between border-b border-gray-200 last:border-0 pb-2 last:pb-0 border-dashed">
+                        <span className="text-gray-600">{item.label}</span>
+                        <span className="font-medium text-gray-900 text-right capitalize">{item.value}</span>
+                      </div>
+                    ) : null)}
+                  </div>
+                </div>
 
                 <div className="mt-4">
                   <TrustBadges />
@@ -707,7 +725,7 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                 title="Customers Also Viewed"
                 products={recommendations}
                 onAddToCart={(p, v) => onAddToCart(p, v)}
-                onToggleWishlist={() => {}}
+                onToggleWishlist={() => { }}
                 wishlistedIds={new Set()}
                 onSelectProduct={onSelectProduct}
                 onNotifyMe={onNotifyMe}

@@ -4,14 +4,11 @@ import { Product, Variant } from '../types';
 import { OptimizedImage } from './OptimizedImage';
 import { PLACEHOLDER_URLS, imageErrorHandlers } from '../utils/imageHelpers';
 import { CheckCircleIcon } from './icons/CheckCircleIcon';
-
 import { PlusIcon } from './icons/PlusIcon';
 import { HeartIcon } from './icons/HeartIcon';
 import { StarIcon } from './icons/StarIcon';
 import { EyeIcon } from './icons/EyeIcon';
-import { CompareIcon } from './icons/CompareIcon';
 import { formatPrice } from '../utils/formatPrice';
-import StockBadge from './StockBadge';
 
 interface ProductCardProps {
   product: Product;
@@ -31,30 +28,15 @@ const ProductCard: React.FC<ProductCardProps> = ({
   onToggleWishlist,
   isWishlisted,
   onSelectProduct,
-  onToggleCompare,
-  isCompared,
-  onNotifyMe,
   priority = 'auto',
 }) => {
   const placeholderImage = PLACEHOLDER_URLS.product;
-  // Use shared image error handler to swap to local fallback
   const handleImageError = imageErrorHandlers.product;
 
-  const averageRating =
-    product.reviews.length > 0
-      ? product.reviews.reduce((acc, review) => acc + review.rating, 0) / product.reviews.length
-      : null;
-
-  const roundedRating = averageRating ? Math.round(averageRating) : 0;
-  const totalStock = product.variants.reduce((sum, v) => sum + v.stock, 0);
-  const isOutOfStock = totalStock === 0;
-  const isLowStock = totalStock > 0 && totalStock <= 5;
-
   const defaultVariant = product.variants[0];
-  const onSale = defaultVariant.salePrice && defaultVariant.salePrice < defaultVariant.price;
-  const hasMultiplePrices = product.variants.length > 1;
-
   const displayPrice = defaultVariant.salePrice ?? defaultVariant.price;
+  const onSale = defaultVariant.salePrice && defaultVariant.salePrice < defaultVariant.price;
+
   const [isAdding, setIsAdding] = React.useState(false);
   const [isSuccess, setIsSuccess] = React.useState(false);
 
@@ -65,210 +47,117 @@ const ProductCard: React.FC<ProductCardProps> = ({
     setIsAdding(true);
     onAddToCart(product, defaultVariant);
 
-    // Simulate network delay for better UX (or wait for actual promise if available)
     setTimeout(() => {
       setIsAdding(false);
       setIsSuccess(true);
-
-      // Reset success state after 1.5 seconds
-      setTimeout(() => {
-        setIsSuccess(false);
-      }, 1500);
+      setTimeout(() => setIsSuccess(false), 1500);
     }, 600);
   };
 
   return (
-    <div className="product-card w-full bg-white rounded-2xl shadow-lg overflow-hidden group transform hover:-translate-y-3 transition-all duration-500 border border-gray-100 hover:border-brand-primary/40 hover:shadow-2xl flex flex-col relative opacity-100">
-      {/* Hover Glow Effect */}
-      <div className="absolute inset-0 bg-gradient-to-br from-brand-primary/0 via-transparent to-amber-500/0 group-hover:from-brand-primary/5 group-hover:to-amber-500/5 transition-all duration-500 rounded-2xl pointer-events-none"></div>
+    <div
+      className="group bg-white rounded-xl border border-neutral-200 overflow-hidden transition-all duration-300 hover:shadow-card-hover hover:border-brand-primary/20 flex flex-col h-full relative"
+      onClick={() => onSelectProduct(product)}
+    >
+      {/* Image Container */}
+      <div className="relative aspect-[4/5] overflow-hidden bg-neutral-50 cursor-pointer">
+        <OptimizedImage
+          src={product.images?.[0] || placeholderImage}
+          alt={product.name}
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          fallbackSrc={placeholderImage}
+          onError={handleImageError}
+          priority={priority}
+        />
 
-      <div className="relative">
-        <div className="h-72 w-full bg-gradient-to-br from-gray-100 to-gray-200 relative overflow-hidden rounded-t-2xl">
-          <OptimizedImage
-            className="h-full w-full object-cover transition-all duration-700 ease-out group-hover:scale-110 group-hover:rotate-2"
-            src={product.images?.[0] || placeholderImage}
-            alt={product.name}
-            type="card"
-            priority={priority}
-            fallbackSrc={placeholderImage}
-            onError={handleImageError}
-            width={400}
-            height={300}
-          />
-          {/* Dark Overlay on Hover */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-black/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-
-          {/* Action Buttons - Slide Up on Hover (Always visible on mobile) */}
-          <div className="absolute inset-x-0 bottom-0 flex items-center justify-center gap-3 p-6 translate-y-0 lg:translate-y-full lg:group-hover:translate-y-0 transition-transform duration-500 ease-out bg-gradient-to-t from-black/40 to-transparent lg:bg-none">
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                onSelectProduct(product);
-              }}
-              className="flex items-center gap-2 bg-white text-gray-900 font-bold py-3 px-6 rounded-xl shadow-xl hover:shadow-2xl hover:bg-gradient-to-r hover:from-brand-primary hover:to-amber-500 hover:text-white transform hover:scale-110 transition-all duration-300"
-              aria-label={`Quick view ${product.name}`}
-            >
-              <EyeIcon className="h-5 w-5" />
-              <span className="text-sm hidden sm:inline">View</span>
-            </button>
-            {isOutOfStock ? (
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onNotifyMe(product.name);
-                }}
-                className="bg-gray-900 text-white font-bold py-3 px-6 rounded-xl shadow-xl hover:shadow-2xl hover:bg-gray-800 transform hover:scale-110 transition-all duration-300"
-              >
-                <span className="text-sm">Notify</span>
-              </button>
-            ) : (
-              <button
-                onClick={handleAddToCart}
-                disabled={isAdding || isSuccess}
-                className={`flex items-center gap-2 font-bold py-3 px-6 rounded-xl shadow-xl transition-all duration-300 transform hover:scale-105
-                  ${
-                    isSuccess
-                      ? 'bg-green-500 text-white hover:bg-green-600'
-                      : 'bg-gradient-to-r from-brand-primary to-amber-500 text-brand-dark hover:shadow-2xl hover:from-amber-500 hover:to-brand-primary'
-                  } 
-                  ${isAdding ? 'opacity-90 cursor-wait' : ''}
-                `}
-                aria-label={isSuccess ? 'Added to cart' : `Add ${product.name} to cart`}
-              >
-                {isAdding ? (
-                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                ) : isSuccess ? (
-                  <CheckCircleIcon className="w-5 h-5 animate-bounce" />
-                ) : (
-                  <PlusIcon />
-                )}
-                <span className="text-sm">
-                  {isAdding ? 'Adding...' : isSuccess ? 'Added' : 'Add'}
-                </span>
-              </button>
-            )}
-          </div>
-
-          {/* Out of Stock Badge */}
-          {isOutOfStock && (
-            <div className="absolute inset-0 bg-white/80 backdrop-blur-sm flex items-center justify-center group-hover:hidden transition-opacity duration-300">
-              <span className="bg-gray-900 text-white font-bold py-3 px-6 rounded-xl shadow-lg">
-                Out of Stock
-              </span>
-            </div>
+        {/* Badges */}
+        <div className="absolute top-3 left-3 flex flex-col gap-2">
+          {onSale && (
+            <span className="bg-brand-secondary text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+              Sale
+            </span>
+          )}
+          {product.grade && (
+            <span className="bg-white/90 backdrop-blur-sm text-neutral-900 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-neutral-200">
+              {product.grade}
+            </span>
           )}
         </div>
 
-        {/* Stock Badge */}
-        <StockBadge
-          stock={totalStock}
-          lowStockThreshold={defaultVariant.lowStockThreshold || 5}
-          restockDate={defaultVariant.restockDate}
-          className="absolute top-2 left-2 z-10"
-        />
-
-        {/* Wishlist Button - Enhanced */}
-        <motion.button
-          {...({
-            whileTap: { scale: 1.2 },
-            onClick: () => onToggleWishlist(product),
-            className:
-              'absolute top-4 right-4 bg-white/90 backdrop-blur-md p-3 rounded-full text-gray-700 hover:text-red-500 hover:bg-white shadow-lg hover:shadow-xl transition-all duration-300 z-10 group/heart',
-            'aria-label': isWishlisted ? 'Remove from wishlist' : 'Add to wishlist',
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          } as any)}
-        >
-          <HeartIcon
-            className={`h-6 w-6 transition-all duration-300 ${isWishlisted ? 'text-red-500 fill-current scale-110' : 'fill-transparent stroke-current group-hover/heart:scale-110'}`}
-          />
-        </motion.button>
-
-        {/* Compare Button - Enhanced */}
+        {/* Wishlist Button */}
         <button
-          onClick={() => onToggleCompare(product)}
-          className={`absolute bottom-4 right-4 bg-white/90 backdrop-blur-md p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 z-10 ${isCompared ? 'text-brand-primary bg-brand-primary/10' : 'text-gray-700 hover:text-brand-primary'}`}
-          aria-label={isCompared ? 'Remove from comparison' : 'Add to comparison'}
+          onClick={(e) => {
+            e.stopPropagation();
+            onToggleWishlist(product);
+          }}
+          className="absolute top-3 right-3 p-2 rounded-full bg-white/80 backdrop-blur-sm text-neutral-600 hover:bg-white hover:text-brand-secondary transition-colors opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 duration-300"
+          aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
         >
-          <CompareIcon className="transition-transform duration-300 hover:scale-110" />
+          <HeartIcon className={`w-5 h-5 ${isWishlisted ? 'fill-brand-secondary text-brand-secondary' : ''}`} />
         </button>
 
-        {/* Badges - Enhanced */}
-        <div className="absolute top-4 left-4 flex flex-col gap-2 z-10">
-          {onSale && (
-            <span className="bg-gradient-to-r from-red-500 to-pink-600 text-white font-bold text-xs py-2 px-4 rounded-full shadow-lg backdrop-blur-sm animate-pulse-slow">
-              SALE
-            </span>
-          )}
-          {isLowStock && (
-            <span className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white font-bold text-xs py-2 px-4 rounded-full shadow-lg backdrop-blur-sm">
-              LOW STOCK
-            </span>
-          )}
+        {/* Quick Actions Overlay */}
+        <div className="absolute inset-x-0 bottom-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 bg-gradient-to-t from-black/50 to-transparent flex gap-2 justify-center">
+          <button
+            onClick={(e) => { e.stopPropagation(); onSelectProduct(product); }}
+            className="bg-white text-neutral-900 p-3 rounded-full hover:bg-neutral-100 transition-colors shadow-lg"
+            title="Quick View"
+          >
+            <EyeIcon className="w-5 h-5" />
+          </button>
+          <button
+            onClick={handleAddToCart}
+            disabled={isAdding || isSuccess}
+            className={`p-3 rounded-full shadow-lg transition-colors flex items-center gap-2 px-4
+                ${isSuccess ? 'bg-success-green text-white' : 'bg-brand-primary text-white hover:bg-brand-primary/90'}
+              `}
+            title="Add to Cart"
+          >
+            {isAdding ? (
+              <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+            ) : isSuccess ? (
+              <CheckCircleIcon className="w-5 h-5" />
+            ) : (
+              <PlusIcon className="w-5 h-5" />
+            )}
+          </button>
         </div>
       </div>
 
-      {/* Product Info - Enhanced */}
-      <div className="p-6 flex flex-col flex-grow bg-gradient-to-b from-white to-gray-50/50">
-        <button
-          onClick={() => onSelectProduct(product)}
-          className="w-full text-left group/title"
-          aria-label={`View details for ${product.name}`}
-        >
-          <h3 className="text-xl font-serif font-bold text-gray-900 truncate group-hover/title:text-brand-primary transition-colors duration-300">
-            {product.name}
-          </h3>
-        </button>
+      {/* Content */}
+      <div className="p-5 flex flex-col gap-2 flex-grow">
+        <div className="text-xs text-neutral-500 font-medium uppercase tracking-wide">
+          {product.category}
+        </div>
+        <h3 className="text-lg font-serif font-bold text-neutral-900 leading-tight group-hover:text-brand-primary transition-colors line-clamp-1">
+          {product.name}
+        </h3>
 
-        <div className="mt-3">
-          <div className="flex items-baseline gap-2">
-            <span
-              className={`text-2xl font-bold font-sans transition-all duration-300 ${onSale ? 'text-red-600' : 'text-gray-900 group-hover:text-brand-primary'}`}
-            >
-              {hasMultiplePrices && (
-                <span className="text-sm font-normal text-gray-500">From </span>
-              )}
-              {formatPrice(displayPrice)}
-            </span>
+        {/* Outcome Description (PEACE Framework) */}
+        <p className="text-sm text-neutral-600 line-clamp-2 leading-relaxed">
+          {product.description}
+        </p>
+
+        {/* Rating */}
+        <div className="flex items-center gap-1 mt-1">
+          <StarIcon className="w-4 h-4 text-warning-yellow fill-warning-yellow" />
+          <span className="text-sm text-neutral-600 font-medium">{product.rating || '4.8'}</span>
+          <span className="text-xs text-neutral-400">({product.review_count || 120})</span>
+        </div>
+
+        <div className="mt-auto pt-4 flex items-center justify-between">
+          <div className="flex flex-col">
             {onSale && (
-              <span className="text-lg font-sans text-gray-500 line-through">
+              <span className="text-sm text-neutral-400 line-through">
                 {formatPrice(defaultVariant.price)}
               </span>
             )}
-          </div>
-        </div>
-
-        <div className="mt-auto pt-4 border-t border-gray-100">
-          <div className="flex items-center h-[24px]">
-            {averageRating ? (
-              <div className="flex items-center gap-2">
-                <div className="flex gap-1">
-                  {Array.from({ length: 5 }).map((_, index) => (
-                    <StarIcon
-                      key={index}
-                      className={`w-5 h-5 transition-all duration-300 ${index < roundedRating ? 'text-yellow-400 drop-shadow-sm' : 'text-gray-400'}`}
-                    />
-                  ))}
-                </div>
-                <span className="text-sm text-gray-600 font-medium">
-                  ({product.reviews.length})
-                </span>
-              </div>
-            ) : (
-              <span className="text-sm text-gray-500 italic">No reviews yet</span>
-            )}
+            <span className={`text-xl font-bold ${onSale ? 'text-brand-secondary' : 'text-neutral-900'}`}>
+              {formatPrice(displayPrice)}
+            </span>
           </div>
         </div>
       </div>
-
-      <style>{`
-        @keyframes pulse-slow {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.8; }
-        }
-        .animate-pulse-slow {
-          animation: pulse-slow 2s ease-in-out infinite;
-        }
-      `}</style>
     </div>
   );
 };

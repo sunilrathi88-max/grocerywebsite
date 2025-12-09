@@ -12,9 +12,11 @@ import MiniCart from './MiniCart';
 import { ChevronDownIcon } from './icons/ChevronDownIcon';
 import { ChevronRightIcon } from './icons/ChevronRightIcon';
 import { TagIcon } from './icons/TagIcon';
+import { SearchIcon } from './icons/SearchIcon';
+import Navigation from './Navigation';
 import { imageErrorHandlers } from '../utils/imageHelpers';
 import { useDarkMode } from '../hooks/useDarkMode';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface HeaderProps {
   cartItems: CartItem[];
@@ -45,17 +47,20 @@ const Header: React.FC<HeaderProps> = ({
   onMobileMenuClick,
   isLoggedIn,
   isAdmin,
-
+  onLoginClick,
+  onLogoutClick,
   allProducts,
   onSelectProduct,
   subtotal,
   categories,
   onSelectCategory,
 }) => {
-  const [isAutocompleteOpen, setAutocompleteOpen] = useState(false);
-  const [isMiniCartOpen, setMiniCartOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isProductsOpen, setProductsOpen] = useState(false);
   const [darkMode, setDarkMode] = useDarkMode();
+  const [isAutocompleteOpen, setAutocompleteOpen] = useState(false);
+  const [isMiniCartOpen, setMiniCartOpen] = useState(false);
   const [cartBounce, setCartBounce] = useState(false);
   const searchContainerRef = useRef<HTMLDivElement>(null);
   const prevCartCountRef = useRef<number>(0);
@@ -65,16 +70,22 @@ const Header: React.FC<HeaderProps> = ({
     [cartItems]
   );
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 0);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   // Trigger bounce animation when cart count increases
   useEffect(() => {
     const prevCount = prevCartCountRef.current;
     if (cartItemCount > prevCount && prevCount !== 0) {
-      // Use setTimeout to avoid setState during effect
       const timer = setTimeout(() => {
         setCartBounce(true);
         setTimeout(() => setCartBounce(false), 600);
       }, 0);
-      // Update ref after checking (refs can be updated in effects)
       prevCartCountRef.current = cartItemCount;
       return () => clearTimeout(timer);
     }
@@ -83,19 +94,13 @@ const Header: React.FC<HeaderProps> = ({
 
   const autocompleteResults = useMemo(() => {
     if (!searchQuery) return { products: [], categories: [] };
-
     const query = searchQuery.toLowerCase();
-
-    // Find matching products
     const matchingProducts = allProducts
       .filter((p) => p.name.toLowerCase().includes(query))
       .slice(0, 4);
-
-    // Find matching categories
     const matchingCategories = categories
       .filter((cat) => cat.toLowerCase() !== 'all' && cat.toLowerCase().includes(query))
       .slice(0, 2);
-
     return { products: matchingProducts, categories: matchingCategories };
   }, [searchQuery, allProducts, categories]);
 
@@ -112,24 +117,20 @@ const Header: React.FC<HeaderProps> = ({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [searchContainerRef]);
 
-  // Mini cart hover handling with delay (using useRef to avoid reassignment)
-  const miniCartTimeoutRef = React.useRef<number | undefined>(undefined);
+  // Mini cart hover handling
+  const miniCartTimeoutRef = useRef<number | undefined>(undefined);
   const handleMiniCartEnter = () => {
-    if (miniCartTimeoutRef.current) {
-      clearTimeout(miniCartTimeoutRef.current);
-    }
+    if (miniCartTimeoutRef.current) clearTimeout(miniCartTimeoutRef.current);
     setMiniCartOpen(true);
   };
   const handleMiniCartLeave = () => {
     miniCartTimeoutRef.current = window.setTimeout(() => setMiniCartOpen(false), 200);
   };
 
-  // Products dropdown hover handling with delay (using useRef to avoid reassignment)
-  const productsTimeoutRef = React.useRef<number | undefined>(undefined);
+  // Products dropdown hover handling
+  const productsTimeoutRef = useRef<number | undefined>(undefined);
   const handleProductsEnter = () => {
-    if (productsTimeoutRef.current) {
-      clearTimeout(productsTimeoutRef.current);
-    }
+    if (productsTimeoutRef.current) clearTimeout(productsTimeoutRef.current);
     setProductsOpen(true);
   };
   const handleProductsLeave = () => {
@@ -137,129 +138,57 @@ const Header: React.FC<HeaderProps> = ({
   };
 
   return (
-    <header className="bg-brand-light/80 dark:bg-gray-800/80 backdrop-blur-lg border-b border-gray-200 dark:border-gray-700 fixed top-0 w-full z-50 shadow-sm transition-colors duration-300">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
-          <div className="flex-shrink-0">
-            <a
-              href="#/"
-              className="text-3xl font-serif font-bold text-brand-dark dark:text-gray-100 transition-colors duration-300"
-            >
+    <>
+      {/* Top Announcement Bar */}
+      <div className="bg-warning-yellow/10 text-brand-dark py-2 px-4 md:px-16 text-center text-sm font-medium hidden md:block">
+        🎉 Free shipping on all orders over ₹999 | Lab-tested purity guaranteed
+      </div>
+
+      <header
+        className={`sticky top-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white shadow-sm' : 'bg-white border-b border-neutral-200'
+          }`}
+      >
+        <div className="max-w-7xl mx-auto px-4 md:px-16 h-20 flex items-center justify-between gap-8">
+          {/* Left: Logo */}
+          <div
+            className="flex-shrink-0 flex items-center gap-2 cursor-pointer"
+            onClick={() => (window.location.hash = '#/')}
+          >
+            <span className="text-2xl font-serif font-bold text-neutral-900 tracking-tight">
               Tattva Co.
-            </a>
+            </span>
           </div>
-          <nav className="hidden md:flex items-center space-x-8">
-            <a
-              href="#/"
-              className="text-brand-dark dark:text-gray-100 hover:text-brand-primary dark:hover:text-brand-primary transition-colors duration-300"
-            >
-              Home
-            </a>
-            <div
-              className="relative"
-              onMouseEnter={handleProductsEnter}
-              onMouseLeave={handleProductsLeave}
-            >
-              <button className="flex items-center gap-1 text-brand-dark hover:text-brand-primary transition-colors duration-300">
-                Products <ChevronDownIcon className="h-4 w-4" />
-              </button>
-              {isProductsOpen && (
-                <div
-                  className="absolute top-full mt-2 w-48 bg-white rounded-lg shadow-lg border z-10 animate-fade-in-fast"
-                  onMouseEnter={handleProductsEnter}
-                  onMouseLeave={handleProductsLeave}
-                >
-                  <ul>
-                    {categories.map((category) => (
-                      <li key={category}>
-                        <button
-                          onClick={() => {
-                            // Close dropdown immediately
-                            setProductsOpen(false);
 
-                            // Set the category first
-                            onSelectCategory(category);
+          {/* Center: Navigation (Desktop) */}
+          <Navigation
+            categories={categories}
+            onSelectCategory={onSelectCategory}
+            isProductsOpen={isProductsOpen}
+            setProductsOpen={setProductsOpen}
+          />
 
-                            // Check if we need to navigate to home page
-                            const currentHash = window.location.hash;
-                            const needsNavigation =
-                              currentHash !== '#/' && currentHash !== '' && currentHash !== '#';
-
-                            if (needsNavigation) {
-                              // Navigate to home page first
-                              window.location.hash = '#/';
-                            }
-
-                            // Scroll to products section after a delay
-                            const scrollDelay = needsNavigation ? 500 : 150;
-                            setTimeout(() => {
-                              const productsSection = document.getElementById('products-section');
-
-                              if (productsSection) {
-                                const headerOffset = 100;
-                                const elementPosition = productsSection.getBoundingClientRect().top;
-                                const offsetPosition =
-                                  elementPosition + window.pageYOffset - headerOffset;
-
-                                window.scrollTo({
-                                  top: offsetPosition,
-                                  behavior: 'smooth',
-                                });
-                              } else {
-                                console.error('Products section not found!');
-                              }
-                            }, scrollDelay);
-                          }}
-                          className="w-full text-left p-3 hover:bg-brand-secondary/30 transition-colors text-sm"
-                        >
-                          {category}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
-            <a
-              href="#/offers"
-              className="text-brand-dark hover:text-brand-primary transition-colors duration-300"
-            >
-              Offers
-            </a>
-            <a
-              href="#/recipes"
-              className="text-brand-dark hover:text-brand-primary transition-colors duration-300"
-            >
-              Recipes
-            </a>
-            <a
-              href="#/blog"
-              className="text-brand-dark hover:text-brand-primary transition-colors duration-300"
-            >
-              Blog
-            </a>
-            <a
-              href="#/contact"
-              className="text-brand-dark hover:text-brand-primary transition-colors duration-300"
-            >
-              Contact
-            </a>
-          </nav>
-          <div className="flex items-center space-x-2">
-            <div className="relative hidden sm:block" ref={searchContainerRef}>
+          {/* Right: Actions */}
+          <div className="flex items-center gap-4">
+            {/* Search */}
+            <div className="relative hidden md:block" ref={searchContainerRef}>
               <input
-                type="search"
+                type="text"
                 placeholder="Search..."
                 value={searchQuery}
                 onChange={(e) => onSearchChange(e.target.value)}
                 onFocus={() => setAutocompleteOpen(true)}
-                className="bg-white border border-gray-300 rounded-full py-2 pl-4 pr-10 focus:outline-none focus:ring-2 focus:ring-brand-primary transition-all duration-300 w-40"
+                className="w-48 focus:w-64 transition-all duration-300 bg-neutral-100 border-none rounded-full py-2 pl-4 pr-10 text-sm focus:ring-2 focus:ring-brand-primary/20 placeholder-neutral-500"
               />
+              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500">
+                <SearchIcon className="w-4 h-4" />
+              </span>
+
+              {/* Autocomplete Dropdown */}
               {isAutocompleteOpen &&
                 (autocompleteResults.products.length > 0 ||
                   autocompleteResults.categories.length > 0) && (
-                  <div className="absolute top-full mt-2 w-80 bg-white rounded-lg shadow-2xl border border-gray-200 z-50 animate-fade-in-up overflow-hidden">
-                    {/* Categories Section */}
+                  <div className="absolute top-full mt-2 w-80 bg-white rounded-lg shadow-2xl border border-gray-200 z-50 animate-fade-in-up overflow-hidden right-0">
+                    {/* Categories */}
                     {autocompleteResults.categories.length > 0 && (
                       <div className="border-b border-gray-100">
                         <div className="px-4 py-2 bg-gray-50">
@@ -276,10 +205,10 @@ const Header: React.FC<HeaderProps> = ({
                                   setAutocompleteOpen(false);
                                   onSearchChange('');
                                 }}
-                                className="w-full text-left flex items-center gap-3 px-4 py-3 hover:bg-gradient-to-r hover:from-brand-primary/10 hover:to-amber-50 transition-all group"
+                                className="w-full text-left flex items-center gap-3 px-4 py-3 hover:bg-neutral-50 transition-all group"
                               >
-                                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-brand-primary to-amber-600 flex items-center justify-center flex-shrink-0">
-                                  <TagIcon className="h-4 w-4 text-white" />
+                                <div className="w-8 h-8 rounded-full bg-brand-primary/10 flex items-center justify-center flex-shrink-0">
+                                  <TagIcon className="h-4 w-4 text-brand-primary" />
                                 </div>
                                 <span className="font-medium text-gray-800 group-hover:text-brand-primary transition-colors">
                                   {category}
@@ -290,8 +219,7 @@ const Header: React.FC<HeaderProps> = ({
                         </ul>
                       </div>
                     )}
-
-                    {/* Products Section */}
+                    {/* Products */}
                     {autocompleteResults.products.length > 0 && (
                       <div>
                         <div className="px-4 py-2 bg-gray-50">
@@ -308,12 +236,12 @@ const Header: React.FC<HeaderProps> = ({
                                   setAutocompleteOpen(false);
                                   onSearchChange('');
                                 }}
-                                className="w-full text-left flex items-center gap-4 px-4 py-3 hover:bg-gradient-to-r hover:from-brand-primary/10 hover:to-amber-50 transition-all group"
+                                className="w-full text-left flex items-center gap-4 px-4 py-3 hover:bg-neutral-50 transition-all group"
                               >
                                 <img
                                   src={product.images[0]}
                                   alt={product.name}
-                                  className="w-12 h-12 object-cover rounded-lg shadow-sm group-hover:shadow-md transition-shadow"
+                                  className="w-12 h-12 object-cover rounded-lg shadow-sm"
                                   onError={imageErrorHandlers.thumb}
                                 />
                                 <div className="flex-1">
@@ -321,7 +249,7 @@ const Header: React.FC<HeaderProps> = ({
                                     {product.name}
                                   </p>
                                   <p className="text-sm text-gray-500">
-                                    ${product.variants[0].salePrice || product.variants[0].price}
+                                    Rs. {product.variants[0].salePrice || product.variants[0].price}
                                   </p>
                                 </div>
                               </button>
@@ -330,144 +258,145 @@ const Header: React.FC<HeaderProps> = ({
                         </ul>
                       </div>
                     )}
-
-                    {/* Search All Results */}
-                    {searchQuery && (
-                      <div className="border-t border-gray-100 bg-gray-50">
-                        <button
-                          onClick={() => {
-                            setAutocompleteOpen(false);
-                          }}
-                          className="w-full text-left px-4 py-3 text-sm font-medium text-brand-primary hover:bg-brand-primary/10 transition-colors flex items-center justify-between group"
-                        >
-                          <span>View all results for &quot;{searchQuery}&quot;</span>
-                          <ChevronRightIcon className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                )}
-              {isAutocompleteOpen &&
-                searchQuery &&
-                autocompleteResults.products.length === 0 &&
-                autocompleteResults.categories.length === 0 && (
-                  <div className="absolute top-full mt-2 w-80 bg-white rounded-lg shadow-2xl border border-gray-200 z-50 animate-fade-in-up overflow-hidden p-4 text-center">
-                    <p className="text-gray-500 text-sm">
-                      No results found for &quot;{searchQuery}&quot;
-                    </p>
                   </div>
                 )}
             </div>
-            {isLoggedIn && (
-              <>
-                {isAdmin && (
-                  <a
-                    href="#/admin"
-                    className="relative p-2 rounded-full text-brand-dark dark:text-gray-100 hover:bg-brand-secondary/30 dark:hover:bg-gray-700 transition-colors"
-                    aria-label="Admin Dashboard"
-                  >
-                    <CogIcon className="h-6 w-6" />
-                  </a>
-                )}
-                <a
-                  href="#/profile"
-                  className="relative p-2 rounded-full text-brand-dark dark:text-gray-100 hover:bg-brand-secondary/30 dark:hover:bg-gray-700 transition-colors"
-                  aria-label="User Profile"
-                >
-                  <UserIcon className="h-6 w-6" />
-                </a>
-              </>
-            )}
+
+            {/* Mobile Search Toggle */}
             <button
-              onClick={() => setDarkMode(!darkMode)}
-              className="relative p-2 rounded-full text-brand-dark dark:text-gray-100 hover:bg-brand-secondary/30 dark:hover:bg-gray-700 transition-all duration-300"
-              aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+              className="md:hidden text-neutral-700"
+              onClick={() => setIsSearchOpen(!isSearchOpen)}
             >
-              {darkMode ? <SunIcon className="h-6 w-6" /> : <MoonIcon className="h-6 w-6" />}
+              <SearchIcon className="w-6 h-6" />
             </button>
+
+            {/* Wishlist */}
             <button
               onClick={onWishlistClick}
-              className="relative p-2 rounded-full text-brand-dark dark:text-gray-100 hover:bg-brand-secondary/30 dark:hover:bg-gray-700 transition-colors"
-              aria-label={`View your wishlist (${wishlistItemCount} items)`}
+              className="relative p-2 text-neutral-700 hover:text-brand-secondary transition-colors"
             >
-              <HeartIcon className="h-6 w-6" />
+              <HeartIcon className="w-6 h-6" />
               {wishlistItemCount > 0 && (
-                <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-brand-primary text-brand-dark text-xs font-bold">
+                <span className="absolute -top-0.5 -right-0.5 bg-brand-secondary text-white text-xs font-bold w-4 h-4 rounded-full flex items-center justify-center">
                   {wishlistItemCount}
                 </span>
               )}
             </button>
+
+            {/* Cart */}
             <div
-              className="relative"
+              className="relative group"
               onMouseEnter={handleMiniCartEnter}
               onMouseLeave={handleMiniCartLeave}
             >
               <motion.div
                 animate={
                   cartBounce
-                    ? {
-                        scale: [1, 1.2, 0.9, 1.1, 1],
-                        rotate: [0, -10, 10, -5, 0],
-                      }
+                    ? { scale: [1, 1.2, 0.9, 1.1, 1], rotate: [0, -10, 10, -5, 0] }
                     : {}
                 }
                 transition={{ duration: 0.6, ease: 'easeInOut' }}
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                {...({} as any)}
               >
                 <button
                   data-testid="header-cart-btn"
                   onClick={onCartClick}
-                  className="relative p-2 rounded-full text-brand-dark dark:text-gray-100 hover:bg-brand-secondary/30 dark:hover:bg-gray-700 transition-colors"
-                  aria-label={`View your cart (${cartItemCount} items)`}
+                  className="relative p-2 text-neutral-700 hover:text-brand-primary transition-colors"
                 >
-                  <ShoppingCartIcon className="h-6 w-6" />
+                  <ShoppingCartIcon className="w-6 h-6" />
                   {cartItemCount > 0 && (
-                    <motion.span
-                      className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-brand-primary text-brand-dark text-xs font-bold"
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      key={cartItemCount}
-                      transition={{ type: 'spring', stiffness: 500, damping: 15 }}
-                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                      {...({} as any)}
+                    <span
+                      data-testid="cart-badge"
+                      className="absolute -top-0.5 -right-0.5 bg-brand-primary text-white text-xs font-bold w-4 h-4 rounded-full flex items-center justify-center"
                     >
                       {cartItemCount}
-                    </motion.span>
+                    </span>
                   )}
                 </button>
               </motion.div>
-              {isMiniCartOpen && <MiniCart items={cartItems} subtotal={subtotal} />}
+              {isMiniCartOpen && (
+                <div className="absolute top-full right-0 pt-2 hidden group-hover:block z-50">
+                  <MiniCart items={cartItems} subtotal={subtotal} />
+                </div>
+              )}
             </div>
+
+            {/* User / Login */}
             {isLoggedIn ? (
-              <SignOutButton className="bg-brand-dark text-white font-bold py-2 px-4 rounded-full text-sm hover:bg-opacity-80 transition-colors" />
+              <div className="flex items-center gap-2">
+                {isAdmin && (
+                  <button
+                    onClick={() => (window.location.hash = '#/admin')}
+                    className="p-2 text-neutral-700 hover:text-brand-primary"
+                  >
+                    <CogIcon className="w-6 h-6" />
+                  </button>
+                )}
+                <button
+                  onClick={() => (window.location.hash = '#/profile')}
+                  className="p-2 text-neutral-700 hover:text-brand-primary"
+                >
+                  <UserIcon className="w-6 h-6" />
+                </button>
+                <div className="hidden md:block">
+                  <SignOutButton className="text-sm font-medium text-neutral-600 hover:text-brand-secondary" />
+                </div>
+              </div>
             ) : (
               <button
-                onClick={() => (window.location.hash = '#/login')}
-                className="bg-brand-dark text-white font-bold py-2 px-4 rounded-full text-sm hover:bg-opacity-80 transition-colors"
+                onClick={onLoginClick}
+                className="hidden md:block bg-brand-primary text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-opacity-90 transition-all shadow-button active:transform active:scale-95"
               >
                 Login
               </button>
             )}
+
+            {/* Dark Mode */}
             <button
-              onClick={onMobileMenuClick}
-              className="md:hidden p-2 rounded-full text-brand-dark hover:bg-brand-secondary/30 transition-colors"
-              aria-label="Open navigation menu"
+              onClick={() => setDarkMode(!darkMode)}
+              className="p-2 text-neutral-700 hover:text-brand-primary transition-colors"
             >
-              <MenuIcon className="h-6 w-6" />
+              {darkMode ? <SunIcon className="w-6 h-6" /> : <MoonIcon className="w-6 h-6" />}
+            </button>
+
+            {/* Mobile Menu */}
+            <button
+              className="md:hidden p-2 text-neutral-700"
+              onClick={onMobileMenuClick}
+            >
+              <MenuIcon className="w-6 h-6" />
             </button>
           </div>
         </div>
-      </div>
-      <style>{`
-        @keyframes fade-in-fast {
-          from { opacity: 0; transform: translateY(-10px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fade-in-fast { animation: fade-in-fast 0.2s ease-out forwards; }
-      `}</style>
-    </header>
+
+        {/* Mobile Search Expanded */}
+        <AnimatePresence>
+          {isSearchOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              className="md:hidden border-t border-neutral-200 bg-white px-4 py-3 overflow-hidden"
+            >
+              <input
+                type="text"
+                placeholder="Search products..."
+                value={searchQuery}
+                onChange={(e) => onSearchChange(e.target.value)}
+                className="w-full bg-neutral-100 border-none rounded-lg py-3 pl-4 pr-10 text-base focus:ring-2 focus:ring-brand-primary/20"
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <style>{`
+          @keyframes fade-in-fast {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+          }
+          .animate-fade-in-fast { animation: fade-in-fast 0.2s ease-out forwards; }
+        `}</style>
+      </header>
+    </>
   );
 };
-
 export default React.memo(Header);

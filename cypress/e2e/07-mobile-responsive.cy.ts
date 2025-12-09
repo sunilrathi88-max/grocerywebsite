@@ -25,11 +25,11 @@ describe('Mobile Responsiveness', () => {
       });
 
       it('should display mobile menu button', () => {
-        cy.get('[class*="mobile"], button[aria-label*="menu" i]').should('be.visible');
+        cy.get('button[aria-label="Menu"]').should('be.visible');
       });
 
       it('should open mobile menu on click', () => {
-        cy.get('[class*="mobile"], button[aria-label*="menu" i]').click();
+        cy.get('button[aria-label="Menu"]').click();
         cy.wait(500);
 
         // Menu should be visible
@@ -37,13 +37,11 @@ describe('Mobile Responsiveness', () => {
       });
 
       it('should close mobile menu', () => {
-        cy.get('[class*="mobile"], button[aria-label*="menu" i]').click();
+        cy.get('button[aria-label="Menu"]').click();
         cy.wait(500);
 
         // Close menu
-        cy.get('button, [class*="close"]')
-          .contains(/✕|close/i)
-          .click({ force: true });
+        cy.get('button[aria-label="Close menu"]').click();
         cy.wait(500);
 
         // Menu should close
@@ -171,7 +169,7 @@ describe('Mobile Responsiveness', () => {
 
       it('should have touch-friendly dropdowns', () => {
         // Open mobile menu
-        cy.get('[class*="mobile"]').click();
+        cy.get('button[aria-label="Menu"]').click();
         cy.wait(500);
 
         // Tap Products

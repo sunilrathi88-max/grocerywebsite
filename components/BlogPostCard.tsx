@@ -23,6 +23,7 @@ const BlogPostCard: React.FC<BlogPostCardProps> = ({ post, onSelectPost }) => {
           <img
             src={post.image}
             alt={post.title}
+            loading="lazy"
             className="w-full h-full object-cover"
             onError={imageErrorHandlers.blog}
           />

@@ -164,13 +164,12 @@ const ReturnRequestModal: React.FC<ReturnRequestModalProps> = ({
                       <React.Fragment key={label}>
                         <div className="flex flex-col items-center">
                           <div
-                            className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm ${
-                              isActive
+                            className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm ${isActive
                                 ? 'bg-brand-primary text-brand-dark'
                                 : isCompleted
                                   ? 'bg-green-500 text-white'
                                   : 'bg-gray-300 text-gray-600'
-                            }`}
+                              }`}
                           >
                             {isCompleted ? '✓' : index + 1}
                           </div>
@@ -222,7 +221,7 @@ const ReturnRequestModal: React.FC<ReturnRequestModalProps> = ({
                           <p className="text-sm text-gray-600">{item.selectedVariant.name}</p>
                           <p className="text-sm text-gray-600">Ordered: {item.quantity}</p>
                           <p className="text-sm font-bold text-brand-primary">
-                            $
+                            ₹
                             {(item.selectedVariant.salePrice || item.selectedVariant.price).toFixed(
                               2
                             )}
@@ -255,7 +254,7 @@ const ReturnRequestModal: React.FC<ReturnRequestModalProps> = ({
                     <div className="bg-brand-accent/20 p-4 rounded-lg">
                       <p className="text-sm text-gray-700">Estimated Refund</p>
                       <p className="text-2xl font-bold text-brand-primary">
-                        ${refundAmount.toFixed(2)}
+                        ₹{refundAmount.toFixed(2)}
                       </p>
                     </div>
                   )}
@@ -273,11 +272,10 @@ const ReturnRequestModal: React.FC<ReturnRequestModalProps> = ({
                           key={r.value}
                           type="button"
                           onClick={() => setReason(r.value)}
-                          className={`p-4 border-2 rounded-lg text-left transition-all ${
-                            reason === r.value
+                          className={`p-4 border-2 rounded-lg text-left transition-all ${reason === r.value
                               ? 'border-brand-primary bg-brand-accent/20'
                               : 'border-gray-200 hover:border-gray-300'
-                          }`}
+                            }`}
                         >
                           <p className="font-semibold text-gray-900">{r.label}</p>
                         </button>
@@ -358,7 +356,7 @@ const ReturnRequestModal: React.FC<ReturnRequestModalProps> = ({
                     <div className="pt-3 border-t">
                       <p className="text-sm text-gray-600">Refund Amount</p>
                       <p className="text-2xl font-bold text-brand-primary">
-                        ${refundAmount.toFixed(2)}
+                        ₹{refundAmount.toFixed(2)}
                       </p>
                     </div>
                   </div>
@@ -417,7 +415,7 @@ const ReturnRequestModal: React.FC<ReturnRequestModalProps> = ({
                   <div className="bg-brand-accent/20 p-4 rounded-lg max-w-md mx-auto">
                     <p className="text-sm text-gray-700">Expected Refund Amount</p>
                     <p className="text-3xl font-bold text-brand-primary">
-                      ${refundAmount.toFixed(2)}
+                      ₹{refundAmount.toFixed(2)}
                     </p>
                   </div>
                 </div>

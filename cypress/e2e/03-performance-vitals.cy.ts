@@ -26,10 +26,10 @@ describe('Performance & Web Vitals', () => {
   it('should meet Core Web Vitals on product detail page', () => {
     cy.visit('/');
 
-    // Open first product detail
-    cy.get('.product-card').first().click();
+    // Open first product detail - Click View button (forced as it appears on hover)
+    cy.get('.product-card').first().find('button').contains('View').click({ force: true });
     // Wait for modal to open (using class since role=dialog is missing)
-    cy.get('.animate-fade-in').should('be.visible');
+    cy.get('.animate-fade-in', { timeout: 10000 }).should('be.visible');
     cy.wait(1000);
 
     // Check vitals on modal

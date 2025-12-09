@@ -195,8 +195,9 @@ describe('Lazy Loading Images', () => {
     // Scroll to trigger lazy loading
     cy.scrollTo('0%', '50%');
 
-    // Check for skeleton or placeholder
-    cy.get('[class*="skeleton"], [class*="placeholder"]').should('exist');
+    // Check for placeholder background (gradient) or opacity transition class
+    // ProductCard uses a gradient background as a placeholder
+    cy.get('.product-card .bg-gradient-to-br').should('exist');
   });
 
   it('should load images on category filter change', () => {
@@ -205,7 +206,8 @@ describe('Lazy Loading Images', () => {
       cy.contains('Products').trigger('mouseover');
     });
 
-    cy.get('[class*="dropdown"]').within(() => {
+    // Use data-testid for robustness
+    cy.get('[data-testid="products-dropdown"]').within(() => {
       cy.contains('Spices').click();
     });
 

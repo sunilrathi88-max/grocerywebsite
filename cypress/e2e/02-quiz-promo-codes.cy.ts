@@ -211,43 +211,22 @@ describe('Quiz and Promo Code System', () => {
     const promoCode = 'QUIZMASTER15';
 
     // Add product to cart
-    cy.visit('/');
-    cy.get('h1').should('be.visible'); // Wait for home page
-
-    // Find and click Add to Cart button (more specific selector)
-    // ProductCard has a button with "Add" text (not "Add to Cart")
-    cy.contains('button', 'Add').first().click();
-
-    // Wait for toast or cart update
-    cy.contains('added to cart').should('be.visible');
-
-    // Go to cart
-    // Click the cart icon/button in header
-    cy.get('[data-testid="header-cart-btn"]').click();
-
-    // Wait for cart sidebar
-    cy.contains('Your Cart').should('be.visible');
+    cy.addProductToCart();
 
     // Go to checkout
-    // Wait for animation and ensure button is interactive
-    cy.wait(1000);
-    cy.get('[data-testid="checkout-btn"]')
-      .scrollIntoView()
-      .should('be.visible')
-      .should('not.have.attr', 'aria-disabled', 'true')
-      .click({ force: true });
+    cy.goToCheckout();
 
     // Verify checkout page loaded
     cy.url().should('include', '/checkout');
     cy.contains('Checkout').should('be.visible');
 
-    // Apply promo code
-    // Assuming there is an input for promo code and an Apply button
-    cy.get('input[placeholder="Promo code"]').type(promoCode);
-    cy.contains('button', 'Apply').click();
+    // Apply promo code using custom command
+    cy.applyPromoCode(promoCode);
 
     // Verify discount applied
     cy.contains('Promo code applied!').should('be.visible');
-    cy.contains('15% off').should('be.visible');
+    // The UI shows "Discount (CODE)" and the amount, not "15% off"
+    cy.contains(`Discount (${promoCode})`).should('be.visible');
+    cy.contains(/-₹/).should('be.visible');
   });
 });

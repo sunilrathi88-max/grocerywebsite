@@ -64,9 +64,9 @@ const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
           <button
             key={item.name}
             onClick={item.action}
-            className={`relative flex flex-col items-center justify-center w-full h-full space-y-1 transition-colors ${
-              item.isActive ? 'text-brand-primary' : 'text-gray-500 hover:text-gray-900'
-            }`}
+            aria-label={item.name}
+            className={`relative flex flex-col items-center justify-center w-full h-full space-y-1 transition-colors ${item.isActive ? 'text-brand-primary' : 'text-gray-500 hover:text-gray-900'
+              }`}
           >
             <div className="relative">
               {item.icon}
