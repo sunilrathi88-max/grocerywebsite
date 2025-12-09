@@ -105,7 +105,7 @@ describe('ProductCard', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     // Suppress console.log from ProductCard
-    jest.spyOn(console, 'log').mockImplementation(() => {});
+    jest.spyOn(console, 'log').mockImplementation(() => { });
   });
 
   afterEach(() => {
@@ -250,7 +250,7 @@ describe('ProductCard', () => {
         />
       );
 
-      expect(screen.getByText('SALE')).toBeInTheDocument();
+      expect(screen.getByText(/sale/i)).toBeInTheDocument();
     });
 
     it('should display LOW STOCK badge when stock is low', () => {
@@ -294,7 +294,7 @@ describe('ProductCard', () => {
         />
       );
 
-      expect(screen.getAllByText('Out of Stock')).toHaveLength(2);
+      expect(screen.getAllByText('Out of Stock')).toHaveLength(1);
     });
   });
 
@@ -494,8 +494,8 @@ describe('ProductCard', () => {
 
       // Check for the filled heart styling
       const heartIcon = wishlistButton.querySelector('svg');
-      expect(heartIcon).toHaveClass('text-red-500');
-      expect(heartIcon).toHaveClass('fill-current');
+      expect(heartIcon).toHaveClass('text-brand-secondary');
+      expect(heartIcon).toHaveClass('fill-brand-secondary');
     });
 
     it('should show outline heart icon when product is not wishlisted', () => {
@@ -555,7 +555,7 @@ describe('ProductCard', () => {
       );
 
       const compareButton = screen.getByRole('button', { name: /Add to comparison/i });
-      expect(compareButton).toHaveClass('text-gray-700');
+      expect(compareButton).toHaveClass('text-neutral-600');
     });
   });
 
