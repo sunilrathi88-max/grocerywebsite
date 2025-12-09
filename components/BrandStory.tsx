@@ -22,8 +22,8 @@ const BrandStory: React.FC = () => {
               </h2>
               <div className="space-y-6 text-lg text-gray-600 leading-relaxed font-sans">
                 <p>
-                  It started with a simple disappointment. We bought "premium" saffron that tasted
-                  like... nothing. We bought "organic" turmeric that looked dull and dusty.
+                  It started with a simple disappointment. We bought &quot;premium&quot; saffron that tasted
+                  like... nothing. We bought &quot;organic&quot; turmeric that looked dull and dusty.
                 </p>
                 <p>
                   We realized the spice industry was broken. Middlemen were holding onto stock for
@@ -37,8 +37,8 @@ const BrandStory: React.FC = () => {
                   we know by name, test every batch for purity, and package it immediately.
                 </p>
                 <p className="text-xl font-serif italic text-brand-secondary">
-                  "We don't just sell ingredients. We sell the confidence that your food will taste
-                  extraordinary."
+                  &quot;We don&apos;t just sell ingredients. We sell the confidence that your food will taste
+                  extraordinary.&quot;
                 </p>
               </div>
 

@@ -1,6 +1,5 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ChevronRightIcon } from './icons/ChevronRightIcon';
 import { PEACE_SOUNDBITES } from '../data/soundbites';
 import { trackEvent } from '../utils/analytics';
 
@@ -47,7 +46,7 @@ const Hero: React.FC<HeroProps> = ({ onShopNow }) => {
 
             {/* Problem/Solution Context (Subtle) */}
             <p className="text-brand-light/80 text-base max-w-lg italic border-l-2 border-white/30 pl-4 my-2">
-              "{heroMessage.problem}" <br />
+              &quot;{heroMessage.problem}&quot; <br />
               <span className="text-sm not-italic opacity-90 mt-1 block">
                 — The Problem We Solved.
               </span>

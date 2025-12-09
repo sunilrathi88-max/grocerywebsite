@@ -72,10 +72,9 @@ const ProductGrid: React.FC<ProductGridProps> = ({
                   key={filter}
                   onClick={() => setActiveFilter(filter)}
                   className={`px-6 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap
-                    ${
-                      activeFilter === filter
-                        ? 'bg-brand-dark text-white shadow-lg'
-                        : 'bg-white text-neutral-600 border border-neutral-200 hover:bg-neutral-50'
+                    ${activeFilter === filter
+                      ? 'bg-brand-dark text-white shadow-lg'
+                      : 'bg-white text-neutral-600 border border-neutral-200 hover:bg-neutral-50'
                     }
                   `}
                 >
@@ -90,7 +89,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({
       {/* Grid */}
       {displayProducts.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-          {displayProducts.map((product, index) => (
+          {displayProducts.map((product) => (
             <div key={product.id} className="w-full">
               <ProductCard
                 product={product}
