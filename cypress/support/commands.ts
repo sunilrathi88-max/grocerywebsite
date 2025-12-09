@@ -80,10 +80,7 @@ Cypress.Commands.add('goToCheckout', () => {
   cy.wait(500);
   // Click checkout link/button - ensure we click the visible one (e.g. inside the open cart side modal)
   // The MiniCart might be present but covered by the main Cart, so filter by visibility.
-  cy.get('a[href*="checkout"], button:contains("Checkout")')
-    .filter(':visible')
-    .first()
-    .click();
+  cy.get('a[href*="checkout"], button:contains("Checkout")').filter(':visible').first().click();
 });
 
 // Custom command for completing quiz
@@ -128,4 +125,4 @@ declare global {
   }
 }
 
-export { };
+export {};

@@ -10,26 +10,26 @@ jobs:
   lint-and-format:
     name: ESLint & Prettier
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: 📥 Checkout
         uses: actions/checkout@v4
-        
+
       - name: 🟢 Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: '18'
           cache: 'npm'
-          
+
       - name: 📦 Install
         run: npm ci
-        
+
       - name: 🎨 Run ESLint
         run: npm run lint
-        
+
       - name: 💅 Check Formatting
         run: npm run format:check
-        
+
       - name: 📊 Post PR Comment
         if: failure() && github.event_name == 'pull_request'
         uses: actions/github-script@v7

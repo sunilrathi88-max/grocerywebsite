@@ -36,7 +36,6 @@ import ToastContainer from './components/ToastContainer';
 import PromotionalBanner from './components/PromotionalBanner';
 import SortDropdown from './components/SortDropdown';
 import Hero from './components/Hero';
-import WhyChoose from './components/WhyChoose'; // Legacy?
 import PEACECards from './components/PEACECards';
 import BrandStory from './components/BrandStory';
 
@@ -616,8 +615,8 @@ const App: React.FC = () => {
             addToast={addToast}
             discount={0}
             promoCode=""
-            onApplyPromoCode={() => { }}
-            onRemovePromoCode={() => { }}
+            onApplyPromoCode={() => {}}
+            onRemovePromoCode={() => {}}
             subtotal={0}
             shippingCost={0}
           />
@@ -906,14 +905,18 @@ const App: React.FC = () => {
                   <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
                     Handpicked essentials that will change the way you cook forever.
                     <br className="hidden md:block" />
-                    <span className="text-brand-primary font-semibold">No fillers. No old stock. Just flavor.</span>
+                    <span className="text-brand-primary font-semibold">
+                      No fillers. No old stock. Just flavor.
+                    </span>
                   </p>
                 </div>
 
                 {/* Advanced Grid Layout */}
                 <div className="grid grid-cols-1 md:grid-cols-[16rem_1fr] gap-10">
                   <aside className="hidden md:block sticky top-24 h-fit z-10">
-                    <React.Suspense fallback={<div className="h-[450px] bg-gray-100 rounded-xl animate-pulse" />}>
+                    <React.Suspense
+                      fallback={<div className="h-[450px] bg-gray-100 rounded-xl animate-pulse" />}
+                    >
                       <AdvancedFilters
                         showOnSale={showOnSale}
                         onToggleOnSale={() => setShowOnSale(!showOnSale)}
@@ -949,7 +952,9 @@ const App: React.FC = () => {
 
                   <div>
                     <div className="flex justify-between items-center mb-6 bg-white p-4 rounded-lg shadow-sm">
-                      <p className="text-gray-600 font-medium">Showing {finalFilteredProducts.length} results</p>
+                      <p className="text-gray-600 font-medium">
+                        Showing {finalFilteredProducts.length} results
+                      </p>
                       <SortDropdown
                         currentSort={sortOrder}
                         onSortChange={(val) => setSortOrder(val as typeof sortOrder)}
@@ -968,7 +973,7 @@ const App: React.FC = () => {
                     />
                     <div className="text-center mt-12">
                       <button
-                        onClick={() => window.location.hash = '#/offers'}
+                        onClick={() => (window.location.hash = '#/offers')}
                         className="text-brand-secondary font-bold hover:text-brand-dark underline decoration-2 underline-offset-4 transition-colors"
                       >
                         View All Offers &rarr;
@@ -992,10 +997,7 @@ const App: React.FC = () => {
             </React.Suspense>
 
             {/* Quiz Module */}
-            <section
-              data-testid="quiz-section"
-              className="bg-brand-secondary/5 py-20 mt-0"
-            >
+            <section data-testid="quiz-section" className="bg-brand-secondary/5 py-20 mt-0">
               <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <React.Suspense fallback={null}>
                   <QuizModule addToast={addToast} />

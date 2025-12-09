@@ -22,7 +22,6 @@ const Hero: React.FC<HeroProps> = ({ onShopNow }) => {
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 md:px-6 lg:px-8 w-full h-full flex flex-col md:flex-row items-center py-12 md:py-20 gap-12">
-
         {/* Left: Content */}
         <div className="w-full md:w-1/2 z-10 text-center md:text-left">
           <motion.div
@@ -49,7 +48,9 @@ const Hero: React.FC<HeroProps> = ({ onShopNow }) => {
             {/* Problem/Solution Context (Subtle) */}
             <p className="text-brand-light/80 text-base max-w-lg italic border-l-2 border-white/30 pl-4 my-2">
               "{heroMessage.problem}" <br />
-              <span className="text-sm not-italic opacity-90 mt-1 block">— The Problem We Solved.</span>
+              <span className="text-sm not-italic opacity-90 mt-1 block">
+                — The Problem We Solved.
+              </span>
             </p>
 
             {/* CTA */}
@@ -102,7 +103,6 @@ const Hero: React.FC<HeroProps> = ({ onShopNow }) => {
           {/* Glow Behind */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] md:w-[500px] md:h-[500px] bg-white/20 rounded-full blur-[80px]" />
         </div>
-
       </div>
     </section>
   );
