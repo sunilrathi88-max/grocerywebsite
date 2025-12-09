@@ -11,8 +11,29 @@ import SignOutButton from './SignOutButton';
 import MiniCart from './MiniCart';
 import { TagIcon } from './icons/TagIcon';
 import { SearchIcon } from './icons/SearchIcon';
+import Navigation from './Navigation';
+import { imageErrorHandlers } from '../utils/imageHelpers';
+import { useDarkMode } from '../hooks/useDarkMode';
+import { motion, AnimatePresence } from 'framer-motion';
 
-// ... lines 40-57 skipped (Header props)
+interface HeaderProps {
+  cartItems: CartItem[];
+  wishlistItemCount: number;
+  searchQuery: string;
+  onSearchChange: (query: string) => void;
+  onCartClick: () => void;
+  onWishlistClick: () => void;
+  onMobileMenuClick: () => void;
+  isLoggedIn: boolean;
+  isAdmin: boolean;
+  onLoginClick: () => void;
+  onLogoutClick: () => void; // Keep for interface compatibility, ignore unused warning for now
+  allProducts: Product[];
+  onSelectProduct: (product: Product) => void;
+  subtotal: number;
+  categories: string[];
+  onSelectCategory: (category: string) => void;
+}
 
 const Header: React.FC<HeaderProps> = ({
   cartItems,
@@ -34,6 +55,7 @@ const Header: React.FC<HeaderProps> = ({
 }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isProductsOpen, setProductsOpen] = useState(false);
   const [darkMode, setDarkMode] = useDarkMode();
   const [isAutocompleteOpen, setAutocompleteOpen] = useState(false);
   const [isMiniCartOpen, setMiniCartOpen] = useState(false);
