@@ -1,81 +1,73 @@
-import { useEffect } from 'react';
-import { applySEO, SEOConfig, addStructuredData, removeStructuredData } from '../utils/seo';
+import React from 'react';
+import { Helmet } from 'react-helmet-async';
+import { SEOConfig } from '../utils/seo';
+
+/**
+ * SEO Component
+ *
+ * Manages meta tags, Open Graph, Twitter Cards, and structured data for a page
+ * using react-helmet-async for declarative management and SSR support.
+ */
 
 interface SEOProps extends SEOConfig {
   structuredData?: Record<string, unknown>;
   structuredDataId?: string;
 }
 
-/**
- * SEO Component
- *
- * Manages meta tags, Open Graph, Twitter Cards, and structured data for a page
- *
- * @example
- * <SEO
- *   title="Product Name"
- *   description="Product description"
- *   ogType="product"
- *   structuredData={productSchema}
- * />
- */
 export const SEO: React.FC<SEOProps> = ({
   title,
   description,
   keywords,
   canonical,
-  ogType,
+  ogType = 'website',
   ogImage,
   ogImageAlt,
-  twitterCard,
+  twitterCard = 'summary_large_image',
   noindex,
   nofollow,
   structuredData,
-  structuredDataId = 'structured-data',
 }) => {
-  useEffect(() => {
-    // Apply SEO configuration
-    applySEO({
-      title,
-      description,
-      keywords,
-      canonical,
-      ogType,
-      ogImage,
-      ogImageAlt,
-      twitterCard,
-      noindex,
-      nofollow,
-    });
+  return (
+    <Helmet>
+      {/* Standard Metadata */}
+      <title>{title}</title>
+      <meta name="description" content={description} />
+      {keywords && keywords.length > 0 && (
+        <meta name="keywords" content={keywords.join(', ')} />
+      )}
+      {canonical && <link rel="canonical" href={canonical} />}
 
-    // Add structured data if provided
-    if (structuredData) {
-      addStructuredData(structuredData, structuredDataId);
-    }
+      {/* Open Graph / Facebook */}
+      <meta property="og:type" content={ogType} />
+      <meta property="og:title" content={title} />
+      <meta property="og:description" content={description} />
+      {ogImage && <meta property="og:image" content={ogImage} />}
+      {ogImageAlt && <meta property="og:image:alt" content={ogImageAlt} />}
+      <meta property="og:url" content={canonical || (typeof window !== 'undefined' ? window.location.href : '')} />
+      <meta property="og:site_name" content="THE RATHI SPICE CO" />
 
-    // Cleanup: remove structured data on unmount
-    return () => {
-      if (structuredData) {
-        removeStructuredData(structuredDataId);
-      }
-    };
-  }, [
-    title,
-    description,
-    keywords,
-    canonical,
-    ogType,
-    ogImage,
-    ogImageAlt,
-    twitterCard,
-    noindex,
-    nofollow,
-    structuredData,
-    structuredDataId,
-  ]);
+      {/* Twitter */}
+      <meta name="twitter:card" content={twitterCard} />
+      <meta name="twitter:title" content={title} />
+      <meta name="twitter:description" content={description} />
+      {ogImage && <meta name="twitter:image" content={ogImage} />}
 
-  // This component doesn't render anything
-  return null;
+      {/* Robots */}
+      {(noindex || nofollow) && (
+        <meta
+          name="robots"
+          content={`${noindex ? 'noindex' : 'index'}, ${nofollow ? 'nofollow' : 'follow'}`}
+        />
+      )}
+
+      {/* Structured Data */}
+      {structuredData && (
+        <script type="application/ld+json">
+          {JSON.stringify(structuredData)}
+        </script>
+      )}
+    </Helmet>
+  );
 };
 
 export default SEO;

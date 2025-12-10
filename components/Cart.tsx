@@ -21,6 +21,8 @@ interface CartProps {
   shippingCost: number;
   onRemoveItem: (productId: number, variantId: number) => void;
   onCheckout: () => void;
+  onAddToCart?: (product: Product, variant: Variant) => void;
+  recommendedProducts?: Product[];
 }
 
 const Spinner: React.FC<{ className?: string }> = ({ className = 'h-5 w-5' }) => (
@@ -58,7 +60,13 @@ const Cart: React.FC<CartProps> = ({
   discount,
   subtotal,
   shippingCost,
+  onAddToCart,
+  recommendedProducts = [],
 }) => {
+  const FREE_SHIPPING_THRESHOLD = 1000;
+  const remainingForFreeShipping = Math.max(0, FREE_SHIPPING_THRESHOLD - subtotal);
+  const shippingProgress = Math.min(100, (subtotal / FREE_SHIPPING_THRESHOLD) * 100);
+
   const [loadingState, setLoadingState] = useState<{ type: 'item' | 'promo' | null; id?: string }>({
     type: null,
   });
@@ -97,6 +105,24 @@ const Cart: React.FC<CartProps> = ({
 
   return (
     <div className="h-full flex flex-col">
+      {/* Free Shipping Progress Bar */}
+      <div className="p-4 bg-gray-50 border-b border-gray-100">
+        <div className="flex justify-between text-xs font-bold mb-1">
+          <span>
+            {remainingForFreeShipping > 0
+              ? `Add ₹${remainingForFreeShipping.toFixed(2)} for Free Shipping`
+              : 'You have unlocked Free Shipping!'}
+          </span>
+          <span>{Math.round(shippingProgress)}%</span>
+        </div>
+        <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+          <div
+            className={`h-full transition-all duration-500 ${remainingForFreeShipping > 0 ? 'bg-brand-primary' : 'bg-green-500'}`}
+            style={{ width: `${shippingProgress}%` }}
+          />
+        </div>
+      </div>
+
       {items.length === 0 ? (
         <div
           className="flex-1 flex flex-col items-center justify-center text-gray-500"
@@ -257,17 +283,54 @@ const Cart: React.FC<CartProps> = ({
           <a
             href={canCheckout ? '#/checkout' : undefined}
             onClick={canCheckout ? onClose : (e) => e.preventDefault()}
-            className={`mt-4 block w-full text-center bg-brand-primary text-brand-dark font-bold py-3 rounded-full shadow-lg transition-all duration-300 ${
-              !canCheckout || !!loadingState.type
-                ? 'bg-gray-400 cursor-not-allowed'
-                : 'hover:bg-opacity-90 transform hover:scale-105'
-            }`}
+            className={`mt-4 block w-full text-center bg-brand-primary text-brand-dark font-bold py-3 rounded-full shadow-lg transition-all duration-300 ${!canCheckout || !!loadingState.type
+              ? 'bg-gray-400 cursor-not-allowed'
+              : 'hover:bg-opacity-90 transform hover:scale-105'
+              }`}
             aria-disabled={!canCheckout || !!loadingState.type}
             data-testid="checkout-btn"
           >
             Proceed to Checkout
           </a>
         </>
+      )}
+
+      {/* Recommendations */}
+      {recommendedProducts.length > 0 && onAddToCart && (
+        <div className="mt-6 border-t pt-6 bg-gray-50 -mx-6 px-6 pb-6">
+          <h4 className="font-bold text-gray-800 mb-3 text-sm">Customers also bought</h4>
+          <div className="space-y-3">
+            {recommendedProducts
+              .filter(p => !items.some(i => i.product.id === p.id))
+              .slice(0, 3)
+              .map(product => (
+                <div key={product.id} className="flex items-center justify-between bg-white p-2 rounded-lg border border-gray-100 shadow-sm">
+                  <div className="flex items-center gap-3">
+                    <OptimizedImage
+                      src={product.images[0]}
+                      alt={product.name}
+                      className="w-10 h-10 object-cover rounded-md"
+                      type="thumbnail"
+                      width={40}
+                      height={40}
+                      onError={imageErrorHandlers.thumb}
+                    />
+                    <div className="overflow-hidden">
+                      <p className="font-bold text-xs text-gray-800 truncate w-32">{product.name}</p>
+                      <p className="text-xs text-gray-500">₹{product.variants[0].salePrice || product.variants[0].price}</p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => onAddToCart(product, product.variants[0])}
+                    className="text-brand-primary hover:bg-brand-primary hover:text-white p-1 rounded transition-colors"
+                    aria-label="Add to cart"
+                  >
+                    <PlusIcon className="w-5 h-5" />
+                  </button>
+                </div>
+              ))}
+          </div>
+        </div>
       )}
     </div>
   );

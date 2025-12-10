@@ -16,6 +16,7 @@ interface ProductGridProps {
   onNotifyMe: (productName: string) => void;
   enableFilters?: boolean; // New prop to enable homepage-style filtering
   title?: string; // Optional title
+  onClearFilters?: () => void;
 }
 
 const ProductGrid: React.FC<ProductGridProps> = ({
@@ -30,6 +31,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({
   onNotifyMe,
   enableFilters = false,
   title,
+  onClearFilters,
 }) => {
   const [activeFilter, setActiveFilter] = useState('All');
 
@@ -72,10 +74,9 @@ const ProductGrid: React.FC<ProductGridProps> = ({
                   key={filter}
                   onClick={() => setActiveFilter(filter)}
                   className={`px-6 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap
-                    ${
-                      activeFilter === filter
-                        ? 'bg-brand-dark text-white shadow-lg'
-                        : 'bg-white text-neutral-600 border border-neutral-200 hover:bg-neutral-50'
+                    ${activeFilter === filter
+                      ? 'bg-brand-dark text-white shadow-lg'
+                      : 'bg-white text-neutral-600 border border-neutral-200 hover:bg-neutral-50'
                     }
                   `}
                 >
@@ -110,13 +111,28 @@ const ProductGrid: React.FC<ProductGridProps> = ({
                 onToggleCompare={onToggleCompare}
                 isCompared={comparisonIds.has(product.id)}
                 onNotifyMe={onNotifyMe}
+                priority={products.indexOf(product) < 4 ? 'high' : 'auto'}
               />
             </div>
           ))}
         </div>
       ) : (
-        <div className="text-center py-20 bg-neutral-50 rounded-2xl border border-dashed border-neutral-200">
-          <p className="text-neutral-500">No products found in this category.</p>
+        <div className="text-center py-20 bg-neutral-50 rounded-2xl border border-dashed border-neutral-200 flex flex-col items-center">
+          <div className="bg-white p-4 rounded-full shadow-sm mb-4">
+            <span className="text-4xl">🔍</span>
+          </div>
+          <h3 className="text-xl font-bold text-gray-900 mb-2">No products found</h3>
+          <p className="text-neutral-500 mb-6 max-w-md mx-auto">
+            We couldn't find any products matching your filters. Try adjusting your search or filters.
+          </p>
+          {onClearFilters && (
+            <button
+              onClick={onClearFilters}
+              className="px-6 py-2 bg-brand-primary text-white font-bold rounded-lg hover:bg-opacity-90 transition-all shadow-md active:transform active:scale-95"
+            >
+              Clear All Filters
+            </button>
+          )}
         </div>
       )}
     </div>

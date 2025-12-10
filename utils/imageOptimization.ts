@@ -54,6 +54,8 @@ export const generateSrcSet = (
   // For placeholders, return single source
   // Don't build srcSet for placeholder/external images
   if (src.includes('placeholder') || src.includes('via.placeholder')) return '';
+  // Don't build srcSet for external URLs (simple fix to avoid breaking them)
+  if (src.startsWith('http://') || src.startsWith('https://')) return '';
 
   // Extract base name without extension
   const lastDotIndex = src.lastIndexOf('.');
@@ -79,6 +81,7 @@ export const generateWebPSrcSet = (
   // For SVGs or placeholders, don't generate a WebP srcset (not applicable)
   if (src.endsWith('.svg')) return '';
   if (src.includes('placeholder') || src.includes('via.placeholder')) return '';
+  if (src.startsWith('http://') || src.startsWith('https://')) return '';
 
   const lastDotIndex = src.lastIndexOf('.');
   const baseName = src.substring(0, lastDotIndex);

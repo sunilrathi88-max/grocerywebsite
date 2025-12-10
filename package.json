@@ -15,8 +15,8 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "test:unit": "jest --testPathPattern='(hooks|utils)' --coverage",
-    "test:components": "jest --testPathPattern='components' --coverage",
+    "test:unit": "jest \"(hooks|utils)\" --coverage",
+    "test:components": "jest \"components\" --coverage",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "cypress:run:chrome": "cypress run --browser chrome",
@@ -41,6 +41,7 @@
     "framer-motion": "11.18.2",
     "react": "18.3.1",
     "react-dom": "18.3.1",
+    "react-helmet-async": "^2.0.5",
     "react-slick": "^0.31.0",
     "recharts": "^3.4.1",
     "slick-carousel": "^1.8.1"

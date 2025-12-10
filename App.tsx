@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import { HelmetProvider } from 'react-helmet-async';
 import {
   Product,
   ToastMessage,
@@ -356,11 +357,22 @@ const App: React.FC = () => {
 
   const handleAddReview = useCallback(
     (productId: number, review: Omit<Review, 'id'>) => {
-      const newReview: Review = { ...review, id: Date.now() };
+      // Check for verified purchase
+      const hasPurchased = orders.some((order) =>
+        order.items.some((item) => item.product.id === productId)
+      );
+
+      const newReview: Review = {
+        ...review,
+        id: Date.now(),
+        verifiedPurchase: hasPurchased,
+        helpful: 0
+      };
+
       addReview(productId, newReview);
       addToast('Review submitted successfully!', 'success');
     },
-    [addReview, addToast]
+    [addReview, addToast, orders]
   );
 
   const handleDeleteReview = useCallback(
@@ -591,6 +603,23 @@ const App: React.FC = () => {
     );
   };
 
+  const handleClearFilters = useCallback(() => {
+    setSelectedCategory('All');
+    setSearchQuery('');
+    setPriceRange({ min: 0, max: maxPrice });
+    setSelectedOrigins([]);
+    setSelectedHeatLevels([]);
+    setSelectedCuisines([]);
+    setSelectedSizes([]);
+    setSelectedGrinds([]);
+    setSelectedGrades([]);
+    setShowOnSale(false);
+    setShowInStock(false);
+    setSelectedTags([]);
+    setSortOrder('newest');
+    addToast('Filters cleared', 'success');
+  }, [maxPrice, addToast]);
+
   // --- Render Views ---
 
   const renderView = () => {
@@ -615,8 +644,8 @@ const App: React.FC = () => {
             addToast={addToast}
             discount={0}
             promoCode=""
-            onApplyPromoCode={() => {}}
-            onRemovePromoCode={() => {}}
+            onApplyPromoCode={() => { }}
+            onRemovePromoCode={() => { }}
             subtotal={0}
             shippingCost={0}
           />
@@ -871,6 +900,7 @@ const App: React.FC = () => {
                   comparisonIds={comparisonIds}
                   isLoading={productsLoading}
                   onNotifyMe={handleNotifyMe}
+                  onClearFilters={handleClearFilters}
                 />
               </div>
             </div>
@@ -970,6 +1000,7 @@ const App: React.FC = () => {
                       comparisonIds={comparisonIds}
                       isLoading={productsLoading}
                       onNotifyMe={handleNotifyMe}
+                      onClearFilters={handleClearFilters}
                     />
                     <div className="text-center mt-12">
                       <button
@@ -1010,198 +1041,202 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <SEO
-        {...(currentView === 'home'
-          ? pageSEO.home()
-          : currentView === 'recipes'
-            ? pageSEO.recipes()
-            : currentView === 'blog'
-              ? pageSEO.blog()
-              : currentView === 'about'
-                ? pageSEO.about()
-                : currentView === 'contact'
-                  ? pageSEO.contact()
-                  : currentView === 'faqs'
-                    ? pageSEO.home()
-                    : selectedCategory !== 'All'
-                      ? pageSEO.products(selectedCategory)
-                      : pageSEO.home())}
-        structuredData={generateOrganizationSchema()}
-        structuredDataId="organization-schema"
-      />
+    <HelmetProvider>
+      <div className="flex flex-col min-h-screen">
+        <SEO
+          {...(currentView === 'home'
+            ? pageSEO.home()
+            : currentView === 'recipes'
+              ? pageSEO.recipes()
+              : currentView === 'blog'
+                ? pageSEO.blog()
+                : currentView === 'about'
+                  ? pageSEO.about()
+                  : currentView === 'contact'
+                    ? pageSEO.contact()
+                    : currentView === 'faqs'
+                      ? pageSEO.home()
+                      : selectedCategory !== 'All'
+                        ? pageSEO.products(selectedCategory)
+                        : pageSEO.home())}
+          structuredData={generateOrganizationSchema()}
+          structuredDataId="organization-schema"
+        />
 
-      {showPromoBanner && <PromotionalBanner onClose={() => setShowPromoBanner(false)} />}
+        {showPromoBanner && <PromotionalBanner onClose={() => setShowPromoBanner(false)} />}
 
-      <Header
-        cartItems={cartItems}
-        wishlistItemCount={wishlistItemCount}
-        searchQuery={searchQuery}
-        onSearchChange={setSearchQuery}
-        onCartClick={() => setIsCartOpen(true)}
-        onWishlistClick={() => setIsWishlistOpen(true)}
-        onMobileMenuClick={() => setIsMobileMenuOpen(true)}
-        isLoggedIn={isLoggedIn}
-        isAdmin={!!currentUser?.isAdmin}
-        onLoginClick={() => setAuthModalOpen(true)}
-        onLogoutClick={handleLogout}
-        allProducts={products}
-        onSelectProduct={setSelectedProduct}
-        subtotal={subtotal}
-        categories={categories}
-        onSelectCategory={handleSelectCategoryAndClose}
-      />
-
-      {renderView()}
-
-      <Footer onSelectCategory={handleSelectCategoryAndClose} />
-
-      <ToastContainer
-        toasts={toasts}
-        onClose={(id) => setToasts((t) => t.filter((toast) => toast.id !== id))}
-      />
-
-      {/* Modals */}
-      <React.Suspense fallback={null}>
-        {selectedProduct && (
-          <ProductDetailModal
-            product={selectedProduct}
-            allProducts={products}
-            recipes={MOCK_RECIPES}
-            onClose={() => setSelectedProduct(null)}
-            onAddToCart={handleAddToCart}
-            onToggleWishlist={handleToggleWishlist}
-            isWishlisted={isInWishlist(selectedProduct.id)}
-            isOpen={true}
-            onAddReview={handleAddReview}
-            onDeleteReview={handleDeleteReview}
-            onSelectCategoryAndClose={handleSelectCategoryAndClose}
-            addToast={addToast}
-            onAskQuestion={handleAskQuestion}
-            onSelectProduct={setSelectedProduct}
-            onNotifyMe={handleNotifyMe}
-          />
-        )}
-
-        <SideModal isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} title="Your Cart">
-          <Cart
-            items={cartItems}
-            onUpdateQuantity={handleUpdateQuantity}
-            onRemoveItem={(pId, vId) => updateQuantity(pId, vId, 0)}
-            onCheckout={() => {
-              setIsCartOpen(false);
-              window.location.hash = '#/checkout';
-            }}
-            subtotal={subtotal}
-            onClose={() => setIsCartOpen(false)}
-            isLoggedIn={isLoggedIn}
-            promoCode={promoCode}
-            onPromoCodeChange={setPromoCode}
-            onApplyPromoCode={handleApplyPromoCode}
-            discount={discount}
-            shippingCost={shippingCost}
-          />
-        </SideModal>
-
-        <SideModal
-          isOpen={isWishlistOpen}
-          onClose={() => setIsWishlistOpen(false)}
-          title="Your Wishlist"
-        >
-          <Wishlist
-            items={wishlistItems}
-            onRemove={(id) => toggleWishlist(products.find((p) => p.id === id)!)}
-            onAddToCart={(p) => {
-              handleAddToCart(p, p.variants[0]);
-              toggleWishlist(p);
-            }}
-            onToggleWishlist={handleToggleWishlist}
-            onClose={() => setIsWishlistOpen(false)}
-          />
-        </SideModal>
-
-        <MobileMenu
-          isOpen={isMobileMenuOpen}
-          onClose={() => setIsMobileMenuOpen(false)}
-          categories={categories}
-          onSelectCategory={handleSelectCategoryAndClose}
-          isLoggedIn={isLoggedIn}
-          onLoginClick={() => {
-            setIsMobileMenuOpen(false);
-            setAuthModalOpen(true);
-          }}
-          onLogoutClick={() => {
-            setIsMobileMenuOpen(false);
-            handleLogout();
-          }}
+        <Header
+          cartItems={cartItems}
+          wishlistItemCount={wishlistItemCount}
           searchQuery={searchQuery}
           onSearchChange={setSearchQuery}
+          onCartClick={() => setIsCartOpen(true)}
+          onWishlistClick={() => setIsWishlistOpen(true)}
+          onMobileMenuClick={() => setIsMobileMenuOpen(true)}
+          isLoggedIn={isLoggedIn}
+          isAdmin={!!currentUser?.isAdmin}
+          onLoginClick={() => setAuthModalOpen(true)}
+          onLogoutClick={handleLogout}
+          allProducts={products}
+          onSelectProduct={setSelectedProduct}
+          subtotal={subtotal}
+          categories={categories}
+          onSelectCategory={handleSelectCategoryAndClose}
         />
-        {isAuthModalOpen && (
-          <AuthModal
-            onClose={() => setAuthModalOpen(false)}
-            onLogin={handleLogin}
-            onSignUp={handleSignUp}
-          />
-        )}
 
-        {comparisonItems.length > 0 && (
-          <ComparisonBar
-            items={comparisonItems}
-            onRemove={(product) =>
-              setComparisonItems((prev) => prev.filter((p) => p.id !== product.id))
-            }
-            onCompare={() => setIsComparisonModalOpen(true)}
-            onClear={() => setComparisonItems([])}
-          />
-        )}
+        {renderView()}
 
-        {isComparisonModalOpen && (
-          <ComparisonModal
-            items={comparisonItems}
-            onClose={() => setIsComparisonModalOpen(false)}
-            onAddToCart={handleAddToCart}
-          />
-        )}
+        <Footer onSelectCategory={handleSelectCategoryAndClose} />
 
-        {isExitIntentModalOpen && (
-          <ExitIntentModal
-            onClose={() => setIsExitIntentModalOpen(false)}
-            onApplyPromo={() => {
-              handleApplyPromoCode('COMEBACK15');
-              setIsExitIntentModalOpen(false);
+        <ToastContainer
+          toasts={toasts}
+          onClose={(id) => setToasts((t) => t.filter((toast) => toast.id !== id))}
+        />
+
+        {/* Modals */}
+        <React.Suspense fallback={null}>
+          {selectedProduct && (
+            <ProductDetailModal
+              product={selectedProduct}
+              allProducts={products}
+              recipes={MOCK_RECIPES}
+              onClose={() => setSelectedProduct(null)}
+              onAddToCart={handleAddToCart}
+              onToggleWishlist={handleToggleWishlist}
+              isWishlisted={isInWishlist(selectedProduct.id)}
+              isOpen={true}
+              onAddReview={handleAddReview}
+              onDeleteReview={handleDeleteReview}
+              onSelectCategoryAndClose={handleSelectCategoryAndClose}
+              addToast={addToast}
+              onAskQuestion={handleAskQuestion}
+              onSelectProduct={setSelectedProduct}
+              onNotifyMe={handleNotifyMe}
+            />
+          )}
+
+          <SideModal isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} title="Your Cart">
+            <Cart
+              items={cartItems}
+              onUpdateQuantity={handleUpdateQuantity}
+              onRemoveItem={(pId, vId) => updateQuantity(pId, vId, 0)}
+              onCheckout={() => {
+                setIsCartOpen(false);
+                window.location.hash = '#/checkout';
+              }}
+              subtotal={subtotal}
+              onClose={() => setIsCartOpen(false)}
+              isLoggedIn={isLoggedIn}
+              promoCode={promoCode}
+              onPromoCodeChange={setPromoCode}
+              onApplyPromoCode={handleApplyPromoCode}
+              discount={discount}
+              shippingCost={shippingCost}
+              onAddToCart={handleAddToCart}
+              recommendedProducts={products.slice(0, 5)}
+            />
+          </SideModal>
+
+          <SideModal
+            isOpen={isWishlistOpen}
+            onClose={() => setIsWishlistOpen(false)}
+            title="Your Wishlist"
+          >
+            <Wishlist
+              items={wishlistItems}
+              onRemove={(id) => toggleWishlist(products.find((p) => p.id === id)!)}
+              onAddToCart={(p) => {
+                handleAddToCart(p, p.variants[0]);
+                toggleWishlist(p);
+              }}
+              onToggleWishlist={handleToggleWishlist}
+              onClose={() => setIsWishlistOpen(false)}
+            />
+          </SideModal>
+
+          <MobileMenu
+            isOpen={isMobileMenuOpen}
+            onClose={() => setIsMobileMenuOpen(false)}
+            categories={categories}
+            onSelectCategory={handleSelectCategoryAndClose}
+            isLoggedIn={isLoggedIn}
+            onLoginClick={() => {
+              setIsMobileMenuOpen(false);
+              setAuthModalOpen(true);
             }}
+            onLogoutClick={() => {
+              setIsMobileMenuOpen(false);
+              handleLogout();
+            }}
+            searchQuery={searchQuery}
+            onSearchChange={setSearchQuery}
           />
-        )}
+          {isAuthModalOpen && (
+            <AuthModal
+              onClose={() => setAuthModalOpen(false)}
+              onLogin={handleLogin}
+              onSignUp={handleSignUp}
+            />
+          )}
 
-        {selectedRecipe && (
-          <RecipeDetailModal
-            recipe={selectedRecipe}
-            allProducts={products}
-            onClose={() => setSelectedRecipe(null)}
-            onAddToCart={(product) => handleAddToCart(product, product.variants[0], 1)}
-            onSelectProduct={setSelectedProduct}
-            onNotifyMe={(product) => handleNotifyMe(product.id)}
-            onToggleWishlist={handleToggleWishlist}
-            isWishlisted={(id) => wishlistItems.some((p) => p.id === id)}
-            onToggleCompare={handleToggleCompare}
-            isCompared={(id) => comparisonItems.some((p) => p.id === id)}
+          {comparisonItems.length > 0 && (
+            <ComparisonBar
+              items={comparisonItems}
+              onRemove={(product) =>
+                setComparisonItems((prev) => prev.filter((p) => p.id !== product.id))
+              }
+              onCompare={() => setIsComparisonModalOpen(true)}
+              onClear={() => setComparisonItems([])}
+            />
+          )}
+
+          {isComparisonModalOpen && (
+            <ComparisonModal
+              items={comparisonItems}
+              onClose={() => setIsComparisonModalOpen(false)}
+              onAddToCart={handleAddToCart}
+            />
+          )}
+
+          {isExitIntentModalOpen && (
+            <ExitIntentModal
+              onClose={() => setIsExitIntentModalOpen(false)}
+              onApplyPromo={() => {
+                handleApplyPromoCode('COMEBACK15');
+                setIsExitIntentModalOpen(false);
+              }}
+            />
+          )}
+
+          {selectedRecipe && (
+            <RecipeDetailModal
+              recipe={selectedRecipe}
+              allProducts={products}
+              onClose={() => setSelectedRecipe(null)}
+              onAddToCart={(product) => handleAddToCart(product, product.variants[0], 1)}
+              onSelectProduct={setSelectedProduct}
+              onNotifyMe={(product) => handleNotifyMe(product.id)}
+              onToggleWishlist={handleToggleWishlist}
+              isWishlisted={(id) => wishlistItems.some((p) => p.id === id)}
+              onToggleCompare={handleToggleCompare}
+              isCompared={(id) => comparisonItems.some((p) => p.id === id)}
+            />
+          )}
+
+          <SocialProofNotifications />
+        </React.Suspense>
+        <React.Suspense fallback={null}>
+          <MobileBottomNav
+            cartItemCount={cartItems.reduce((acc, item) => acc + item.quantity, 0)}
+            wishlistItemCount={wishlistItems.length}
+            onOpenCart={() => setIsCartOpen(true)}
+            onOpenWishlist={() => setIsWishlistOpen(true)}
+            onOpenMenu={() => setIsMobileMenuOpen(true)}
+            currentView={currentView}
           />
-        )}
-
-        <SocialProofNotifications />
-      </React.Suspense>
-      <React.Suspense fallback={null}>
-        <MobileBottomNav
-          cartItemCount={cartItems.reduce((acc, item) => acc + item.quantity, 0)}
-          wishlistItemCount={wishlistItems.length}
-          onOpenCart={() => setIsCartOpen(true)}
-          onOpenWishlist={() => setIsWishlistOpen(true)}
-          onOpenMenu={() => setIsMobileMenuOpen(true)}
-          currentView={currentView}
-        />
-      </React.Suspense>
-    </div>
+        </React.Suspense>
+      </div>
+    </HelmetProvider>
   );
 };
 
