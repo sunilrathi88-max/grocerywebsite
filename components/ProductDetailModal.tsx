@@ -9,6 +9,9 @@ import Breadcrumbs from './Breadcrumbs';
 import { FacebookIcon } from './icons/FacebookIcon';
 import { TwitterIcon } from './icons/TwitterIcon';
 import { PinterestIcon } from './icons/PinterestIcon';
+import { ChevronRightIcon } from './icons/ChevronRightIcon';
+import { CheckBadgeIcon } from './icons/CheckBadgeIcon';
+import { CheckCircleIcon } from './icons/CheckCircleIcon';
 
 import { GlobeIcon } from './icons/GlobeIcon';
 import { TagIcon } from './icons/TagIcon';
@@ -19,8 +22,6 @@ import ProductSlider from './ProductSlider';
 import { ShieldCheckIcon } from './icons/ShieldCheckIcon';
 import { LeafIcon } from './icons/LeafIcon';
 import { UsersIcon } from './icons/UsersIcon';
-import { CheckBadgeIcon } from './icons/CheckBadgeIcon';
-import { CheckCircleIcon } from './icons/CheckCircleIcon';
 
 import TrustBadges from './TrustBadges';
 import ImageGallery from './ImageGallery';
@@ -74,9 +75,14 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
   const [selectedVariant, setSelectedVariant] = useState(
     product.variants.find((v) => v.stock > 0) || product.variants[0]
   );
+  const [quantity, setQuantity] = useState(1);
+
+  useEffect(() => {
+    setQuantity(1);
+  }, [product.id]);
 
   const [activeTab, setActiveTab] = useState<
-    'description' | 'nutrition' | 'sourcing' | 'reviews' | 'qna' | 'recipes'
+    'description' | 'nutrition' | 'sourcing' | 'reviews' | 'qna' | 'recipes' | ''
   >('description');
   // Use lazy initialization to set random viewer count only once
   const [viewers, setViewers] = useState(() => Math.floor(Math.random() * 10) + 2);
@@ -240,11 +246,10 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                       <button
                         key={variant.id}
                         onClick={() => setSelectedVariant(variant)}
-                        className={`px-4 py-2 text-sm font-bold rounded-full transition-all duration-300 border ${
-                          selectedVariant.id === variant.id
-                            ? 'bg-brand-primary text-brand-dark border-brand-primary shadow-md'
-                            : 'bg-white text-brand-dark hover:bg-brand-secondary/50 border-gray-300'
-                        } ${variant.stock === 0 ? 'line-through text-gray-400 cursor-not-allowed' : ''}`}
+                        className={`px-4 py-2 text-sm font-bold rounded-full transition-all duration-300 border ${selectedVariant.id === variant.id
+                          ? 'bg-brand-primary text-brand-dark border-brand-primary shadow-md'
+                          : 'bg-white text-brand-dark hover:bg-brand-secondary/50 border-gray-300'
+                          } ${variant.stock === 0 ? 'line-through text-gray-400 cursor-not-allowed' : ''}`}
                         disabled={variant.stock === 0}
                       >
                         {variant.name}
@@ -289,15 +294,66 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                     })()}
                     )
                   </p>
-                  {isLowStock && (
-                    <p className="text-yellow-600 font-bold mt-2">
-                      Hurry! Only {selectedVariant.stock} left in stock.
-                    </p>
+                  {/* Stock Bar */}
+                  {selectedVariant.stock < 20 && selectedVariant.stock > 0 && (
+                    <div className="mt-3">
+                      <div className="flex justify-between text-xs font-bold mb-1">
+                        <span className="text-orange-600">Hurry! Only {selectedVariant.stock} left</span>
+                        <span className="text-gray-500">
+                          {Math.min(100, Math.round((selectedVariant.stock / 50) * 100))}% Sold
+                        </span>
+                      </div>
+                      <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+                        <div
+                          className="h-full bg-gradient-to-r from-orange-500 to-red-500 transition-all duration-500"
+                          style={{ width: `${Math.max(5, 100 - (selectedVariant.stock / 20) * 100)}%` }}
+                        />
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Micro-Badges Promotion */}
+                  {product.tags && product.tags.some(tag => ['Organic', 'Vegan', 'Gluten-Free', 'Non-GMO'].includes(tag)) && (
+                    <div className="flex flex-wrap gap-2 mt-4">
+                      {product.tags.filter(tag => ['Organic', 'Vegan', 'Gluten-Free', 'Non-GMO'].includes(tag)).map(tag => (
+                        <span key={tag} className="inline-flex items-center gap-1 bg-green-50 text-green-700 text-xs font-bold px-2 py-1 rounded-full border border-green-100">
+                          <CheckBadgeIcon className="h-3 w-3" /> {tag}
+                        </span>
+                      ))}
+                    </div>
                   )}
                   <p className="text-sm text-gray-600 mt-2">
                     Estimated delivery by{' '}
                     <span className="font-bold text-green-700">{estimatedDelivery}</span>
                   </p>
+
+                  {/* Quantity Selector */}
+                  <div className="mt-4 flex items-center gap-3">
+                    <label className="font-bold text-sm text-gray-600">Quantity:</label>
+                    <div className="flex items-center border border-gray-300 rounded-md">
+                      <button
+                        onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                        className="px-3 py-1 text-gray-600 hover:bg-gray-100 transition-colors"
+                        aria-label="Decrease quantity"
+                      >
+                        -
+                      </button>
+                      <input
+                        type="number"
+                        min="1"
+                        value={quantity}
+                        readOnly
+                        className="w-12 text-center border-x border-gray-300 py-1 text-gray-900 font-medium focus:outline-none"
+                      />
+                      <button
+                        onClick={() => setQuantity(quantity + 1)}
+                        className="px-3 py-1 text-gray-600 hover:bg-gray-100 transition-colors"
+                        aria-label="Increase quantity"
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
                 </div>
 
                 {isOutOfStock ? (
@@ -311,10 +367,10 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                 ) : (
                   <button
                     ref={mainButtonRef}
-                    onClick={() => onAddToCart(product, selectedVariant)}
+                    onClick={() => onAddToCart(product, selectedVariant, quantity)}
                     className="w-full bg-brand-primary text-brand-dark font-bold py-3 px-6 rounded-full shadow-lg hover:bg-opacity-90 transform hover:scale-105 transition-all duration-300"
                   >
-                    Add to Cart
+                    Add {quantity} to Cart - ₹{((onSale ? selectedVariant.salePrice! : selectedVariant.price) * quantity).toFixed(2)}
                   </button>
                 )}
 
@@ -345,7 +401,24 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                   </div>
                 </div>
 
-                <div className="mt-4">
+                <div className="mt-6">
+                  <h4 className="font-bold text-gray-900 mb-2 text-sm">Why You'll Love This</h4>
+                  <ul className="space-y-1">
+                    {[
+                      'Ethically Sourced from Indian Farms',
+                      'Lab Tested for Purity & Potency',
+                      'No Additives or Preservatives',
+                      'Premium Grade Quality'
+                    ].map((benefit, i) => (
+                      <li key={i} className="flex items-start gap-2 text-sm text-gray-600">
+                        <CheckCircleIcon className="h-4 w-4 text-brand-primary flex-shrink-0 mt-0.5" />
+                        <span>{benefit}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="mt-6">
                   <TrustBadges />
                 </div>
 
@@ -379,8 +452,132 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
             </div>
           </div>
 
-          {/* Tabs Section */}
-          <div className="p-6 border-t">
+
+          {/* Mobile Accordions (Visible on mobile only) */}
+          <div className="md:hidden p-4 space-y-3">
+            {/* Description Accordion */}
+            <div className="border border-gray-200 rounded-lg overflow-hidden">
+              <button
+                onClick={() => setActiveTab(activeTab === 'description' ? '' : 'description')}
+                className="w-full flex items-center justify-between p-4 bg-gray-50 font-bold text-gray-900"
+              >
+                <span>Description</span>
+                <ChevronRightIcon className={`h-5 w-5 text-gray-500 transition-transform ${activeTab === 'description' ? 'rotate-90' : ''}`} />
+              </button>
+              {activeTab === 'description' && (
+                <div className="p-4 bg-white border-t border-gray-200 animate-fade-in">
+                  <p className="text-gray-700 leading-relaxed mb-4">{product.description}</p>
+                  {product.tags && product.tags.length > 0 && (
+                    <div className="flex flex-wrap gap-2">
+                      {product.tags.map(tag => (
+                        <span key={tag} className="bg-brand-secondary text-brand-dark text-xs font-bold px-2 py-1 rounded-full">{tag}</span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* Nutrition Accordion */}
+            {product.nutrition && product.nutrition.length > 0 && (
+              <div className="border border-gray-200 rounded-lg overflow-hidden">
+                <button
+                  onClick={() => setActiveTab(activeTab === 'nutrition' ? '' : 'nutrition')}
+                  className="w-full flex items-center justify-between p-4 bg-gray-50 font-bold text-gray-900"
+                >
+                  <span>Nutrition Facts</span>
+                  <ChevronRightIcon className={`h-5 w-5 text-gray-500 transition-transform ${activeTab === 'nutrition' ? 'rotate-90' : ''}`} />
+                </button>
+                {activeTab === 'nutrition' && (
+                  <div className="p-4 bg-white border-t border-gray-200 animate-fade-in">
+                    <div className="space-y-2">
+                      {product.nutrition.map((n, idx) => (
+                        <div key={idx} className="flex justify-between border-b border-gray-100 last:border-0 py-2">
+                          <span className="font-medium text-gray-700">{n.key}</span>
+                          <span className="text-gray-600">{n.value}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Origin Accordion */}
+            {product.origin && (
+              <div className="border border-gray-200 rounded-lg overflow-hidden">
+                <button
+                  onClick={() => setActiveTab(activeTab === 'sourcing' ? '' : 'sourcing')}
+                  className="w-full flex items-center justify-between p-4 bg-gray-50 font-bold text-gray-900"
+                >
+                  <span>Origin Story</span>
+                  <ChevronRightIcon className={`h-5 w-5 text-gray-500 transition-transform ${activeTab === 'sourcing' ? 'rotate-90' : ''}`} />
+                </button>
+                {activeTab === 'sourcing' && (
+                  <div className="p-4 bg-white border-t border-gray-200 animate-fade-in">
+                    <div className="flex items-start gap-4 mb-4">
+                      <GlobeIcon className="h-6 w-6 text-brand-primary flex-shrink-0" />
+                      <div>
+                        <h4 className="font-bold text-gray-900">Sourced from</h4>
+                        <p className="text-gray-600">{product.origin}</p>
+                      </div>
+                    </div>
+                    {product.harvestDate && (
+                      <div className="flex items-start gap-4">
+                        <LeafIcon className="h-6 w-6 text-green-600 flex-shrink-0" />
+                        <div>
+                          <h4 className="font-bold text-gray-900">Harvest Date</h4>
+                          <p className="text-gray-600">{product.harvestDate}</p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Reviews Accordion */}
+            <div className="border border-gray-200 rounded-lg overflow-hidden">
+              <button
+                onClick={() => setActiveTab(activeTab === 'reviews' ? '' : 'reviews')}
+                className="w-full flex items-center justify-between p-4 bg-gray-50 font-bold text-gray-900"
+              >
+                <span>Reviews ({product.reviews.length})</span>
+                <ChevronRightIcon className={`h-5 w-5 text-gray-500 transition-transform ${activeTab === 'reviews' ? 'rotate-90' : ''}`} />
+              </button>
+              {activeTab === 'reviews' && (
+                <div className="p-4 bg-white border-t border-gray-200 animate-fade-in">
+                  {product.reviews.length === 0 ? (
+                    <p className="text-gray-500 text-sm">No reviews yet.</p>
+                  ) : (
+                    <div className="space-y-4">
+                      {product.reviews.slice(0, 3).map(review => (
+                        <div key={review.id} className="border-b border-gray-100 last:border-0 pb-2">
+                          <div className="flex items-center gap-2 mb-1">
+                            <div className="flex text-yellow-400">
+                              {[...Array(5)].map((_, i) => (
+                                <span key={i}>{i < review.rating ? '★' : '☆'}</span>
+                              ))}
+                            </div>
+                            <span className="font-bold text-sm">{review.author}</span>
+                          </div>
+                          <p className="text-gray-600 text-sm">{review.comment}</p>
+                        </div>
+                      ))}
+                      {product.reviews.length > 3 && (
+                        <button className="text-brand-primary text-sm font-bold w-full text-center pt-2">
+                          View all {product.reviews.length} reviews
+                        </button>
+                      )}
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Apps Tabs Section (Hidden on Mobile) */}
+          <div className="hidden md:block p-6 border-t">
             <div className="border-b border-gray-200 mb-6">
               <nav className="-mb-px flex space-x-4 overflow-x-auto" aria-label="Tabs">
                 <button
@@ -389,18 +586,22 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                 >
                   Description
                 </button>
-                <button
-                  onClick={() => setActiveTab('nutrition')}
-                  className={`whitespace-nowrap pb-4 px-3 border-b-2 font-medium text-sm transition-all ${activeTab === 'nutrition' ? 'border-brand-primary text-brand-primary' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}`}
-                >
-                  Nutrition Facts
-                </button>
-                <button
-                  onClick={() => setActiveTab('sourcing')}
-                  className={`whitespace-nowrap pb-4 px-3 border-b-2 font-medium text-sm transition-all ${activeTab === 'sourcing' ? 'border-brand-primary text-brand-primary' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}`}
-                >
-                  Origin Story
-                </button>
+                {product.nutrition && product.nutrition.length > 0 && (
+                  <button
+                    onClick={() => setActiveTab('nutrition')}
+                    className={`whitespace-nowrap pb-4 px-3 border-b-2 font-medium text-sm transition-all ${activeTab === 'nutrition' ? 'border-brand-primary text-brand-primary' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}`}
+                  >
+                    Nutrition Facts
+                  </button>
+                )}
+                {product.origin && (
+                  <button
+                    onClick={() => setActiveTab('sourcing')}
+                    className={`whitespace-nowrap pb-4 px-3 border-b-2 font-medium text-sm transition-all ${activeTab === 'sourcing' ? 'border-brand-primary text-brand-primary' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}`}
+                  >
+                    Origin Story
+                  </button>
+                )}
                 {relatedRecipes.length > 0 && (
                   <button
                     onClick={() => setActiveTab('recipes')}
@@ -488,32 +689,7 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                     </div>
                   </div>
 
-                  {product.tags &&
-                    product.tags.some((tag) =>
-                      ['Organic', 'Vegan', 'Gluten-Free', 'Non-GMO'].includes(tag)
-                    ) && (
-                      <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-                        <h4 className="font-bold text-green-800 mb-3 flex items-center gap-2">
-                          <CheckBadgeIcon className="h-5 w-5" />
-                          Certifications & Benefits
-                        </h4>
-                        <div className="flex flex-wrap gap-2">
-                          {product.tags
-                            .filter((tag) =>
-                              ['Organic', 'Vegan', 'Gluten-Free', 'Non-GMO'].includes(tag)
-                            )
-                            .map((tag) => (
-                              <span
-                                key={tag}
-                                className="bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1"
-                              >
-                                <CheckCircleIcon className="h-4 w-4" />
-                                {tag}
-                              </span>
-                            ))}
-                        </div>
-                      </div>
-                    )}
+
                 </div>
               )}
 
@@ -734,7 +910,7 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                 title="Customers Also Viewed"
                 products={recommendations}
                 onAddToCart={(p, v) => onAddToCart(p, v)}
-                onToggleWishlist={() => {}}
+                onToggleWishlist={() => { }}
                 wishlistedIds={new Set()}
                 onSelectProduct={onSelectProduct}
                 onNotifyMe={onNotifyMe}
@@ -744,13 +920,13 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
         </div>
         {/* Sticky add to cart button */}
         {isStickyButtonVisible && !isOutOfStock && (
-          <div className="sticky bottom-0 left-0 right-0 md:hidden bg-white p-4 border-t shadow-lg-top animate-slide-up">
+          <div className="sticky bottom-0 left-0 right-0 md:hidden bg-white p-4 border-t shadow-lg-top animate-slide-up z-50">
             <button
-              onClick={() => onAddToCart(product, selectedVariant)}
+              onClick={() => onAddToCart(product, selectedVariant, quantity)}
               className="w-full bg-brand-primary text-brand-dark font-bold py-3 px-6 rounded-full shadow-lg transition-all duration-300"
             >
-              Add to Cart - ₹
-              {onSale ? selectedVariant.salePrice!.toFixed(2) : selectedVariant.price.toFixed(2)}
+              Add {quantity} to Cart - ₹
+              {((onSale ? selectedVariant.salePrice! : selectedVariant.price) * quantity).toFixed(2)}
             </button>
           </div>
         )}

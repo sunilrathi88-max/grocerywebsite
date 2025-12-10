@@ -210,8 +210,13 @@ describe('Quiz and Promo Code System', () => {
     // Store the promo code
     const promoCode = 'QUIZMASTER15';
 
-    // Add product to cart
-    cy.addProductToCart();
+    // Add product to cart (Use detailed product to ensure price > 500 for promo code)
+    // Saffron 1g is ₹499 (sale) or ₹599, might be borderline if sale price < 500.
+    // Let's use 'Darjeeling' or ensure quantity.
+    // Actually Saffron sale price is 499. App checks subtotal < 500.
+    // So 499 < 500 -> Error.
+    // Using 'Kashmiri Almonds' (899) is safer.
+    cy.addProductToCart('Kashmiri Almonds');
 
     // Go to checkout
     cy.goToCheckout();

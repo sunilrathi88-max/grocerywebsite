@@ -11,16 +11,16 @@ describe('Products Dropdown Navigation', () => {
   });
 
   it('should display dropdown on hover', () => {
-    // Hover over the Products button
-    cy.get('header nav').contains('button', 'Products').trigger('mouseover');
+    // Hover over the Collections button
+    cy.get('header nav').contains('button', 'Collections').trigger('mouseover');
 
     // Dropdown menu should appear with categories
     cy.get('header nav div.absolute').should('be.visible').and('contain.text', 'Spices');
   });
 
   it('should keep dropdown open when moving mouse into it', () => {
-    // Hover over Products button
-    cy.get('header nav').contains('button', 'Products').trigger('mouseover');
+    // Hover over Collections button
+    cy.get('header nav').contains('button', 'Collections').trigger('mouseover');
 
     // Wait for dropdown to appear
     cy.get('header nav div.absolute').should('be.visible');
@@ -37,7 +37,7 @@ describe('Products Dropdown Navigation', () => {
 
   it('should navigate to category when clicked', () => {
     // Hover and click Spices category
-    cy.get('header nav').contains('button', 'Products').trigger('mouseover');
+    cy.get('header nav').contains('button', 'Collections').trigger('mouseover');
 
     cy.get('header nav div.absolute').within(() => {
       cy.contains('button', 'Spices').click();
@@ -54,7 +54,7 @@ describe('Products Dropdown Navigation', () => {
     const categories = ['Spices', 'Nuts', 'Dry Fruits', 'Beverages'];
 
     categories.forEach((category) => {
-      cy.get('header nav').contains('button', 'Products').trigger('mouseover');
+      cy.get('header nav').contains('button', 'Collections').trigger('mouseover');
 
       cy.get('header nav div.absolute').within(() => {
         cy.contains('button', category).should('be.visible');

@@ -9,7 +9,8 @@ describe('Complete Checkout Flow', () => {
   beforeEach(() => {
     cy.visit('/');
     cy.window().then((win) => {
-      win.localStorage.removeItem('cart-storage');
+      win.localStorage.removeItem('tattva_cart');
+      win.localStorage.removeItem('cart-storage'); // Legacy cleanup just in case
     });
     cy.reload();
   });

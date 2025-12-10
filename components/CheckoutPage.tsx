@@ -163,7 +163,7 @@ const DeliverySlotPicker: React.FC<{
       </h3>
       <div>
         <h4 className="font-bold text-sm text-gray-600 mb-2">Select a Date:</h4>
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-col sm:flex-row flex-wrap gap-2">
           {deliveryDates.map((date) => (
             <button
               key={date.value}
@@ -180,7 +180,7 @@ const DeliverySlotPicker: React.FC<{
       {selectedDate && (
         <div>
           <h4 className="font-bold text-sm text-gray-600 mb-2">Select a Time:</h4>
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             {timeSlots.map((slot) => (
               <button
                 key={slot.time}
@@ -749,7 +749,8 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
           .input-field {
             display: block;
             width: 100%;
-            padding: 0.5rem 0.75rem;
+            padding: 0.75rem;
+            font-size: 16px; /* Prevent iOS zoom */
             border: 1px solid #D1D5DB;
             border-radius: 0.375rem;
             box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);

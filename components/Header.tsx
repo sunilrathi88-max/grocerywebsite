@@ -133,9 +133,8 @@ const Header: React.FC<HeaderProps> = ({
       </div>
 
       <header
-        className={`sticky top-0 z-50 transition-all duration-300 ${
-          isScrolled ? 'bg-white shadow-sm' : 'bg-white border-b border-neutral-200'
-        }`}
+        className={`sticky top-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white shadow-sm' : 'bg-white border-b border-neutral-200'
+          }`}
       >
         <div className="max-w-7xl mx-auto px-4 md:px-16 h-20 flex items-center justify-between gap-8">
           {/* Left: Logo */}
@@ -255,6 +254,7 @@ const Header: React.FC<HeaderProps> = ({
             <button
               className="md:hidden text-neutral-700"
               onClick={() => setIsSearchOpen(!isSearchOpen)}
+              aria-label="Toggle search"
             >
               <SearchIcon className="w-6 h-6" />
             </button>
@@ -263,6 +263,7 @@ const Header: React.FC<HeaderProps> = ({
             <button
               onClick={onWishlistClick}
               className="relative p-2 text-neutral-700 hover:text-brand-secondary transition-colors"
+              aria-label="View wishlist"
             >
               <HeartIcon className="w-6 h-6" />
               {wishlistItemCount > 0 && (
@@ -288,6 +289,7 @@ const Header: React.FC<HeaderProps> = ({
                   data-testid="header-cart-btn"
                   onClick={onCartClick}
                   className="relative p-2 text-neutral-700 hover:text-brand-primary transition-colors"
+                  aria-label="View cart"
                 >
                   <ShoppingCartIcon className="w-6 h-6" />
                   {cartItemCount > 0 && (
@@ -314,6 +316,7 @@ const Header: React.FC<HeaderProps> = ({
                   <button
                     onClick={() => (window.location.hash = '#/admin')}
                     className="p-2 text-neutral-700 hover:text-brand-primary"
+                    aria-label="Admin dashboard"
                   >
                     <CogIcon className="w-6 h-6" />
                   </button>
@@ -321,6 +324,7 @@ const Header: React.FC<HeaderProps> = ({
                 <button
                   onClick={() => (window.location.hash = '#/profile')}
                   className="p-2 text-neutral-700 hover:text-brand-primary"
+                  aria-label="User profile"
                 >
                   <UserIcon className="w-6 h-6" />
                 </button>
@@ -341,12 +345,17 @@ const Header: React.FC<HeaderProps> = ({
             <button
               onClick={() => setDarkMode(!darkMode)}
               className="p-2 text-neutral-700 hover:text-brand-primary transition-colors"
+              aria-label="Toggle dark mode"
             >
               {darkMode ? <SunIcon className="w-6 h-6" /> : <MoonIcon className="w-6 h-6" />}
             </button>
 
             {/* Mobile Menu */}
-            <button className="md:hidden p-2 text-neutral-700" onClick={onMobileMenuClick}>
+            <button
+              className="md:hidden p-2 text-neutral-700"
+              onClick={onMobileMenuClick}
+              aria-label="Open menu"
+            >
               <MenuIcon className="w-6 h-6" />
             </button>
           </div>
