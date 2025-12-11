@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Product, Variant, CartItem } from '../types';
+import type { Product, Variant, CartItem } from '../types';
 import { XIcon } from '@heroicons/react/outline';
 import { PlusIcon } from './icons/PlusIcon';
 import { MinusIcon } from './icons/MinusIcon';
@@ -285,8 +285,8 @@ const Cart: React.FC<CartProps> = ({
             href={canCheckout ? '#/checkout' : undefined}
             onClick={canCheckout ? onClose : (e) => e.preventDefault()}
             className={`mt-4 block w-full text-center bg-brand-primary text-brand-dark font-bold py-3 rounded-full shadow-lg transition-all duration-300 ${!canCheckout || !!loadingState.type
-              ? 'bg-gray-400 cursor-not-allowed'
-              : 'hover:bg-opacity-90 transform hover:scale-105'
+                ? 'bg-gray-400 cursor-not-allowed'
+                : 'hover:bg-opacity-90 transform hover:scale-105'
               }`}
             aria-disabled={!canCheckout || !!loadingState.type}
             data-testid="checkout-btn"
@@ -302,10 +302,13 @@ const Cart: React.FC<CartProps> = ({
           <h4 className="font-bold text-gray-800 mb-3 text-sm">Customers also bought</h4>
           <div className="space-y-3">
             {recommendedProducts
-              .filter(p => !items.some(i => i.product.id === p.id))
+              .filter((p) => !items.some((i) => i.product.id === p.id))
               .slice(0, 3)
-              .map(product => (
-                <div key={product.id} className="flex items-center justify-between bg-white p-2 rounded-lg border border-gray-100 shadow-sm">
+              .map((product) => (
+                <div
+                  key={product.id}
+                  className="flex items-center justify-between bg-white p-2 rounded-lg border border-gray-100 shadow-sm"
+                >
                   <div className="flex items-center gap-3">
                     <OptimizedImage
                       src={product.images[0]}
@@ -317,8 +320,12 @@ const Cart: React.FC<CartProps> = ({
                       onError={imageErrorHandlers.thumb}
                     />
                     <div className="overflow-hidden">
-                      <p className="font-bold text-xs text-gray-800 truncate w-32">{product.name}</p>
-                      <p className="text-xs text-gray-500">₹{product.variants[0].salePrice || product.variants[0].price}</p>
+                      <p className="font-bold text-xs text-gray-800 truncate w-32">
+                        {product.name}
+                      </p>
+                      <p className="text-xs text-gray-500">
+                        ₹{product.variants[0].salePrice || product.variants[0].price}
+                      </p>
                     </div>
                   </div>
                   <button

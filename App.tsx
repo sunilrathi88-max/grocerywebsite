@@ -367,7 +367,7 @@ const App: React.FC = () => {
         ...review,
         id: Date.now(),
         verifiedPurchase: hasPurchased,
-        helpful: 0
+        helpful: 0,
       };
 
       addReview(productId, newReview);
@@ -651,8 +651,8 @@ const App: React.FC = () => {
             addToast={addToast}
             discount={0}
             promoCode=""
-            onApplyPromoCode={() => { }}
-            onRemovePromoCode={() => { }}
+            onApplyPromoCode={() => {}}
+            onRemovePromoCode={() => {}}
             subtotal={0}
             shippingCost={0}
           />

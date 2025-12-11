@@ -102,13 +102,16 @@ const Header: React.FC<HeaderProps> = ({
 
     // Fuzzy matching for categories
     const matchingCategories = categories
-      .filter((cat) => cat.toLowerCase() !== 'all' && cat.toLowerCase().includes(searchQuery.toLowerCase()))
+      .filter(
+        (cat) =>
+          cat.toLowerCase() !== 'all' && cat.toLowerCase().includes(searchQuery.toLowerCase())
+      )
       .slice(0, 2);
 
     // Get suggestions if low on results
     let suggestions: string[] = [];
     if (matchingProducts.length === 0 && matchingCategories.length === 0) {
-      const allNames = allProducts.map(p => p.name);
+      const allNames = allProducts.map((p) => p.name);
       suggestions = getSuggestions(searchQuery, [...allNames, ...categories]);
     }
 
@@ -146,8 +149,9 @@ const Header: React.FC<HeaderProps> = ({
       </div>
 
       <header
-        className={`sticky top-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white shadow-sm' : 'bg-white border-b border-neutral-200'
-          }`}
+        className={`sticky top-0 z-50 transition-all duration-300 ${
+          isScrolled ? 'bg-white shadow-sm' : 'bg-white border-b border-neutral-200'
+        }`}
       >
         <div className="max-w-7xl mx-auto px-4 md:px-16 h-20 flex items-center justify-between gap-8">
           {/* Left: Logo */}
@@ -188,7 +192,8 @@ const Header: React.FC<HeaderProps> = ({
               {isAutocompleteOpen &&
                 (autocompleteResults.products.length > 0 ||
                   autocompleteResults.categories.length > 0 ||
-                  (autocompleteResults.suggestions && autocompleteResults.suggestions.length > 0)) && (
+                  (autocompleteResults.suggestions &&
+                    autocompleteResults.suggestions.length > 0)) && (
                   <div className="absolute top-full mt-2 w-80 bg-white rounded-lg shadow-2xl border border-gray-200 z-50 animate-fade-in-up overflow-hidden right-0">
                     {/* Categories */}
                     {autocompleteResults.categories.length > 0 && (
@@ -262,27 +267,28 @@ const Header: React.FC<HeaderProps> = ({
                     )}
 
                     {/* "Did you mean?" Suggestions */}
-                    {autocompleteResults.suggestions && autocompleteResults.suggestions.length > 0 && (
-                      <div className="p-3 bg-yellow-50 border-t border-yellow-100">
-                        <p className="text-xs font-bold text-yellow-700 uppercase tracking-wide mb-2">
-                          Did you mean?
-                        </p>
-                        <div className="flex flex-wrap gap-2">
-                          {autocompleteResults.suggestions.map((term) => (
-                            <button
-                              key={term}
-                              onClick={() => {
-                                onSearchChange(term);
-                                // Keep open to show results for new term
-                              }}
-                              className="text-sm text-yellow-800 bg-white border border-yellow-200 px-3 py-1 rounded-full hover:bg-yellow-100 transition-colors"
-                            >
-                              {term}
-                            </button>
-                          ))}
+                    {autocompleteResults.suggestions &&
+                      autocompleteResults.suggestions.length > 0 && (
+                        <div className="p-3 bg-yellow-50 border-t border-yellow-100">
+                          <p className="text-xs font-bold text-yellow-700 uppercase tracking-wide mb-2">
+                            Did you mean?
+                          </p>
+                          <div className="flex flex-wrap gap-2">
+                            {autocompleteResults.suggestions.map((term) => (
+                              <button
+                                key={term}
+                                onClick={() => {
+                                  onSearchChange(term);
+                                  // Keep open to show results for new term
+                                }}
+                                className="text-sm text-yellow-800 bg-white border border-yellow-200 px-3 py-1 rounded-full hover:bg-yellow-100 transition-colors"
+                              >
+                                {term}
+                              </button>
+                            ))}
+                          </div>
                         </div>
-                      </div>
-                    )}
+                      )}
                   </div>
                 )}
             </div>

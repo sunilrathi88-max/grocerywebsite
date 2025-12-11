@@ -74,9 +74,10 @@ const ProductGrid: React.FC<ProductGridProps> = ({
                   key={filter}
                   onClick={() => setActiveFilter(filter)}
                   className={`px-6 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap
-                    ${activeFilter === filter
-                      ? 'bg-brand-dark text-white shadow-lg'
-                      : 'bg-white text-neutral-600 border border-neutral-200 hover:bg-neutral-50'
+                    ${
+                      activeFilter === filter
+                        ? 'bg-brand-dark text-white shadow-lg'
+                        : 'bg-white text-neutral-600 border border-neutral-200 hover:bg-neutral-50'
                     }
                   `}
                 >
@@ -123,7 +124,8 @@ const ProductGrid: React.FC<ProductGridProps> = ({
           </div>
           <h3 className="text-xl font-bold text-gray-900 mb-2">No products found</h3>
           <p className="text-neutral-500 mb-6 max-w-md mx-auto">
-            We couldn't find any products matching your filters. Try adjusting your search or filters.
+            We couldn't find any products matching your filters. Try adjusting your search or
+            filters.
           </p>
           {onClearFilters && (
             <button

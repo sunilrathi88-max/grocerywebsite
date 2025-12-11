@@ -22,14 +22,14 @@ const ReviewList: React.FC<ReviewListProps> = ({ reviews, productId, onDelete })
   const [helpfulVotes, setHelpfulVotes] = useState<Record<number, number>>({});
 
   const handleHelpful = (reviewId: number) => {
-    setHelpfulVotes(prev => ({
+    setHelpfulVotes((prev) => ({
       ...prev,
-      [reviewId]: (prev[reviewId] || 0) + 1
+      [reviewId]: (prev[reviewId] || 0) + 1,
     }));
   };
 
   const handleLoadMore = () => {
-    setVisibleCount(prev => prev + 5);
+    setVisibleCount((prev) => prev + 5);
   };
 
   const filteredAndSortedReviews = useMemo(() => {
@@ -124,10 +124,10 @@ const ReviewList: React.FC<ReviewListProps> = ({ reviews, productId, onDelete })
                       <span className="text-xs text-gray-400">
                         {review.date
                           ? new Date(review.date).toLocaleDateString('en-US', {
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric',
-                          })
+                              year: 'numeric',
+                              month: 'long',
+                              day: 'numeric',
+                            })
                           : 'Unknown Date'}
                       </span>
                     </div>
@@ -171,7 +171,13 @@ const ReviewList: React.FC<ReviewListProps> = ({ reviews, productId, onDelete })
                     onClick={() => handleHelpful(review.id)}
                     className="text-xs text-gray-500 hover:text-brand-primary flex items-center gap-1 transition-colors"
                   >
-                    <span>👍 Helpful ({review.helpful ? review.helpful + (helpfulVotes[review.id] || 0) : (helpfulVotes[review.id] || 0)})</span>
+                    <span>
+                      👍 Helpful (
+                      {review.helpful
+                        ? review.helpful + (helpfulVotes[review.id] || 0)
+                        : helpfulVotes[review.id] || 0}
+                      )
+                    </span>
                   </button>
                 </div>
               </div>
