@@ -124,7 +124,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({
           </div>
           <h3 className="text-xl font-bold text-gray-900 mb-2">No products found</h3>
           <p className="text-neutral-500 mb-6 max-w-md mx-auto">
-            We couldn't find any products matching your filters. Try adjusting your search or
+            We couldn&apos;t find any products matching your filters. Try adjusting your search or
             filters.
           </p>
           {onClearFilters && (

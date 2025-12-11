@@ -1,23 +1,22 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { Product } from '../types';
 
 const HISTORY_KEY = 'tattva_viewing_history';
 const MAX_HISTORY = 6;
 
 export const useViewingHistory = () => {
-  const [viewedProducts, setViewedProducts] = useState<Product[]>([]);
-
-  // Load history on mount
-  useEffect(() => {
+  const [viewedProducts, setViewedProducts] = useState<Product[]>(() => {
     try {
       const saved = localStorage.getItem(HISTORY_KEY);
-      if (saved) {
-        setViewedProducts(JSON.parse(saved));
-      }
+      return saved ? JSON.parse(saved) : [];
     } catch (e) {
       console.error('Failed to load viewing history', e);
+      return [];
     }
-  }, []);
+  });
+
+  // Load history on mount - Removed as we use lazy init now
+  /* useEffect(() => { ... } removed */
 
   const addToHistory = useCallback((product: Product) => {
     setViewedProducts((prev) => {
