@@ -87,8 +87,11 @@ const AnalyticsDashboard: React.FC<{ analytics: AnalyticsProps }> = ({ analytics
           <span className="text-yellow-500">★</span> Top Performing Products
         </h4>
         <div className="space-y-4">
-          {analytics.bestSellers.map(product => (
-            <div key={product.id} className="flex justify-between items-center border-b border-gray-100 last:border-0 pb-2 last:pb-0">
+          {analytics.bestSellers.map((product) => (
+            <div
+              key={product.id}
+              className="flex justify-between items-center border-b border-gray-100 last:border-0 pb-2 last:pb-0"
+            >
               <div>
                 <p className="font-bold text-gray-800">{product.name}</p>
                 <p className="text-xs text-gray-500">{product.unitsSold} units sold</p>
@@ -96,7 +99,9 @@ const AnalyticsDashboard: React.FC<{ analytics: AnalyticsProps }> = ({ analytics
               <span className="font-bold text-brand-primary">₹{product.revenue.toFixed(0)}</span>
             </div>
           ))}
-          {analytics.bestSellers.length === 0 && <p className="text-gray-400">No sales data yet.</p>}
+          {analytics.bestSellers.length === 0 && (
+            <p className="text-gray-400">No sales data yet.</p>
+          )}
         </div>
       </div>
 
@@ -106,10 +111,15 @@ const AnalyticsDashboard: React.FC<{ analytics: AnalyticsProps }> = ({ analytics
           <span className="text-red-500">⚠</span> Inventory Alerts
         </h4>
         <div className="space-y-3">
-          {analytics.inventoryHealth.map(item => (
-            <div key={item.id} className="flex justify-between items-center bg-red-50 p-3 rounded-lg">
+          {analytics.inventoryHealth.map((item) => (
+            <div
+              key={item.id}
+              className="flex justify-between items-center bg-red-50 p-3 rounded-lg"
+            >
               <span className="font-medium text-gray-800 truncate pr-4">{item.name}</span>
-              <span className={`px-2 py-1 rounded-full text-xs font-bold ${item.status === 'Out' ? 'bg-red-200 text-red-800' : 'bg-yellow-200 text-yellow-800'}`}>
+              <span
+                className={`px-2 py-1 rounded-full text-xs font-bold ${item.status === 'Out' ? 'bg-red-200 text-red-800' : 'bg-yellow-200 text-yellow-800'}`}
+              >
                 {item.status === 'Out' ? 'Out of Stock' : `Low: ${item.stock}`}
               </span>
             </div>
@@ -127,7 +137,9 @@ const AnalyticsDashboard: React.FC<{ analytics: AnalyticsProps }> = ({ analytics
 );
 
 const AdminDashboard: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'products' | 'orders' | 'analytics' | 'reviews' | 'content'>('products');
+  const [activeTab, setActiveTab] = useState<
+    'products' | 'orders' | 'analytics' | 'reviews' | 'content'
+  >('products');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
 
@@ -143,7 +155,7 @@ const AdminDashboard: React.FC = () => {
     salesData: [],
     bestSellers: [],
     inventoryHealth: [],
-    momGrowth: 0
+    momGrowth: 0,
   });
   const [loading, setLoading] = useState(true);
 
@@ -155,7 +167,7 @@ const AdminDashboard: React.FC = () => {
         orderAPI.getAll(),
         reviewAPI.getAll(),
         contentAPI.getBlogs(),
-        contentAPI.getRecipes()
+        contentAPI.getRecipes(),
       ]);
 
       setProducts(productsData);
@@ -193,7 +205,7 @@ const AdminDashboard: React.FC = () => {
         salesData,
         bestSellers,
         inventoryHealth,
-        momGrowth
+        momGrowth,
       });
     } catch (error) {
       console.error('Failed to fetch admin data', error);
@@ -555,7 +567,10 @@ const OrderManagement: React.FC<{
   );
 };
 
-const ReviewModeration: React.FC<{ reviews: any[]; onUpdate: () => void }> = ({ reviews, onUpdate }) => {
+const ReviewModeration: React.FC<{ reviews: any[]; onUpdate: () => void }> = ({
+  reviews,
+  onUpdate,
+}) => {
   const handleStatusChange = async (id: number, status: 'approved' | 'rejected') => {
     await reviewAPI.updateStatus(id, status);
     onUpdate();
@@ -568,37 +583,68 @@ const ReviewModeration: React.FC<{ reviews: any[]; onUpdate: () => void }> = ({ 
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Product</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Reviewer</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Rating</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Comment</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
-              <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Actions</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                Product
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                Reviewer
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                Rating
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                Comment
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                Status
+              </th>
+              <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
+                Actions
+              </th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {reviews.map(review => (
+            {reviews.map((review) => (
               <tr key={review.id}>
-                <td className="px-6 py-4 text-sm font-medium text-gray-900">{review.productName}</td>
+                <td className="px-6 py-4 text-sm font-medium text-gray-900">
+                  {review.productName}
+                </td>
                 <td className="px-6 py-4 text-sm text-gray-500">
                   <div>{review.author}</div>
                   <div className="text-xs">{review.date}</div>
                 </td>
                 <td className="px-6 py-4 text-sm text-yellow-500">{'★'.repeat(review.rating)}</td>
-                <td className="px-6 py-4 text-sm text-gray-500 max-w-xs truncate">{review.comment}</td>
+                <td className="px-6 py-4 text-sm text-gray-500 max-w-xs truncate">
+                  {review.comment}
+                </td>
                 <td className="px-6 py-4 text-sm">
-                  <span className={`px-2 py-1 rounded-full text-xs font-bold ${review.status === 'approved' ? 'bg-green-100 text-green-800' :
-                    review.status === 'rejected' ? 'bg-red-100 text-red-800' :
-                      'bg-yellow-100 text-yellow-800'
-                    }`}>
+                  <span
+                    className={`px-2 py-1 rounded-full text-xs font-bold ${
+                      review.status === 'approved'
+                        ? 'bg-green-100 text-green-800'
+                        : review.status === 'rejected'
+                          ? 'bg-red-100 text-red-800'
+                          : 'bg-yellow-100 text-yellow-800'
+                    }`}
+                  >
                     {review.status.toUpperCase()}
                   </span>
                 </td>
                 <td className="px-6 py-4 text-right text-sm font-medium space-x-2">
                   {review.status === 'pending' && (
                     <>
-                      <button onClick={() => handleStatusChange(review.id, 'approved')} className="text-green-600 hover:text-green-900">Approve</button>
-                      <button onClick={() => handleStatusChange(review.id, 'rejected')} className="text-red-600 hover:text-red-900">Reject</button>
+                      <button
+                        onClick={() => handleStatusChange(review.id, 'approved')}
+                        className="text-green-600 hover:text-green-900"
+                      >
+                        Approve
+                      </button>
+                      <button
+                        onClick={() => handleStatusChange(review.id, 'rejected')}
+                        className="text-red-600 hover:text-red-900"
+                      >
+                        Reject
+                      </button>
                     </>
                   )}
                 </td>
@@ -611,7 +657,10 @@ const ReviewModeration: React.FC<{ reviews: any[]; onUpdate: () => void }> = ({ 
   );
 };
 
-const ContentManagement: React.FC<{ content: any[]; onUpdate: () => void }> = ({ content, onUpdate }) => {
+const ContentManagement: React.FC<{ content: any[]; onUpdate: () => void }> = ({
+  content,
+  onUpdate,
+}) => {
   const handleDelete = async (id: number, type: 'blog' | 'recipe') => {
     if (window.confirm(`Delete this ${type}?`)) {
       await contentAPI.delete(id, type);
@@ -629,27 +678,45 @@ const ContentManagement: React.FC<{ content: any[]; onUpdate: () => void }> = ({
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {content.map(item => (
-          <div key={`${item.type}-${item.id}`} className="bg-white rounded-lg shadow-md overflow-hidden group">
+        {content.map((item) => (
+          <div
+            key={`${item.type}-${item.id}`}
+            className="bg-white rounded-lg shadow-md overflow-hidden group"
+          >
             <div className="h-32 bg-gray-200 flex items-center justify-center text-gray-400">
               {/* Placeholder for real image */}
               <span className="text-4xl">📷</span>
             </div>
             <div className="p-4">
               <div className="flex justify-between items-start mb-2">
-                <span className={`px-2 py-1 rounded-full text-xs font-bold ${item.type === 'blog' ? 'bg-blue-100 text-blue-800' : 'bg-orange-100 text-orange-800'}`}>
+                <span
+                  className={`px-2 py-1 rounded-full text-xs font-bold ${item.type === 'blog' ? 'bg-blue-100 text-blue-800' : 'bg-orange-100 text-orange-800'}`}
+                >
                   {item.type.toUpperCase()}
                 </span>
-                <span className={`text-xs ${item.status === 'published' ? 'text-green-600' : 'text-gray-500'}`}>
+                <span
+                  className={`text-xs ${item.status === 'published' ? 'text-green-600' : 'text-gray-500'}`}
+                >
                   ● {item.status}
                 </span>
               </div>
-              <h4 className="font-bold text-gray-900 mb-1 group-hover:text-brand-primary transition-colors">{item.title}</h4>
-              <p className="text-sm text-gray-500 mb-4">By {item.author} • {item.date}</p>
+              <h4 className="font-bold text-gray-900 mb-1 group-hover:text-brand-primary transition-colors">
+                {item.title}
+              </h4>
+              <p className="text-sm text-gray-500 mb-4">
+                By {item.author} • {item.date}
+              </p>
 
               <div className="flex justify-end pt-3 border-t border-gray-100 space-x-3">
-                <button className="text-gray-400 hover:text-brand-primary"><PencilIcon className="w-5 h-5" /></button>
-                <button onClick={() => handleDelete(item.id, item.type)} className="text-gray-400 hover:text-red-600"><TrashIcon className="w-5 h-5" /></button>
+                <button className="text-gray-400 hover:text-brand-primary">
+                  <PencilIcon className="w-5 h-5" />
+                </button>
+                <button
+                  onClick={() => handleDelete(item.id, item.type)}
+                  className="text-gray-400 hover:text-red-600"
+                >
+                  <TrashIcon className="w-5 h-5" />
+                </button>
               </div>
             </div>
           </div>

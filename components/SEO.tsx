@@ -32,9 +32,7 @@ export const SEO: React.FC<SEOProps> = ({
       {/* Standard Metadata */}
       <title>{title}</title>
       <meta name="description" content={description} />
-      {keywords && keywords.length > 0 && (
-        <meta name="keywords" content={keywords.join(', ')} />
-      )}
+      {keywords && keywords.length > 0 && <meta name="keywords" content={keywords.join(', ')} />}
       {canonical && <link rel="canonical" href={canonical} />}
 
       {/* Open Graph / Facebook */}
@@ -43,7 +41,10 @@ export const SEO: React.FC<SEOProps> = ({
       <meta property="og:description" content={description} />
       {ogImage && <meta property="og:image" content={ogImage} />}
       {ogImageAlt && <meta property="og:image:alt" content={ogImageAlt} />}
-      <meta property="og:url" content={canonical || (typeof window !== 'undefined' ? window.location.href : '')} />
+      <meta
+        property="og:url"
+        content={canonical || (typeof window !== 'undefined' ? window.location.href : '')}
+      />
       <meta property="og:site_name" content="THE RATHI SPICE CO" />
 
       {/* Twitter */}
@@ -61,19 +62,16 @@ export const SEO: React.FC<SEOProps> = ({
       )}
 
       {/* Structured Data */}
-      {structuredData && (
-        Array.isArray(structuredData) ? (
+      {structuredData &&
+        (Array.isArray(structuredData) ? (
           structuredData.map((data, index) => (
             <script key={index} type="application/ld+json">
               {JSON.stringify(data)}
             </script>
           ))
         ) : (
-          <script type="application/ld+json">
-            {JSON.stringify(structuredData)}
-          </script>
-        )
-      )}
+          <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
+        ))}
     </Helmet>
   );
 };

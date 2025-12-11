@@ -48,7 +48,12 @@ import { PLACEHOLDER_URLS, imageErrorHandlers } from '../utils/imageHelpers';
 import { useViewingHistory } from '../hooks/useViewingHistory';
 
 import { SEO } from './SEO';
-import { pageSEO, generateProductSchema, generateBreadcrumbSchema, generateRecipeSchema } from '../utils/seo';
+import {
+  pageSEO,
+  generateProductSchema,
+  generateBreadcrumbSchema,
+  generateRecipeSchema,
+} from '../utils/seo';
 
 const PLACEHOLDER_THUMB = PLACEHOLDER_URLS.thumb;
 
@@ -216,16 +221,18 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
     schemas.push(generateProductSchema(product));
 
     // 2. Breadcrumb Schema
-    schemas.push(generateBreadcrumbSchema([
-      { name: 'Home', url: 'https://tattva-co.com' },
-      { name: 'Products', url: 'https://tattva-co.com/products' },
-      { name: product.category, url: `https://tattva-co.com/products/${product.category}` },
-      { name: product.name, url: `https://tattva-co.com/products/${product.id}` } // Fallback URL
-    ]));
+    schemas.push(
+      generateBreadcrumbSchema([
+        { name: 'Home', url: 'https://tattva-co.com' },
+        { name: 'Products', url: 'https://tattva-co.com/products' },
+        { name: product.category, url: `https://tattva-co.com/products/${product.category}` },
+        { name: product.name, url: `https://tattva-co.com/products/${product.id}` }, // Fallback URL
+      ])
+    );
 
     // 3. Recipe Schema (if related recipes exist)
     if (relatedRecipes.length > 0) {
-      relatedRecipes.forEach(recipe => {
+      relatedRecipes.forEach((recipe) => {
         schemas.push(generateRecipeSchema(recipe));
       });
     }
@@ -280,10 +287,11 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                       <button
                         key={variant.id}
                         onClick={() => setSelectedVariant(variant)}
-                        className={`px-4 py-2 text-sm font-bold rounded-full transition-all duration-300 border ${selectedVariant.id === variant.id
-                          ? 'bg-brand-primary text-brand-dark border-brand-primary shadow-md'
-                          : 'bg-white text-brand-dark hover:bg-brand-secondary/50 border-gray-300'
-                          } ${variant.stock === 0 ? 'line-through text-gray-400 cursor-not-allowed' : ''}`}
+                        className={`px-4 py-2 text-sm font-bold rounded-full transition-all duration-300 border ${
+                          selectedVariant.id === variant.id
+                            ? 'bg-brand-primary text-brand-dark border-brand-primary shadow-md'
+                            : 'bg-white text-brand-dark hover:bg-brand-secondary/50 border-gray-300'
+                        } ${variant.stock === 0 ? 'line-through text-gray-400 cursor-not-allowed' : ''}`}
                         disabled={variant.stock === 0}
                       >
                         {variant.name}
@@ -332,7 +340,9 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                   {selectedVariant.stock < 20 && selectedVariant.stock > 0 && (
                     <div className="mt-3">
                       <div className="flex justify-between text-xs font-bold mb-1">
-                        <span className="text-orange-600">Hurry! Only {selectedVariant.stock} left</span>
+                        <span className="text-orange-600">
+                          Hurry! Only {selectedVariant.stock} left
+                        </span>
                         <span className="text-gray-500">
                           {Math.min(100, Math.round((selectedVariant.stock / 50) * 100))}% Sold
                         </span>
@@ -340,22 +350,34 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                       <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
                         <div
                           className="h-full bg-gradient-to-r from-orange-500 to-red-500 transition-all duration-500"
-                          style={{ width: `${Math.max(5, 100 - (selectedVariant.stock / 20) * 100)}%` }}
+                          style={{
+                            width: `${Math.max(5, 100 - (selectedVariant.stock / 20) * 100)}%`,
+                          }}
                         />
                       </div>
                     </div>
                   )}
 
                   {/* Micro-Badges Promotion */}
-                  {product.tags && product.tags.some(tag => ['Organic', 'Vegan', 'Gluten-Free', 'Non-GMO'].includes(tag)) && (
-                    <div className="flex flex-wrap gap-2 mt-4">
-                      {product.tags.filter(tag => ['Organic', 'Vegan', 'Gluten-Free', 'Non-GMO'].includes(tag)).map(tag => (
-                        <span key={tag} className="inline-flex items-center gap-1 bg-green-50 text-green-700 text-xs font-bold px-2 py-1 rounded-full border border-green-100">
-                          <CheckBadgeIcon className="h-3 w-3" /> {tag}
-                        </span>
-                      ))}
-                    </div>
-                  )}
+                  {product.tags &&
+                    product.tags.some((tag) =>
+                      ['Organic', 'Vegan', 'Gluten-Free', 'Non-GMO'].includes(tag)
+                    ) && (
+                      <div className="flex flex-wrap gap-2 mt-4">
+                        {product.tags
+                          .filter((tag) =>
+                            ['Organic', 'Vegan', 'Gluten-Free', 'Non-GMO'].includes(tag)
+                          )
+                          .map((tag) => (
+                            <span
+                              key={tag}
+                              className="inline-flex items-center gap-1 bg-green-50 text-green-700 text-xs font-bold px-2 py-1 rounded-full border border-green-100"
+                            >
+                              <CheckBadgeIcon className="h-3 w-3" /> {tag}
+                            </span>
+                          ))}
+                      </div>
+                    )}
                   <p className="text-sm text-gray-600 mt-2">
                     Estimated delivery by{' '}
                     <span className="font-bold text-green-700">{estimatedDelivery}</span>
@@ -404,31 +426,42 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                     disabled={isOutOfStock}
                     onClick={() => {
                       const finalPrice = isSubscription
-                        ? Math.floor((onSale ? selectedVariant.salePrice! : selectedVariant.price) * 0.9)
-                        : (onSale ? selectedVariant.salePrice! : selectedVariant.price);
+                        ? Math.floor(
+                            (onSale ? selectedVariant.salePrice! : selectedVariant.price) * 0.9
+                          )
+                        : onSale
+                          ? selectedVariant.salePrice!
+                          : selectedVariant.price;
 
                       // Create a modified variant or product object if needed, or just rely on the cart to handle 'price' override if supported.
                       // Since Cart usually recalculates from master data, we might need a 'subscription' flag in the cart item.
                       // For now, let's assuming we pass metadata.
                       // Actually, let's just use the standard add and maybe toast the subscription info for now since we don't want to break the cart type definitions immediately without a larger refactor.
-                      // Strategy: We will add it as a normal item but with a "Subscription: 30 Days" note if possible. 
+                      // Strategy: We will add it as a normal item but with a "Subscription: 30 Days" note if possible.
                       // Wait, I can pass a modified variant with the discounted price!
 
-                      const variantToAdd = isSubscription ? {
-                        ...selectedVariant,
-                        price: finalPrice, // Override price
-                        salePrice: undefined, // Clear sale price to avoid double discount confusion
-                        name: selectedVariant.name + " (Subscribed)"
-                      } : selectedVariant;
+                      const variantToAdd = isSubscription
+                        ? {
+                            ...selectedVariant,
+                            price: finalPrice, // Override price
+                            salePrice: undefined, // Clear sale price to avoid double discount confusion
+                            name: selectedVariant.name + ' (Subscribed)',
+                          }
+                        : selectedVariant;
 
                       onAddToCart(product, variantToAdd, quantity);
                       if (isSubscription) {
-                        addToast("Subscribed! Deliver every 30 days.", "success");
+                        addToast('Subscribed! Deliver every 30 days.', 'success');
                       }
                     }}
-                    className={`flex-1 bg-brand-primary text-brand-dark font-bold py-4 px-8 rounded-full shadow-lg hover:bg-opacity-90 transform hover:scale-105 transition-all duration-300 flex items-center justify-center gap-3 ${isOutOfStock ? 'opacity-50 cursor-not-allowed hover:scale-100' : ''
-                      }`}
-                  >₹{((onSale ? selectedVariant.salePrice! : selectedVariant.price) * quantity).toFixed(2)}
+                    className={`flex-1 bg-brand-primary text-brand-dark font-bold py-4 px-8 rounded-full shadow-lg hover:bg-opacity-90 transform hover:scale-105 transition-all duration-300 flex items-center justify-center gap-3 ${
+                      isOutOfStock ? 'opacity-50 cursor-not-allowed hover:scale-100' : ''
+                    }`}
+                  >
+                    ₹
+                    {(
+                      (onSale ? selectedVariant.salePrice! : selectedVariant.price) * quantity
+                    ).toFixed(2)}
                   </button>
                 )}
 
@@ -466,7 +499,7 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                       'Ethically Sourced from Indian Farms',
                       'Lab Tested for Purity & Potency',
                       'No Additives or Preservatives',
-                      'Premium Grade Quality'
+                      'Premium Grade Quality',
                     ].map((benefit, i) => (
                       <li key={i} className="flex items-start gap-2 text-sm text-gray-600">
                         <CheckCircleIcon className="h-4 w-4 text-brand-primary flex-shrink-0 mt-0.5" />
@@ -510,7 +543,6 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
             </div>
           </div>
 
-
           {/* Mobile Accordions (Visible on mobile only) */}
           <div className="md:hidden p-4 space-y-3">
             {/* Description Accordion */}
@@ -520,15 +552,22 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                 className="w-full flex items-center justify-between p-4 bg-gray-50 font-bold text-gray-900"
               >
                 <span>Description</span>
-                <ChevronRightIcon className={`h-5 w-5 text-gray-500 transition-transform ${activeTab === 'description' ? 'rotate-90' : ''}`} />
+                <ChevronRightIcon
+                  className={`h-5 w-5 text-gray-500 transition-transform ${activeTab === 'description' ? 'rotate-90' : ''}`}
+                />
               </button>
               {activeTab === 'description' && (
                 <div className="p-4 bg-white border-t border-gray-200 animate-fade-in">
                   <p className="text-gray-700 leading-relaxed mb-4">{product.description}</p>
                   {product.tags && product.tags.length > 0 && (
                     <div className="flex flex-wrap gap-2">
-                      {product.tags.map(tag => (
-                        <span key={tag} className="bg-brand-secondary text-brand-dark text-xs font-bold px-2 py-1 rounded-full">{tag}</span>
+                      {product.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="bg-brand-secondary text-brand-dark text-xs font-bold px-2 py-1 rounded-full"
+                        >
+                          {tag}
+                        </span>
                       ))}
                     </div>
                   )}
@@ -544,13 +583,18 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                   className="w-full flex items-center justify-between p-4 bg-gray-50 font-bold text-gray-900"
                 >
                   <span>Nutrition Facts</span>
-                  <ChevronRightIcon className={`h-5 w-5 text-gray-500 transition-transform ${activeTab === 'nutrition' ? 'rotate-90' : ''}`} />
+                  <ChevronRightIcon
+                    className={`h-5 w-5 text-gray-500 transition-transform ${activeTab === 'nutrition' ? 'rotate-90' : ''}`}
+                  />
                 </button>
                 {activeTab === 'nutrition' && (
                   <div className="p-4 bg-white border-t border-gray-200 animate-fade-in">
                     <div className="space-y-2">
                       {product.nutrition.map((n, idx) => (
-                        <div key={idx} className="flex justify-between border-b border-gray-100 last:border-0 py-2">
+                        <div
+                          key={idx}
+                          className="flex justify-between border-b border-gray-100 last:border-0 py-2"
+                        >
                           <span className="font-medium text-gray-700">{n.key}</span>
                           <span className="text-gray-600">{n.value}</span>
                         </div>
@@ -569,7 +613,9 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                   className="w-full flex items-center justify-between p-4 bg-gray-50 font-bold text-gray-900"
                 >
                   <span>Origin Story</span>
-                  <ChevronRightIcon className={`h-5 w-5 text-gray-500 transition-transform ${activeTab === 'sourcing' ? 'rotate-90' : ''}`} />
+                  <ChevronRightIcon
+                    className={`h-5 w-5 text-gray-500 transition-transform ${activeTab === 'sourcing' ? 'rotate-90' : ''}`}
+                  />
                 </button>
                 {activeTab === 'sourcing' && (
                   <div className="p-4 bg-white border-t border-gray-200 animate-fade-in">
@@ -601,7 +647,9 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                 className="w-full flex items-center justify-between p-4 bg-gray-50 font-bold text-gray-900"
               >
                 <span>Reviews ({product.reviews.length})</span>
-                <ChevronRightIcon className={`h-5 w-5 text-gray-500 transition-transform ${activeTab === 'reviews' ? 'rotate-90' : ''}`} />
+                <ChevronRightIcon
+                  className={`h-5 w-5 text-gray-500 transition-transform ${activeTab === 'reviews' ? 'rotate-90' : ''}`}
+                />
               </button>
               {activeTab === 'reviews' && (
                 <div className="p-4 bg-white border-t border-gray-200 animate-fade-in">
@@ -609,8 +657,11 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                     <p className="text-gray-500 text-sm">No reviews yet.</p>
                   ) : (
                     <div className="space-y-4">
-                      {product.reviews.slice(0, 3).map(review => (
-                        <div key={review.id} className="border-b border-gray-100 last:border-0 pb-2">
+                      {product.reviews.slice(0, 3).map((review) => (
+                        <div
+                          key={review.id}
+                          className="border-b border-gray-100 last:border-0 pb-2"
+                        >
                           <div className="flex items-center gap-2 mb-1">
                             <div className="flex text-yellow-400">
                               {[...Array(5)].map((_, i) => (
@@ -746,8 +797,6 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                       )}
                     </div>
                   </div>
-
-
                 </div>
               )}
 
@@ -968,7 +1017,7 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                 title="Customers Also Viewed"
                 products={recommendations}
                 onAddToCart={(p, v) => onAddToCart(p, v)}
-                onToggleWishlist={() => { }}
+                onToggleWishlist={() => {}}
                 wishlistedIds={new Set()}
                 onSelectProduct={onSelectProduct}
                 onNotifyMe={onNotifyMe}
@@ -976,14 +1025,15 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
             </div>
           )}
 
-
           {/* Subscription Toggle */}
           <div className="mt-8 mb-6 bg-gray-50 border border-gray-200 rounded-lg p-4">
             <h4 className="font-bold text-gray-900 mb-3 flex items-center gap-2">
               <span className="text-brand-primary">↻</span> Subscribe & Save
             </h4>
             <div className="space-y-3">
-              <label className={`flex items-center justify-between p-3 border rounded-lg cursor-pointer transition-all ${!isSubscription ? 'border-brand-primary bg-white ring-1 ring-brand-primary' : 'border-gray-200 hover:border-brand-primary/50'}`}>
+              <label
+                className={`flex items-center justify-between p-3 border rounded-lg cursor-pointer transition-all ${!isSubscription ? 'border-brand-primary bg-white ring-1 ring-brand-primary' : 'border-gray-200 hover:border-brand-primary/50'}`}
+              >
                 <div className="flex items-center gap-3">
                   <input
                     type="radio"
@@ -997,10 +1047,14 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                     <p className="text-sm text-gray-500">Standard price</p>
                   </div>
                 </div>
-                <span className="font-bold">₹{onSale ? selectedVariant.salePrice : selectedVariant.price}</span>
+                <span className="font-bold">
+                  ₹{onSale ? selectedVariant.salePrice : selectedVariant.price}
+                </span>
               </label>
 
-              <label className={`flex items-center justify-between p-3 border rounded-lg cursor-pointer transition-all ${isSubscription ? 'border-brand-primary bg-white ring-1 ring-brand-primary' : 'border-gray-200 hover:border-brand-primary/50'}`}>
+              <label
+                className={`flex items-center justify-between p-3 border rounded-lg cursor-pointer transition-all ${isSubscription ? 'border-brand-primary bg-white ring-1 ring-brand-primary' : 'border-gray-200 hover:border-brand-primary/50'}`}
+              >
                 <div className="flex items-center gap-3">
                   <input
                     type="radio"
@@ -1015,8 +1069,15 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                   </div>
                 </div>
                 <div className="text-right">
-                  <span className="font-bold text-green-700">₹{Math.floor((onSale ? selectedVariant.salePrice! : selectedVariant.price) * 0.9)}</span>
-                  <p className="text-xs text-green-600 line-through">₹{onSale ? selectedVariant.salePrice : selectedVariant.price}</p>
+                  <span className="font-bold text-green-700">
+                    ₹
+                    {Math.floor(
+                      (onSale ? selectedVariant.salePrice! : selectedVariant.price) * 0.9
+                    )}
+                  </span>
+                  <p className="text-xs text-green-600 line-through">
+                    ₹{onSale ? selectedVariant.salePrice : selectedVariant.price}
+                  </p>
                 </div>
               </label>
             </div>
@@ -1046,7 +1107,10 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
             >
               <span>Add to Cart</span>
               <span className="bg-brand-dark text-white text-xs px-2 py-0.5 rounded-full">
-                ₹{((onSale ? selectedVariant.salePrice! : selectedVariant.price) * quantity).toFixed(0)}
+                ₹
+                {((onSale ? selectedVariant.salePrice! : selectedVariant.price) * quantity).toFixed(
+                  0
+                )}
               </span>
             </button>
           </div>
@@ -1068,7 +1132,7 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
         .prose { max-width: none; }
       `}</style>
       </div>
-    </div >
+    </div>
   );
 };
 

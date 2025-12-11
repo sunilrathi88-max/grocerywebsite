@@ -127,4 +127,4 @@ declare global {
   }
 }
 
-export { };
+export {};
