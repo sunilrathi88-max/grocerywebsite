@@ -10,7 +10,7 @@ import { SEOConfig } from '../utils/seo';
  */
 
 interface SEOProps extends SEOConfig {
-  structuredData?: Record<string, unknown>;
+  structuredData?: Record<string, unknown> | Record<string, unknown>[];
   structuredDataId?: string;
 }
 
@@ -62,9 +62,17 @@ export const SEO: React.FC<SEOProps> = ({
 
       {/* Structured Data */}
       {structuredData && (
-        <script type="application/ld+json">
-          {JSON.stringify(structuredData)}
-        </script>
+        Array.isArray(structuredData) ? (
+          structuredData.map((data, index) => (
+            <script key={index} type="application/ld+json">
+              {JSON.stringify(data)}
+            </script>
+          ))
+        ) : (
+          <script type="application/ld+json">
+            {JSON.stringify(structuredData)}
+          </script>
+        )
       )}
     </Helmet>
   );

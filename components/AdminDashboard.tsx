@@ -7,14 +7,18 @@ import { PencilIcon } from './icons/PencilIcon';
 import { CurrencyDollarIcon } from './icons/CurrencyDollarIcon';
 import { ShoppingBagIcon } from './icons/ShoppingBagIcon';
 import { UsersIcon } from './icons/UsersIcon';
-import { orderAPI, productAPI } from '../utils/apiService';
+import { orderAPI, productAPI, reviewAPI, contentAPI } from '../utils/apiService';
 import OrderDetailModal from './OrderDetailModal';
+import { analyticsHelpers, ProductPerformance, InventoryAlert } from '../utils/analyticsHelpers';
 
 interface AnalyticsProps {
   totalRevenue: number;
   totalOrders: number;
   uniqueCustomers: number;
   salesData: { name: string; sales: number }[];
+  bestSellers: ProductPerformance[];
+  inventoryHealth: InventoryAlert[];
+  momGrowth: number;
 }
 
 const StatCard: React.FC<{ title: string; value: string | number; icon: React.ReactNode }> = ({
@@ -76,36 +80,88 @@ const AnalyticsDashboard: React.FC<{ analytics: AnalyticsProps }> = ({ analytics
         icon={<UsersIcon className="h-8 w-8 text-brand-primary" />}
       />
     </div>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+      {/* Best Sellers */}
+      <div className="bg-white p-6 rounded-lg shadow-md">
+        <h4 className="text-lg font-serif font-bold mb-4 flex items-center gap-2">
+          <span className="text-yellow-500">★</span> Top Performing Products
+        </h4>
+        <div className="space-y-4">
+          {analytics.bestSellers.map(product => (
+            <div key={product.id} className="flex justify-between items-center border-b border-gray-100 last:border-0 pb-2 last:pb-0">
+              <div>
+                <p className="font-bold text-gray-800">{product.name}</p>
+                <p className="text-xs text-gray-500">{product.unitsSold} units sold</p>
+              </div>
+              <span className="font-bold text-brand-primary">₹{product.revenue.toFixed(0)}</span>
+            </div>
+          ))}
+          {analytics.bestSellers.length === 0 && <p className="text-gray-400">No sales data yet.</p>}
+        </div>
+      </div>
+
+      {/* Inventory Health */}
+      <div className="bg-white p-6 rounded-lg shadow-md">
+        <h4 className="text-lg font-serif font-bold mb-4 flex items-center gap-2">
+          <span className="text-red-500">⚠</span> Inventory Alerts
+        </h4>
+        <div className="space-y-3">
+          {analytics.inventoryHealth.map(item => (
+            <div key={item.id} className="flex justify-between items-center bg-red-50 p-3 rounded-lg">
+              <span className="font-medium text-gray-800 truncate pr-4">{item.name}</span>
+              <span className={`px-2 py-1 rounded-full text-xs font-bold ${item.status === 'Out' ? 'bg-red-200 text-red-800' : 'bg-yellow-200 text-yellow-800'}`}>
+                {item.status === 'Out' ? 'Out of Stock' : `Low: ${item.stock}`}
+              </span>
+            </div>
+          ))}
+          {analytics.inventoryHealth.length === 0 && (
+            <div className="text-center py-8 text-green-600">
+              <p>✓ All stock levels healthy</p>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
     <SalesChart data={analytics.salesData} />
   </div>
 );
 
 const AdminDashboard: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'products' | 'orders' | 'analytics'>('products');
+  const [activeTab, setActiveTab] = useState<'products' | 'orders' | 'analytics' | 'reviews' | 'content'>('products');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
 
   // State for data
   const [products, setProducts] = useState<Product[]>([]);
   const [orders, setOrders] = useState<Order[]>([]);
+  const [reviews, setReviews] = useState<any[]>([]);
+  const [content, setContent] = useState<any[]>([]);
   const [analytics, setAnalytics] = useState<AnalyticsProps>({
     totalRevenue: 0,
     totalOrders: 0,
     uniqueCustomers: 0,
     salesData: [],
+    bestSellers: [],
+    inventoryHealth: [],
+    momGrowth: 0
   });
   const [loading, setLoading] = useState(true);
 
   const fetchData = async () => {
     setLoading(true);
     try {
-      const [productsData, ordersData] = await Promise.all([
+      const [productsData, ordersData, reviewsData, blogsData, recipesData] = await Promise.all([
         productAPI.getAll(),
         orderAPI.getAll(),
+        reviewAPI.getAll(),
+        contentAPI.getBlogs(),
+        contentAPI.getRecipes()
       ]);
 
       setProducts(productsData);
       setOrders(ordersData.data);
+      setReviews(reviewsData);
+      setContent([...blogsData, ...recipesData]);
 
       // Calculate Analytics
       const totalRevenue = ordersData.data.reduce((sum, o) => sum + o.total, 0);
@@ -126,11 +182,18 @@ const AdminDashboard: React.FC = () => {
         sales: Number(sales),
       }));
 
+      const bestSellers = analyticsHelpers.calculateBestSellers(ordersData.data, productsData);
+      const inventoryHealth = analyticsHelpers.getInventoryHealth(productsData);
+      const momGrowth = analyticsHelpers.calculateMoMGrowth(ordersData.data);
+
       setAnalytics({
         totalRevenue,
         totalOrders: ordersData.data.length,
         uniqueCustomers,
         salesData,
+        bestSellers,
+        inventoryHealth,
+        momGrowth
       });
     } catch (error) {
       console.error('Failed to fetch admin data', error);
@@ -217,6 +280,18 @@ const AdminDashboard: React.FC = () => {
           >
             Analytics
           </button>
+          <button
+            onClick={() => setActiveTab('reviews')}
+            className={`whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm ${activeTab === 'reviews' ? 'border-brand-primary text-brand-primary' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}`}
+          >
+            Reviews
+          </button>
+          <button
+            onClick={() => setActiveTab('content')}
+            className={`whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm ${activeTab === 'content' ? 'border-brand-primary text-brand-primary' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}`}
+          >
+            Content
+          </button>
         </nav>
       </div>
 
@@ -233,6 +308,8 @@ const AdminDashboard: React.FC = () => {
           <OrderManagement orders={orders} onUpdateStatus={handleUpdateOrderStatus} />
         )}
         {activeTab === 'analytics' && <AnalyticsDashboard analytics={analytics} />}
+        {activeTab === 'reviews' && <ReviewModeration reviews={reviews} onUpdate={fetchData} />}
+        {activeTab === 'content' && <ContentManagement content={content} onUpdate={fetchData} />}
       </div>
 
       {isModalOpen && (
@@ -474,6 +551,110 @@ const OrderManagement: React.FC<{
       {selectedOrder && (
         <OrderDetailModal order={selectedOrder} onClose={() => setSelectedOrder(null)} />
       )}
+    </div>
+  );
+};
+
+const ReviewModeration: React.FC<{ reviews: any[]; onUpdate: () => void }> = ({ reviews, onUpdate }) => {
+  const handleStatusChange = async (id: number, status: 'approved' | 'rejected') => {
+    await reviewAPI.updateStatus(id, status);
+    onUpdate();
+  };
+
+  return (
+    <div>
+      <h3 className="text-xl font-serif font-bold mb-6">Review Moderation</h3>
+      <div className="bg-white shadow overflow-hidden sm:rounded-lg">
+        <table className="min-w-full divide-y divide-gray-200">
+          <thead className="bg-gray-50">
+            <tr>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Product</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Reviewer</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Rating</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Comment</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+              <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Actions</th>
+            </tr>
+          </thead>
+          <tbody className="bg-white divide-y divide-gray-200">
+            {reviews.map(review => (
+              <tr key={review.id}>
+                <td className="px-6 py-4 text-sm font-medium text-gray-900">{review.productName}</td>
+                <td className="px-6 py-4 text-sm text-gray-500">
+                  <div>{review.author}</div>
+                  <div className="text-xs">{review.date}</div>
+                </td>
+                <td className="px-6 py-4 text-sm text-yellow-500">{'★'.repeat(review.rating)}</td>
+                <td className="px-6 py-4 text-sm text-gray-500 max-w-xs truncate">{review.comment}</td>
+                <td className="px-6 py-4 text-sm">
+                  <span className={`px-2 py-1 rounded-full text-xs font-bold ${review.status === 'approved' ? 'bg-green-100 text-green-800' :
+                    review.status === 'rejected' ? 'bg-red-100 text-red-800' :
+                      'bg-yellow-100 text-yellow-800'
+                    }`}>
+                    {review.status.toUpperCase()}
+                  </span>
+                </td>
+                <td className="px-6 py-4 text-right text-sm font-medium space-x-2">
+                  {review.status === 'pending' && (
+                    <>
+                      <button onClick={() => handleStatusChange(review.id, 'approved')} className="text-green-600 hover:text-green-900">Approve</button>
+                      <button onClick={() => handleStatusChange(review.id, 'rejected')} className="text-red-600 hover:text-red-900">Reject</button>
+                    </>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+};
+
+const ContentManagement: React.FC<{ content: any[]; onUpdate: () => void }> = ({ content, onUpdate }) => {
+  const handleDelete = async (id: number, type: 'blog' | 'recipe') => {
+    if (window.confirm(`Delete this ${type}?`)) {
+      await contentAPI.delete(id, type);
+      onUpdate();
+    }
+  };
+
+  return (
+    <div>
+      <div className="flex justify-between items-center mb-6">
+        <h3 className="text-xl font-serif font-bold">Content Management</h3>
+        <button className="bg-brand-dark text-white px-4 py-2 rounded-full font-bold shadow-md hover:bg-opacity-90">
+          <PlusIcon className="w-5 h-5 inline mr-1" /> New Post
+        </button>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {content.map(item => (
+          <div key={`${item.type}-${item.id}`} className="bg-white rounded-lg shadow-md overflow-hidden group">
+            <div className="h-32 bg-gray-200 flex items-center justify-center text-gray-400">
+              {/* Placeholder for real image */}
+              <span className="text-4xl">📷</span>
+            </div>
+            <div className="p-4">
+              <div className="flex justify-between items-start mb-2">
+                <span className={`px-2 py-1 rounded-full text-xs font-bold ${item.type === 'blog' ? 'bg-blue-100 text-blue-800' : 'bg-orange-100 text-orange-800'}`}>
+                  {item.type.toUpperCase()}
+                </span>
+                <span className={`text-xs ${item.status === 'published' ? 'text-green-600' : 'text-gray-500'}`}>
+                  ● {item.status}
+                </span>
+              </div>
+              <h4 className="font-bold text-gray-900 mb-1 group-hover:text-brand-primary transition-colors">{item.title}</h4>
+              <p className="text-sm text-gray-500 mb-4">By {item.author} • {item.date}</p>
+
+              <div className="flex justify-end pt-3 border-t border-gray-100 space-x-3">
+                <button className="text-gray-400 hover:text-brand-primary"><PencilIcon className="w-5 h-5" /></button>
+                <button onClick={() => handleDelete(item.id, item.type)} className="text-gray-400 hover:text-red-600"><TrashIcon className="w-5 h-5" /></button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

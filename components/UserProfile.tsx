@@ -3,9 +3,11 @@ import { User, Order } from '../types';
 import { UserIcon } from './icons/UserIcon';
 import { LocationMarkerIcon } from './icons/LocationMarkerIcon';
 import { ClipboardListIcon } from './icons/ClipboardListIcon';
+import { SparklesIcon } from './icons/SparklesIcon';
 import { userAPI } from '../utils/apiService';
 import { APIErrorDisplay } from './APIErrorDisplay';
 import OrderDetailModal from './OrderDetailModal';
+import { LoyaltyPointsTracker } from './LoyaltyPointsTracker';
 
 interface UserProfileProps {
   user: User;
@@ -14,7 +16,7 @@ interface UserProfileProps {
 }
 
 const UserProfile: React.FC<UserProfileProps> = ({ user, orders, onUpdateUser }) => {
-  const [activeTab, setActiveTab] = useState<'profile' | 'addresses' | 'orders'>('profile');
+  const [activeTab, setActiveTab] = useState<'profile' | 'addresses' | 'orders' | 'loyalty'>('profile');
 
   const renderContent = () => {
     switch (activeTab) {
@@ -26,6 +28,8 @@ const UserProfile: React.FC<UserProfileProps> = ({ user, orders, onUpdateUser })
         );
       case 'orders':
         return <OrderHistory orders={orders} />;
+      case 'loyalty':
+        return <LoyaltyPointsTracker />;
       default:
         return null;
     }
@@ -58,6 +62,12 @@ const UserProfile: React.FC<UserProfileProps> = ({ user, orders, onUpdateUser })
               className={`w-full flex items-center gap-3 p-3 rounded-lg text-left transition-colors ${activeTab === 'orders' ? 'bg-brand-primary text-brand-dark' : 'hover:bg-brand-secondary/50'}`}
             >
               <ClipboardListIcon className="h-6 w-6" /> <span className="font-bold">My Orders</span>
+            </button>
+            <button
+              onClick={() => setActiveTab('loyalty')}
+              className={`w-full flex items-center gap-3 p-3 rounded-lg text-left transition-colors ${activeTab === 'loyalty' ? 'bg-brand-primary text-brand-dark' : 'hover:bg-brand-secondary/50'}`}
+            >
+              <SparklesIcon className="h-6 w-6" /> <span className="font-bold">Loyalty Points</span>
             </button>
           </nav>
         </aside>
@@ -474,15 +484,14 @@ const OrderHistory: React.FC<{ orders: Order[] }> = ({ orders }) => {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm">
                     <span
-                      className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                        order.status === 'Delivered'
-                          ? 'bg-green-100 text-green-800'
-                          : order.status === 'Shipped'
-                            ? 'bg-blue-100 text-blue-800'
-                            : order.status === 'Cancelled'
-                              ? 'bg-red-100 text-red-800'
-                              : 'bg-yellow-100 text-yellow-800'
-                      }`}
+                      className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${order.status === 'Delivered'
+                        ? 'bg-green-100 text-green-800'
+                        : order.status === 'Shipped'
+                          ? 'bg-blue-100 text-blue-800'
+                          : order.status === 'Cancelled'
+                            ? 'bg-red-100 text-red-800'
+                            : 'bg-yellow-100 text-yellow-800'
+                        }`}
                     >
                       {order.status}
                     </span>

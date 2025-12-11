@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { CartItem } from '../types';
+import { Product, Variant, CartItem } from '../types';
+import { XIcon } from '@heroicons/react/outline';
 import { PlusIcon } from './icons/PlusIcon';
 import { MinusIcon } from './icons/MinusIcon';
 import { TrashIcon } from './icons/TrashIcon';

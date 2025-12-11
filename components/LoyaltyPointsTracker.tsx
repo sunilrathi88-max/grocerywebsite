@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { GiftIcon } from './icons/GiftIcon';
 import { SparklesIcon } from './icons/SparklesIcon';
 import { TruckIcon } from './icons/TruckIcon';
@@ -20,26 +20,50 @@ interface PointsHistory {
 }
 
 export const LoyaltyPointsTracker: React.FC = () => {
-  const [points] = useState<LoyaltyPoints>({
-    current: 1250,
-    lifetime: 3800,
-    tier: 'Silver',
-    nextTierPoints: 5000,
+  const [points, setPoints] = useState<LoyaltyPoints>(() => {
+    const saved = localStorage.getItem('tattva_loyalty_points');
+    return saved ? JSON.parse(saved) : {
+      current: 1250,
+      lifetime: 3800,
+      tier: 'Silver',
+      nextTierPoints: 5000,
+    };
   });
 
-  const [history] = useState<PointsHistory[]>([
-    { id: '1', date: '2024-01-15', description: 'Purchase #1234', points: 150, type: 'earned' },
-    { id: '2', date: '2024-01-10', description: 'Product Review', points: 50, type: 'earned' },
-    {
-      id: '3',
-      date: '2024-01-08',
-      description: '10% Discount Redeemed',
-      points: -200,
-      type: 'redeemed',
-    },
-    { id: '4', date: '2024-01-05', description: 'Purchase #1233', points: 220, type: 'earned' },
-    { id: '5', date: '2024-01-01', description: 'Welcome Bonus', points: 100, type: 'earned' },
-  ]);
+  const [history, setHistory] = useState<PointsHistory[]>(() => {
+    const saved = localStorage.getItem('tattva_loyalty_history');
+    return saved ? JSON.parse(saved) : [
+      { id: '1', date: '2024-01-15', description: 'Purchase #1234', points: 150, type: 'earned' },
+      { id: '2', date: '2024-01-10', description: 'Product Review', points: 50, type: 'earned' },
+      { id: '4', date: '2024-01-05', description: 'Purchase #1233', points: 220, type: 'earned' },
+      { id: '5', date: '2024-01-01', description: 'Welcome Bonus', points: 100, type: 'earned' },
+    ];
+  });
+
+  useEffect(() => {
+    localStorage.setItem('tattva_loyalty_points', JSON.stringify(points));
+  }, [points]);
+
+  useEffect(() => {
+    localStorage.setItem('tattva_loyalty_history', JSON.stringify(history));
+  }, [history]);
+
+  const handleRedeem = (amount: number, reward: string) => {
+    if (points.current >= amount) {
+      const newPoints = { ...points, current: points.current - amount };
+      setPoints(newPoints);
+
+      const newHistoryItem: PointsHistory = {
+        id: Date.now().toString(),
+        date: new Date().toISOString(),
+        description: `Redeemed: ${reward}`,
+        points: -amount,
+        type: 'redeemed'
+      };
+      setHistory([newHistoryItem, ...history]);
+      alert(`Successfully redeemed ${reward}!`);
+    }
+  };
 
   const progressToNextTier = ((points.lifetime / points.nextTierPoints) * 100).toFixed(1);
 
@@ -121,18 +145,21 @@ export const LoyaltyPointsTracker: React.FC = () => {
             reward="$5 Off"
             available={points.current >= 500}
             icon={<ShoppingBagIcon className="w-8 h-8 text-brand-primary" />}
+            onRedeem={() => handleRedeem(500, "$5 Off")}
           />
           <RedeemOption
             points={1000}
             reward="$10 Off + Free Shipping"
             available={points.current >= 1000}
             icon={<TruckIcon className="w-8 h-8 text-brand-primary" />}
+            onRedeem={() => handleRedeem(1000, "$10 Off + Free Shipping")}
           />
           <RedeemOption
             points={2000}
             reward="$25 Off + Free Shipping"
             available={points.current >= 2000}
             icon={<GiftIcon className="w-8 h-8 text-brand-primary" />}
+            onRedeem={() => handleRedeem(2000, "$25 Off + Free Shipping")}
           />
         </div>
       </div>
@@ -170,9 +197,8 @@ export const LoyaltyPointsTracker: React.FC = () => {
                 </p>
               </div>
               <div
-                className={`font-bold ${
-                  item.type === 'earned' ? 'text-green-600' : 'text-red-600'
-                }`}
+                className={`font-bold ${item.type === 'earned' ? 'text-green-600' : 'text-red-600'
+                  }`}
               >
                 {item.points > 0 ? '+' : ''}
                 {item.points}
@@ -190,27 +216,27 @@ interface RedeemOptionProps {
   reward: string;
   available: boolean;
   icon: React.ReactNode;
+  onRedeem?: () => void;
 }
 
-const RedeemOption: React.FC<RedeemOptionProps> = ({ points, reward, available, icon }) => {
+const RedeemOption: React.FC<RedeemOptionProps> = ({ points, reward, available, icon, onRedeem }) => {
   return (
     <div
-      className={`border-2 rounded-lg p-4 text-center transition-all ${
-        available
-          ? 'border-brand-primary hover:shadow-lg cursor-pointer'
-          : 'border-gray-200 opacity-50 cursor-not-allowed'
-      }`}
+      className={`border-2 rounded-lg p-4 text-center transition-all ${available
+        ? 'border-brand-primary hover:shadow-lg cursor-pointer'
+        : 'border-gray-200 opacity-50 cursor-not-allowed'
+        }`}
     >
       <div className="mb-3 flex justify-center">{icon}</div>
       <p className="font-bold text-lg text-gray-900 mb-1">{reward}</p>
       <p className="text-sm text-gray-600 mb-3">{points} points</p>
       <button
+        onClick={() => onRedeem?.()}
         disabled={!available}
-        className={`w-full py-2 rounded-lg font-medium transition-colors ${
-          available
-            ? 'bg-brand-primary text-white hover:bg-brand-dark'
-            : 'bg-gray-200 text-gray-400'
-        }`}
+        className={`w-full py-2 rounded-lg font-medium transition-colors ${available
+          ? 'bg-brand-primary text-white hover:bg-brand-dark'
+          : 'bg-gray-200 text-gray-400'
+          }`}
       >
         {available ? 'Redeem' : 'Not Available'}
       </button>

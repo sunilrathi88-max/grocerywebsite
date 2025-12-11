@@ -15,6 +15,7 @@ import Navigation from './Navigation';
 import { imageErrorHandlers } from '../utils/imageHelpers';
 import { useDarkMode } from '../hooks/useDarkMode';
 import { motion, AnimatePresence } from 'framer-motion';
+import { fuzzySearch, getSuggestions } from '../utils/searchUtils';
 
 interface HeaderProps {
   cartItems: CartItem[];
@@ -90,16 +91,28 @@ const Header: React.FC<HeaderProps> = ({
     prevCartCountRef.current = cartItemCount;
   }, [cartItemCount]);
 
+  // Import search utils
+  // import { fuzzySearch, getSuggestions } from '../utils/searchUtils';
+
   const autocompleteResults = useMemo(() => {
-    if (!searchQuery) return { products: [], categories: [] };
-    const query = searchQuery.toLowerCase();
-    const matchingProducts = allProducts
-      .filter((p) => p.name.toLowerCase().includes(query))
-      .slice(0, 4);
+    if (!searchQuery) return { products: [], categories: [], suggestions: [] };
+
+    // Use fuzzy search for products
+    const matchingProducts = fuzzySearch(searchQuery, allProducts).slice(0, 4);
+
+    // Fuzzy matching for categories
     const matchingCategories = categories
-      .filter((cat) => cat.toLowerCase() !== 'all' && cat.toLowerCase().includes(query))
+      .filter((cat) => cat.toLowerCase() !== 'all' && cat.toLowerCase().includes(searchQuery.toLowerCase()))
       .slice(0, 2);
-    return { products: matchingProducts, categories: matchingCategories };
+
+    // Get suggestions if low on results
+    let suggestions: string[] = [];
+    if (matchingProducts.length === 0 && matchingCategories.length === 0) {
+      const allNames = allProducts.map(p => p.name);
+      suggestions = getSuggestions(searchQuery, [...allNames, ...categories]);
+    }
+
+    return { products: matchingProducts, categories: matchingCategories, suggestions };
   }, [searchQuery, allProducts, categories]);
 
   useEffect(() => {
@@ -174,7 +187,8 @@ const Header: React.FC<HeaderProps> = ({
               {/* Autocomplete Dropdown */}
               {isAutocompleteOpen &&
                 (autocompleteResults.products.length > 0 ||
-                  autocompleteResults.categories.length > 0) && (
+                  autocompleteResults.categories.length > 0 ||
+                  (autocompleteResults.suggestions && autocompleteResults.suggestions.length > 0)) && (
                   <div className="absolute top-full mt-2 w-80 bg-white rounded-lg shadow-2xl border border-gray-200 z-50 animate-fade-in-up overflow-hidden right-0">
                     {/* Categories */}
                     {autocompleteResults.categories.length > 0 && (
@@ -244,6 +258,29 @@ const Header: React.FC<HeaderProps> = ({
                             </li>
                           ))}
                         </ul>
+                      </div>
+                    )}
+
+                    {/* "Did you mean?" Suggestions */}
+                    {autocompleteResults.suggestions && autocompleteResults.suggestions.length > 0 && (
+                      <div className="p-3 bg-yellow-50 border-t border-yellow-100">
+                        <p className="text-xs font-bold text-yellow-700 uppercase tracking-wide mb-2">
+                          Did you mean?
+                        </p>
+                        <div className="flex flex-wrap gap-2">
+                          {autocompleteResults.suggestions.map((term) => (
+                            <button
+                              key={term}
+                              onClick={() => {
+                                onSearchChange(term);
+                                // Keep open to show results for new term
+                              }}
+                              className="text-sm text-yellow-800 bg-white border border-yellow-200 px-3 py-1 rounded-full hover:bg-yellow-100 transition-colors"
+                            >
+                              {term}
+                            </button>
+                          ))}
+                        </div>
                       </div>
                     )}
                   </div>

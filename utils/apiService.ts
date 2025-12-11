@@ -269,34 +269,34 @@ export const orderAPI = {
         },
         billingAddress: o.billing_street
           ? {
-              id: 0,
-              street: o.billing_street as string,
-              city: o.billing_city as string,
-              state: o.billing_state as string,
-              zip: o.billing_zip as string,
-              country: (o.billing_country as string) || 'India',
-              type: 'Billing',
-              isDefault: false,
-            }
+            id: 0,
+            street: o.billing_street as string,
+            city: o.billing_city as string,
+            state: o.billing_state as string,
+            zip: o.billing_zip as string,
+            country: (o.billing_country as string) || 'India',
+            type: 'Billing',
+            isDefault: false,
+          }
           : {
-              id: 0,
-              street: o.shipping_street as string,
-              city: o.shipping_city as string,
-              state: o.shipping_state as string,
-              zip: o.shipping_zip as string,
-              country: (o.shipping_country as string) || 'India',
-              type: 'Billing',
-              isDefault: false,
-            },
+            id: 0,
+            street: o.shipping_street as string,
+            city: o.shipping_city as string,
+            state: o.shipping_state as string,
+            zip: o.shipping_zip as string,
+            country: (o.shipping_country as string) || 'India',
+            type: 'Billing',
+            isDefault: false,
+          },
         deliveryMethod: (o.delivery_method as Order['deliveryMethod']) || 'Standard',
         paymentMethod: o.payment_method as string,
         shippingCost: parseFloat(o.shipping_cost as string) || 0,
         discount: parseFloat(o.discount as string) || 0,
         deliverySlot: o.delivery_date
           ? {
-              date: o.delivery_date as string,
-              time: (o.delivery_time as string) || '',
-            }
+            date: o.delivery_date as string,
+            time: (o.delivery_time as string) || '',
+          }
           : undefined,
         trackingNumber: o.tracking_number as string,
         items: (o.order_items as Record<string, unknown>[]).map(
@@ -359,34 +359,34 @@ export const orderAPI = {
         },
         billingAddress: data.billing_street
           ? {
-              id: 0,
-              street: data.billing_street,
-              city: data.billing_city,
-              state: data.billing_state,
-              zip: data.billing_zip,
-              country: data.billing_country || 'India',
-              type: 'Billing',
-              isDefault: false,
-            }
+            id: 0,
+            street: data.billing_street,
+            city: data.billing_city,
+            state: data.billing_state,
+            zip: data.billing_zip,
+            country: data.billing_country || 'India',
+            type: 'Billing',
+            isDefault: false,
+          }
           : {
-              id: 0,
-              street: data.shipping_street,
-              city: data.shipping_city,
-              state: data.shipping_state,
-              zip: data.shipping_zip,
-              country: data.shipping_country || 'India',
-              type: 'Billing',
-              isDefault: false,
-            },
+            id: 0,
+            street: data.shipping_street,
+            city: data.shipping_city,
+            state: data.shipping_state,
+            zip: data.shipping_zip,
+            country: data.shipping_country || 'India',
+            type: 'Billing',
+            isDefault: false,
+          },
         deliveryMethod: (data.delivery_method as Order['deliveryMethod']) || 'Standard',
         paymentMethod: data.payment_method,
         shippingCost: parseFloat(data.shipping_cost) || 0,
         discount: parseFloat(data.discount) || 0,
         deliverySlot: data.delivery_date
           ? {
-              date: data.delivery_date,
-              time: data.delivery_time || '',
-            }
+            date: data.delivery_date,
+            time: data.delivery_time || '',
+          }
           : undefined,
         trackingNumber: data.tracking_number,
         items: (data.order_items as Record<string, unknown>[]).map(
@@ -640,7 +640,7 @@ export const userAPI = {
           id: parseInt(data.user.id.replace(/-/g, '').slice(0, 15), 16),
           email: data.user.email || '',
           name: data.user.user_metadata?.name || '',
-          isAdmin: false,
+          isAdmin: data.user.email === 'admin@tattva.com', // Mock Admin Logic
           isEmailVerified: !!data.user.email_confirmed_at,
           has2FA: false,
           addresses: data.user.user_metadata?.addresses || [],
@@ -888,4 +888,53 @@ export const cartAPI = {
    * Clear cart
    */
   clear: () => api.delete<APIResponse<void>>('/cart'),
+};
+
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+// Stateful Mocks
+let mockReviews = [
+  { id: 101, author: "Alice M.", rating: 5, comment: "Amazing saffron!", status: 'approved', date: "2024-02-10", productName: "Kashmir Saffron" },
+  { id: 102, author: "Bob D.", rating: 4, comment: "Good but pricey.", status: 'pending', date: "2024-02-12", productName: "Kashmir Saffron" },
+  { id: 103, author: "Charlie", rating: 2, comment: "Delivery was late.", status: 'rejected', date: "2024-01-20", productName: "Cold Pressed Coconut Oil" },
+  { id: 104, author: "Diana", rating: 5, comment: "Love the aroma!", status: 'pending', date: "2024-02-14", productName: "Spicy Turmeric Powder" }
+];
+
+let mockBlogs = [
+  { id: 1, title: "Benefits of Turmeric", status: "published", type: "blog", author: "Dr. A. Sharma", date: "2024-01-15" },
+  { id: 2, title: "Saffron Recipes", status: "draft", type: "blog", author: "Chef R. Kapoor", date: "2024-02-01" }
+];
+
+let mockRecipes = [
+  { id: 1, title: "Golden Milk", status: "published", type: "recipe", author: "Tattva Kitchen", date: "2023-11-10" },
+  { id: 2, title: "Saffron Rice", status: "published", type: "recipe", author: "Tattva Kitchen", date: "2023-12-05" }
+];
+
+export const reviewAPI = {
+  getAll: async () => {
+    await delay(500);
+    return [...mockReviews];
+  },
+  updateStatus: async (id: number, status: 'approved' | 'rejected') => {
+    await delay(300);
+    mockReviews = mockReviews.map(r => r.id === id ? { ...r, status } : r);
+    return { success: true };
+  }
+};
+
+export const contentAPI = {
+  getBlogs: async () => {
+    await delay(400);
+    return [...mockBlogs];
+  },
+  getRecipes: async () => {
+    await delay(400);
+    return [...mockRecipes];
+  },
+  delete: async (id: number, type: 'blog' | 'recipe') => {
+    await delay(300);
+    if (type === 'blog') mockBlogs = mockBlogs.filter(b => b.id !== id);
+    else mockRecipes = mockRecipes.filter(r => r.id !== id);
+    return { success: true };
+  }
 };
