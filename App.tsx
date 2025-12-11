@@ -37,8 +37,6 @@ import ToastContainer from './components/ToastContainer';
 import PromotionalBanner from './components/PromotionalBanner';
 import SortDropdown from './components/SortDropdown';
 import Hero from './components/Hero';
-import PEACECards from './components/PEACECards';
-import BrandStory from './components/BrandStory';
 
 // Lazy-Loaded Components (Load on Demand)
 const Testimonials = React.lazy(() => import('./components/Testimonials'));
@@ -66,9 +64,12 @@ const UserProfile = React.lazy(() => import('./components/UserProfile'));
 const AdminDashboard = React.lazy(() => import('./components/AdminDashboard'));
 const PrivacyPolicyPage = React.lazy(() => import('./components/PrivacyPolicyPage'));
 const RefundPolicyPage = React.lazy(() => import('./components/RefundPolicyPage'));
-import TermsOfServicePage from './components/TermsOfServicePage';
+const TermsOfServicePage = React.lazy(() => import('./components/TermsOfServicePage'));
 const AboutPage = React.lazy(() => import('./components/AboutPage'));
+const PEACECards = React.lazy(() => import('./components/PEACECards'));
+const BrandStory = React.lazy(() => import('./components/BrandStory'));
 const FAQsPage = React.lazy(() => import('./components/FAQsPage'));
+const RecommendedProducts = React.lazy(() => import('./components/RecommendedProducts'));
 const ContactPage = React.lazy(() => import('./components/ContactPage'));
 const RecipesPage = React.lazy(() => import('./components/RecipesPage'));
 const BlogPage = React.lazy(() => import('./components/BlogPage'));
@@ -413,25 +414,27 @@ const App: React.FC = () => {
   const handleLogin = useCallback(
     async (email: string, password: string, rememberMe: boolean) => {
       try {
-        const { supabase } = await import('./supabaseClient');
-        const { data, error } = await supabase.auth.signInWithPassword({
-          email,
-          password,
-        });
+        const { userAPI } = await import('./utils/apiService');
+        const response = await userAPI.login({ email, password });
 
-        if (error || !data.session || !data.user) {
-          addToast(error?.message || 'Invalid email or password', 'error');
+        if (!response.success || !response.data) {
+          addToast('Invalid email or password', 'error');
           return;
         }
 
+        const user = response.data.user;
+        setIsLoggedIn(true);
+        setCurrentUser(user);
         setAuthModalOpen(false);
         window.location.hash = '#/';
+
+        addToast(`Welcome back, ${user.name || user.email}!`, 'success');
 
         if (rememberMe) {
           localStorage.setItem('rememberedEmail', email);
         }
-      } catch {
-        addToast('Login failed. Please try again.', 'error');
+      } catch (error: any) {
+        addToast(error.message || 'Login failed', 'error');
       }
     },
     [addToast]
@@ -632,6 +635,10 @@ const App: React.FC = () => {
       </div>
     );
 
+    // Use empty strings to avoid overriding page titles, purely for Schema injection
+    const orgSchema = generateOrganizationSchema();
+    const GlobalSEO = <SEO title="" description="" structuredData={orgSchema} />;
+
     if (currentView.startsWith('order-confirmation')) {
       const orderId = currentView.split('/')[1];
       const order = orders.find((o) => o.id === orderId);
@@ -675,12 +682,14 @@ const App: React.FC = () => {
       case 'messaging':
         return (
           <React.Suspense fallback={<PageLoader />}>
+            {GlobalSEO}
             <MessagingShowcase />
           </React.Suspense>
         );
       case 'checkout':
         return (
           <React.Suspense fallback={<PageLoader />}>
+            {GlobalSEO}
             <CheckoutPage
               cartItems={cartItems}
               user={currentUser}
@@ -924,6 +933,16 @@ const App: React.FC = () => {
                 <PEACECards />
               </React.Suspense>
             </div>
+
+            {/* Personalized Recommendations */}
+            <React.Suspense fallback={null}>
+              <RecommendedProducts
+                allProducts={products}
+                onAddToCart={handleAddToCart}
+                onSelectProduct={setSelectedProduct}
+                onNotifyMe={handleNotifyMe}
+              />
+            </React.Suspense>
 
             {/* Product Grid Section */}
             <div id="products-section" className="bg-brand-accent py-20">

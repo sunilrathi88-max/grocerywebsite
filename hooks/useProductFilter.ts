@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { Product } from '../types';
+import { fuzzySearch } from '../utils/searchUtils';
 
 export interface FilterOptions {
   category: string;
@@ -51,14 +52,7 @@ export const useProductFilter = (
 
     // Filter by search query
     if (filters.searchQuery) {
-      const query = filters.searchQuery.toLowerCase();
-      result = result.filter(
-        (product) =>
-          product.name.toLowerCase().includes(query) ||
-          product.description.toLowerCase().includes(query) ||
-          product.category.toLowerCase().includes(query) ||
-          product.tags?.some((tag) => tag.toLowerCase().includes(query))
-      );
+      result = fuzzySearch(filters.searchQuery, result);
     }
 
     // Filter by price range

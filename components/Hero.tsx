@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { PEACE_SOUNDBITES } from '../data/soundbites';
 import { trackEvent } from '../utils/analytics';
+import { OptimizedImage } from './OptimizedImage';
 
 interface HeroProps {
   onShopNow: () => void;
@@ -76,11 +77,16 @@ const Hero: React.FC<HeroProps> = ({ onShopNow }) => {
             className="relative z-10"
           >
             {/* Main Hero Image */}
-            <img
-              src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&q=80&w=1000"
-              alt="Premium Spices"
-              className="w-full max-w-md md:max-w-lg object-contain drop-shadow-2xl hover:scale-[1.02] transition-transform duration-700 rounded-2xl"
-            />
+            <div className="relative z-10 w-full max-w-md md:max-w-lg">
+              <OptimizedImage
+                src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&q=80&w=1000"
+                alt="Premium Spices"
+                className="w-full h-full object-contain drop-shadow-2xl hover:scale-[1.02] transition-transform duration-700 rounded-2xl"
+                priority="high"
+                width={500}
+                height={500}
+              />
+            </div>
 
             {/* Float Cards/Badges */}
             <motion.div

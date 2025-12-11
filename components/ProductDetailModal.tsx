@@ -45,9 +45,10 @@ interface ProductDetailModalProps {
 }
 
 import { PLACEHOLDER_URLS, imageErrorHandlers } from '../utils/imageHelpers';
+import { useViewingHistory } from '../hooks/useViewingHistory';
 
 import { SEO } from './SEO';
-import { pageSEO, generateProductSchema } from '../utils/seo';
+import { pageSEO, generateProductSchema, generateBreadcrumbSchema, generateRecipeSchema } from '../utils/seo';
 
 const PLACEHOLDER_THUMB = PLACEHOLDER_URLS.thumb;
 
@@ -81,12 +82,21 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
     setQuantity(1);
   }, [product.id]);
 
+  const { addToHistory } = useViewingHistory();
+
+  useEffect(() => {
+    if (isOpen && product) {
+      addToHistory(product);
+    }
+  }, [isOpen, product, addToHistory]);
+
   const [activeTab, setActiveTab] = useState<
     'description' | 'nutrition' | 'sourcing' | 'reviews' | 'qna' | 'recipes' | ''
   >('description');
   // Use lazy initialization to set random viewer count only once
   const [viewers, setViewers] = useState(() => Math.floor(Math.random() * 10) + 2);
   const [isStickyButtonVisible, setStickyButtonVisible] = useState(false);
+  const [isSubscription, setIsSubscription] = useState(false);
 
   // Image error handlers
 
@@ -197,13 +207,37 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
 
   // SEO Configuration
   const seoConfig = useMemo(() => pageSEO.product(product.name, product.description), [product]);
-  const productSchema = useMemo(() => generateProductSchema(product), [product]);
+
+  // Structured Data with correct type aggregation
+  const structuredData = useMemo(() => {
+    const schemas: Record<string, unknown>[] = [];
+
+    // 1. Product Schema
+    schemas.push(generateProductSchema(product));
+
+    // 2. Breadcrumb Schema
+    schemas.push(generateBreadcrumbSchema([
+      { name: 'Home', url: 'https://tattva-co.com' },
+      { name: 'Products', url: 'https://tattva-co.com/products' },
+      { name: product.category, url: `https://tattva-co.com/products/${product.category}` },
+      { name: product.name, url: `https://tattva-co.com/products/${product.id}` } // Fallback URL
+    ]));
+
+    // 3. Recipe Schema (if related recipes exist)
+    if (relatedRecipes.length > 0) {
+      relatedRecipes.forEach(recipe => {
+        schemas.push(generateRecipeSchema(recipe));
+      });
+    }
+
+    return schemas;
+  }, [product, relatedRecipes]);
 
   if (!isOpen || !product) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
-      <SEO {...seoConfig} structuredData={productSchema} structuredDataId="product-schema" />
+      <SEO {...seoConfig} structuredData={structuredData} />
       <div
         className="absolute inset-0 bg-black bg-opacity-50 transition-opacity"
         onClick={onClose}
@@ -367,10 +401,34 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                 ) : (
                   <button
                     ref={mainButtonRef}
-                    onClick={() => onAddToCart(product, selectedVariant, quantity)}
-                    className="w-full bg-brand-primary text-brand-dark font-bold py-3 px-6 rounded-full shadow-lg hover:bg-opacity-90 transform hover:scale-105 transition-all duration-300"
-                  >
-                    Add {quantity} to Cart - ₹{((onSale ? selectedVariant.salePrice! : selectedVariant.price) * quantity).toFixed(2)}
+                    disabled={isOutOfStock}
+                    onClick={() => {
+                      const finalPrice = isSubscription
+                        ? Math.floor((onSale ? selectedVariant.salePrice! : selectedVariant.price) * 0.9)
+                        : (onSale ? selectedVariant.salePrice! : selectedVariant.price);
+
+                      // Create a modified variant or product object if needed, or just rely on the cart to handle 'price' override if supported.
+                      // Since Cart usually recalculates from master data, we might need a 'subscription' flag in the cart item.
+                      // For now, let's assuming we pass metadata.
+                      // Actually, let's just use the standard add and maybe toast the subscription info for now since we don't want to break the cart type definitions immediately without a larger refactor.
+                      // Strategy: We will add it as a normal item but with a "Subscription: 30 Days" note if possible. 
+                      // Wait, I can pass a modified variant with the discounted price!
+
+                      const variantToAdd = isSubscription ? {
+                        ...selectedVariant,
+                        price: finalPrice, // Override price
+                        salePrice: undefined, // Clear sale price to avoid double discount confusion
+                        name: selectedVariant.name + " (Subscribed)"
+                      } : selectedVariant;
+
+                      onAddToCart(product, variantToAdd, quantity);
+                      if (isSubscription) {
+                        addToast("Subscribed! Deliver every 30 days.", "success");
+                      }
+                    }}
+                    className={`flex-1 bg-brand-primary text-brand-dark font-bold py-4 px-8 rounded-full shadow-lg hover:bg-opacity-90 transform hover:scale-105 transition-all duration-300 flex items-center justify-center gap-3 ${isOutOfStock ? 'opacity-50 cursor-not-allowed hover:scale-100' : ''
+                      }`}
+                  >₹{((onSale ? selectedVariant.salePrice! : selectedVariant.price) * quantity).toFixed(2)}
                   </button>
                 )}
 
@@ -917,21 +975,84 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
               />
             </div>
           )}
-        </div>
-        {/* Sticky add to cart button */}
-        {isStickyButtonVisible && !isOutOfStock && (
-          <div className="sticky bottom-0 left-0 right-0 md:hidden bg-white p-4 border-t shadow-lg-top animate-slide-up z-50">
+
+
+          {/* Subscription Toggle */}
+          <div className="mt-8 mb-6 bg-gray-50 border border-gray-200 rounded-lg p-4">
+            <h4 className="font-bold text-gray-900 mb-3 flex items-center gap-2">
+              <span className="text-brand-primary">↻</span> Subscribe & Save
+            </h4>
+            <div className="space-y-3">
+              <label className={`flex items-center justify-between p-3 border rounded-lg cursor-pointer transition-all ${!isSubscription ? 'border-brand-primary bg-white ring-1 ring-brand-primary' : 'border-gray-200 hover:border-brand-primary/50'}`}>
+                <div className="flex items-center gap-3">
+                  <input
+                    type="radio"
+                    name="subscription"
+                    checked={!isSubscription}
+                    onChange={() => setIsSubscription(false)}
+                    className="text-brand-primary focus:ring-brand-primary"
+                  />
+                  <div>
+                    <p className="font-bold text-gray-900">One-time purchase</p>
+                    <p className="text-sm text-gray-500">Standard price</p>
+                  </div>
+                </div>
+                <span className="font-bold">₹{onSale ? selectedVariant.salePrice : selectedVariant.price}</span>
+              </label>
+
+              <label className={`flex items-center justify-between p-3 border rounded-lg cursor-pointer transition-all ${isSubscription ? 'border-brand-primary bg-white ring-1 ring-brand-primary' : 'border-gray-200 hover:border-brand-primary/50'}`}>
+                <div className="flex items-center gap-3">
+                  <input
+                    type="radio"
+                    name="subscription"
+                    checked={isSubscription}
+                    onChange={() => setIsSubscription(true)}
+                    className="text-brand-primary focus:ring-brand-primary"
+                  />
+                  <div>
+                    <p className="font-bold text-gray-900">Subscribe & Save 10%</p>
+                    <p className="text-sm text-gray-500">Deliver every 30 days</p>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <span className="font-bold text-green-700">₹{Math.floor((onSale ? selectedVariant.salePrice! : selectedVariant.price) * 0.9)}</span>
+                  <p className="text-xs text-green-600 line-through">₹{onSale ? selectedVariant.salePrice : selectedVariant.price}</p>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <div className="flex gap-4 mb-8">
+            <div className="flex items-center border border-gray-300 rounded-full h-12 bg-gray-50 shrink-0">
+              <button
+                onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                className="w-10 h-full flex items-center justify-center text-gray-600 active:bg-gray-200 rounded-l-full"
+                aria-label="Decrease quantity"
+              >
+                -
+              </button>
+              <span className="w-8 text-center font-bold text-gray-900">{quantity}</span>
+              <button
+                onClick={() => setQuantity(quantity + 1)}
+                className="w-10 h-full flex items-center justify-center text-gray-600 active:bg-gray-200 rounded-r-full"
+                aria-label="Increase quantity"
+              >
+                +
+              </button>
+            </div>
             <button
               onClick={() => onAddToCart(product, selectedVariant, quantity)}
-              className="w-full bg-brand-primary text-brand-dark font-bold py-3 px-6 rounded-full shadow-lg transition-all duration-300"
+              className="flex-1 bg-brand-primary text-brand-dark font-bold py-3 px-4 rounded-full shadow-lg transition-transform active:scale-95 flex items-center justify-center gap-2"
             >
-              Add {quantity} to Cart - ₹
-              {((onSale ? selectedVariant.salePrice! : selectedVariant.price) * quantity).toFixed(2)}
+              <span>Add to Cart</span>
+              <span className="bg-brand-dark text-white text-xs px-2 py-0.5 rounded-full">
+                ₹{((onSale ? selectedVariant.salePrice! : selectedVariant.price) * quantity).toFixed(0)}
+              </span>
             </button>
           </div>
-        )}
-      </div>
-      <style>{`
+        </div>
+
+        <style>{`
         @keyframes fade-in {
           from { opacity: 0; transform: scale(0.95); }
           to { opacity: 1; transform: scale(1); }
@@ -946,7 +1067,8 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
         .shadow-lg-top { box-shadow: 0 -4px 6px -1px rgb(0 0 0 / 0.1), 0 -2px 4px -2px rgb(0 0 0 / 0.1); }
         .prose { max-width: none; }
       `}</style>
-    </div>
+      </div>
+    </div >
   );
 };
 

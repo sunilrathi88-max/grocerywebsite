@@ -9,6 +9,7 @@ export interface Review {
   date?: string;
   images?: string[];
   helpful?: number;
+  status?: 'pending' | 'approved' | 'rejected';
 }
 
 export interface QnA {
