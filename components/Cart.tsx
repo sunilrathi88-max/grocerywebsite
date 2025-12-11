@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import type { Product, Variant, CartItem } from '../types';
-import { XIcon } from '@heroicons/react/outline';
+// XIcon removed
 import { PlusIcon } from './icons/PlusIcon';
 import { MinusIcon } from './icons/MinusIcon';
 import { TrashIcon } from './icons/TrashIcon';
@@ -284,10 +284,11 @@ const Cart: React.FC<CartProps> = ({
           <a
             href={canCheckout ? '#/checkout' : undefined}
             onClick={canCheckout ? onClose : (e) => e.preventDefault()}
-            className={`mt-4 block w-full text-center bg-brand-primary text-brand-dark font-bold py-3 rounded-full shadow-lg transition-all duration-300 ${!canCheckout || !!loadingState.type
+            className={`mt-4 block w-full text-center bg-brand-primary text-brand-dark font-bold py-3 rounded-full shadow-lg transition-all duration-300 ${
+              !canCheckout || !!loadingState.type
                 ? 'bg-gray-400 cursor-not-allowed'
                 : 'hover:bg-opacity-90 transform hover:scale-105'
-              }`}
+            }`}
             aria-disabled={!canCheckout || !!loadingState.type}
             data-testid="checkout-btn"
           >

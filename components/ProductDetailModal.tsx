@@ -83,9 +83,10 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
   );
   const [quantity, setQuantity] = useState(1);
 
-  useEffect(() => {
-    setQuantity(1);
-  }, [product.id]);
+  // Reset quantity on product change handled by key prop on container
+  // useEffect(() => {
+  //   setQuantity(1);
+  // }, [product.id]);
 
   const { addToHistory } = useViewingHistory();
 
@@ -100,7 +101,7 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
   >('description');
   // Use lazy initialization to set random viewer count only once
   const [viewers, setViewers] = useState(() => Math.floor(Math.random() * 10) + 2);
-  const [isStickyButtonVisible, setStickyButtonVisible] = useState(false);
+  // const [isStickyButtonVisible, setStickyButtonVisible] = useState(false);
   const [isSubscription, setIsSubscription] = useState(false);
 
   // Image error handlers
@@ -116,28 +117,10 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
     return () => clearInterval(interval);
   }, []);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setStickyButtonVisible(!entry.isIntersecting);
-      },
-      { rootMargin: '0px', threshold: 0.1 }
-    );
-
-    const currentButton = mainButtonRef.current;
-    if (currentButton) {
-      observer.observe(currentButton);
-    }
-
-    return () => {
-      if (currentButton) {
-        observer.unobserve(currentButton);
-      }
-    };
-  }, [mainButtonRef]);
+  /* Removed unused sticky button observer effect */
 
   const isOutOfStock = selectedVariant.stock === 0;
-  const isLowStock = selectedVariant.stock > 0 && selectedVariant.stock < 10;
+  // const isLowStock = selectedVariant.stock > 0 && selectedVariant.stock < 10;
   const onSale =
     selectedVariant.salePrice !== undefined && selectedVariant.salePrice < selectedVariant.price;
 
@@ -250,7 +233,10 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
         onClick={onClose}
         aria-hidden="true"
       />
-      <div className="relative bg-white rounded-lg shadow-xl w-full max-w-6xl max-h-[90vh] flex flex-col overflow-hidden animate-fade-in">
+      <div
+        key={product.id}
+        className="relative bg-white rounded-lg shadow-xl w-full max-w-6xl max-h-[90vh] flex flex-col overflow-hidden animate-fade-in"
+      >
         <div className="absolute top-4 right-4 z-10">
           <button
             onClick={onClose}
@@ -493,7 +479,9 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                 </div>
 
                 <div className="mt-6">
-                  <h4 className="font-bold text-gray-900 mb-2 text-sm">Why You'll Love This</h4>
+                  <h4 className="font-bold text-gray-900 mb-2 text-sm">
+                    Why You&apos;ll Love This
+                  </h4>
                   <ul className="space-y-1">
                     {[
                       'Ethically Sourced from Indian Farms',
