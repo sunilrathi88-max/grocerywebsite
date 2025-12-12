@@ -39,7 +39,7 @@ coverage/
 
 # Debug and temporary files
 *.log
-*.txt
+# *.txt
 cypress/e2e/debug-*.cy.ts
 cypress/e2e/trivial.cy.ts
 cypress/e2e/diagnostic.cy.ts

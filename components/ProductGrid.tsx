@@ -3,6 +3,7 @@ import { Product, Variant } from '../types';
 import ProductCard from './ProductCard';
 import ProductCardSkeleton from './ProductCardSkeleton';
 import { trackEvent } from '../utils/analytics';
+import { CategorySEO } from './CategorySEO';
 
 interface ProductGridProps {
   products: Product[];
@@ -137,6 +138,9 @@ const ProductGrid: React.FC<ProductGridProps> = ({
           )}
         </div>
       )}
+
+      {/* Category SEO Content */}
+      {enableFilters && <CategorySEO category={activeFilter} />}
     </div>
   );
 };

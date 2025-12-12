@@ -7,9 +7,7 @@ import { ChevronRightIcon } from './icons/ChevronRightIcon';
 import { PlayIcon } from './icons/PlayIcon';
 
 // Add type declaration for react-slick if missing
-// @ts-expect-error
 import 'slick-carousel/slick/slick.css';
-// @ts-expect-error
 import 'slick-carousel/slick/slick-theme.css';
 
 export interface MediaItem {
@@ -164,11 +162,10 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ media, productName, isOutOf
             {media.map((item, idx) => (
               <div key={`thumb-${idx}`} className="px-2 outline-none">
                 <div
-                  className={`relative aspect-square rounded-md overflow-hidden cursor-pointer border-2 transition-all ${
-                    activeSlide === idx
+                  className={`relative aspect-square rounded-md overflow-hidden cursor-pointer border-2 transition-all ${activeSlide === idx
                       ? 'border-brand-primary ring-1 ring-brand-primary'
                       : 'border-transparent hover:border-gray-300'
-                  }`}
+                    }`}
                 >
                   <OptimizedImage
                     src={item.thumb}

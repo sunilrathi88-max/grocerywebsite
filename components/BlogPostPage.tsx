@@ -70,6 +70,17 @@ const BlogPostPage: React.FC<BlogPostPageProps> = ({ post }) => {
             ))}
           </div>
         </div>
+
+        {/* Shop CTA */}
+        <div className="mt-12 bg-brand-primary/10 rounded-2xl p-8 text-center border border-brand-primary/20">
+          <h3 className="text-2xl font-serif font-bold text-brand-dark mb-4">Inspired to Cook?</h3>
+          <p className="text-gray-700 mb-6 max-w-lg mx-auto">
+            Discover our premium range of authentic Indian spices and ingredients mentioned in this story.
+          </p>
+          <a href="#/products" className="inline-block bg-brand-dark text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-opacity-90 transform hover:scale-105 transition-all">
+            Shop Premium Spices
+          </a>
+        </div>
       </div>
       <style>{`
         .prose h3 { font-family: 'Playfair Display', serif; }
