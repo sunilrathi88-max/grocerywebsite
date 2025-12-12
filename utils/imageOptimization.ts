@@ -43,54 +43,84 @@ export const getWebPUrl = (src: string): string => {
  * Generates srcSet for responsive images
  * Creates multiple sizes for different screen widths
  */
+/**
+ * Helper to generate Unsplash srcSet
+ */
+const generateUnsplashSrcSet = (src: string, widths: number[], format?: 'webp'): string => {
+  try {
+    const url = new URL(src);
+    // Remove existing width/quality params if we're overriding them
+    url.searchParams.delete('w');
+
+    if (format === 'webp') {
+      url.searchParams.set('fm', 'webp');
+    }
+
+    return widths
+      .map((width) => {
+        const newUrl = new URL(url.toString());
+        newUrl.searchParams.set('w', width.toString());
+        // Add quality param if not present
+        if (!newUrl.searchParams.has('q')) {
+          newUrl.searchParams.set('q', '80');
+        }
+        return `${newUrl.toString()} ${width}w`;
+      })
+      .join(', ');
+  } catch (e) {
+    return '';
+  }
+};
+
 export const generateSrcSet = (
   src: string,
   widths: number[] = [400, 640, 768, 1024, 1280, 1536]
 ): string => {
-  // If SVG, return single source (vector graphics scale infinitely)
-  // For SVGs we don't generate size-specific raster variants — return empty so callers skip srcSet
   if (src.endsWith('.svg')) return '';
-
-  // For placeholders, return single source
-  // Don't build srcSet for placeholder/external images
   if (src.includes('placeholder') || src.includes('via.placeholder')) return '';
-  // Don't build srcSet for external URLs (simple fix to avoid breaking them)
+
+  // Handle Unsplash URLs
+  if (src.includes('images.unsplash.com')) {
+    return generateUnsplashSrcSet(src, widths);
+  }
+
+  // Handle other external URLs - skip
   if (src.startsWith('http://') || src.startsWith('https://')) return '';
 
-  // Extract base name without extension
+  // Local file handling
   const lastDotIndex = src.lastIndexOf('.');
   const baseName = src.substring(0, lastDotIndex);
   const extension = src.substring(lastDotIndex);
 
-  // Generate srcSet entries for each width
-  const srcSetEntries = widths.map((width) => {
-    // Format: image-400w.jpg 400w, image-640w.jpg 640w, etc.
-    return `${baseName}-${width}w${extension} ${width}w`;
-  });
-
-  return srcSetEntries.join(', ');
+  return widths
+    .map((width) => {
+      return `${baseName}-${width}w${extension} ${width}w`;
+    })
+    .join(', ');
 };
 
-/**
- * Generates WebP srcSet for modern browsers
- */
 export const generateWebPSrcSet = (
   src: string,
   widths: number[] = [400, 640, 768, 1024, 1280, 1536]
 ): string => {
-  // For SVGs or placeholders, don't generate a WebP srcset (not applicable)
   if (src.endsWith('.svg')) return '';
   if (src.includes('placeholder') || src.includes('via.placeholder')) return '';
+
+  // Handle Unsplash URLs
+  if (src.includes('images.unsplash.com')) {
+    return generateUnsplashSrcSet(src, widths, 'webp');
+  }
+
   if (src.startsWith('http://') || src.startsWith('https://')) return '';
 
   const lastDotIndex = src.lastIndexOf('.');
   const baseName = src.substring(0, lastDotIndex);
 
-  const srcSetEntries = widths.map((width) => {
-    return `${baseName}-${width}w.webp ${width}w`;
-  });
-
-  return srcSetEntries.join(', ');
+  return widths
+    .map((width) => {
+      return `${baseName}-${width}w.webp ${width}w`;
+    })
+    .join(', ');
 };
 
 /**

@@ -2,6 +2,7 @@
  * SEO Utilities
  * Handles meta tags, structured data, and SEO optimizations
  */
+import { Product } from '../types';
 
 export interface SEOConfig {
   title: string;
@@ -22,6 +23,7 @@ export interface ProductStructuredData extends Record<string, unknown> {
   name: string;
   description: string;
   image: string[];
+  sku?: string;
   brand: {
     '@type': 'Brand';
     name: string;
@@ -32,6 +34,8 @@ export interface ProductStructuredData extends Record<string, unknown> {
     priceCurrency: string;
     availability: string;
     url?: string;
+    shippingDetails?: Record<string, unknown>;
+    hasMerchantReturnPolicy?: Record<string, unknown>;
   };
   aggregateRating?: {
     '@type': 'AggregateRating';
@@ -213,18 +217,7 @@ export const generateOrganizationSchema = (): OrganizationStructuredData => ({
 /**
  * Generate Product structured data
  */
-export const generateProductSchema = (product: {
-  id: number;
-  name: string;
-  description: string;
-  images: string[];
-  variants: Array<{ price: number; salePrice?: number; stock: number }>;
-  reviews: Array<{ rating: number; author: string; comment: string }>;
-  weight?: { value: number; unit: string };
-  origin?: string;
-  category?: string;
-  grade?: string;
-}): ProductStructuredData => {
+export const generateProductSchema = (product: Product): ProductStructuredData => {
   const lowestPrice = Math.min(...product.variants.map((v) => v.salePrice ?? v.price));
   const inStock = product.variants.some((v) => v.stock > 0);
   const avgRating =
@@ -238,6 +231,7 @@ export const generateProductSchema = (product: {
     name: product.name,
     description: product.description,
     image: product.images,
+    sku: `TATTVA-${product.id}`,
     brand: {
       '@type': 'Brand',
       name: 'THE RATHI SPICE CO',
@@ -245,17 +239,38 @@ export const generateProductSchema = (product: {
     offers: {
       '@type': 'Offer',
       price: lowestPrice,
-      priceCurrency: 'USD',
+      priceCurrency: 'INR',
       availability: inStock ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
       url: `https://tattva-co.com/product/${product.id}`,
-    },
-    ...(product.weight && {
-      weight: {
-        '@type': 'QuantitativeValue',
-        value: product.weight.value,
-        unitText: product.weight.unit,
+      shippingDetails: {
+        '@type': 'OfferShippingDetails',
+        shippingRate: {
+          '@type': 'MonetaryAmount',
+          value: 0,
+          currency: 'INR',
+        },
+        shippingDestination: {
+          '@type': 'DefinedRegion',
+          addressCountry: 'IN',
+        },
+        deliveryTime: {
+          '@type': 'ShippingDeliveryTime',
+          transitTime: {
+            '@type': 'QuantitativeValue',
+            minValue: 3,
+            maxValue: 7,
+            unitCode: 'DAY',
+          },
+        },
       },
-    }),
+      hasMerchantReturnPolicy: {
+        '@type': 'MerchantReturnPolicy',
+        returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
+        merchantReturnDays: 7,
+        returnMethod: 'https://schema.org/ReturnByMail',
+        returnFees: 'https://schema.org/FreeReturn',
+      },
+    },
     ...(product.origin && {
       countryOfOrigin: {
         '@type': 'Country',
@@ -281,6 +296,7 @@ export const generateProductSchema = (product: {
           name: review.author,
         },
         reviewBody: review.comment,
+        datePublished: review.date, // Assuming date exists in Review type
       })),
     }),
   };
@@ -393,6 +409,14 @@ export const generateBlogPostingSchema = (post: {
   },
   datePublished: post.date,
   articleBody: post.content.replace(/<[^>]*>?/gm, ''), // Strip HTML tags for plain text body
+  publisher: {
+    '@type': 'Organization',
+    name: 'THE RATHI SPICE CO',
+    logo: {
+      '@type': 'ImageObject',
+      url: 'https://tattva-co.com/images/logo.png',
+    },
+  },
 });
 
 export const generateTestimonialSchema = (

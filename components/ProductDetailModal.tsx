@@ -25,6 +25,8 @@ import { UsersIcon } from './icons/UsersIcon';
 
 import TrustBadges from './TrustBadges';
 import ImageGallery from './ImageGallery';
+import { getBundleSuggestions } from '../utils/recommendations';
+import { FrequentlyBoughtTogether } from './FrequentlyBoughtTogether';
 
 interface ProductDetailModalProps {
   product: Product;
@@ -247,7 +249,7 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
           </button>
         </div>
 
-        <div className="flex-grow overflow-y-auto">
+        <div className="flex-grow overflow-y-auto pb-32 md:pb-0">
           <div className="px-6 pt-4 hidden sm:block">
             <Breadcrumbs items={breadcrumbItems} />
           </div>
@@ -368,88 +370,90 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                     Estimated delivery by{' '}
                     <span className="font-bold text-green-700">{estimatedDelivery}</span>
                   </p>
-
-                  {/* Quantity Selector */}
-                  <div className="mt-4 flex items-center gap-3">
-                    <label className="font-bold text-sm text-gray-600">Quantity:</label>
-                    <div className="flex items-center border border-gray-300 rounded-md">
-                      <button
-                        onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                        className="px-3 py-1 text-gray-600 hover:bg-gray-100 transition-colors"
-                        aria-label="Decrease quantity"
-                      >
-                        -
-                      </button>
-                      <input
-                        type="number"
-                        min="1"
-                        value={quantity}
-                        readOnly
-                        className="w-12 text-center border-x border-gray-300 py-1 text-gray-900 font-medium focus:outline-none"
-                      />
-                      <button
-                        onClick={() => setQuantity(quantity + 1)}
-                        className="px-3 py-1 text-gray-600 hover:bg-gray-100 transition-colors"
-                        aria-label="Increase quantity"
-                      >
-                        +
-                      </button>
+                </div>
+                <div className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t border-gray-100 shadow-[0_-4px_20px_rgba(0,0,0,0.1)] z-50 md:static md:bg-transparent md:border-t-0 md:shadow-none md:p-0">
+                  <div className="flex gap-3 md:block max-w-7xl mx-auto">
+                    {/* Quantity Selector */}
+                    <div className="flex items-center gap-3 w-auto md:mb-4">
+                      <label className="font-bold text-sm text-gray-600 hidden md:block">
+                        Quantity:
+                      </label>
+                      <div className="flex items-center border border-gray-300 rounded-md bg-white">
+                        <button
+                          onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                          className="px-3 py-3 md:py-1 text-gray-600 hover:bg-gray-100 transition-colors" // Larger tap area on mobile
+                          aria-label="Decrease quantity"
+                        >
+                          -
+                        </button>
+                        <input
+                          type="number"
+                          min="1"
+                          value={quantity}
+                          readOnly
+                          className="w-8 md:w-12 text-center border-x border-gray-300 py-1 text-gray-900 font-medium focus:outline-none"
+                        />
+                        <button
+                          onClick={() => setQuantity(quantity + 1)}
+                          className="px-3 py-3 md:py-1 text-gray-600 hover:bg-gray-100 transition-colors"
+                          aria-label="Increase quantity"
+                        >
+                          +
+                        </button>
+                      </div>
                     </div>
+
+                    {/* Add to Cart Button */}
+                    {isOutOfStock ? (
+                      <button
+                        ref={mainButtonRef}
+                        onClick={() => onNotifyMe(`${product.name} (${selectedVariant.name})`)}
+                        className="flex-1 w-full bg-brand-dark text-white font-bold py-3 px-6 rounded-full shadow-lg hover:bg-opacity-90 transform hover:scale-105 transition-all duration-300"
+                      >
+                        Notify Me
+                      </button>
+                    ) : (
+                      <button
+                        ref={mainButtonRef}
+                        disabled={isOutOfStock}
+                        onClick={() => {
+                          const finalPrice = isSubscription
+                            ? Math.floor(
+                                (onSale ? selectedVariant.salePrice! : selectedVariant.price) * 0.9
+                              )
+                            : onSale
+                              ? selectedVariant.salePrice!
+                              : selectedVariant.price;
+
+                          const variantToAdd = isSubscription
+                            ? {
+                                ...selectedVariant,
+                                price: finalPrice,
+                                salePrice: undefined,
+                                name: selectedVariant.name + ' (Subscribed)',
+                              }
+                            : selectedVariant;
+
+                          onAddToCart(product, variantToAdd, quantity);
+                          if (isSubscription) {
+                            addToast('Subscribed! Deliver every 30 days.', 'success');
+                          }
+                        }}
+                        className={`flex-1 w-full bg-brand-primary text-brand-dark font-bold py-3 md:py-4 px-4 md:px-8 rounded-full shadow-lg hover:bg-opacity-90 transform hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2 md:gap-3 ${
+                          isOutOfStock ? 'opacity-50 cursor-not-allowed hover:scale-100' : ''
+                        }`}
+                      >
+                        <span className="whitespace-nowrap">Add to Cart - </span>
+                        <span>
+                          ₹
+                          {(
+                            (onSale ? selectedVariant.salePrice! : selectedVariant.price) * quantity
+                          ).toFixed(2)}
+                        </span>
+                      </button>
+                    )}
                   </div>
                 </div>
-
-                {isOutOfStock ? (
-                  <button
-                    ref={mainButtonRef}
-                    onClick={() => onNotifyMe(`${product.name} (${selectedVariant.name})`)}
-                    className="w-full bg-brand-dark text-white font-bold py-3 px-6 rounded-full shadow-lg hover:bg-opacity-90 transform hover:scale-105 transition-all duration-300"
-                  >
-                    Notify Me When Available
-                  </button>
-                ) : (
-                  <button
-                    ref={mainButtonRef}
-                    disabled={isOutOfStock}
-                    onClick={() => {
-                      const finalPrice = isSubscription
-                        ? Math.floor(
-                            (onSale ? selectedVariant.salePrice! : selectedVariant.price) * 0.9
-                          )
-                        : onSale
-                          ? selectedVariant.salePrice!
-                          : selectedVariant.price;
-
-                      // Create a modified variant or product object if needed, or just rely on the cart to handle 'price' override if supported.
-                      // Since Cart usually recalculates from master data, we might need a 'subscription' flag in the cart item.
-                      // For now, let's assuming we pass metadata.
-                      // Actually, let's just use the standard add and maybe toast the subscription info for now since we don't want to break the cart type definitions immediately without a larger refactor.
-                      // Strategy: We will add it as a normal item but with a "Subscription: 30 Days" note if possible.
-                      // Wait, I can pass a modified variant with the discounted price!
-
-                      const variantToAdd = isSubscription
-                        ? {
-                            ...selectedVariant,
-                            price: finalPrice, // Override price
-                            salePrice: undefined, // Clear sale price to avoid double discount confusion
-                            name: selectedVariant.name + ' (Subscribed)',
-                          }
-                        : selectedVariant;
-
-                      onAddToCart(product, variantToAdd, quantity);
-                      if (isSubscription) {
-                        addToast('Subscribed! Deliver every 30 days.', 'success');
-                      }
-                    }}
-                    className={`flex-1 bg-brand-primary text-brand-dark font-bold py-4 px-8 rounded-full shadow-lg hover:bg-opacity-90 transform hover:scale-105 transition-all duration-300 flex items-center justify-center gap-3 ${
-                      isOutOfStock ? 'opacity-50 cursor-not-allowed hover:scale-100' : ''
-                    }`}
-                  >
-                    ₹
-                    {(
-                      (onSale ? selectedVariant.salePrice! : selectedVariant.price) * quantity
-                    ).toFixed(2)}
-                  </button>
-                )}
 
                 <div className="mt-6 border border-gray-100 bg-gray-50 rounded-xl p-4">
                   <h3 className="font-bold text-gray-900 mb-3 text-sm uppercase tracking-wide">
@@ -495,6 +499,20 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                       </li>
                     ))}
                   </ul>
+                </div>
+
+                <div className="mt-8">
+                  {/* Frequently Bought Together Bundle */}
+                  <FrequentlyBoughtTogether
+                    mainProduct={product}
+                    recommendations={getBundleSuggestions(product, allProducts)}
+                    onAddBundle={(products) => {
+                      products.forEach((p) => {
+                        onAddToCart(p, p.variants[0], 1);
+                      });
+                      addToast(`Added ${products.length} items to cart!`, 'success');
+                    }}
+                  />
                 </div>
 
                 <div className="mt-6">
