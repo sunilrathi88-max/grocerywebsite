@@ -50,11 +50,16 @@ export const fuzzySearch = (query: string, items: Product[], threshold = 2): Pro
   const lowerQuery = query.toLowerCase().trim();
 
   // 1. Exact/Substring match (High Priority)
-  const exactMatches = items.filter(
-    (item) =>
-      item.name.toLowerCase().includes(lowerQuery) ||
-      item.category.toLowerCase().includes(lowerQuery)
-  );
+  const exactMatches = items.filter((item) => {
+    const searchSpace = [
+      item.name,
+      item.category,
+      item.description,
+      ...(item.tags || []),
+    ].join(' ').toLowerCase();
+
+    return searchSpace.includes(lowerQuery);
+  });
 
   // If we have enough exact matches, return them
   if (exactMatches.length >= 3) return exactMatches;
