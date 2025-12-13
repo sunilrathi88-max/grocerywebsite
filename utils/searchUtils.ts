@@ -51,12 +51,9 @@ export const fuzzySearch = (query: string, items: Product[], threshold = 2): Pro
 
   // 1. Exact/Substring match (High Priority)
   const exactMatches = items.filter((item) => {
-    const searchSpace = [
-      item.name,
-      item.category,
-      item.description,
-      ...(item.tags || []),
-    ].join(' ').toLowerCase();
+    const searchSpace = [item.name, item.category, item.description, ...(item.tags || [])]
+      .join(' ')
+      .toLowerCase();
 
     return searchSpace.includes(lowerQuery);
   });
