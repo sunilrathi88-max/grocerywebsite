@@ -17,10 +17,12 @@ interface AdminReview extends BaseReview {
 
 interface AdminContent {
   id: number;
-  type: 'blog' | 'recipe';
+  type: 'blog' | 'recipe' | string;
   title?: string;
   status: string;
   image?: string;
+  author?: string;
+  date?: string;
 }
 
 interface AnalyticsProps {
@@ -184,8 +186,8 @@ const AdminDashboard: React.FC = () => {
 
       setProducts(productsData);
       setOrders(ordersData.data);
-      setReviews(reviewsData);
-      setContent([...blogsData, ...recipesData]);
+      setReviews(reviewsData as AdminReview[]);
+      setContent([...blogsData, ...recipesData] as AdminContent[]);
 
       // Calculate Analytics
       const totalRevenue = ordersData.data.reduce((sum, o) => sum + o.total, 0);
