@@ -1,6 +1,5 @@
 import React, { useMemo, useState } from 'react';
 import { Product } from '../types';
-import { PlusIcon } from '@heroicons/react/24/outline'; // Adjust import if needed
 import { imageErrorHandlers } from '../utils/imageHelpers';
 
 // Fallback icon if heroicons missing or path wrong
@@ -66,7 +65,7 @@ export const FrequentlyBoughtTogether: React.FC<FrequentlyBoughtTogetherProps> =
             />
           </div>
 
-          {[...recommendations].map((product, idx) => (
+          {[...recommendations].map((product) => (
             <React.Fragment key={product.id}>
               <div className="flex-shrink-0 text-gray-400">
                 <PlusSymbol />

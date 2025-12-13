@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { Product, Order, OrderStatus } from '../types';
+import { Product, Order, OrderStatus, Review as BaseReview } from '../types';
 import ProductFormModal from './ProductFormModal';
 import { PlusIcon } from './icons/PlusIcon';
 import { TrashIcon } from './icons/TrashIcon';
@@ -10,6 +10,18 @@ import { UsersIcon } from './icons/UsersIcon';
 import { orderAPI, productAPI, reviewAPI, contentAPI } from '../utils/apiService';
 import OrderDetailModal from './OrderDetailModal';
 import { analyticsHelpers, ProductPerformance, InventoryAlert } from '../utils/analyticsHelpers';
+
+interface AdminReview extends BaseReview {
+  productName: string;
+}
+
+interface AdminContent {
+  id: number;
+  type: 'blog' | 'recipe';
+  title?: string;
+  status: string;
+  image?: string;
+}
 
 interface AnalyticsProps {
   totalRevenue: number;
@@ -146,8 +158,8 @@ const AdminDashboard: React.FC = () => {
   // State for data
   const [products, setProducts] = useState<Product[]>([]);
   const [orders, setOrders] = useState<Order[]>([]);
-  const [reviews, setReviews] = useState<any[]>([]);
-  const [content, setContent] = useState<any[]>([]);
+  const [reviews, setReviews] = useState<AdminReview[]>([]);
+  const [content, setContent] = useState<AdminContent[]>([]);
   const [analytics, setAnalytics] = useState<AnalyticsProps>({
     totalRevenue: 0,
     totalOrders: 0,
@@ -567,7 +579,7 @@ const OrderManagement: React.FC<{
   );
 };
 
-const ReviewModeration: React.FC<{ reviews: any[]; onUpdate: () => void }> = ({
+const ReviewModeration: React.FC<{ reviews: AdminReview[]; onUpdate: () => void }> = ({
   reviews,
   onUpdate,
 }) => {
@@ -657,7 +669,7 @@ const ReviewModeration: React.FC<{ reviews: any[]; onUpdate: () => void }> = ({
   );
 };
 
-const ContentManagement: React.FC<{ content: any[]; onUpdate: () => void }> = ({
+const ContentManagement: React.FC<{ content: AdminContent[]; onUpdate: () => void }> = ({
   content,
   onUpdate,
 }) => {
