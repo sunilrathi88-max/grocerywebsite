@@ -633,13 +633,12 @@ const ReviewModeration: React.FC<{ reviews: AdminReview[]; onUpdate: () => void 
                 </td>
                 <td className="px-6 py-4 text-sm">
                   <span
-                    className={`px-2 py-1 rounded-full text-xs font-bold ${
-                      review.status === 'approved'
+                    className={`px-2 py-1 rounded-full text-xs font-bold ${review.status === 'approved'
                         ? 'bg-green-100 text-green-800'
                         : review.status === 'rejected'
                           ? 'bg-red-100 text-red-800'
                           : 'bg-yellow-100 text-yellow-800'
-                    }`}
+                      }`}
                   >
                     {review.status.toUpperCase()}
                   </span>
@@ -726,7 +725,7 @@ const ContentManagement: React.FC<{ content: AdminContent[]; onUpdate: () => voi
                   <PencilIcon className="w-5 h-5" />
                 </button>
                 <button
-                  onClick={() => handleDelete(item.id, item.type)}
+                  onClick={() => handleDelete(item.id, item.type as 'blog' | 'recipe')}
                   className="text-gray-400 hover:text-red-600"
                 >
                   <TrashIcon className="w-5 h-5" />
