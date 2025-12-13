@@ -433,8 +433,9 @@ const App: React.FC = () => {
         if (rememberMe) {
           localStorage.setItem('rememberedEmail', email);
         }
-      } catch (error: any) {
-        addToast(error.message || 'Login failed', 'error');
+      } catch (error) {
+        const message = error instanceof Error ? error.message : 'Login failed';
+        addToast(message, 'error');
       }
     },
     [addToast]
@@ -651,8 +652,8 @@ const App: React.FC = () => {
             addToast={addToast}
             discount={0}
             promoCode=""
-            onApplyPromoCode={() => {}}
-            onRemovePromoCode={() => {}}
+            onApplyPromoCode={() => { }}
+            onRemovePromoCode={() => { }}
             subtotal={0}
             shippingCost={0}
           />

@@ -67,7 +67,7 @@ const generateUnsplashSrcSet = (src: string, widths: number[], format?: 'webp'):
         return `${newUrl.toString()} ${width}w`;
       })
       .join(', ');
-  } catch (e) {
+  } catch {
     return '';
   }
 };
