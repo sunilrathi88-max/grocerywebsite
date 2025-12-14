@@ -656,8 +656,8 @@ const App: React.FC = () => {
             addToast={addToast}
             discount={0}
             promoCode=""
-            onApplyPromoCode={() => { }}
-            onRemovePromoCode={() => { }}
+            onApplyPromoCode={() => {}}
+            onRemovePromoCode={() => {}}
             subtotal={0}
             shippingCost={0}
           />
@@ -927,18 +927,22 @@ const App: React.FC = () => {
           <>
             {GlobalSEO}
             <main>
-              <Hero onShopNow={() => {
-                const element = document.getElementById('products-section');
-                element?.scrollIntoView({ behavior: 'smooth' });
-              }} />
-
-              <div id="category-showcase">
-                <CategoryShowcase onSelectCategory={(cat) => {
-                  setSelectedCategory(cat);
-                  if (cat === 'Offers') window.location.hash = '#/offers';
+              <Hero
+                onShopNow={() => {
                   const element = document.getElementById('products-section');
                   element?.scrollIntoView({ behavior: 'smooth' });
-                }} />
+                }}
+              />
+
+              <div id="category-showcase">
+                <CategoryShowcase
+                  onSelectCategory={(cat) => {
+                    setSelectedCategory(cat);
+                    if (cat === 'Offers') window.location.hash = '#/offers';
+                    const element = document.getElementById('products-section');
+                    element?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                />
               </div>
 
               <TrustSignals />
@@ -1014,7 +1018,9 @@ const App: React.FC = () => {
                   <div className="grid grid-cols-1 md:grid-cols-[16rem_1fr] gap-10">
                     <aside className="hidden md:block sticky top-24 h-fit z-10">
                       <React.Suspense
-                        fallback={<div className="h-[450px] bg-gray-100 rounded-xl animate-pulse" />}
+                        fallback={
+                          <div className="h-[450px] bg-gray-100 rounded-xl animate-pulse" />
+                        }
                       >
                         <AdvancedFilters
                           showOnSale={showOnSale}
@@ -1059,8 +1065,19 @@ const App: React.FC = () => {
                           onClick={() => setIsFilterOpen(true)}
                           className="md:hidden flex items-center gap-2 px-4 py-2 bg-neutral-100 rounded-lg font-medium text-neutral-700 hover:bg-neutral-200 transition-colors"
                         >
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-5 w-5"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
+                            />
                           </svg>
                           Filters
                         </button>
@@ -1074,7 +1091,7 @@ const App: React.FC = () => {
                       {/* Active Filters Display */}
                       {(selectedCategory !== 'All' || searchQuery || selectedTags.length > 0) && (
                         <div className="flex flex-wrap gap-2 items-center mb-4">
-                          {(selectedCategory !== 'All') && (
+                          {selectedCategory !== 'All' && (
                             <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-brand-primary/10 text-brand-primary text-sm font-medium">
                               {selectedCategory}
                               <button
@@ -1284,11 +1301,7 @@ const App: React.FC = () => {
             />
           )}
 
-          <SideModal
-            isOpen={isFilterOpen}
-            onClose={() => setIsFilterOpen(false)}
-            title="Filters"
-          >
+          <SideModal isOpen={isFilterOpen} onClose={() => setIsFilterOpen(false)} title="Filters">
             <div className="p-4 pb-24 h-full overflow-y-auto">
               <React.Suspense fallback={<div className="h-96 bg-gray-50 animate-pulse" />}>
                 <AdvancedFilters

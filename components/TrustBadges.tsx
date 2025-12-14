@@ -63,8 +63,24 @@ const TrustBadges: React.FC = () => {
           <div className="bg-white dark:bg-gray-800 rounded px-3 py-2 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 border border-gray-100 dark:border-gray-700">
             <svg className="h-6 w-10" viewBox="0 0 48 32" fill="none">
               <rect width="48" height="32" rx="4" fill="white" />
-              <path d="M10 8L10 18C10 20 12 21 14 21L18 21C20 21 22 20 22 18L22 8M30 8L30 21M38 8L38 21" stroke="#4caf50" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-              <text x="50%" y="28" textAnchor="middle" fontSize="6" fill="#555" fontWeight="bold" fontFamily="sans-serif">UPI</text>
+              <path
+                d="M10 8L10 18C10 20 12 21 14 21L18 21C20 21 22 20 22 18L22 8M30 8L30 21M38 8L38 21"
+                stroke="#4caf50"
+                strokeWidth="3"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <text
+                x="50%"
+                y="28"
+                textAnchor="middle"
+                fontSize="6"
+                fill="#555"
+                fontWeight="bold"
+                fontFamily="sans-serif"
+              >
+                UPI
+              </text>
             </svg>
           </div>
 
@@ -72,8 +88,19 @@ const TrustBadges: React.FC = () => {
           <div className="bg-white dark:bg-gray-800 rounded px-3 py-2 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 border border-gray-100 dark:border-gray-700">
             <svg className="h-6 w-10" viewBox="0 0 48 32" fill="none">
               <rect width="48" height="32" rx="4" fill="white" />
-              <path d="M8 10L16 10L20 16L14 24M28 10L28 24M36 10L36 24" stroke="#1d305d" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-              <path d="M38 12C42 12 42 16 38 16L36 16" stroke="#f37021" strokeWidth="3" strokeLinecap="round" />
+              <path
+                d="M8 10L16 10L20 16L14 24M28 10L28 24M36 10L36 24"
+                stroke="#1d305d"
+                strokeWidth="3"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M38 12C42 12 42 16 38 16L36 16"
+                stroke="#f37021"
+                strokeWidth="3"
+                strokeLinecap="round"
+              />
             </svg>
           </div>
 
