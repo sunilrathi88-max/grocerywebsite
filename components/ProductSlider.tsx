@@ -38,7 +38,7 @@ const ProductSlider: React.FC<ProductSliderProps> = ({
               onToggleWishlist={props.onToggleWishlist}
               isWishlisted={props.wishlistedIds.has(product.id)}
               onSelectProduct={props.onSelectProduct}
-              onToggleCompare={props.onToggleCompare || (() => { })}
+              onToggleCompare={props.onToggleCompare || (() => {})}
               isCompared={(props.comparisonIds || new Set()).has(product.id)}
               onNotifyMe={onNotifyMe}
               priority={loadingStrategy === 'eager' && index < 4 ? 'high' : 'auto'}

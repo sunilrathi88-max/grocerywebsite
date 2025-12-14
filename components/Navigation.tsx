@@ -17,7 +17,7 @@ const Navigation: React.FC<NavigationProps> = ({
   const handleScrollTo = (id: string) => {
     // If not on home page, navigate to home first
     if (window.location.hash !== '#/') {
-      window.location.hash = '#/';
+      window.location.assign('#/');
       // Wait for navigation then scroll
       setTimeout(() => {
         const element = document.getElementById(id);
@@ -33,7 +33,7 @@ const Navigation: React.FC<NavigationProps> = ({
     <nav className="hidden md:flex items-center gap-8">
       <button
         onClick={() => {
-          if (window.location.hash !== '#/') window.location.hash = '#/';
+          if (window.location.hash !== '#/') window.location.assign('#/');
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }}
         className="text-base font-medium text-neutral-900 hover:text-brand-primary transition-colors py-2 relative group"

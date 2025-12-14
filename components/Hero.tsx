@@ -1,6 +1,5 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { PEACE_SOUNDBITES } from '../data/soundbites';
 import { trackEvent } from '../utils/analytics';
 import { OptimizedImage } from './OptimizedImage';
 
@@ -45,10 +44,12 @@ const Hero: React.FC<HeroProps> = ({ onShopNow }) => {
                   <span className="w-2 h-2 rounded-full bg-brand-secondary"></span> Freshly Sourced
                 </li>
                 <li className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-brand-secondary"></span> Lab Tested for Purity
+                  <span className="w-2 h-2 rounded-full bg-brand-secondary"></span> Lab Tested for
+                  Purity
                 </li>
                 <li className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-brand-secondary"></span> No Fillers or Additives
+                  <span className="w-2 h-2 rounded-full bg-brand-secondary"></span> No Fillers or
+                  Additives
                 </li>
               </ul>
             </div>
@@ -102,11 +103,15 @@ const Hero: React.FC<HeroProps> = ({ onShopNow }) => {
                 <div className="flex justify-between items-end">
                   <div>
                     <h3 className="font-bold text-lg">Royal Green Cardamom</h3>
-                    <div className="flex text-yellow-400 text-sm">★★★★★ <span className="text-white/70 ml-1">(128)</span></div>
+                    <div className="flex text-yellow-400 text-sm">
+                      ★★★★★ <span className="text-white/70 ml-1">(128)</span>
+                    </div>
                   </div>
                   <div className="text-right">
                     <p className="font-bold text-xl">₹599</p>
-                    <span className="text-xs bg-brand-secondary px-2 py-0.5 rounded text-white font-bold">BESTSELLER</span>
+                    <span className="text-xs bg-brand-secondary px-2 py-0.5 rounded text-white font-bold">
+                      BESTSELLER
+                    </span>
                   </div>
                 </div>
               </div>

@@ -1,4 +1,9 @@
-type EventName = 'hero_cta_click' | 'add_to_cart' | 'product_click' | 'hero_cta_primary_click' | 'hero_cta_secondary_click';
+type EventName =
+  | 'hero_cta_click'
+  | 'add_to_cart'
+  | 'product_click'
+  | 'hero_cta_primary_click'
+  | 'hero_cta_secondary_click';
 
 interface AnalyticsEvent {
   name: EventName;

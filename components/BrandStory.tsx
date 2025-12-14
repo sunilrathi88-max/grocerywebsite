@@ -4,20 +4,20 @@ import { motion } from 'framer-motion';
 const BrandStory: React.FC = () => {
   const features = [
     {
-      title: "Uncompromised Quality",
-      desc: "Sourced within weeks of harvest for maximum potency.",
-      icon: "✨"
+      title: 'Uncompromised Quality',
+      desc: 'Sourced within weeks of harvest for maximum potency.',
+      icon: '✨',
     },
     {
-      title: "Radical Transparency",
-      desc: "Every batch lab-tested. Scan QR to see the report.",
-      icon: "🔬"
+      title: 'Radical Transparency',
+      desc: 'Every batch lab-tested. Scan QR to see the report.',
+      icon: '🔬',
     },
     {
-      title: "Farmer First",
-      desc: "Direct partnerships. No middlemen. Fair prices.",
-      icon: "🤝"
-    }
+      title: 'Farmer First',
+      desc: 'Direct partnerships. No middlemen. Fair prices.',
+      icon: '🤝',
+    },
   ];
 
   return (
@@ -36,8 +36,8 @@ const BrandStory: React.FC = () => {
             Fighting Mediocrity in Your Pantry
           </h2>
           <p className="text-lg text-neutral-600 max-w-2xl mx-auto mb-16 leading-relaxed">
-            Most spices on shelves are dead—stored for months, losing their soul.
-            We changed the rules to bring you flavor that actually tastes like something.
+            Most spices on shelves are dead—stored for months, losing their soul. We changed the
+            rules to bring you flavor that actually tastes like something.
           </p>
         </motion.div>
 
@@ -55,15 +55,16 @@ const BrandStory: React.FC = () => {
                 {feature.icon}
               </div>
               <h3 className="text-xl font-bold text-brand-dark mb-3">{feature.title}</h3>
-              <p className="text-neutral-600 leading-relaxed">
-                {feature.desc}
-              </p>
+              <p className="text-neutral-600 leading-relaxed">{feature.desc}</p>
             </motion.div>
           ))}
         </div>
 
         <div className="mt-16">
-          <a href="#/about" className="inline-flex items-center gap-2 text-brand-primary font-bold hover:text-brand-dark transition-colors group">
+          <a
+            href="#/about"
+            className="inline-flex items-center gap-2 text-brand-primary font-bold hover:text-brand-dark transition-colors group"
+          >
             Read Our Full Story
             <span className="transform group-hover:translate-x-1 transition-transform">→</span>
           </a>
