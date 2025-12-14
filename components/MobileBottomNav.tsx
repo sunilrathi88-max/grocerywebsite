@@ -4,6 +4,7 @@ import { MenuIcon } from './icons/MenuIcon';
 import { ShoppingCartIcon } from './icons/ShoppingCartIcon';
 import { HeartIcon } from './icons/HeartIcon';
 import { UserIcon } from './icons/UserIcon';
+import { TagIcon } from './icons/TagIcon';
 
 interface MobileBottomNavProps {
   cartItemCount: number;
@@ -30,9 +31,9 @@ const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
       isActive: currentView === 'home',
     },
     {
-      name: 'Menu',
-      icon: <MenuIcon className="h-6 w-6" />,
-      action: onOpenMenu,
+      name: 'Categories',
+      icon: <TagIcon className="h-6 w-6" />,
+      action: onOpenMenu, // Using existing menu logic but renaming entry point
       isActive: false,
     },
     {
@@ -65,9 +66,8 @@ const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
             key={item.name}
             onClick={item.action}
             aria-label={item.name}
-            className={`relative flex flex-col items-center justify-center w-full h-full space-y-1 transition-colors ${
-              item.isActive ? 'text-brand-primary' : 'text-gray-500 hover:text-gray-900'
-            }`}
+            className={`relative flex flex-col items-center justify-center w-full h-full space-y-1 transition-colors ${item.isActive ? 'text-brand-primary' : 'text-gray-500 hover:text-gray-900'
+              }`}
           >
             <div className="relative">
               {item.icon}

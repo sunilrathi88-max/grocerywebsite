@@ -59,8 +59,26 @@ const TrustBadges: React.FC = () => {
           Accepted Payment Methods
         </p>
         <div className="flex justify-center items-center gap-4 flex-wrap">
+          {/* UPI - Unified Payments Interface */}
+          <div className="bg-white dark:bg-gray-800 rounded px-3 py-2 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 border border-gray-100 dark:border-gray-700">
+            <svg className="h-6 w-10" viewBox="0 0 48 32" fill="none">
+              <rect width="48" height="32" rx="4" fill="white" />
+              <path d="M10 8L10 18C10 20 12 21 14 21L18 21C20 21 22 20 22 18L22 8M30 8L30 21M38 8L38 21" stroke="#4caf50" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+              <text x="50%" y="28" textAnchor="middle" fontSize="6" fill="#555" fontWeight="bold" fontFamily="sans-serif">UPI</text>
+            </svg>
+          </div>
+
+          {/* RuPay */}
+          <div className="bg-white dark:bg-gray-800 rounded px-3 py-2 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 border border-gray-100 dark:border-gray-700">
+            <svg className="h-6 w-10" viewBox="0 0 48 32" fill="none">
+              <rect width="48" height="32" rx="4" fill="white" />
+              <path d="M8 10L16 10L20 16L14 24M28 10L28 24M36 10L36 24" stroke="#1d305d" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M38 12C42 12 42 16 38 16L36 16" stroke="#f37021" strokeWidth="3" strokeLinecap="round" />
+            </svg>
+          </div>
+
           {/* Visa */}
-          <div className="bg-white dark:bg-gray-800 rounded px-3 py-2 shadow-sm hover:shadow-md transition-shadow">
+          <div className="bg-white dark:bg-gray-800 rounded px-3 py-2 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 border border-gray-100 dark:border-gray-700">
             <svg className="h-6 w-10" viewBox="0 0 48 32" fill="none">
               <rect width="48" height="32" rx="4" fill="white" />
               <path
@@ -71,7 +89,7 @@ const TrustBadges: React.FC = () => {
           </div>
 
           {/* Mastercard */}
-          <div className="bg-white dark:bg-gray-800 rounded px-3 py-2 shadow-sm hover:shadow-md transition-shadow">
+          <div className="bg-white dark:bg-gray-800 rounded px-3 py-2 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 border border-gray-100 dark:border-gray-700">
             <svg className="h-6 w-10" viewBox="0 0 48 32" fill="none">
               <rect width="48" height="32" rx="4" fill="white" />
               <circle cx="18" cy="16" r="8" fill="#EB001B" />
@@ -84,7 +102,7 @@ const TrustBadges: React.FC = () => {
           </div>
 
           {/* PayPal */}
-          <div className="bg-white dark:bg-gray-800 rounded px-3 py-2 shadow-sm hover:shadow-md transition-shadow">
+          <div className="bg-white dark:bg-gray-800 rounded px-3 py-2 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 border border-gray-100 dark:border-gray-700">
             <svg className="h-6 w-10" viewBox="0 0 48 32" fill="none">
               <rect width="48" height="32" rx="4" fill="white" />
               <path
@@ -94,17 +112,6 @@ const TrustBadges: React.FC = () => {
               <path
                 d="M38.6 9.5h-2.4c-.2 0-.4.15-.4.35l-.1.65-.15-.25c-.5-.7-1.6-1-2.7-1-2.5 0-4.7 1.9-5.1 4.6-.2 1.35.1 2.65.85 3.55.7.85 1.7 1.2 2.9 1.2 2.05 0 3.2-1.3 3.2-1.3l-.1.65c-.04.25.15.48.4.48h2.2c.35 0 .65-.25.7-.6l1.3-8.2c.05-.25-.15-.48-.4-.48zm-3.3 4.7c-.2 1.3-1.2 2.2-2.5 2.2-.65 0-1.15-.2-1.5-.6-.35-.4-.5-.95-.4-1.6.2-1.3 1.2-2.2 2.5-2.2.65 0 1.15.2 1.5.6.35.4.5.95.4 1.6z"
                 fill="#009CDE"
-              />
-            </svg>
-          </div>
-
-          {/* American Express */}
-          <div className="bg-white dark:bg-gray-800 rounded px-3 py-2 shadow-sm hover:shadow-md transition-shadow">
-            <svg className="h-6 w-10" viewBox="0 0 48 32" fill="none">
-              <rect width="48" height="32" rx="4" fill="#006FCF" />
-              <path
-                d="M8.5 19.5l-1.2-3h-2.6l-1.2 3H1l3.5-8h2.5l3.5 8h-2zm-2.8-6.5l-.9 2.3h1.8l-.9-2.3zm5.8 6.5v-8h3.5c.9 0 1.6.2 2.1.7.4.4.6 1 .6 1.6 0 1.2-.7 2-2 2.3l2.3 3.4h-2.5l-2-3h-.5v3h-1.5zm1.5-4.5h1.7c.8 0 1.2-.4 1.2-1s-.4-1-1.2-1h-1.7v2zm8.5 4.5l-1.2-3h-2.6l-1.2 3H14l3.5-8h2.5l3.5 8h-2zm-2.8-6.5l-.9 2.3h1.8l-.9-2.3zM26 19.5v-8h5.5v1.5h-4v1.5h3.5v1.5h-3.5v2h4v1.5H26zm8 0v-8h1.5l2.5 4.2 2.5-4.2h1.5v8h-1.5v-5.2l-2.5 4.2h-.5l-2.5-4.2v5.2H34z"
-                fill="white"
               />
             </svg>
           </div>
