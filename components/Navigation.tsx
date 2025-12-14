@@ -42,7 +42,22 @@ const Navigation: React.FC<NavigationProps> = ({
         <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-primary transition-all duration-300 group-hover:w-full" />
       </button>
 
-      {/* Products Dropdown */}
+      {/* Direct Category Links */}
+      {['Spices', 'Dry Fruits', 'Beverages'].map((category) => (
+        <button
+          key={category}
+          onClick={() => {
+            onSelectCategory(category);
+            handleScrollTo('products-section');
+          }}
+          className="text-base font-medium text-neutral-900 hover:text-brand-primary transition-colors py-2 relative group"
+        >
+          {category}
+          <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-primary transition-all duration-300 group-hover:w-full" />
+        </button>
+      ))}
+
+      {/* Shop All Dropdown */}
       <div
         className="relative group"
         onMouseEnter={() => setProductsOpen(true)}
@@ -52,7 +67,7 @@ const Navigation: React.FC<NavigationProps> = ({
           className="text-base font-medium text-neutral-900 hover:text-brand-primary transition-colors py-2 flex items-center gap-1"
           onClick={() => handleScrollTo('products-section')}
         >
-          Collections <ChevronDownIcon className="h-4 w-4" />
+          Shop All <ChevronDownIcon className="h-4 w-4" />
         </button>
         {isProductsOpen && (
           <div className="absolute top-full left-0 w-48 bg-white shadow-lg rounded-lg py-2 z-10 animate-fade-in-fast border border-neutral-100">
@@ -73,25 +88,9 @@ const Navigation: React.FC<NavigationProps> = ({
         )}
       </div>
 
-      <button
-        onClick={() => handleScrollTo('why-us')}
-        className="text-base font-medium text-neutral-900 hover:text-brand-primary transition-colors py-2 group relative"
-      >
-        Why Us
-        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-primary transition-all duration-300 group-hover:w-full" />
-      </button>
-
-      <button
-        onClick={() => handleScrollTo('our-story')}
-        className="text-base font-medium text-neutral-900 hover:text-brand-primary transition-colors py-2 group relative"
-      >
-        Our Story
-        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-primary transition-all duration-300 group-hover:w-full" />
-      </button>
-
       <a
         href="#/offers"
-        className="text-base font-medium text-neutral-900 hover:text-brand-primary transition-colors py-2 group relative"
+        className="text-base font-medium text-brand-primary hover:text-brand-dark transition-colors py-2 group relative font-semibold"
       >
         Offers
         <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-primary transition-all duration-300 group-hover:w-full" />

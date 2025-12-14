@@ -37,6 +37,9 @@ import ToastContainer from './components/ToastContainer';
 import PromotionalBanner from './components/PromotionalBanner';
 import SortDropdown from './components/SortDropdown';
 import Hero from './components/Hero';
+import CategoryShowcase from './components/CategoryShowcase';
+import FeaturedCollection from './components/FeaturedCollection';
+import TrustSignals from './components/TrustSignals';
 
 // Lazy-Loaded Components (Load on Demand)
 const Testimonials = React.lazy(() => import('./components/Testimonials'));
@@ -133,6 +136,7 @@ const App: React.FC = () => {
   >('newest');
 
   // Advanced Filters State
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [showOnSale, setShowOnSale] = useState(false);
   const [showInStock, setShowInStock] = useState(false);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
@@ -652,8 +656,8 @@ const App: React.FC = () => {
             addToast={addToast}
             discount={0}
             promoCode=""
-            onApplyPromoCode={() => {}}
-            onRemovePromoCode={() => {}}
+            onApplyPromoCode={() => { }}
+            onRemovePromoCode={() => { }}
             subtotal={0}
             shippingCost={0}
           />
@@ -921,140 +925,202 @@ const App: React.FC = () => {
         // New Homepage Layout (PEACE Framework)
         return (
           <>
-            <Hero
-              onShopNow={() => {
+            {GlobalSEO}
+            <main>
+              <Hero onShopNow={() => {
                 const element = document.getElementById('products-section');
                 element?.scrollIntoView({ behavior: 'smooth' });
-              }}
-            />
+              }} />
 
-            {/* PEACE Soundbites Section */}
-            <div id="why-us">
-              <React.Suspense fallback={<div className="h-96 bg-gray-50 animate-pulse" />}>
-                <PEACECards />
-              </React.Suspense>
-            </div>
+              <div id="category-showcase">
+                <CategoryShowcase onSelectCategory={(cat) => {
+                  setSelectedCategory(cat);
+                  if (cat === 'Offers') window.location.hash = '#/offers';
+                  const element = document.getElementById('products-section');
+                  element?.scrollIntoView({ behavior: 'smooth' });
+                }} />
+              </div>
 
-            {/* Personalized Recommendations */}
-            <React.Suspense fallback={null}>
-              <RecommendedProducts
-                allProducts={products}
+              <TrustSignals />
+
+              {/* Best Sellers */}
+              <FeaturedCollection
+                title="Best Sellers"
+                products={products.slice(0, 8)}
                 onAddToCart={handleAddToCart}
+                onToggleWishlist={handleToggleWishlist}
+                wishlistedIds={wishlistedIds}
                 onSelectProduct={setSelectedProduct}
                 onNotifyMe={handleNotifyMe}
+                onViewAll={() => {
+                  setSelectedCategory('All');
+                  const element = document.getElementById('products-section');
+                  element?.scrollIntoView({ behavior: 'smooth' });
+                }}
               />
-            </React.Suspense>
 
-            {/* Product Grid Section */}
-            <div id="products-section" className="bg-brand-accent py-20">
-              <div className="container mx-auto px-4 md:px-6">
-                <div className="text-center mb-16">
-                  <h2 className="text-3xl md:text-5xl font-serif font-bold text-brand-dark mb-6">
-                    Curated for Impact
-                  </h2>
-                  <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-                    Handpicked essentials that will change the way you cook forever.
-                    <br className="hidden md:block" />
-                    <span className="text-brand-primary font-semibold">
-                      No fillers. No old stock. Just flavor.
-                    </span>
-                  </p>
-                </div>
+              {/* New Arrivals - Different background */}
+              <FeaturedCollection
+                title="New Arrivals"
+                products={products.slice(8, 16)}
+                onAddToCart={handleAddToCart}
+                onToggleWishlist={handleToggleWishlist}
+                wishlistedIds={wishlistedIds}
+                onSelectProduct={setSelectedProduct}
+                onNotifyMe={handleNotifyMe}
+                bgClass="bg-neutral-50"
+                onViewAll={() => {
+                  setSortOrder('newest');
+                  const element = document.getElementById('products-section');
+                  element?.scrollIntoView({ behavior: 'smooth' });
+                }}
+              />
 
-                {/* Advanced Grid Layout */}
-                <div className="grid grid-cols-1 md:grid-cols-[16rem_1fr] gap-10">
-                  <aside className="hidden md:block sticky top-24 h-fit z-10">
-                    <React.Suspense
-                      fallback={<div className="h-[450px] bg-gray-100 rounded-xl animate-pulse" />}
-                    >
-                      <AdvancedFilters
-                        showOnSale={showOnSale}
-                        onToggleOnSale={() => setShowOnSale(!showOnSale)}
-                        showInStock={showInStock}
-                        onToggleInStock={() => setShowInStock(!showInStock)}
-                        availableTags={availableTags}
-                        selectedTags={selectedTags}
-                        onToggleTag={handleToggleTag}
-                        priceRange={priceRange}
-                        maxPrice={maxPrice}
-                        onPriceChange={(max) => setPriceRange((prev) => ({ ...prev, max }))}
-                        origins={availableOrigins}
-                        selectedOrigins={selectedOrigins}
-                        onToggleOrigin={handleToggleOrigin}
-                        heatLevels={availableHeatLevels}
-                        selectedHeatLevels={selectedHeatLevels}
-                        onToggleHeatLevel={handleToggleHeatLevel}
-                        cuisines={availableCuisines}
-                        selectedCuisines={selectedCuisines}
-                        onToggleCuisine={handleToggleCuisine}
-                        sizes={availableSizes}
-                        selectedSizes={selectedSizes}
-                        onToggleSize={handleToggleSize}
-                        grinds={availableGrinds}
-                        selectedGrinds={selectedGrinds}
-                        onToggleGrind={handleToggleGrind}
-                        grades={availableGrades}
-                        selectedGrades={selectedGrades}
-                        onToggleGrade={handleToggleGrade}
-                      />
-                    </React.Suspense>
-                  </aside>
+              <BrandStory />
 
-                  <div>
-                    <div className="flex justify-between items-center mb-6 bg-white p-4 rounded-lg shadow-sm">
-                      <p className="text-gray-600 font-medium">
-                        Showing {finalFilteredProducts.length} results
-                      </p>
-                      <SortDropdown
-                        currentSort={sortOrder}
-                        onSortChange={(val) => setSortOrder(val as typeof sortOrder)}
-                      />
-                    </div>
-                    <ProductGrid
-                      products={finalFilteredProducts}
-                      onAddToCart={handleAddToCart}
-                      onToggleWishlist={handleToggleWishlist}
-                      wishlistedIds={wishlistedIds}
-                      onSelectProduct={setSelectedProduct}
-                      onToggleCompare={handleToggleCompare}
-                      comparisonIds={comparisonIds}
-                      isLoading={productsLoading}
-                      onNotifyMe={handleNotifyMe}
-                      onClearFilters={handleClearFilters}
-                    />
-                    <div className="text-center mt-12">
-                      <button
-                        onClick={() => (window.location.hash = '#/offers')}
-                        className="text-brand-secondary font-bold hover:text-brand-dark underline decoration-2 underline-offset-4 transition-colors"
+              <div id="why-us">
+                <React.Suspense fallback={<div className="h-96 bg-gray-50 animate-pulse" />}>
+                  <PEACECards />
+                </React.Suspense>
+              </div>
+
+              {/* Personalized Recommendations */}
+              <React.Suspense fallback={null}>
+                <RecommendedProducts
+                  allProducts={products}
+                  onAddToCart={handleAddToCart}
+                  onSelectProduct={setSelectedProduct}
+                  onNotifyMe={handleNotifyMe}
+                />
+              </React.Suspense>
+
+              <React.Suspense fallback={<PageLoader />}>
+                <Testimonials testimonials={MOCK_TESTIMONIALS} />
+              </React.Suspense>
+
+              {/* Main Product Grid Section */}
+              <div id="products-section" className="bg-brand-accent py-20">
+                <div className="container mx-auto px-4 md:px-6">
+                  <div className="text-center mb-16">
+                    <h2 className="text-3xl md:text-5xl font-serif font-bold text-brand-dark mb-6">
+                      Shop All
+                    </h2>
+                    <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                      Explore our full range of premium spices.
+                    </p>
+                  </div>
+
+                  {/* Advanced Grid Layout */}
+                  <div className="grid grid-cols-1 md:grid-cols-[16rem_1fr] gap-10">
+                    <aside className="hidden md:block sticky top-24 h-fit z-10">
+                      <React.Suspense
+                        fallback={<div className="h-[450px] bg-gray-100 rounded-xl animate-pulse" />}
                       >
-                        View All Offers &rarr;
-                      </button>
+                        <AdvancedFilters
+                          showOnSale={showOnSale}
+                          onToggleOnSale={() => setShowOnSale(!showOnSale)}
+                          showInStock={showInStock}
+                          onToggleInStock={() => setShowInStock(!showInStock)}
+                          availableTags={availableTags}
+                          selectedTags={selectedTags}
+                          onToggleTag={handleToggleTag}
+                          priceRange={priceRange}
+                          maxPrice={maxPrice}
+                          onPriceChange={(max) => setPriceRange((prev) => ({ ...prev, max }))}
+                          origins={availableOrigins}
+                          selectedOrigins={selectedOrigins}
+                          onToggleOrigin={handleToggleOrigin}
+                          heatLevels={availableHeatLevels}
+                          selectedHeatLevels={selectedHeatLevels}
+                          onToggleHeatLevel={handleToggleHeatLevel}
+                          cuisines={availableCuisines}
+                          selectedCuisines={selectedCuisines}
+                          onToggleCuisine={handleToggleCuisine}
+                          sizes={availableSizes}
+                          selectedSizes={selectedSizes}
+                          onToggleSize={handleToggleSize}
+                          grinds={availableGrinds}
+                          selectedGrinds={selectedGrinds}
+                          onToggleGrind={handleToggleGrind}
+                          grades={availableGrades}
+                          selectedGrades={selectedGrades}
+                          onToggleGrade={handleToggleGrade}
+                        />
+                      </React.Suspense>
+                    </aside>
+
+                    <div>
+                      <div className="flex flex-wrap gap-4 justify-between items-center mb-6 bg-white p-4 rounded-lg shadow-sm">
+                        <p className="text-gray-600 font-medium whitespace-nowrap hidden sm:block">
+                          Showing {finalFilteredProducts.length} results
+                        </p>
+
+                        <button
+                          onClick={() => setIsFilterOpen(true)}
+                          className="md:hidden flex items-center gap-2 px-4 py-2 bg-neutral-100 rounded-lg font-medium text-neutral-700 hover:bg-neutral-200 transition-colors"
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                          </svg>
+                          Filters
+                        </button>
+
+                        <SortDropdown
+                          currentSort={sortOrder}
+                          onSortChange={(val) => setSortOrder(val as typeof sortOrder)}
+                        />
+                      </div>
+
+                      {/* Active Filters Display */}
+                      {(selectedCategory !== 'All' || searchQuery || selectedTags.length > 0) && (
+                        <div className="flex flex-wrap gap-2 items-center mb-4">
+                          {(selectedCategory !== 'All') && (
+                            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-brand-primary/10 text-brand-primary text-sm font-medium">
+                              {selectedCategory}
+                              <button
+                                onClick={() => setSelectedCategory('All')}
+                                className="hover:text-brand-dark ml-1"
+                              >
+                                ×
+                              </button>
+                            </span>
+                          )}
+                        </div>
+                      )}
+
+                      <ProductGrid
+                        products={finalFilteredProducts}
+                        onAddToCart={handleAddToCart}
+                        onToggleWishlist={handleToggleWishlist}
+                        wishlistedIds={wishlistedIds}
+                        onSelectProduct={setSelectedProduct}
+                        onToggleCompare={handleToggleCompare}
+                        comparisonIds={comparisonIds}
+                        isLoading={productsLoading}
+                        onNotifyMe={handleNotifyMe}
+                        onClearFilters={handleClearFilters}
+                      />
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            {/* Brand Story (Founder Narrative) */}
-            <div id="our-story">
-              <React.Suspense fallback={<div className="h-96 bg-white animate-pulse" />}>
-                <BrandStory />
+              {/* Quiz Module */}
+              <section data-testid="quiz-section" className="bg-brand-secondary/5 py-20 mt-0">
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                  <React.Suspense fallback={null}>
+                    <QuizModule addToast={addToast} />
+                  </React.Suspense>
+                </div>
+              </section>
+
+              <React.Suspense fallback={<PageLoader />}>
+                <div className="py-12 bg-neutral-50 text-center">
+                  <h2 className="text-2xl font-bold mb-4">Got Questions?</h2>
+                  <FAQsPage />
+                </div>
               </React.Suspense>
-            </div>
-
-            {/* Testimonials */}
-            <React.Suspense fallback={<div className="h-64 bg-gray-50" />}>
-              <Testimonials testimonials={MOCK_TESTIMONIALS} />
-            </React.Suspense>
-
-            {/* Quiz Module */}
-            <section data-testid="quiz-section" className="bg-brand-secondary/5 py-20 mt-0">
-              <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                <React.Suspense fallback={null}>
-                  <QuizModule addToast={addToast} />
-                </React.Suspense>
-              </div>
-            </section>
+            </main>
           </>
         );
     }
@@ -1217,6 +1283,65 @@ const App: React.FC = () => {
               onAddToCart={handleAddToCart}
             />
           )}
+
+          <SideModal
+            isOpen={isFilterOpen}
+            onClose={() => setIsFilterOpen(false)}
+            title="Filters"
+          >
+            <div className="p-4 pb-24 h-full overflow-y-auto">
+              <React.Suspense fallback={<div className="h-96 bg-gray-50 animate-pulse" />}>
+                <AdvancedFilters
+                  showOnSale={showOnSale}
+                  onToggleOnSale={() => setShowOnSale(!showOnSale)}
+                  showInStock={showInStock}
+                  onToggleInStock={() => setShowInStock(!showInStock)}
+                  availableTags={availableTags}
+                  selectedTags={selectedTags}
+                  onToggleTag={handleToggleTag}
+                  priceRange={priceRange}
+                  maxPrice={maxPrice}
+                  onPriceChange={(max) => setPriceRange((prev) => ({ ...prev, max }))}
+                  origins={availableOrigins}
+                  selectedOrigins={selectedOrigins}
+                  onToggleOrigin={handleToggleOrigin}
+                  heatLevels={availableHeatLevels}
+                  selectedHeatLevels={selectedHeatLevels}
+                  onToggleHeatLevel={handleToggleHeatLevel}
+                  cuisines={availableCuisines}
+                  selectedCuisines={selectedCuisines}
+                  onToggleCuisine={handleToggleCuisine}
+                  sizes={availableSizes}
+                  selectedSizes={selectedSizes}
+                  onToggleSize={handleToggleSize}
+                  grinds={availableGrinds}
+                  selectedGrinds={selectedGrinds}
+                  onToggleGrind={handleToggleGrind}
+                  grades={availableGrades}
+                  selectedGrades={selectedGrades}
+                  onToggleGrade={handleToggleGrade}
+                />
+                {/* Clear Filters Button Mobile */}
+                <div className="mt-8 pt-4 border-t border-gray-100">
+                  <button
+                    onClick={() => {
+                      handleClearFilters();
+                      setIsFilterOpen(false);
+                    }}
+                    className="w-full py-3 bg-neutral-100 text-neutral-700 font-bold rounded-lg hover:bg-neutral-200 transition-colors"
+                  >
+                    Clear All Filters
+                  </button>
+                  <button
+                    onClick={() => setIsFilterOpen(false)}
+                    className="w-full py-3 mt-3 bg-brand-primary text-brand-dark font-bold rounded-lg hover:bg-brand-primary/90 transition-colors"
+                  >
+                    Show {finalFilteredProducts.length} Results
+                  </button>
+                </div>
+              </React.Suspense>
+            </div>
+          </SideModal>
 
           {isExitIntentModalOpen && (
             <ExitIntentModal
