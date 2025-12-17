@@ -1,13 +1,13 @@
 import React from 'react';
-import Toast from './Toast';
-import { ToastMessage } from '../types';
+import { Toast } from './Toast';
+import { ToastMessage } from '../../types';
 
 interface ToastContainerProps {
   toasts: ToastMessage[];
   onClose: (id: number) => void;
 }
 
-const ToastContainer: React.FC<ToastContainerProps> = ({ toasts, onClose }) => {
+export const ToastContainer: React.FC<ToastContainerProps> = ({ toasts, onClose }) => {
   return (
     <div
       aria-live="assertive"
@@ -21,5 +21,3 @@ const ToastContainer: React.FC<ToastContainerProps> = ({ toasts, onClose }) => {
     </div>
   );
 };
-
-export default ToastContainer;

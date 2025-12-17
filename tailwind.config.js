@@ -29,6 +29,8 @@ export default {
         'success-green': '#10B981',
         'warning-yellow': '#F59E0B',
         'accent-orange': '#FF6B35',
+        'social-google': '#4285F4',
+        'social-facebook': '#1877F2',
       },
       boxShadow: {
         card: '0 1px 3px 0 rgba(15, 23, 42, 0.1)',

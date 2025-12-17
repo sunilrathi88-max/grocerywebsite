@@ -8,6 +8,7 @@ import { ShoppingCartIcon } from './icons/ShoppingCartIcon';
 import { OptimizedImage } from './OptimizedImage';
 import { imageErrorHandlers } from '../utils/imageHelpers';
 import { motion, AnimatePresence } from 'framer-motion';
+import PincodeChecker from './PincodeChecker';
 
 interface CartProps {
   items: CartItem[];
@@ -250,6 +251,10 @@ const Cart: React.FC<CartProps> = ({
                 {loadingState.type === 'promo' ? <Spinner /> : 'Apply'}
               </button>
             </div>
+          </div>
+
+          <div className="mt-4">
+            <PincodeChecker />
           </div>
 
           <div className="mt-6 border-t pt-6 space-y-2">

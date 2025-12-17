@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { XIcon } from './icons/XIcon';
 import { UserIcon } from './icons/UserIcon';
+import { User } from '../types';
 
 interface AuthModalProps {
   onClose: () => void;
-  onLogin: (email: string, password: string, rememberMe: boolean) => void;
+  onLogin: (user: User) => void;
   onSignUp: (name: string, email: string, password: string) => void;
 }
 
@@ -16,7 +17,16 @@ const AuthModal: React.FC<AuthModalProps> = ({ onClose, onLogin, onSignUp }) => 
     // In a real app, we would gather these from state/refs
     if (activeTab === 'login') {
       // Mock values for now as the form inputs are not controlled in this snippet
-      onLogin('anika.sharma@example.com', 'password123', true);
+      const mockUser: User = {
+        id: 1,
+        name: 'Demo User',
+        email: 'anika.sharma@example.com',
+        isAdmin: false,
+        addresses: [],
+        wishlist: [],
+        orders: [],
+      };
+      onLogin(mockUser);
     } else {
       onSignUp('New User', 'newuser@example.com', 'password123');
     }

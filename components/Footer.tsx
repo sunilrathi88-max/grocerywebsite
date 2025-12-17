@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { ShieldCheckIcon } from './icons/ShieldCheckIcon';
 import { LeafIcon } from './icons/LeafIcon';
 import { TruckIcon } from './icons/TruckIcon';
@@ -117,24 +118,24 @@ const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
             <h4 className="font-bold tracking-wider uppercase text-gray-600">About</h4>
             <ul className="mt-4 space-y-2 text-sm">
               <li>
-                <a href="#/about" className="hover:text-brand-dark transition-colors">
+                <Link to="/about" className="hover:text-brand-dark transition-colors">
                   Our Story
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#/blog" className="hover:text-brand-dark transition-colors">
+                <Link to="/blog" className="hover:text-brand-dark transition-colors">
                   Blog
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#/contact" className="hover:text-brand-dark transition-colors">
+                <Link to="/contact" className="hover:text-brand-dark transition-colors">
                   Contact Us
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#/faqs" className="hover:text-brand-dark transition-colors">
+                <Link to="/faqs" className="hover:text-brand-dark transition-colors">
                   FAQs
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -142,19 +143,19 @@ const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
             <h4 className="font-bold tracking-wider uppercase text-gray-600">Legal</h4>
             <ul className="mt-4 space-y-2 text-sm">
               <li>
-                <a href="#/privacy-policy" className="hover:text-brand-dark transition-colors">
+                <Link to="/privacy-policy" className="hover:text-brand-dark transition-colors">
                   Privacy Policy
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#/refund-policy" className="hover:text-brand-dark transition-colors">
+                <Link to="/refund-policy" className="hover:text-brand-dark transition-colors">
                   Refund Policy
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#/terms-of-service" className="hover:text-brand-dark transition-colors">
+                <Link to="/terms-of-service" className="hover:text-brand-dark transition-colors">
                   Terms of Service
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

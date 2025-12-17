@@ -141,7 +141,7 @@ const ProfileInfo: React.FC<{ user: User; onUpdateUser: (u: Partial<User>) => vo
             id="name"
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-            className="mt-1 input-field"
+            className="mt-1 block w-full px-3 py-2 border border-neutral-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-brand-primary sm:text-sm"
             required
           />
         </div>
@@ -155,7 +155,7 @@ const ProfileInfo: React.FC<{ user: User; onUpdateUser: (u: Partial<User>) => vo
             id="email"
             value={formData.email}
             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-            className="mt-1 input-field"
+            className="mt-1 block w-full px-3 py-2 border border-neutral-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-brand-primary sm:text-sm"
             required
           />
         </div>
@@ -170,14 +170,7 @@ const ProfileInfo: React.FC<{ user: User; onUpdateUser: (u: Partial<User>) => vo
           {isUpdating ? 'Saving...' : 'Save Changes'}
         </button>
       </form>
-      <style>{`
-        .input-field {
-            display: block; width: 100%; padding: 0.5rem 0.75rem; border: 1px solid #D1D5DB; border-radius: 0.375rem; 
-        }
-        .input-field:focus {
-            outline: none; --tw-ring-color: #FFB7C1; box-shadow: 0 0 0 2px var(--tw-ring-color); border-color: #FFB7C1;
-        }
-      `}</style>
+      {/* Styles removed in favor of Tailwind classes */}
     </div>
   );
 };
@@ -227,7 +220,7 @@ const AddressManager: React.FC<{
     setIsModalOpen(true);
   };
 
-  const handleDelete = async (id: number) => {
+  const handleDelete = async (id: string) => {
     if (!window.confirm('Are you sure you want to delete this address?')) return;
     const newAddresses = addresses.filter((a) => a.id !== id);
     try {
@@ -257,7 +250,7 @@ const AddressManager: React.FC<{
       newAddresses.push({
         ...formData,
         type: formData.type as 'Home' | 'Work' | 'Other',
-        id: Date.now(),
+        id: Date.now().toString(),
       });
     }
 

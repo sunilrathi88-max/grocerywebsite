@@ -178,7 +178,7 @@ const AdminDashboard: React.FC = () => {
     try {
       const [productsData, ordersData, reviewsData, blogsData, recipesData] = await Promise.all([
         productAPI.getAll(),
-        orderAPI.getAll(),
+        orderAPI.getAll({ adminMode: true }),
         reviewAPI.getAll(),
         contentAPI.getBlogs(),
         contentAPI.getRecipes(),

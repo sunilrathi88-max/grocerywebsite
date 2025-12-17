@@ -1,6 +1,6 @@
 import React from 'react';
 import { BlogPost } from '../types';
-import Breadcrumbs from './Breadcrumbs';
+import { Breadcrumbs } from './ui/Breadcrumbs';
 import { imageErrorHandlers } from '../utils/imageHelpers';
 import { SEO } from './SEO';
 import { pageSEO, generateBlogPostingSchema } from '../utils/seo';

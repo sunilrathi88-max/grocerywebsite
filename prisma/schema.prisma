@@ -66,6 +66,18 @@ model Product {
   recipeIngredients RecipeIngredient[]
   metaTitle   String?
   metaDesc    String?
+  
+  // Compliance & Regulatory Fields
+  fssaiLicense       String?
+  ingredients        String?
+  allergens          String?
+  batchNo            String?
+  mfgDate            DateTime?
+  bestBeforeMonths   Int?
+  storageInstructions String?
+  originRegion       String?
+  processingMethod   String?
+
   createdAt   DateTime       @default(now())
   updatedAt   DateTime       @updatedAt
 

@@ -1,10 +1,10 @@
-/**
+﻿/**
  * API Service Layer
  * Business logic for API calls with proper typing
  */
 
 import { api, APIResponse } from './api';
-import { Product, Order, User, Review, QnA, Variant, OrderStatus } from '../types';
+import { Product, Order, User, Review, QnA, Variant, OrderStatus, Address } from '../types';
 
 /**
  * Product API endpoints
@@ -226,6 +226,7 @@ export const orderAPI = {
     page?: number;
     limit?: number;
     status?: string;
+    adminMode?: boolean;
   }): Promise<APIResponse<Order[]>> => {
     try {
       const {
@@ -237,8 +238,8 @@ export const orderAPI = {
         .select('*, order_items(*)')
         .order('created_at', { ascending: false });
 
-      // Filter by user if authenticated
-      if (user) {
+      // Filter by user if authenticated and NOT in admin mode
+      if (user && !params?.adminMode) {
         query = query.eq('user_id', user.id);
       }
 
@@ -258,7 +259,7 @@ export const orderAPI = {
         status: o.status as OrderStatus,
         total: parseFloat(o.total as string),
         shippingAddress: {
-          id: 0,
+          id: '',
           street: o.shipping_street as string,
           city: o.shipping_city as string,
           state: o.shipping_state as string,
@@ -269,7 +270,7 @@ export const orderAPI = {
         },
         billingAddress: o.billing_street
           ? {
-              id: 0,
+              id: '',
               street: o.billing_street as string,
               city: o.billing_city as string,
               state: o.billing_state as string,
@@ -279,7 +280,7 @@ export const orderAPI = {
               isDefault: false,
             }
           : {
-              id: 0,
+              id: '',
               street: o.shipping_street as string,
               city: o.shipping_city as string,
               state: o.shipping_state as string,
@@ -348,7 +349,7 @@ export const orderAPI = {
         status: data.status,
         total: parseFloat(data.total),
         shippingAddress: {
-          id: 0,
+          id: '',
           street: data.shipping_street,
           city: data.shipping_city,
           state: data.shipping_state,
@@ -359,7 +360,7 @@ export const orderAPI = {
         },
         billingAddress: data.billing_street
           ? {
-              id: 0,
+              id: '',
               street: data.billing_street,
               city: data.billing_city,
               state: data.billing_state,
@@ -369,7 +370,7 @@ export const orderAPI = {
               isDefault: false,
             }
           : {
-              id: 0,
+              id: '',
               street: data.shipping_street,
               city: data.shipping_city,
               state: data.shipping_state,
@@ -430,6 +431,10 @@ export const orderAPI = {
     }
   ): Promise<APIResponse<Order>> => {
     try {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
       // Generate order ID
       const orderId = `ORD-${Date.now()}-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
 
@@ -515,6 +520,35 @@ export const orderAPI = {
         items: orderData.items,
       };
 
+      // 3. Trigger Email Notification (Fire and forget, or log error)
+      try {
+        const customerEmail = user?.email || orderData.guestEmail;
+        const customerName = user?.user_metadata?.name || 'Valued Customer';
+
+        if (customerEmail) {
+          supabase.functions
+            .invoke('send-order-email', {
+              body: {
+                order_id: orderId,
+                customer_name: customerName,
+                customer_email: customerEmail,
+                total_amount: orderData.total,
+                items: orderData.items.map((item: any) => ({
+                  product_name: item.product.name,
+                  quantity: item.quantity,
+                  unit_price: item.selectedVariant.price, // or salePrice? Using price for simplicity or check logic
+                })),
+              },
+            })
+            .then(({ error }) => {
+              if (error) console.error('Failed to send email:', error);
+            });
+        }
+      } catch (emailErr) {
+        console.warn('Email trigger failed:', emailErr);
+        // Don't block order success
+      }
+
       return {
         data: createdOrder,
         message: 'Order created successfully',
@@ -547,7 +581,7 @@ export const orderAPI = {
         status: data.status,
         total: parseFloat(data.total),
         shippingAddress: {
-          id: 0,
+          id: '',
           street: data.shipping_street,
           city: data.shipping_city,
           state: data.shipping_state,
@@ -557,7 +591,7 @@ export const orderAPI = {
           isDefault: false,
         },
         billingAddress: {
-          id: 0,
+          id: '',
           street: data.billing_street || data.shipping_street,
           city: data.billing_city || data.shipping_city,
           state: data.billing_state || data.shipping_state,
@@ -621,6 +655,78 @@ export const orderAPI = {
       console.error('Error cancelling order:', error);
       throw error;
     }
+  },
+
+  /**
+   * Track order (Public/Guest)
+   */
+  trackOrder: async (orderId: string, email?: string): Promise<APIResponse<Order>> => {
+    const { data: orderData, error } = await supabase
+      .from('orders')
+      .select('*, order_items(*)')
+      .eq('id', orderId)
+      .single();
+
+    if (error) throw new Error('Order not found');
+
+    // Email verification for guests
+    if (email) {
+      const orderEmail = orderData.guest_email || orderData.user_email || '';
+      if (orderEmail.toLowerCase() !== email.toLowerCase()) {
+        throw new Error('Order details do not match.');
+      }
+    }
+
+    // Reuse transformation logic
+    const order: Order = {
+      id: orderData.id,
+      date: orderData.created_at,
+      status: orderData.status,
+      total: parseFloat(orderData.total),
+      shippingAddress: {
+        id: '',
+        street: orderData.shipping_street,
+        city: orderData.shipping_city,
+        state: orderData.shipping_state,
+        zip: orderData.shipping_zip,
+        country: orderData.shipping_country || 'India',
+        type: 'Shipping',
+        isDefault: false,
+      },
+      billingAddress: {
+        id: '',
+        street: orderData.billing_street || orderData.shipping_street,
+        city: orderData.billing_city || orderData.shipping_city,
+        state: orderData.billing_state || orderData.shipping_state,
+        zip: orderData.billing_zip || orderData.shipping_zip,
+        country: orderData.billing_country || orderData.shipping_country || 'India',
+        type: 'Billing',
+        isDefault: false,
+      },
+      paymentMethod: orderData.payment_method,
+      deliveryMethod: (orderData.delivery_method as Order['deliveryMethod']) || 'Standard',
+      items: (orderData.order_items as any[]).map((item) => ({
+        product: {
+          id: item.product_id,
+          name: item.product_name,
+          images: [item.product_image],
+        } as unknown as Product,
+        selectedVariant: {
+          id: item.variant_id,
+          name: item.variant_name,
+          price: parseFloat(item.unit_price),
+        } as unknown as Variant,
+        quantity: item.quantity,
+      })),
+      shippingCost: parseFloat(orderData.shipping_cost || '0'),
+      discount: parseFloat(orderData.discount || '0'),
+    };
+
+    return {
+      data: order,
+      success: true,
+      message: 'Order details found',
+    };
   },
 };
 
@@ -790,26 +896,163 @@ export const userAPI = {
 };
 
 /**
+ * Address API endpoints (Dedicated Table)
+ */
+export const addressAPI = {
+  /**
+   * Get all addresses for current user
+   */
+  getAll: async () => {
+    const { data, error } = await supabase
+      .from('addresses')
+      .select('*')
+      .order('is_default', { ascending: false });
+
+    if (error) throw error;
+
+    return {
+      data: data as Address[],
+      success: true,
+    };
+  },
+
+  /**
+   * Add new address
+   */
+  add: async (address: Omit<Address, 'id' | 'createdAt' | 'updatedAt'>) => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user) throw new Error('User not authenticated');
+
+    // If making default, unset others
+    if (address.isDefault) {
+      await supabase.from('addresses').update({ is_default: false }).eq('user_id', user.id);
+    }
+
+    const { data, error } = await supabase
+      .from('addresses')
+      .insert([{ ...address, user_id: user.id }])
+      .select()
+      .single();
+
+    if (error) throw error;
+
+    return {
+      data: data as Address,
+      success: true,
+    };
+  },
+
+  /**
+   * Update address
+   */
+  update: async (id: string, address: Partial<Address>) => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user) throw new Error('User not authenticated');
+
+    if (address.isDefault) {
+      await supabase.from('addresses').update({ is_default: false }).eq('user_id', user.id);
+    }
+
+    const { data, error } = await supabase
+      .from('addresses')
+      .update(address)
+      .eq('id', id)
+      .select()
+      .single();
+
+    if (error) throw error;
+
+    return {
+      data: data as Address,
+      success: true,
+    };
+  },
+
+  /**
+   * Delete address
+   */
+  delete: async (id: string) => {
+    const { error } = await supabase.from('addresses').delete().eq('id', id);
+
+    if (error) throw error;
+
+    return {
+      success: true,
+    };
+  },
+};
+
+/**
+ * Utility API endpoints
+ */
+export const utilsAPI = {
+  /**
+   * Check if pincode is serviceable
+   */
+  checkPincode: async (pincode: string) => {
+    const { data, error } = await supabase.functions.invoke('check-pincode', {
+      body: { pincode },
+    });
+
+    if (error) throw error;
+
+    return {
+      data,
+      success: true,
+    };
+  },
+};
+
+/**
  * Promo code API endpoints
  */
 export const promoAPI = {
   /**
-   * Validate promo code
+   * Validate promo code via Edge Function
    */
-  validate: (code: string) =>
-    api.post<APIResponse<{ valid: boolean; discount: number; message?: string }>>(
-      '/promo/validate',
-      { code }
-    ),
+  validate: async (code: string) => {
+    const { data, error } = await supabase.functions.invoke('apply-coupon', {
+      body: { code, cartTotal: 0 }, // Just validation, amount might matter for min_order but we can simulate or pass 0 if generic check
+    });
+
+    if (error) throw error;
+
+    // transform to expected APIResponse format
+    return {
+      data: {
+        valid: data.valid,
+        discount: data.discount || 0,
+        message: data.message,
+      },
+      success: true,
+      message: data.message,
+    } as APIResponse<{ valid: boolean; discount: number; message?: string }>;
+  },
 
   /**
-   * Apply promo code to cart
+   * Apply promo code to cart via Edge Function
    */
-  apply: (code: string, cartTotal: number) =>
-    api.post<APIResponse<{ discount: number; finalTotal: number }>>('/promo/apply', {
-      code,
-      cartTotal,
-    }),
+  apply: async (code: string, cartTotal: number) => {
+    const { data, error } = await supabase.functions.invoke('apply-coupon', {
+      body: { code, cartTotal },
+    });
+
+    if (error) throw error;
+
+    return {
+      data: {
+        discount: data.discount || 0,
+        finalTotal: cartTotal - (data.discount || 0),
+        message: data.message,
+      },
+      success: data.valid,
+      message: data.message,
+    } as APIResponse<{ discount: number; finalTotal: number }>;
+  },
 };
 
 /**
@@ -865,7 +1108,50 @@ export const wishlistAPI = {
  */
 export const cartAPI = {
   /**
-   * Get user's cart
+   * Calculate cart connection via Edge Function
+   */
+  calculate: async (
+    items: Array<{ productId: number; variantId: number; quantity: number }>,
+    couponCode?: string,
+    userLocation?: { pincode: string }
+  ) => {
+    const { data, error } = await supabase.functions.invoke('calculate-cart-totals', {
+      body: { items, couponCode, userLocation },
+    });
+
+    if (error) throw error;
+
+    return {
+      data,
+      success: true,
+      message: 'Cart calculated',
+    };
+  },
+
+  /**
+   * Validate stock via Edge Function
+   */
+  validateStock: async (
+    items: Array<{ productId: number; variantId: number; quantity: number }>
+  ) => {
+    const { data, error } = await supabase.functions.invoke('validate-stock', {
+      body: { items },
+    });
+
+    if (error) throw error;
+
+    return {
+      data,
+      success: true,
+      message: 'Stock validated',
+    };
+  },
+
+  // ... (keeping other methods if needed, or remove if unused)
+  // For now, retaining get/sync/clear but they might be deprecated if we move completely to client-side + edge calculation
+
+  /**
+   * Get user's cart (Legacy/Server Sync)
    */
   get: () =>
     api.get<

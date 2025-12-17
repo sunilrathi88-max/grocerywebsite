@@ -74,7 +74,7 @@ const OrderConfirmation: React.FC<{ order: Order }> = ({ order }) => {
                   </p>
                 </div>
                 <p className="text-sm font-bold flex-shrink-0">
-                  $
+                  ₹
                   {(
                     (item.selectedVariant.salePrice ?? item.selectedVariant.price) * item.quantity
                   ).toFixed(2)}
@@ -84,7 +84,7 @@ const OrderConfirmation: React.FC<{ order: Order }> = ({ order }) => {
           </div>
           <div className="flex justify-between font-bold text-lg text-brand-dark mt-4 pt-4 border-t">
             <span>Total Paid</span>
-            <span>${order.total.toFixed(2)}</span>
+            <span>₹{order.total.toFixed(2)}</span>
           </div>
         </div>
 
@@ -425,10 +425,10 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
         const orderData = {
           items: cartItems,
           total: total,
-          shippingAddress: { ...shippingAddress, id: 0, type: 'Shipping' as const },
+          shippingAddress: { ...shippingAddress, id: '', type: 'Shipping' as const },
           billingAddress: useSameAddress
-            ? { ...shippingAddress, id: 0, type: 'Billing' as const }
-            : { ...billingAddress, id: 0, type: 'Billing' as const },
+            ? { ...shippingAddress, id: '', type: 'Billing' as const }
+            : { ...billingAddress, id: '', type: 'Billing' as const },
           deliveryMethod: 'Standard' as const,
           paymentMethod: paymentMethod,
           shippingCost: shippingCost,
@@ -463,6 +463,21 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
     if (paymentMethod === 'Cash on Delivery') {
       processOrder();
     } else {
+      // Save state before redirecting
+      localStorage.setItem(
+        'checkout_state',
+        JSON.stringify({
+          shippingAddress,
+          billingAddress,
+          useSameAddress,
+          guestEmail,
+          guestPhone,
+          selectedDate,
+          selectedTime,
+          paymentMethod,
+        })
+      );
+
       // Initialize Payment (Cashfree)
       paymentService.initializePayment(
         total,
@@ -473,7 +488,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
           phone: user?.phone || guestPhone,
         },
         (orderId) => {
-          // Payment Success
+          // Payment Success (this callback might not fire if redirected, handled by useEffect below)
           processOrder(orderId);
         },
         (error) => {
@@ -484,6 +499,144 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
       );
     }
   };
+
+  // Payment Verification & State Restoration
+  React.useEffect(() => {
+    const savedState = localStorage.getItem('checkout_state');
+    if (savedState) {
+      try {
+        const parsed = JSON.parse(savedState);
+        // Only restore if we are not already submitting (avoid overwrite loops)
+        if (!user) {
+          // Only restore contact info for guests
+          if (parsed.guestEmail) setGuestEmail(parsed.guestEmail);
+          if (parsed.guestPhone) setGuestPhone(parsed.guestPhone);
+        }
+        if (parsed.shippingAddress && (!shippingAddress.street || !shippingAddress.zip))
+          setShippingAddress(parsed.shippingAddress);
+        if (parsed.billingAddress && !useSameAddress) setBillingAddress(parsed.billingAddress);
+        if (typeof parsed.useSameAddress === 'boolean') setUseSameAddress(parsed.useSameAddress);
+        if (parsed.selectedDate) setSelectedDate(parsed.selectedDate);
+        if (parsed.selectedTime) setSelectedTime(parsed.selectedTime);
+        if (parsed.paymentMethod) setPaymentMethod(parsed.paymentMethod);
+      } catch (e) {
+        console.error('Failed to restore checkout state', e);
+      }
+    }
+
+    const verifyAsync = async () => {
+      const params = new URLSearchParams(window.location.search);
+      const orderId = params.get('order_id');
+
+      if (orderId && !orderConfirmation && !isSubmitting) {
+        setIsSubmitting(true);
+        addToast('Verifying payment...', 'info');
+        try {
+          const isSuccess = await paymentService.verifyPayment(orderId);
+          if (isSuccess) {
+            // Need to ensure state is ready before processing
+            // Use savedState if available to ensure we satisfy requirements
+
+            // We need to re-construct orderData. Ideally processOrder shouldn't depend on closure state if called here?
+            // Actually processOrder uses current state. If we just restored it, we should be fine?
+            // React state updates are async. We might need to wait or pass data directly.
+            // For safety, let's call processOrder with specific override or just hope state settled.
+            // Better: call a modified processOrder that accepts data, or rely on restored state being fast enough (it runs on mount).
+
+            // Important: Clear query param to avoid re-verification on reload
+            window.history.replaceState({}, '', window.location.pathname);
+
+            // Wait a tick for state to settle?
+            setTimeout(() => {
+              // We can assume state is restored by now since we did it synchronously above (except setStates are async)
+              // But we can trigger it.
+
+              // Re-running validation might flag empty fields if restore failed.
+              // Let's rely on the user having filled it before redirect.
+
+              // Call create directly to avoid validation check fail if partial?
+              // processOrder does logic.
+
+              // Let's try calling it.
+              // But processOrder uses 'cartItems'.
+
+              const processOrderAfterVerify = async () => {
+                try {
+                  const saved = savedState ? JSON.parse(savedState) : {};
+                  const finalOrderData = {
+                    items: cartItems, // cartItems comes from useCart which is persistent
+                    total: total,
+                    shippingAddress: {
+                      ...shippingAddress,
+                      ...saved.shippingAddress,
+                      id: '',
+                      type: 'Shipping' as const,
+                    },
+                    billingAddress:
+                      (saved.useSameAddress ?? useSameAddress)
+                        ? {
+                            ...shippingAddress,
+                            ...saved.shippingAddress,
+                            id: '',
+                            type: 'Billing' as const,
+                          }
+                        : {
+                            ...billingAddress,
+                            ...saved.billingAddress,
+                            id: '',
+                            type: 'Billing' as const,
+                          },
+                    deliveryMethod: 'Standard' as const,
+                    paymentMethod: saved.paymentMethod || paymentMethod || 'Online Payment',
+                    shippingCost: shippingCost, // shippingCost is calculated from cart items
+                    discount,
+                    deliverySlot: {
+                      date: new Date(saved.selectedDate || selectedDate).toLocaleDateString(
+                        'en-US',
+                        {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric',
+                        }
+                      ),
+                      time: saved.selectedTime || selectedTime,
+                    },
+                    guestEmail: !user ? saved.guestEmail || guestEmail : undefined,
+                    guestPhone: !user ? saved.guestPhone || guestPhone : undefined,
+                    paymentId: orderId,
+                    userId: user?.id.toString(),
+                  };
+
+                  const confirmedOrder = await orderAPI.create(finalOrderData);
+                  setOrderConfirmation(confirmedOrder.data);
+                  onPlaceOrder(confirmedOrder.data);
+                  addToast('Payment verified & Order placed!', 'success');
+                  localStorage.removeItem('checkout_state');
+                } catch (err) {
+                  console.error(err);
+                  setSubmitError(
+                    'Failed to create order after payment: ' +
+                      (err instanceof Error ? err.message : 'Unknown error')
+                  );
+                } finally {
+                  setIsSubmitting(false);
+                }
+              };
+              processOrderAfterVerify();
+            }, 500);
+          } else {
+            setSubmitError('Payment verification failed.');
+            setIsSubmitting(false);
+          }
+        } catch (err) {
+          setSubmitError('Error verifying payment.');
+          setIsSubmitting(false);
+        }
+      }
+    };
+
+    verifyAsync();
+  }, [user]); // Run on mount (and user load)
 
   if (orderConfirmation) {
     return <OrderConfirmation order={orderConfirmation} />;
