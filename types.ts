@@ -52,6 +52,17 @@ export interface Product {
   tags?: string[];
   rating?: number;
   review_count?: number;
+
+  // Compliance Fields
+  fssaiLicense?: string;
+  ingredients?: string;
+  allergens?: string;
+  batchNo?: string;
+  mfgDate?: string; // ISO string for frontend
+  bestBeforeMonths?: number;
+  storageInstructions?: string;
+  originRegion?: string;
+  processingMethod?: string;
 }
 
 export interface CartItem {
@@ -68,7 +79,7 @@ export interface ToastMessage {
 }
 
 export interface Address {
-  id: number;
+  id: string;
   type: 'Shipping' | 'Billing' | 'Home' | 'Work' | 'Other';
   street: string;
   city: string;
@@ -145,4 +156,15 @@ export interface Recipe {
   ingredients: string[];
   instructions: string[];
   relatedProductIds?: number[];
+}
+
+export interface PincodeServiceability {
+  pincode: string;
+  serviceable: boolean;
+  city?: string;
+  state?: string;
+  deliveryDays?: number;
+  codAvailable?: boolean;
+  shippingCost?: number;
+  freeShippingThreshold?: number;
 }

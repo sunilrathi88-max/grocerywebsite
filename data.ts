@@ -538,7 +538,7 @@ export const MOCK_USER: User = {
   isAdmin: true,
   addresses: [
     {
-      id: 1,
+      id: '1',
       type: 'Shipping',
       street: '42, Lotus Boulevard',
       city: 'Mumbai',
@@ -548,7 +548,7 @@ export const MOCK_USER: User = {
       isDefault: true,
     },
     {
-      id: 2,
+      id: '2',
       type: 'Billing',
       street: '15, Park Avenue',
       city: 'Delhi',

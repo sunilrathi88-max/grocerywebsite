@@ -40,7 +40,7 @@ serve(async (req) => {
         customer_email: customer_email || 'guest@example.com',
       },
       order_meta: {
-        return_url: `${req.headers.get('origin')}/#/checkout?order_id=${orderId}`,
+        return_url: `${req.headers.get('origin')}/checkout?order_id=${orderId}`,
       },
     };
 

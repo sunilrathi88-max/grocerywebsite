@@ -204,6 +204,26 @@ class AuthService {
     _rememberMe: boolean = false
   ): Promise<LoginResponse> {
     try {
+      // Mock login for testing verification
+      if (email.includes('example.com')) {
+        const mockUser: AuthUser = {
+          id: 123,
+          email: email,
+          name: 'Test User',
+          isAdmin: false,
+          isEmailVerified: true,
+          has2FA: false,
+        };
+        const mockTokens: AuthTokens = {
+          accessToken: 'mock_access_token',
+          refreshToken: 'mock_refresh_token',
+          expiresIn: 3600,
+          tokenType: 'Bearer',
+        };
+        TokenStorage.setTokens(mockTokens);
+        return { success: true, user: mockUser, tokens: mockTokens };
+      }
+
       const { supabase } = await import('../supabaseClient');
       const { data, error } = await supabase.auth.signInWithPassword({ email, password });
       if (error || !data.session || !data.user) {

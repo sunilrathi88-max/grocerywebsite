@@ -171,6 +171,107 @@ const ProductFormModal: React.FC<ProductFormModalProps> = ({ product, onSave, on
               </p>
             </div>
           </div>
+          <div className="border-t pt-4">
+            <h3 className="font-bold mb-2">Compliance & Details</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium">FSSAI License</label>
+                <input
+                  type="text"
+                  value={formData.fssaiLicense || ''}
+                  onChange={handleChange}
+                  className="mt-1 input-field"
+                  placeholder="e.g. 1001234567890"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium">Batch No.</label>
+                <input
+                  type="text"
+                  name="batchNo"
+                  value={formData.batchNo || ''}
+                  onChange={handleChange}
+                  className="mt-1 input-field"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium">Mfg Date</label>
+                <input
+                  type="date"
+                  name="mfgDate"
+                  value={
+                    formData.mfgDate ? new Date(formData.mfgDate).toISOString().split('T')[0] : ''
+                  }
+                  onChange={handleChange}
+                  className="mt-1 input-field"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium">Best Before (Months)</label>
+                <input
+                  type="number"
+                  name="bestBeforeMonths"
+                  value={formData.bestBeforeMonths || ''}
+                  onChange={handleChange}
+                  className="mt-1 input-field"
+                />
+              </div>
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium">Ingredients</label>
+                <textarea
+                  name="ingredients"
+                  value={formData.ingredients || ''}
+                  onChange={handleChange}
+                  rows={2}
+                  className="mt-1 input-field"
+                  placeholder="e.g. Turmeric, Black Pepper (5%)"
+                />
+              </div>
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium">Allergens</label>
+                <input
+                  type="text"
+                  name="allergens"
+                  value={formData.allergens || ''}
+                  onChange={handleChange}
+                  className="mt-1 input-field"
+                  placeholder="e.g. Processed in a facility that handles nuts"
+                />
+              </div>
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium">Storage Instructions</label>
+                <input
+                  type="text"
+                  name="storageInstructions"
+                  value={formData.storageInstructions || ''}
+                  onChange={handleChange}
+                  className="mt-1 input-field"
+                  placeholder="e.g. Store in a cool, dry place"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium">Origin Region</label>
+                <input
+                  type="text"
+                  name="originRegion"
+                  value={formData.originRegion || ''}
+                  onChange={handleChange}
+                  className="mt-1 input-field"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium">Processing Method</label>
+                <input
+                  type="text"
+                  name="processingMethod"
+                  value={formData.processingMethod || ''}
+                  onChange={handleChange}
+                  className="mt-1 input-field"
+                  placeholder="e.g. Sun-dried, Cold-pressed"
+                />
+              </div>
+            </div>
+          </div>
 
           <div className="border-t pt-4">
             <h3 className="font-bold mb-2">Variants</h3>

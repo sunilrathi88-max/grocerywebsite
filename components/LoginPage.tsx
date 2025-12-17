@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { User } from '../types';
 import { UserIcon } from './icons/UserIcon';
 import { MailIcon } from './icons/MailIcon';
 import { EyeIcon } from './icons/EyeIcon';
 import { AlertTriangleIcon } from './icons/AlertTriangleIcon';
 import OAuthButtons from './OAuthButtons';
 import { AuthService } from '../utils/authService';
+import { Button } from './ui/Button';
+import { Input } from './ui/Input';
 
 interface LoginPageProps {
-  onLogin: (email: string, password: string, rememberMe: boolean) => void;
+  onLogin: (user: User) => void;
   onNavigateToSignup: () => void;
   onNavigateToForgotPassword: () => void;
 }
@@ -17,6 +21,7 @@ const LoginPage: React.FC<LoginPageProps> = ({
   onNavigateToSignup,
   onNavigateToForgotPassword,
 }) => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
@@ -59,17 +64,23 @@ const LoginPage: React.FC<LoginPageProps> = ({
       const response = await AuthService.login(email, password, rememberMe);
 
       if (response.success) {
-        onLogin(email, password, rememberMe);
+        // Map AuthUser to User type
+        const user: User = {
+          ...response.user,
+          addresses: [], // Initialize empty addresses for now
+          wishlist: [],
+          orders: [],
+        };
+        onLogin(user);
       } else if (response.requires2FA) {
         // Redirect to 2FA verification page
-        window.location.hash = '#/2fa-verify';
+        navigate('/2fa-verify');
       } else {
         setErrors({ general: response.message || 'Invalid email or password' });
       }
     } catch (_error) {
       setErrors({
-        general:
-          _error instanceof _error ? _error.message : 'An _error occurred. Please try again.',
+        general: _error instanceof Error ? _error.message : 'An error occurred. Please try again.',
       });
     } finally {
       setIsLoading(false);
@@ -102,69 +113,47 @@ const LoginPage: React.FC<LoginPageProps> = ({
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Email Field */}
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                Email Address
-              </label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <div className="absolute inset-y-0 left-0 pl-3 top-9 flex items-center pointer-events-none z-10">
                   <MailIcon className="h-5 w-5 text-gray-400" />
                 </div>
-                <input
+                <Input
+                  label="Email Address"
                   type="email"
                   id="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className={`block w-full pl-10 pr-3 py-3 border ${
-                    errors.email
-                      ? 'border-red-300 focus:ring-red-500'
-                      : 'border-gray-300 focus:ring-brand-primary'
-                  } rounded-lg focus:outline-none focus:ring-2 transition-all duration-200`}
+                  className="pl-10"
                   placeholder="you@example.com"
                   disabled={isLoading}
+                  error={errors.email}
                 />
               </div>
-              {errors.email && (
-                <p className="mt-2 text-sm text-red-600 flex items-center gap-1">
-                  <AlertTriangleIcon className="h-4 w-4" />
-                  {errors.email}
-                </p>
-              )}
             </div>
 
             {/* Password Field */}
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-                Password
-              </label>
               <div className="relative">
-                <input
+                <Input
+                  label="Password"
                   type={showPassword ? 'text' : 'password'}
                   id="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className={`block w-full pr-10 px-3 py-3 border ${
-                    errors.password
-                      ? 'border-red-300 focus:ring-red-500'
-                      : 'border-gray-300 focus:ring-brand-primary'
-                  } rounded-lg focus:outline-none focus:ring-2 transition-all duration-200`}
+                  className="pr-10"
                   placeholder="Enter your password"
                   disabled={isLoading}
+                  error={errors.password}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+                  className="absolute inset-y-0 right-0 pr-3 top-8 flex items-center text-gray-400 hover:text-gray-600"
                   tabIndex={-1}
                 >
                   <EyeIcon className="h-5 w-5" />
                 </button>
               </div>
-              {errors.password && (
-                <p className="mt-2 text-sm text-red-600 flex items-center gap-1">
-                  <AlertTriangleIcon className="h-4 w-4" />
-                  {errors.password}
-                </p>
-              )}
             </div>
 
             {/* Remember Me & Forgot Password */}
@@ -197,39 +186,9 @@ const LoginPage: React.FC<LoginPageProps> = ({
             </div>
 
             {/* Submit Button */}
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="w-full bg-gradient-to-r from-brand-primary to-brand-dark text-white font-bold py-3 px-4 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
-            >
-              {isLoading ? (
-                <span className="flex items-center justify-center gap-2">
-                  <svg
-                    className="animate-spin h-5 w-5"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <circle
-                      className="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                    ></circle>
-                    <path
-                      className="opacity-75"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                    ></path>
-                  </svg>
-                  Signing in...
-                </span>
-              ) : (
-                'Sign In'
-              )}
-            </button>
+            <Button type="submit" isLoading={isLoading} fullWidth variant="primary">
+              Sign In
+            </Button>
           </form>
 
           {/* OAuth Buttons */}
@@ -246,7 +205,17 @@ const LoginPage: React.FC<LoginPageProps> = ({
             <div className="mt-6">
               <OAuthButtons
                 onSuccess={(user, _isNewUser) => {
-                  onLogin(user.email, '', false);
+                  // OAuth returns AuthUser, need to map to User
+                  const appUser: User = {
+                    ...user,
+                    id: 0,
+                    name: user.email.split('@')[0],
+                    isAdmin: false,
+                    addresses: [],
+                    wishlist: [],
+                    orders: [],
+                  };
+                  onLogin(appUser);
                 }}
                 onError={(error) => {
                   setErrors({ general: error });
@@ -283,12 +252,13 @@ const LoginPage: React.FC<LoginPageProps> = ({
 
         {/* Back to Home */}
         <div className="text-center">
-          <button
-            onClick={() => (window.location.hash = '#/')}
+          <Button
+            variant="ghost"
+            onClick={() => navigate('/')}
             className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
           >
             ← Back to home
-          </button>
+          </Button>
         </div>
       </div>
 

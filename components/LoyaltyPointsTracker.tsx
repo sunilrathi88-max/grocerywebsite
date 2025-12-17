@@ -280,3 +280,5 @@ const RedeemOption: React.FC<RedeemOptionProps> = ({
     </div>
   );
 };
+
+export default LoyaltyPointsTracker;

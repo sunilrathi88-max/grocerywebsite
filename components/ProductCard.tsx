@@ -10,6 +10,7 @@ import { EyeIcon } from './icons/EyeIcon';
 import { CompareIcon } from './icons/CompareIcon';
 import { MailIcon } from './icons/MailIcon';
 import { formatPrice } from '../utils/formatPrice';
+import { Badge } from './ui/Badge';
 
 interface ProductCardProps {
   product: Product;
@@ -77,27 +78,39 @@ const ProductCard: React.FC<ProductCardProps> = ({
         />
 
         {/* Badges */}
-        <div className="absolute top-3 left-3 flex flex-col gap-2">
+        <div className="absolute top-3 left-3 flex flex-col gap-2 items-start">
           {isOutOfStock ? (
-            <span className="bg-neutral-900 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+            <Badge
+              variant="neutral"
+              className="bg-neutral-900 text-white border-none uppercase tracking-wider"
+            >
               Out of Stock
-            </span>
+            </Badge>
           ) : (
             <>
               {onSale && (
-                <span className="bg-brand-secondary text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                <Badge
+                  variant="error"
+                  className="bg-brand-secondary text-white border-none uppercase tracking-wider"
+                >
                   Sale
-                </span>
+                </Badge>
               )}
               {isLowStock && (
-                <span className="bg-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
-                  LOW STOCK
-                </span>
+                <Badge
+                  variant="warning"
+                  className="bg-orange-500 text-white border-none uppercase tracking-wider"
+                >
+                  Low Stock
+                </Badge>
               )}
               {product.grade && (
-                <span className="bg-white/90 backdrop-blur-sm text-neutral-900 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-neutral-200">
+                <Badge
+                  variant="neutral"
+                  className="bg-white/90 backdrop-blur-sm text-neutral-900 border-neutral-200 uppercase tracking-wider"
+                >
                   {product.grade}
-                </span>
+                </Badge>
               )}
             </>
           )}
@@ -205,7 +218,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
           {product.description}
         </p>
 
-        {/* Rating */}
         {/* Rating */}
         <div className="flex items-center gap-1 mt-1">
           {product.rating || (product.reviews?.length || 0) > 0 ? (

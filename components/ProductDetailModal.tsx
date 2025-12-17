@@ -5,7 +5,7 @@ import { OptimizedImage } from './OptimizedImage';
 import ReviewList from './ReviewList';
 import ReviewForm from './ReviewForm';
 import ReviewSummary from './ReviewSummary';
-import Breadcrumbs from './Breadcrumbs';
+import { Breadcrumbs } from './ui/Breadcrumbs';
 import { FacebookIcon } from './icons/FacebookIcon';
 import { TwitterIcon } from './icons/TwitterIcon';
 import { PinterestIcon } from './icons/PinterestIcon';
@@ -26,6 +26,7 @@ import { UsersIcon } from './icons/UsersIcon';
 import TrustBadges from './TrustBadges';
 import ImageGallery from './ImageGallery';
 import { getBundleSuggestions } from '../utils/recommendations';
+import PincodeChecker from './PincodeChecker';
 import { FrequentlyBoughtTogether } from './FrequentlyBoughtTogether';
 
 interface ProductDetailModalProps {
@@ -453,6 +454,9 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                       </button>
                     )}
                   </div>
+                  <div className="mt-4 border-t border-gray-100 pt-4">
+                    <PincodeChecker />
+                  </div>
                 </div>
 
                 <div className="mt-6 border border-gray-100 bg-gray-50 rounded-xl p-4">
@@ -770,6 +774,79 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                           <h4 className="font-bold text-sm text-gray-600">Origin:</h4>
                           <p className="text-brand-dark">{product.origin}</p>
                         </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Compliance & Details Block */}
+                  <div className="mt-8 border-t border-gray-100 pt-6">
+                    <h4 className="font-bold text-lg text-brand-dark mb-4">
+                      Product Details & Compliance
+                    </h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 text-sm">
+                      {product.fssaiLicense && (
+                        <div className="flex flex-col">
+                          <span className="text-gray-500 text-xs">FSSAI License</span>
+                          <span className="font-medium">{product.fssaiLicense}</span>
+                        </div>
+                      )}
+                      {product.batchNo && (
+                        <div className="flex flex-col">
+                          <span className="text-gray-500 text-xs">Batch No.</span>
+                          <span className="font-medium">{product.batchNo}</span>
+                        </div>
+                      )}
+                      {product.mfgDate && (
+                        <div className="flex flex-col">
+                          <span className="text-gray-500 text-xs">Mfg Date</span>
+                          <span className="font-medium">
+                            {new Date(product.mfgDate).toLocaleDateString()}
+                          </span>
+                        </div>
+                      )}
+                      {product.bestBeforeMonths && (
+                        <div className="flex flex-col">
+                          <span className="text-gray-500 text-xs">Shelf Life</span>
+                          <span className="font-medium">{product.bestBeforeMonths} Months</span>
+                        </div>
+                      )}
+                      {product.originRegion && (
+                        <div className="flex flex-col">
+                          <span className="text-gray-500 text-xs">Region of Origin</span>
+                          <span className="font-medium">{product.originRegion}</span>
+                        </div>
+                      )}
+                      {product.processingMethod && (
+                        <div className="flex flex-col">
+                          <span className="text-gray-500 text-xs">Processing</span>
+                          <span className="font-medium">{product.processingMethod}</span>
+                        </div>
+                      )}
+                    </div>
+
+                    {product.ingredients && (
+                      <div className="mt-4">
+                        <span className="block text-gray-500 text-xs mb-1">Ingredients</span>
+                        <p className="font-medium">{product.ingredients}</p>
+                      </div>
+                    )}
+
+                    {product.allergens && (
+                      <div className="mt-4 bg-yellow-50 p-3 rounded-md border border-yellow-100">
+                        <span className="block text-yellow-800 text-xs font-bold mb-1 uppercase">
+                          Allergen Information
+                        </span>
+                        <p className="text-yellow-900 font-medium">{product.allergens}</p>
+                      </div>
+                    )}
+
+                    {product.storageInstructions && (
+                      <div className="mt-4">
+                        <span className="block text-gray-500 text-xs mb-1">Storage</span>
+                        <p className="font-medium text-gray-700">
+                          <span className="inline-block mr-2">❄️</span>
+                          {product.storageInstructions}
+                        </p>
                       </div>
                     )}
                   </div>

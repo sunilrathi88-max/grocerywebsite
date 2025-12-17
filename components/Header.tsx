@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { ShoppingCartIcon } from './icons/ShoppingCartIcon';
 import { HeartIcon } from './icons/HeartIcon';
 import { MenuIcon } from './icons/MenuIcon';
@@ -54,6 +55,7 @@ const Header: React.FC<HeaderProps> = ({
   categories,
   onSelectCategory,
 }) => {
+  const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isProductsOpen, setProductsOpen] = useState(false);
@@ -155,14 +157,11 @@ const Header: React.FC<HeaderProps> = ({
       >
         <div className="max-w-7xl mx-auto px-4 md:px-16 h-20 flex items-center justify-between gap-8">
           {/* Left: Logo */}
-          <div
-            className="flex-shrink-0 flex items-center gap-2 cursor-pointer"
-            onClick={() => (window.location.hash = '#/')}
-          >
+          <Link to="/" className="flex-shrink-0 flex items-center gap-2 cursor-pointer">
             <span className="text-2xl font-serif font-bold text-neutral-900 tracking-tight">
               Tattva Co.
             </span>
-          </div>
+          </Link>
 
           {/* Center: Navigation (Desktop) */}
           <Navigation
@@ -357,7 +356,7 @@ const Header: React.FC<HeaderProps> = ({
               <div className="flex items-center gap-2">
                 {isAdmin && (
                   <button
-                    onClick={() => (window.location.hash = '#/admin')}
+                    onClick={() => navigate('/admin')}
                     className="p-2 text-neutral-700 hover:text-brand-primary"
                     aria-label="Admin dashboard"
                   >
@@ -365,7 +364,7 @@ const Header: React.FC<HeaderProps> = ({
                   </button>
                 )}
                 <button
-                  onClick={() => (window.location.hash = '#/profile')}
+                  onClick={() => navigate('/profile')}
                   className="p-2 text-neutral-700 hover:text-brand-primary"
                   aria-label="User profile"
                 >
