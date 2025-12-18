@@ -67,7 +67,7 @@ const MessagingShowcase = React.lazy(() => import('./components/MessagingShowcas
 
 // Lazy-Loaded Pages (Route-Based Code Splitting)
 const CheckoutPage = React.lazy(() => import('./components/CheckoutPage'));
-const UserProfile = React.lazy(() => import('./components/UserProfile'));
+
 const AdminDashboard = React.lazy(() => import('./components/AdminDashboard'));
 const PrivacyPolicyPage = React.lazy(() => import('./components/PrivacyPolicyPage'));
 const RefundPolicyPage = React.lazy(() => import('./components/RefundPolicyPage'));
@@ -106,7 +106,15 @@ const PageLoader = () => (
   </div>
 );
 
-const OrderConfirmationRoute = ({ currentUser, handlePlaceOrder, addToast }: any) => {
+const OrderConfirmationRoute = ({
+  currentUser,
+  handlePlaceOrder,
+  addToast,
+}: {
+  currentUser: User | null;
+  handlePlaceOrder: (order: Order) => void;
+  addToast: (message: string, type: ToastMessage['type']) => void;
+}) => {
   const { orderId } = useParams();
   const { orders } = useUserOrders();
   const order = orders.find((o: Order) => o.id === orderId);
@@ -554,7 +562,7 @@ const App: React.FC = () => {
     };
 
     initializeAuth();
-  }, [addToast]);
+  }, [addToast, location.hash, navigate]);
 
   const handleSignUp = useCallback(
     async (name: string, _email: string, _password: string) => {

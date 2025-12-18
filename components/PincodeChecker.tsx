@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { utilsAPI } from '../utils/apiService';
-import { PincodeServiceability } from '../types';
 
 interface PincodeCheckerProps {
-  onCheck?: (data: { serviceable: boolean; details?: any }) => void;
+  onCheck?: (data: { serviceable: boolean; details?: Record<string, unknown> }) => void;
   className?: string; // Standard className prop for styling
 }
 
@@ -44,10 +43,10 @@ const PincodeChecker: React.FC<PincodeCheckerProps> = ({ onCheck, className }) =
       if (onCheck) {
         onCheck(checkResult);
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Pincode check failed', err);
       // Handle different error structures if needed
-      setError(err.message || 'Failed to check pincode. Please try again.');
+      setError((err as Error).message || 'Failed to check pincode. Please try again.');
       if (onCheck) {
         onCheck({ serviceable: false });
       }

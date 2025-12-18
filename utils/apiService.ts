@@ -533,11 +533,17 @@ export const orderAPI = {
                 customer_name: customerName,
                 customer_email: customerEmail,
                 total_amount: orderData.total,
-                items: orderData.items.map((item: any) => ({
-                  product_name: item.product.name,
-                  quantity: item.quantity,
-                  unit_price: item.selectedVariant.price, // or salePrice? Using price for simplicity or check logic
-                })),
+                items: orderData.items.map(
+                  (item: {
+                    product: { name: string };
+                    quantity: number;
+                    selectedVariant: { price: number };
+                  }) => ({
+                    product_name: item.product.name,
+                    quantity: item.quantity,
+                    unit_price: item.selectedVariant.price, // or salePrice? Using price for simplicity or check logic
+                  })
+                ),
               },
             })
             .then(({ error }) => {
@@ -705,18 +711,18 @@ export const orderAPI = {
       },
       paymentMethod: orderData.payment_method,
       deliveryMethod: (orderData.delivery_method as Order['deliveryMethod']) || 'Standard',
-      items: (orderData.order_items as any[]).map((item) => ({
+      items: (orderData.order_items as Record<string, unknown>[]).map((item) => ({
         product: {
-          id: item.product_id,
-          name: item.product_name,
-          images: [item.product_image],
+          id: item.product_id as string,
+          name: item.product_name as string,
+          images: [item.product_image as string],
         } as unknown as Product,
         selectedVariant: {
-          id: item.variant_id,
-          name: item.variant_name,
-          price: parseFloat(item.unit_price),
+          id: item.variant_id as string,
+          name: item.variant_name as string,
+          price: parseFloat(item.unit_price as string),
         } as unknown as Variant,
-        quantity: item.quantity,
+        quantity: item.quantity as number,
       })),
       shippingCost: parseFloat(orderData.shipping_cost || '0'),
       discount: parseFloat(orderData.discount || '0'),

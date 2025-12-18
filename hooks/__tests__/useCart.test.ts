@@ -1,6 +1,22 @@
-import { renderHook, act } from '@testing-library/react';
+import { renderHook, act, waitFor } from '@testing-library/react';
 import { useCart } from '../useCart';
 import { Product, Variant } from '../../types';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import React from 'react';
+
+const createWrapper = () => {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+      },
+    },
+  });
+  const Wrapper = ({ children }: { children: React.ReactNode }) =>
+    React.createElement(QueryClientProvider, { client: queryClient }, children);
+  Wrapper.displayName = 'QueryClientWrapper';
+  return Wrapper;
+};
 
 describe('useCart', () => {
   // Mock product and variant data
@@ -72,7 +88,7 @@ describe('useCart', () => {
 
   describe('Initial State', () => {
     it('should initialize with empty cart', () => {
-      const { result } = renderHook(() => useCart());
+      const { result } = renderHook(() => useCart(), { wrapper: createWrapper() });
 
       expect(result.current.cartItems).toEqual([]);
       expect(result.current.cartItemCount).toBe(0);
@@ -81,14 +97,16 @@ describe('useCart', () => {
   });
 
   describe('addToCart', () => {
-    it('should add a new product to cart', () => {
-      const { result } = renderHook(() => useCart());
+    it('should add a new product to cart', async () => {
+      const { result } = renderHook(() => useCart(), { wrapper: createWrapper() });
 
       act(() => {
         result.current.addToCart(mockProduct, mockVariant1, 1);
       });
 
-      expect(result.current.cartItems).toHaveLength(1);
+      await waitFor(() => {
+        expect(result.current.cartItems).toHaveLength(1);
+      });
       expect(result.current.cartItems[0]).toEqual({
         product: mockProduct,
         selectedVariant: mockVariant1,
@@ -96,46 +114,59 @@ describe('useCart', () => {
       });
     });
 
-    it('should add product with default quantity of 1', () => {
-      const { result } = renderHook(() => useCart());
+    it('should add product with default quantity of 1', async () => {
+      const { result } = renderHook(() => useCart(), { wrapper: createWrapper() });
 
       act(() => {
         result.current.addToCart(mockProduct, mockVariant1);
       });
 
-      expect(result.current.cartItems[0].quantity).toBe(1);
+      await waitFor(() => {
+        expect(result.current.cartItems[0].quantity).toBe(1);
+      });
     });
 
-    it('should add multiple quantity of same product', () => {
-      const { result } = renderHook(() => useCart());
+    it('should add multiple quantity of same product', async () => {
+      const { result } = renderHook(() => useCart(), { wrapper: createWrapper() });
 
       act(() => {
         result.current.addToCart(mockProduct, mockVariant1, 3);
       });
 
-      expect(result.current.cartItems[0].quantity).toBe(3);
+      await waitFor(() => {
+        expect(result.current.cartItems[0].quantity).toBe(3);
+      });
     });
 
-    it('should update quantity when adding existing product', () => {
-      const { result } = renderHook(() => useCart());
+    it('should update quantity when adding existing product', async () => {
+      const { result } = renderHook(() => useCart(), { wrapper: createWrapper() });
 
       act(() => {
         result.current.addToCart(mockProduct, mockVariant1, 2);
       });
 
+      await waitFor(() => {
+        expect(result.current.cartItems).toHaveLength(1);
+      });
+
       act(() => {
         result.current.addToCart(mockProduct, mockVariant1, 3);
       });
 
-      expect(result.current.cartItems).toHaveLength(1);
-      expect(result.current.cartItems[0].quantity).toBe(5);
+      await waitFor(() => {
+        expect(result.current.cartItems[0].quantity).toBe(5);
+      });
     });
 
-    it('should not exceed stock limit when adding', () => {
-      const { result } = renderHook(() => useCart());
+    it('should not exceed stock limit when adding', async () => {
+      const { result } = renderHook(() => useCart(), { wrapper: createWrapper() });
 
       act(() => {
         result.current.addToCart(mockProduct, mockVariant1, 8);
+      });
+
+      await waitFor(() => {
+        expect(result.current.cartItems).toHaveLength(1);
       });
 
       act(() => {
@@ -143,106 +174,154 @@ describe('useCart', () => {
       });
 
       // Should be capped at stock limit of 10
-      expect(result.current.cartItems[0].quantity).toBe(10);
+      await waitFor(() => {
+        expect(result.current.cartItems[0].quantity).toBe(10);
+      });
     });
 
-    it('should add different variants as separate items', () => {
-      const { result } = renderHook(() => useCart());
+    it('should add different variants as separate items', async () => {
+      const { result } = renderHook(() => useCart(), { wrapper: createWrapper() });
 
       act(() => {
         result.current.addToCart(mockProduct, mockVariant1, 2);
+      });
+
+      await waitFor(() => {
+        expect(result.current.cartItems).toHaveLength(1);
       });
 
       act(() => {
         result.current.addToCart(mockProduct, mockVariant2, 1);
       });
 
-      expect(result.current.cartItems).toHaveLength(2);
+      await waitFor(() => {
+        expect(result.current.cartItems).toHaveLength(2);
+      });
     });
 
-    it('should add different products as separate items', () => {
-      const { result } = renderHook(() => useCart());
+    it('should add different products as separate items', async () => {
+      const { result } = renderHook(() => useCart(), { wrapper: createWrapper() });
 
       act(() => {
         result.current.addToCart(mockProduct, mockVariant1, 1);
       });
 
+      await waitFor(() => {
+        expect(result.current.cartItems).toHaveLength(1);
+      });
+
       act(() => {
         result.current.addToCart(mockProduct2, mockVariant1, 1);
       });
 
-      expect(result.current.cartItems).toHaveLength(2);
+      await waitFor(() => {
+        expect(result.current.cartItems).toHaveLength(2);
+      });
     });
   });
 
   describe('removeFromCart', () => {
-    it('should remove item from cart', () => {
-      const { result } = renderHook(() => useCart());
+    it('should remove item from cart', async () => {
+      const { result } = renderHook(() => useCart(), { wrapper: createWrapper() });
 
       act(() => {
         result.current.addToCart(mockProduct, mockVariant1, 2);
+      });
+
+      await waitFor(() => {
+        expect(result.current.cartItems).toHaveLength(1);
       });
 
       act(() => {
         result.current.removeFromCart(mockProduct.id, mockVariant1.id);
       });
 
-      expect(result.current.cartItems).toHaveLength(0);
+      await waitFor(() => {
+        expect(result.current.cartItems).toHaveLength(0);
+      });
     });
 
-    it('should only remove specified variant', () => {
-      const { result } = renderHook(() => useCart());
+    it('should only remove specified variant', async () => {
+      const { result } = renderHook(() => useCart(), { wrapper: createWrapper() });
 
       act(() => {
         result.current.addToCart(mockProduct, mockVariant1, 2);
+      });
+      await waitFor(() => expect(result.current.cartItems).toHaveLength(1));
+
+      act(() => {
         result.current.addToCart(mockProduct, mockVariant2, 1);
       });
+      await waitFor(() => {
+        expect(result.current.cartItems).toHaveLength(2);
+      });
 
       act(() => {
         result.current.removeFromCart(mockProduct.id, mockVariant1.id);
       });
 
-      expect(result.current.cartItems).toHaveLength(1);
-      expect(result.current.cartItems[0].selectedVariant.id).toBe(mockVariant2.id);
+      await waitFor(() => {
+        expect(result.current.cartItems).toHaveLength(1);
+        expect(result.current.cartItems[0].selectedVariant.id).toBe(mockVariant2.id);
+      });
     });
 
-    it('should not affect other products when removing', () => {
-      const { result } = renderHook(() => useCart());
+    it('should not affect other products when removing', async () => {
+      const { result } = renderHook(() => useCart(), { wrapper: createWrapper() });
 
       act(() => {
         result.current.addToCart(mockProduct, mockVariant1, 2);
+      });
+      await waitFor(() => expect(result.current.cartItems).toHaveLength(1));
+
+      act(() => {
         result.current.addToCart(mockProduct2, mockVariant1, 1);
+      });
+      await waitFor(() => {
+        expect(result.current.cartItems).toHaveLength(2);
       });
 
       act(() => {
         result.current.removeFromCart(mockProduct.id, mockVariant1.id);
       });
 
-      expect(result.current.cartItems).toHaveLength(1);
-      expect(result.current.cartItems[0].product.id).toBe(mockProduct2.id);
+      await waitFor(() => {
+        expect(result.current.cartItems).toHaveLength(1);
+        expect(result.current.cartItems[0].product.id).toBe(mockProduct2.id);
+      });
     });
   });
 
   describe('updateQuantity', () => {
-    it('should update item quantity', () => {
-      const { result } = renderHook(() => useCart());
+    it('should update item quantity', async () => {
+      const { result } = renderHook(() => useCart(), { wrapper: createWrapper() });
 
       act(() => {
         result.current.addToCart(mockProduct, mockVariant1, 2);
+      });
+
+      await waitFor(() => {
+        expect(result.current.cartItems).toHaveLength(1);
       });
 
       act(() => {
         result.current.updateQuantity(mockProduct.id, mockVariant1.id, 5);
       });
 
-      expect(result.current.cartItems[0].quantity).toBe(5);
+      await waitFor(() => {
+        expect(result.current.cartItems[0].quantity).toBe(5);
+      });
     });
 
-    it('should respect stock limit when updating', () => {
-      const { result } = renderHook(() => useCart());
+    it('should respect stock limit when updating', async () => {
+      const { result } = renderHook(() => useCart(), { wrapper: createWrapper() });
 
       act(() => {
         result.current.addToCart(mockProduct, mockVariant1, 2);
+      });
+
+      await waitFor(() => {
+        expect(result.current.cartItems).toHaveLength(1);
       });
 
       act(() => {
@@ -250,150 +329,196 @@ describe('useCart', () => {
       });
 
       // Should be capped at stock limit of 10
-      expect(result.current.cartItems[0].quantity).toBe(10);
+      await waitFor(() => {
+        expect(result.current.cartItems[0].quantity).toBe(10);
+      });
     });
 
-    it('should remove item when quantity is 0', () => {
-      const { result } = renderHook(() => useCart());
+    it('should remove item when quantity is 0', async () => {
+      const { result } = renderHook(() => useCart(), { wrapper: createWrapper() });
 
       act(() => {
         result.current.addToCart(mockProduct, mockVariant1, 2);
+      });
+
+      await waitFor(() => {
+        expect(result.current.cartItems).toHaveLength(1);
       });
 
       act(() => {
         result.current.updateQuantity(mockProduct.id, mockVariant1.id, 0);
       });
 
-      expect(result.current.cartItems).toHaveLength(0);
+      await waitFor(() => {
+        expect(result.current.cartItems).toHaveLength(0);
+      });
     });
 
-    it('should remove item when quantity is negative', () => {
-      const { result } = renderHook(() => useCart());
+    it('should remove item when quantity is negative', async () => {
+      const { result } = renderHook(() => useCart(), { wrapper: createWrapper() });
 
       act(() => {
         result.current.addToCart(mockProduct, mockVariant1, 2);
+      });
+
+      await waitFor(() => {
+        expect(result.current.cartItems).toHaveLength(1);
       });
 
       act(() => {
         result.current.updateQuantity(mockProduct.id, mockVariant1.id, -1);
       });
 
-      expect(result.current.cartItems).toHaveLength(0);
+      await waitFor(() => {
+        expect(result.current.cartItems).toHaveLength(0);
+      });
     });
   });
 
   describe('clearCart', () => {
-    it('should remove all items from cart', () => {
-      const { result } = renderHook(() => useCart());
+    it('should remove all items from cart', async () => {
+      const { result } = renderHook(() => useCart(), { wrapper: createWrapper() });
 
       act(() => {
         result.current.addToCart(mockProduct, mockVariant1, 2);
+      });
+      await waitFor(() => expect(result.current.cartItems).toHaveLength(1));
+
+      act(() => {
         result.current.addToCart(mockProduct, mockVariant2, 1);
+      });
+      await waitFor(() => expect(result.current.cartItems).toHaveLength(2));
+
+      act(() => {
         result.current.addToCart(mockProduct2, mockVariant1, 3);
       });
-
-      expect(result.current.cartItems).toHaveLength(3);
+      await waitFor(() => {
+        expect(result.current.cartItems).toHaveLength(3);
+      });
 
       act(() => {
         result.current.clearCart();
       });
 
-      expect(result.current.cartItems).toHaveLength(0);
-      expect(result.current.cartItemCount).toBe(0);
-      expect(result.current.subtotal).toBe(0);
+      await waitFor(() => {
+        expect(result.current.cartItems).toHaveLength(0);
+        expect(result.current.cartItemCount).toBe(0);
+        expect(result.current.subtotal).toBe(0);
+      });
     });
   });
 
   describe('isInCart', () => {
-    it('should return true for item in cart', () => {
-      const { result } = renderHook(() => useCart());
+    it('should return true for item in cart', async () => {
+      const { result } = renderHook(() => useCart(), { wrapper: createWrapper() });
 
       act(() => {
         result.current.addToCart(mockProduct, mockVariant1, 1);
       });
 
-      expect(result.current.isInCart(mockProduct.id, mockVariant1.id)).toBe(true);
+      await waitFor(() => {
+        expect(result.current.isInCart(mockProduct.id, mockVariant1.id)).toBe(true);
+      });
     });
 
     it('should return false for item not in cart', () => {
-      const { result } = renderHook(() => useCart());
+      const { result } = renderHook(() => useCart(), { wrapper: createWrapper() });
 
       expect(result.current.isInCart(mockProduct.id, mockVariant1.id)).toBe(false);
     });
 
-    it('should return false for different variant', () => {
-      const { result } = renderHook(() => useCart());
+    it('should return false for different variant', async () => {
+      const { result } = renderHook(() => useCart(), { wrapper: createWrapper() });
 
       act(() => {
         result.current.addToCart(mockProduct, mockVariant1, 1);
       });
 
-      expect(result.current.isInCart(mockProduct.id, mockVariant2.id)).toBe(false);
+      await waitFor(() => {
+        expect(result.current.isInCart(mockProduct.id, mockVariant2.id)).toBe(false);
+      });
     });
   });
 
   describe('getCartItemQuantity', () => {
-    it('should return correct quantity for item in cart', () => {
-      const { result } = renderHook(() => useCart());
+    it('should return correct quantity for item in cart', async () => {
+      const { result } = renderHook(() => useCart(), { wrapper: createWrapper() });
 
       act(() => {
         result.current.addToCart(mockProduct, mockVariant1, 5);
       });
 
-      expect(result.current.getCartItemQuantity(mockProduct.id, mockVariant1.id)).toBe(5);
+      await waitFor(() => {
+        expect(result.current.getCartItemQuantity(mockProduct.id, mockVariant1.id)).toBe(5);
+      });
     });
 
     it('should return 0 for item not in cart', () => {
-      const { result } = renderHook(() => useCart());
+      const { result } = renderHook(() => useCart(), { wrapper: createWrapper() });
 
       expect(result.current.getCartItemQuantity(mockProduct.id, mockVariant1.id)).toBe(0);
     });
   });
 
   describe('cartItemCount', () => {
-    it('should calculate total item count', () => {
-      const { result } = renderHook(() => useCart());
+    it('should calculate total item count', async () => {
+      const { result } = renderHook(() => useCart(), { wrapper: createWrapper() });
 
       act(() => {
         result.current.addToCart(mockProduct, mockVariant1, 2);
+      });
+      await waitFor(() => expect(result.current.cartItems).toHaveLength(1));
+
+      act(() => {
         result.current.addToCart(mockProduct, mockVariant2, 3);
+      });
+      await waitFor(() => expect(result.current.cartItems).toHaveLength(2));
+
+      act(() => {
         result.current.addToCart(mockProduct2, mockVariant1, 1);
       });
-
-      expect(result.current.cartItemCount).toBe(6);
+      await waitFor(() => {
+        expect(result.current.cartItemCount).toBe(6);
+      });
     });
 
-    it('should update when quantities change', () => {
-      const { result } = renderHook(() => useCart());
+    it('should update when quantities change', async () => {
+      const { result } = renderHook(() => useCart(), { wrapper: createWrapper() });
 
       act(() => {
         result.current.addToCart(mockProduct, mockVariant1, 2);
       });
 
-      expect(result.current.cartItemCount).toBe(2);
+      await waitFor(() => {
+        expect(result.current.cartItemCount).toBe(2);
+      });
 
       act(() => {
         result.current.updateQuantity(mockProduct.id, mockVariant1.id, 5);
       });
 
-      expect(result.current.cartItemCount).toBe(5);
+      await waitFor(() => {
+        expect(result.current.cartItemCount).toBe(5);
+      });
     });
   });
 
   describe('subtotal', () => {
-    it('should calculate subtotal using sale price when available', () => {
-      const { result } = renderHook(() => useCart());
+    it('should calculate subtotal using sale price when available', async () => {
+      const { result } = renderHook(() => useCart(), { wrapper: createWrapper() });
 
       act(() => {
         result.current.addToCart(mockProduct, mockVariant1, 2);
       });
 
       // mockVariant1 has salePrice of 2499
-      expect(result.current.subtotal).toBe(2499 * 2);
+      await waitFor(() => {
+        expect(result.current.subtotal).toBe(2499 * 2);
+      });
     });
 
-    it('should calculate subtotal using regular price when no sale price', () => {
-      const { result } = renderHook(() => useCart());
+    it('should calculate subtotal using regular price when no sale price', async () => {
+      const { result } = renderHook(() => useCart(), { wrapper: createWrapper() });
       const variantNoSale: Variant = {
         ...mockVariant1,
         salePrice: undefined,
@@ -403,57 +528,70 @@ describe('useCart', () => {
         result.current.addToCart(mockProduct, variantNoSale, 2);
       });
 
-      expect(result.current.subtotal).toBe(2999 * 2);
+      await waitFor(() => {
+        expect(result.current.subtotal).toBe(2999 * 2);
+      });
     });
 
-    it('should calculate subtotal for multiple items', () => {
-      const { result } = renderHook(() => useCart());
+    it('should calculate subtotal for multiple items', async () => {
+      const { result } = renderHook(() => useCart(), { wrapper: createWrapper() });
 
       act(() => {
         result.current.addToCart(mockProduct, mockVariant1, 2); // 2499 * 2 = 4998
+      });
+      await waitFor(() => expect(result.current.cartItems).toHaveLength(1));
+
+      act(() => {
         result.current.addToCart(mockProduct, mockVariant2, 1); // 4999 * 1 = 4999
       });
-
-      expect(result.current.subtotal).toBe(9997);
+      await waitFor(() => {
+        expect(result.current.subtotal).toBe(9997);
+      });
     });
 
-    it('should update when quantities change', () => {
-      const { result } = renderHook(() => useCart());
+    it('should update when quantities change', async () => {
+      const { result } = renderHook(() => useCart(), { wrapper: createWrapper() });
 
       act(() => {
         result.current.addToCart(mockProduct, mockVariant1, 1);
       });
 
-      expect(result.current.subtotal).toBe(2499);
+      await waitFor(() => {
+        expect(result.current.subtotal).toBe(2499);
+      });
 
       act(() => {
         result.current.updateQuantity(mockProduct.id, mockVariant1.id, 3);
       });
 
-      expect(result.current.subtotal).toBe(2499 * 3);
+      await waitFor(() => {
+        expect(result.current.subtotal).toBe(2499 * 3);
+      });
     });
 
     it('should be 0 for empty cart', () => {
-      const { result } = renderHook(() => useCart());
+      const { result } = renderHook(() => useCart(), { wrapper: createWrapper() });
 
       expect(result.current.subtotal).toBe(0);
     });
   });
 
   describe('Edge Cases', () => {
-    it('should handle adding product with 0 quantity', () => {
-      const { result } = renderHook(() => useCart());
+    it('should handle adding product with 0 quantity', async () => {
+      const { result } = renderHook(() => useCart(), { wrapper: createWrapper() });
 
       act(() => {
         result.current.addToCart(mockProduct, mockVariant1, 0);
       });
 
-      expect(result.current.cartItems).toHaveLength(1);
-      expect(result.current.cartItems[0].quantity).toBe(0);
+      await waitFor(() => {
+        expect(result.current.cartItems).toHaveLength(1);
+        expect(result.current.cartItems[0].quantity).toBe(0);
+      });
     });
 
-    it('should handle variant with 0 stock', () => {
-      const { result } = renderHook(() => useCart());
+    it('should handle variant with 0 stock', async () => {
+      const { result } = renderHook(() => useCart(), { wrapper: createWrapper() });
       const outOfStockVariant: Variant = {
         ...mockVariant1,
         stock: 0,
@@ -466,23 +604,36 @@ describe('useCart', () => {
       // Current behavior: initial add doesn't cap quantity (bug)
       // Quantity is only capped when updating existing items
       // This test documents current behavior - should be fixed in hook
-      expect(result.current.cartItems[0].quantity).toBe(5);
+      await waitFor(() => {
+        expect(result.current.cartItems[0].quantity).toBe(5);
+      });
 
       // But updating should cap to stock
       act(() => {
         result.current.updateQuantity(mockProduct.id, outOfStockVariant.id, 10);
       });
 
-      expect(result.current.cartItems[0].quantity).toBe(0);
+      await waitFor(() => {
+        expect(result.current.cartItems[0].quantity).toBe(0);
+      });
     });
 
-    it('should maintain state across multiple operations', () => {
-      const { result } = renderHook(() => useCart());
+    it('should maintain state across multiple operations', async () => {
+      const { result } = renderHook(() => useCart(), { wrapper: createWrapper() });
 
-      // Add items
+      // Add items sequentially
       act(() => {
         result.current.addToCart(mockProduct, mockVariant1, 2);
+      });
+      await waitFor(() => {
+        expect(result.current.cartItems).toHaveLength(1);
+      });
+
+      act(() => {
         result.current.addToCart(mockProduct2, mockVariant1, 3);
+      });
+      await waitFor(() => {
+        expect(result.current.cartItems).toHaveLength(2);
       });
 
       // Update quantity
@@ -490,9 +641,17 @@ describe('useCart', () => {
         result.current.updateQuantity(mockProduct.id, mockVariant1.id, 5);
       });
 
+      await waitFor(() => {
+        expect(result.current.cartItems[0].quantity).toBe(5);
+      });
+
       // Remove one item
       act(() => {
         result.current.removeFromCart(mockProduct2.id, mockVariant1.id);
+      });
+
+      await waitFor(() => {
+        expect(result.current.cartItems).toHaveLength(1);
       });
 
       // Add back
@@ -500,8 +659,10 @@ describe('useCart', () => {
         result.current.addToCart(mockProduct2, mockVariant2, 1);
       });
 
-      expect(result.current.cartItems).toHaveLength(2);
-      expect(result.current.cartItemCount).toBe(6);
+      await waitFor(() => {
+        expect(result.current.cartItems).toHaveLength(2);
+        expect(result.current.cartItemCount).toBe(6);
+      });
     });
   });
 });
