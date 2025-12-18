@@ -628,7 +628,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
             setSubmitError('Payment verification failed.');
             setIsSubmitting(false);
           }
-        } catch (err) {
+        } catch {
           setSubmitError('Error verifying payment.');
           setIsSubmitting(false);
         }
@@ -636,6 +636,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
     };
 
     verifyAsync();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]); // Run on mount (and user load)
 
   if (orderConfirmation) {
