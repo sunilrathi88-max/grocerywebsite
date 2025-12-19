@@ -10,9 +10,11 @@ interface AnalyticsEvent {
   data?: Record<string, unknown>;
 }
 
+import { isDev } from './env';
+
 export const trackEvent = ({ name, data }: AnalyticsEvent) => {
   // Log to console in development
-  if (import.meta.env.DEV) {
+  if (isDev()) {
     // eslint-disable-next-line no-console
     console.log(`[Analytics] Event: ${name}`, data);
   }
