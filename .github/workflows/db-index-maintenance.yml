@@ -1,0 +1,26 @@
+name: DB Index Maintenance
+
+on:
+  workflow_dispatch: {}
+  # optional: run weekly
+  # schedule:
+  #   - cron: '0 2 * * 1'
+
+jobs:
+  apply-indexes:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install PostgreSQL client
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes --no-install-recommends postgresql-client
+
+      - name: Apply index SQL to Supabase
+        env:
+          DATABASE_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: |
+          psql "$DATABASE_URL" -f db/indexes.sql
