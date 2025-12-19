@@ -26,11 +26,10 @@ export interface PaginatedResponse<T> {
   };
 }
 
+import { getEnv } from './env';
+
 // API Configuration
-const API_BASE_URL =
-  (typeof process !== 'undefined' ? process.env.VITE_API_BASE_URL : undefined) ||
-  import.meta.env.VITE_API_BASE_URL ||
-  'http://localhost:3001/api';
+const API_BASE_URL = getEnv('VITE_API_BASE_URL') || 'http://localhost:3001/api';
 const API_TIMEOUT = 30000; // 30 seconds
 const MAX_RETRIES = 3;
 const RETRY_DELAY = 1000; // 1 second

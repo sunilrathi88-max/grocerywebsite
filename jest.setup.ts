@@ -49,3 +49,12 @@ Object.defineProperty(global, 'localStorage', {
   value: localStorageMock,
   writable: true,
 });
+
+// Mock utils/env to avoid SyntaxError: Cannot use 'import.meta' outside a module
+// We use a virtual mock or rely on path resolution
+jest.mock('./utils/env', () => ({
+  getEnv: (key: string) => process.env[key],
+  getMode: () => process.env.NODE_ENV || 'test',
+  isDev: () => process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test',
+  isProd: () => process.env.NODE_ENV === 'production',
+}));

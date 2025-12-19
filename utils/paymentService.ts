@@ -1,4 +1,5 @@
 import { supabase } from '../supabaseClient';
+import { isProd } from './env';
 
 // Types for Cashfree
 interface CashfreeOptions {
@@ -73,8 +74,8 @@ export const paymentService = {
         ) {
           console.warn('⚠️ Edge Function not found. Using MOCK order creation for development.');
           return {
-            payment_session_id: `session_${Date.now()}_mock`,
-            order_id: `order_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+            payment_session_id: `session_${Date.now()} _mock`,
+            order_id: `order_${Date.now()}_${Math.random().toString(36).substr(2, 9)} `,
           };
         }
         throw error;
@@ -180,7 +181,7 @@ export const paymentService = {
       });
 
       // 3. Initialize Cashfree
-      const isProduction = import.meta.env.PROD; // Or use a specific env var
+      const isProduction = isProd(); // Or use a specific env var
       const cashfree = new window.Cashfree({
         mode: isProduction ? 'production' : 'sandbox',
       });

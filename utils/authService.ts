@@ -3,6 +3,8 @@
  * Handles JWT tokens, authentication state, and API integration
  */
 
+import { getEnv } from './env';
+
 export interface AuthTokens {
   accessToken: string;
   refreshToken: string;
@@ -163,7 +165,7 @@ class JWTDecoder {
  */
 class AuthService {
   private static get BASE_URL(): string {
-    return import.meta.env.VITE_API_URL || 'http://localhost:5000';
+    return getEnv('VITE_API_URL') || 'http://localhost:5000';
   }
 
   /**
