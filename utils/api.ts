@@ -207,9 +207,9 @@ export const api = {
   get: <T>(endpoint: string, params?: Record<string, string | number>) => {
     const queryString = params
       ? '?' +
-      Object.entries(params)
-        .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
-        .join('&')
+        Object.entries(params)
+          .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
+          .join('&')
       : '';
     return apiRequest<T>(`${endpoint}${queryString}`, { method: 'GET' });
   },
