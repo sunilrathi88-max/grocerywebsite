@@ -105,7 +105,7 @@ describe('ProductCard', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     // Suppress console.log from ProductCard
-    jest.spyOn(console, 'log').mockImplementation(() => {});
+    jest.spyOn(console, 'log').mockImplementation(() => { });
   });
 
   afterEach(() => {
@@ -272,7 +272,7 @@ describe('ProductCard', () => {
         />
       );
 
-      expect(screen.getByText('LOW STOCK')).toBeInTheDocument();
+      expect(screen.getByText('Low Stock')).toBeInTheDocument();
     });
 
     it('should display Out of Stock overlay when stock is zero', () => {
@@ -613,7 +613,7 @@ describe('ProductCard', () => {
       );
 
       // Total stock is 5, should show LOW STOCK badge
-      expect(screen.getByText('LOW STOCK')).toBeInTheDocument();
+      expect(screen.getByText('Low Stock')).toBeInTheDocument();
     });
 
     it('should handle product with no tags gracefully', () => {

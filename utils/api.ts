@@ -27,7 +27,10 @@ export interface PaginatedResponse<T> {
 }
 
 // API Configuration
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001/api';
+const API_BASE_URL =
+  (typeof process !== 'undefined' ? process.env.VITE_API_BASE_URL : undefined) ||
+  import.meta.env.VITE_API_BASE_URL ||
+  'http://localhost:3001/api';
 const API_TIMEOUT = 30000; // 30 seconds
 const MAX_RETRIES = 3;
 const RETRY_DELAY = 1000; // 1 second
@@ -204,9 +207,9 @@ export const api = {
   get: <T>(endpoint: string, params?: Record<string, string | number>) => {
     const queryString = params
       ? '?' +
-        Object.entries(params)
-          .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
-          .join('&')
+      Object.entries(params)
+        .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
+        .join('&')
       : '';
     return apiRequest<T>(`${endpoint}${queryString}`, { method: 'GET' });
   },
