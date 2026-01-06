@@ -32,7 +32,6 @@ interface HeaderProps {
   onLogoutClick: () => void; // Keep for interface compatibility, ignore unused warning for now
   allProducts: Product[];
   onSelectProduct: (product: Product) => void;
-  subtotal: number;
   categories: string[];
   onSelectCategory: (category: string) => void;
   onRemoveItem?: (id: string) => void;
@@ -52,7 +51,6 @@ const Header: React.FC<HeaderProps> = ({
   onLogoutClick: _onLogoutClick,
   allProducts,
   onSelectProduct,
-  subtotal,
   categories,
   onSelectCategory,
   onRemoveItem,
