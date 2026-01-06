@@ -373,7 +373,32 @@ const CategoryPage: React.FC = () => {
                   {paginatedProducts.map((product) => (
                     <ProductCard
                       key={product.id}
-                      {...product}
+                      id={product.id.toString()}
+                      name={product.name}
+                      price={product.variants[0]?.salePrice ?? product.variants[0]?.price ?? 0}
+                      originalPrice={
+                        product.variants[0]?.salePrice ? product.variants[0]?.price : undefined
+                      }
+                      image={product.images[0] || ''}
+                      rating={
+                        product.reviews?.length
+                          ? product.reviews.reduce((sum, r) => sum + r.rating, 0) /
+                            product.reviews.length
+                          : 4.5
+                      }
+                      reviewCount={product.reviews?.length ?? 0}
+                      heatLevel={
+                        product.tags?.includes('Hot')
+                          ? 'hot'
+                          : product.tags?.includes('Medium')
+                            ? 'medium'
+                            : 'mild'
+                      }
+                      useCase={
+                        product.tags?.find((t) =>
+                          ['Curries', 'Rice', 'Tea', 'Tandoor', 'Desserts'].includes(t)
+                        ) || 'Everyday'
+                      }
                       onAddToCart={() => handleAddToCart(product)}
                       onWishlist={() => handleWishlist(product.id.toString())}
                     />

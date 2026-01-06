@@ -14,24 +14,24 @@ export default {
         serif: ['Playfair Display', 'serif'], // Keeping Playfair for "Premium" feel as per existing design, though guide focuses on Sans.
       },
       colors: {
-        'brand': {
+        brand: {
           primary: '#D4A017', // Gold
-          dark: '#B8860B',    // Gold Dark
-          light: '#FFF9E6',   // Gold Light
+          dark: '#B8860B', // Gold Dark
+          light: '#FFF9E6', // Gold Light
         },
-        'neutral': {
+        neutral: {
           900: '#1F2121', // Charcoal (Primary Text)
           700: '#6F7577', // Slate (Secondary Text)
           400: '#E5E7EB', // Gray Light (Borders)
           100: '#F5F5F0', // Background Light
           50: '#F9FAFB',
         },
-        'semantic': {
+        semantic: {
           success: '#2D8F5E',
           error: '#EF4444',
           info: '#3B82F6',
         },
-        'accent': {
+        accent: {
           brown: '#5F5238',
           red: '#C01F2F', // Spice Red
         },
