@@ -29,7 +29,7 @@ import { useUserOrders } from './hooks/useUserOrders';
 import { supabase } from './supabaseClient';
 
 // Mock Data
-import { MOCK_TESTIMONIALS, MOCK_POSTS, MOCK_RECIPES } from './data';
+import { MOCK_POSTS, MOCK_RECIPES } from './data';
 
 // Core Components (Eagerly Loaded - Always Visible)
 // Core Components (Eagerly Loaded - Always Visible)
@@ -37,16 +37,10 @@ import Header from './components/Header';
 import ProductGrid from './components/ProductGrid';
 import Footer from './components/Footer';
 import { ToastContainer } from './components/ui/ToastContainer';
-import { Breadcrumbs } from './components/ui/Breadcrumbs';
 import PromotionalBanner from './components/PromotionalBanner';
 import SortDropdown from './components/SortDropdown';
-import Hero from './components/Hero';
-import CategoryShowcase from './components/CategoryShowcase';
-import FeaturedCollection from './components/FeaturedCollection';
-import TrustSignals from './components/TrustSignals';
 
 // Lazy-Loaded Components (Load on Demand)
-const Testimonials = React.lazy(() => import('./components/Testimonials'));
 const ProductDetailModal = React.lazy(() => import('./components/ProductDetailModal'));
 const SideModal = React.lazy(() => import('./components/SideModal'));
 const Cart = React.lazy(() => import('./components/Cart'));
@@ -59,7 +53,6 @@ const ComparisonBar = React.lazy(() => import('./components/ComparisonBar'));
 const ComparisonModal = React.lazy(() => import('./components/ComparisonModal'));
 const ExitIntentModal = React.lazy(() => import('./components/ExitIntentModal'));
 const RecipeDetailModal = React.lazy(() => import('./components/RecipeDetailModal'));
-const QuizModule = React.lazy(() => import('./components/QuizModule'));
 
 const MobileBottomNav = React.lazy(() => import('./components/MobileBottomNav'));
 
@@ -73,8 +66,6 @@ const PrivacyPolicyPage = React.lazy(() => import('./components/PrivacyPolicyPag
 const RefundPolicyPage = React.lazy(() => import('./components/RefundPolicyPage'));
 const TermsOfServicePage = React.lazy(() => import('./components/TermsOfServicePage'));
 const AboutPage = React.lazy(() => import('./components/AboutPage'));
-const PEACECards = React.lazy(() => import('./components/PEACECards'));
-const BrandStory = React.lazy(() => import('./components/BrandStory'));
 const FAQsPage = React.lazy(() => import('./components/FAQsPage'));
 const RecommendedProducts = React.lazy(() => import('./components/RecommendedProducts'));
 const ContactPage = React.lazy(() => import('./components/ContactPage'));
