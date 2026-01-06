@@ -33,15 +33,31 @@ const ProductSlider: React.FC<ProductSliderProps> = ({
         {products.map((product, index) => (
           <div key={product.id} className="w-80 flex-shrink-0">
             <ProductCard
-              product={product}
-              onAddToCart={props.onAddToCart}
-              onToggleWishlist={props.onToggleWishlist}
-              isWishlisted={props.wishlistedIds.has(product.id)}
-              onSelectProduct={props.onSelectProduct}
-              onToggleCompare={props.onToggleCompare || (() => {})}
-              isCompared={(props.comparisonIds || new Set()).has(product.id)}
-              onNotifyMe={onNotifyMe}
-              priority={loadingStrategy === 'eager' && index < 4 ? 'high' : 'auto'}
+              id={product.id.toString()}
+              name={product.name}
+              price={product.variants[0]?.salePrice || product.variants[0]?.price}
+              originalPrice={
+                product.variants[0]?.salePrice ? product.variants[0]?.price : undefined
+              }
+              image={product.images[0]}
+              rating={product.rating || 0}
+              reviewCount={product.reviews.length}
+              heatLevel="medium"
+              useCase={product.category}
+              sizes={product.variants.map((v) => ({
+                size: v.name,
+                price: v.salePrice || v.price,
+              }))}
+              onAddToCart={(id) => {
+                const p = products.find((prod) => prod.id.toString() === id);
+                if (p && p.variants[0]) {
+                  props.onAddToCart(p, p.variants[0]);
+                }
+              }}
+              onWishlist={(id) => {
+                const p = products.find((prod) => prod.id.toString() === id);
+                if (p) props.onToggleWishlist(p);
+              }}
             />
           </div>
         ))}

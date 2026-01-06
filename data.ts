@@ -123,8 +123,8 @@ export const MOCK_PRODUCTS: Product[] = [
     description:
       "Feel confident about what you're cooking with—purity you can see in the vibrant color. This high-curcumin turmeric adds earthy richness without the fear of additives.",
     images: [
-      'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1615485500704-8e990f9900f7?auto=format&fit=crop&w=800&q=80',
+      '/images/products/turmeric-powder-front.jpg',
+      '/images/products/turmeric-powder-back.jpg',
     ],
     category: 'Spices',
     variants: [{ id: 401, name: '200g', price: 249, stock: 5 }],
@@ -313,9 +313,7 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Guntur Chilli Powder',
     description:
       'Ignite your palate with authentic fiery heat. Authentic Guntur chillies deliver the punch you crave without the artificial dyes.',
-    images: [
-      'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
-    ],
+    images: ['/images/products/red-chilli-powder-back.jpg'],
     category: 'Spices',
     variants: [{ id: 1201, name: '250g', price: 199, stock: 60 }],
     reviews: [],
@@ -508,9 +506,7 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Masala Chai Blend',
     description:
       'Ditch the teabag dust. Brew a cup of comfort with whole spices and premium tea leaves for a ritual that recharges your soul.',
-    images: [
-      'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
-    ],
+    images: ['/images/products/chai-masala-front.jpg', '/images/products/chai-masala-back.jpg'],
     category: 'Beverages',
     variants: [{ id: 2701, name: '250g', price: 349, stock: 40 }],
     reviews: [],
@@ -521,13 +517,25 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Garam Masala',
     description:
       'The finishing touch your grandmother would approve of. A secret blend of 12 roasted spices that brings harmony to any Indian curry.',
-    images: [
-      'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
-    ],
+    images: ['/images/products/garam-masala-front.jpg', '/images/products/garam-masala-back.jpg'],
     category: 'Spices',
     variants: [{ id: 2801, name: '100g', price: 299, stock: 35 }],
     reviews: [],
     tags: ['Blend', 'Essential', 'Aromatic'],
+  },
+  {
+    id: 29,
+    name: 'Coriander Powder',
+    description:
+      'Freshly ground from premium coriander seeds. This aromatic powder adds a mild, citrusy flavor and thickens your curries perfectly.',
+    images: [
+      '/images/products/coriander-powder-front.jpg',
+      '/images/products/coriander-powder-back.jpg',
+    ],
+    category: 'Spices',
+    variants: [{ id: 2901, name: '200g', price: 149, stock: 45 }],
+    reviews: [],
+    tags: ['Earthy', 'Citrusy', 'Essential'],
   },
 ];
 
@@ -776,5 +784,62 @@ export const MOCK_RECIPES: Recipe[] = [
       'Roast for 10-15 minutes, stirring halfway, until fragrant.',
     ],
     relatedProductIds: [3], // Almonds
+  },
+  {
+    id: 5,
+    title: 'Kerala-Style Fish Curry',
+    image:
+      'https://images.unsplash.com/photo-1626200419199-391ae4be7f29?q=80&w=600&h=400&auto=format&fit=crop',
+    prepTime: '15 mins',
+    cookTime: '25 mins',
+    serves: 4,
+    description:
+      'Authentic Malabar fish curry with coconut milk, tamarind, and our signature black pepper blend. Restaurant-quality in your home kitchen.',
+    ingredients: [
+      '500g Fish (pomfret or kingfish), cut into steaks',
+      '1 cup Coconut milk',
+      '1 tsp Tattva Co. Malabar Black Pepper',
+      '1 tsp Tattva Co. Turmeric Powder',
+      '2 tbsp Coconut oil',
+      '2 tbsp Tamarind paste',
+      'Curry leaves, green chillies',
+      '1 Onion, sliced thin',
+    ],
+    instructions: [
+      'Marinate fish with turmeric and salt for 15 minutes.',
+      'Sauté onions in coconut oil until golden, add curry leaves and green chillies.',
+      'Add tamarind paste and coconut milk, bring to a simmer.',
+      'Add fish and cook gently for 10 minutes until done.',
+      'Finish with freshly cracked black pepper.',
+    ],
+    relatedProductIds: [2, 4], // Pepper, Turmeric
+  },
+  {
+    id: 6,
+    title: 'Authentic Masala Chai',
+    image:
+      'https://images.unsplash.com/photo-1571934811356-5cc061b6821f?q=80&w=600&h=400&auto=format&fit=crop',
+    prepTime: '5 mins',
+    cookTime: '10 mins',
+    serves: 2,
+    description:
+      'The real thing. Not a chai latte, not a concentrate—proper Indian masala chai brewed from scratch with whole spices.',
+    ingredients: [
+      '2 cups Water',
+      '1 cup Milk',
+      '2 tbsp Loose leaf black tea',
+      '4 Green cardamom pods, crushed',
+      '1 inch Fresh ginger, sliced',
+      '2 Cloves',
+      '1 Small cinnamon stick',
+      '2 tbsp Sugar or jaggery',
+    ],
+    instructions: [
+      'Add water, ginger, and all spices to a pot. Bring to boil.',
+      'Reduce heat, add tea leaves and simmer for 3 minutes.',
+      'Add milk and sugar, bring to boil again.',
+      'Strain into cups and serve hot.',
+    ],
+    relatedProductIds: [10, 11], // Cardamom, Cinnamon
   },
 ];

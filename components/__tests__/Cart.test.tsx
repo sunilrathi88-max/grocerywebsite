@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Cart from '../Cart';
-import { CartItem, Product, Variant } from '../../types';
+import { CartItem } from '../../store/cartStore';
 
 // Mock framer-motion
 // Mock framer-motion
@@ -121,54 +121,25 @@ describe('Cart', () => {
   const mockOnPromoCodeChange = jest.fn();
   const mockOnApplyPromoCode = jest.fn();
 
-  // Mock data
-  const mockVariant1: Variant = {
-    id: 1,
-    name: '100g',
-    price: 299,
-    salePrice: 249,
+  // Mock data using store/cartStore CartItem structure
+  const mockCartItem1: CartItem = {
+    id: '1-100g',
+    name: 'Premium Saffron',
+    price: 249,
+    quantity: 2,
+    weight: '100g',
+    image: '/images/products/saffron-1.svg',
     stock: 10,
   };
 
-  const mockVariant2: Variant = {
-    id: 2,
-    name: '200g',
-    price: 499,
-    stock: 5,
-  };
-
-  const mockProduct1: Product = {
-    id: 1,
-    name: 'Premium Saffron',
-    description: 'Finest quality saffron',
-    category: 'Spices',
-    images: ['/images/products/saffron-1.svg'],
-    variants: [mockVariant1],
-    reviews: [],
-    tags: [],
-  };
-
-  const mockProduct2: Product = {
-    id: 2,
-    name: 'Black Pepper',
-    description: 'Organic black pepper',
-    category: 'Spices',
-    images: ['/images/products/pepper-1.svg'],
-    variants: [mockVariant2],
-    reviews: [],
-    tags: [],
-  };
-
-  const mockCartItem1: CartItem = {
-    product: mockProduct1,
-    selectedVariant: mockVariant1,
-    quantity: 2,
-  };
-
   const mockCartItem2: CartItem = {
-    product: mockProduct2,
-    selectedVariant: mockVariant2,
+    id: '2-200g',
+    name: 'Black Pepper',
+    price: 499,
     quantity: 1,
+    weight: '200g',
+    image: '/images/products/pepper-1.svg',
+    stock: 5,
   };
 
   const defaultProps = {
@@ -180,7 +151,7 @@ describe('Cart', () => {
     onPromoCodeChange: mockOnPromoCodeChange,
     onApplyPromoCode: mockOnApplyPromoCode,
     discount: 0,
-    subtotal: 747, // (249 * 2) + 499
+    subtotal: 997, // (249 * 2) + 499
     shippingCost: 0,
     onRemoveItem: jest.fn(),
     onCheckout: jest.fn(),
@@ -282,7 +253,7 @@ describe('Cart', () => {
       });
 
       await waitFor(() => {
-        expect(mockOnUpdateQuantity).toHaveBeenCalledWith(1, 1, 3);
+        expect(mockOnUpdateQuantity).toHaveBeenCalledWith('1-100g', 3);
       });
     });
 
@@ -303,15 +274,19 @@ describe('Cart', () => {
       });
 
       await waitFor(() => {
-        expect(mockOnUpdateQuantity).toHaveBeenCalledWith(1, 1, 1);
+        expect(mockOnUpdateQuantity).toHaveBeenCalledWith('1-100g', 1);
       });
     });
 
     it('should disable plus button when quantity reaches stock limit', () => {
       const itemAtLimit: CartItem = {
-        product: mockProduct1,
-        selectedVariant: mockVariant1,
+        id: '1-100g',
+        name: 'Premium Saffron',
+        price: 249,
         quantity: 10, // Same as stock
+        weight: '100g',
+        image: '/images/products/saffron-1.svg',
+        stock: 10,
       };
 
       render(<Cart {...defaultProps} items={[itemAtLimit]} subtotal={2490} />);
@@ -375,7 +350,7 @@ describe('Cart', () => {
       });
 
       await waitFor(() => {
-        expect(mockOnUpdateQuantity).toHaveBeenCalledWith(1, 1, 0);
+        expect(mockOnUpdateQuantity).toHaveBeenCalledWith('1-100g', 0);
       });
     });
 
@@ -552,11 +527,14 @@ describe('Cart', () => {
     });
 
     it('should handle items with same product but different variants', () => {
-      const variant2: Variant = { ...mockVariant1, id: 3, name: '200g', price: 499 };
       const cartItem3: CartItem = {
-        product: mockProduct1,
-        selectedVariant: variant2,
+        id: '1-200g',
+        name: 'Premium Saffron',
+        price: 499,
         quantity: 1,
+        weight: '200g',
+        image: '/images/products/saffron-1.svg',
+        stock: 5,
       };
 
       render(<Cart {...defaultProps} items={[mockCartItem1, cartItem3]} subtotal={997} />);

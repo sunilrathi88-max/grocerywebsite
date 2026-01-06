@@ -520,7 +520,14 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                 </div>
 
                 <div className="mt-6">
-                  <TrustBadges />
+                  <TrustBadges
+                    badges={[
+                      { icon: '💳', text: 'Secure' },
+                      { icon: '🛡️', text: 'Privacy' },
+                      { icon: '↩️', text: 'Returns' },
+                    ]}
+                    variant="horizontal"
+                  />
                 </div>
 
                 <div className="mt-6 text-center">

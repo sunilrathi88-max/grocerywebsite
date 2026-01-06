@@ -1,67 +1,128 @@
-import React from 'react';
-import { CartItem } from '../types';
-import { ShoppingCartIcon } from './icons/ShoppingCartIcon';
-import { imageErrorHandlers } from '../utils/imageHelpers';
+import React, { useState } from 'react';
+import { Button } from './Button';
+import clsx from 'clsx';
 
-interface MiniCartProps {
-  items: CartItem[];
-  subtotal: number;
+export interface MiniCartItem {
+  id: string;
+  name: string;
+  image: string;
+  price: number;
+  quantity: number;
+  weight: string;
 }
 
-const MiniCart: React.FC<MiniCartProps> = ({ items, subtotal }) => {
+export interface MiniCartProps {
+  isOpen: boolean;
+  onClose: () => void;
+  items: MiniCartItem[];
+  onCheckout: () => void;
+  onContinueShopping: () => void;
+  onRemoveItem: (id: string) => void;
+}
+
+export const MiniCart: React.FC<MiniCartProps> = ({
+  isOpen,
+  onClose,
+  items,
+  onCheckout,
+  onContinueShopping,
+  onRemoveItem,
+}) => {
+  const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const shipping = subtotal >= 250 ? 0 : 0; // Free shipping above ₹250
+
   return (
-    <div className="absolute top-full right-0 mt-2 w-80 bg-white rounded-lg shadow-2xl border z-50 p-4">
-      {items.length === 0 ? (
-        <div className="text-center py-4">
-          <ShoppingCartIcon className="h-12 w-12 text-gray-300 mx-auto" />
-          <p className="mt-2 text-gray-500">Your cart is empty.</p>
-        </div>
-      ) : (
-        <>
-          <h4 className="font-bold text-brand-dark mb-3">Your Cart</h4>
-          <div className="space-y-3 max-h-60 overflow-y-auto pr-2 -mr-2">
-            {items.map((item) => (
-              <div
-                key={`${item.product.id}-${item.selectedVariant.id}`}
-                className="flex items-center gap-3"
-              >
-                <img
-                  src={item.product.images[0]}
-                  alt={item.product.name}
-                  className="w-12 h-12 object-cover rounded-md flex-shrink-0"
-                  onError={imageErrorHandlers.thumb}
-                />
-                <div className="flex-grow min-w-0">
-                  <p className="text-sm font-bold truncate">{item.product.name}</p>
-                  <p className="text-xs text-gray-500">
-                    {item.quantity} x $
-                    {(item.selectedVariant.salePrice ?? item.selectedVariant.price).toFixed(2)}
-                  </p>
-                </div>
-                <p className="text-sm font-bold flex-shrink-0">
-                  $
-                  {(
-                    item.quantity * (item.selectedVariant.salePrice ?? item.selectedVariant.price)
-                  ).toFixed(2)}
-                </p>
-              </div>
-            ))}
-          </div>
-          <div className="mt-4 border-t pt-4">
-            <div className="flex justify-between font-bold">
-              <span>Subtotal:</span>
-              <span>${subtotal.toFixed(2)}</span>
-            </div>
-            <a
-              href="#/checkout"
-              className="mt-3 block w-full text-center bg-brand-primary text-white font-bold py-2 rounded-full shadow-lg hover:bg-opacity-90 transition-all text-sm"
-            >
-              Checkout
-            </a>
-          </div>
-        </>
+    <>
+      {/* Overlay */}
+      {isOpen && (
+        <div className="fixed inset-0 bg-black/50 z-40 transition-opacity" onClick={onClose} />
       )}
-    </div>
+
+      {/* Drawer */}
+      <div
+        className={clsx(
+          'fixed right-0 top-0 h-full w-96 max-w-full bg-white shadow-lg z-50 flex flex-col transition-transform duration-300 ease-out',
+          isOpen ? 'translate-x-0' : 'translate-x-full'
+        )}
+      >
+        {/* Header */}
+        <div className="flex justify-between items-center p-5 border-b">
+          <h3 className="text-xl font-bold text-[#1F2121]">Your Cart</h3>
+          <button onClick={onClose} className="text-2xl text-[#6F7577] hover:text-[#1F2121]">
+            ✕
+          </button>
+        </div>
+
+        {/* Items */}
+        <div className="flex-1 overflow-y-auto p-5 space-y-4">
+          {items.length === 0 ? (
+            <div className="flex items-center justify-center h-full">
+              <p className="text-center text-[#6F7577]">Your cart is empty</p>
+            </div>
+          ) : (
+            items.map((item) => (
+              <div key={item.id} className="flex gap-3 pb-4 border-b">
+                <img
+                  src={item.image}
+                  alt={item.name}
+                  width={80}
+                  height={80}
+                  className="rounded object-cover"
+                />
+                <div className="flex-1">
+                  <h4 className="font-semibold text-[#1F2121]">{item.name}</h4>
+                  <p className="text-sm text-[#6F7577]">{item.weight}</p>
+                  <p className="text-sm text-[#6F7577]">Qty: {item.quantity}</p>
+                  <p className="font-bold text-[#1F2121]">₹{item.price * item.quantity}</p>
+                </div>
+                <button
+                  onClick={() => onRemoveItem(item.id)}
+                  className="text-[#6F7577] hover:text-[#1F2121]"
+                >
+                  ✕
+                </button>
+              </div>
+            ))
+          )}
+        </div>
+
+        {/* Footer */}
+        {items.length > 0 && (
+          <div className="border-t p-5 space-y-4">
+            <div className="space-y-2">
+              <div className="flex justify-between text-sm">
+                <span>Subtotal:</span>
+                <span>₹{subtotal}</span>
+              </div>
+              <div className="flex justify-between text-sm">
+                <span>Shipping:</span>
+                <span>{shipping === 0 ? 'FREE' : `₹${shipping}`}</span>
+              </div>
+              <div className="flex justify-between font-bold text-lg border-t pt-2">
+                <span>Total:</span>
+                <span>₹{subtotal + shipping}</span>
+              </div>
+            </div>
+
+            <Button variant="primary" size="lg" fullWidth onClick={onCheckout}>
+              Proceed to Checkout
+            </Button>
+
+            <Button
+              variant="outline"
+              size="lg"
+              fullWidth
+              onClick={() => {
+                onContinueShopping();
+                onClose();
+              }}
+            >
+              Continue Shopping
+            </Button>
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 

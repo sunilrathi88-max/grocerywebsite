@@ -11,26 +11,40 @@ export default {
     extend: {
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
-        serif: ['Playfair Display', 'serif'],
+        serif: ['Playfair Display', 'serif'], // Keeping Playfair for "Premium" feel as per existing design, though guide focuses on Sans.
       },
       colors: {
-        'brand-primary': '#8B5CF6', // Purple
-        'brand-secondary': '#DC2626', // Red
-        'brand-dark': '#0F172A', // Slate 900
-        'brand-light': '#FFFFFF', // White
-        'brand-accent': '#F8FAFC', // Slate 50 (Page Background)
-        'neutral-50': '#F8FAFC',
-        'neutral-100': '#F1F5F9',
-        'neutral-200': '#E2E8F0',
-        'neutral-300': '#CBD5E1',
-        'neutral-600': '#475569',
-        'neutral-700': '#334155',
-        'neutral-900': '#0F172A',
-        'success-green': '#10B981',
-        'warning-yellow': '#F59E0B',
-        'accent-orange': '#FF6B35',
-        'social-google': '#4285F4',
-        'social-facebook': '#1877F2',
+        'brand': {
+          primary: '#D4A017', // Gold
+          dark: '#B8860B',    // Gold Dark
+          light: '#FFF9E6',   // Gold Light
+        },
+        'neutral': {
+          900: '#1F2121', // Charcoal (Primary Text)
+          700: '#6F7577', // Slate (Secondary Text)
+          400: '#E5E7EB', // Gray Light (Borders)
+          100: '#F5F5F0', // Background Light
+          50: '#F9FAFB',
+        },
+        'semantic': {
+          success: '#2D8F5E',
+          error: '#EF4444',
+          info: '#3B82F6',
+        },
+        'accent': {
+          brown: '#5F5238',
+          red: '#C01F2F', // Spice Red
+        },
+        // Mapping existing class names to new palette for backward compatibility/smooth transition
+        'brand-primary': '#D4A017',
+        'brand-secondary': '#B8860B',
+        'brand-dark': '#1F2121',
+        'brand-light': '#FFFFFF',
+        'brand-accent': '#F5F5F0',
+        'success-green': '#2D8F5E',
+        'warning-yellow': '#EF4444', // Mapping warning to error color or similar warm tone if needed, or keeping generic.
+        'accent-orange': '#C01F2F', // Mapping old orange to new Spice Red
+        'gray-light': '#E5E7EB',
       },
       boxShadow: {
         card: '0 1px 3px 0 rgba(15, 23, 42, 0.1)',
@@ -38,7 +52,7 @@ export default {
         button: '0 1px 2px 0 rgba(15, 23, 42, 0.08)',
       },
       backgroundImage: {
-        'gradient-hero': 'linear-gradient(135deg, #8B5CF6 0%, #EF4444 100%)',
+        'gradient-hero': 'linear-gradient(135deg, #FAF5E6 0%, #FFF9E6 100%)', // Lighter, premium gradient
       },
     },
   },

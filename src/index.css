@@ -2,11 +2,33 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  /* Colors */
+  --primary-gold: #D4A017;
+  --primary-gold-dark: #B8860B;
+  --primary-gold-light: #FFF9E6;
+
+  --neutral-900: #1F2121;
+  --neutral-700: #6F7577;
+  --neutral-400: #E5E7EB;
+  --neutral-100: #F5F5F0;
+  --white: #FFFFFF;
+
+  --success: #2D8F5E;
+  --error: #EF4444;
+  --info: #3B82F6;
+
+  --accent-brown: #5F5238;
+  --accent-red: #C01F2F;
+
+  /* Spacing Base (4px) */
+  --spacing-base: 4px;
+}
+
 /* Custom styles can go here */
 
 /* Global Focus Styles for Accessibility */
 :focus-visible {
-  outline: 2px solid #333333;
-  /* brand-dark */
+  outline: 2px solid var(--neutral-900);
   outline-offset: 2px;
 }

@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
-import { CartItem, User, Address, Order, ToastMessage } from '../types';
+import { User, Address, Order, ToastMessage } from '../types';
+import { CartItem as StoreCartItem } from '../store/cartStore';
 import { CheckCircleIcon } from './icons/CheckCircleIcon';
 import { CalendarIcon } from './icons/CalendarIcon';
 import { XIcon } from './icons/XIcon';
@@ -9,9 +10,33 @@ import { imageErrorHandlers } from '../utils/imageHelpers';
 import { orderAPI } from '../utils/apiService';
 import { paymentService } from '../utils/paymentService';
 import { APIErrorDisplay } from './APIErrorDisplay';
+import CheckoutStepper from './CheckoutStepper';
+
+// Helper to map flat store items to nested Order items
+const mapToOrderItems = (items: StoreCartItem[]): any[] => {
+  return items.map((item) => {
+    const [productId, variantName] = item.id.includes('-')
+      ? item.id.split('-')
+      : [item.id, item.weight];
+    return {
+      product: {
+        id: productId, // Best effort
+        name: item.name,
+        images: [item.image],
+      },
+      selectedVariant: {
+        id: 0, // Fallback ID as store doesn't keep variant ID
+        name: item.weight,
+        price: item.price,
+        stock: item.stock,
+      },
+      quantity: item.quantity,
+    };
+  });
+};
 
 interface CheckoutPageProps {
-  cartItems: CartItem[];
+  cartItems: StoreCartItem[];
   user: User | null;
   onPlaceOrder: (order: Order) => void;
   addToast: (message: string, type: ToastMessage['type']) => void;
@@ -423,7 +448,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
     const processOrder = async (paymentId?: string) => {
       try {
         const orderData = {
-          items: cartItems,
+          items: mapToOrderItems(cartItems),
           total: total,
           shippingAddress: { ...shippingAddress, id: '', type: 'Shipping' as const },
           billingAddress: useSameAddress
@@ -564,7 +589,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
                 try {
                   const saved = savedState ? JSON.parse(savedState) : {};
                   const finalOrderData = {
-                    items: cartItems, // cartItems comes from useCart which is persistent
+                    items: mapToOrderItems(cartItems), // cartItems comes from useCart which is persistent
                     total: total,
                     shippingAddress: {
                       ...shippingAddress,
@@ -644,8 +669,10 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
   }
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <h2 className="text-3xl md:text-4xl font-serif font-bold text-center text-brand-dark mb-12">
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <CheckoutStepper currentStep={paymentMethod ? 'payment' : 'shipping'} />
+
+      <h2 className="text-3xl md:text-4xl font-serif font-bold text-center text-brand-dark mb-12 mt-8">
         Checkout
       </h2>
 
@@ -785,13 +812,10 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
             <h3 className="text-xl font-serif font-bold mb-4">Order Summary</h3>
             <div className="space-y-4 max-h-60 overflow-y-auto pr-2">
               {cartItems.map((item) => (
-                <div
-                  key={`${item.product.id}-${item.selectedVariant.id}`}
-                  className="flex justify-between items-start gap-4"
-                >
+                <div key={item.id} className="flex justify-between items-start gap-4">
                   <OptimizedImage
-                    src={item.product.images[0]}
-                    alt={item.product.name}
+                    src={item.image}
+                    alt={item.name}
                     className="w-16 h-16 object-cover rounded-md flex-shrink-0"
                     type="thumbnail"
                     priority="high"
@@ -800,16 +824,13 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
                     onError={imageErrorHandlers.thumb}
                   />
                   <div className="flex-grow">
-                    <p className="font-bold text-sm leading-tight">{item.product.name}</p>
+                    <p className="font-bold text-sm leading-tight">{item.name}</p>
                     <p className="text-xs text-gray-500">
-                      {item.selectedVariant.name} x {item.quantity}
+                      {item.weight} x {item.quantity}
                     </p>
                   </div>
                   <p className="text-sm font-bold flex-shrink-0">
-                    ₹
-                    {(
-                      (item.selectedVariant.salePrice ?? item.selectedVariant.price) * item.quantity
-                    ).toFixed(2)}
+                    ₹{(item.price * item.quantity).toFixed(2)}
                   </p>
                 </div>
               ))}
@@ -873,10 +894,22 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
               )}
             </div>
 
-            <div className="mt-6 border-t pt-4 text-center text-brand-dark">
-              <div className="flex items-center justify-center gap-3 text-sm">
-                <ShieldCheckIcon className="h-6 w-6 text-green-600" />
+            <div className="mt-6 border-t pt-4 space-y-3">
+              <div className="flex items-center gap-3 text-sm text-gray-700 bg-green-50 p-2 rounded-md">
+                <ShieldCheckIcon className="h-5 w-5 text-green-600 flex-shrink-0" />
                 <span className="font-bold">Secure SSL Checkout</span>
+              </div>
+              <div className="flex items-center gap-3 text-sm text-gray-700 bg-blue-50 p-2 rounded-md">
+                <span className="h-5 w-5 flex items-center justify-center text-blue-600 font-bold">
+                  ↺
+                </span>
+                <span className="font-bold">30-Day Money Back Guarantee</span>
+              </div>
+              <div className="flex items-center gap-3 text-sm text-gray-700 bg-yellow-50 p-2 rounded-md">
+                <span className="h-5 w-5 flex items-center justify-center text-yellow-600 font-bold">
+                  🚚
+                </span>
+                <span className="font-bold">Fast & Free Shipping over ₹250</span>
               </div>
             </div>
 
