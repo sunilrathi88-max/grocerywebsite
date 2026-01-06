@@ -1,5 +1,4 @@
 import React from 'react';
-import { CheckCircleIcon } from './icons/CheckCircleIcon';
 
 interface CheckoutStepperProps {
   currentStep: 'shipping' | 'payment' | 'review';

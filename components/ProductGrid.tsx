@@ -9,9 +9,6 @@ interface ProductGridProps {
   products: Product[];
   onAddToCart: (product: Product, variant: Variant) => void;
   onToggleWishlist: (product: Product) => void;
-  wishlistedIds: Set<number>;
-  onSelectProduct: (product: Product) => void;
-  onToggleCompare: (product: Product) => void;
   comparisonIds: Set<number>;
   isLoading: boolean;
   onNotifyMe: (productName: string) => void;
@@ -24,9 +21,6 @@ const ProductGrid: React.FC<ProductGridProps> = ({
   products,
   onAddToCart,
   onToggleWishlist,
-  wishlistedIds,
-  onSelectProduct,
-  onToggleCompare,
   comparisonIds,
   isLoading,
   onNotifyMe,

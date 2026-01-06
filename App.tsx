@@ -67,7 +67,6 @@ const RefundPolicyPage = React.lazy(() => import('./components/RefundPolicyPage'
 const TermsOfServicePage = React.lazy(() => import('./components/TermsOfServicePage'));
 const AboutPage = React.lazy(() => import('./components/AboutPage'));
 const FAQsPage = React.lazy(() => import('./components/FAQsPage'));
-const RecommendedProducts = React.lazy(() => import('./components/RecommendedProducts'));
 const ContactPage = React.lazy(() => import('./components/ContactPage'));
 const RecipesPage = React.lazy(() => import('./components/RecipesPage'));
 const BlogPage = React.lazy(() => import('./components/BlogPage'));
@@ -739,7 +738,6 @@ const App: React.FC = () => {
           onLogoutClick={handleLogout}
           allProducts={products}
           onSelectProduct={setSelectedProduct}
-          subtotal={subtotal}
           categories={categories}
           onSelectCategory={handleSelectCategoryAndClose}
           onRemoveItem={removeFromCart}
@@ -1161,9 +1159,6 @@ const App: React.FC = () => {
                       products={finalFilteredProducts}
                       onAddToCart={handleAddToCart}
                       onToggleWishlist={handleToggleWishlist}
-                      wishlistedIds={wishlistedIds}
-                      onSelectProduct={setSelectedProduct}
-                      onToggleCompare={handleToggleCompare}
                       comparisonIds={comparisonIds}
                       isLoading={productsLoading}
                       onNotifyMe={handleNotifyMe}

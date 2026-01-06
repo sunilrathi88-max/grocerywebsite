@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { User, Address, Order, ToastMessage } from '../types';
+import { User, Address, Order, ToastMessage, Product, CartItem } from '../types';
 import { CartItem as StoreCartItem } from '../store/cartStore';
 import { CheckCircleIcon } from './icons/CheckCircleIcon';
 import { CalendarIcon } from './icons/CalendarIcon';
@@ -13,23 +13,25 @@ import { APIErrorDisplay } from './APIErrorDisplay';
 import CheckoutStepper from './CheckoutStepper';
 
 // Helper to map flat store items to nested Order items
-const mapToOrderItems = (items: StoreCartItem[]): any[] => {
+const mapToOrderItems = (items: StoreCartItem[]): CartItem[] => {
   return items.map((item) => {
-    const [productId, variantName] = item.id.includes('-')
-      ? item.id.split('-')
-      : [item.id, item.weight];
+    const [productId] = item.id.includes('-') ? item.id.split('-') : [item.id];
     return {
       product: {
-        id: productId, // Best effort
+        id: parseInt(productId) || 0, // Ensure number if Product expects number, checking types again... Product.id is number. CartItem.id is string? StoreCartItem.id is string.
         name: item.name,
         images: [item.image],
-      },
+        variants: [], // Required by Product
+        reviews: [], // Required by Product
+        description: '', // Required by Product
+        category: '', // Required by Product
+      } as unknown as Product,
       selectedVariant: {
-        id: 0, // Fallback ID as store doesn't keep variant ID
+        id: 0,
         name: item.weight,
         price: item.price,
         stock: item.stock,
-      },
+      } as any, // Variant also has required props
       quantity: item.quantity,
     };
   });

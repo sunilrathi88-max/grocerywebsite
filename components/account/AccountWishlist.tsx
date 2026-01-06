@@ -31,9 +31,6 @@ const AccountWishlist: React.FC = () => {
           products={wishlistItems}
           onAddToCart={handleAddToCart}
           onToggleWishlist={toggleWishlist}
-          wishlistedIds={new Set(wishlistItems.map((p) => p.id))}
-          onSelectProduct={(p) => navigate(`/product/${p.id}`)} // Fallback to ID-based routing for now or update Type if slug exists
-          onToggleCompare={() => {}}
           comparisonIds={new Set()}
           isLoading={false}
           onNotifyMe={() => {}}
