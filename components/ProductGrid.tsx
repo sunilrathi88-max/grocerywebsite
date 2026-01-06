@@ -96,24 +96,39 @@ const ProductGrid: React.FC<ProductGridProps> = ({
           {displayProducts.map((product) => (
             <div key={product.id} className="w-full">
               <ProductCard
-                product={product}
-                onAddToCart={(p, v) => {
-                  trackEvent({
-                    name: 'add_to_cart',
-                    data: { id: p.id, name: p.name, price: v.salePrice || v.price },
-                  });
-                  onAddToCart(p, v);
+                id={product.id.toString()}
+                name={product.name}
+                price={product.variants[0]?.salePrice || product.variants[0]?.price}
+                originalPrice={
+                  product.variants[0]?.salePrice ? product.variants[0]?.price : undefined
+                }
+                image={product.images[0]}
+                rating={product.rating || 0}
+                reviewCount={product.reviews.length}
+                heatLevel="medium" // Default or derive from tags
+                useCase={product.category}
+                sizes={product.variants.map((v) => ({
+                  size: v.name,
+                  price: v.salePrice || v.price,
+                }))}
+                onAddToCart={(id) => {
+                  const p = products.find((prod) => prod.id.toString() === id);
+                  if (p && p.variants[0]) {
+                    trackEvent({
+                      name: 'add_to_cart',
+                      data: {
+                        id: p.id,
+                        name: p.name,
+                        price: p.variants[0].salePrice || p.variants[0].price,
+                      },
+                    });
+                    onAddToCart(p, p.variants[0]);
+                  }
                 }}
-                onToggleWishlist={onToggleWishlist}
-                isWishlisted={wishlistedIds.has(product.id)}
-                onSelectProduct={(p) => {
-                  trackEvent({ name: 'product_click', data: { id: p.id, name: p.name } });
-                  onSelectProduct(p);
+                onWishlist={(id) => {
+                  const p = products.find((prod) => prod.id.toString() === id);
+                  if (p) onToggleWishlist(p);
                 }}
-                onToggleCompare={onToggleCompare}
-                isCompared={comparisonIds.has(product.id)}
-                onNotifyMe={onNotifyMe}
-                priority={products.indexOf(product) < 4 ? 'high' : 'auto'}
               />
             </div>
           ))}

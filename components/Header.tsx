@@ -7,9 +7,9 @@ import { UserIcon } from './icons/UserIcon';
 import { CogIcon } from './icons/CogIcon';
 import { MoonIcon } from './icons/MoonIcon';
 import { SunIcon } from './icons/SunIcon';
-import { Product, CartItem } from '../types';
+import { Product } from '../types';
 import SignOutButton from './SignOutButton';
-import MiniCart from './MiniCart';
+import MiniCart, { MiniCartItem } from './MiniCart';
 import { TagIcon } from './icons/TagIcon';
 import { SearchIcon } from './icons/SearchIcon';
 import Navigation from './Navigation';
@@ -19,7 +19,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { fuzzySearch, getSuggestions } from '../utils/searchUtils';
 
 interface HeaderProps {
-  cartItems: CartItem[];
+  cartItems: MiniCartItem[];
   wishlistItemCount: number;
   searchQuery: string;
   onSearchChange: (query: string) => void;
@@ -35,6 +35,7 @@ interface HeaderProps {
   subtotal: number;
   categories: string[];
   onSelectCategory: (category: string) => void;
+  onRemoveItem?: (id: string) => void;
 }
 
 const Header: React.FC<HeaderProps> = ({
@@ -54,6 +55,7 @@ const Header: React.FC<HeaderProps> = ({
   subtotal,
   categories,
   onSelectCategory,
+  onRemoveItem,
 }) => {
   const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
@@ -346,7 +348,16 @@ const Header: React.FC<HeaderProps> = ({
               </motion.div>
               {isMiniCartOpen && (
                 <div className="absolute top-full right-0 pt-2 hidden group-hover:block z-50">
-                  <MiniCart items={cartItems} subtotal={subtotal} />
+                  <MiniCart
+                    isOpen={true} // Always "open" when parent renders it
+                    onClose={() => setMiniCartOpen(false)}
+                    items={cartItems}
+                    onCheckout={() => navigate('/checkout')}
+                    onContinueShopping={() => setMiniCartOpen(false)}
+                    onRemoveItem={(id) => {
+                      if (onRemoveItem) onRemoveItem(id);
+                    }}
+                  />
                 </div>
               )}
             </div>

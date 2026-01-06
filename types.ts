@@ -131,6 +131,10 @@ export interface Testimonial {
   name: string;
   quote: string;
   rating: number;
+  image?: string;
+  location?: string;
+  productPurchased?: string;
+  verified?: boolean;
 }
 
 export interface BlogPost {

@@ -21,7 +21,7 @@ import SEO from './components/SEO';
 import { pageSEO, generateOrganizationSchema } from './utils/seo';
 
 // Custom Hooks
-import { useCart } from './hooks/useCart';
+import { useCartStore } from './store/cartStore';
 import { useWishlist } from './hooks/useWishlist';
 import { useProductFilter } from './hooks/useProductFilter';
 import { useProducts } from './hooks/useProducts';
@@ -96,6 +96,9 @@ const EmailVerificationPage = React.lazy(() => import('./components/EmailVerific
 const CartPage = React.lazy(() => import('./pages/CartPage'));
 const TwoFactorSetupPage = React.lazy(() => import('./components/TwoFactorSetupPage'));
 const OrderTrackingPage = React.lazy(() => import('./pages/OrderTrackingPage'));
+const ProductDetailPage = React.lazy(() => import('./pages/ProductDetailPage'));
+const HomePage = React.lazy(() => import('./pages/HomePage'));
+const CategoryPage = React.lazy(() => import('./pages/CategoryPage'));
 
 const PageLoader = () => (
   <div className="flex items-center justify-center min-h-[60vh]">
@@ -248,7 +251,12 @@ const App: React.FC = () => {
   const [discount, setDiscount] = useState(0);
 
   // Custom hooks
-  const { cartItems, subtotal, addToCart, updateQuantity, clearCart } = useCart();
+  const cartItems = useCartStore((state) => state.items);
+  const subtotal = useCartStore((state) => state.getSubtotal());
+  const addToCart = useCartStore((state) => state.addItem);
+  const updateQuantity = useCartStore((state) => state.updateQuantity);
+  const clearCart = useCartStore((state) => state.clearCart);
+  const removeFromCart = useCartStore((state) => state.removeItem);
   const { wishlistItems, wishlistItemCount, toggleWishlist, isInWishlist } = useWishlist();
 
   const {
@@ -392,7 +400,15 @@ const App: React.FC = () => {
 
   const handleAddToCart = useCallback(
     (product: Product, variant: Variant, quantity: number = 1) => {
-      addToCart(product, variant, quantity);
+      addToCart({
+        id: `${product.id}-${variant.name}`, // Use composite ID matching ProductDetailPage logic
+        name: product.name,
+        price: variant.salePrice || variant.price,
+        quantity,
+        weight: variant.name,
+        image: product.images[0],
+        stock: variant.stock, // Add stock property
+      });
       addToast(`${product.name} added to cart!`, 'success');
     },
     [addToCart, addToast]
@@ -473,8 +489,8 @@ const App: React.FC = () => {
   );
 
   const handleUpdateQuantity = useCallback(
-    (productId: number, variantId: number, quantity: number) => {
-      updateQuantity(productId, variantId, quantity);
+    (id: string, quantity: number) => {
+      updateQuantity(id, quantity);
     },
     [updateQuantity]
   );
@@ -735,243 +751,91 @@ const App: React.FC = () => {
           subtotal={subtotal}
           categories={categories}
           onSelectCategory={handleSelectCategoryAndClose}
+          onRemoveItem={removeFromCart}
         />
 
         <Routes>
+          <Route
+            path="/product/:id"
+            element={
+              <React.Suspense fallback={<PageLoader />}>
+                <ProductDetailPage />
+              </React.Suspense>
+            }
+          />
+          <Route
+            path="/category/:category"
+            element={
+              <React.Suspense fallback={<PageLoader />}>
+                <CategoryPage />
+              </React.Suspense>
+            }
+          />
+          <Route
+            path="/shop"
+            element={
+              <React.Suspense fallback={<PageLoader />}>
+                <CategoryPage />
+              </React.Suspense>
+            }
+          />
           <Route
             path="/"
             element={
               <>
                 {GlobalSEO}
-                <main>
-                  <Hero
-                    onShopNow={() => {
-                      const element = document.getElementById('products-section');
-                      element?.scrollIntoView({ behavior: 'smooth' });
-                    }}
-                  />
-
-                  <div id="category-showcase">
-                    <CategoryShowcase
-                      onSelectCategory={(cat) => {
-                        setSelectedCategory(cat);
-                        if (cat === 'Offers') navigate('/offers');
-                        else {
-                          const element = document.getElementById('products-section');
-                          element?.scrollIntoView({ behavior: 'smooth' });
-                        }
-                      }}
-                    />
-                  </div>
-
-                  <TrustSignals />
-
-                  {/* Best Sellers */}
-                  <FeaturedCollection
-                    title="Best Sellers"
-                    products={products.slice(0, 8)}
-                    onAddToCart={handleAddToCart}
-                    onToggleWishlist={handleToggleWishlist}
-                    wishlistedIds={wishlistedIds}
-                    onSelectProduct={setSelectedProduct}
-                    onNotifyMe={handleNotifyMe}
-                    onViewAll={() => {
-                      setSelectedCategory('All');
-                      const element = document.getElementById('products-section');
-                      element?.scrollIntoView({ behavior: 'smooth' });
-                    }}
-                  />
-
-                  {/* New Arrivals - Different background */}
-                  <FeaturedCollection
-                    title="New Arrivals"
-                    products={products.slice(8, 16)}
-                    onAddToCart={handleAddToCart}
-                    onToggleWishlist={handleToggleWishlist}
-                    wishlistedIds={wishlistedIds}
-                    onSelectProduct={setSelectedProduct}
-                    onNotifyMe={handleNotifyMe}
-                    bgClass="bg-neutral-50"
-                    onViewAll={() => {
-                      setSortOrder('newest');
-                      const element = document.getElementById('products-section');
-                      element?.scrollIntoView({ behavior: 'smooth' });
-                    }}
-                  />
-
-                  <BrandStory />
-
-                  <div id="why-us">
-                    <React.Suspense fallback={<div className="h-96 bg-gray-50 animate-pulse" />}>
-                      <PEACECards />
-                    </React.Suspense>
-                  </div>
-
-                  {/* Personalized Recommendations */}
-                  <React.Suspense fallback={null}>
-                    <RecommendedProducts
-                      allProducts={products}
-                      onAddToCart={handleAddToCart}
-                      onSelectProduct={setSelectedProduct}
-                      onNotifyMe={handleNotifyMe}
-                    />
-                  </React.Suspense>
-
-                  <React.Suspense fallback={<PageLoader />}>
-                    <Testimonials testimonials={MOCK_TESTIMONIALS} />
-                  </React.Suspense>
-
-                  {/* Main Product Grid Section */}
-                  <div id="products-section" className="bg-brand-accent py-20">
-                    <div className="container mx-auto px-4 md:px-6">
-                      <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-5xl font-serif font-bold text-brand-dark mb-6">
-                          Shop All
-                        </h2>
-                        <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-                          Explore our full range of premium spices.
-                        </p>
-                      </div>
-
-                      {/* Advanced Grid Layout */}
-                      <div className="grid grid-cols-1 md:grid-cols-[16rem_1fr] gap-10">
-                        <aside className="hidden md:block sticky top-24 h-fit z-10">
-                          <React.Suspense
-                            fallback={
-                              <div className="h-[450px] bg-gray-100 rounded-xl animate-pulse" />
-                            }
-                          >
-                            <AdvancedFilters
-                              showOnSale={showOnSale}
-                              onToggleOnSale={() => setShowOnSale(!showOnSale)}
-                              showInStock={showInStock}
-                              onToggleInStock={() => setShowInStock(!showInStock)}
-                              availableTags={availableTags}
-                              selectedTags={selectedTags}
-                              onToggleTag={handleToggleTag}
-                              priceRange={priceRange}
-                              maxPrice={maxPrice}
-                              onPriceChange={(max) => setPriceRange((prev) => ({ ...prev, max }))}
-                              origins={availableOrigins}
-                              selectedOrigins={selectedOrigins}
-                              onToggleOrigin={handleToggleOrigin}
-                              heatLevels={availableHeatLevels}
-                              selectedHeatLevels={selectedHeatLevels}
-                              onToggleHeatLevel={handleToggleHeatLevel}
-                              cuisines={availableCuisines}
-                              selectedCuisines={selectedCuisines}
-                              onToggleCuisine={handleToggleCuisine}
-                              sizes={availableSizes}
-                              selectedSizes={selectedSizes}
-                              onToggleSize={handleToggleSize}
-                              grinds={availableGrinds}
-                              selectedGrinds={selectedGrinds}
-                              onToggleGrind={handleToggleGrind}
-                              grades={availableGrades}
-                              selectedGrades={selectedGrades}
-                              onToggleGrade={handleToggleGrade}
-                            />
-                          </React.Suspense>
-                        </aside>
-
-                        <div>
-                          {selectedCategory !== 'All' && (
-                            <div className="mb-4">
-                              <Breadcrumbs
-                                items={[
-                                  {
-                                    label: 'Home',
-                                    onClick: () => setSelectedCategory('All'),
-                                  },
-                                  { label: selectedCategory },
-                                ]}
-                              />
-                            </div>
-                          )}
-                          <div className="flex flex-wrap gap-4 justify-between items-center mb-6 bg-white p-4 rounded-lg shadow-sm">
-                            <p className="text-gray-600 font-medium whitespace-nowrap hidden sm:block">
-                              Showing {finalFilteredProducts.length} results
-                            </p>
-
-                            <button
-                              onClick={() => setIsFilterOpen(true)}
-                              className="md:hidden flex items-center gap-2 px-4 py-2 bg-neutral-100 rounded-lg font-medium text-neutral-700 hover:bg-neutral-200 transition-colors"
-                            >
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-5 w-5"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={2}
-                                  d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
-                                />
-                              </svg>
-                              Filters
-                            </button>
-
-                            <SortDropdown
-                              currentSort={sortOrder}
-                              onSortChange={(val) => setSortOrder(val as typeof sortOrder)}
-                            />
-                          </div>
-
-                          {/* Active Filters Display */}
-                          {(selectedCategory !== 'All' ||
-                            searchQuery ||
-                            selectedTags.length > 0) && (
-                            <div className="flex flex-wrap gap-2 items-center mb-4">
-                              {selectedCategory !== 'All' && (
-                                <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-brand-primary/10 text-brand-primary text-sm font-medium">
-                                  {selectedCategory}
-                                  <button
-                                    onClick={() => setSelectedCategory('All')}
-                                    className="hover:text-brand-dark ml-1"
-                                  >
-                                    ×
-                                  </button>
-                                </span>
-                              )}
-                            </div>
-                          )}
-
-                          <ProductGrid
-                            products={finalFilteredProducts}
-                            onAddToCart={handleAddToCart}
-                            onToggleWishlist={handleToggleWishlist}
-                            wishlistedIds={wishlistedIds}
-                            onSelectProduct={setSelectedProduct}
-                            onToggleCompare={handleToggleCompare}
-                            comparisonIds={comparisonIds}
-                            isLoading={productsLoading}
-                            onNotifyMe={handleNotifyMe}
-                            onClearFilters={handleClearFilters}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Quiz Module */}
-                  <section data-testid="quiz-section" className="bg-brand-secondary/5 py-20 mt-0">
-                    <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                      <React.Suspense fallback={null}>
-                        <QuizModule addToast={addToast} />
-                      </React.Suspense>
-                    </div>
-                  </section>
-
-                  <React.Suspense fallback={<PageLoader />}>
-                    <div className="py-12 bg-neutral-50 text-center">
-                      <h2 className="text-2xl font-bold mb-4">Got Questions?</h2>
-                      <FAQsPage />
-                    </div>
-                  </React.Suspense>
-                </main>
+                <HomePage
+                  products={products}
+                  selectedCategory={selectedCategory}
+                  setSelectedCategory={(cat) => {
+                    handleSelectCategoryAndClose(cat);
+                    if (cat === 'Offers') navigate('/offers');
+                  }}
+                  searchQuery={searchQuery}
+                  selectedTags={selectedTags}
+                  finalFilteredProducts={finalFilteredProducts}
+                  productsLoading={productsLoading}
+                  wishlistedIds={wishlistedIds}
+                  comparisonIds={comparisonIds}
+                  handleAddToCart={handleAddToCart}
+                  handleToggleWishlist={handleToggleWishlist}
+                  setSelectedProduct={setSelectedProduct}
+                  handleNotifyMe={handleNotifyMe}
+                  handleToggleCompare={handleToggleCompare}
+                  handleClearFilters={handleClearFilters}
+                  setIsFilterOpen={setIsFilterOpen}
+                  setSortOrder={setSortOrder}
+                  sortOrder={sortOrder}
+                  showOnSale={showOnSale}
+                  setShowOnSale={setShowOnSale}
+                  showInStock={showInStock}
+                  setShowInStock={setShowInStock}
+                  availableTags={availableTags}
+                  selectedTagsState={selectedTags} // Mapping prop name correctly
+                  handleToggleTag={handleToggleTag}
+                  priceRange={priceRange}
+                  setPriceRange={(range) => setPriceRange((prev) => ({ ...prev, ...range }))} // Simple wrapper match
+                  maxPrice={maxPrice}
+                  selectedOrigins={selectedOrigins}
+                  handleToggleOrigin={handleToggleOrigin}
+                  availableOrigins={availableOrigins}
+                  selectedHeatLevels={selectedHeatLevels}
+                  handleToggleHeatLevel={handleToggleHeatLevel}
+                  availableHeatLevels={availableHeatLevels}
+                  selectedCuisines={selectedCuisines}
+                  handleToggleCuisine={handleToggleCuisine}
+                  availableCuisines={availableCuisines}
+                  selectedSizes={selectedSizes}
+                  handleToggleSize={handleToggleSize}
+                  availableSizes={availableSizes}
+                  selectedGrinds={selectedGrinds}
+                  handleToggleGrind={handleToggleGrind}
+                  availableGrinds={availableGrinds}
+                  selectedGrades={selectedGrades}
+                  handleToggleGrade={handleToggleGrade}
+                  availableGrades={availableGrades}
+                  addToast={addToast}
+                />
               </>
             }
           />
@@ -1368,7 +1232,7 @@ const App: React.FC = () => {
             <Cart
               items={cartItems}
               onUpdateQuantity={handleUpdateQuantity}
-              onRemoveItem={(pId, vId) => updateQuantity(pId, vId, 0)}
+              onRemoveItem={(id) => updateQuantity(id, 0)}
               onCheckout={() => {
                 setIsCartOpen(false);
                 navigate('/checkout');

@@ -1,257 +1,159 @@
-import React from 'react';
-import { Product, Variant } from '../types';
-import { OptimizedImage } from './OptimizedImage';
-import { PLACEHOLDER_URLS, imageErrorHandlers } from '../utils/imageHelpers';
-import { CheckCircleIcon } from './icons/CheckCircleIcon';
-import { PlusIcon } from './icons/PlusIcon';
-import { HeartIcon } from './icons/HeartIcon';
-import { StarIcon } from './icons/StarIcon';
-import { EyeIcon } from './icons/EyeIcon';
-import { CompareIcon } from './icons/CompareIcon';
-import { MailIcon } from './icons/MailIcon';
-import { formatPrice } from '../utils/formatPrice';
-import { Badge } from './ui/Badge';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Button } from './Button';
 
 interface ProductCardProps {
-  product: Product;
-  onAddToCart: (product: Product, variant: Variant) => void;
-  onToggleWishlist: (product: Product) => void;
-  isWishlisted: boolean;
-  onSelectProduct: (product: Product) => void;
-  onToggleCompare: (product: Product) => void;
-  isCompared: boolean;
-  onNotifyMe: (productName: string) => void;
-  priority?: 'high' | 'low' | 'auto';
+  id: string;
+  name: string;
+  price: number;
+  originalPrice?: number;
+  image: string;
+  rating: number;
+  reviewCount: number;
+  heatLevel: 'mild' | 'medium' | 'hot';
+  useCase: string;
+  sizes?: Array<{ size: string; price: number }>;
+  badge?: 'new' | 'discount';
+  badgeValue?: string;
+  onAddToCart: (productId: string) => void;
+  onWishlist: (productId: string) => void;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({
-  product,
+export const ProductCard: React.FC<ProductCardProps> = ({
+  id,
+  name,
+  price,
+  originalPrice,
+  image,
+  rating,
+  reviewCount,
+  heatLevel,
+  useCase,
+  sizes,
+  badge,
   onAddToCart,
-  onToggleWishlist,
-  isWishlisted,
-  onSelectProduct,
-  onToggleCompare,
-  isCompared,
-  onNotifyMe,
-  priority = 'auto',
+  onWishlist,
 }) => {
-  const placeholderImage = PLACEHOLDER_URLS.product;
-  const handleImageError = imageErrorHandlers.product;
+  const [isHovered, setIsHovered] = useState(false);
+  const [isWishlisted, setIsWishlisted] = useState(false);
 
-  const defaultVariant = product.variants[0];
-  const displayPrice = defaultVariant.salePrice ?? defaultVariant.price;
-  const onSale = defaultVariant.salePrice && defaultVariant.salePrice < defaultVariant.price;
-  const isLowStock = defaultVariant.stock <= 5 && defaultVariant.stock > 0;
-  const isOutOfStock = defaultVariant.stock === 0;
-
-  const [isAdding, setIsAdding] = React.useState(false);
-  const [isSuccess, setIsSuccess] = React.useState(false);
-
-  const handleAddToCart = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (isAdding || isSuccess) return;
-
-    setIsAdding(true);
-    onAddToCart(product, defaultVariant);
-
-    setTimeout(() => {
-      setIsAdding(false);
-      setIsSuccess(true);
-      setTimeout(() => setIsSuccess(false), 1500);
-    }, 600);
+  const heatLevelEmoji = {
+    mild: '🌶️',
+    medium: '🌶️🌶️',
+    hot: '🌶️🌶️🌶️',
   };
 
+  // Default to 0 based on user logic, though usually it's calculated
+  const discount = originalPrice ? Math.round(((originalPrice - price) / originalPrice) * 100) : 0;
+
   return (
-    <div
-      className="group bg-white rounded-xl border border-neutral-200 overflow-hidden transition-all duration-300 hover:shadow-card-hover hover:border-brand-primary/20 flex flex-col h-full relative"
-      onClick={() => onSelectProduct(product)}
-    >
-      {/* Image Container */}
-      <div className="relative aspect-[4/5] overflow-hidden bg-neutral-50 cursor-pointer">
-        <OptimizedImage
-          src={product.images?.[0] || placeholderImage}
-          alt={product.name}
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-          fallbackSrc={placeholderImage}
-          onError={handleImageError}
-          priority={priority}
-        />
+    <Link to={`/product/${id}`}>
+      <div
+        className="group bg-white rounded-xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-300 hover:-translate-y-1 cursor-pointer h-full border border-neutral-200"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        {/* Image Container */}
+        <div className="relative w-full aspect-[4/5] bg-neutral-100 overflow-hidden">
+          <img
+            src={image}
+            alt={name}
+            className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500"
+          />
 
-        {/* Badges */}
-        <div className="absolute top-3 left-3 flex flex-col gap-2 items-start">
-          {isOutOfStock ? (
-            <Badge
-              variant="neutral"
-              className="bg-neutral-900 text-white border-none uppercase tracking-wider"
-            >
-              Out of Stock
-            </Badge>
-          ) : (
-            <>
-              {onSale && (
-                <Badge
-                  variant="error"
-                  className="bg-brand-secondary text-white border-none uppercase tracking-wider"
-                >
-                  Sale
-                </Badge>
+          {/* Badges */}
+          {badge && (
+            <div className="absolute top-3 left-3 flex flex-col gap-2">
+              {badge === 'new' && (
+                <span className="bg-brand-primary text-white px-2.5 py-1 rounded-md text-xs font-bold shadow-sm uppercase tracking-wide">
+                  New
+                </span>
               )}
-              {isLowStock && (
-                <Badge
-                  variant="warning"
-                  className="bg-orange-500 text-white border-none uppercase tracking-wider"
-                >
-                  Low Stock
-                </Badge>
+              {badge === 'discount' && discount > 0 && (
+                <span className="bg-semantic-error text-white px-2.5 py-1 rounded-md text-xs font-bold shadow-sm">
+                  {discount}% OFF
+                </span>
               )}
-              {product.grade && (
-                <Badge
-                  variant="neutral"
-                  className="bg-white/90 backdrop-blur-sm text-neutral-900 border-neutral-200 uppercase tracking-wider"
-                >
-                  {product.grade}
-                </Badge>
-              )}
-            </>
+            </div>
           )}
-        </div>
 
-        {/* Wishlist Button */}
-        <div className="absolute top-3 right-3 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 duration-300 transition-all z-10">
+          {/* Wishlist Button - Visible on Hover for Desktop, Always for Mobile */}
           <button
+            className="absolute top-3 right-3 p-2 bg-white/90 backdrop-blur-sm rounded-full shadow-sm hover:bg-white text-neutral-600 hover:text-accent-red transition-all transform hover:scale-110"
             onClick={(e) => {
-              e.stopPropagation();
-              onToggleWishlist(product);
+              e.preventDefault();
+              setIsWishlisted(!isWishlisted);
+              onWishlist(id);
             }}
-            className="p-2 rounded-full bg-white/80 backdrop-blur-sm text-neutral-600 hover:bg-white hover:text-brand-secondary transition-colors shadow-sm"
-            aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
           >
-            <HeartIcon
-              className={`w-5 h-5 ${isWishlisted ? 'fill-brand-secondary text-brand-secondary' : 'fill-transparent'}`}
-            />
+            {isWishlisted ? '❤️' : '♡'}
           </button>
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              onToggleCompare(product);
-            }}
-            className={`p-2 rounded-full bg-white/80 backdrop-blur-sm hover:bg-white transition-colors shadow-sm ${
-              isCompared
-                ? 'text-brand-primary bg-brand-primary/10'
-                : 'text-neutral-600 hover:text-brand-primary'
-            }`}
-            aria-label={isCompared ? 'Remove from comparison' : 'Add to comparison'}
-          >
-            <CompareIcon className="w-5 h-5" />
-          </button>
-        </div>
 
-        {/* Quick Actions Overlay */}
-        <div className="absolute inset-x-0 bottom-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 bg-gradient-to-t from-black/50 to-transparent flex gap-2 justify-center">
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              onSelectProduct(product);
-            }}
-            className="bg-white text-neutral-900 p-3 rounded-full hover:bg-neutral-100 transition-colors shadow-lg"
-            title={`Quick view ${product.name}`}
-            aria-label={`Quick view ${product.name}`}
+          {/* Quick View Button */}
+          <div
+            className={`absolute inset-x-0 bottom-0 p-4 transition-all duration-300 ${isHovered ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'}`}
           >
-            <EyeIcon className="w-5 h-5" />
-          </button>
-          {isOutOfStock ? (
-            <button
+            <Button
+              variant="primary"
+              size="sm"
+              fullWidth
+              className="shadow-lg"
               onClick={(e) => {
-                e.stopPropagation();
-                onNotifyMe(product.name);
+                e.preventDefault();
+                onAddToCart(id);
               }}
-              className="bg-neutral-800 text-white p-3 rounded-full hover:bg-neutral-900 transition-colors shadow-lg px-4 flex items-center gap-2"
-              title="Notify Me"
-              aria-label={`Notify me when ${product.name} is back in stock`}
             >
-              <MailIcon className="w-5 h-5" />
-              <span className="text-sm font-bold whitespace-nowrap">Notify</span>
-            </button>
-          ) : (
-            <button
-              onClick={handleAddToCart}
-              disabled={isAdding || isSuccess}
-              className={`p-3 rounded-full shadow-lg transition-colors flex items-center gap-2 px-4
-                  ${isSuccess ? 'bg-success-green text-white' : 'bg-brand-primary text-white hover:bg-brand-primary/90'}
-                `}
-              title={`Add ${product.name} to cart`}
-              aria-label={`Add ${product.name} to cart`}
-            >
-              {isAdding ? (
-                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-              ) : isSuccess ? (
-                <CheckCircleIcon className="w-5 h-5" />
-              ) : (
-                <PlusIcon className="w-5 h-5" />
-              )}
-            </button>
-          )}
-        </div>
-      </div>
-
-      {/* Content */}
-      <div className="p-5 flex flex-col gap-2 flex-grow">
-        <div className="text-xs text-neutral-500 font-medium uppercase tracking-wide">
-          {product.category}
-        </div>
-        <h3
-          className="text-lg font-serif font-bold text-neutral-900 leading-tight group-hover:text-brand-primary transition-colors line-clamp-1 cursor-pointer"
-          role="button"
-          tabIndex={0}
-          aria-label={`View details for ${product.name}`}
-          onClick={(e) => {
-            e.stopPropagation();
-            onSelectProduct(product);
-          }}
-          onKeyDown={(e) => e.key === 'Enter' && onSelectProduct(product)}
-        >
-          {product.name}
-        </h3>
-
-        {/* Outcome Description (PEACE Framework) */}
-        <p className="text-sm text-neutral-600 line-clamp-2 leading-relaxed">
-          {product.description}
-        </p>
-
-        {/* Rating */}
-        <div className="flex items-center gap-1 mt-1">
-          {product.rating || (product.reviews?.length || 0) > 0 ? (
-            <>
-              <StarIcon className="w-4 h-4 text-warning-yellow fill-warning-yellow" />
-              <span className="text-sm text-neutral-600 font-medium">
-                {product.rating || '4.8'}
-              </span>
-              <span className="text-xs text-neutral-400">
-                ({product.review_count || product.reviews?.length || 120})
-              </span>
-            </>
-          ) : (
-            <span className="text-sm text-neutral-500 italic">No reviews yet</span>
-          )}
+              Add to Cart
+            </Button>
+          </div>
         </div>
 
-        <div className="mt-auto pt-4 flex items-center justify-between">
-          <div className="flex flex-col">
-            {onSale && (
-              <span className="text-sm text-neutral-400 line-through">
-                {formatPrice(defaultVariant.price)}
-              </span>
-            )}
-            <span
-              className={`text-xl font-bold ${onSale ? 'text-brand-secondary' : 'text-neutral-900'}`}
-            >
-              {formatPrice(displayPrice)}
+        {/* Product Info */}
+        <div className="p-5">
+          {/* Tags Row */}
+          <div className="flex gap-2 mb-3 flex-wrap">
+            <span className="inline-flex items-center text-[10px] font-bold uppercase tracking-wider text-neutral-600 bg-neutral-100 px-2 py-1 rounded-full">
+              {heatLevelEmoji[heatLevel]} {heatLevel}
             </span>
+            <span className="inline-flex items-center text-[10px] font-bold uppercase tracking-wider text-neutral-600 bg-neutral-100 px-2 py-1 rounded-full">
+              {useCase}
+            </span>
+          </div>
+
+          {/* Product Name */}
+          <h3 className="text-lg font-bold text-neutral-900 mb-1 line-clamp-1 group-hover:text-brand-primary transition-colors">
+            {name}
+          </h3>
+
+          {/* Rating Row */}
+          <div className="flex items-center gap-1 mb-3">
+            <div className="flex text-brand-primary text-sm">
+              {'★'.repeat(Math.round(rating))}
+              <span className="text-neutral-300">{'★'.repeat(5 - Math.round(rating))}</span>
+            </div>
+            <span className="text-xs text-neutral-500 font-medium ml-1">
+              {rating} ({reviewCount})
+            </span>
+          </div>
+
+          {/* Pricing Row */}
+          <div className="flex items-end justify-between mt-auto">
+            <div>
+              <div className="text-xl font-bold text-neutral-900">₹{price}</div>
+              {originalPrice && (
+                <div className="text-xs text-neutral-400 line-through">₹{originalPrice}</div>
+              )}
+            </div>
+            <div className="text-right">
+              <span className="text-xs font-medium text-neutral-500 block mb-1">
+                {sizes?.[0]?.size || 'Pack'}
+              </span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
-export default React.memo(ProductCard);
+export default ProductCard;

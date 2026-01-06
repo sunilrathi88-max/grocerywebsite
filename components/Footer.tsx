@@ -115,7 +115,7 @@ const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
             </ul>
           </div>
           <div>
-            <h4 className="font-bold tracking-wider uppercase text-gray-600">About</h4>
+            <h4 className="font-bold tracking-wider uppercase text-gray-600">Company</h4>
             <ul className="mt-4 space-y-2 text-sm">
               <li>
                 <Link to="/about" className="hover:text-brand-dark transition-colors">
@@ -123,10 +123,20 @@ const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
                 </Link>
               </li>
               <li>
-                <Link to="/blog" className="hover:text-brand-dark transition-colors">
-                  Blog
+                <Link to="/impact" className="hover:text-brand-dark transition-colors">
+                  Social Impact
                 </Link>
               </li>
+              <li>
+                <Link to="/careers" className="hover:text-brand-dark transition-colors">
+                  Careers
+                </Link>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-bold tracking-wider uppercase text-gray-600">Support</h4>
+            <ul className="mt-4 space-y-2 text-sm">
               <li>
                 <Link to="/contact" className="hover:text-brand-dark transition-colors">
                   Contact Us
@@ -135,6 +145,11 @@ const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
               <li>
                 <Link to="/faqs" className="hover:text-brand-dark transition-colors">
                   FAQs
+                </Link>
+              </li>
+              <li>
+                <Link to="/shipping" className="hover:text-brand-dark transition-colors">
+                  Shipping & Returns
                 </Link>
               </li>
             </ul>
@@ -197,7 +212,13 @@ const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
           </div>
 
           {/* Trust Badges with Payment Methods */}
-          <TrustBadges />
+          <TrustBadges
+            badges={[
+              { icon: '💳', text: 'Secure Payment' },
+              { icon: '🛡️', text: 'Data Privacy' },
+            ]}
+            variant="horizontal"
+          />
 
           <div className="border-t border-gray-200 pt-8 text-center text-sm text-gray-600">
             <p>&copy; {new Date().getFullYear()} THE RATHI SPICE CO. All Rights Reserved.</p>

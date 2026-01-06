@@ -8,7 +8,7 @@ export interface FilterOptions {
   priceRange?: [number, number];
   minRating?: number;
   inStockOnly?: boolean;
-  sortBy?: 'name' | 'price-asc' | 'price-desc' | 'rating' | 'newest';
+  sortBy?: 'name' | 'price-asc' | 'price-desc' | 'rating' | 'newest' | 'popular';
   origin?: string[];
   heatLevel?: string[];
   cuisine?: string[];
@@ -172,6 +172,10 @@ export const useProductFilter = (
           break;
         case 'newest':
           result.sort((a, b) => b.id - a.id);
+          break;
+        case 'popular':
+          // Sort by review count (most reviews = most popular)
+          result.sort((a, b) => b.reviews.length - a.reviews.length);
           break;
       }
     }

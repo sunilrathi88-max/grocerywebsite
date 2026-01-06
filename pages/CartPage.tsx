@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Cart from '../components/Cart';
-import { useCart } from '../hooks/useCart';
+import { useCartStore } from '../store/cartStore';
 import { productAPI, promoAPI } from '../utils/apiService';
-import { Product } from '../types';
+import { Product, Variant } from '../types';
 
 const CartPage: React.FC = () => {
   const navigate = useNavigate();
-  const { cartItems, updateQuantity, removeFromCart, addToCart, subtotal } = useCart();
+  const cartItems = useCartStore((state) => state.items);
+  const updateQuantity = useCartStore((state) => state.updateQuantity);
+  const removeFromCart = useCartStore((state) => state.removeItem);
+  const addItem = useCartStore((state) => state.addItem);
+  const subtotal = useCartStore((state) => state.getSubtotal());
 
   const [promoCode, setPromoCode] = useState('');
   const [discount, setDiscount] = useState(0);
@@ -31,6 +35,19 @@ const CartPage: React.FC = () => {
   }, []);
 
   const shippingCost = subtotal > 1000 ? 0 : 50;
+
+  const handleAddToCart = (product: Product, variant: Variant) => {
+    addItem({
+      id: `${product.id}-${variant.name}`,
+      name: product.name,
+      price: variant.salePrice || variant.price,
+      quantity: 1,
+      weight: variant.name,
+      image: product.images[0],
+      stock: variant.stock || 50,
+    });
+    alert('Added to cart!');
+  };
 
   const handleApplyPromoCode = async (code: string) => {
     try {
@@ -73,7 +90,7 @@ const CartPage: React.FC = () => {
           subtotal={subtotal}
           shippingCost={shippingCost}
           onCheckout={handleCheckout}
-          onAddToCart={addToCart}
+          onAddToCart={handleAddToCart}
           recommendedProducts={recommendedProducts}
         />
       </div>

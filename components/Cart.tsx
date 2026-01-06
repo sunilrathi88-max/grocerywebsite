@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import type { Product, Variant, CartItem } from '../types';
-// XIcon removed
+import type { Product, Variant } from '../types';
+import type { CartItem } from '../store/cartStore';
 import { PlusIcon } from './icons/PlusIcon';
 import { MinusIcon } from './icons/MinusIcon';
 import { TrashIcon } from './icons/TrashIcon';
@@ -12,7 +12,7 @@ import PincodeChecker from './PincodeChecker';
 
 interface CartProps {
   items: CartItem[];
-  onUpdateQuantity: (productId: number, variantId: number, quantity: number) => void;
+  onUpdateQuantity: (id: string, quantity: number) => void;
   onClose: () => void;
   isLoggedIn: boolean;
   promoCode: string;
@@ -21,7 +21,7 @@ interface CartProps {
   discount: number;
   subtotal: number;
   shippingCost: number;
-  onRemoveItem: (productId: number, variantId: number) => void;
+  onRemoveItem: (id: string) => void;
   onCheckout: () => void;
   onAddToCart?: (product: Product, variant: Variant) => void;
   recommendedProducts?: Product[];
@@ -79,17 +79,15 @@ const Cart: React.FC<CartProps> = ({
 
   const handleQuantityChange = (item: CartItem, newQuantity: number) => {
     const performUpdate = () => {
-      setLoadingState({ type: 'item', id: `${item.product.id}-${item.selectedVariant.id}` });
+      setLoadingState({ type: 'item', id: item.id });
       setTimeout(() => {
-        onUpdateQuantity(item.product.id, item.selectedVariant.id, newQuantity);
+        onUpdateQuantity(item.id, newQuantity);
         setLoadingState({ type: null });
       }, 500); // Simulate network delay
     };
 
     if (newQuantity <= 0) {
-      if (
-        window.confirm(`Are you sure you want to remove "${item.product.name}" from your cart?`)
-      ) {
+      if (window.confirm(`Are you sure you want to remove "${item.name}" from your cart?`)) {
         performUpdate();
       }
     } else {
@@ -141,12 +139,10 @@ const Cart: React.FC<CartProps> = ({
           <div className="flex-1 overflow-y-auto pr-2 space-y-4">
             <AnimatePresence>
               {items.map((item) => {
-                const isItemLoading =
-                  loadingState.type === 'item' &&
-                  loadingState.id === `${item.product.id}-${item.selectedVariant.id}`;
+                const isItemLoading = loadingState.type === 'item' && loadingState.id === item.id;
                 return (
                   <motion.div
-                    key={`${item.product.id}-${item.selectedVariant.id}`}
+                    key={item.id}
                     className="flex items-center justify-between bg-white p-3 rounded-lg shadow-sm border border-gray-100"
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
@@ -157,8 +153,8 @@ const Cart: React.FC<CartProps> = ({
                   >
                     <div className="flex items-center gap-4">
                       <OptimizedImage
-                        src={item.product.images[0]}
-                        alt={item.product.name}
+                        src={item.image}
+                        alt={item.name}
                         className="w-16 h-16 object-cover rounded-md bg-gray-200"
                         type="thumbnail"
                         priority="high"
@@ -168,16 +164,11 @@ const Cart: React.FC<CartProps> = ({
                       />
                       <div>
                         <p className="font-bold text-brand-dark dark:text-white leading-tight">
-                          {item.product.name}
+                          {item.name}
                         </p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">{item.weight}</p>
                         <p className="text-sm text-gray-500 dark:text-gray-400">
-                          {item.selectedVariant.name}
-                        </p>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
-                          ₹
-                          {(item.selectedVariant.salePrice ?? item.selectedVariant.price).toFixed(
-                            2
-                          )}
+                          ₹{item.price.toFixed(2)}
                         </p>
                       </div>
                     </div>
@@ -206,7 +197,7 @@ const Cart: React.FC<CartProps> = ({
                           <motion.button
                             onClick={() => handleQuantityChange(item, item.quantity + 1)}
                             className="p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors disabled:text-gray-300 disabled:cursor-not-allowed disabled:hover:bg-transparent"
-                            disabled={item.quantity >= item.selectedVariant.stock}
+                            disabled={item.quantity >= (item.stock || 999)}
                             whileTap={{ scale: 0.9 }}
                           >
                             <PlusIcon />
@@ -308,7 +299,7 @@ const Cart: React.FC<CartProps> = ({
           <h4 className="font-bold text-gray-800 mb-3 text-sm">Customers also bought</h4>
           <div className="space-y-3">
             {recommendedProducts
-              .filter((p) => !items.some((i) => i.product.id === p.id))
+              .filter((p) => !items.some((i) => i.id.startsWith(`${p.id}-`)))
               .slice(0, 3)
               .map((product) => (
                 <div

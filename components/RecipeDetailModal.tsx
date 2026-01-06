@@ -153,17 +153,29 @@ const RecipeDetailModal: React.FC<RecipeDetailModalProps> = ({
                     {relatedProducts.map((product) => (
                       <ProductCard
                         key={product.id}
-                        product={product}
-                        onAddToCart={onAddToCart}
-                        onToggleWishlist={onToggleWishlist}
-                        isWishlisted={isWishlisted(product.id)}
-                        onSelectProduct={() => {
-                          onClose();
-                          onSelectProduct(product);
+                        id={product.id.toString()}
+                        name={product.name}
+                        price={product.variants[0]?.salePrice || product.variants[0]?.price}
+                        originalPrice={
+                          product.variants[0]?.salePrice ? product.variants[0]?.price : undefined
+                        }
+                        image={product.images[0]}
+                        rating={product.rating || 0}
+                        reviewCount={product.reviews.length}
+                        heatLevel="medium"
+                        useCase={product.category}
+                        sizes={product.variants.map((v) => ({
+                          size: v.name,
+                          price: v.salePrice || v.price,
+                        }))}
+                        onAddToCart={(id) => {
+                          const p = relatedProducts.find((prod) => prod.id.toString() === id);
+                          if (p) onAddToCart(p);
                         }}
-                        onToggleCompare={onToggleCompare}
-                        isCompared={isCompared(product.id)}
-                        onNotifyMe={() => onNotifyMe(product)}
+                        onWishlist={(id) => {
+                          const p = relatedProducts.find((prod) => prod.id.toString() === id);
+                          if (p) onToggleWishlist(p);
+                        }}
                       />
                     ))}
                   </div>
