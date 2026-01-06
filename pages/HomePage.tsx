@@ -1,5 +1,5 @@
 import React from 'react';
-import { Product } from '../types';
+import { Product, Variant } from '../types';
 import { HeroSection } from '../components/HeroSection';
 import WhyChooseUs from '../components/WhyChooseUs';
 import ShopByCategory from '../components/ShopByCategory';
@@ -26,17 +26,17 @@ interface HomePageProps {
   selectedTags: string[];
   finalFilteredProducts: Product[];
   productsLoading: boolean;
-  wishlistedIds: Set<any>;
-  comparisonIds: Set<any>;
-  handleAddToCart: (product: Product, variant: any, quantity?: number) => void;
+  wishlistedIds: Set<number>;
+  comparisonIds: Set<number>;
+  handleAddToCart: (product: Product, variant: Variant, quantity?: number) => void;
   handleToggleWishlist: (product: Product) => void;
   setSelectedProduct: (product: Product | null) => void;
-  handleNotifyMe: (id: any) => void;
+  handleNotifyMe: (productName: string) => void;
   handleToggleCompare: (product: Product) => void;
   handleClearFilters: () => void;
   setIsFilterOpen: (isOpen: boolean) => void;
-  setSortOrder: (sort: any) => void;
-  sortOrder: any;
+  setSortOrder: (sort: string) => void;
+  sortOrder: string;
   showOnSale: boolean;
   setShowOnSale: (show: boolean) => void;
   showInStock: boolean;
@@ -77,12 +77,7 @@ const HomePage: React.FC<HomePageProps> = ({
   finalFilteredProducts,
   productsLoading,
   wishlistedIds,
-  comparisonIds,
-  handleAddToCart,
-  handleToggleWishlist,
-  setSelectedProduct,
   handleNotifyMe,
-  handleToggleCompare,
   handleClearFilters,
   setIsFilterOpen,
   setSortOrder,
@@ -319,7 +314,6 @@ const HomePage: React.FC<HomePageProps> = ({
                 products={finalFilteredProducts}
                 onAddToCart={handleAddToCart}
                 onToggleWishlist={handleToggleWishlist}
-                comparisonIds={comparisonIds}
                 isLoading={productsLoading}
                 onNotifyMe={handleNotifyMe}
                 onClearFilters={handleClearFilters}

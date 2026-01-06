@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { User, Address, Order, ToastMessage, Product, CartItem } from '../types';
+import { User, Address, Order, ToastMessage, Product, CartItem, Variant } from '../types';
 import { CartItem as StoreCartItem } from '../store/cartStore';
 import { CheckCircleIcon } from './icons/CheckCircleIcon';
 import { CalendarIcon } from './icons/CalendarIcon';
@@ -31,7 +31,7 @@ const mapToOrderItems = (items: StoreCartItem[]): CartItem[] => {
         name: item.weight,
         price: item.price,
         stock: item.stock,
-      } as any, // Variant also has required props
+      } as unknown as Variant, // Variant also has required props
       quantity: item.quantity,
     };
   });
@@ -602,17 +602,17 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
                     billingAddress:
                       (saved.useSameAddress ?? useSameAddress)
                         ? {
-                            ...shippingAddress,
-                            ...saved.shippingAddress,
-                            id: '',
-                            type: 'Billing' as const,
-                          }
+                          ...shippingAddress,
+                          ...saved.shippingAddress,
+                          id: '',
+                          type: 'Billing' as const,
+                        }
                         : {
-                            ...billingAddress,
-                            ...saved.billingAddress,
-                            id: '',
-                            type: 'Billing' as const,
-                          },
+                          ...billingAddress,
+                          ...saved.billingAddress,
+                          id: '',
+                          type: 'Billing' as const,
+                        },
                     deliveryMethod: 'Standard' as const,
                     paymentMethod: saved.paymentMethod || paymentMethod || 'Online Payment',
                     shippingCost: shippingCost, // shippingCost is calculated from cart items
@@ -643,7 +643,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
                   console.error(err);
                   setSubmitError(
                     'Failed to create order after payment: ' +
-                      (err instanceof Error ? err.message : 'Unknown error')
+                    (err instanceof Error ? err.message : 'Unknown error')
                   );
                 } finally {
                   setIsSubmitting(false);

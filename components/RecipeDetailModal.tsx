@@ -27,12 +27,7 @@ const RecipeDetailModal: React.FC<RecipeDetailModalProps> = ({
   allProducts,
   onClose,
   onAddToCart,
-  onSelectProduct,
-  onNotifyMe,
   onToggleWishlist,
-  isWishlisted,
-  onToggleCompare,
-  isCompared,
 }) => {
   // Filter products that are related to this recipe
   const relatedProducts = allProducts.filter((product) =>

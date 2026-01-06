@@ -31,10 +31,9 @@ const AccountWishlist: React.FC = () => {
           products={wishlistItems}
           onAddToCart={handleAddToCart}
           onToggleWishlist={toggleWishlist}
-          comparisonIds={new Set()}
           isLoading={false}
-          onNotifyMe={() => {}}
-          onClearFilters={() => {}}
+          onNotifyMe={() => { }}
+          onClearFilters={() => { }}
         />
       )}
       <ToastContainer

@@ -18,8 +18,6 @@ interface ProductSliderProps {
 const ProductSlider: React.FC<ProductSliderProps> = ({
   title,
   products,
-  onNotifyMe,
-  loadingStrategy = 'lazy',
   ...props
 }) => {
   if (products.length === 0) {
@@ -30,7 +28,7 @@ const ProductSlider: React.FC<ProductSliderProps> = ({
     <div>
       {title && <h3 className="text-2xl font-serif font-bold text-brand-dark mb-6">{title}</h3>}
       <div className="flex space-x-8 pb-4 -mx-4 px-4 overflow-x-auto min-h-[420px]">
-        {products.map((product, index) => (
+        {products.map((product) => (
           <div key={product.id} className="w-80 flex-shrink-0">
             <ProductCard
               id={product.id.toString()}

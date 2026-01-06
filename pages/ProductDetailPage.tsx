@@ -55,18 +55,7 @@ export default function ProductDetailPage() {
     alert('Added to cart!');
   };
 
-  const tabs = [
-    {
-      id: 'description',
-      label: 'Description',
-      content: <div>{product.description}</div>,
-    },
-    {
-      id: 'reviews',
-      label: 'Reviews',
-      content: <div>Reviews content...</div>,
-    },
-  ];
+
 
   return (
     <div className="min-h-screen bg-[#F5F5F0]">
@@ -104,7 +93,7 @@ export default function ProductDetailPage() {
             {/* Weight Selector */}
             <WeightSelector
               options={product.sizes.map((s) => ({ ...s, badge: s.badge || undefined }))}
-              onSelect={(index, price) => setSelectedWeight(index)}
+              onSelect={(index) => setSelectedWeight(index)}
               defaultSelectedIndex={0}
             />
 

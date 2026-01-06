@@ -425,7 +425,7 @@ describe('Cart', () => {
       render(<Cart {...defaultProps} />);
 
       expect(screen.getByText('Subtotal')).toBeInTheDocument();
-      expect(screen.getByText('₹747.00')).toBeInTheDocument();
+      expect(screen.getByText('₹997.00')).toBeInTheDocument();
     });
 
     it('should display discount when applied', () => {
@@ -456,27 +456,27 @@ describe('Cart', () => {
     });
 
     it('should calculate and display tax (8%)', () => {
-      // Tax = (subtotal - discount) * 0.08 = (747 - 0) * 0.08 = 59.76
+      // Tax = (subtotal - discount) * 0.08 = (997 - 0) * 0.08 = 79.76
       render(<Cart {...defaultProps} />);
 
       expect(screen.getByText('Taxes (8%)')).toBeInTheDocument();
-      expect(screen.getByText('₹59.76')).toBeInTheDocument();
+      expect(screen.getByText('₹79.76')).toBeInTheDocument();
     });
 
     it('should calculate total correctly', () => {
       // Total = subtotal - discount + shipping + tax
-      // 747 - 0 + 0 + 59.76 = 806.76
+      // 997 - 0 + 0 + 79.76 = 1076.76
       render(<Cart {...defaultProps} />);
 
       expect(screen.getByText('Total')).toBeInTheDocument();
-      expect(screen.getByText('₹806.76')).toBeInTheDocument();
+      expect(screen.getByText('₹1076.76')).toBeInTheDocument();
     });
 
     it('should calculate total with discount and shipping', () => {
-      // Total = 747 - 50 + 15 + ((747 - 50) * 0.08) = 747 - 50 + 15 + 55.76 = 767.76
+      // Total = 997 - 50 + 15 + ((997 - 50) * 0.08) = 997 - 50 + 15 + 75.76 = 1037.76
       render(<Cart {...defaultProps} discount={50} shippingCost={15} />);
 
-      const totalText = screen.getByText('₹767.76');
+      const totalText = screen.getByText('₹1037.76');
       expect(totalText).toBeInTheDocument();
     });
   });
