@@ -25,7 +25,11 @@
   --spacing-base: 4px;
 }
 
-/* Custom styles can go here */
+@layer components {
+  .input-field {
+    @apply w-full border border-neutral-300 rounded-lg shadow-sm px-4 py-2 text-neutral-900 placeholder-neutral-400 focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none transition-colors;
+  }
+}
 
 /* Global Focus Styles for Accessibility */
 :focus-visible {

@@ -7,7 +7,7 @@ import { TrashIcon } from './icons/TrashIcon';
 import { ShoppingCartIcon } from './icons/ShoppingCartIcon';
 import { OptimizedImage } from './OptimizedImage';
 import { imageErrorHandlers } from '../utils/imageHelpers';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import PincodeChecker from './PincodeChecker';
 
 interface CartProps {
@@ -21,7 +21,6 @@ interface CartProps {
   discount: number;
   subtotal: number;
   shippingCost: number;
-  onRemoveItem: (id: string) => void;
   onCheckout: () => void;
   onAddToCart?: (product: Product, variant: Variant) => void;
   recommendedProducts?: Product[];
@@ -62,6 +61,7 @@ const Cart: React.FC<CartProps> = ({
   discount,
   subtotal,
   shippingCost,
+  onCheckout,
   onAddToCart,
   recommendedProducts = [],
 }) => {
@@ -141,7 +141,7 @@ const Cart: React.FC<CartProps> = ({
               {items.map((item) => {
                 const isItemLoading = loadingState.type === 'item' && loadingState.id === item.id;
                 return (
-                  <motion.div
+                  <m.div
                     key={item.id}
                     className="flex items-center justify-between bg-white p-3 rounded-lg shadow-sm border border-gray-100"
                     initial={{ opacity: 0, x: -20 }}
@@ -179,41 +179,43 @@ const Cart: React.FC<CartProps> = ({
                         </div>
                       ) : (
                         <>
-                          <motion.button
+                          <m.button
                             onClick={() => handleQuantityChange(item, item.quantity - 1)}
                             className="p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                             whileTap={{ scale: 0.9 }}
                           >
                             <MinusIcon />
-                          </motion.button>
-                          <motion.span
+                          </m.button>
+                          <m.span
                             className="w-8 text-center font-bold"
                             key={item.quantity}
                             initial={{ scale: 1.2 }}
                             animate={{ scale: 1 }}
                           >
                             {item.quantity}
-                          </motion.span>
-                          <motion.button
+                          </m.span>
+                          <m.button
                             onClick={() => handleQuantityChange(item, item.quantity + 1)}
                             className="p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors disabled:text-gray-300 disabled:cursor-not-allowed disabled:hover:bg-transparent"
                             disabled={item.quantity >= (item.stock || 999)}
                             whileTap={{ scale: 0.9 }}
                           >
                             <PlusIcon />
-                          </motion.button>
-                          <motion.button
+                          </m.button>
+                          <m.button
                             onClick={() => handleQuantityChange(item, 0)}
-                            className="p-1 rounded-full text-red-500 hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors ml-2"
-                            whileHover={{ scale: 1.1 }}
-                            whileTap={{ scale: 0.9 }}
+                            className="p-1 rounded-full text-red-500 hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors ml-2 flex items-center gap-1 px-2"
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            aria-label="Remove item"
                           >
-                            <TrashIcon />
-                          </motion.button>
+                            <TrashIcon className="w-4 h-4" />
+                            <span className="text-xs font-bold">Remove</span>
+                          </m.button>
                         </>
                       )}
                     </div>
-                  </motion.div>
+                  </m.div>
                 );
               })}
             </AnimatePresence>
@@ -277,19 +279,18 @@ const Cart: React.FC<CartProps> = ({
               You can check out as a guest or log in.
             </p>
           )}
-          <a
-            href={canCheckout ? '#/checkout' : undefined}
-            onClick={canCheckout ? onClose : (e) => e.preventDefault()}
+          <button
+            onClick={canCheckout ? onCheckout : undefined}
+            disabled={!canCheckout || !!loadingState.type}
             className={`mt-4 block w-full text-center bg-brand-primary text-brand-dark font-bold py-3 rounded-full shadow-lg transition-all duration-300 ${
               !canCheckout || !!loadingState.type
                 ? 'bg-gray-400 cursor-not-allowed'
                 : 'hover:bg-opacity-90 transform hover:scale-105'
             }`}
-            aria-disabled={!canCheckout || !!loadingState.type}
             data-testid="checkout-btn"
           >
             Proceed to Checkout
-          </a>
+          </button>
         </>
       )}
 

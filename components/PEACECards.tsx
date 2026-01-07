@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { PEACE_SOUNDBITES } from '../data/soundbites';
 
 const PEACECards: React.FC = () => {
@@ -17,7 +17,7 @@ const PEACECards: React.FC = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {PEACE_SOUNDBITES.map((item, index) => (
-            <motion.div
+            <m.div
               key={item.id}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -50,7 +50,7 @@ const PEACECards: React.FC = () => {
               <div className="mt-8 pt-6 border-t border-gray-100 w-full">
                 <p className="text-brand-primary font-bold text-lg">{item.result}</p>
               </div>
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </div>

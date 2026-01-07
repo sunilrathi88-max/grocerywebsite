@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { Order, OrderStatus, User } from '../types';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { imageErrorHandlers } from '../utils/imageHelpers';
 
 interface OrderHistoryProps {
@@ -148,7 +148,7 @@ const OrderHistory: React.FC<OrderHistoryProps> = ({ user, orders, onSelectOrder
           <div className="space-y-4">
             <AnimatePresence>
               {filteredOrders.map((order, index) => (
-                <motion.div
+                <m.div
                   key={order.id}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -236,7 +236,7 @@ const OrderHistory: React.FC<OrderHistoryProps> = ({ user, orders, onSelectOrder
                       )}
                     </div>
                   </div>
-                </motion.div>
+                </m.div>
               ))}
             </AnimatePresence>
           </div>

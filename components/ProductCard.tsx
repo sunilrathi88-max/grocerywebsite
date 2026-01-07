@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { OptimizedImage } from './OptimizedImage';
 import { Link } from 'react-router-dom';
 import { Button } from './Button';
 
@@ -55,10 +56,13 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       >
         {/* Image Container */}
         <div className="relative w-full aspect-[4/5] bg-neutral-100 overflow-hidden">
-          <img
+          <OptimizedImage
             src={image}
             alt={name}
+            type="card"
             className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500"
+            width={300}
+            height={375}
           />
 
           {/* Badges */}

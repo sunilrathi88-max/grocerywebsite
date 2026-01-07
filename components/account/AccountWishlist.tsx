@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import ProductGrid from '../ProductGrid';
 import { useWishlist } from '../../hooks/useWishlist';
 import { useCart } from '../../hooks/useCart';
-import { useNavigate } from 'react-router-dom';
+
 import { Product, Variant, ToastMessage } from '../../types';
 import { ToastContainer } from '../ui/ToastContainer';
 
 const AccountWishlist: React.FC = () => {
   const { wishlistItems, toggleWishlist } = useWishlist();
   const { addToCart } = useCart();
-  const navigate = useNavigate();
+
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
 
   const addToast = (message: string, type: ToastMessage['type']) => {
@@ -32,8 +32,8 @@ const AccountWishlist: React.FC = () => {
           onAddToCart={handleAddToCart}
           onToggleWishlist={toggleWishlist}
           isLoading={false}
-          onNotifyMe={() => { }}
-          onClearFilters={() => { }}
+          onNotifyMe={() => {}}
+          onClearFilters={() => {}}
         />
       )}
       <ToastContainer

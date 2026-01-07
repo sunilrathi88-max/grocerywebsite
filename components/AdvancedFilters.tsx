@@ -41,7 +41,7 @@ const FilterButton: React.FC<{
   <button
     onClick={onClick}
     aria-pressed={isActive}
-    className={`px-5 py-2.5 text-sm font-bold rounded-xl transition-all duration-300 border-2 transform hover:scale-105 hover:shadow-md ${
+    className={`px-5 py-2.5 text-sm font-bold rounded-xl transition-all duration-300 border-2 transform hover:scale-105 hover:shadow-md max-w-full truncate ${
       isActive
         ? 'bg-gradient-to-r from-brand-primary to-amber-500 text-white border-transparent shadow-lg'
         : 'bg-white text-gray-700 hover:bg-gray-50 border-gray-200 hover:border-brand-primary/30'

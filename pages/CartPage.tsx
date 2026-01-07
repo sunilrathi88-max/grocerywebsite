@@ -9,7 +9,6 @@ const CartPage: React.FC = () => {
   const navigate = useNavigate();
   const cartItems = useCartStore((state) => state.items);
   const updateQuantity = useCartStore((state) => state.updateQuantity);
-  const removeFromCart = useCartStore((state) => state.removeItem);
   const addItem = useCartStore((state) => state.addItem);
   const subtotal = useCartStore((state) => state.getSubtotal());
 
@@ -80,7 +79,6 @@ const CartPage: React.FC = () => {
         <Cart
           items={cartItems}
           onUpdateQuantity={updateQuantity}
-          onRemoveItem={removeFromCart}
           onClose={() => navigate('/')} // Redirect to home or back
           isLoggedIn={isLoggedIn}
           promoCode={promoCode}

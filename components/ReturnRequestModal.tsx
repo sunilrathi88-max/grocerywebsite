@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { Order, ToastMessage } from '../types';
 import { XIcon } from './icons/XIcon';
 import { OptimizedImage } from './OptimizedImage';
@@ -129,7 +129,7 @@ const ReturnRequestModal: React.FC<ReturnRequestModalProps> = ({
           className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
           onClick={handleClose}
         >
-          <motion.div
+          <m.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
@@ -463,7 +463,7 @@ const ReturnRequestModal: React.FC<ReturnRequestModalProps> = ({
                 </button>
               </div>
             )}
-          </motion.div>
+          </m.div>
         </div>
       )}
     </AnimatePresence>

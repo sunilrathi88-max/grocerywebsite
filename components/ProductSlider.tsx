@@ -15,11 +15,7 @@ interface ProductSliderProps {
   loadingStrategy?: 'eager' | 'lazy';
 }
 
-const ProductSlider: React.FC<ProductSliderProps> = ({
-  title,
-  products,
-  ...props
-}) => {
+const ProductSlider: React.FC<ProductSliderProps> = ({ title, products, ...props }) => {
   if (products.length === 0) {
     return null;
   }

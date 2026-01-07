@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { XIcon } from './icons/XIcon';
 
 interface SideModalProps {
@@ -26,7 +26,7 @@ const SideModal: React.FC<SideModalProps> = ({ isOpen, onClose, title, children 
     <AnimatePresence>
       {/* eslint-disable @typescript-eslint/no-explicit-any */}
       {isOpen && [
-        <motion.div
+        <m.div
           key="backdrop"
           // FIX: Wrapped framer-motion props in a spread object to resolve TypeScript error.
 
@@ -40,7 +40,7 @@ const SideModal: React.FC<SideModalProps> = ({ isOpen, onClose, title, children 
             'aria-hidden': 'true',
           } as any)}
         />,
-        <motion.div
+        <m.div
           key="modal"
           // FIX: Wrapped framer-motion props in a spread object to resolve TypeScript error.
 
@@ -69,7 +69,7 @@ const SideModal: React.FC<SideModalProps> = ({ isOpen, onClose, title, children 
             </button>
           </div>
           <div className="flex-grow overflow-y-auto p-6">{children}</div>
-        </motion.div>,
+        </m.div>,
       ]}
       {/* eslint-enable @typescript-eslint/no-explicit-any */}
     </AnimatePresence>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 
 const BrandStory: React.FC = () => {
   const features = [
@@ -23,7 +23,7 @@ const BrandStory: React.FC = () => {
   return (
     <section className="py-20 bg-neutral-50" id="why-us">
       <div className="max-w-7xl mx-auto px-4 md:px-16 text-center">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -39,11 +39,11 @@ const BrandStory: React.FC = () => {
             Most spices on shelves are dead—stored for months, losing their soul. We changed the
             rules to bring you flavor that actually tastes like something.
           </p>
-        </motion.div>
+        </m.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
           {features.map((feature, idx) => (
-            <motion.div
+            <m.div
               key={idx}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -56,7 +56,7 @@ const BrandStory: React.FC = () => {
               </div>
               <h3 className="text-xl font-bold text-brand-dark mb-3">{feature.title}</h3>
               <p className="text-neutral-600 leading-relaxed">{feature.desc}</p>
-            </motion.div>
+            </m.div>
           ))}
         </div>
 

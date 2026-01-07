@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Button } from '../components/Button';
+import { OptimizedImage } from '../components/OptimizedImage';
 import { ProductTabs } from '../components/ProductTabs';
 import { WeightSelector } from '../components/WeightSelector';
 import { QuantitySelector } from '../components/QuantitySelector';
@@ -22,7 +23,7 @@ export default function ProductDetailPage() {
     name: 'Garam Masala',
     price: 45,
     originalPrice: 60,
-    image: '/images/garam-masala.jpg',
+    image: '/images/products/garam-masala-front.jpg',
     rating: 4.8,
     reviewCount: 47,
     description: 'Premium cold-ground Garam Masala...',
@@ -55,8 +56,6 @@ export default function ProductDetailPage() {
     alert('Added to cart!');
   };
 
-
-
   return (
     <div className="min-h-screen bg-[#F5F5F0]">
       <div className="max-w-7xl mx-auto px-4 py-8">
@@ -64,10 +63,14 @@ export default function ProductDetailPage() {
         <div className="grid md:grid-cols-2 gap-8 mb-12">
           {/* Left: Image */}
           <div className="bg-white rounded-lg p-4">
-            <img
+            <OptimizedImage
               src={product.image}
               alt={product.name}
+              type="detail"
               className="w-full aspect-square object-cover rounded-lg"
+              width={600}
+              height={600}
+              priority="high"
             />
           </div>
 
@@ -233,10 +236,13 @@ export default function ProductDetailPage() {
             </div>
             <div className="md:w-1/2 relative">
               <div className="absolute inset-0 bg-brand-dark rounded-xl transform rotate-3 opacity-10"></div>
-              <img
+              <OptimizedImage
                 src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?q=80&w=800&auto=format&fit=crop"
                 alt="Spice Farmer in Kerala"
                 className="relative rounded-xl shadow-lg w-full object-cover aspect-[4/3] transform -rotate-2 hover:rotate-0 transition-all duration-500"
+                width={800}
+                height={600}
+                type="hero"
               />
             </div>
           </div>

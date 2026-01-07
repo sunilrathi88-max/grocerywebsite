@@ -1,5 +1,5 @@
 import React from 'react';
-import { Product, Variant } from '../types';
+import { Product, Variant, ToastMessage } from '../types';
 import { HeroSection } from '../components/HeroSection';
 import WhyChooseUs from '../components/WhyChooseUs';
 import ShopByCategory from '../components/ShopByCategory';
@@ -35,7 +35,9 @@ interface HomePageProps {
   handleToggleCompare: (product: Product) => void;
   handleClearFilters: () => void;
   setIsFilterOpen: (isOpen: boolean) => void;
-  setSortOrder: (sort: string) => void;
+  setSortOrder: React.Dispatch<
+    React.SetStateAction<'name' | 'price-asc' | 'price-desc' | 'rating' | 'newest'>
+  >;
   sortOrder: string;
   showOnSale: boolean;
   setShowOnSale: (show: boolean) => void;
@@ -65,7 +67,7 @@ interface HomePageProps {
   selectedGrades: string[];
   handleToggleGrade: (grade: string) => void;
   availableGrades: string[];
-  addToast: (msg: string, type: any) => void;
+  addToast: (msg: string, type: ToastMessage['type']) => void;
 }
 
 const HomePage: React.FC<HomePageProps> = ({
@@ -294,7 +296,12 @@ const HomePage: React.FC<HomePageProps> = ({
                   Filters
                 </button>
 
-                <SortDropdown currentSort={sortOrder} onSortChange={(val) => setSortOrder(val)} />
+                <SortDropdown
+                  currentSort={sortOrder}
+                  onSortChange={(val) =>
+                    setSortOrder(val as 'name' | 'price-asc' | 'price-desc' | 'rating' | 'newest')
+                  }
+                />
               </div>
 
               {/* Active Filters Display */}
@@ -315,12 +322,16 @@ const HomePage: React.FC<HomePageProps> = ({
               )}
 
               <ProductGrid
-                products={finalFilteredProducts}
+                products={products}
                 onAddToCart={handleAddToCart}
                 onToggleWishlist={handleToggleWishlist}
+                comparisonIds={comparisonIds}
                 isLoading={productsLoading}
                 onNotifyMe={handleNotifyMe}
+                onSelectProduct={setSelectedProduct}
                 onClearFilters={handleClearFilters}
+                enableFilters
+                title="Our Premium Collection"
               />
             </div>
           </div>

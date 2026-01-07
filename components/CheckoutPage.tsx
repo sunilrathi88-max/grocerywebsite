@@ -1,10 +1,9 @@
 import React, { useState, useMemo } from 'react';
+import { TrustBadges } from './TrustBadges';
 import { User, Address, Order, ToastMessage, Product, CartItem, Variant } from '../types';
 import { CartItem as StoreCartItem } from '../store/cartStore';
 import { CheckCircleIcon } from './icons/CheckCircleIcon';
 import { CalendarIcon } from './icons/CalendarIcon';
-import { XIcon } from './icons/XIcon';
-import { ShieldCheckIcon } from './icons/ShieldCheckIcon';
 import { OptimizedImage } from './OptimizedImage';
 import { imageErrorHandlers } from '../utils/imageHelpers';
 import { orderAPI } from '../utils/apiService';
@@ -439,9 +438,16 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
       addToast('Please select a payment method.', 'error');
       return;
     }
-    if (paymentMethod === 'UPI' && !upiId) {
-      addToast('Please enter your UPI ID.', 'error');
-      return;
+    if (paymentMethod === 'UPI') {
+      const upiRegex = /^[\w.-]+@[\w.-]+$/;
+      if (!upiId) {
+        addToast('Please enter your UPI ID.', 'error');
+        return;
+      }
+      if (!upiRegex.test(upiId)) {
+        addToast('Please enter a valid UPI ID (e.g., name@bank).', 'error');
+        return;
+      }
     }
 
     setIsSubmitting(true);
@@ -491,7 +497,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
       processOrder();
     } else {
       // Save state before redirecting
-      localStorage.setItem(
+      sessionStorage.setItem(
         'checkout_state',
         JSON.stringify({
           shippingAddress,
@@ -529,7 +535,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
 
   // Payment Verification & State Restoration
   React.useEffect(() => {
-    const savedState = localStorage.getItem('checkout_state');
+    const savedState = sessionStorage.getItem('checkout_state');
     if (savedState) {
       try {
         const parsed = JSON.parse(savedState);
@@ -602,17 +608,17 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
                     billingAddress:
                       (saved.useSameAddress ?? useSameAddress)
                         ? {
-                          ...shippingAddress,
-                          ...saved.shippingAddress,
-                          id: '',
-                          type: 'Billing' as const,
-                        }
+                            ...shippingAddress,
+                            ...saved.shippingAddress,
+                            id: '',
+                            type: 'Billing' as const,
+                          }
                         : {
-                          ...billingAddress,
-                          ...saved.billingAddress,
-                          id: '',
-                          type: 'Billing' as const,
-                        },
+                            ...billingAddress,
+                            ...saved.billingAddress,
+                            id: '',
+                            type: 'Billing' as const,
+                          },
                     deliveryMethod: 'Standard' as const,
                     paymentMethod: saved.paymentMethod || paymentMethod || 'Online Payment',
                     shippingCost: shippingCost, // shippingCost is calculated from cart items
@@ -638,12 +644,12 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
                   setOrderConfirmation(confirmedOrder.data);
                   onPlaceOrder(confirmedOrder.data);
                   addToast('Payment verified & Order placed!', 'success');
-                  localStorage.removeItem('checkout_state');
+                  sessionStorage.removeItem('checkout_state');
                 } catch (err) {
                   console.error(err);
                   setSubmitError(
                     'Failed to create order after payment: ' +
-                    (err instanceof Error ? err.message : 'Unknown error')
+                      (err instanceof Error ? err.message : 'Unknown error')
                   );
                 } finally {
                   setIsSubmitting(false);
@@ -672,7 +678,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <CheckoutStepper currentStep={paymentMethod ? 'payment' : 'shipping'} />
+      <CheckoutStepper currentStep="shipping" />
 
       <h2 className="text-3xl md:text-4xl font-serif font-bold text-center text-brand-dark mb-12 mt-8">
         Checkout
@@ -810,85 +816,106 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
 
         {/* Right/Sidebar Column */}
         <div className="lg:col-span-1">
-          <div className="bg-brand-accent/50 p-6 rounded-lg sticky top-28">
-            <h3 className="text-xl font-serif font-bold mb-4">Order Summary</h3>
-            <div className="space-y-4 max-h-60 overflow-y-auto pr-2">
+          <div className="bg-neutral-50 p-6 rounded-xl border border-neutral-200 shadow-sm sticky top-24">
+            <h3 className="text-xl font-serif font-bold text-neutral-900 mb-6">Order Summary</h3>
+
+            <div className="space-y-4 max-h-80 overflow-y-auto mb-6 pr-2">
               {cartItems.map((item) => (
-                <div key={item.id} className="flex justify-between items-start gap-4">
+                <div key={item.id} className="flex gap-4">
                   <OptimizedImage
                     src={item.image}
                     alt={item.name}
-                    className="w-16 h-16 object-cover rounded-md flex-shrink-0"
+                    className="w-16 h-16 object-cover rounded bg-white"
                     type="thumbnail"
-                    priority="high"
                     width={64}
                     height={64}
-                    onError={imageErrorHandlers.thumb}
                   />
-                  <div className="flex-grow">
-                    <p className="font-bold text-sm leading-tight">{item.name}</p>
-                    <p className="text-xs text-gray-500">
+                  <div className="flex-1">
+                    <p className="font-bold text-sm text-neutral-900 line-clamp-1">{item.name}</p>
+                    <p className="text-xs text-neutral-500">
                       {item.weight} x {item.quantity}
                     </p>
+                    <p className="text-sm font-bold text-neutral-900">
+                      ₹{(item.price * item.quantity).toFixed(2)}
+                    </p>
                   </div>
-                  <p className="text-sm font-bold flex-shrink-0">
-                    ₹{(item.price * item.quantity).toFixed(2)}
-                  </p>
                 </div>
               ))}
             </div>
-            <div className="mt-4 border-t pt-4 space-y-2">
-              <div className="flex justify-between text-sm text-gray-600">
+
+            <div className="border-t border-neutral-200 pt-4 space-y-2 text-neutral-600 text-sm">
+              <div className="flex justify-between">
                 <span>Subtotal</span>
                 <span>₹{subtotal.toFixed(2)}</span>
               </div>
+              <div className="flex justify-between">
+                <span>Shipping</span>
+                <span>
+                  {shippingCost === 0 ? (
+                    <span className="text-success font-bold">Free</span>
+                  ) : (
+                    `₹${shippingCost.toFixed(2)}`
+                  )}
+                </span>
+              </div>
               {discount > 0 && (
-                <div className="flex justify-between text-sm text-green-600">
+                <div className="flex justify-between text-success font-medium">
                   <span>Discount ({promoCode})</span>
                   <span>-₹{discount.toFixed(2)}</span>
                 </div>
               )}
-              <div className="flex justify-between text-sm text-gray-600">
-                <span>Shipping</span>
-                <span className={shippingCost === 0 ? 'text-green-600 font-bold' : ''}>
-                  {shippingCost === 0 ? 'Free' : `₹${shippingCost.toFixed(2)}`}
-                </span>
-              </div>
-              <div className="flex justify-between text-sm text-gray-600">
+              <div className="flex justify-between text-sm text-neutral-600">
                 <span>Taxes (8%)</span>
                 <span>₹{tax.toFixed(2)}</span>
               </div>
-              <div className="flex justify-between font-bold text-lg text-brand-dark mt-2 pt-2 border-t">
+              <div className="flex justify-between font-bold text-xl text-neutral-900 pt-3 border-t border-neutral-200 mt-2">
                 <span>Total</span>
                 <span>₹{total.toFixed(2)}</span>
               </div>
             </div>
 
-            <div className="mt-4">
+            {/* Promo Code Input */}
+            <div className="mt-6">
               {promoCode ? (
-                <div className="flex justify-between items-center bg-green-100 text-green-800 text-sm p-2 rounded-md">
-                  <span>Code &quot;{promoCode}&quot; applied!</span>
+                <div className="flex items-center justify-between text-brand-dark bg-brand-primary/10 px-3 py-2 rounded-lg border border-brand-primary/20">
+                  <span className="font-bold text-sm">Used: {promoCode}</span>
                   <button
                     type="button"
                     onClick={onRemovePromoCode}
-                    className="p-1 rounded-full hover:bg-green-200"
+                    className="text-xs text-red-600 hover:text-red-800 font-bold"
                   >
-                    <XIcon className="h-4 w-4" />
+                    REMOVE
                   </button>
                 </div>
               ) : (
-                <div className="flex rounded-md shadow-sm">
+                <div className="flex gap-2">
                   <input
                     type="text"
+                    placeholder="Promo Code"
                     value={localPromoCode}
                     onChange={(e) => setLocalPromoCode(e.target.value)}
-                    placeholder="Promo code"
-                    className="flex-1 block w-full rounded-none rounded-l-md border-gray-300 focus:ring-brand-primary focus:border-brand-primary sm:text-sm"
+                    className="flex-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-brand-primary focus:ring-brand-primary sm:text-sm p-2 border"
                   />
                   <button
                     type="button"
-                    onClick={() => onApplyPromoCode(localPromoCode)}
-                    className="inline-flex items-center px-4 py-2 border border-l-0 border-gray-300 rounded-r-md bg-gray-50 text-sm font-medium text-gray-700 hover:bg-gray-100"
+                    onClick={() => {
+                      if (!localPromoCode) {
+                        addToast('Please enter a promo code.', 'error');
+                        return;
+                      }
+                      if (
+                        ['TATTVA10', 'WELCOME15', 'QUIZMASTER15'].includes(
+                          localPromoCode.toUpperCase()
+                        )
+                      ) {
+                        onApplyPromoCode(localPromoCode);
+                        addToast(`Promo code ${localPromoCode} applied successfully!`, 'success');
+                        setLocalPromoCode('');
+                      } else {
+                        addToast('Invalid promo code.', 'error');
+                      }
+                    }}
+                    className="bg-brand-dark text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-neutral-800 transition-colors"
                   >
                     Apply
                   </button>
@@ -896,40 +923,30 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
               )}
             </div>
 
-            <div className="mt-6 border-t pt-4 space-y-3">
-              <div className="flex items-center gap-3 text-sm text-gray-700 bg-green-50 p-2 rounded-md">
-                <ShieldCheckIcon className="h-5 w-5 text-green-600 flex-shrink-0" />
-                <span className="font-bold">Secure SSL Checkout</span>
-              </div>
-              <div className="flex items-center gap-3 text-sm text-gray-700 bg-blue-50 p-2 rounded-md">
-                <span className="h-5 w-5 flex items-center justify-center text-blue-600 font-bold">
-                  ↺
-                </span>
-                <span className="font-bold">30-Day Money Back Guarantee</span>
-              </div>
-              <div className="flex items-center gap-3 text-sm text-gray-700 bg-yellow-50 p-2 rounded-md">
-                <span className="h-5 w-5 flex items-center justify-center text-yellow-600 font-bold">
-                  🚚
-                </span>
-                <span className="font-bold">Fast & Free Shipping over ₹250</span>
-              </div>
-            </div>
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full bg-brand-primary text-white font-bold py-4 rounded-xl shadow-button hover:shadow-button-hover transform hover:-translate-y-0.5 transition-all mt-6 disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center gap-2"
+            >
+              {isSubmitting ? (
+                <>
+                  <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white"></div>
+                  <span>Processing...</span>
+                </>
+              ) : (
+                <span>Pay ₹{total.toFixed(2)}</span>
+              )}
+            </button>
 
-            <div className="mt-4">
-              <button
-                type="submit"
-                disabled={!selectedDate || !selectedTime || !paymentMethod || isSubmitting}
-                className="w-full bg-brand-dark text-white font-bold py-3 rounded-full shadow-lg hover:bg-opacity-90 transform hover:scale-105 transition-all duration-300 disabled:bg-gray-400 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center gap-2"
-              >
-                {isSubmitting ? (
-                  <>
-                    <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white"></div>
-                    <span>Processing...</span>
-                  </>
-                ) : (
-                  'Place Order'
-                )}
-              </button>
+            <div className="mt-6">
+              <TrustBadges
+                variant="vertical"
+                size="sm"
+                badges={[
+                  { icon: '🔒', text: 'Secure SSL Checkout' },
+                  { icon: '✅', text: 'Satisfaction Guaranteed' },
+                ]}
+              />
             </div>
           </div>
         </div>

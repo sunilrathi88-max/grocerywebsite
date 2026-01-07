@@ -88,13 +88,14 @@ export const generateSrcSet = (
   if (src.startsWith('http://') || src.startsWith('https://')) return '';
 
   // Local file handling
-  const lastDotIndex = src.lastIndexOf('.');
-  const baseName = src.substring(0, lastDotIndex);
-  const extension = src.substring(lastDotIndex);
+  const ext = src.match(/\.(\w+)$/)?.[1];
+  if (!ext) return '';
 
   return widths
     .map((width) => {
-      return `${baseName}-${width}w${extension} ${width}w`;
+      const pathWithoutExt = src.replace(/\.\w+$/, '');
+      const responsivePath = `${pathWithoutExt}-${width}w.${ext}`;
+      return `${responsivePath} ${width}w`;
     })
     .join(', ');
 };
@@ -113,12 +114,12 @@ export const generateWebPSrcSet = (
 
   if (src.startsWith('http://') || src.startsWith('https://')) return '';
 
-  const lastDotIndex = src.lastIndexOf('.');
-  const baseName = src.substring(0, lastDotIndex);
-
+  // Local files - generate WebP variants
   return widths
     .map((width) => {
-      return `${baseName}-${width}w.webp ${width}w`;
+      const pathWithoutExt = src.replace(/\.\w+$/, '');
+      const responsivePath = `${pathWithoutExt}-${width}w.webp`;
+      return `${responsivePath} ${width}w`;
     })
     .join(', ');
 };

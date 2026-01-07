@@ -9,13 +9,14 @@ import { MoonIcon } from './icons/MoonIcon';
 import { SunIcon } from './icons/SunIcon';
 import { Product } from '../types';
 import SignOutButton from './SignOutButton';
-import MiniCart, { MiniCartItem } from './MiniCart';
+import { MiniCartItem } from './MiniCart';
+const MiniCart = React.lazy(() => import('./MiniCart'));
 import { TagIcon } from './icons/TagIcon';
 import { SearchIcon } from './icons/SearchIcon';
 import Navigation from './Navigation';
 import { imageErrorHandlers } from '../utils/imageHelpers';
 import { useDarkMode } from '../hooks/useDarkMode';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { fuzzySearch, getSuggestions } from '../utils/searchUtils';
 
 interface HeaderProps {
@@ -147,7 +148,7 @@ const Header: React.FC<HeaderProps> = ({
     <>
       {/* Top Announcement Bar */}
       <div className="bg-warning-yellow/10 text-brand-dark py-2 px-4 md:px-16 text-center text-sm font-medium hidden md:block">
-        🎉 Free shipping on all orders over ₹999 | Lab-tested purity guaranteed
+        🎉 Free shipping on all orders over ₹999!
       </div>
 
       <header
@@ -321,7 +322,7 @@ const Header: React.FC<HeaderProps> = ({
               onMouseEnter={handleMiniCartEnter}
               onMouseLeave={handleMiniCartLeave}
             >
-              <motion.div
+              <m.div
                 animate={
                   cartBounce ? { scale: [1, 1.2, 0.9, 1.1, 1], rotate: [0, -10, 10, -5, 0] } : {}
                 }
@@ -343,19 +344,25 @@ const Header: React.FC<HeaderProps> = ({
                     </span>
                   )}
                 </button>
-              </motion.div>
+              </m.div>
               {isMiniCartOpen && (
                 <div className="absolute top-full right-0 pt-2 hidden group-hover:block z-50">
-                  <MiniCart
-                    isOpen={true} // Always "open" when parent renders it
-                    onClose={() => setMiniCartOpen(false)}
-                    items={cartItems}
-                    onCheckout={() => navigate('/checkout')}
-                    onContinueShopping={() => setMiniCartOpen(false)}
-                    onRemoveItem={(id) => {
-                      if (onRemoveItem) onRemoveItem(id);
-                    }}
-                  />
+                  <React.Suspense
+                    fallback={
+                      <div className="w-80 h-40 bg-white shadow-xl rounded-xl animate-pulse" />
+                    }
+                  >
+                    <MiniCart
+                      isOpen={true} // Always "open" when parent renders it
+                      onClose={() => setMiniCartOpen(false)}
+                      items={cartItems}
+                      onCheckout={() => navigate('/checkout')}
+                      onContinueShopping={() => setMiniCartOpen(false)}
+                      onRemoveItem={(id) => {
+                        if (onRemoveItem) onRemoveItem(id);
+                      }}
+                    />
+                  </React.Suspense>
                 </div>
               )}
             </div>
@@ -415,7 +422,7 @@ const Header: React.FC<HeaderProps> = ({
         {/* Mobile Search Expanded */}
         <AnimatePresence>
           {isSearchOpen && (
-            <motion.div
+            <m.div
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: 'auto', opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
@@ -428,7 +435,7 @@ const Header: React.FC<HeaderProps> = ({
                 onChange={(e) => onSearchChange(e.target.value)}
                 className="w-full bg-neutral-100 border-none rounded-lg py-3 pl-4 pr-10 text-base focus:ring-2 focus:ring-brand-primary/20"
               />
-            </motion.div>
+            </m.div>
           )}
         </AnimatePresence>
 

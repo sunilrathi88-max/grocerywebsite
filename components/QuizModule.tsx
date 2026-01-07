@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { ToastMessage } from '../types';
 import { LightbulbIcon } from './icons/LightbulbIcon';
 import { CheckCircleIcon } from './icons/CheckCircleIcon';
@@ -141,7 +141,7 @@ const QuizModule: React.FC<QuizModuleProps> = ({ addToast }) => {
     const percentage = ((result.score / questions.length) * 100).toFixed(0);
 
     return (
-      <motion.div
+      <m.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         className="bg-white p-8 rounded-lg shadow-lg text-center"
@@ -220,7 +220,7 @@ const QuizModule: React.FC<QuizModuleProps> = ({ addToast }) => {
 
         {/* Promo Code */}
         {promo && (
-          <motion.div
+          <m.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             className="mt-6 bg-gradient-to-br from-brand-primary to-amber-500 p-6 rounded-lg text-white"
@@ -236,7 +236,7 @@ const QuizModule: React.FC<QuizModuleProps> = ({ addToast }) => {
                 ? '15% off your next order!'
                 : '10% off your next order!'}
             </p>
-          </motion.div>
+          </m.div>
         )}
 
         {/* Action Buttons */}
@@ -259,7 +259,7 @@ const QuizModule: React.FC<QuizModuleProps> = ({ addToast }) => {
             </button>
           )}
         </div>
-      </motion.div>
+      </m.div>
     );
   }
 
@@ -288,7 +288,7 @@ const QuizModule: React.FC<QuizModuleProps> = ({ addToast }) => {
                 data-testid={`quiz-answer-${activeQuestion}-${index}`}
                 onClick={() => handleAnswer(index)}
                 disabled={isAnswered}
-                className={`w-full text-left p-4 rounded-lg border-2 transition-all duration-300 flex items-center justify-between ${buttonClass} ${isAnswered ? 'cursor-default' : 'cursor-pointer'}`}
+                className={`w-full text-left p-4 rounded-lg border-2 transition-all duration-200 flex items-center justify-between ${buttonClass} ${isAnswered ? 'cursor-default opacity-90' : 'cursor-pointer active:scale-95 active:bg-gray-200'}`}
               >
                 <span className="font-medium">{option}</span>
                 {isCorrect && <CheckCircleIcon className="h-6 w-6 text-green-600" />}
@@ -299,7 +299,7 @@ const QuizModule: React.FC<QuizModuleProps> = ({ addToast }) => {
         })}
       </ul>
       {isAnswered && (
-        <motion.div
+        <m.div
           data-testid="quiz-feedback"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -314,7 +314,7 @@ const QuizModule: React.FC<QuizModuleProps> = ({ addToast }) => {
           >
             {activeQuestion === questions.length - 1 ? 'Finish Quiz' : 'Next Question'}
           </button>
-        </motion.div>
+        </m.div>
       )}
     </div>
   );

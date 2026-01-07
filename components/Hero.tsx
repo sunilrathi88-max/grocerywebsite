@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { trackEvent } from '../utils/analytics';
 import { OptimizedImage } from './OptimizedImage';
 
@@ -20,7 +20,7 @@ const Hero: React.FC<HeroProps> = ({ onShopNow }) => {
       <div className="relative max-w-7xl mx-auto px-4 md:px-6 lg:px-8 w-full h-full flex flex-col md:flex-row items-center py-12 gap-8 md:gap-16">
         {/* Left: Content */}
         <div className="w-full md:w-1/2 z-10 text-center md:text-left">
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -76,12 +76,12 @@ const Hero: React.FC<HeroProps> = ({ onShopNow }) => {
                 Browse All Products
               </button>
             </div>
-          </motion.div>
+          </m.div>
         </div>
 
         {/* Right: Visual */}
         <div className="w-full md:w-1/2 relative h-[350px] md:h-[500px] flex items-center justify-center">
-          <motion.div
+          <m.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -116,7 +116,7 @@ const Hero: React.FC<HeroProps> = ({ onShopNow }) => {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </m.div>
         </div>
       </div>
     </section>

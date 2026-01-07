@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { Recipe, Product } from '../types';
 import { XIcon } from './icons/XIcon';
 import { ClockIcon } from './icons/ClockIcon';
@@ -37,7 +37,7 @@ const RecipeDetailModal: React.FC<RecipeDetailModalProps> = ({
   const recipeSchema = React.useMemo(() => generateRecipeSchema(recipe), [recipe]);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const MotionDiv = motion.div as any;
+  const MotionDiv = m.div as any;
 
   return (
     <AnimatePresence>
