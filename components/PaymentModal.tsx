@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 
 interface PaymentModalProps {
   amount: number;
@@ -26,7 +26,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
           className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
           onClick={onClose}
         >
-          <motion.div
+          <m.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
@@ -163,7 +163,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
                 <span className="text-xs font-bold text-gray-400">100% Secure Payments</span>
               </div>
             </div>
-          </motion.div>
+          </m.div>
         </div>
       )}
     </AnimatePresence>

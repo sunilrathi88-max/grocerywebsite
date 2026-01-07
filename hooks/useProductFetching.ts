@@ -13,7 +13,7 @@ interface Product {
 interface UseProductsOptions {
   category?: string;
   sortBy?: 'popular' | 'price' | 'rating' | 'new';
-  filters?: Record<string, any>;
+  filters?: Record<string, string[] | string>;
 }
 
 export const useProductFetching = (options?: UseProductsOptions) => {

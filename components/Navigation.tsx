@@ -1,5 +1,6 @@
 import React from 'react';
 import { ChevronDownIcon } from './icons/ChevronDownIcon';
+import { Link } from 'react-router-dom';
 
 interface NavigationProps {
   categories: string[];
@@ -88,13 +89,13 @@ const Navigation: React.FC<NavigationProps> = ({
         )}
       </div>
 
-      <a
-        href="#/offers"
+      <Link
+        to="/offers"
         className="text-base font-medium text-brand-primary hover:text-brand-dark transition-colors py-2 group relative font-semibold"
       >
         Offers
         <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-primary transition-all duration-300 group-hover:w-full" />
-      </a>
+      </Link>
     </nav>
   );
 };

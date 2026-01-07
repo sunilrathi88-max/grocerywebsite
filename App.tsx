@@ -15,6 +15,8 @@ import {
 
 // Performance Utils
 import { usePerformanceMonitoring } from './utils/performance';
+// Framer Motion Optimization
+import { LazyMotion, domAnimation } from 'framer-motion';
 
 // SEO Utils
 import SEO from './components/SEO';
@@ -26,7 +28,6 @@ import { useWishlist } from './hooks/useWishlist';
 import { useProductFilter } from './hooks/useProductFilter';
 import { useProducts } from './hooks/useProducts';
 import { useUserOrders } from './hooks/useUserOrders';
-import { supabase } from './supabaseClient';
 
 // Mock Data
 import { MOCK_POSTS, MOCK_RECIPES } from './data';
@@ -34,13 +35,11 @@ import { MOCK_POSTS, MOCK_RECIPES } from './data';
 // Core Components (Eagerly Loaded - Always Visible)
 // Core Components (Eagerly Loaded - Always Visible)
 import Header from './components/Header';
-import ProductGrid from './components/ProductGrid';
-import Footer from './components/Footer';
 import { ToastContainer } from './components/ui/ToastContainer';
-import PromotionalBanner from './components/PromotionalBanner';
-import SortDropdown from './components/SortDropdown';
 
 // Lazy-Loaded Components (Load on Demand)
+const Footer = React.lazy(() => import('./components/Footer'));
+const PromotionalBanner = React.lazy(() => import('./components/PromotionalBanner'));
 const ProductDetailModal = React.lazy(() => import('./components/ProductDetailModal'));
 const SideModal = React.lazy(() => import('./components/SideModal'));
 const Cart = React.lazy(() => import('./components/Cart'));
@@ -89,6 +88,7 @@ const OrderTrackingPage = React.lazy(() => import('./pages/OrderTrackingPage'));
 const ProductDetailPage = React.lazy(() => import('./pages/ProductDetailPage'));
 const HomePage = React.lazy(() => import('./pages/HomePage'));
 const CategoryPage = React.lazy(() => import('./pages/CategoryPage'));
+const OffersPage = React.lazy(() => import('./pages/OffersPage'));
 
 const PageLoader = () => (
   <div className="flex items-center justify-center min-h-[60vh]">
@@ -509,65 +509,74 @@ const App: React.FC = () => {
   );
 
   // Supabase Auth Listener
+  // Supabase Auth Listener (Lazy Loaded & Delayed)
   useEffect(() => {
-    const initializeAuth = async () => {
-      try {
-        const {
-          data: { session },
-        } = await supabase.auth.getSession();
-        if (session?.user) {
-          const user = session.user;
-          setIsLoggedIn(true);
-          setCurrentUser({
-            id: parseInt(user.id.replace(/-/g, '').slice(0, 15), 16),
-            email: user.email || '',
-            name: user.user_metadata?.name || user.email || '',
-            isAdmin: Boolean(user.user_metadata?.is_admin),
-            profilePicture: user.user_metadata?.picture || user.user_metadata?.avatar_url,
-            phone: user.user_metadata?.phone || user.phone || undefined,
-            wishlist: [],
-            orders: [],
-            addresses: user.user_metadata?.addresses || [],
-          });
-        }
-      } catch (error) {
-        console.error('Auth initialization error:', error);
-      }
+    let subscription: { unsubscribe: () => void } | null = null;
 
-      const {
-        data: { subscription },
-      } = supabase.auth.onAuthStateChange(async (event, session) => {
-        if (event === 'SIGNED_IN' && session?.user) {
-          const user = session.user;
-          setIsLoggedIn(true);
-          setCurrentUser({
-            id: parseInt(user.id.replace(/-/g, '').slice(0, 15), 16),
-            email: user.email || '',
-            name: user.user_metadata?.name || user.email || '',
-            isAdmin: Boolean(user.user_metadata?.is_admin),
-            profilePicture: user.user_metadata?.picture || user.user_metadata?.avatar_url,
-            phone: user.user_metadata?.phone || user.phone || undefined,
-            wishlist: [],
-            orders: [],
-            addresses: [],
-          });
-          if (event === 'SIGNED_IN') {
-            addToast(`Welcome back, ${user.user_metadata?.name || user.email}!`, 'success');
+    // Delay auth initialization to prioritize LCP and main thread for initial render
+    const timer = setTimeout(() => {
+      const initializeAuth = async () => {
+        const { supabase } = await import('./supabaseClient');
+        try {
+          const {
+            data: { session },
+          } = await supabase.auth.getSession();
+          if (session?.user) {
+            const user = session.user;
+            setIsLoggedIn(true);
+            setCurrentUser({
+              id: parseInt(user.id.replace(/-/g, '').slice(0, 15), 16),
+              email: user.email || '',
+              name: user.user_metadata?.name || user.email || '',
+              isAdmin: Boolean(user.user_metadata?.is_admin),
+              profilePicture: user.user_metadata?.picture || user.user_metadata?.avatar_url,
+              phone: user.user_metadata?.phone || user.phone || undefined,
+              wishlist: [],
+              orders: [],
+              addresses: user.user_metadata?.addresses || [],
+            });
           }
-          if (location.hash.includes('access_token')) {
-            // Supabase auth redirect handling if using hash
-            navigate('/');
-          }
-        } else if (event === 'SIGNED_OUT' || !session) {
-          setIsLoggedIn(false);
-          setCurrentUser(null);
+        } catch (error) {
+          console.error('Auth initialization error:', error);
         }
-      });
 
-      return () => subscription.unsubscribe();
+        const { data } = supabase.auth.onAuthStateChange(async (event, session) => {
+          if (event === 'SIGNED_IN' && session?.user) {
+            const user = session.user;
+            setIsLoggedIn(true);
+            setCurrentUser({
+              id: parseInt(user.id.replace(/-/g, '').slice(0, 15), 16),
+              email: user.email || '',
+              name: user.user_metadata?.name || user.email || '',
+              isAdmin: Boolean(user.user_metadata?.is_admin),
+              profilePicture: user.user_metadata?.picture || user.user_metadata?.avatar_url,
+              phone: user.user_metadata?.phone || user.phone || undefined,
+              wishlist: [],
+              orders: [],
+              addresses: [],
+            });
+            if (event === 'SIGNED_IN') {
+              addToast(`Welcome back, ${user.user_metadata?.name || user.email}!`, 'success');
+            }
+            if (location.hash.includes('access_token')) {
+              // Supabase auth redirect handling if using hash
+              navigate('/');
+            }
+          } else if (event === 'SIGNED_OUT' || !session) {
+            setIsLoggedIn(false);
+            setCurrentUser(null);
+          }
+        });
+        subscription = data.subscription;
+      };
+
+      initializeAuth();
+    }, 2000); // 2 second delay to clear TBT
+
+    return () => {
+      clearTimeout(timer);
+      if (subscription) subscription.unsubscribe();
     };
-
-    initializeAuth();
   }, [addToast, location.hash, navigate]);
 
   const handleSignUp = useCallback(
@@ -701,695 +710,626 @@ const App: React.FC = () => {
 
   return (
     <HelmetProvider>
-      <div className="flex flex-col min-h-screen">
-        <SEO
-          {...(currentView === 'home'
-            ? pageSEO.home()
-            : currentView === 'recipes'
-              ? pageSEO.recipes()
-              : currentView === 'blog'
-                ? pageSEO.blog()
-                : currentView === 'about'
-                  ? pageSEO.about()
-                  : currentView === 'contact'
-                    ? pageSEO.contact()
-                    : currentView === 'faqs'
-                      ? pageSEO.home()
-                      : selectedCategory !== 'All'
-                        ? pageSEO.products(selectedCategory)
-                        : pageSEO.home())}
-          structuredData={generateOrganizationSchema()}
-          structuredDataId="organization-schema"
-        />
-
-        {showPromoBanner && <PromotionalBanner onClose={() => setShowPromoBanner(false)} />}
-
-        <Header
-          cartItems={cartItems}
-          wishlistItemCount={wishlistItemCount}
-          searchQuery={searchQuery}
-          onSearchChange={setSearchQuery}
-          onCartClick={() => setIsCartOpen(true)}
-          onWishlistClick={() => setIsWishlistOpen(true)}
-          onMobileMenuClick={() => setIsMobileMenuOpen(true)}
-          isLoggedIn={isLoggedIn}
-          isAdmin={!!currentUser?.isAdmin}
-          onLoginClick={() => setAuthModalOpen(true)}
-          onLogoutClick={handleLogout}
-          allProducts={products}
-          onSelectProduct={setSelectedProduct}
-          categories={categories}
-          onSelectCategory={handleSelectCategoryAndClose}
-          onRemoveItem={removeFromCart}
-        />
-
-        <Routes>
-          <Route
-            path="/product/:id"
-            element={
-              <React.Suspense fallback={<PageLoader />}>
-                <ProductDetailPage />
-              </React.Suspense>
-            }
-          />
-          <Route
-            path="/category/:category"
-            element={
-              <React.Suspense fallback={<PageLoader />}>
-                <CategoryPage />
-              </React.Suspense>
-            }
-          />
-          <Route
-            path="/shop"
-            element={
-              <React.Suspense fallback={<PageLoader />}>
-                <CategoryPage />
-              </React.Suspense>
-            }
-          />
-          <Route
-            path="/"
-            element={
-              <>
-                {GlobalSEO}
-                <HomePage
-                  products={products}
-                  selectedCategory={selectedCategory}
-                  setSelectedCategory={(cat) => {
-                    handleSelectCategoryAndClose(cat);
-                    if (cat === 'Offers') navigate('/offers');
-                  }}
-                  searchQuery={searchQuery}
-                  selectedTags={selectedTags}
-                  finalFilteredProducts={finalFilteredProducts}
-                  productsLoading={productsLoading}
-                  wishlistedIds={wishlistedIds}
-                  comparisonIds={comparisonIds}
-                  handleAddToCart={handleAddToCart}
-                  handleToggleWishlist={handleToggleWishlist}
-                  setSelectedProduct={setSelectedProduct}
-                  handleNotifyMe={handleNotifyMe}
-                  handleToggleCompare={handleToggleCompare}
-                  handleClearFilters={handleClearFilters}
-                  setIsFilterOpen={setIsFilterOpen}
-                  setSortOrder={setSortOrder}
-                  sortOrder={sortOrder}
-                  showOnSale={showOnSale}
-                  setShowOnSale={setShowOnSale}
-                  showInStock={showInStock}
-                  setShowInStock={setShowInStock}
-                  availableTags={availableTags}
-                  selectedTagsState={selectedTags} // Mapping prop name correctly
-                  handleToggleTag={handleToggleTag}
-                  priceRange={priceRange}
-                  setPriceRange={(range) => setPriceRange((prev) => ({ ...prev, ...range }))} // Simple wrapper match
-                  maxPrice={maxPrice}
-                  selectedOrigins={selectedOrigins}
-                  handleToggleOrigin={handleToggleOrigin}
-                  availableOrigins={availableOrigins}
-                  selectedHeatLevels={selectedHeatLevels}
-                  handleToggleHeatLevel={handleToggleHeatLevel}
-                  availableHeatLevels={availableHeatLevels}
-                  selectedCuisines={selectedCuisines}
-                  handleToggleCuisine={handleToggleCuisine}
-                  availableCuisines={availableCuisines}
-                  selectedSizes={selectedSizes}
-                  handleToggleSize={handleToggleSize}
-                  availableSizes={availableSizes}
-                  selectedGrinds={selectedGrinds}
-                  handleToggleGrind={handleToggleGrind}
-                  availableGrinds={availableGrinds}
-                  selectedGrades={selectedGrades}
-                  handleToggleGrade={handleToggleGrade}
-                  availableGrades={availableGrades}
-                  addToast={addToast}
-                />
-              </>
-            }
+      <LazyMotion features={domAnimation}>
+        <div className="flex flex-col min-h-screen">
+          <SEO
+            {...(currentView === 'home'
+              ? pageSEO.home()
+              : currentView === 'recipes'
+                ? pageSEO.recipes()
+                : currentView === 'blog'
+                  ? pageSEO.blog()
+                  : currentView === 'about'
+                    ? pageSEO.about()
+                    : currentView === 'contact'
+                      ? pageSEO.contact()
+                      : currentView === 'faqs'
+                        ? pageSEO.home()
+                        : selectedCategory !== 'All'
+                          ? pageSEO.products(selectedCategory)
+                          : pageSEO.home())}
+            structuredData={generateOrganizationSchema()}
+            structuredDataId="organization-schema"
           />
 
-          <Route
-            path="/messaging"
-            element={
-              <React.Suspense fallback={<PageLoader />}>
-                {GlobalSEO}
-                <MessagingShowcase />
-              </React.Suspense>
-            }
+          <React.Suspense fallback={null}>
+            {showPromoBanner && <PromotionalBanner onClose={() => setShowPromoBanner(false)} />}
+          </React.Suspense>
+
+          <Header
+            cartItems={cartItems}
+            wishlistItemCount={wishlistItemCount}
+            searchQuery={searchQuery}
+            onSearchChange={setSearchQuery}
+            onCartClick={() => setIsCartOpen(true)}
+            onWishlistClick={() => setIsWishlistOpen(true)}
+            onMobileMenuClick={() => setIsMobileMenuOpen(true)}
+            isLoggedIn={isLoggedIn}
+            isAdmin={!!currentUser?.isAdmin}
+            onLoginClick={() => setAuthModalOpen(true)}
+            onLogoutClick={handleLogout}
+            allProducts={products}
+            onSelectProduct={setSelectedProduct}
+            categories={categories}
+            onSelectCategory={handleSelectCategoryAndClose}
+            onRemoveItem={removeFromCart}
           />
 
-          <Route
-            path="/checkout"
-            element={
-              <React.Suspense fallback={<PageLoader />}>
-                {GlobalSEO}
-                <CheckoutPage
-                  cartItems={cartItems}
-                  user={currentUser}
-                  onPlaceOrder={handlePlaceOrder}
-                  addToast={addToast}
-                  discount={discount}
-                  promoCode={promoCode}
-                  onApplyPromoCode={handleApplyPromoCode}
-                  onRemovePromoCode={handleRemovePromoCode}
-                  subtotal={subtotal}
-                  shippingCost={shippingCost}
-                />
-              </React.Suspense>
-            }
-          />
-
-          <Route
-            path="/account"
-            element={
-              currentUser ? (
-                <React.Suspense fallback={<PageLoader />}>
-                  <AccountLayout user={currentUser} />
-                </React.Suspense>
-              ) : (
-                <Navigate to="/login" replace />
-              )
-            }
-          >
+          <Routes>
             <Route
-              index
+              path="/product/:id"
               element={
                 <React.Suspense fallback={<PageLoader />}>
-                  <AccountOverview
-                    user={currentUser!}
-                    onUpdateUser={(updatedUser) =>
-                      setCurrentUser((prev) => ({ ...prev!, ...updatedUser }))
-                    }
+                  <ProductDetailPage />
+                </React.Suspense>
+              }
+            />
+            <Route
+              path="/category/:category"
+              element={
+                <React.Suspense fallback={<PageLoader />}>
+                  <CategoryPage />
+                </React.Suspense>
+              }
+            />
+            <Route
+              path="/shop"
+              element={
+                <React.Suspense fallback={<PageLoader />}>
+                  <CategoryPage />
+                </React.Suspense>
+              }
+            />
+            <Route
+              path="/"
+              element={
+                <>
+                  {GlobalSEO}
+                  <HomePage
+                    products={products}
+                    selectedCategory={selectedCategory}
+                    setSelectedCategory={(cat) => {
+                      handleSelectCategoryAndClose(cat);
+                      if (cat === 'Offers') navigate('/offers');
+                    }}
+                    searchQuery={searchQuery}
+                    selectedTags={selectedTags}
+                    finalFilteredProducts={finalFilteredProducts}
+                    productsLoading={productsLoading}
+                    wishlistedIds={wishlistedIds}
+                    comparisonIds={comparisonIds}
+                    handleAddToCart={handleAddToCart}
+                    handleToggleWishlist={handleToggleWishlist}
+                    setSelectedProduct={setSelectedProduct}
+                    handleNotifyMe={handleNotifyMe}
+                    handleToggleCompare={handleToggleCompare}
+                    handleClearFilters={handleClearFilters}
+                    setIsFilterOpen={setIsFilterOpen}
+                    setSortOrder={setSortOrder}
+                    sortOrder={sortOrder}
+                    showOnSale={showOnSale}
+                    setShowOnSale={setShowOnSale}
+                    showInStock={showInStock}
+                    setShowInStock={setShowInStock}
+                    availableTags={availableTags}
+                    selectedTagsState={selectedTags} // Mapping prop name correctly
+                    handleToggleTag={handleToggleTag}
+                    priceRange={priceRange}
+                    setPriceRange={(range) => setPriceRange((prev) => ({ ...prev, ...range }))} // Simple wrapper match
+                    maxPrice={maxPrice}
+                    selectedOrigins={selectedOrigins}
+                    handleToggleOrigin={handleToggleOrigin}
+                    availableOrigins={availableOrigins}
+                    selectedHeatLevels={selectedHeatLevels}
+                    handleToggleHeatLevel={handleToggleHeatLevel}
+                    availableHeatLevels={availableHeatLevels}
+                    selectedCuisines={selectedCuisines}
+                    handleToggleCuisine={handleToggleCuisine}
+                    availableCuisines={availableCuisines}
+                    selectedSizes={selectedSizes}
+                    handleToggleSize={handleToggleSize}
+                    availableSizes={availableSizes}
+                    selectedGrinds={selectedGrinds}
+                    handleToggleGrind={handleToggleGrind}
+                    availableGrinds={availableGrinds}
+                    selectedGrades={selectedGrades}
+                    handleToggleGrade={handleToggleGrade}
+                    availableGrades={availableGrades}
+                    addToast={addToast}
+                  />
+                </>
+              }
+            />
+
+            <Route
+              path="/messaging"
+              element={
+                <React.Suspense fallback={<PageLoader />}>
+                  {GlobalSEO}
+                  <MessagingShowcase />
+                </React.Suspense>
+              }
+            />
+
+            <Route
+              path="/checkout"
+              element={
+                <React.Suspense fallback={<PageLoader />}>
+                  {GlobalSEO}
+                  <CheckoutPage
+                    cartItems={cartItems}
+                    user={currentUser}
+                    onPlaceOrder={handlePlaceOrder}
+                    addToast={addToast}
+                    discount={discount}
+                    promoCode={promoCode}
+                    onApplyPromoCode={handleApplyPromoCode}
+                    onRemovePromoCode={handleRemovePromoCode}
+                    subtotal={subtotal}
+                    shippingCost={shippingCost}
                   />
                 </React.Suspense>
               }
             />
+
             <Route
-              path="orders"
+              path="/account"
               element={
-                <React.Suspense fallback={<PageLoader />}>
-                  <OrdersList />
-                </React.Suspense>
+                currentUser ? (
+                  <React.Suspense fallback={<PageLoader />}>
+                    <AccountLayout user={currentUser} />
+                  </React.Suspense>
+                ) : (
+                  <Navigate to="/login" replace />
+                )
               }
-            />
-            <Route
-              path="addresses"
-              element={
-                <React.Suspense fallback={<PageLoader />}>
-                  <AddressBook />
-                </React.Suspense>
-              }
-            />
-            <Route
-              path="wishlist"
-              element={
-                <React.Suspense fallback={<PageLoader />}>
-                  <AccountWishlist />
-                </React.Suspense>
-              }
-            />
-            <Route
-              path="loyalty"
-              element={
-                <React.Suspense fallback={<PageLoader />}>
-                  <LoyaltyPointsTracker />
-                </React.Suspense>
-              }
-            />
-          </Route>
-
-          <Route path="/profile" element={<Navigate to="/account" replace />} />
-
-          <Route
-            path="/admin"
-            element={
-              currentUser?.isAdmin ? (
-                <React.Suspense fallback={<PageLoader />}>
-                  <AdminDashboard />
-                </React.Suspense>
-              ) : (
-                <div className="text-center py-20">
-                  <h2>Access Denied.</h2>
-                </div>
-              )
-            }
-          />
-
-          <Route
-            path="/privacy-policy"
-            element={
-              <React.Suspense fallback={<PageLoader />}>
-                <PrivacyPolicyPage />
-              </React.Suspense>
-            }
-          />
-          <Route
-            path="/refund-policy"
-            element={
-              <React.Suspense fallback={<PageLoader />}>
-                <RefundPolicyPage />
-              </React.Suspense>
-            }
-          />
-          <Route
-            path="/terms-of-service"
-            element={
-              <React.Suspense fallback={<PageLoader />}>
-                <TermsOfServicePage />
-              </React.Suspense>
-            }
-          />
-          <Route
-            path="/about"
-            element={
-              <React.Suspense fallback={<PageLoader />}>
-                <AboutPage />
-              </React.Suspense>
-            }
-          />
-          <Route
-            path="/faqs"
-            element={
-              <React.Suspense fallback={<PageLoader />}>
-                <FAQsPage />
-              </React.Suspense>
-            }
-          />
-          <Route
-            path="/contact"
-            element={
-              <React.Suspense fallback={<PageLoader />}>
-                <ContactPage />
-              </React.Suspense>
-            }
-          />
-          <Route
-            path="/recipes"
-            element={
-              <React.Suspense fallback={<PageLoader />}>
-                <RecipesPage recipes={MOCK_RECIPES} onSelectRecipe={setSelectedRecipe} />
-              </React.Suspense>
-            }
-          />
-
-          <Route
-            path="/blog"
-            element={
-              <React.Suspense fallback={<PageLoader />}>
-                <BlogPage posts={MOCK_POSTS} onSelectPost={(slug) => navigate(`/blog/${slug}`)} />
-              </React.Suspense>
-            }
-          />
-
-          <Route
-            path="/login"
-            element={
-              <React.Suspense fallback={<PageLoader />}>
-                <LoginPage
-                  onLogin={handleLogin}
-                  onNavigateToSignup={() => navigate('/signup')}
-                  onNavigateToForgotPassword={() => navigate('/forgot-password')}
-                />
-              </React.Suspense>
-            }
-          />
-
-          <Route
-            path="/signup"
-            element={
-              <React.Suspense fallback={<PageLoader />}>
-                <SignUpPage onSignUp={handleSignUp} onNavigateToLogin={() => navigate('/login')} />
-              </React.Suspense>
-            }
-          />
-
-          <Route
-            path="/forgot-password"
-            element={
-              <React.Suspense fallback={<PageLoader />}>
-                <ForgotPasswordPage onNavigateToLogin={() => navigate('/login')} />
-              </React.Suspense>
-            }
-          />
-
-          <Route
-            path="/verify-email"
-            element={
-              <React.Suspense fallback={<PageLoader />}>
-                <EmailVerificationPage
-                  email={
-                    new URLSearchParams(location.hash.split('?')[1] || location.search).get(
-                      'email'
-                    ) ||
-                    currentUser?.email ||
-                    ''
-                  }
-                  onNavigateToHome={() => navigate('/')}
-                  onResendEmail={() => addToast('Verification email sent!', 'success')}
-                />
-              </React.Suspense>
-            }
-          />
-
-          <Route
-            path="/cart"
-            element={
-              <React.Suspense fallback={<PageLoader />}>
-                <CartPage />
-              </React.Suspense>
-            }
-          />
-          <Route
-            path="/track-order"
-            element={
-              <React.Suspense fallback={<PageLoader />}>
-                <OrderTrackingPage />
-              </React.Suspense>
-            }
-          />
-
-          <Route
-            path="/2fa-setup"
-            element={
-              <React.Suspense fallback={<PageLoader />}>
-                <TwoFactorSetupPage
-                  onComplete={() => {
-                    addToast('2FA enabled successfully!', 'success');
-                    navigate('/profile');
-                  }}
-                  onCancel={() => navigate('/profile')}
-                />
-              </React.Suspense>
-            }
-          />
-
-          <Route
-            path="/offers"
-            element={
-              <>
-                <div className="bg-brand-secondary/20 py-12 mb-8">
-                  <div className="container mx-auto px-4 text-center">
-                    <h1 className="text-4xl md:text-5xl font-serif font-bold text-brand-dark mb-4">
-                      Special Offers
-                    </h1>
-                    <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                      Exclusive deals on our premium spices and ingredients. Limited time only.
-                    </p>
-                  </div>
-                </div>
-                <div
-                  id="products-section"
-                  className="grid grid-cols-1 md:grid-cols-[16rem_1fr] gap-8 container mx-auto px-4 py-8"
-                >
-                  <aside className="sticky top-24 h-fit">
-                    <React.Suspense
-                      fallback={
-                        <div
-                          className="bg-gray-100 rounded-xl animate-pulse"
-                          style={{ height: '450px' }}
-                        />
+            >
+              <Route
+                index
+                element={
+                  <React.Suspense fallback={<PageLoader />}>
+                    <AccountOverview
+                      user={currentUser!}
+                      onUpdateUser={(updatedUser) =>
+                        setCurrentUser((prev) => ({ ...prev!, ...updatedUser }))
                       }
-                    >
-                      <AdvancedFilters
-                        showOnSale={showOnSale}
-                        onToggleOnSale={() => setShowOnSale(!showOnSale)}
-                        showInStock={showInStock}
-                        onToggleInStock={() => setShowInStock(!showInStock)}
-                        availableTags={availableTags}
-                        selectedTags={selectedTags}
-                        onToggleTag={handleToggleTag}
-                        priceRange={priceRange}
-                        maxPrice={maxPrice}
-                        onPriceChange={(max) => setPriceRange((prev) => ({ ...prev, max }))}
-                        origins={availableOrigins}
-                        selectedOrigins={selectedOrigins}
-                        onToggleOrigin={handleToggleOrigin}
-                        heatLevels={availableHeatLevels}
-                        selectedHeatLevels={selectedHeatLevels}
-                        onToggleHeatLevel={handleToggleHeatLevel}
-                        cuisines={availableCuisines}
-                        selectedCuisines={selectedCuisines}
-                        onToggleCuisine={handleToggleCuisine}
-                        sizes={availableSizes}
-                        selectedSizes={selectedSizes}
-                        onToggleSize={handleToggleSize}
-                        grinds={availableGrinds}
-                        selectedGrinds={selectedGrinds}
-                        onToggleGrind={handleToggleGrind}
-                        grades={availableGrades}
-                        selectedGrades={selectedGrades}
-                        onToggleGrade={handleToggleGrade}
-                      />
-                    </React.Suspense>
-                  </aside>
-
-                  <div className="min-w-0">
-                    <div className="flex justify-between items-center mb-6">
-                      <p className="text-gray-600">
-                        Showing {finalFilteredProducts.length} results
-                      </p>
-                      <SortDropdown
-                        currentSort={sortOrder}
-                        onSortChange={(val) => setSortOrder(val as typeof sortOrder)}
-                      />
-                    </div>
-
-                    <ProductGrid
-                      products={finalFilteredProducts}
-                      onAddToCart={handleAddToCart}
-                      onToggleWishlist={handleToggleWishlist}
-                      comparisonIds={comparisonIds}
-                      isLoading={productsLoading}
-                      onNotifyMe={handleNotifyMe}
-                      onClearFilters={handleClearFilters}
                     />
-                  </div>
-                </div>
-              </>
-            }
-          />
-
-          <Route
-            path="/order-confirmation/:orderId"
-            element={
-              <OrderConfirmationRoute
-                currentUser={currentUser}
-                handlePlaceOrder={handlePlaceOrder}
-                addToast={addToast}
+                  </React.Suspense>
+                }
               />
-            }
-          />
-          <Route path="/blog/:slug" element={<BlogPostRoute />} />
-          {/* Catch all redirect */}
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
+              <Route
+                path="orders"
+                element={
+                  <React.Suspense fallback={<PageLoader />}>
+                    <OrdersList />
+                  </React.Suspense>
+                }
+              />
+              <Route
+                path="addresses"
+                element={
+                  <React.Suspense fallback={<PageLoader />}>
+                    <AddressBook />
+                  </React.Suspense>
+                }
+              />
+              <Route
+                path="wishlist"
+                element={
+                  <React.Suspense fallback={<PageLoader />}>
+                    <AccountWishlist />
+                  </React.Suspense>
+                }
+              />
+              <Route
+                path="loyalty"
+                element={
+                  <React.Suspense fallback={<PageLoader />}>
+                    <LoyaltyPointsTracker />
+                  </React.Suspense>
+                }
+              />
+            </Route>
 
-        <Footer onSelectCategory={handleSelectCategoryAndClose} />
+            <Route path="/profile" element={<Navigate to="/account" replace />} />
 
-        <ToastContainer
-          toasts={toasts}
-          onClose={(id) => setToasts((t) => t.filter((toast) => toast.id !== id))}
-        />
-
-        {/* Modals */}
-        <React.Suspense fallback={null}>
-          {selectedProduct && (
-            <ProductDetailModal
-              product={selectedProduct}
-              allProducts={products}
-              recipes={MOCK_RECIPES}
-              onClose={() => setSelectedProduct(null)}
-              onAddToCart={handleAddToCart}
-              onToggleWishlist={handleToggleWishlist}
-              isWishlisted={isInWishlist(selectedProduct.id)}
-              isOpen={true}
-              onAddReview={handleAddReview}
-              onDeleteReview={handleDeleteReview}
-              onSelectCategoryAndClose={handleSelectCategoryAndClose}
-              addToast={addToast}
-              onAskQuestion={handleAskQuestion}
-              onSelectProduct={setSelectedProduct}
-              onNotifyMe={handleNotifyMe}
-            />
-          )}
-
-          <SideModal isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} title="Your Cart">
-            <Cart
-              items={cartItems}
-              onUpdateQuantity={handleUpdateQuantity}
-              onRemoveItem={(id) => updateQuantity(id, 0)}
-              onCheckout={() => {
-                setIsCartOpen(false);
-                navigate('/checkout');
-              }}
-              subtotal={subtotal}
-              onClose={() => setIsCartOpen(false)}
-              isLoggedIn={isLoggedIn}
-              promoCode={promoCode}
-              onPromoCodeChange={setPromoCode}
-              onApplyPromoCode={handleApplyPromoCode}
-              discount={discount}
-              shippingCost={shippingCost}
-              onAddToCart={handleAddToCart}
-              recommendedProducts={products.slice(0, 5)}
-            />
-          </SideModal>
-
-          <SideModal
-            isOpen={isWishlistOpen}
-            onClose={() => setIsWishlistOpen(false)}
-            title="Your Wishlist"
-          >
-            <Wishlist
-              items={wishlistItems}
-              onRemove={(id) => toggleWishlist(products.find((p) => p.id === id)!)}
-              onAddToCart={(p) => {
-                handleAddToCart(p, p.variants[0]);
-                toggleWishlist(p);
-              }}
-              onToggleWishlist={handleToggleWishlist}
-              onClose={() => setIsWishlistOpen(false)}
-            />
-          </SideModal>
-
-          <MobileMenu
-            isOpen={isMobileMenuOpen}
-            onClose={() => setIsMobileMenuOpen(false)}
-            categories={categories}
-            onSelectCategory={handleSelectCategoryAndClose}
-            isLoggedIn={isLoggedIn}
-            onLoginClick={() => {
-              setIsMobileMenuOpen(false);
-              setAuthModalOpen(true);
-            }}
-            onLogoutClick={() => {
-              setIsMobileMenuOpen(false);
-              handleLogout();
-            }}
-            searchQuery={searchQuery}
-            onSearchChange={setSearchQuery}
-          />
-          {isAuthModalOpen && (
-            <AuthModal
-              onClose={() => setAuthModalOpen(false)}
-              onLogin={handleLogin}
-              onSignUp={handleSignUp}
-            />
-          )}
-
-          {comparisonItems.length > 0 && (
-            <ComparisonBar
-              items={comparisonItems}
-              onRemove={(product) =>
-                setComparisonItems((prev) => prev.filter((p) => p.id !== product.id))
+            <Route
+              path="/admin"
+              element={
+                currentUser?.isAdmin ? (
+                  <React.Suspense fallback={<PageLoader />}>
+                    <AdminDashboard />
+                  </React.Suspense>
+                ) : (
+                  <div className="text-center py-20">
+                    <h2>Access Denied.</h2>
+                  </div>
+                )
               }
-              onCompare={() => setIsComparisonModalOpen(true)}
-              onClear={() => setComparisonItems([])}
             />
-          )}
 
-          {isComparisonModalOpen && (
-            <ComparisonModal
-              items={comparisonItems}
-              onClose={() => setIsComparisonModalOpen(false)}
-              onAddToCart={handleAddToCart}
+            <Route
+              path="/privacy-policy"
+              element={
+                <React.Suspense fallback={<PageLoader />}>
+                  <PrivacyPolicyPage />
+                </React.Suspense>
+              }
             />
-          )}
+            <Route
+              path="/refund-policy"
+              element={
+                <React.Suspense fallback={<PageLoader />}>
+                  <RefundPolicyPage />
+                </React.Suspense>
+              }
+            />
+            <Route
+              path="/terms-of-service"
+              element={
+                <React.Suspense fallback={<PageLoader />}>
+                  <TermsOfServicePage />
+                </React.Suspense>
+              }
+            />
+            <Route
+              path="/about"
+              element={
+                <React.Suspense fallback={<PageLoader />}>
+                  <AboutPage />
+                </React.Suspense>
+              }
+            />
+            <Route
+              path="/faqs"
+              element={
+                <React.Suspense fallback={<PageLoader />}>
+                  <FAQsPage />
+                </React.Suspense>
+              }
+            />
+            <Route
+              path="/contact"
+              element={
+                <React.Suspense fallback={<PageLoader />}>
+                  <ContactPage />
+                </React.Suspense>
+              }
+            />
+            <Route
+              path="/recipes"
+              element={
+                <React.Suspense fallback={<PageLoader />}>
+                  <RecipesPage recipes={MOCK_RECIPES} onSelectRecipe={setSelectedRecipe} />
+                </React.Suspense>
+              }
+            />
 
-          <SideModal isOpen={isFilterOpen} onClose={() => setIsFilterOpen(false)} title="Filters">
-            <div className="p-4 pb-24 h-full overflow-y-auto">
-              <React.Suspense fallback={<div className="h-96 bg-gray-50 animate-pulse" />}>
-                <AdvancedFilters
-                  showOnSale={showOnSale}
-                  onToggleOnSale={() => setShowOnSale(!showOnSale)}
-                  showInStock={showInStock}
-                  onToggleInStock={() => setShowInStock(!showInStock)}
-                  availableTags={availableTags}
-                  selectedTags={selectedTags}
-                  onToggleTag={handleToggleTag}
-                  priceRange={priceRange}
-                  maxPrice={maxPrice}
-                  onPriceChange={(max) => setPriceRange((prev) => ({ ...prev, max }))}
-                  origins={availableOrigins}
-                  selectedOrigins={selectedOrigins}
-                  onToggleOrigin={handleToggleOrigin}
-                  heatLevels={availableHeatLevels}
-                  selectedHeatLevels={selectedHeatLevels}
-                  onToggleHeatLevel={handleToggleHeatLevel}
-                  cuisines={availableCuisines}
-                  selectedCuisines={selectedCuisines}
-                  onToggleCuisine={handleToggleCuisine}
-                  sizes={availableSizes}
-                  selectedSizes={selectedSizes}
-                  onToggleSize={handleToggleSize}
-                  grinds={availableGrinds}
-                  selectedGrinds={selectedGrinds}
-                  onToggleGrind={handleToggleGrind}
-                  grades={availableGrades}
-                  selectedGrades={selectedGrades}
-                  onToggleGrade={handleToggleGrade}
-                />
-                {/* Clear Filters Button Mobile */}
-                <div className="mt-8 pt-4 border-t border-gray-100">
-                  <button
-                    onClick={() => {
-                      handleClearFilters();
-                      setIsFilterOpen(false);
+            <Route
+              path="/blog"
+              element={
+                <React.Suspense fallback={<PageLoader />}>
+                  <BlogPage posts={MOCK_POSTS} onSelectPost={(slug) => navigate(`/blog/${slug}`)} />
+                </React.Suspense>
+              }
+            />
+
+            <Route
+              path="/login"
+              element={
+                <React.Suspense fallback={<PageLoader />}>
+                  <LoginPage
+                    onLogin={handleLogin}
+                    onNavigateToSignup={() => navigate('/signup')}
+                    onNavigateToForgotPassword={() => navigate('/forgot-password')}
+                  />
+                </React.Suspense>
+              }
+            />
+
+            <Route
+              path="/signup"
+              element={
+                <React.Suspense fallback={<PageLoader />}>
+                  <SignUpPage
+                    onSignUp={handleSignUp}
+                    onNavigateToLogin={() => navigate('/login')}
+                  />
+                </React.Suspense>
+              }
+            />
+
+            <Route
+              path="/forgot-password"
+              element={
+                <React.Suspense fallback={<PageLoader />}>
+                  <ForgotPasswordPage onNavigateToLogin={() => navigate('/login')} />
+                </React.Suspense>
+              }
+            />
+
+            <Route
+              path="/verify-email"
+              element={
+                <React.Suspense fallback={<PageLoader />}>
+                  <EmailVerificationPage
+                    email={
+                      new URLSearchParams(location.hash.split('?')[1] || location.search).get(
+                        'email'
+                      ) ||
+                      currentUser?.email ||
+                      ''
+                    }
+                    onNavigateToHome={() => navigate('/')}
+                    onResendEmail={() => addToast('Verification email sent!', 'success')}
+                  />
+                </React.Suspense>
+              }
+            />
+
+            <Route
+              path="/cart"
+              element={
+                <React.Suspense fallback={<PageLoader />}>
+                  <CartPage />
+                </React.Suspense>
+              }
+            />
+            <Route
+              path="/track-order"
+              element={
+                <React.Suspense fallback={<PageLoader />}>
+                  <OrderTrackingPage />
+                </React.Suspense>
+              }
+            />
+
+            <Route
+              path="/2fa-setup"
+              element={
+                <React.Suspense fallback={<PageLoader />}>
+                  <TwoFactorSetupPage
+                    onComplete={() => {
+                      addToast('2FA enabled successfully!', 'success');
+                      navigate('/profile');
                     }}
-                    className="w-full py-3 bg-neutral-100 text-neutral-700 font-bold rounded-lg hover:bg-neutral-200 transition-colors"
-                  >
-                    Clear All Filters
-                  </button>
-                  <button
-                    onClick={() => setIsFilterOpen(false)}
-                    className="w-full py-3 mt-3 bg-brand-primary text-brand-dark font-bold rounded-lg hover:bg-brand-primary/90 transition-colors"
-                  >
-                    Show {finalFilteredProducts.length} Results
-                  </button>
-                </div>
-              </React.Suspense>
-            </div>
-          </SideModal>
-
-          {isExitIntentModalOpen && (
-            <ExitIntentModal
-              onClose={() => setIsExitIntentModalOpen(false)}
-              onApplyPromo={() => {
-                handleApplyPromoCode('COMEBACK15');
-                setIsExitIntentModalOpen(false);
-              }}
+                    onCancel={() => navigate('/profile')}
+                  />
+                </React.Suspense>
+              }
             />
-          )}
 
-          {selectedRecipe && (
-            <RecipeDetailModal
-              recipe={selectedRecipe}
-              allProducts={products}
-              onClose={() => setSelectedRecipe(null)}
-              onAddToCart={(product) => handleAddToCart(product, product.variants[0], 1)}
-              onSelectProduct={setSelectedProduct}
-              onNotifyMe={(product) => handleNotifyMe(product.id)}
-              onToggleWishlist={handleToggleWishlist}
-              isWishlisted={(id) => wishlistItems.some((p) => p.id === id)}
-              onToggleCompare={handleToggleCompare}
-              isCompared={(id) => comparisonItems.some((p) => p.id === id)}
+            <Route
+              path="/offers"
+              element={
+                <React.Suspense fallback={<PageLoader />}>
+                  <OffersPage />
+                </React.Suspense>
+              }
             />
-          )}
 
-          <SocialProofNotifications />
-        </React.Suspense>
-        <React.Suspense fallback={null}>
-          <MobileBottomNav
-            cartItemCount={cartItems.reduce((acc, item) => acc + item.quantity, 0)}
-            wishlistItemCount={wishlistItems.length}
-            onOpenCart={() => setIsCartOpen(true)}
-            onOpenWishlist={() => setIsWishlistOpen(true)}
-            onOpenMenu={() => setIsMobileMenuOpen(true)}
-            currentView={currentView}
+            <Route
+              path="/order-confirmation/:orderId"
+              element={
+                <OrderConfirmationRoute
+                  currentUser={currentUser}
+                  handlePlaceOrder={handlePlaceOrder}
+                  addToast={addToast}
+                />
+              }
+            />
+            <Route path="/blog/:slug" element={<BlogPostRoute />} />
+            {/* Catch all redirect */}
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+
+          <React.Suspense fallback={<div className="h-64 bg-gray-100" />}>
+            <Footer onSelectCategory={handleSelectCategoryAndClose} />
+          </React.Suspense>
+
+          <ToastContainer
+            toasts={toasts}
+            onClose={(id) => setToasts((t) => t.filter((toast) => toast.id !== id))}
           />
-        </React.Suspense>
-      </div>
+
+          {/* Modals */}
+          <React.Suspense fallback={null}>
+            {selectedProduct && (
+              <ProductDetailModal
+                product={selectedProduct}
+                allProducts={products}
+                recipes={MOCK_RECIPES}
+                onClose={() => setSelectedProduct(null)}
+                onAddToCart={handleAddToCart}
+                onToggleWishlist={handleToggleWishlist}
+                isWishlisted={isInWishlist(selectedProduct.id)}
+                isOpen={true}
+                onAddReview={handleAddReview}
+                onDeleteReview={handleDeleteReview}
+                onSelectCategoryAndClose={handleSelectCategoryAndClose}
+                addToast={addToast}
+                onAskQuestion={handleAskQuestion}
+                onSelectProduct={setSelectedProduct}
+                onNotifyMe={handleNotifyMe}
+              />
+            )}
+
+            <SideModal isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} title="Your Cart">
+              <Cart
+                items={cartItems}
+                onUpdateQuantity={handleUpdateQuantity}
+                onCheckout={() => {
+                  setIsCartOpen(false);
+                  navigate('/checkout');
+                }}
+                subtotal={subtotal}
+                onClose={() => setIsCartOpen(false)}
+                isLoggedIn={isLoggedIn}
+                promoCode={promoCode}
+                onPromoCodeChange={setPromoCode}
+                onApplyPromoCode={handleApplyPromoCode}
+                discount={discount}
+                shippingCost={shippingCost}
+                onAddToCart={handleAddToCart}
+                recommendedProducts={products.slice(0, 5)}
+              />
+            </SideModal>
+
+            <SideModal
+              isOpen={isWishlistOpen}
+              onClose={() => setIsWishlistOpen(false)}
+              title="Your Wishlist"
+            >
+              <Wishlist
+                items={wishlistItems}
+                onRemove={(id) => toggleWishlist(products.find((p) => p.id === id)!)}
+                onAddToCart={(p) => {
+                  handleAddToCart(p, p.variants[0]);
+                  toggleWishlist(p);
+                }}
+                onToggleWishlist={handleToggleWishlist}
+                onClose={() => setIsWishlistOpen(false)}
+              />
+            </SideModal>
+
+            <MobileMenu
+              isOpen={isMobileMenuOpen}
+              onClose={() => setIsMobileMenuOpen(false)}
+              categories={categories}
+              onSelectCategory={handleSelectCategoryAndClose}
+              isLoggedIn={isLoggedIn}
+              onLoginClick={() => {
+                setIsMobileMenuOpen(false);
+                setAuthModalOpen(true);
+              }}
+              onLogoutClick={() => {
+                setIsMobileMenuOpen(false);
+                handleLogout();
+              }}
+              searchQuery={searchQuery}
+              onSearchChange={setSearchQuery}
+            />
+            {isAuthModalOpen && (
+              <AuthModal
+                onClose={() => setAuthModalOpen(false)}
+                onLogin={handleLogin}
+                onSignUp={handleSignUp}
+              />
+            )}
+
+            {comparisonItems.length > 0 && (
+              <ComparisonBar
+                items={comparisonItems}
+                onRemove={(product) =>
+                  setComparisonItems((prev) => prev.filter((p) => p.id !== product.id))
+                }
+                onCompare={() => setIsComparisonModalOpen(true)}
+                onClear={() => setComparisonItems([])}
+              />
+            )}
+
+            {isComparisonModalOpen && (
+              <ComparisonModal
+                items={comparisonItems}
+                onClose={() => setIsComparisonModalOpen(false)}
+                onAddToCart={handleAddToCart}
+              />
+            )}
+
+            <SideModal isOpen={isFilterOpen} onClose={() => setIsFilterOpen(false)} title="Filters">
+              <div className="p-4 pb-24 h-full overflow-y-auto">
+                <React.Suspense fallback={<div className="h-96 bg-gray-50 animate-pulse" />}>
+                  <AdvancedFilters
+                    showOnSale={showOnSale}
+                    onToggleOnSale={() => setShowOnSale(!showOnSale)}
+                    showInStock={showInStock}
+                    onToggleInStock={() => setShowInStock(!showInStock)}
+                    availableTags={availableTags}
+                    selectedTags={selectedTags}
+                    onToggleTag={handleToggleTag}
+                    priceRange={priceRange}
+                    maxPrice={maxPrice}
+                    onPriceChange={(max) => setPriceRange((prev) => ({ ...prev, max }))}
+                    origins={availableOrigins}
+                    selectedOrigins={selectedOrigins}
+                    onToggleOrigin={handleToggleOrigin}
+                    heatLevels={availableHeatLevels}
+                    selectedHeatLevels={selectedHeatLevels}
+                    onToggleHeatLevel={handleToggleHeatLevel}
+                    cuisines={availableCuisines}
+                    selectedCuisines={selectedCuisines}
+                    onToggleCuisine={handleToggleCuisine}
+                    sizes={availableSizes}
+                    selectedSizes={selectedSizes}
+                    onToggleSize={handleToggleSize}
+                    grinds={availableGrinds}
+                    selectedGrinds={selectedGrinds}
+                    onToggleGrind={handleToggleGrind}
+                    grades={availableGrades}
+                    selectedGrades={selectedGrades}
+                    onToggleGrade={handleToggleGrade}
+                  />
+                  {/* Clear Filters Button Mobile */}
+                  <div className="mt-8 pt-4 border-t border-gray-100">
+                    <button
+                      onClick={() => {
+                        handleClearFilters();
+                        setIsFilterOpen(false);
+                      }}
+                      className="w-full py-3 bg-neutral-100 text-neutral-700 font-bold rounded-lg hover:bg-neutral-200 transition-colors"
+                    >
+                      Clear All Filters
+                    </button>
+                    <button
+                      onClick={() => setIsFilterOpen(false)}
+                      className="w-full py-3 mt-3 bg-brand-primary text-brand-dark font-bold rounded-lg hover:bg-brand-primary/90 transition-colors"
+                    >
+                      Show {finalFilteredProducts.length} Results
+                    </button>
+                  </div>
+                </React.Suspense>
+              </div>
+            </SideModal>
+
+            {isExitIntentModalOpen && (
+              <ExitIntentModal
+                onClose={() => setIsExitIntentModalOpen(false)}
+                onApplyPromo={() => {
+                  handleApplyPromoCode('COMEBACK15');
+                  setIsExitIntentModalOpen(false);
+                }}
+              />
+            )}
+
+            {selectedRecipe && (
+              <RecipeDetailModal
+                recipe={selectedRecipe}
+                allProducts={products}
+                onClose={() => setSelectedRecipe(null)}
+                onAddToCart={(product) => handleAddToCart(product, product.variants[0], 1)}
+                onSelectProduct={setSelectedProduct}
+                onNotifyMe={(product) => handleNotifyMe(product.id)}
+                onToggleWishlist={handleToggleWishlist}
+                isWishlisted={(id) => wishlistItems.some((p) => p.id === id)}
+                onToggleCompare={handleToggleCompare}
+                isCompared={(id) => comparisonItems.some((p) => p.id === id)}
+              />
+            )}
+
+            <SocialProofNotifications />
+          </React.Suspense>
+          <React.Suspense fallback={null}>
+            <MobileBottomNav
+              cartItemCount={cartItems.reduce((acc, item) => acc + item.quantity, 0)}
+              wishlistItemCount={wishlistItems.length}
+              onOpenCart={() => setIsCartOpen(true)}
+              onOpenWishlist={() => setIsWishlistOpen(true)}
+              onOpenMenu={() => setIsMobileMenuOpen(true)}
+              currentView={currentView}
+            />
+          </React.Suspense>
+        </div>
+      </LazyMotion>
     </HelmetProvider>
   );
 };

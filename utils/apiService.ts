@@ -9,7 +9,13 @@ import { Product, Order, User, Review, QnA, Variant, OrderStatus, Address } from
 /**
  * Product API endpoints
  */
-import { supabase } from '../supabaseClient';
+/**
+ * Lazy load Supabase client to avoid eager bundle loading
+ */
+const getSupabase = async () => {
+  const { supabase } = await import('../supabaseClient');
+  return supabase;
+};
 
 /**
  * Product API endpoints
@@ -27,7 +33,7 @@ export const productAPI = {
     page?: number;
     limit?: number;
   }): Promise<Product[]> => {
-    let query = supabase.from('products').select(`
+    let query = (await getSupabase()).from('products').select(`
         *,
         variants (*),
         reviews (*),
@@ -80,7 +86,9 @@ export const productAPI = {
    * Get single product by ID
    */
   getById: async (id: number): Promise<Product> => {
-    const { data, error } = await supabase
+    const { data, error } = await (
+      await getSupabase()
+    )
       .from('products')
       .select(
         `
@@ -118,7 +126,9 @@ export const productAPI = {
     // For MVP, we'll just insert the main product.
     // In a real app, we'd use a transaction or multiple calls.
 
-    const { data, error } = await supabase
+    const { data, error } = await (
+      await getSupabase()
+    )
       .from('products')
       .insert({
         name: product.name,
@@ -147,7 +157,9 @@ export const productAPI = {
    * Update existing product (admin only)
    */
   update: async (id: number, product: Partial<Product>): Promise<Product> => {
-    const { data, error } = await supabase
+    const { data, error } = await (
+      await getSupabase()
+    )
       .from('products')
       .update({
         ...product,
@@ -167,7 +179,7 @@ export const productAPI = {
    * Delete product (admin only)
    */
   delete: async (id: number): Promise<void> => {
-    const { error } = await supabase.from('products').delete().eq('id', id);
+    const { error } = await (await getSupabase()).from('products').delete().eq('id', id);
     if (error) throw new Error(error.message);
   },
 
@@ -175,7 +187,9 @@ export const productAPI = {
    * Add review to product
    */
   addReview: async (productId: number, review: Omit<Review, 'id'>): Promise<Review> => {
-    const { data, error } = await supabase
+    const { data, error } = await (
+      await getSupabase()
+    )
       .from('reviews')
       .insert({
         product_id: productId,
@@ -198,7 +212,9 @@ export const productAPI = {
    * Add question to product
    */
   addQuestion: async (productId: number, question: Omit<QnA, 'id'>): Promise<QnA> => {
-    const { data, error } = await supabase
+    const { data, error } = await (
+      await getSupabase()
+    )
       .from('qna')
       .insert({
         product_id: productId,
@@ -231,9 +247,9 @@ export const orderAPI = {
     try {
       const {
         data: { user },
-      } = await supabase.auth.getUser();
+      } = await (await getSupabase()).auth.getUser();
 
-      let query = supabase
+      let query = (await getSupabase())
         .from('orders')
         .select('*, order_items(*)')
         .order('created_at', { ascending: false });
@@ -335,7 +351,7 @@ export const orderAPI = {
    */
   getById: async (id: string): Promise<APIResponse<Order>> => {
     try {
-      const { data, error } = await supabase
+      const { data, error } = await (await getSupabase())
         .from('orders')
         .select('*, order_items(*)')
         .eq('id', id)
@@ -433,7 +449,7 @@ export const orderAPI = {
     try {
       const {
         data: { user },
-      } = await supabase.auth.getUser();
+      } = await (await getSupabase()).auth.getUser();
 
       // Generate order ID
       const orderId = `ORD-${Date.now()}-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
@@ -442,7 +458,9 @@ export const orderAPI = {
       const tax = (orderData.total - orderData.discount) * 0.08;
 
       // 1. Insert Order
-      const { data: order, error: orderError } = await supabase
+      const { data: order, error: orderError } = await (
+        await getSupabase()
+      )
         .from('orders')
         .insert({
           id: orderId,
@@ -495,12 +513,14 @@ export const orderAPI = {
         total: (item.selectedVariant.salePrice || item.selectedVariant.price) * item.quantity,
       }));
 
-      const { error: itemsError } = await supabase.from('order_items').insert(itemsToInsert);
+      const { error: itemsError } = await (await getSupabase())
+        .from('order_items')
+        .insert(itemsToInsert);
 
       if (itemsError) {
         console.error('Order items error:', itemsError);
         // Rollback order if items fail
-        await supabase.from('orders').delete().eq('id', orderId);
+        await (await getSupabase()).from('orders').delete().eq('id', orderId);
         throw itemsError;
       }
 
@@ -526,7 +546,7 @@ export const orderAPI = {
         const customerName = user?.user_metadata?.name || 'Valued Customer';
 
         if (customerEmail) {
-          supabase.functions
+          (await getSupabase()).functions
             .invoke('send-order-email', {
               body: {
                 order_id: orderId,
@@ -571,7 +591,7 @@ export const orderAPI = {
    */
   updateStatus: async (orderId: string, status: Order['status']): Promise<APIResponse<Order>> => {
     try {
-      const { data, error } = await supabase
+      const { data, error } = await (await getSupabase())
         .from('orders')
         .update({ status, updated_at: new Date().toISOString() })
         .eq('id', orderId)
@@ -644,7 +664,7 @@ export const orderAPI = {
    */
   cancel: async (orderId: string): Promise<APIResponse<void>> => {
     try {
-      const { error } = await supabase
+      const { error } = await (await getSupabase())
         .from('orders')
         .update({ status: 'Cancelled', updated_at: new Date().toISOString() })
         .eq('id', orderId)
@@ -667,7 +687,7 @@ export const orderAPI = {
    * Track order (Public/Guest)
    */
   trackOrder: async (orderId: string, email?: string): Promise<APIResponse<Order>> => {
-    const { data: orderData, error } = await supabase
+    const { data: orderData, error } = await (await getSupabase())
       .from('orders')
       .select('*, order_items(*)')
       .eq('id', orderId)
@@ -744,7 +764,7 @@ export const userAPI = {
    * Login user
    */
   login: async (credentials: { email: string; password: string }) => {
-    const { data, error } = await supabase.auth.signInWithPassword(credentials);
+    const { data, error } = await (await getSupabase()).auth.signInWithPassword(credentials);
     if (error) throw error;
     return {
       data: {
@@ -769,7 +789,9 @@ export const userAPI = {
    * Register new user
    */
   register: async (userData: { name: string; email: string; password: string; phone?: string }) => {
-    const { data, error } = await supabase.auth.signUp({
+    const { data, error } = await (
+      await getSupabase()
+    ).auth.signUp({
       email: userData.email,
       password: userData.password,
       options: {
@@ -804,7 +826,7 @@ export const userAPI = {
    * Logout user
    */
   logout: async () => {
-    const { error } = await supabase.auth.signOut();
+    const { error } = await (await getSupabase()).auth.signOut();
     if (error) throw error;
     return { success: true, data: undefined };
   },
@@ -816,7 +838,7 @@ export const userAPI = {
     const {
       data: { user },
       error,
-    } = await supabase.auth.getUser();
+    } = await (await getSupabase()).auth.getUser();
     if (error) throw error;
     if (!user) throw new Error('No user found');
 
@@ -845,7 +867,9 @@ export const userAPI = {
     if (userData.phone) updates.phone = userData.phone;
     if (userData.addresses) updates.addresses = userData.addresses;
 
-    const { data, error } = await supabase.auth.updateUser({
+    const { data, error } = await (
+      await getSupabase()
+    ).auth.updateUser({
       data: updates,
     });
 
@@ -873,7 +897,7 @@ export const userAPI = {
   changePassword: async (data: { currentPassword: string; newPassword: string }) => {
     // Supabase doesn't require current password for update if logged in,
     // but for security we might want to re-auth. For now, just update.
-    const { error } = await supabase.auth.updateUser({ password: data.newPassword });
+    const { error } = await (await getSupabase()).auth.updateUser({ password: data.newPassword });
     if (error) throw error;
     return { success: true, data: undefined };
   },
@@ -882,7 +906,9 @@ export const userAPI = {
    * Request password reset
    */
   requestPasswordReset: async (email: string) => {
-    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    const { error } = await (
+      await getSupabase()
+    ).auth.resetPasswordForEmail(email, {
       redirectTo: window.location.origin + '/#/reset-password',
     });
     if (error) throw error;
@@ -895,7 +921,7 @@ export const userAPI = {
    */
   resetPassword: async (token: string, newPassword: string) => {
     // In Supabase, you just update the user after clicking the link
-    const { error } = await supabase.auth.updateUser({ password: newPassword });
+    const { error } = await (await getSupabase()).auth.updateUser({ password: newPassword });
     if (error) throw error;
     return { success: true, data: undefined };
   },
@@ -909,7 +935,7 @@ export const addressAPI = {
    * Get all addresses for current user
    */
   getAll: async () => {
-    const { data, error } = await supabase
+    const { data, error } = await (await getSupabase())
       .from('addresses')
       .select('*')
       .order('is_default', { ascending: false });
@@ -928,15 +954,20 @@ export const addressAPI = {
   add: async (address: Omit<Address, 'id' | 'createdAt' | 'updatedAt'>) => {
     const {
       data: { user },
-    } = await supabase.auth.getUser();
+    } = await (await getSupabase()).auth.getUser();
     if (!user) throw new Error('User not authenticated');
 
     // If making default, unset others
     if (address.isDefault) {
-      await supabase.from('addresses').update({ is_default: false }).eq('user_id', user.id);
+      await (await getSupabase())
+        .from('addresses')
+        .update({ is_default: false })
+        .eq('user_id', user.id);
     }
 
-    const { data, error } = await supabase
+    const { data, error } = await (
+      await getSupabase()
+    )
       .from('addresses')
       .insert([{ ...address, user_id: user.id }])
       .select()
@@ -956,14 +987,17 @@ export const addressAPI = {
   update: async (id: string, address: Partial<Address>) => {
     const {
       data: { user },
-    } = await supabase.auth.getUser();
+    } = await (await getSupabase()).auth.getUser();
     if (!user) throw new Error('User not authenticated');
 
     if (address.isDefault) {
-      await supabase.from('addresses').update({ is_default: false }).eq('user_id', user.id);
+      await (await getSupabase())
+        .from('addresses')
+        .update({ is_default: false })
+        .eq('user_id', user.id);
     }
 
-    const { data, error } = await supabase
+    const { data, error } = await (await getSupabase())
       .from('addresses')
       .update(address)
       .eq('id', id)
@@ -982,7 +1016,7 @@ export const addressAPI = {
    * Delete address
    */
   delete: async (id: string) => {
-    const { error } = await supabase.from('addresses').delete().eq('id', id);
+    const { error } = await (await getSupabase()).from('addresses').delete().eq('id', id);
 
     if (error) throw error;
 
@@ -1000,7 +1034,9 @@ export const utilsAPI = {
    * Check if pincode is serviceable
    */
   checkPincode: async (pincode: string) => {
-    const { data, error } = await supabase.functions.invoke('check-pincode', {
+    const { data, error } = await (
+      await getSupabase()
+    ).functions.invoke('check-pincode', {
       body: { pincode },
     });
 
@@ -1021,7 +1057,9 @@ export const promoAPI = {
    * Validate promo code via Edge Function
    */
   validate: async (code: string) => {
-    const { data, error } = await supabase.functions.invoke('apply-coupon', {
+    const { data, error } = await (
+      await getSupabase()
+    ).functions.invoke('apply-coupon', {
       body: { code, cartTotal: 0 }, // Just validation, amount might matter for min_order but we can simulate or pass 0 if generic check
     });
 
@@ -1043,7 +1081,9 @@ export const promoAPI = {
    * Apply promo code to cart via Edge Function
    */
   apply: async (code: string, cartTotal: number) => {
-    const { data, error } = await supabase.functions.invoke('apply-coupon', {
+    const { data, error } = await (
+      await getSupabase()
+    ).functions.invoke('apply-coupon', {
       body: { code, cartTotal },
     });
 
@@ -1121,7 +1161,9 @@ export const cartAPI = {
     couponCode?: string,
     userLocation?: { pincode: string }
   ) => {
-    const { data, error } = await supabase.functions.invoke('calculate-cart-totals', {
+    const { data, error } = await (
+      await getSupabase()
+    ).functions.invoke('calculate-cart-totals', {
       body: { items, couponCode, userLocation },
     });
 
@@ -1140,7 +1182,9 @@ export const cartAPI = {
   validateStock: async (
     items: Array<{ productId: number; variantId: number; quantity: number }>
   ) => {
-    const { data, error } = await supabase.functions.invoke('validate-stock', {
+    const { data, error } = await (
+      await getSupabase()
+    ).functions.invoke('validate-stock', {
       body: { items },
     });
 

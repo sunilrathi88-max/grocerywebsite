@@ -9,12 +9,13 @@ interface ProductGridProps {
   products: Product[];
   onAddToCart: (product: Product, variant: Variant) => void;
   onToggleWishlist: (product: Product) => void;
-  comparisonIds: Set<number>;
+  comparisonIds?: Set<number>;
   isLoading: boolean;
-  onNotifyMe: (productName: string) => void;
-  enableFilters?: boolean; // New prop to enable homepage-style filtering
-  title?: string; // Optional title
+  onNotifyMe?: (productName: string) => void;
+  enableFilters?: boolean;
+  title?: string;
   onClearFilters?: () => void;
+  onSelectProduct?: (product: Product) => void;
 }
 
 const ProductGrid: React.FC<ProductGridProps> = ({
@@ -25,8 +26,10 @@ const ProductGrid: React.FC<ProductGridProps> = ({
   enableFilters = false,
   title,
   onClearFilters,
+  onSelectProduct,
 }) => {
   const [activeFilter, setActiveFilter] = useState('All');
+  // ... (rest of component until onAddToCart handler)
 
   const filters = ['All', 'Spices', 'Nuts', 'Gift Boxes'];
 
@@ -67,9 +70,10 @@ const ProductGrid: React.FC<ProductGridProps> = ({
                   key={filter}
                   onClick={() => setActiveFilter(filter)}
                   className={`px-6 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap
-                    ${activeFilter === filter
-                      ? 'bg-brand-dark text-white shadow-lg'
-                      : 'bg-white text-neutral-600 border border-neutral-200 hover:bg-neutral-50'
+                    ${
+                      activeFilter === filter
+                        ? 'bg-brand-dark text-white shadow-lg'
+                        : 'bg-white text-neutral-600 border border-neutral-200 hover:bg-neutral-50'
                     }
                   `}
                 >
@@ -113,7 +117,12 @@ const ProductGrid: React.FC<ProductGridProps> = ({
                         price: p.variants[0].salePrice || p.variants[0].price,
                       },
                     });
-                    onAddToCart(p, p.variants[0]);
+
+                    if (onSelectProduct) {
+                      onSelectProduct(p);
+                    } else {
+                      onAddToCart(p, p.variants[0]);
+                    }
                   }
                 }}
                 onWishlist={(id) => {

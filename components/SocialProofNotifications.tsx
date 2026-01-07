@@ -78,7 +78,7 @@ export const SocialProofNotifications: React.FC = () => {
 
     // Then show notifications every 10-15 seconds (random interval)
     const scheduleNext = (): number => {
-      const delay = Math.random() * 5000 + 10000; // 10-15 seconds
+      const delay = Math.random() * 20000 + 30000; // 30-50 seconds
       return window.setTimeout(() => {
         showNotification();
         intervalRef.current = scheduleNext();

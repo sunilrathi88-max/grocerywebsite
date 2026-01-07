@@ -153,7 +153,6 @@ describe('Cart', () => {
     discount: 0,
     subtotal: 997, // (249 * 2) + 499
     shippingCost: 0,
-    onRemoveItem: jest.fn(),
     onCheckout: jest.fn(),
   };
 
@@ -321,11 +320,9 @@ describe('Cart', () => {
 
       render(<Cart {...defaultProps} />);
 
-      const trashButtons = screen.getAllByRole('button', { name: '' }).filter((btn) => {
-        return btn.className.includes('text-red-500');
-      });
+      const removeButtons = screen.getAllByRole('button', { name: /remove/i });
 
-      fireEvent.click(trashButtons[0]);
+      fireEvent.click(removeButtons[0]);
 
       expect(confirmSpy).toHaveBeenCalledWith(
         'Are you sure you want to remove "Premium Saffron" from your cart?'
@@ -339,11 +336,9 @@ describe('Cart', () => {
 
       render(<Cart {...defaultProps} />);
 
-      const trashButtons = screen.getAllByRole('button', { name: '' }).filter((btn) => {
-        return btn.className.includes('text-red-500');
-      });
+      const removeButtons = screen.getAllByRole('button', { name: /remove/i });
 
-      fireEvent.click(trashButtons[0]);
+      fireEvent.click(removeButtons[0]);
 
       await act(async () => {
         jest.advanceTimersByTime(500);
@@ -359,11 +354,9 @@ describe('Cart', () => {
 
       render(<Cart {...defaultProps} />);
 
-      const trashButtons = screen.getAllByRole('button', { name: '' }).filter((btn) => {
-        return btn.className.includes('text-red-500');
-      });
+      const removeButtons = screen.getAllByRole('button', { name: /remove/i });
 
-      fireEvent.click(trashButtons[0]);
+      fireEvent.click(removeButtons[0]);
 
       expect(mockOnUpdateQuantity).not.toHaveBeenCalled();
     });
@@ -485,24 +478,24 @@ describe('Cart', () => {
     it('should display Proceed to Checkout button when items exist', () => {
       render(<Cart {...defaultProps} />);
 
-      expect(screen.getByText('Proceed to Checkout')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /Proceed to Checkout/i })).toBeInTheDocument();
     });
 
     it('should enable checkout button when items exist', () => {
       render(<Cart {...defaultProps} />);
 
-      const checkoutLink = screen.getByText('Proceed to Checkout').closest('a');
-      expect(checkoutLink).not.toHaveClass('cursor-not-allowed');
-      expect(checkoutLink).toHaveAttribute('href', '#/checkout');
+      const checkoutButton = screen.getByRole('button', { name: /Proceed to Checkout/i });
+      expect(checkoutButton).not.toBeDisabled();
+      expect(checkoutButton).not.toHaveClass('cursor-not-allowed');
     });
 
-    it('should call onClose when checkout button is clicked', () => {
+    it('should call onCheckout when checkout button is clicked', () => {
       render(<Cart {...defaultProps} />);
 
-      const checkoutLink = screen.getByText('Proceed to Checkout');
-      fireEvent.click(checkoutLink);
+      const checkoutButton = screen.getByRole('button', { name: /Proceed to Checkout/i });
+      fireEvent.click(checkoutButton);
 
-      expect(mockOnClose).toHaveBeenCalledTimes(1);
+      expect(defaultProps.onCheckout).toHaveBeenCalledTimes(1);
     });
 
     it('should show guest checkout message when not logged in', () => {

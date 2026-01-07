@@ -7,6 +7,8 @@ import { FilterSidebar } from '../components/FilterSidebar';
 import { ProductCard } from '../components/ProductCard';
 import { Pagination } from '../components/Pagination';
 import { useCartStore } from '../store/cartStore';
+import { useWishlist } from '../hooks/useWishlist';
+import { Product, Variant } from '../types';
 
 const ITEMS_PER_PAGE = 12;
 
@@ -23,6 +25,7 @@ const CategoryPage: React.FC = () => {
   // Hooks
   const { products, isLoading, error } = useProducts({ useMockData: true });
   const addItem = useCartStore((state) => state.addItem);
+  const { toggleWishlist } = useWishlist();
 
   // Parse initial state from URL
   const initialPage = parseInt(searchParams.get('page') || '1', 10);
@@ -121,20 +124,24 @@ const CategoryPage: React.FC = () => {
     setPriceRange([0, 2000]);
   };
 
-  const handleAddToCart = (product: any) => {
+  const handleAddToCart = (product: Product, variant?: Variant) => {
+    // Added variant parameter
     addItem({
       id: product.id.toString(),
       name: product.name,
-      price: product.price || product.variants[0]?.price,
+      price: product.variants[0]?.salePrice ?? product.variants[0]?.price, // Use salePrice if available
       quantity: 1,
-      image: product.image || product.images[0],
-      weight: 'Standard',
+      image: product.images[0],
+      weight: variant?.name || 'Standard', // Use variant name for weight
       stock: 10,
     });
   };
 
   const handleWishlist = (productId: string) => {
-    console.log('Toggle wishlist', productId);
+    const product = products.find((p) => p.id.toString() === productId);
+    if (product) {
+      toggleWishlist(product);
+    }
   };
 
   const handlePageChange = (page: number) => {

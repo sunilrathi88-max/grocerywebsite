@@ -90,7 +90,7 @@ export const MOCK_PRODUCTS: Product[] = [
     description:
       'Experience the rich, creamy sweetness of Mamra almonds—far superior to standard varieties. Packed with natural oils, they make healthy snacking feel indulgent.',
     images: [
-      'https://images.unsplash.com/photo-1508061253366-f7da158b6d6b?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1623428187969-5da2dcea5ebf?auto=format&fit=crop&w=800&q=80',
       'https://images.unsplash.com/photo-1623428187969-5da2dcea5ebf?auto=format&fit=crop&w=800&q=80',
     ],
     category: 'Nuts',
@@ -122,10 +122,7 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Organic Turmeric Powder',
     description:
       "Feel confident about what you're cooking with—purity you can see in the vibrant color. This high-curcumin turmeric adds earthy richness without the fear of additives.",
-    images: [
-      '/images/products/turmeric-powder-front.jpg',
-      '/images/products/turmeric-powder-back.jpg',
-    ],
+    images: ['/images/products/turmeric-1.svg', '/images/products/turmeric-2.svg'],
     category: 'Spices',
     variants: [{ id: 401, name: '200g', price: 249, stock: 5 }],
     reviews: [

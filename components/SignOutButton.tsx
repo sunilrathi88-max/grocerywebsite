@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { supabase } from '../supabaseClient';
 
 interface SignOutButtonProps {
   redirectTo?: string;
@@ -12,6 +11,7 @@ const SignOutButton: React.FC<SignOutButtonProps> = ({ redirectTo = '#/', classN
   const handleSignOut = async () => {
     setIsLoading(true);
     try {
+      const { supabase } = await import('../supabaseClient');
       await supabase.auth.signOut();
       // Clear any local storage
       localStorage.removeItem('auth_access_token');

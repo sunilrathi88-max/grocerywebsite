@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { XIcon } from './icons/XIcon';
 
 interface MobileMenuProps {
@@ -25,6 +26,8 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
   onLoginClick,
   onLogoutClick,
 }) => {
+  const navigate = useNavigate();
+
   useEffect(() => {
     const handleEsc = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
@@ -62,18 +65,17 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
   };
 
   const navLinks = [
-    { name: 'Home', href: '#/' },
-    { name: 'Products', href: '#/' },
-    { name: 'Offers', href: '#/offers' },
-    { name: 'Recipes', href: '#/recipes' },
-    { name: 'Blog', href: '#/blog' },
-    { name: 'Contact Us', href: '#/contact' },
+    { name: 'Home', href: '/' },
+    { name: 'Offers', href: '/offers' },
+    { name: 'Recipes', href: '/recipes' },
+    { name: 'Blog', href: '/blog' },
+    { name: 'Contact Us', href: '/contact' },
   ];
 
   return (
     <AnimatePresence>
       {isOpen && [
-        <motion.div
+        <m.div
           key="backdrop"
           // FIX: Wrapped framer-motion props in a spread object to resolve TypeScript error.
           {...({
@@ -87,7 +89,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
           } as any)}
         />,
-        <motion.div
+        <m.div
           key="menu"
           // FIX: Wrapped framer-motion props in a spread object to resolve TypeScript error.
 
@@ -130,25 +132,20 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
           </div>
           <nav className="flex flex-col p-6 pt-0 space-y-4 overflow-y-auto max-h-[60vh]">
             {navLinks.map((link, i) => (
-              <motion.a
+              <m.button
                 key={link.name}
-                // FIX: Wrapped framer-motion props in a spread object to resolve TypeScript error.
-
-                {...({
-                  custom: i,
-                  variants: navItemVariants,
-                  initial: 'hidden',
-                  animate: 'visible',
-                  key: link.name,
-                  href: link.href,
-                  className:
-                    'text-2xl font-serif text-brand-dark hover:text-brand-primary transition-colors',
-                  onClick: onClose,
-                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                } as any)}
+                custom={i}
+                variants={navItemVariants}
+                initial="hidden"
+                animate="visible"
+                className="text-2xl font-serif text-brand-dark hover:text-brand-primary transition-colors text-left"
+                onClick={() => {
+                  navigate(link.href);
+                  onClose();
+                }}
               >
                 {link.name}
-              </motion.a>
+              </m.button>
             ))}
 
             <div className="border-t border-gray-200 my-4 pt-4">
@@ -156,7 +153,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
                 Categories
               </p>
               {categories.map((category, i) => (
-                <motion.button
+                <m.button
                   key={category}
                   // FIX: Wrapped framer-motion props in a spread object to resolve TypeScript error.
                   {...({
@@ -174,13 +171,13 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
                   } as any)}
                 >
                   {category}
-                </motion.button>
+                </m.button>
               ))}
             </div>
 
             <div className="border-t border-gray-200 pt-4">
               {isLoggedIn ? (
-                <motion.button
+                <m.button
                   // FIX: Wrapped framer-motion props in a spread object to resolve TypeScript error.
                   {...({
                     custom: navLinks.length + categories.length + 1,
@@ -194,9 +191,9 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
                   } as any)}
                 >
                   Sign Out
-                </motion.button>
+                </m.button>
               ) : (
-                <motion.button
+                <m.button
                   // FIX: Wrapped framer-motion props in a spread object to resolve TypeScript error.
                   {...({
                     custom: navLinks.length + categories.length + 1,
@@ -210,11 +207,11 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
                   } as any)}
                 >
                   Login / Sign Up
-                </motion.button>
+                </m.button>
               )}
             </div>
           </nav>
-        </motion.div>,
+        </m.div>,
       ]}
     </AnimatePresence>
   );

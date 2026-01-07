@@ -1,0 +1,22 @@
+﻿
+> tattva-co.---indian-gourmet-products@0.0.0 lint
+> eslint . --ext .ts,.tsx,.js,.jsx
+
+
+C:\Users\shubh\grocerywebsite\grocerywebsite\components\CheckoutPage.tsx
+  7:10  warning  'XIcon' is defined but never used            @typescript-eslint/no-unused-vars
+  8:10  warning  'ShieldCheckIcon' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\shubh\grocerywebsite\grocerywebsite\components\MiniCart.tsx
+  106:96  error  Delete `┬╖unlocked`  prettier/prettier
+  107:16  error  Insert `┬╖unlocked`  prettier/prettier
+
+C:\Users\shubh\grocerywebsite\grocerywebsite\pages\CartPage.tsx
+  12:9  warning  'removeFromCart' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\shubh\grocerywebsite\grocerywebsite\pages\CategoryPage.tsx
+  393:27  error  Insert `┬╖┬╖`  prettier/prettier
+
+Γ£û 6 problems (3 errors, 3 warnings)
+  3 errors and 0 warnings potentially fixable with the `--fix` option.
+
