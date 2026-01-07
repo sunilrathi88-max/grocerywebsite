@@ -12,6 +12,13 @@ jest.mock('framer-motion', () => ({
   AnimatePresence: ({ children }: { children: React.ReactNode }) => <>{children}</>,
 }));
 
+// Mock OptimizedImage
+jest.mock('../OptimizedImage', () => ({
+  OptimizedImage: ({ src, alt, className }: { src: string; alt: string; className?: string }) => (
+    <img src={src} alt={alt} className={className} data-testid="optimized-image" />
+  ),
+}));
+
 describe('ProductCard', () => {
   // Mock functions
   const mockOnAddToCart = jest.fn();
@@ -61,7 +68,7 @@ describe('ProductCard', () => {
   describe('Badges', () => {
     it('should display NEW badge', () => {
       renderWithRouter(<ProductCard {...defaultProps} badge="new" />);
-      expect(screen.getByText('NEW')).toBeInTheDocument();
+      expect(screen.getByText('New')).toBeInTheDocument();
     });
 
     it('should display DISCOUNT badge', () => {
@@ -83,7 +90,7 @@ describe('ProductCard', () => {
     it('should call onWishlist when wishlist button is clicked', () => {
       renderWithRouter(<ProductCard {...defaultProps} />);
 
-      const wishlistButton = screen.getByText(/Wishlist/);
+      const wishlistButton = screen.getByRole('button', { name: /Add to wishlist/i });
       fireEvent.click(wishlistButton);
 
       expect(mockOnWishlist).toHaveBeenCalledWith('1');

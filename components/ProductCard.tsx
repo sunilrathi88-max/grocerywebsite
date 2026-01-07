@@ -89,6 +89,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               setIsWishlisted(!isWishlisted);
               onWishlist(id);
             }}
+            aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
           >
             {isWishlisted ? '❤️' : '♡'}
           </button>
