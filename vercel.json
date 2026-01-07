@@ -5,7 +5,6 @@
   "devCommand": "npm run dev",
   "installCommand": "npm install",
   "framework": "vite",
-
   "headers": [
     {
       "source": "/assets/(.*)",
@@ -82,7 +81,6 @@
       ]
     }
   ],
-
   "redirects": [
     {
       "source": "/home",
@@ -90,14 +88,12 @@
       "permanent": true
     }
   ],
-
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/((?!assets/|.*\\..*).*)",
       "destination": "/index.html"
     }
   ],
-
   "env": {
     "NODE_ENV": "production"
   }
