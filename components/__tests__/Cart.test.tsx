@@ -81,6 +81,7 @@ jest.mock('framer-motion', () => {
 
   return {
     motion,
+    m: motion,
     AnimatePresence,
     useAnimation: () => ({
       start: jest.fn(),
