@@ -1,8 +1,6 @@
 User-agent: *
 Allow: /
-
-# Sitemap
-Sitemap: https://tattva-co.com/sitemap.xml
+Sitemap: https://tattvaco.in/sitemap.xml
 
 # Disallow admin/private paths
 Disallow: /admin

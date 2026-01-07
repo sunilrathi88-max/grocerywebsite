@@ -13,8 +13,8 @@ export const MOCK_PRODUCTS: Product[] = [
     videos: ['https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4'],
     category: 'Spices',
     variants: [
-      { id: 101, name: '1g', price: 599, salePrice: 499, stock: 15 },
-      { id: 102, name: '5g', price: 2899, stock: 8 },
+      { id: 101, name: '1g', price: 300, stock: 15 },
+      { id: 102, name: '5g', price: 1500, stock: 8 },
     ],
     reviews: [
       {
@@ -65,7 +65,7 @@ export const MOCK_PRODUCTS: Product[] = [
       'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
     ],
     category: 'Spices',
-    variants: [{ id: 201, name: '250g', price: 399, stock: 30 }],
+    variants: [{ id: 201, name: '250g', price: 300, stock: 30 }],
     reviews: [
       {
         id: 3,
@@ -86,7 +86,7 @@ export const MOCK_PRODUCTS: Product[] = [
   },
   {
     id: 3,
-    name: 'Kashmiri Almonds',
+    name: 'California Almonds',
     description:
       'Experience the rich, creamy sweetness of Mamra almonds—far superior to standard varieties. Packed with natural oils, they make healthy snacking feel indulgent.',
     images: [
@@ -95,8 +95,8 @@ export const MOCK_PRODUCTS: Product[] = [
     ],
     category: 'Nuts',
     variants: [
-      { id: 301, name: '500g', price: 899, stock: 20 },
-      { id: 302, name: '1kg', price: 1699, stock: 10 },
+      { id: 301, name: '500g', price: 500, stock: 20 },
+      { id: 302, name: '1kg', price: 1000, stock: 10 },
     ],
     reviews: [
       {
@@ -124,7 +124,10 @@ export const MOCK_PRODUCTS: Product[] = [
       "Feel confident about what you're cooking with—purity you can see in the vibrant color. This high-curcumin turmeric adds earthy richness without the fear of additives.",
     images: ['/images/products/turmeric-1.svg', '/images/products/turmeric-2.svg'],
     category: 'Spices',
-    variants: [{ id: 401, name: '200g', price: 249, stock: 5 }],
+    variants: [
+      { id: 401, name: '200g', price: 100, stock: 5 },
+      { id: 402, name: '500g', price: 220, stock: 5 },
+    ],
     reviews: [
       {
         id: 5,
@@ -152,7 +155,7 @@ export const MOCK_PRODUCTS: Product[] = [
   },
   {
     id: 5,
-    name: 'Darjeeling First Flush Tea',
+    name: 'Royal Assam Kadak Chai',
     description:
       'Elevate your morning ritual with the "Champagne of Teas"—so delicate effectively it needs no sugar. Enjoy the floral aroma and leave the bitterness behind.',
     images: [
@@ -160,7 +163,7 @@ export const MOCK_PRODUCTS: Product[] = [
       'https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=800&q=80',
     ],
     category: 'Beverages',
-    variants: [{ id: 501, name: '100g', price: 1299, salePrice: 1099, stock: 25 }],
+    variants: [{ id: 501, name: '500g', price: 300, stock: 25 }],
     reviews: [
       {
         id: 7,
@@ -188,7 +191,7 @@ export const MOCK_PRODUCTS: Product[] = [
       'https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=800&q=80',
     ],
     category: 'Spices',
-    variants: [{ id: 601, name: '100g', price: 349, stock: 40 }],
+    variants: [{ id: 601, name: '100g', price: 230, stock: 40 }],
     reviews: [
       {
         id: 8,
@@ -246,8 +249,8 @@ export const MOCK_PRODUCTS: Product[] = [
     ],
     category: 'Nuts',
     variants: [
-      { id: 801, name: '250g', price: 499, stock: 0 },
-      { id: 802, name: '500g', price: 949, stock: 0 },
+      { id: 801, name: '250g', price: 350, stock: 0 },
+      { id: 802, name: '500g', price: 700, stock: 0 },
     ],
     reviews: [
       {
@@ -288,31 +291,35 @@ export const MOCK_PRODUCTS: Product[] = [
       'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
     ],
     category: 'Spices',
-    variants: [{ id: 1001, name: '50g', price: 349, stock: 30 }],
+    variants: [{ id: 1001, name: '50g', price: 250, stock: 30 }],
     reviews: [],
     tags: ['Aromatic', 'Baking', 'Chai'],
   },
   {
     id: 11,
-    name: 'Ceylon Cinnamon',
+    name: 'Cinnamon',
     description:
       'Forget the harsh burn of cassia. Enjoy the delicate, sweet warmth of true cinnamon that elevates your baking without overpowering it.',
     images: [
       'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
     ],
     category: 'Spices',
-    variants: [{ id: 1101, name: '100g', price: 399, stock: 25 }],
+    variants: [{ id: 1101, name: '100g', price: 120, stock: 25 }],
     reviews: [],
     tags: ['Sweet', 'Baking', 'True Cinnamon'],
   },
   {
     id: 12,
-    name: 'Guntur Chilli Powder',
+    name: 'Jodhpuri Mathaniya Chilli Powder',
     description:
       'Ignite your palate with authentic fiery heat. Authentic Guntur chillies deliver the punch you crave without the artificial dyes.',
     images: ['/images/products/red-chilli-powder-back.jpg'],
     category: 'Spices',
-    variants: [{ id: 1201, name: '250g', price: 199, stock: 60 }],
+    variants: [
+      { id: 1201, name: '200g', price: 120, stock: 60 },
+      { id: 1202, name: '500g', price: 250, stock: 60 },
+    ],
     reviews: [],
     tags: ['Spicy', 'Essential', 'Indian'],
   },
@@ -325,7 +332,7 @@ export const MOCK_PRODUCTS: Product[] = [
       'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
     ],
     category: 'Spices',
-    variants: [{ id: 1301, name: '200g', price: 149, stock: 45 }],
+    variants: [{ id: 1301, name: '200g', price: 80, stock: 45 }],
     reviews: [],
     tags: ['Citrusy', 'Essential', 'Whole'],
   },
@@ -338,7 +345,7 @@ export const MOCK_PRODUCTS: Product[] = [
       'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
     ],
     category: 'Spices',
-    variants: [{ id: 1401, name: '200g', price: 199, stock: 50 }],
+    variants: [{ id: 1401, name: '200g', price: 120, stock: 50 }],
     reviews: [],
     tags: ['Earthy', 'Essential', 'Whole'],
   },
@@ -351,7 +358,7 @@ export const MOCK_PRODUCTS: Product[] = [
       'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
     ],
     category: 'Spices',
-    variants: [{ id: 1501, name: '100g', price: 129, stock: 40 }],
+    variants: [{ id: 1501, name: '200g', price: 130, stock: 40 }],
     reviews: [],
     tags: ['Sweet', 'Digestive', 'Mukhwas'],
   },
@@ -377,7 +384,7 @@ export const MOCK_PRODUCTS: Product[] = [
       'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
     ],
     category: 'Spices',
-    variants: [{ id: 1701, name: '50g', price: 299, stock: 35 }],
+    variants: [{ id: 1701, name: '50g', price: 130, stock: 35 }],
     reviews: [],
     tags: ['Pungent', 'Aromatic', 'Whole'],
   },
@@ -390,7 +397,7 @@ export const MOCK_PRODUCTS: Product[] = [
       'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
     ],
     category: 'Spices',
-    variants: [{ id: 1801, name: '200g', price: 99, stock: 60 }],
+    variants: [{ id: 1801, name: '200g', price: 60, stock: 60 }],
     reviews: [],
     tags: ['Pungent', 'Tempering', 'Essential'],
   },
@@ -403,7 +410,7 @@ export const MOCK_PRODUCTS: Product[] = [
       'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
     ],
     category: 'Spices',
-    variants: [{ id: 1901, name: '200g', price: 119, stock: 40 }],
+    variants: [{ id: 1901, name: '200g', price: 60, stock: 40 }],
     reviews: [],
     tags: ['Bitter', 'Pickling', 'Essential'],
   },
@@ -429,7 +436,7 @@ export const MOCK_PRODUCTS: Product[] = [
       'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
     ],
     category: 'Nuts',
-    variants: [{ id: 2101, name: '500g', price: 799, stock: 30 }],
+    variants: [{ id: 2101, name: '500g', price: 750, stock: 30 }],
     reviews: [],
     tags: ['Snack', 'Creamy', 'Premium'],
   },
@@ -442,7 +449,7 @@ export const MOCK_PRODUCTS: Product[] = [
       'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
     ],
     category: 'Nuts',
-    variants: [{ id: 2201, name: '250g', price: 499, stock: 30 }],
+    variants: [{ id: 2201, name: '200g', price: 350, stock: 30 }],
     reviews: [],
     tags: ['Snack', 'Roasted', 'Salted'],
   },
@@ -455,7 +462,7 @@ export const MOCK_PRODUCTS: Product[] = [
       'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
     ],
     category: 'Nuts',
-    variants: [{ id: 2301, name: '500g', price: 899, stock: 20 }],
+    variants: [{ id: 2301, name: '500g', price: 500, stock: 20 }],
     reviews: [],
     tags: ['Healthy', 'Baking', 'Snack'],
   },
@@ -468,7 +475,7 @@ export const MOCK_PRODUCTS: Product[] = [
       'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
     ],
     category: 'Dry Fruits',
-    variants: [{ id: 2401, name: '500g', price: 299, stock: 50 }],
+    variants: [{ id: 2401, name: '500g', price: 350, stock: 50 }],
     reviews: [],
     tags: ['Sweet', 'Snack', 'Natural'],
   },
@@ -505,7 +512,7 @@ export const MOCK_PRODUCTS: Product[] = [
       'Ditch the teabag dust. Brew a cup of comfort with whole spices and premium tea leaves for a ritual that recharges your soul.',
     images: ['/images/products/chai-masala-front.jpg', '/images/products/chai-masala-back.jpg'],
     category: 'Beverages',
-    variants: [{ id: 2701, name: '250g', price: 349, stock: 40 }],
+    variants: [{ id: 2701, name: '100g', price: 200, stock: 40 }],
     reviews: [],
     tags: ['Tea', 'Spiced', 'Ritual'],
   },
@@ -516,7 +523,7 @@ export const MOCK_PRODUCTS: Product[] = [
       'The finishing touch your grandmother would approve of. A secret blend of 12 roasted spices that brings harmony to any Indian curry.',
     images: ['/images/products/garam-masala-front.jpg', '/images/products/garam-masala-back.jpg'],
     category: 'Spices',
-    variants: [{ id: 2801, name: '100g', price: 299, stock: 35 }],
+    variants: [{ id: 2801, name: '100g', price: 220, stock: 35 }],
     reviews: [],
     tags: ['Blend', 'Essential', 'Aromatic'],
   },
@@ -530,7 +537,10 @@ export const MOCK_PRODUCTS: Product[] = [
       '/images/products/coriander-powder-back.jpg',
     ],
     category: 'Spices',
-    variants: [{ id: 2901, name: '200g', price: 149, stock: 45 }],
+    variants: [
+      { id: 2901, name: '200g', price: 130, stock: 45 },
+      { id: 2902, name: '500g', price: 250, stock: 45 },
+    ],
     reviews: [],
     tags: ['Earthy', 'Citrusy', 'Essential'],
   },
