@@ -30,6 +30,7 @@
     "percy:snapshot": "percy exec -- cypress run --spec 'cypress/e2e/08-visual-regression.cy.ts'",
     "images:convert": "node scripts/convertToWebP.js",
     "images:convert:responsive": "node scripts/convertToWebP.js --responsive",
+    "generate:sitemap": "node scripts/generate-sitemap-regex.cjs",
     "lighthouse": "lhci autorun",
     "lighthouse:local": "npm run build && npm run preview & wait-on http://localhost:4173 && lhci autorun && kill %1",
     "test:all": "npm run test:unit && npm run test:e2e && npm run lighthouse",

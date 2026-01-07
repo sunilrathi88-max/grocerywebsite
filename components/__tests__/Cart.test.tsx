@@ -10,39 +10,39 @@ jest.mock('framer-motion', () => {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
   const React = require('react');
   const motion = {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     div: ({ children, ...props }: any) => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { layout, initial, animate, exit, transition, whileHover, whileTap, key, ...rest } =
         props;
       return <div {...rest}>{children}</div>;
     },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     button: ({ children, onClick, className, disabled, ...props }: any) => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { layout, initial, animate, exit, transition, whileHover, whileTap, key, ...rest } =
         props;
       return (
-        <button
-          onClick={onClick}
-          className={className}
-          disabled={disabled}
-          {...rest}
-        >
+        <button onClick={onClick} className={className} disabled={disabled} {...rest}>
           {children}
         </button>
       );
     },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     span: ({ children, ...props }: any) => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { layout, initial, animate, exit, transition, whileHover, whileTap, key, ...rest } =
         props;
       return <span {...rest}>{children}</span>;
     },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     a: ({ children, ...props }: any) => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { layout, initial, animate, exit, transition, whileHover, whileTap, key, ...rest } =
         props;
       return <a {...rest}>{children}</a>;
     },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     p: ({ children, ...props }: any) => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { layout, initial, animate, exit, transition, whileHover, whileTap, key, ...rest } =
