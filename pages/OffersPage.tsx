@@ -217,7 +217,7 @@ const OffersPage: React.FC = () => {
             onAddToCart={handleAddToCart}
             onToggleWishlist={handleToggleWishlistFn}
             comparisonIds={new Set<number>()}
-            onNotifyMe={() => { }}
+            onNotifyMe={() => {}}
             onClearFilters={handleClearFilters}
           />
         </div>
