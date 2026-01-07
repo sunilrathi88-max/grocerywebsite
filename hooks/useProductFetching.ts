@@ -27,7 +27,7 @@ export const useProductFetching = (options?: UseProductsOptions) => {
         setLoading(true);
         // Note: This endpoint might not exist in the current setup, standardizing on what user asked.
         const response = await axios.get('/api/products', { params: options });
-        setProducts(response.data);
+        setProducts(response.data as Product[]);
         setError(null);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to fetch products');

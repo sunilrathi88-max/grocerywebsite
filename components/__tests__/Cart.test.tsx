@@ -10,71 +10,45 @@ jest.mock('framer-motion', () => {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
   const React = require('react');
   const motion = {
-    div: ({
-      children,
-      layout: _layout,
-      initial: _initial,
-      animate: _animate,
-      exit: _exit,
-      transition: _transition,
-      whileHover: _whileHover,
-      whileTap: _whileTap,
-      ...props
-    }: React.ComponentProps<'div'> & Record<string, unknown>) => <div {...props}>{children}</div>,
-    button: ({
-      children,
-      onClick,
-      className,
-      disabled,
-      layout: _layout,
-      initial: _initial,
-      animate: _animate,
-      exit: _exit,
-      transition: _transition,
-      whileHover: _whileHover,
-      whileTap: _whileTap,
-      ...props
-    }: React.ComponentProps<'button'> & Record<string, unknown>) => (
-      <button onClick={onClick} className={className} disabled={disabled} {...props}>
-        {children}
-      </button>
-    ),
-    span: ({
-      children,
-      layout: _layout,
-      initial: _initial,
-      animate: _animate,
-      exit: _exit,
-      transition: _transition,
-      whileHover: _whileHover,
-      whileTap: _whileTap,
-      key: _key,
-      ...props
-    }: React.ComponentProps<'span'> & Record<string, unknown>) => (
-      <span {...props}>{children}</span>
-    ),
-    a: ({
-      children,
-      layout: _layout,
-      initial: _initial,
-      animate: _animate,
-      exit: _exit,
-      transition: _transition,
-      whileHover: _whileHover,
-      whileTap: _whileTap,
-      ...props
-    }: React.ComponentProps<'a'> & Record<string, unknown>) => <a {...props}>{children}</a>,
-    p: ({
-      children,
-      layout: _layout,
-      initial: _initial,
-      animate: _animate,
-      exit: _exit,
-      transition: _transition,
-      whileHover: _whileHover,
-      whileTap: _whileTap,
-      ...props
-    }: React.ComponentProps<'p'> & Record<string, unknown>) => <p {...props}>{children}</p>,
+    div: ({ children, ...props }: any) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { layout, initial, animate, exit, transition, whileHover, whileTap, key, ...rest } =
+        props;
+      return <div {...rest}>{children}</div>;
+    },
+    button: ({ children, onClick, className, disabled, ...props }: any) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { layout, initial, animate, exit, transition, whileHover, whileTap, key, ...rest } =
+        props;
+      return (
+        <button
+          onClick={onClick}
+          className={className}
+          disabled={disabled}
+          {...rest}
+        >
+          {children}
+        </button>
+      );
+    },
+    span: ({ children, ...props }: any) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { layout, initial, animate, exit, transition, whileHover, whileTap, key, ...rest } =
+        props;
+      return <span {...rest}>{children}</span>;
+    },
+    a: ({ children, ...props }: any) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { layout, initial, animate, exit, transition, whileHover, whileTap, key, ...rest } =
+        props;
+      return <a {...rest}>{children}</a>;
+    },
+    p: ({ children, ...props }: any) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { layout, initial, animate, exit, transition, whileHover, whileTap, key, ...rest } =
+        props;
+      return <p {...rest}>{children}</p>;
+    },
   };
 
   const AnimatePresence = ({ children }: { children: React.ReactNode }) => <>{children}</>;
