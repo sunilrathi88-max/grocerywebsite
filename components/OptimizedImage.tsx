@@ -143,8 +143,7 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
         className={`${className} ${isLoaded ? 'opacity-100' : 'opacity-0'
           } transition-opacity duration-300 ease-in-out`}
         loading={loading}
-        // @ts-expect-error - fetchpriority is a valid attribute but not yet in React types
-        fetchpriority={priority === 'high' ? 'high' : 'auto'}
+        fetchPriority={priority === 'high' ? 'high' : 'auto'}
         width={width}
         height={height}
         onLoad={handleLoad}
