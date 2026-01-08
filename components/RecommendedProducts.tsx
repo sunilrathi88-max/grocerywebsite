@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { Product, Variant } from '../types';
 import ProductSlider from './ProductSlider';
 import { useViewingHistory } from '../hooks/useViewingHistory';
+import { getPersonalizedSuggestions } from '../utils/recommendations';
 
 interface RecommendedProductsProps {
   allProducts: Product[];
@@ -19,33 +20,8 @@ const RecommendedProducts: React.FC<RecommendedProductsProps> = ({
   const { viewedProducts } = useViewingHistory();
 
   const recommendations = useMemo(() => {
-    if (viewedProducts.length === 0) return [];
-
-    // 1. Get categories of viewed products
-    const viewedCategories = new Set(viewedProducts.map((p) => p.category));
-
-    // 2. Find products in those categories, excluding already viewed ones
-    const viewedIds = new Set(viewedProducts.map((p) => p.id));
-
-    // 3. Simple scoring: Same category = +1 point
-    const candidates = allProducts.filter((p) => !viewedIds.has(p.id));
-
-    const scoredCandidates = candidates.map((p) => {
-      let score = 0;
-      if (viewedCategories.has(p.category)) score += 2;
-      // Boost highly rated products
-      const avgRating = p.reviews.reduce((acc, r) => acc + r.rating, 0) / (p.reviews.length || 1);
-      if (avgRating >= 4.5) score += 1;
-
-      return { product: p, score };
-    });
-
-    // 4. Sort by score and take top 8
-    return scoredCandidates
-      .filter((item) => item.score > 0)
-      .sort((a, b) => b.score - a.score)
-      .slice(0, 8)
-      .map((item) => item.product);
+    // Use the unified recommendation logic
+    return getPersonalizedSuggestions(viewedProducts, allProducts, 8);
   }, [viewedProducts, allProducts]);
 
   if (recommendations.length === 0 && viewedProducts.length === 0) return null;

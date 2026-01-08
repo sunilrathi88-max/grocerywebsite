@@ -99,6 +99,22 @@ export interface User {
   phone?: string;
   wishlist?: number[];
   orders?: string[];
+  subscription?: {
+    planId: string;
+    status: 'active' | 'cancelled' | 'paused';
+    startDate: string;
+    nextBillingDate: string;
+  };
+}
+
+export interface SubscriptionPlan {
+  id: string;
+  name: string;
+  price: number;
+  interval: 'monthly' | 'quarterly';
+  features: string[];
+  savings: string;
+  recommended?: boolean;
 }
 
 export type OrderStatus = 'Processing' | 'Shipped' | 'Delivered' | 'Cancelled';

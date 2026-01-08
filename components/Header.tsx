@@ -217,6 +217,7 @@ const Header: React.FC<HeaderProps> = ({
                                 <div className="w-8 h-8 rounded-full bg-brand-primary/10 flex items-center justify-center flex-shrink-0">
                                   <TagIcon className="h-4 w-4 text-brand-primary" />
                                 </div>
+
                                 <span className="font-medium text-gray-800 group-hover:text-brand-primary transition-colors">
                                   {category}
                                 </span>

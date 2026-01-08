@@ -8,6 +8,7 @@ import { TwitterIcon } from './icons/TwitterIcon';
 import { PinterestIcon } from './icons/PinterestIcon';
 import { InstagramIcon } from './icons/InstagramIcon';
 import TrustBadges from './TrustBadges';
+import CertificationsBanner from './CertificationsBanner';
 
 interface FooterProps {
   onSelectCategory: (category: string) => void;
@@ -116,14 +117,28 @@ const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
           </div>
           <div>
             <h4 className="font-bold tracking-wider uppercase text-gray-600">Company</h4>
-            <ul className="mt-4 space-y-2 text-sm">
+            <ul className="space-y-4">
               <li>
-                <Link to="/about" className="hover:text-brand-dark transition-colors">
+                <Link
+                  to="/farmers"
+                  className="text-neutral-400 hover:text-brand-dark transition-colors"
+                >
+                  Meet Our Farmers
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/about"
+                  className="text-neutral-400 hover:text-brand-dark transition-colors"
+                >
                   Our Story
                 </Link>
               </li>
               <li>
-                <Link to="/impact" className="hover:text-brand-dark transition-colors">
+                <Link
+                  to="/impact"
+                  className="text-neutral-400 hover:text-brand-dark transition-colors"
+                >
                   Social Impact
                 </Link>
               </li>
@@ -212,6 +227,8 @@ const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
           </div>
 
           {/* Trust Badges with Payment Methods */}
+          <CertificationsBanner variant="minimal" className="bg-transparent border-0 mb-8" />
+
           <TrustBadges
             badges={[
               { icon: '💳', text: 'Secure Payment' },

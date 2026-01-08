@@ -3,9 +3,9 @@ import { Product, User, Order, Testimonial, BlogPost, Recipe } from './types';
 export const MOCK_PRODUCTS: Product[] = [
   {
     id: 1,
-    name: 'Himalayan Saffron',
+    name: 'Himalayan Saffron (Kesar)',
     description:
-      'Transform your biryanis from ordinary to unforgettable with just a pinch. Experience the deep, golden aroma that only fresh, unadulterated Kashmiri Mongra can deliver.',
+      'Known as "Red Gold," our Himalayan Saffron is hand-harvested from the pristine valleys of Kashmir. These deep crimson strands (Mongra grade) possess a potent aroma and flavor.',
     images: [
       'https://images.unsplash.com/photo-1532336414038-cf19250c5757?auto=format&fit=crop&w=800&q=80',
       'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=800&q=80',
@@ -57,13 +57,10 @@ export const MOCK_PRODUCTS: Product[] = [
   },
   {
     id: 2,
-    name: 'Malabar Black Pepper',
+    name: 'Malabar Black Pepper (Kali Mirch)',
     description:
-      "Give your dishes a bold, aromatic kick that pre-ground pepper simply can't match. Taste the difference of sun-dried Tellicherry peppercorns in every bite.",
-    images: [
-      'https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
-    ],
+      'Sourced directly from the Malabar coast, these bold black peppercorns are sun-dried to preserve their sharp, biting heat and complex citrusy aroma. Rich in piperine for a robust kick.',
+    images: ['/images/products/tattv-malabar-black-pepper-front.png'],
     category: 'Spices',
     variants: [{ id: 201, name: '250g', price: 300, stock: 30 }],
     reviews: [
@@ -86,9 +83,9 @@ export const MOCK_PRODUCTS: Product[] = [
   },
   {
     id: 3,
-    name: 'California Almonds',
+    name: 'California Almonds (Badam)',
     description:
-      'Experience the rich, creamy sweetness of Mamra almonds—far superior to standard varieties. Packed with natural oils, they make healthy snacking feel indulgent.',
+      'Sourced from the best orchards in California, Tattv Almonds are sweet, crunchy, and packed with healthy fats, protein, and Vitamin E. Perfect for snacking or making rich Badam milk.',
     images: [
       'https://images.unsplash.com/photo-1623428187969-5da2dcea5ebf?auto=format&fit=crop&w=800&q=80',
       'https://images.unsplash.com/photo-1623428187969-5da2dcea5ebf?auto=format&fit=crop&w=800&q=80',
@@ -119,10 +116,10 @@ export const MOCK_PRODUCTS: Product[] = [
   },
   {
     id: 4,
-    name: 'Organic Turmeric Powder',
+    name: 'Salem Turmeric Powder (Haldi)',
     description:
-      "Feel confident about what you're cooking with—purity you can see in the vibrant color. This high-curcumin turmeric adds earthy richness without the fear of additives.",
-    images: ['/images/products/turmeric-1.svg', '/images/products/turmeric-2.svg'],
+      'The Golden Standard of Purity. Sourced from the Salem region of Tamil Nadu, known for its rich essential oils and high curcumin content. This deep golden-orange powder is pure, healing, and free from artificial colors.',
+    images: ['/images/products/turmeric-powder-front.jpg', '/images/products/turmeric-powder-back.jpg'],
     category: 'Spices',
     variants: [
       { id: 401, name: '200g', price: 100, stock: 5 },
@@ -145,7 +142,7 @@ export const MOCK_PRODUCTS: Product[] = [
       },
     ],
     nutrition: [{ key: 'High in', value: 'Curcumin' }],
-    origin: 'Andhra Pradesh, India',
+    origin: 'Salem, Tamil Nadu',
     harvestDate: 'February 2025',
     grade: 'High Curcumin (5%+)',
     purityTest: 'Certified Organic',
@@ -157,7 +154,7 @@ export const MOCK_PRODUCTS: Product[] = [
     id: 5,
     name: 'Royal Assam Kadak Chai',
     description:
-      'Elevate your morning ritual with the "Champagne of Teas"—so delicate effectively it needs no sugar. Enjoy the floral aroma and leave the bitterness behind.',
+      'For those who love their tea strong and bold. A blend of premium CTC granules that brews a dark, malty cup with a rich amber color. Delivers the authentic "Kadak" taste of India.',
     images: [
       'https://images.unsplash.com/photo-1594631252845-29fc4cc8cde9?auto=format&fit=crop&w=800&q=80',
       'https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=800&q=80',
@@ -181,48 +178,12 @@ export const MOCK_PRODUCTS: Product[] = [
     shelfLife: '24 Months',
     tags: ['Premium', 'Single-Origin', 'Tea'],
   },
-  {
-    id: 6,
-    name: 'Gourmet Garam Masala',
-    description:
-      'Stop guessing with store-bought mixes—achieve restaurant-quality flavor effortlessly. This artisanal blend brings perfect balance to your curries every single time.',
-    images: [
-      'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=800&q=80',
-    ],
-    category: 'Spices',
-    variants: [{ id: 601, name: '100g', price: 230, stock: 40 }],
-    reviews: [
-      {
-        id: 8,
-        author: 'David C.',
-        rating: 5,
-        comment: 'This has elevated my home cooking. I put it in everything!',
-        verifiedPurchase: true,
-      },
-    ],
-    qna: [
-      {
-        id: 2,
-        author: 'Lisa',
-        question: 'Is this very spicy/hot?',
-        answer:
-          'Our Garam Masala is aromatic and flavorful, not primarily hot. The heat level is mild.',
-      },
-    ],
-    origin: 'India (House Blend)',
-    harvestDate: 'Freshly Ground Monthly',
-    grade: 'Artisanal Blend',
-    purityTest: 'No Fillers',
-    storage: 'Airtight container',
-    shelfLife: '9 Months',
-    tags: ['Aromatic', 'House Blend', 'Spices'],
-  },
+
   {
     id: 7,
-    name: 'Organic Dried Apricots',
+    name: 'Organic Dried Apricots (Khubani)',
     description:
-      "Satisfy your sweet tooth guilt-free with nature's candy. These unsulphured apricots are naturally sweet and chewy, perfect for a healthy energy boost.",
+      'Sun-dried without sulphur treatment to retain their natural amber color. Chewy, sweet, and tangy, they are a perfect guilt-free snack loaded with Vitamin A and antioxidants.',
     images: [
       'https://images.unsplash.com/photo-1606913084603-3e7702b01627?auto=format&fit=crop&w=800&q=80',
       'https://images.unsplash.com/photo-1595413667362-722923769976?auto=format&fit=crop&w=800&q=80',
@@ -240,9 +201,9 @@ export const MOCK_PRODUCTS: Product[] = [
   },
   {
     id: 8,
-    name: 'Goan Cashew Nuts',
+    name: 'Goan Cashew Nuts (Kaju)',
     description:
-      'Immerse yourself in the creamy crunch of premium W240 cashews. Perfectly roasted to bring out a natural sweetness that makes ordinary cashews feel bland.',
+      'Experience the superior taste of Indian cashews. Renowned for their large size, ivory color, and naturally sweet, buttery taste. Expertly processed to ensure they remain whole and crunchy.',
     images: [
       'https://images.unsplash.com/photo-1536591375315-1988d6960545?auto=format&fit=crop&w=800&q=80',
       'https://images.unsplash.com/photo-1595413667362-722923769976?auto=format&fit=crop&w=800&q=80',
@@ -269,208 +230,224 @@ export const MOCK_PRODUCTS: Product[] = [
     shelfLife: '6 Months',
     tags: ['Premium', 'Snack', 'Indian'],
   },
-  {
-    id: 9,
-    name: 'Lakadong Turmeric',
-    description:
-      'Stop settling for dull, yellow powder. Our high-curcumin turmeric adds vibrant color and potent anti-inflammatory benefits to every spoon.',
-    images: [
-      'https://images.unsplash.com/photo-1615485500704-8e99099928b3?auto=format&fit=crop&w=800&q=80',
-    ],
-    category: 'Spices',
-    variants: [{ id: 901, name: '250g', price: 249, stock: 50 }],
-    reviews: [],
-    tags: ['High Curcumin', 'Organic', 'Essential'],
-  },
+
   {
     id: 10,
-    name: 'Coorg Green Cardamom',
+    name: 'Coorg Green Cardamom (Elaichi)',
     description:
-      'Breathe life into your chai and desserts with pearls of intense fragrance. Harvested at peak ripeness for an aroma that fills the room.',
-    images: [
-      'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
-    ],
+      'Grown in the misty hills of Coorg, handpicked at peak ripeness. Bursting with sweet, floral notes and refreshing menthol undertones. Essential for Masala Chai and rich desserts.',
+    images: ['/images/products/tattv-coorg-green-cardamom-front.jpg'],
     category: 'Spices',
     variants: [{ id: 1001, name: '50g', price: 250, stock: 30 }],
     reviews: [],
+    origin: 'Coorg, Karnataka',
+    harvestDate: 'October 2024',
+    processingMethod: 'Sun-Dried, Whole Pods',
+    grade: 'Extra Bold (8mm+)',
+    purityTest: 'Unadulterated',
+    storage: 'Airtight container',
+    shelfLife: '24 Months',
     tags: ['Aromatic', 'Baking', 'Chai'],
   },
   {
     id: 11,
-    name: 'Cinnamon',
+    name: 'Cinnamon Bark (Dalchini)',
     description:
-      'Forget the harsh burn of cassia. Enjoy the delicate, sweet warmth of true cinnamon that elevates your baking without overpowering it.',
-    images: [
-      'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
-    ],
+      'Provides a warm, sweet-spicy flavor profile. Perfect for steeping in tea, adding to rice pilafs, or grinding into baking spice mixes. Adds natural sweetness without sugar.',
+    images: ['/images/products/tattv-cinnamon-bark-front.png'],
     category: 'Spices',
     variants: [{ id: 1101, name: '100g', price: 120, stock: 25 }],
     reviews: [],
+    origin: 'Sri Lanka',
+    harvestDate: 'November 2024',
+    processingMethod: 'Hand-Rolled Quills',
+    grade: 'Alba Grade',
+    purityTest: 'True Cinnamon (Cinnamomum Verum)',
+    storage: 'Cool, dark place',
+    shelfLife: '36 Months',
     tags: ['Sweet', 'Baking', 'True Cinnamon'],
   },
   {
     id: 12,
-    name: 'Jodhpuri Mathaniya Chilli Powder',
+    name: 'Jodhpuri Mathania Red Chilli Powder',
     description:
-      'Ignite your palate with authentic fiery heat. Authentic Guntur chillies deliver the punch you crave without the artificial dyes.',
-    images: ['/images/products/red-chilli-powder-back.jpg'],
+      'Discover the Legend of Mathania. Sourced directly from the arid soils of Jodhpur, this "Red Gold" delivers a unique pungent heat and vibrant color perfect for authentic Rajasthani marinades and curries.',
+    images: ['/images/products/red-chilli-powder-front.jpg', '/images/products/red-chilli-powder-back.jpg'],
     category: 'Spices',
     variants: [
       { id: 1201, name: '200g', price: 120, stock: 60 },
       { id: 1202, name: '500g', price: 250, stock: 60 },
     ],
     reviews: [],
+    origin: 'Jodhpur, Rajasthan',
+    harvestDate: 'March 2025',
+    processingMethod: 'Sun-Dried, Stone-Ground',
+    grade: 'Mathaniya Laal',
+    purityTest: 'No Artificial Colors',
+    storage: 'Airtight container',
+    shelfLife: '12 Months',
     tags: ['Spicy', 'Essential', 'Indian'],
   },
   {
     id: 13,
-    name: 'Coriander Seeds',
+    name: 'Whole Coriander Seeds (Sabut Dhaniya)',
     description:
-      'Crush these seeds to release a citrusy, floral burst that transforms curries. Sourced fresh to ensure no flavor is lost to time.',
+      'Light, crisp, and full of citrusy, woody notes. Perfect for dry roasting and grinding fresh at home, or for crushing coarsely into Samosa fillings and pickles.',
     images: [
       'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
     ],
     category: 'Spices',
     variants: [{ id: 1301, name: '200g', price: 80, stock: 45 }],
     reviews: [],
+    origin: 'Rajasthan, India',
+    harvestDate: 'April 2025',
+    processingMethod: 'Sun-Dried, Whole',
+    grade: 'Split (Dal)',
+    purityTest: 'Clean & Unpolished',
+    storage: 'Cool, dry place',
+    shelfLife: '18 Months',
     tags: ['Citrusy', 'Essential', 'Whole'],
   },
   {
     id: 14,
-    name: 'Cumin Seeds',
+    name: 'Premium Cumin Seeds (Jeera)',
     description:
-      'The backbone of flavor, revived. Our sun-dried cumin seeds bring a nutty, earthy depth that generic store brands simply lack.',
-    images: [
-      'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
-    ],
+      'Cleaned and sorted to ensure zero dust or stones. They release an intense, nutty, and earthy aroma when tempered in hot oil/ghee. A digestive aid and flavor powerhouse.',
+    images: ['/images/products/tattv-cumin-seeds-front.jpg'],
     category: 'Spices',
     variants: [{ id: 1401, name: '200g', price: 120, stock: 50 }],
     reviews: [],
+    origin: 'Gujarat, India',
+    harvestDate: 'March 2025',
+    processingMethod: 'Sun-Dried, Whole',
+    grade: 'Singapore Quality',
+    purityTest: 'No Adulteration',
+    storage: 'Airtight container',
+    shelfLife: '24 Months',
     tags: ['Earthy', 'Essential', 'Whole'],
   },
   {
     id: 15,
-    name: 'Fennel Seeds',
+    name: 'Fennel Seeds (Saunf)',
     description:
-      'Refresh your senses with the sweet, licorice-like crunch of Lucknowi fennel. A perfect digestive that tastes as good as it feels.',
-    images: [
-      'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
-    ],
+      'Vibrant green and naturally sweet. Traditionally used as a post-meal digestive and mouth freshener (Mukhwas), they add a subtle anise-like sweetness to curries and pickles.',
+    images: ['/images/products/tattv-fennel-seeds-front.jpg'],
     category: 'Spices',
     variants: [{ id: 1501, name: '200g', price: 130, stock: 40 }],
     reviews: [],
+    origin: 'Lucknow, Uttar Pradesh',
+    harvestDate: 'April 2025',
+    processingMethod: 'Sun-Dried, Whole',
+    grade: 'Lucknowi',
+    purityTest: 'Natural & Clean',
+    storage: 'Cool, dry place',
+    shelfLife: '18 Months',
     tags: ['Sweet', 'Digestive', 'Mukhwas'],
   },
-  {
-    id: 16,
-    name: 'Star Anise',
-    description:
-      'Add a mystical, sweet-spiciness to your broths. Whole stars that guarantee your signature dishes have that secret restaurant-quality depth.',
-    images: [
-      'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
-    ],
-    category: 'Spices',
-    variants: [{ id: 1601, name: '50g', price: 249, stock: 30 }],
-    reviews: [],
-    tags: ['Exotic', 'Aromatic', 'Whole'],
-  },
-  {
-    id: 17,
-    name: 'Cloves',
-    description:
-      'Unlock intense, warming aroma with just a few buds. Hand-selected for oil content, ensuring your heavy spices pack a powerful punch.',
-    images: [
-      'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
-    ],
-    category: 'Spices',
-    variants: [{ id: 1701, name: '50g', price: 130, stock: 35 }],
-    reviews: [],
-    tags: ['Pungent', 'Aromatic', 'Whole'],
-  },
+
+
   {
     id: 18,
-    name: 'Mustard Seeds',
+    name: 'Small Mustard Seeds (Rai)',
     description:
-      'Hear the pop of freshness. These seeds crackle with pungent flavor, essential for a tempering that wakes up any lentil dish.',
-    images: [
-      'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
-    ],
+      'Small in size but big on flavor. These seeds pop with a nutty, pungent kick when tempered. Essential for South Indian curries, pickles, and Bengali fish dishes.',
+    images: ['/images/products/tattv-mustard-seeds-rai-front.jpg'],
     category: 'Spices',
     variants: [{ id: 1801, name: '200g', price: 60, stock: 60 }],
     reviews: [],
+    origin: 'Rajasthan, India',
+    harvestDate: 'March 2025',
+    processingMethod: 'Sun-Dried, Whole',
+    grade: 'Yellow Mustard',
+    purityTest: 'Clean & Unpolished',
+    storage: 'Airtight container',
+    shelfLife: '18 Months',
     tags: ['Pungent', 'Tempering', 'Essential'],
   },
   {
     id: 19,
-    name: 'Fenugreek Seeds',
+    name: 'Fenugreek Seeds (Methi Dana)',
     description:
-      'Master the art of subtle bitterness. Essential for pickles and sambar, adding a complex savory note that balances rich flavors.',
-    images: [
-      'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
-    ],
+      'Known for their maple-like aroma and subtle bitterness. A staple for pickles and Sambars. Rich in fiber and known to support blood sugar health.',
+    images: ['/images/products/tattv-fenugreek-seeds-front.png'],
     category: 'Spices',
     variants: [{ id: 1901, name: '200g', price: 60, stock: 40 }],
     reviews: [],
+    origin: 'Rajasthan, India',
+    harvestDate: 'April 2025',
+    processingMethod: 'Sun-Dried, Whole',
+    grade: 'Bold',
+    purityTest: 'Natural & Clean',
+    storage: 'Cool, dry place',
+    shelfLife: '24 Months',
     tags: ['Bitter', 'Pickling', 'Essential'],
   },
-  {
-    id: 20,
-    name: 'Bay Leaf',
-    description:
-      'Infuse your slow-cooked meals with a subtle, herbal elegance. Whole, unbroken leaves that release flavor slowly and steadily.',
-    images: [
-      'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
-    ],
-    category: 'Spices',
-    variants: [{ id: 2001, name: '50g', price: 89, stock: 50 }],
-    reviews: [],
-    tags: ['Aromatic', 'Whole', 'Essential'],
-  },
+
   {
     id: 21,
-    name: 'Cashew Nuts',
+    name: 'Pure Assam Black Tea',
     description:
-      'Creamy, crunchy, and naturally sweet. Whole W320 grade cashews that turn snacking into a moment of pure, guilt-free luxury.',
+      'Experience the sophistication of whole leaf tea. Offers a refined, smooth brew with distinct malty notes and a fragrant aroma. Best enjoyed black or with a splash of lemon.',
     images: [
       'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
     ],
-    category: 'Nuts',
+    category: 'Beverages',
     variants: [{ id: 2101, name: '500g', price: 750, stock: 30 }],
     reviews: [],
-    tags: ['Snack', 'Creamy', 'Premium'],
+    origin: 'Assam, India',
+    harvestDate: 'April 2024 (First Flush)',
+    processingMethod: 'Orthodox, Hand-Rolled',
+    grade: 'FTGFOP1 (Finest Tippy Golden Flowery Orange Pekoe)',
+    purityTest: 'Single Estate',
+    storage: 'Airtight canister',
+    shelfLife: '24 Months',
+    tags: ['Tea', 'Morning', 'Premium'],
   },
   {
     id: 22,
-    name: 'Pistachios',
+    name: 'Premium Pistachios (Pista)',
     description:
-      'Crack open vibrant green delight. Lightly salted and roasted to perfection, making every kernel a savory treasure.',
+      'Roasted to perfection to bring out their nutty flavor. Bursting with vibrant green kernels inside naturally open shells. A fiber-rich snack that is as delicious as it is healthy.',
     images: [
       'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
     ],
     category: 'Nuts',
     variants: [{ id: 2201, name: '200g', price: 350, stock: 30 }],
     reviews: [],
+    origin: 'Iran',
+    harvestDate: 'September 2024',
+    processingMethod: 'Roasted & Salted',
+    grade: 'Akbari',
+    purityTest: 'Naturally Opened',
+    storage: 'Airtight container',
+    shelfLife: '9 Months',
     tags: ['Snack', 'Roasted', 'Salted'],
   },
   {
     id: 23,
-    name: 'Walnuts',
+    name: 'Premium Walnut Kernels (Akhrot)',
     description:
-      'Brain food that actually tastes good. Golden, buttery kernels with zero bitterness, perfect for baking or snacking straight from the shell.',
+      'Fresh, earthy, and mildly bitter-sweet. Shelled carefully to keep the butterfly halves intact. Rich in Omega-3 fatty acids, the ultimate brain food.',
     images: [
       'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
     ],
     category: 'Nuts',
     variants: [{ id: 2301, name: '500g', price: 500, stock: 20 }],
     reviews: [],
+    origin: 'Kashmir, India',
+    harvestDate: 'October 2024',
+    processingMethod: 'Shelled Halves',
+    grade: 'Light Halves',
+    purityTest: 'No Shell Fragments',
+    storage: 'Refrigerate',
+    shelfLife: '12 Months',
     tags: ['Healthy', 'Baking', 'Snack'],
   },
   {
     id: 24,
-    name: 'Raisins',
+    name: 'Premium Raisins (Kishmish)',
     description:
-      "Nature's candy, redefined. Plump, juicy, and bursting with natural sweetness—no added sugar needed.",
+      'Dried to a golden-brown perfection. Plump, juicy, and naturally sweet. Perfect for adding to Kheer, Pulao, or eating by the handful for an instant energy boost.',
     images: [
       'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
     ],
@@ -481,9 +458,9 @@ export const MOCK_PRODUCTS: Product[] = [
   },
   {
     id: 25,
-    name: 'Dried Figs',
+    name: 'Dried Figs (Anjeer)',
     description:
-      'Chewy, honey-like sweetness in every bite. A calcium-rich superfood that satisfies your dessert cravings naturally.',
+      'Rope dried to concentrate their sweetness and form a chewy, seed-filled texture. Known for high fiber and calcium content, a delicious natural treat.',
     images: [
       'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
     ],
@@ -492,46 +469,37 @@ export const MOCK_PRODUCTS: Product[] = [
     reviews: [],
     tags: ['Sweet', 'Healthy', 'Snack'],
   },
-  {
-    id: 26,
-    name: 'Apricots',
-    description:
-      'Tangy-sweet, sun-kissed goodness. Soft, vibrant apricots that bring a burst of Himalayan sunshine to your pantry.',
-    images: [
-      'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
-    ],
-    category: 'Dry Fruits',
-    variants: [{ id: 2601, name: '250g', price: 449, stock: 25 }],
-    reviews: [],
-    tags: ['Tangy', 'Healthy', 'Snack'],
-  },
+
   {
     id: 27,
-    name: 'Masala Chai Blend',
+    name: 'Premium Chai Masala',
     description:
-      'Ditch the teabag dust. Brew a cup of comfort with whole spices and premium tea leaves for a ritual that recharges your soul.',
+      'The Soul of Your Morning Cup. A natural blend dominated by premium Green Cardamom and dry Ginger, balanced with Clove and Cinnamon. No sugar, no fillers—just 100% pure aromatic spices.',
     images: ['/images/products/chai-masala-front.jpg', '/images/products/chai-masala-back.jpg'],
     category: 'Beverages',
     variants: [{ id: 2701, name: '100g', price: 200, stock: 40 }],
     reviews: [],
     tags: ['Tea', 'Spiced', 'Ritual'],
+    origin: 'Kerala, India',
+    storage: 'Airtight container',
   },
   {
     id: 28,
-    name: 'Garam Masala',
+    name: 'Royal Garam Masala',
     description:
-      'The finishing touch your grandmother would approve of. A secret blend of 12 roasted spices that brings harmony to any Indian curry.',
+      'A Symphony of Spices. A premium blend of 15+ dry-roasted whole spices, including Cardamom and Mace. Just a pinch at the end of cooking transforms a simple dish into a gourmet feast.',
     images: ['/images/products/garam-masala-front.jpg', '/images/products/garam-masala-back.jpg'],
     category: 'Spices',
     variants: [{ id: 2801, name: '100g', price: 220, stock: 35 }],
     reviews: [],
     tags: ['Blend', 'Essential', 'Aromatic'],
+    origin: 'India (House Blend)',
   },
   {
     id: 29,
-    name: 'Coriander Powder',
+    name: 'Organic Coriander Powder (Dhaniya)',
     description:
-      'Freshly ground from premium coriander seeds. This aromatic powder adds a mild, citrusy flavor and thickens your curries perfectly.',
+      'Freshness You Can Smell. Stone-ground from organic coriander seeds to preserve the volatile oils responsible for that citrusy aroma. The perfect thickener and flavor enhancer for gravies.',
     images: [
       '/images/products/coriander-powder-front.jpg',
       '/images/products/coriander-powder-back.jpg',
@@ -543,6 +511,9 @@ export const MOCK_PRODUCTS: Product[] = [
     ],
     reviews: [],
     tags: ['Earthy', 'Citrusy', 'Essential'],
+    origin: 'Rajasthan, India',
+    harvestDate: 'April 2025',
+    storage: 'Cool, dry place',
   },
 ];
 

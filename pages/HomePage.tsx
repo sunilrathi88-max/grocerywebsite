@@ -2,6 +2,7 @@ import React from 'react';
 import { Product, Variant, ToastMessage } from '../types';
 import { HeroSection } from '../components/HeroSection';
 import WhyChooseUs from '../components/WhyChooseUs';
+import CertificationsBanner from '../components/CertificationsBanner';
 import ShopByCategory from '../components/ShopByCategory';
 import ShopByUseCase from '../components/ShopByUseCase';
 import FeaturedCollection from '../components/FeaturedCollection';
@@ -135,6 +136,8 @@ const HomePage: React.FC<HomePageProps> = ({
         subtext="Trusted by 10,000+ home chefs across India"
       />
 
+      <CertificationsBanner className="mt-4 mb-8" />
+
       <div id="category-showcase">
         <ShopByCategory
           onSelectCategory={(cat) => {
@@ -163,6 +166,10 @@ const HomePage: React.FC<HomePageProps> = ({
           element?.scrollIntoView({ behavior: 'smooth' });
         }}
       />
+
+      <React.Suspense fallback={<div>Loading Testimonials...</div>}>
+        <Testimonials testimonials={MOCK_TESTIMONIALS} />
+      </React.Suspense>
 
       <ShopByUseCase />
 
@@ -193,10 +200,6 @@ const HomePage: React.FC<HomePageProps> = ({
           onSelectProduct={setSelectedProduct}
           onNotifyMe={handleNotifyMe}
         />
-      </React.Suspense>
-
-      <React.Suspense fallback={<div>Loading Testimonials...</div>}>
-        <Testimonials testimonials={MOCK_TESTIMONIALS} />
       </React.Suspense>
 
       <BlogStrip />
