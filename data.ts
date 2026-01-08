@@ -119,7 +119,10 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Salem Turmeric Powder (Haldi)',
     description:
       'The Golden Standard of Purity. Sourced from the Salem region of Tamil Nadu, known for its rich essential oils and high curcumin content. This deep golden-orange powder is pure, healing, and free from artificial colors.',
-    images: ['/images/products/turmeric-powder-front.jpg', '/images/products/turmeric-powder-back.jpg'],
+    images: [
+      '/images/products/turmeric-powder-front.jpg',
+      '/images/products/turmeric-powder-back.jpg',
+    ],
     category: 'Spices',
     variants: [
       { id: 401, name: '200g', price: 100, stock: 5 },
@@ -272,7 +275,10 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Jodhpuri Mathania Red Chilli Powder',
     description:
       'Discover the Legend of Mathania. Sourced directly from the arid soils of Jodhpur, this "Red Gold" delivers a unique pungent heat and vibrant color perfect for authentic Rajasthani marinades and curries.',
-    images: ['/images/products/red-chilli-powder-front.jpg', '/images/products/red-chilli-powder-back.jpg'],
+    images: [
+      '/images/products/red-chilli-powder-front.jpg',
+      '/images/products/red-chilli-powder-back.jpg',
+    ],
     category: 'Spices',
     variants: [
       { id: 1201, name: '200g', price: 120, stock: 60 },
@@ -344,7 +350,6 @@ export const MOCK_PRODUCTS: Product[] = [
     shelfLife: '18 Months',
     tags: ['Sweet', 'Digestive', 'Mukhwas'],
   },
-
 
   {
     id: 18,
