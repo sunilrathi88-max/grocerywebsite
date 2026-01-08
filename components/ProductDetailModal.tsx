@@ -24,6 +24,7 @@ import { LeafIcon } from './icons/LeafIcon';
 import { UsersIcon } from './icons/UsersIcon';
 
 import TrustBadges from './TrustBadges';
+import CertificationsBanner from './CertificationsBanner';
 import ImageGallery from './ImageGallery';
 import { getBundleSuggestions } from '../utils/recommendations';
 import PincodeChecker from './PincodeChecker';
@@ -503,6 +504,10 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                       </li>
                     ))}
                   </ul>
+                </div>
+
+                <div className="mt-6">
+                  <CertificationsBanner variant="compact" />
                 </div>
 
                 <div className="mt-8">

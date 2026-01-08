@@ -2,6 +2,7 @@ import React from 'react';
 import { imageErrorHandlers } from '../utils/imageHelpers';
 import { SEO } from './SEO';
 import { pageSEO } from '../utils/seo';
+import { OptimizedImage } from './OptimizedImage';
 
 const AboutPage: React.FC = () => {
   return (
@@ -29,10 +30,11 @@ const AboutPage: React.FC = () => {
           </div>
           <div className="relative">
             <div className="absolute inset-0 bg-brand-primary/10 rounded-lg transform translate-x-4 translate-y-4"></div>
-            <img
+            <OptimizedImage
               src="https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1200&auto=format&fit=crop"
               alt="A vibrant Indian spice market"
               className="relative rounded-lg shadow-xl"
+              type="hero"
               onError={imageErrorHandlers.hero}
             />
           </div>
@@ -92,10 +94,11 @@ const AboutPage: React.FC = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div className="group">
               <div className="overflow-hidden rounded-xl mb-4 h-64">
-                <img
+                <OptimizedImage
                   src="https://images.unsplash.com/photo-1595273670150-bd0c3c392e46?q=80&w=800&auto=format&fit=crop"
                   alt="Farmer"
                   className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
+                  type="card"
                 />
               </div>
               <h3 className="font-bold text-xl text-brand-dark">Ramesh & Family</h3>
@@ -107,10 +110,11 @@ const AboutPage: React.FC = () => {
             </div>
             <div className="group">
               <div className="overflow-hidden rounded-xl mb-4 h-64">
-                <img
+                <OptimizedImage
                   src="https://images.unsplash.com/photo-1627885376595-827cb347895e?q=80&w=800&auto=format&fit=crop"
                   alt="Farmer"
                   className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
+                  type="card"
                 />
               </div>
               <h3 className="font-bold text-xl text-brand-dark">The Singh Sisters</h3>
@@ -122,10 +126,11 @@ const AboutPage: React.FC = () => {
             </div>
             <div className="group">
               <div className="overflow-hidden rounded-xl mb-4 h-64">
-                <img
+                <OptimizedImage
                   src="https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?q=80&w=800&auto=format&fit=crop"
                   alt="Farmer"
                   className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
+                  type="card"
                 />
               </div>
               <h3 className="font-bold text-xl text-brand-dark">Thomas Varghese</h3>

@@ -67,6 +67,28 @@ export const MOCK_TESTIMONIALS: Testimonial[] = [
     productPurchased: 'Cumin Seeds',
     verified: true,
   },
+  {
+    id: 7,
+    name: 'Sneha Patel',
+    quote:
+      'I needed spices urgently for a family function. Ordered on Tuesday, delivered on Wednesday morning! The express shipping is a lifesaver, and the packaging kept everything perfect.',
+    rating: 5,
+    image: 'https://ui-avatars.com/api/?name=Sneha+Patel&background=EC4899&color=fff',
+    location: 'Ahmedabad',
+    productPurchased: 'Express Shipping',
+    verified: true,
+  },
+  {
+    id: 8,
+    name: "Robert D'Souza",
+    quote:
+      'Had a question about which grind size to pick for my espresso. The support team answered within minutes on WhatsApp and guided me perfectly. Real people who know their stuff!',
+    rating: 5,
+    image: 'https://ui-avatars.com/api/?name=Robert+D&background=6366F1&color=fff',
+    location: 'Goa',
+    productPurchased: 'Coffee Blend',
+    verified: true,
+  },
 ];
 
 // Featured testimonials for homepage (top 4)

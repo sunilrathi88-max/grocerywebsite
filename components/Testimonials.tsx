@@ -5,6 +5,7 @@ import { Testimonial } from '../types';
 import { generateTestimonialSchema, addStructuredData, removeStructuredData } from '../utils/seo';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { OptimizedImage } from './OptimizedImage';
 
 interface TestimonialsProps {
   testimonials: Testimonial[];
@@ -109,13 +110,14 @@ const Testimonials: React.FC<TestimonialsProps> = ({ testimonials }) => {
 
                   <div className="mt-auto">
                     <div className="w-14 h-14 bg-neutral-200 rounded-full mx-auto mb-3 overflow-hidden ring-2 ring-brand-primary/20">
-                      <img
+                      <OptimizedImage
                         src={
                           testimonial.image ||
                           `https://ui-avatars.com/api/?name=${testimonial.name.replace(' ', '+')}&background=random`
                         }
                         alt={testimonial.name}
                         className="w-full h-full object-cover"
+                        type="thumbnail"
                       />
                     </div>
                     <cite className="not-italic font-bold text-neutral-900 block">

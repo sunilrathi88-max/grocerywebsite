@@ -36,6 +36,7 @@ import { MOCK_POSTS, MOCK_RECIPES } from './data';
 // Core Components (Eagerly Loaded - Always Visible)
 import Header from './components/Header';
 import { ToastContainer } from './components/ui/ToastContainer';
+import FreeShippingBanner from './components/FreeShippingBanner';
 
 // Lazy-Loaded Components (Load on Demand)
 const Footer = React.lazy(() => import('./components/Footer'));
@@ -89,6 +90,8 @@ const ProductDetailPage = React.lazy(() => import('./pages/ProductDetailPage'));
 const HomePage = React.lazy(() => import('./pages/HomePage'));
 const CategoryPage = React.lazy(() => import('./pages/CategoryPage'));
 const OffersPage = React.lazy(() => import('./pages/OffersPage'));
+const SubscriptionPage = React.lazy(() => import('./pages/SubscriptionPage'));
+const FarmersPage = React.lazy(() => import('./pages/FarmersPage'));
 
 const PageLoader = () => (
   <div className="flex items-center justify-center min-h-[60vh]">
@@ -728,9 +731,10 @@ const App: React.FC = () => {
                         : selectedCategory !== 'All'
                           ? pageSEO.products(selectedCategory)
                           : pageSEO.home())}
-            structuredData={generateOrganizationSchema()}
             structuredDataId="organization-schema"
           />
+
+          <FreeShippingBanner />
 
           <React.Suspense fallback={null}>
             {showPromoBanner && <PromotionalBanner onClose={() => setShowPromoBanner(false)} />}
@@ -769,6 +773,22 @@ const App: React.FC = () => {
               element={
                 <React.Suspense fallback={<PageLoader />}>
                   <CategoryPage />
+                </React.Suspense>
+              }
+            />
+            <Route
+              path="/subscription"
+              element={
+                <React.Suspense fallback={<PageLoader />}>
+                  <SubscriptionPage />
+                </React.Suspense>
+              }
+            />
+            <Route
+              path="/farmers"
+              element={
+                <React.Suspense fallback={<PageLoader />}>
+                  <FarmersPage />
                 </React.Suspense>
               }
             />

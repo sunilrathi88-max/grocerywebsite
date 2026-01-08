@@ -6,34 +6,51 @@ import { ProductTabs } from '../components/ProductTabs';
 import { WeightSelector } from '../components/WeightSelector';
 import { QuantitySelector } from '../components/QuantitySelector';
 import { TrustBadges } from '../components/TrustBadges';
+import CertificationsBanner from '../components/CertificationsBanner';
 import { useCartStore } from '../store/cartStore';
 import ReviewsList from '../components/ReviewsList';
+import { GlobeIcon } from '../components/icons/GlobeIcon';
+
+import { MOCK_PRODUCTS } from '../data';
+import { getSimilarProducts } from '../utils/recommendations'; // Import recommendation logic
+import ProductSlider from '../components/ProductSlider'; // Import ProductSlider comp
+import { useWishlist } from '../hooks/useWishlist';
+
+// Note: If useWishlist is not available in context, check other files.
+// Based on previous files, onToggleWishlist might need a dummy if not implemented contextually.
+// Actually, let's check imports in RecommendedProducts.tsx to be consistent.
+// It uses onToggleWishlist={() => {}} // Optional here.
+// But ProductDetailPage acts as a page, it should probably wire it up if possible.
+// For now, let's stick to the props expected by ProductSlider.
 
 export default function ProductDetailPage() {
   const { id } = useParams<{ id: string }>();
   const addToCart = useCartStore((state) => state.addItem);
+  const { toggleWishlist, wishlistItems } = useWishlist();
+  const wishlistedIds = new Set(wishlistItems.map((p) => p.id));
 
   const [selectedWeight, setSelectedWeight] = useState(0);
   const [quantity, setQuantity] = useState(1);
 
-  // Hardcoded example data as per user request to demonstrate the layout.
-  // In a real app, we would fetch this using id.
-  const product = {
-    id: id || '1',
-    name: 'Garam Masala',
-    price: 45,
-    originalPrice: 60,
-    image: '/images/products/garam-masala-front.jpg',
-    rating: 4.8,
-    reviewCount: 47,
-    description: 'Premium cold-ground Garam Masala...',
-    sizes: [
-      { size: '50g', price: 45, discount: 0, badge: 'MOST POPULAR', stock: 100 },
-      { size: '100g', price: 80, discount: 20, badge: '', stock: 50 },
-      { size: '250g', price: 180, discount: 30, badge: 'BEST VALUE', stock: 20 },
-      { size: '500g', price: 320, discount: 40, badge: '', stock: 0 },
-    ],
-  };
+  // Fetch product from mock data
+  const product = MOCK_PRODUCTS.find((p) => p.id === Number(id)) || MOCK_PRODUCTS[0];
+
+  // Map variants to old 'sizes' structure for compatibility with existing UI components
+  // In a real app, we'd update the components to use 'Variant' type directly.
+  const productSizes = product.variants.map((v) => ({
+    size: v.name,
+    price: v.price,
+    // Calculate discount if salePrice exists, else mock based on logic or leave 0
+    discount: v.salePrice ? Math.round(((v.price - v.salePrice) / v.price) * 100) : 0,
+    badge: v.stock < 10 ? 'LOW STOCK' : '',
+    stock: v.stock,
+  }));
+
+  // Fallback if no variants (shouldn't happen with our data)
+  const displaySizes =
+    productSizes.length > 0
+      ? productSizes
+      : [{ size: 'Standard', price: 0, discount: 0, badge: 'OUT OF STOCK', stock: 0 }];
 
   const trustBadges = [
     { icon: '🧪', text: 'Lab-Tested Purity' },
@@ -43,14 +60,14 @@ export default function ProductDetailPage() {
   ];
 
   const handleAddToCart = () => {
-    const selectedSize = product.sizes[selectedWeight];
+    const selectedSize = displaySizes[selectedWeight];
     addToCart({
       id: `${product.id}-${selectedSize.size}`, // Composite ID
       name: product.name,
       price: selectedSize.price,
       quantity,
       weight: selectedSize.size,
-      image: product.image,
+      image: product.images[0],
       stock: selectedSize.stock || 50, // Fallback if no stock data
     });
     alert('Added to cart!');
@@ -64,7 +81,7 @@ export default function ProductDetailPage() {
           {/* Left: Image */}
           <div className="bg-white rounded-lg p-4">
             <OptimizedImage
-              src={product.image}
+              src={product.images[0]}
               alt={product.name}
               type="detail"
               className="w-full aspect-square object-cover rounded-lg"
@@ -78,8 +95,8 @@ export default function ProductDetailPage() {
           <div className="space-y-6">
             {/* Rating */}
             <div>
-              <span className="text-2xl">⭐ {product.rating}</span>
-              <span className="text-gray-600 ml-2">({product.reviewCount} reviews)</span>
+              <span className="text-2xl">⭐ {product.rating || 5.0}</span>
+              <span className="text-gray-600 ml-2">({product.reviews?.length || 0} reviews)</span>
             </div>
 
             {/* Name & Price */}
@@ -87,15 +104,23 @@ export default function ProductDetailPage() {
               <h1 className="text-4xl font-bold text-[#5F5238] mb-4">{product.name}</h1>
               <div className="flex items-center gap-3">
                 <span className="text-3xl font-bold text-[#1F2121]">
-                  ₹{product.sizes[selectedWeight].price}
+                  ₹{displaySizes[selectedWeight]?.price || 'N/A'}
                 </span>
-                <span className="line-through text-gray-500">₹{product.originalPrice}</span>
+                {displaySizes[selectedWeight]?.discount > 0 && (
+                  <span className="line-through text-gray-500">
+                    ₹
+                    {Math.round(
+                      displaySizes[selectedWeight].price /
+                        (1 - displaySizes[selectedWeight].discount / 100)
+                    )}
+                  </span>
+                )}
               </div>
             </div>
 
             {/* Weight Selector */}
             <WeightSelector
-              options={product.sizes.map((s) => ({ ...s, badge: s.badge || undefined }))}
+              options={displaySizes.map((s) => ({ ...s, badge: s.badge || undefined }))}
               onSelect={(index) => setSelectedWeight(index)}
               defaultSelectedIndex={0}
             />
@@ -114,7 +139,8 @@ export default function ProductDetailPage() {
             </div>
 
             {/* Trust Badges */}
-            <div className="pt-6 border-t">
+            <div className="pt-6 border-t space-y-4">
+              <CertificationsBanner variant="compact" />
               <TrustBadges badges={trustBadges} variant="vertical" />
             </div>
           </div>
@@ -152,7 +178,7 @@ export default function ProductDetailPage() {
               },
               {
                 id: 'reviews',
-                label: `Reviews (${product.reviewCount})`,
+                label: `Reviews (${product.reviews?.length || 0})`,
                 content: (
                   <ReviewsList
                     reviews={[
@@ -195,57 +221,104 @@ export default function ProductDetailPage() {
           />
         </div>
 
-        {/* Sourcing Story Section */}
-        <div className="bg-stone-100 rounded-2xl p-8 md:p-12 mb-12">
-          <div className="flex flex-col md:flex-row gap-12 items-center">
-            <div className="md:w-1/2">
-              <div className="inline-block bg-brand-primary/20 text-brand-dark px-4 py-1.5 rounded-full text-sm font-bold tracking-wide uppercase mb-6">
-                Farm to Fork
+        {/* Sourcing & Transparency Section */}
+        <div className="grid md:grid-cols-2 gap-8 mb-12">
+          {/* Transparency Card */}
+          <div className="bg-white rounded-2xl p-8 shadow-sm border border-neutral-100">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="bg-brand-primary/10 p-2 rounded-lg">
+                <GlobeIcon className="w-6 h-6 text-brand-dark" />
               </div>
-              <h2 className="text-3xl md:text-4xl font-serif font-bold text-brand-dark mb-6">
-                Sourced with Integrity from Idukki, Kerala
+              <h2 className="text-2xl font-serif font-bold text-gray-900">
+                Traceability & Sourcing
               </h2>
-              <p className="text-lg text-gray-700 mb-6 leading-relaxed">
-                This {product.name} comes from the lush hills of Idukki, where our partner farmer,{' '}
-                <strong>Mr. Thomas</strong>, practices traditional regenerative farming.
-              </p>
-              <div className="space-y-4">
-                <div className="flex gap-4 items-start">
-                  <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm flex-shrink-0 text-xl">
-                    🌱
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-brand-dark">Sustainably Grown</h4>
-                    <p className="text-sm text-gray-600">
-                      Grown without synthetic pesticides, ensuring purity from soil to spoon.
-                    </p>
-                  </div>
-                </div>
-                <div className="flex gap-4 items-start">
-                  <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm flex-shrink-0 text-xl">
-                    🤝
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-brand-dark">Fair Trade</h4>
-                    <p className="text-sm text-gray-600">
-                      We pay our farmers 20% above market rates to support their livelihood.
-                    </p>
-                  </div>
-                </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-6">
+              <div>
+                <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">
+                  Origin
+                </p>
+                <p className="font-medium text-gray-900 flex items-center gap-2">
+                  <span className="text-xl">📍</span> {product.origin || 'Kerala, India'}
+                </p>
+              </div>
+              <div>
+                <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">
+                  Harvest
+                </p>
+                <p className="font-medium text-gray-900 flex items-center gap-2">
+                  <span className="text-xl">📅</span> {product.harvestDate || 'Fresh Harvest'}
+                </p>
+              </div>
+              <div>
+                <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">
+                  Process
+                </p>
+                <p className="font-medium text-gray-900 flex items-center gap-2">
+                  <span className="text-xl">👐</span> {product.processingMethod || 'Hand-processed'}
+                </p>
+              </div>
+              <div>
+                <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">
+                  Purity
+                </p>
+                <p className="font-medium text-gray-900 flex items-center gap-2">
+                  <span className="text-xl">🧪</span> {product.purityTest || 'Lab Tested'}
+                </p>
               </div>
             </div>
-            <div className="md:w-1/2 relative">
-              <div className="absolute inset-0 bg-brand-dark rounded-xl transform rotate-3 opacity-10"></div>
-              <OptimizedImage
-                src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?q=80&w=800&auto=format&fit=crop"
-                alt="Spice Farmer in Kerala"
-                className="relative rounded-xl shadow-lg w-full object-cover aspect-[4/3] transform -rotate-2 hover:rotate-0 transition-all duration-500"
-                width={800}
-                height={600}
-                type="hero"
-              />
+
+            <div className="mt-8 bg-neutral-50 p-4 rounded-xl border border-neutral-100">
+              <p className="text-sm text-gray-600 italic">
+                &quot;Our unique {product.processingMethod} technique ensures that the natural oils
+                and aroma are locked in until you open the pack.&quot;
+              </p>
             </div>
           </div>
+
+          {/* Farmer Highlight (Mock usage for now, linking to farmers page) */}
+          <div className="bg-brand-dark text-white rounded-2xl p-8 relative overflow-hidden group cursor-pointer hover:shadow-xl transition-all">
+            <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1595245842188-4235b2e6669f?auto=format&fit=crop&q=80')] bg-cover bg-center opacity-40 transition-transform duration-700 group-hover:scale-105"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+
+            <div className="relative z-10 h-full flex flex-col justify-end">
+              <span className="bg-brand-primary text-brand-dark font-bold text-xs uppercase tracking-widest px-3 py-1 rounded-full w-fit mb-4">
+                Direct Trade
+              </span>
+              <h3 className="text-3xl font-serif font-bold mb-2">Grower Spotlight</h3>
+              <p className="text-brand-light mb-6 opacity-90">
+                Sourced directly from farmers like Rajesh in Wayanad, ensuring fair pay and
+                sustainable practices.
+              </p>
+              <div className="flex items-center gap-2 font-bold text-brand-primary group-hover:translate-x-2 transition-transform">
+                Meet Our Farmers <span>→</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* You Might Also Like Section */}
+        <div className="mb-12">
+          <ProductSlider
+            title="You Might Also Like"
+            products={getSimilarProducts(product, MOCK_PRODUCTS)}
+            onAddToCart={(p, v) =>
+              addToCart({
+                id: `${p.id}-${v.name}`,
+                name: p.name,
+                price: v.price,
+                quantity: 1,
+                weight: v.name,
+                image: p.images[0],
+                stock: v.stock,
+              })
+            }
+            onToggleWishlist={toggleWishlist}
+            wishlistedIds={wishlistedIds}
+            onSelectProduct={(p) => (window.location.href = `/product/${p.id}`)} // Simple navigation
+            onNotifyMe={() => {}}
+          />
         </div>
       </div>
     </div>

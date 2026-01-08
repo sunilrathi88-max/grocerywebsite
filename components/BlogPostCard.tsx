@@ -2,6 +2,7 @@ import React from 'react';
 import { BlogPost } from '../types';
 import { ArrowRightIcon } from './icons/ArrowRightIcon';
 import { imageErrorHandlers } from '../utils/imageHelpers';
+import { OptimizedImage } from './OptimizedImage';
 
 interface BlogPostCardProps {
   post: BlogPost;
@@ -20,10 +21,10 @@ const BlogPostCard: React.FC<BlogPostCardProps> = ({ post, onSelectPost }) => {
         className="block"
       >
         <div className="relative h-56">
-          <img
+          <OptimizedImage
             src={post.image}
             alt={post.title}
-            loading="lazy"
+            type="card"
             className="w-full h-full object-cover"
             onError={imageErrorHandlers.blog}
           />

@@ -91,10 +91,15 @@ const Navigation: React.FC<NavigationProps> = ({
 
       <Link
         to="/offers"
-        className="text-base font-medium text-brand-primary hover:text-brand-dark transition-colors py-2 group relative font-semibold"
+        className="text-neutral-600 hover:text-brand-primary font-medium transition-colors"
       >
         Offers
-        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-primary transition-all duration-300 group-hover:w-full" />
+      </Link>
+      <Link
+        to="/subscription"
+        className="text-brand-dark hover:text-brand-primary font-bold transition-colors"
+      >
+        Subscription
       </Link>
     </nav>
   );
