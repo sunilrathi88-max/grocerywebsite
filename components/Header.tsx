@@ -146,11 +146,6 @@ const Header: React.FC<HeaderProps> = ({
 
   return (
     <>
-      {/* Top Announcement Bar */}
-      <div className="bg-warning-yellow/10 text-brand-dark py-2 px-4 md:px-16 text-center text-sm font-medium hidden md:block">
-        🎉 Free shipping on all orders over ₹999!
-      </div>
-
       <header
         className={`sticky top-0 z-50 transition-all duration-300 ${
           isScrolled ? 'bg-white shadow-sm' : 'bg-white border-b border-neutral-200'

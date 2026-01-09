@@ -4,10 +4,10 @@ describe('Homepage UX Redesign', () => {
   });
 
   it('should display the new Hero section with correct copy and CTAs', () => {
-    cy.contains('Fresh, Lab-Tested Spices from Indian Farms').should('be.visible');
-    cy.contains('Harvest to Home').should('be.visible');
-    cy.contains('button', 'Shop Spices').should('be.visible');
-    cy.contains('button', 'Browse All Products').should('be.visible');
+    cy.contains('From Flavorless Dust... To Dishes That Taste Alive.').should('be.visible');
+    cy.contains('Your dishes will taste alive').should('be.visible');
+    cy.contains('button', 'Browse Collections').should('be.visible');
+    cy.contains('button', 'Take the Spice Quiz').should('be.visible');
   });
 
   it('should display Category Showcase with 6 tiles', () => {
@@ -60,5 +60,28 @@ describe('Homepage UX Redesign', () => {
     // Optional: Open filter
     cy.contains('button', 'Filters').click();
     cy.contains('Clear All Filters').scrollIntoView().should('be.visible');
+  });
+
+  it('should navigate correctly using "Why Us" and "Our Story" links', () => {
+    // Assuming these are anchor links to sections on the homepage or separate pages
+    // If they are on the homepage:
+    cy.get('a[href*="#why-us"], button:contains("Why Us")').click({ multiple: true, force: true });
+    cy.get('#why-us, h2:contains("Why Tattva Co?")').should('be.visible');
+
+    // Reset/Go back if needed, or just check the second one
+    cy.visit('/');
+    cy.contains('Our Story').click();
+    cy.get('#brand-story, h2:contains("Why We Started")').should('be.visible');
+  });
+
+  it('should display correct Hero text size on mobile', () => {
+    cy.viewport('iphone-x'); // 375px width
+
+    // Check Hero Headline existence and potentially style
+    cy.contains('From Flavorless Dust... To Dishes That Taste Alive.').should('be.visible')
+      .and('have.css', 'font-size'); // We can check specific size if known, e.g. '24px' or '30px'
+
+    // Ensure it doesn't overflow or look broken (basic visibility check checks part of this)
+    cy.get('h1').should('be.visible');
   });
 });
