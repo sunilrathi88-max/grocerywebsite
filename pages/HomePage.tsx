@@ -1,5 +1,6 @@
 import React from 'react';
 import { Product, Variant, ToastMessage } from '../types';
+import { useABTest } from '../src/context/ABTestContext'; // A/B Test Hook
 import { HeroSection } from '../components/HeroSection';
 import WhyChooseUs from '../components/WhyChooseUs';
 import CertificationsBanner from '../components/CertificationsBanner';
@@ -119,21 +120,58 @@ const HomePage: React.FC<HomePageProps> = ({
   availableGrades,
   addToast,
 }) => {
+  const { variant, trackConversion } = useABTest();
+
+  // Track View on Mount
+  React.useEffect(() => {
+    trackConversion('view_homepage', { variant });
+  }, [variant, trackConversion]);
+
+  // Wrap Add to Cart for Tracking
+  const handleAddToCartWithTracking = (product: Product, variant: Variant, quantity?: number) => {
+    trackConversion('add_to_cart', { productId: product.id, productName: product.name });
+    handleAddToCart(product, variant, quantity);
+  };
+
   return (
     <main>
       <HeroSection
-        title="Taste the Difference."
-        subtitle="Cold-ground spices from partner farms. Lab-tested for purity. Delivered fresh to your kitchen — no middlemen, no compromises."
+        title={
+          variant === 'B'
+            ? '100% Organic, High-Curcumin Turmeric & Premium Spices'
+            : 'From Flavorless Dust... To Dishes That Taste Alive.'
+        }
+        subtitle={
+          variant === 'B'
+            ? 'Sourced directly from farmers. FSSAI Certified. Cold-ground to preserve essential oils. Shop the purest spices in India.'
+            : 'Your dishes will taste alive—never bland again. Cold-ground spices from partner farms, lab-tested for purity. Delivered fresh to your kitchen.'
+        }
         badges={[
           { icon: '❄️', text: 'Cold Ground Daily' },
           { icon: '🔬', text: 'Lab Tested Every Batch' },
           { icon: '🌾', text: 'Direct from Farmers' },
           { icon: '✅', text: 'FSSAI Certified' },
         ]}
-        ctaPrimary={{ text: 'Shop Best Sellers', href: '#products-section' }}
+        ctaPrimary={{ text: 'Browse Collections', href: '#products-section' }}
         ctaSecondary={{ text: 'Take the Spice Quiz', href: '#quiz-section' }}
-        heroImage="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?q=80&w=1000&auto=format&fit=crop"
+        heroImage="/images/rathi-naturals-hero.png"
         subtext="Trusted by 10,000+ home chefs across India"
+      />
+
+      {/* Best Sellers - Masalas Only (right after hero) */}
+      <FeaturedCollection
+        title="Our Most Loved Masalas"
+        products={products.filter((p) => [4, 12, 29, 28, 27].includes(p.id))}
+        onAddToCart={handleAddToCartWithTracking}
+        onToggleWishlist={handleToggleWishlist}
+        wishlistedIds={wishlistedIds}
+        onSelectProduct={setSelectedProduct}
+        onNotifyMe={handleNotifyMe}
+        onViewAll={() => {
+          setSelectedCategory('Spices');
+          const element = document.getElementById('products-section');
+          element?.scrollIntoView({ behavior: 'smooth' });
+        }}
       />
 
       <CertificationsBanner className="mt-4 mb-8" />
@@ -151,22 +189,6 @@ const HomePage: React.FC<HomePageProps> = ({
 
       <WhyChooseUs />
 
-      {/* Best Sellers */}
-      <FeaturedCollection
-        title="Our Most Loved Masalas"
-        products={products.slice(0, 8)}
-        onAddToCart={handleAddToCart}
-        onToggleWishlist={handleToggleWishlist}
-        wishlistedIds={wishlistedIds}
-        onSelectProduct={setSelectedProduct}
-        onNotifyMe={handleNotifyMe}
-        onViewAll={() => {
-          setSelectedCategory('All');
-          const element = document.getElementById('products-section');
-          element?.scrollIntoView({ behavior: 'smooth' });
-        }}
-      />
-
       <React.Suspense fallback={<div>Loading Testimonials...</div>}>
         <Testimonials testimonials={MOCK_TESTIMONIALS} />
       </React.Suspense>
@@ -177,7 +199,7 @@ const HomePage: React.FC<HomePageProps> = ({
       <FeaturedCollection
         title="New Arrivals"
         products={products.slice(8, 16)}
-        onAddToCart={handleAddToCart}
+        onAddToCart={handleAddToCartWithTracking}
         onToggleWishlist={handleToggleWishlist}
         wishlistedIds={wishlistedIds}
         onSelectProduct={setSelectedProduct}
@@ -196,7 +218,7 @@ const HomePage: React.FC<HomePageProps> = ({
       <React.Suspense fallback={null}>
         <RecommendedProducts
           allProducts={products}
-          onAddToCart={handleAddToCart}
+          onAddToCart={handleAddToCartWithTracking}
           onSelectProduct={setSelectedProduct}
           onNotifyMe={handleNotifyMe}
         />
@@ -326,7 +348,7 @@ const HomePage: React.FC<HomePageProps> = ({
 
               <ProductGrid
                 products={products}
-                onAddToCart={handleAddToCart}
+                onAddToCart={handleAddToCartWithTracking}
                 onToggleWishlist={handleToggleWishlist}
                 comparisonIds={comparisonIds}
                 isLoading={productsLoading}

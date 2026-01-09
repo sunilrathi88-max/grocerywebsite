@@ -64,6 +64,15 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
   const imageConfig = createResponsiveImage(safeSrc, type);
   const loading = getLoadingAttribute(priority);
 
+  // Check if this is an external URL - for local images without responsive variants,
+  // we should NOT use srcSet as those files don't exist
+  const isExternalUrl = safeSrc.startsWith('http://') || safeSrc.startsWith('https://');
+
+  // Only use srcSet for Unsplash images (which support dynamic sizing)
+  // or images that have known responsive variants
+  const hasResponsiveVariants = safeSrc.includes('unsplash.com');
+  const shouldUseSrcSet = hasResponsiveVariants || isExternalUrl;
+
   // Intersection Observer for lazy loading (skip if priority is high)
   useEffect(() => {
     if (priority === 'high' || !imgRef.current) return;
@@ -124,25 +133,25 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
   const imageSrc = hasError ? safeFallbackSrc : isInView ? safeSrc : safeFallbackSrc;
 
   return (
-    <picture style={{ display: 'contents' }}>
-      {/* WebP source for modern browsers */}
-      {!hasError && imageConfig.webpSrcSet && isInView && (
+    <picture className={`block w-full h-full ${className}`}>
+      {' '}
+      {/* Pass className to picture for layout */}
+      {/* WebP source for modern browsers - only use srcSet when we know the variants exist */}
+      {!hasError && shouldUseSrcSet && imageConfig.webpSrcSet && isInView && (
         <source type="image/webp" srcSet={imageConfig.webpSrcSet} sizes={imageConfig.sizes} />
       )}
-
-      {/* Standard format fallback */}
-      {!hasError && imageConfig.srcSet && isInView && (
+      {/* Standard format fallback - only use srcSet when we know the variants exist */}
+      {!hasError && shouldUseSrcSet && imageConfig.srcSet && isInView && (
         <source srcSet={imageConfig.srcSet} sizes={imageConfig.sizes} />
       )}
-
       {/* Main image element */}
       <img
         ref={imgRef}
         src={imageSrc}
         alt={alt}
-        className={`${className} ${
+        className={`w-full h-full ${
           isLoaded ? 'opacity-100' : 'opacity-0'
-        } transition-opacity duration-300 ease-in-out`}
+        } transition-opacity duration-300 ease-in-out`} // className already applied to picture if needed, or split styling
         loading={loading}
         fetchPriority={priority === 'high' ? 'high' : 'auto'}
         width={width}
@@ -150,7 +159,7 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
         onLoad={handleLoad}
         onError={handleError}
         decoding={priority === 'high' ? 'sync' : 'async'}
-        style={style}
+        style={{ ...style, objectFit: 'cover' }} // Ensure object-cover is applied if passed via style or className. ProductCard passes 'object-cover' in className.
       />
     </picture>
   );

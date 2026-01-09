@@ -21,21 +21,21 @@ const categories = [
     name: 'Whole Spices',
     description: 'Whole seeds and pods for fresh grinding at home.',
     image:
-      'https://images.unsplash.com/photo-1556740714-a8395b3bf3ea?auto=format&fit=crop&q=80&w=600',
+      'https://images.unsplash.com/photo-1599909631891-77f43f6dfbca?auto=format&fit=crop&q=80&w=600',
   },
   {
     id: 'single-origin',
     name: 'Single Origin',
     description: 'High-grade lots sourced from specific regions.',
     image:
-      'https://images.unsplash.com/photo-1627564757530-97c7299a811d?auto=format&fit=crop&q=80&w=600',
+      'https://images.unsplash.com/photo-1532336414038-cf19250c5757?auto=format&fit=crop&q=80&w=600',
   },
   {
     id: 'combo-packs',
     name: 'Combo Packs',
     description: 'Curated sets for daily cooking or gifting.',
     image:
-      'https://images.unsplash.com/photo-1631485600673-c60368a49c25?auto=format&fit=crop&q=80&w=600',
+      'https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?auto=format&fit=crop&q=80&w=600',
   },
 ];
 

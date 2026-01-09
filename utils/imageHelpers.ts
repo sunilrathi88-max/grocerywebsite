@@ -14,14 +14,49 @@ export const PLACEHOLDER_URLS = {
 };
 
 /**
- * Creates an image error handler that swaps to a placeholder
- * @param placeholderUrl The fallback URL to use
+ * Creates an image error handler with retry logic that attempts to reload
+ * the image before falling back to a placeholder
+ * @param placeholderUrl The fallback URL to use after retries exhausted
+ * @param maxRetries Number of times to retry loading the original image (default: 2)
+ * @param retryDelay Delay in ms between retries (default: 500)
  */
-export const createImageErrorHandler = (placeholderUrl: string) => {
+export const createImageErrorHandler = (
+  placeholderUrl: string,
+  maxRetries: number = 2,
+  retryDelay: number = 500
+) => {
   return (event: React.SyntheticEvent<HTMLImageElement>) => {
     const img = event.currentTarget;
-    if (img.src !== placeholderUrl) {
-      img.src = placeholderUrl;
+    const originalSrc = img.dataset.originalSrc || img.src;
+    const retryCount = parseInt(img.dataset.retryCount || '0', 10);
+
+    // Save original src on first error
+    if (!img.dataset.originalSrc) {
+      img.dataset.originalSrc = img.src;
+    }
+
+    // If we haven't exhausted retries, try again
+    if (retryCount < maxRetries && img.src !== placeholderUrl) {
+      img.dataset.retryCount = (retryCount + 1).toString();
+
+      // Add cache-busting query param to force reload
+      const cacheBuster = `?retry=${Date.now()}`;
+      const retryUrl = originalSrc.includes('?')
+        ? `${originalSrc}&cb=${Date.now()}`
+        : `${originalSrc}${cacheBuster}`;
+
+      // Delay before retry to avoid rapid-fire requests
+      setTimeout(() => {
+        img.src = retryUrl;
+      }, retryDelay);
+    } else {
+      // All retries exhausted, use fallback
+      if (img.src !== placeholderUrl) {
+        img.src = placeholderUrl;
+        // Clean up data attributes
+        delete img.dataset.originalSrc;
+        delete img.dataset.retryCount;
+      }
     }
   };
 };

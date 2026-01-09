@@ -2,6 +2,40 @@ import React from 'react';
 import { Button } from './Button';
 import { OptimizedImage } from './OptimizedImage';
 
+// Pure CSS animated gradient background (shader fallback)
+const AnimatedGradientBackground: React.FC = () => (
+  <div className="absolute inset-0 overflow-hidden">
+    <div
+      className="absolute inset-0"
+      style={{
+        background: 'linear-gradient(135deg, #ff6a1a 0%, #c73c00 25%, #FD4912 50%, #1a1a1a 100%)',
+        backgroundSize: '400% 400%',
+        animation: 'gradientFlow 12s ease infinite',
+      }}
+    />
+    {/* Animated overlay for depth */}
+    <div
+      className="absolute inset-0 opacity-30"
+      style={{
+        background: 'radial-gradient(ellipse at 30% 70%, #ff6a1a 0%, transparent 50%)',
+        animation: 'pulseGlow 6s ease-in-out infinite',
+      }}
+    />
+    {/* Dark overlay for text readability */}
+    <div className="absolute inset-0 bg-black/70" />
+    <style>{`
+      @keyframes gradientFlow {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+      }
+      @keyframes pulseGlow {
+        0%, 100% { opacity: 0.2; transform: scale(1); }
+        50% { opacity: 0.4; transform: scale(1.1); }
+      }
+    `}</style>
+  </div>
+);
+
 interface TrustBadge {
   icon: string;
   text: string;
@@ -33,32 +67,35 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   subtext,
 }) => {
   return (
-    <section className="bg-gradient-hero py-16 md:py-24 relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 md:px-8 relative z-10">
-        <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
-          {/* Text Content */}
-          <div className="animate-fadeIn order-2 md:order-1">
+    <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-neutral-900">
+      {/* Animated CSS Gradient Background */}
+      <AnimatedGradientBackground />
+
+      <div className="max-w-7xl mx-auto px-4 md:px-8 relative z-10 w-full py-12 md:py-20">
+        <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-start">
+          {/* Text Content - Wrapped in Card for Readability */}
+          <div className="animate-fadeIn order-2 md:order-1 bg-white/10 backdrop-blur-md rounded-3xl p-6 md:p-10 border border-white/10 shadow-2xl">
             {/* Main Title */}
             <div className="space-y-4 mb-8">
-              <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold text-accent-brown leading-none tracking-tight">
+              <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold text-white leading-none tracking-tight drop-shadow-lg">
                 {title || 'Fresh Farm Spices.'}
               </h1>
-              <h2 className="text-4xl md:text-5xl lg:text-7xl font-bold text-brand-primary leading-none tracking-tight">
+              <h2 className="text-4xl md:text-5xl lg:text-7xl font-bold text-brand-primary leading-none tracking-tight drop-shadow-md">
                 Real Stories.
               </h2>
-              <h2 className="text-4xl md:text-5xl lg:text-7xl font-bold text-accent-brown leading-none tracking-tight">
+              <h2 className="text-4xl md:text-5xl lg:text-7xl font-bold text-gray-200 leading-none tracking-tight">
                 No Middleman.
               </h2>
             </div>
 
             {subtitle && (
-              <p className="text-lg md:text-xl text-neutral-700 mb-10 font-medium max-w-lg leading-relaxed">
+              <p className="text-lg md:text-xl text-gray-300 mb-10 font-medium max-w-lg leading-relaxed">
                 {subtitle}
               </p>
             )}
 
             {/* Badges - Short Labels */}
-            <div className="flex flex-wrap gap-x-6 gap-y-3 mb-10 text-neutral-700">
+            <div className="flex flex-wrap gap-x-6 gap-y-3 mb-10 text-gray-200">
               {badges && badges.length > 0 ? (
                 badges.map((badge, index) => (
                   <div key={index} className="flex items-center gap-2">
@@ -93,7 +130,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               <Button
                 variant="primary"
                 size="lg"
-                className="w-full sm:w-auto shadow-button hover:shadow-card-hover transition-all"
+                className="w-full sm:w-auto shadow-lg hover:shadow-brand-primary/50 transition-all border-none"
                 onClick={() =>
                   ctaPrimary?.href ? (window.location.href = ctaPrimary.href) : undefined
                 }
@@ -103,7 +140,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               <Button
                 variant="outline"
                 size="lg"
-                className="w-full sm:w-auto border-neutral-300 hover:border-brand-primary"
+                className="w-full sm:w-auto text-white border-white/30 hover:bg-white/10 hover:border-white"
                 onClick={() =>
                   ctaSecondary?.href ? (window.location.href = ctaSecondary.href) : undefined
                 }
@@ -114,35 +151,29 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
             {/* Subtext */}
             {subtext && (
-              <p className="text-sm text-neutral-600 font-medium flex items-center gap-2">
+              <p className="text-sm text-gray-400 font-medium flex items-center gap-2">
                 <span className="inline-block w-2 h-2 rounded-full bg-success-green animate-pulse"></span>
                 {subtext}
               </p>
             )}
           </div>
 
-          {/* Hero Image - Fixed aspect ratio to prevent CLS */}
+          {/* Hero Image - Full size display */}
           <div
-            className="relative animate-fadeIn order-1 md:order-2"
+            className="relative animate-fadeIn order-1 md:order-2 flex items-start justify-center"
             style={{
               animationDelay: '0.2s',
-              aspectRatio: '4/5',
-              minHeight: '400px',
-              maxHeight: '650px',
+              minHeight: '300px',
             }}
           >
-            <div className="absolute inset-0 bg-brand-primary/10 rounded-[2rem] transform rotate-3 scale-95 z-0"></div>
-            <OptimizedImage
+            <div className="absolute inset-0 bg-brand-primary/20 rounded-[2rem] transform rotate-3 scale-95 z-0 blur-xl"></div>
+            <img
               src={
                 heroImage ||
                 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?q=80&w=1000&auto=format&fit=crop'
               }
-              alt="Fresh Spices"
-              type="hero"
-              priority="high"
-              width={800}
-              height={1000}
-              className="relative z-10 object-cover rounded-[2rem] w-full h-full shadow-2xl border-4 border-white"
+              alt="Rathi Naturals Spices Collection"
+              className="relative z-10 object-contain w-full h-auto max-h-[550px] rounded-[2rem] shadow-2xl"
             />
           </div>
         </div>

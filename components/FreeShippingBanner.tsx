@@ -9,7 +9,7 @@ const FreeShippingBanner: React.FC = () => {
 
   return (
     <div className="bg-brand-dark text-white text-xs md:text-sm py-2 px-4 relative z-50">
-      <div className="container mx-auto flex items-center justify-center gap-2 text-center">
+      <div className="container mx-auto flex items-center justify-center gap-3 text-center">
         <TruckIcon className="w-4 h-4 text-brand-secondary" />
         <p>
           <span className="font-semibold text-brand-secondary">FREE SHIPPING</span> on orders over{' '}

@@ -197,13 +197,31 @@ const customHandler = createImageErrorHandler(PLACEHOLDER_URLS.hero);
 
 ## Future Enhancements
 
-### Potential Improvements
+### Completed Improvements ✅
 
-- [ ] Add loading states with skeleton screens
-- [ ] Implement progressive image loading (blur-up)
-- [ ] Create custom SVG placeholders instead of external service
-- [ ] Add retry logic before showing fallback
-- [ ] Implement lazy loading with Intersection Observer
+- [x] Add loading states with skeleton screens (`ProductCardSkeleton`)
+- [x] Implement progressive image loading (blur-up via `OptimizedImage`)
+- [x] Create custom SVG placeholders in `/public/images/fallbacks/`
+- [x] Add retry logic before showing fallback (2 retries with cache-busting)
+- [x] Implement lazy loading with Intersection Observer (`OptimizedImage`)
+
+### Retry Logic Details
+
+The `createImageErrorHandler` now supports retry logic:
+
+```typescript
+// Default: 2 retries with 500ms delay
+createImageErrorHandler(placeholderUrl, maxRetries = 2, retryDelay = 500)
+```
+
+How it works:
+1. On first error, saves original URL to `data-original-src`
+2. Attempts retries with cache-busting query params
+3. Waits between retries to avoid rapid-fire requests
+4. Falls back to placeholder only after retries exhausted
+
+### Remaining Improvements
+
 - [ ] Add image optimization service (WebP, AVIF conversion)
 - [ ] Create admin tool to validate all image URLs
 

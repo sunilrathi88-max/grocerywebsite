@@ -5,11 +5,8 @@ export const MOCK_PRODUCTS: Product[] = [
     id: 1,
     name: 'Himalayan Saffron (Kesar)',
     description:
-      'Known as "Red Gold," our Himalayan Saffron is hand-harvested from the pristine valleys of Kashmir. These deep crimson strands (Mongra grade) possess a potent aroma and flavor.',
-    images: [
-      'https://images.unsplash.com/photo-1532336414038-cf19250c5757?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=800&q=80',
-    ],
+      'Known as "Red Gold," our Himalayan Saffron is hand-harvested from the pristine valleys of Kashmir. These deep crimson strands (Mongra grade) possess a potent aroma and flavor. Your dishes will taste alive—never bland again.',
+    images: ['/images/products/saffron-kesar-front.jpg', '/images/products/saffron-kesar-back.jpg'],
     videos: ['https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4'],
     category: 'Spices',
     variants: [
@@ -59,7 +56,7 @@ export const MOCK_PRODUCTS: Product[] = [
     id: 2,
     name: 'Malabar Black Pepper (Kali Mirch)',
     description:
-      'Sourced directly from the Malabar coast, these bold black peppercorns are sun-dried to preserve their sharp, biting heat and complex citrusy aroma. Rich in piperine for a robust kick.',
+      'Sourced directly from the Malabar coast, these bold black peppercorns are sun-dried to preserve their sharp, biting heat and complex citrusy aroma. Rich in piperine for a robust kick. Your dishes will taste alive—never bland again.',
     images: ['/images/products/tattv-malabar-black-pepper-front.png'],
     category: 'Spices',
     variants: [{ id: 201, name: '250g', price: 300, stock: 30 }],
@@ -86,10 +83,7 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'California Almonds (Badam)',
     description:
       'Sourced from the best orchards in California, Tattv Almonds are sweet, crunchy, and packed with healthy fats, protein, and Vitamin E. Perfect for snacking or making rich Badam milk.',
-    images: [
-      'https://images.unsplash.com/photo-1623428187969-5da2dcea5ebf?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1623428187969-5da2dcea5ebf?auto=format&fit=crop&w=800&q=80',
-    ],
+    images: ['/images/products/almonds-badam-front.jpg'],
     category: 'Nuts',
     variants: [
       { id: 301, name: '500g', price: 500, stock: 20 },
@@ -118,7 +112,7 @@ export const MOCK_PRODUCTS: Product[] = [
     id: 4,
     name: 'Salem Turmeric Powder (Haldi)',
     description:
-      'The Golden Standard of Purity. Sourced from the Salem region of Tamil Nadu, known for its rich essential oils and high curcumin content. This deep golden-orange powder is pure, healing, and free from artificial colors.',
+      'The Golden Standard of Purity. Sourced from the Salem region of Tamil Nadu, known for its rich essential oils and high curcumin content. This deep golden-orange powder is pure, healing, and free from artificial colors. Your dishes will taste alive—never bland again.',
     images: [
       '/images/products/turmeric-powder-front.jpg',
       '/images/products/turmeric-powder-back.jpg',
@@ -181,36 +175,12 @@ export const MOCK_PRODUCTS: Product[] = [
     shelfLife: '24 Months',
     tags: ['Premium', 'Single-Origin', 'Tea'],
   },
-
-  {
-    id: 7,
-    name: 'Organic Dried Apricots (Khubani)',
-    description:
-      'Sun-dried without sulphur treatment to retain their natural amber color. Chewy, sweet, and tangy, they are a perfect guilt-free snack loaded with Vitamin A and antioxidants.',
-    images: [
-      'https://images.unsplash.com/photo-1606913084603-3e7702b01627?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1595413667362-722923769976?auto=format&fit=crop&w=800&q=80',
-    ],
-    category: 'Dry Fruits',
-    variants: [{ id: 701, name: '400g', price: 649, stock: 18 }],
-    reviews: [],
-    origin: 'Ladakh, India',
-    harvestDate: 'August 2024',
-    grade: 'Jumbo',
-    purityTest: 'Unsulphured',
-    storage: 'Refrigerate',
-    shelfLife: '12 Months',
-    tags: ['Organic', 'Gluten-Free', 'Snack'],
-  },
   {
     id: 8,
     name: 'Goan Cashew Nuts (Kaju)',
     description:
       'Experience the superior taste of Indian cashews. Renowned for their large size, ivory color, and naturally sweet, buttery taste. Expertly processed to ensure they remain whole and crunchy.',
-    images: [
-      'https://images.unsplash.com/photo-1536591375315-1988d6960545?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1595413667362-722923769976?auto=format&fit=crop&w=800&q=80',
-    ],
+    images: ['/images/products/cashew-kaju-front.png'],
     category: 'Nuts',
     variants: [
       { id: 801, name: '250g', price: 350, stock: 0 },
