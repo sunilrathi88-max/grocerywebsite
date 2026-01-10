@@ -60,7 +60,7 @@
     "@eslint/js": "^9.38.0",
     "@lhci/cli": "^0.15.1",
     "@percy/cypress": "^3.1.6",
-    "@react-three/fiber": "^9.5.0",
+    "@react-three/fiber": "^8.16.8",
     "@shadergradient/react": "^2.4.20",
     "@testing-library/cypress": "^10.1.0",
     "@testing-library/jest-dom": "^6.9.1",
