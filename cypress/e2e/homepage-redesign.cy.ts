@@ -78,7 +78,8 @@ describe('Homepage UX Redesign', () => {
     cy.viewport('iphone-x'); // 375px width
 
     // Check Hero Headline existence and potentially style
-    cy.contains('From Flavorless Dust... To Dishes That Taste Alive.').should('be.visible')
+    cy.contains('From Flavorless Dust... To Dishes That Taste Alive.')
+      .should('be.visible')
       .and('have.css', 'font-size'); // We can check specific size if known, e.g. '24px' or '30px'
 
     // Ensure it doesn't overflow or look broken (basic visibility check checks part of this)

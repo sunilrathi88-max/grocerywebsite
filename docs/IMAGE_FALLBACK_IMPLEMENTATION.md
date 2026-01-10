@@ -211,10 +211,11 @@ The `createImageErrorHandler` now supports retry logic:
 
 ```typescript
 // Default: 2 retries with 500ms delay
-createImageErrorHandler(placeholderUrl, maxRetries = 2, retryDelay = 500)
+createImageErrorHandler(placeholderUrl, (maxRetries = 2), (retryDelay = 500));
 ```
 
 How it works:
+
 1. On first error, saves original URL to `data-original-src`
 2. Attempts retries with cache-busting query params
 3. Waits between retries to avoid rapid-fire requests
