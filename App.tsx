@@ -309,11 +309,13 @@ const App: React.FC = () => {
     });
   }, [maxPrice]);
 
-  // Exit Intent
+  // Exit Intent (Throttled to once per session)
   useEffect(() => {
     const handleMouseLeave = (e: MouseEvent) => {
-      if (e.clientY <= 0 && !isExitIntentModalOpen && cartItems.length > 0) {
+      const hasShownExitIntent = sessionStorage.getItem('exitIntentShown');
+      if (e.clientY <= 0 && !isExitIntentModalOpen && cartItems.length > 0 && !hasShownExitIntent) {
         setIsExitIntentModalOpen(true);
+        sessionStorage.setItem('exitIntentShown', 'true');
       }
     };
     document.addEventListener('mouseleave', handleMouseLeave);
@@ -750,7 +752,7 @@ const App: React.FC = () => {
               onSearchChange={setSearchQuery}
               onCartClick={() => setIsCartOpen(true)}
               onWishlistClick={() => setIsWishlistOpen(true)}
-              onMobileMenuClick={() => setIsMobileMenuOpen(true)}
+              onMobileMenuClick={() => setIsMobileMenuOpen((prev) => !prev)}
               isLoggedIn={isLoggedIn}
               isAdmin={!!currentUser?.isAdmin}
               onLoginClick={() => setAuthModalOpen(true)}
@@ -1354,7 +1356,7 @@ const App: React.FC = () => {
                 wishlistItemCount={wishlistItems.length}
                 onOpenCart={() => setIsCartOpen(true)}
                 onOpenWishlist={() => setIsWishlistOpen(true)}
-                onOpenMenu={() => setIsMobileMenuOpen(true)}
+                onOpenMenu={() => setIsMobileMenuOpen((prev) => !prev)}
                 currentView={currentView}
               />
             </React.Suspense>
