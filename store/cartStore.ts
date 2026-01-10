@@ -63,7 +63,7 @@ export const useCartStore = create<CartStore>()(
 
       getTotal: () => {
         const subtotal = get().getSubtotal();
-        return subtotal >= 250 ? subtotal : subtotal + 0; // Free shipping above ₹250
+        return subtotal >= 600 ? subtotal : subtotal + 50; // Free shipping above ₹600
       },
     }),
     {

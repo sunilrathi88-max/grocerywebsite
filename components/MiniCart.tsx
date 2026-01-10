@@ -30,8 +30,8 @@ export const MiniCart: React.FC<MiniCartProps> = ({
   onRemoveItem,
 }) => {
   const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const FREE_SHIPPING_THRESHOLD = 250;
-  const shipping = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : 50; // Example fallback shipping cost if not free
+  const FREE_SHIPPING_THRESHOLD = 600;
+  const shipping = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : 50;
   const amountToFreeShipping = Math.max(0, FREE_SHIPPING_THRESHOLD - subtotal);
   const progressPercent = Math.min(100, (subtotal / FREE_SHIPPING_THRESHOLD) * 100);
 

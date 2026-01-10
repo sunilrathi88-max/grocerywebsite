@@ -8,7 +8,7 @@ const TrustSignals: React.FC = () => {
   const deepSignals = [
     {
       icon: <TruckIcon className="w-5 h-5 md:w-6 md:h-6" />,
-      text: 'Free Shipping > ₹999',
+      text: 'Free Shipping > ₹600',
     },
     {
       icon: <CheckBadgeIcon className="w-5 h-5 md:w-6 md:h-6" />,

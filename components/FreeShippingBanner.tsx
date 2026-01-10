@@ -13,7 +13,7 @@ const FreeShippingBanner: React.FC = () => {
         <TruckIcon className="w-4 h-4 text-brand-secondary" />
         <p>
           <span className="font-semibold text-brand-secondary">FREE SHIPPING</span> on orders over{' '}
-          <span className="font-bold">₹999</span>
+          <span className="font-bold">₹600</span>
         </p>
       </div>
       <button
