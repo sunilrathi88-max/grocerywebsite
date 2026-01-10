@@ -57,18 +57,6 @@ const Testimonials: React.FC<TestimonialsProps> = ({ testimonials }) => {
           </h2>
 
           {/* Stats Block */}
-          <div className="flex justify-center items-center gap-8 mt-8">
-            <div className="text-center">
-              <p className="text-3xl font-bold text-brand-dark">4.8/5</p>
-              <div className="flex text-yellow-400 text-sm justify-center mt-1">★★★★★</div>
-              <p className="text-sm text-gray-500">Average Rating</p>
-            </div>
-            <div className="h-12 w-px bg-gray-200"></div>
-            <div className="text-center">
-              <p className="text-3xl font-bold text-brand-dark">1200+</p>
-              <p className="text-sm text-gray-500 mt-1">Verified Reviews</p>
-            </div>
-          </div>
         </div>
 
         <div className="slider-container px-4">

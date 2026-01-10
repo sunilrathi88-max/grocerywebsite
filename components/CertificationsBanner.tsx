@@ -20,12 +20,7 @@ const CertificationsBanner: React.FC<CertificationsBannerProps> = ({
       desc: 'Licensed & Regulated',
       color: 'bg-green-50 border-green-100',
     },
-    {
-      icon: <LeafIcon className="w-8 h-8 md:w-10 md:h-10 text-[#8BC34A]" />,
-      title: '100% Organic',
-      desc: 'Certified Natural',
-      color: 'bg-[#F1F8E9] border-[#DCEDC8]',
-    },
+
     {
       icon: <UsersIcon className="w-8 h-8 md:w-10 md:h-10 text-[#FF9800]" />, // Using UsersIcon for Fair Trade/Farmer connection
       title: 'Fair Trade',
