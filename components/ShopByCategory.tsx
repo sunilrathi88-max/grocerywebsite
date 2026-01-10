@@ -6,36 +6,31 @@ const categories = [
     id: 'pure-spices',
     name: 'Pure Spices',
     description: 'Individual, unmixed spices for custom blending.',
-    image:
-      'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&q=80&w=600',
+    image: '/images/products/turmeric-powder-front.jpg',
   },
   {
     id: 'masala-blends',
     name: 'Masala Blends',
     description: 'Ready-to-use blends for quick, authentic dishes.',
-    image:
-      'https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&q=80&w=600',
+    image: '/images/products/garam-masala-front.jpg',
   },
   {
     id: 'whole-spices',
     name: 'Whole Spices',
     description: 'Whole seeds and pods for fresh grinding at home.',
-    image:
-      'https://images.unsplash.com/photo-1599909631891-77f43f6dfbca?auto=format&fit=crop&q=80&w=600',
+    image: '/images/products/tattv-cumin-seeds-front.jpg',
   },
   {
     id: 'single-origin',
     name: 'Single Origin',
     description: 'High-grade lots sourced from specific regions.',
-    image:
-      'https://images.unsplash.com/photo-1532336414038-cf19250c5757?auto=format&fit=crop&q=80&w=600',
+    image: '/images/products/tattv-malabar-black-pepper-front.png',
   },
   {
     id: 'combo-packs',
     name: 'Combo Packs',
     description: 'Curated sets for daily cooking or gifting.',
-    image:
-      'https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?auto=format&fit=crop&q=80&w=600',
+    image: '/images/products/chai-masala-front.jpg',
   },
 ];
 
