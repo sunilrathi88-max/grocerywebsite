@@ -58,8 +58,9 @@
   height: 100%;
   min-height: 90vh;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
+  grid-template-columns: 2fr 3fr;
+  /* 40% text, 60% image */
+  gap: 3rem;
   align-items: center;
   padding: 4rem 3rem;
   position: relative;
@@ -227,7 +228,7 @@
 
 .product-image {
   width: 100%;
-  max-width: 650px;
+  max-width: 750px;
   height: auto;
   display: block;
   filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.15));
@@ -239,7 +240,7 @@
 }
 
 .slide-image.full-range .product-image {
-  max-width: 800px;
+  max-width: 900px;
 }
 
 /* =====================================
