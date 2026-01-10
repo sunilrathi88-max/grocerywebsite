@@ -30,7 +30,7 @@ const categories = [
     id: 'combo-packs',
     name: 'Combo Packs',
     description: 'Curated sets for daily cooking or gifting.',
-    image: '/images/products/chai-masala-front.jpg',
+    image: '/images/products/combo-pack-trio.jpg',
   },
 ];
 
