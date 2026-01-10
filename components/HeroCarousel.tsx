@@ -67,17 +67,8 @@ const HeroCarousel: React.FC = () => {
 
         {/* Slide 2: Brighten Every Dish */}
         <div className={`hero-slide ${currentSlide === 1 ? 'active' : ''}`} data-slide="2">
-          <div className="slide-content reverse">
-            {/* Left Product Image */}
-            <div className="slide-image">
-              <img
-                src="/images/spice-trio-coriander-chilli-turmeric.png"
-                alt="Coriander Powder, Red Chilli Powder, Turmeric Powder"
-                className="product-image"
-              />
-            </div>
-
-            {/* Right Content */}
+          <div className="slide-content">
+            {/* Left Content */}
             <div className="slide-text">
               <h1 className="main-heading">
                 Brighten Every Dish
@@ -88,6 +79,15 @@ const HeroCarousel: React.FC = () => {
                 Bulk packs for serious home cooks and small businesses.
               </p>
               <button className="cta-button cta-yellow">Shop Haldi Mirch Dhaniya</button>
+            </div>
+
+            {/* Right Product Image */}
+            <div className="slide-image">
+              <img
+                src="/images/spice-trio-coriander-chilli-turmeric.png"
+                alt="Coriander Powder, Red Chilli Powder, Turmeric Powder"
+                className="product-image"
+              />
             </div>
           </div>
 
@@ -101,11 +101,11 @@ const HeroCarousel: React.FC = () => {
             {/* Left Content */}
             <div className="slide-text">
               <h1 className="main-heading">
-                Bring Authentic
+                Fresh Spices,
                 <br />
-                Masalas Home
+                Delivered Daily
               </h1>
-              <p className="slide-description">Freshly ground spices delivered to your doorstep.</p>
+              <p className="slide-description">Explore our complete range of premium masalas.</p>
               <button className="cta-button cta-yellow">Shop Masala Combos</button>
             </div>
 
