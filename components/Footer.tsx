@@ -26,7 +26,7 @@ const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
           <div className="col-span-2 md:col-span-3 lg:col-span-1">
             <h3 className="text-sm font-bold tracking-widest text-brand-primary uppercase mb-2">
-              The Rathi Spice Co.
+              Rathi Naturals
             </h3>
             <p className="text-2xl font-serif font-bold text-brand-dark mb-4 leading-tight">
               Fresh Spices. <br /> Real Stories.
@@ -238,7 +238,7 @@ const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
           />
 
           <div className="border-t border-gray-200 pt-8 text-center text-sm text-gray-600">
-            <p>&copy; {new Date().getFullYear()} THE RATHI SPICE CO. All Rights Reserved.</p>
+            <p>&copy; {new Date().getFullYear()} Rathi Naturals. All Rights Reserved.</p>
           </div>
         </div>
       </div>

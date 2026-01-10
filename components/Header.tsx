@@ -155,7 +155,7 @@ const Header: React.FC<HeaderProps> = ({
           {/* Left: Logo */}
           <Link to="/" className="flex-shrink-0 flex items-center gap-2 cursor-pointer">
             <span className="text-2xl font-serif font-bold text-neutral-900 tracking-tight">
-              Tattva Co.
+              Rathi Naturals
             </span>
           </Link>
 
