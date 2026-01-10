@@ -222,7 +222,7 @@ const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
             <div className="flex flex-col items-center gap-3">
               <TruckIcon className="h-10 w-10 text-brand-primary" />
               <h5 className="font-bold">Fast Shipping</h5>
-              <p className="text-sm text-gray-600">On orders over ₹999</p>
+              <p className="text-sm text-gray-600">On orders over ₹600</p>
             </div>
           </div>
 
