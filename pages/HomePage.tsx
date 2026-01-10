@@ -1,7 +1,7 @@
 import React from 'react';
 import { Product, Variant, ToastMessage } from '../types';
 import { useABTest } from '../src/context/ABTestContext'; // A/B Test Hook
-import { HeroSection } from '../components/HeroSection';
+import HeroCarousel from '../components/HeroCarousel';
 import WhyChooseUs from '../components/WhyChooseUs';
 import CertificationsBanner from '../components/CertificationsBanner';
 import ShopByCategory from '../components/ShopByCategory';
@@ -135,28 +135,7 @@ const HomePage: React.FC<HomePageProps> = ({
 
   return (
     <main>
-      <HeroSection
-        title={
-          variant === 'B'
-            ? '100% Organic, High-Curcumin Turmeric & Premium Spices'
-            : 'From Flavorless Dust... To Dishes That Taste Alive.'
-        }
-        subtitle={
-          variant === 'B'
-            ? 'Sourced directly from farmers. FSSAI Certified. Cold-ground to preserve essential oils. Shop the purest spices in India.'
-            : 'Your dishes will taste alive—never bland again. Cold-ground spices from partner farms, lab-tested for purity. Delivered fresh to your kitchen.'
-        }
-        badges={[
-          { icon: '❄️', text: 'Cold Ground Daily' },
-          { icon: '🔬', text: 'Lab Tested Every Batch' },
-          { icon: '🌾', text: 'Direct from Farmers' },
-          { icon: '✅', text: 'FSSAI Certified' },
-        ]}
-        ctaPrimary={{ text: 'Browse Collections', href: '#products-section' }}
-        ctaSecondary={{ text: 'Take the Spice Quiz', href: '#quiz-section' }}
-        heroImage="/images/rathi-naturals-hero.png"
-        subtext="Trusted by 1000+ home chefs across india"
-      />
+      <HeroCarousel />
 
       {/* Best Sellers - Masalas Only (right after hero) */}
       <FeaturedCollection
