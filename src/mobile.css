@@ -1,0 +1,531 @@
+/* ========================================
+   MOBILE RESPONSIVE STYLES
+   tattvaco.in - Mobile Optimization
+   ======================================== */
+
+/* =====================================
+   1. GLOBAL MOBILE BASE STYLES
+   ===================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-size: 16px;
+  /* Prevents zoom on input focus */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Prevent horizontal scroll */
+html,
+body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* Touch-friendly links and buttons */
+a,
+button {
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Remove tap highlight on mobile */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* =====================================
+   2. HEADER & NAVIGATION (MOBILE)
+   ===================================== */
+
+@media (max-width: 768px) {
+  /* Announcement Banner */
+  .announcement-banner {
+    font-size: 0.75rem;
+    padding: 0.5rem;
+    text-align: center;
+    line-height: 1.4;
+  }
+
+  .announcement-banner .close-btn {
+    padding: 0.5rem;
+    min-width: 40px;
+    min-height: 40px;
+  }
+
+  /* Logo */
+  header .logo {
+    font-size: 1.5rem;
+    padding: 0.5rem;
+  }
+
+  /* Hide desktop navigation */
+  nav.desktop-nav {
+    display: none !important;
+  }
+
+  /* Mobile Header Layout */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 0.5rem 1rem;
+  }
+
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 100%;
+  }
+
+  /* Hamburger Menu Button */
+  .mobile-menu-toggle {
+    display: flex !important;
+    flex-direction: column;
+    gap: 4px;
+    padding: 0.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 1002;
+  }
+
+  .mobile-menu-toggle span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background: #4a2410;
+    transition: all 0.3s ease;
+    border-radius: 2px;
+  }
+
+  .mobile-menu-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+
+  .mobile-menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .mobile-menu-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -6px);
+  }
+
+  /* Mobile Navigation Drawer */
+  .mobile-nav-drawer {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 80%;
+    max-width: 320px;
+    height: 100vh;
+    background: white;
+    z-index: 1001;
+    transition: left 0.3s ease;
+    overflow-y: auto;
+    box-shadow: 2px 0 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .mobile-nav-drawer.open {
+    left: 0;
+  }
+
+  .mobile-nav-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .mobile-nav-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .mobile-nav-menu {
+    padding: 4rem 0 2rem;
+  }
+
+  .mobile-nav-menu a,
+  .mobile-nav-menu button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 1rem 1.5rem;
+    border: none;
+    background: none;
+    text-align: left;
+    font-size: 1rem;
+    color: #333;
+    border-bottom: 1px solid #eee;
+    text-decoration: none;
+  }
+
+  .mobile-nav-menu a:active,
+  .mobile-nav-menu button:active {
+    background: #f5f5f5;
+  }
+
+  /* Header Icons (Search, Wishlist, Cart, Login) */
+  .header-icons {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .header-icons button {
+    padding: 0.5rem;
+    background: none;
+    border: none;
+    position: relative;
+  }
+
+  .header-icons .badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: #dc2626;
+    color: white;
+    font-size: 0.65rem;
+    padding: 0.125rem 0.375rem;
+    border-radius: 10px;
+    min-width: 18px;
+  }
+
+  /* Mobile Search */
+  .search-mobile {
+    display: none;
+    padding: 1rem;
+    background: white;
+    border-bottom: 1px solid #eee;
+  }
+
+  .search-mobile.active {
+    display: block;
+  }
+
+  .search-mobile input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+  }
+}
+
+/* =====================================
+   3. HERO SECTION (MOBILE)
+   ===================================== */
+
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 2rem 1rem;
+    min-height: auto;
+  }
+
+  .hero-content {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .hero-text {
+    width: 100%;
+    text-align: center;
+  }
+
+  .hero-heading {
+    font-size: 2rem;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+
+  .hero-subheading {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .hero-description {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Feature List */
+  .hero-features {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-feature-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  /* Hero CTAs */
+  .hero-cta-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  .hero-cta-buttons button {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    font-weight: 600;
+  }
+
+  .hero-image {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .hero-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+  }
+
+  /* Trust Badge */
+  .trust-badge {
+    font-size: 0.85rem;
+    margin-top: 1.5rem;
+    text-align: center;
+  }
+}
+
+/* =====================================
+   4. PRODUCT GRID (MOBILE)
+   ===================================== */
+
+@media (max-width: 768px) {
+  .products-section {
+    padding: 2rem 1rem;
+  }
+
+  .section-header {
+    margin-bottom: 1.5rem;
+  }
+
+  .section-title {
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  /* Product Grid - Single Column */
+  .product-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  /* Product Card */
+  .product-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+  }
+
+  .product-card:active {
+    transform: scale(0.98);
+  }
+
+  .product-image-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%;
+    /* 1:1 aspect ratio */
+    overflow: hidden;
+  }
+
+  .product-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Wishlist Button */
+  .wishlist-btn {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    background: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    font-size: 1.25rem;
+    z-index: 10;
+  }
+
+  /* Product Info */
+  .product-info {
+    padding: 1rem;
+  }
+
+  .product-badges {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .product-badge {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.7rem;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+
+  .product-title {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+  }
+
+  .product-rating {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.85rem;
+  }
+
+  .product-price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.75rem;
+  }
+
+  .product-price {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #4a2410;
+  }
+
+  .product-weight {
+    font-size: 0.85rem;
+    color: #666;
+  }
+
+  /* Add to Cart Button */
+  .add-to-cart-btn {
+    width: 100%;
+    padding: 0.875rem;
+    margin-top: 0.75rem;
+    background: #4a2410;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .add-to-cart-btn:active {
+    background: #3a1810;
+  }
+}
+
+/* Two-column layout for larger phones (landscape) */
+@media (min-width: 480px) and (max-width: 768px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .product-card {
+    font-size: 0.9rem;
+  }
+
+  .product-title {
+    font-size: 0.9rem;
+  }
+
+  .product-price {
+    font-size: 1.1rem;
+  }
+}
+
+/* =====================================
+   5. FILTERS (MOBILE)
+   ===================================== */
+
+@media (max-width: 768px) {
+  /* Hide desktop sidebar */
+  .filters-sidebar-desktop {
+    display: none !important;
+  }
+
+  /* Mobile Filter Button */
+  .filters-btn-mobile {
+    position: fixed;
+    bottom: 80px;
+    right: 1rem;
+    z-index: 100;
+    background: #4a2410;
+    color: white;
+    border: none;
+    padding: 1rem 1.5rem;
+    border-radius: 25px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  /* Mobile Filter Drawer (Bottom Sheet) */
+  .filters-drawer-mobile {
+    position: fixed;
+    bottom: -100%;
+    left: 0;
+    width: 100%;
+    max-height: 80vh;
+    background: white;
+    z-index: 1001;
+    transition: bottom 0.3s ease;
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.2);
+    overflow-y: auto;
+  }
+
+  .filters-drawer-mobile.open {
+    bottom: 0;
+  }
+}
