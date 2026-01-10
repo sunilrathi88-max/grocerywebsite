@@ -5,6 +5,7 @@ import HeroCarousel from '../components/HeroCarousel';
 import WhyChooseUs from '../components/WhyChooseUs';
 import CertificationsBanner from '../components/CertificationsBanner';
 import ShopByCategory from '../components/ShopByCategory';
+import CookingContextWidget from '../components/CookingContextWidget';
 import ShopByUseCase from '../components/ShopByUseCase';
 import FeaturedCollection from '../components/FeaturedCollection';
 import BrandStory from '../components/BrandStory';
@@ -138,21 +139,22 @@ const HomePage: React.FC<HomePageProps> = ({
       <HeroCarousel />
 
       {/* Best Sellers - Masalas Only (right after hero) */}
-      <FeaturedCollection
-        title="Our Most Loved Masalas"
-        products={products.filter((p) => [4, 12, 29, 28, 27].includes(p.id))}
-        onAddToCart={handleAddToCartWithTracking}
-        onToggleWishlist={handleToggleWishlist}
-        wishlistedIds={wishlistedIds}
-        onSelectProduct={setSelectedProduct}
-        onNotifyMe={handleNotifyMe}
-        onViewAll={() => {
-          setSelectedCategory('Spices');
-          const element = document.getElementById('products-section');
-          element?.scrollIntoView({ behavior: 'smooth' });
-        }}
-      />
-
+      <div id="most-loved-section">
+        <FeaturedCollection
+          title="Our Most Loved Masalas"
+          products={products.filter((p) => [4, 12, 29, 28, 27].includes(p.id))}
+          onAddToCart={handleAddToCartWithTracking}
+          onToggleWishlist={handleToggleWishlist}
+          wishlistedIds={wishlistedIds}
+          onSelectProduct={setSelectedProduct}
+          onNotifyMe={handleNotifyMe}
+          onViewAll={() => {
+            setSelectedCategory('Spices');
+            const element = document.getElementById('products-section');
+            element?.scrollIntoView({ behavior: 'smooth' });
+          }}
+        />
+      </div>
       <CertificationsBanner className="mt-4 mb-8" />
 
       <div id="category-showcase">
@@ -165,6 +167,22 @@ const HomePage: React.FC<HomePageProps> = ({
           }}
         />
       </div>
+
+      {/* Cook What You're Craving Widget - drives bundle purchases */}
+      <CookingContextWidget
+        onAddBundleToCart={(kit) => {
+          // Add all products from the kit to cart
+          kit.products.forEach((product) => {
+            const matchedProduct = products.find((p) =>
+              p.name.includes(product.name.split(' ')[0])
+            );
+            if (matchedProduct && matchedProduct.variants[0]) {
+              handleAddToCart(matchedProduct, matchedProduct.variants[0], 1);
+            }
+          });
+          addToast(`Added ${kit.name} to cart!`, 'success');
+        }}
+      />
 
       <WhyChooseUs />
 
