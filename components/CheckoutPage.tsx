@@ -358,7 +358,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [localPromoCode, setLocalPromoCode] = useState('');
 
-  const tax = useMemo(() => (subtotal - discount) * 0.08, [subtotal, discount]);
+  const tax = useMemo(() => (subtotal - discount) * 0.05, [subtotal, discount]);
   const total = useMemo(
     () => subtotal + shippingCost + tax - discount,
     [subtotal, shippingCost, tax, discount]
@@ -608,17 +608,17 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
                     billingAddress:
                       (saved.useSameAddress ?? useSameAddress)
                         ? {
-                            ...shippingAddress,
-                            ...saved.shippingAddress,
-                            id: '',
-                            type: 'Billing' as const,
-                          }
+                          ...shippingAddress,
+                          ...saved.shippingAddress,
+                          id: '',
+                          type: 'Billing' as const,
+                        }
                         : {
-                            ...billingAddress,
-                            ...saved.billingAddress,
-                            id: '',
-                            type: 'Billing' as const,
-                          },
+                          ...billingAddress,
+                          ...saved.billingAddress,
+                          id: '',
+                          type: 'Billing' as const,
+                        },
                     deliveryMethod: 'Standard' as const,
                     paymentMethod: saved.paymentMethod || paymentMethod || 'Online Payment',
                     shippingCost: shippingCost, // shippingCost is calculated from cart items
@@ -649,7 +649,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
                   console.error(err);
                   setSubmitError(
                     'Failed to create order after payment: ' +
-                      (err instanceof Error ? err.message : 'Unknown error')
+                    (err instanceof Error ? err.message : 'Unknown error')
                   );
                 } finally {
                   setIsSubmitting(false);
@@ -865,7 +865,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
                 </div>
               )}
               <div className="flex justify-between text-sm text-neutral-600">
-                <span>Taxes (8%)</span>
+                <span>Taxes (5%)</span>
                 <span>₹{tax.toFixed(2)}</span>
               </div>
               <div className="flex justify-between font-bold text-xl text-neutral-900 pt-3 border-t border-neutral-200 mt-2">
