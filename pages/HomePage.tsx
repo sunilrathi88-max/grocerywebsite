@@ -155,7 +155,7 @@ const HomePage: React.FC<HomePageProps> = ({
         ctaPrimary={{ text: 'Browse Collections', href: '#products-section' }}
         ctaSecondary={{ text: 'Take the Spice Quiz', href: '#quiz-section' }}
         heroImage="/images/rathi-naturals-hero.png"
-        subtext="Trusted by 10,000+ home chefs across India"
+        subtext="Trusted by 1000+ home chefs across india"
       />
 
       {/* Best Sellers - Masalas Only (right after hero) */}

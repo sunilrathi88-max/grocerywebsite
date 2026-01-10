@@ -77,15 +77,6 @@ const WhyChooseUs: React.FC = () => {
             </div>
           ))}
         </div>
-
-        <div className="mt-16 flex flex-col sm:flex-row justify-center gap-4">
-          <button className="px-8 py-3 bg-white border border-neutral-200 text-neutral-900 rounded-lg font-bold hover:border-neutral-900 hover:bg-neutral-50 transition-all shadow-sm">
-            View Lab Reports
-          </button>
-          <button className="px-8 py-3 bg-brand-primary text-white border border-brand-primary rounded-lg font-bold hover:bg-brand-dark hover:border-brand-dark transition-all shadow-button hover:shadow-lg">
-            Meet Our Farmers
-          </button>
-        </div>
       </div>
     </section>
   );
