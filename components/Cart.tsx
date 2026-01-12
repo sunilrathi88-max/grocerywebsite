@@ -72,7 +72,7 @@ const Cart: React.FC<CartProps> = ({
   const [loadingState, setLoadingState] = useState<{ type: 'item' | 'promo' | null; id?: string }>({
     type: null,
   });
-  const tax = (subtotal - discount) * 0.08;
+  const tax = (subtotal - discount) * 0.05;
   const total = subtotal - discount + shippingCost + tax;
 
   const canCheckout = items.length > 0;
@@ -266,7 +266,7 @@ const Cart: React.FC<CartProps> = ({
               <span>{shippingCost === 0 ? 'Free' : `₹${shippingCost.toFixed(2)}`}</span>
             </div>
             <div className="flex justify-between text-gray-600">
-              <span>Taxes (8%)</span>
+              <span>Taxes (5%)</span>
               <span>₹{tax.toFixed(2)}</span>
             </div>
             <div className="flex justify-between font-bold text-lg text-brand-dark">
@@ -282,11 +282,10 @@ const Cart: React.FC<CartProps> = ({
           <button
             onClick={canCheckout ? onCheckout : undefined}
             disabled={!canCheckout || !!loadingState.type}
-            className={`mt-4 block w-full text-center bg-brand-primary text-brand-dark font-bold py-3 rounded-full shadow-lg transition-all duration-300 ${
-              !canCheckout || !!loadingState.type
+            className={`mt-4 block w-full text-center bg-brand-primary text-brand-dark font-bold py-3 rounded-full shadow-lg transition-all duration-300 ${!canCheckout || !!loadingState.type
                 ? 'bg-gray-400 cursor-not-allowed'
                 : 'hover:bg-opacity-90 transform hover:scale-105'
-            }`}
+              }`}
             data-testid="checkout-btn"
           >
             Proceed to Checkout
