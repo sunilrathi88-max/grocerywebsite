@@ -80,7 +80,7 @@ const MobileProductGrid: React.FC<MobileProductGridProps> = ({
             >
               {/* Product Image */}
               <div
-                className="relative w-full aspect-[4/5] overflow-hidden rounded-lg bg-amber-50 dark:bg-stone-700 cursor-pointer"
+                className="relative w-full aspect-square overflow-hidden rounded-lg bg-amber-50 dark:bg-stone-700 cursor-pointer"
                 onClick={() => onSelectProduct(product)}
               >
                 {/* Wishlist Button */}
