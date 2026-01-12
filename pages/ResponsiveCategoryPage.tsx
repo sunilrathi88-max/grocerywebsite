@@ -18,7 +18,7 @@ interface ResponsiveCategoryPageProps {
 }
 
 const ResponsiveCategoryPage: React.FC<ResponsiveCategoryPageProps> = (props) => {
-  const isMobile = useIsMobile(768);
+  const isMobile = useIsMobile(1024);
 
   if (isMobile) {
     return (

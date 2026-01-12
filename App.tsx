@@ -100,6 +100,7 @@ const ResponsiveCategoryPage = React.lazy(() => import('./pages/ResponsiveCatego
 const OffersPage = React.lazy(() => import('./pages/OffersPage'));
 const SubscriptionPage = React.lazy(() => import('./pages/SubscriptionPage'));
 const FarmersPage = React.lazy(() => import('./pages/FarmersPage'));
+const ResponsiveCartPage = React.lazy(() => import('./pages/ResponsiveCartPage'));
 
 const PageLoader = () => (
   <div className="flex items-center justify-center min-h-[60vh]">
@@ -735,6 +736,7 @@ const App: React.FC = () => {
   const isMobileLayoutPage =
     location.pathname === '/' ||
     location.pathname === '/shop' ||
+    location.pathname === '/cart' ||
     location.pathname.startsWith('/category');
 
   return (
@@ -1140,7 +1142,7 @@ const App: React.FC = () => {
                 path="/cart"
                 element={
                   <React.Suspense fallback={<PageLoader />}>
-                    <CartPage />
+                    <ResponsiveCartPage />
                   </React.Suspense>
                 }
               />

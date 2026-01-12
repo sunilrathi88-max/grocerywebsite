@@ -40,7 +40,9 @@ const MobileCategoryPage: React.FC<MobileCategoryPageProps> = ({
   const cartItems = useCartStore((state) => state.items);
 
   // Local state
-  const [searchQuery, setSearchQuery] = useState(externalSearchQuery || '');
+  const searchParams = new URLSearchParams(location.search);
+  const initialSearch = searchParams.get('search') || externalSearchQuery || '';
+  const [searchQuery, setSearchQuery] = useState(initialSearch);
   const [activeFilters, setActiveFilters] = useState<Set<string>>(new Set());
   const [sortModalOpen, setSortModalOpen] = useState(false);
   const [sortBy, setSortBy] = useState<'popularity' | 'price-asc' | 'price-desc' | 'newest'>(

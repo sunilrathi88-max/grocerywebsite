@@ -38,8 +38,8 @@ const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
       id: 'shop',
       name: 'Shop',
       icon: TagIcon,
-      action: onOpenMenu,
-      isActive: false,
+      action: () => navigate('/shop'),
+      isActive: currentView === 'shop',
     },
     {
       id: 'cart',
@@ -120,9 +120,8 @@ const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
               </div>
 
               <span
-                className={`text-[11px] font-medium mt-0.5 transition-colors ${
-                  isActive ? 'text-brand-primary' : 'text-neutral-500'
-                }`}
+                className={`text-[11px] font-medium mt-0.5 transition-colors ${isActive ? 'text-brand-primary' : 'text-neutral-500'
+                  }`}
               >
                 {item.name}
               </span>
