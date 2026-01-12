@@ -3,6 +3,7 @@ import { SparklesIcon } from './icons/SparklesIcon';
 import { BeakerIcon } from './icons/BeakerIcon';
 import { UsersIcon } from './icons/UsersIcon';
 import { ClockIcon } from './icons/ClockIcon';
+import { motion } from 'framer-motion';
 
 const features = [
   {
@@ -35,25 +36,37 @@ const features = [
 
 const WhyChooseUs: React.FC = () => {
   return (
-    <section className="py-20 bg-neutral-50 border-t border-neutral-100">
+    <section className="py-20 bg-neutral-50 border-t border-neutral-100 overflow-hidden">
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center mb-16">
-          <span className="text-brand-primary font-bold tracking-wider uppercase text-sm mb-2 block">
-            The Tattvaco Difference
-          </span>
-          <h2 className="text-3xl md:text-5xl font-serif font-bold text-neutral-900 mb-4">
-            Why Choose Tattva?
-          </h2>
-          <p className="text-xl text-neutral-600 font-medium max-w-2xl mx-auto">
-            Pure Spices. Zero Compromise. Delivered Fresh.
-          </p>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <span className="text-brand-primary font-bold tracking-wider uppercase text-sm mb-2 block">
+              The Tattvaco Difference
+            </span>
+            <h2 className="text-3xl md:text-5xl font-serif font-bold text-neutral-900 mb-4">
+              Why Choose Tattva?
+            </h2>
+            <p className="text-xl text-neutral-600 font-medium max-w-2xl mx-auto">
+              Pure Spices. Zero Compromise. Delivered Fresh.
+            </p>
+          </motion.div>
         </div>
 
         {/* 4-Column Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 justify-center">
           {features.map((feature, index) => (
-            <div
+            <motion.div
               key={index}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              whileHover={{ y: -5 }}
               className="bg-white p-6 rounded-xl border border-neutral-100 shadow-sm hover:shadow-card-hover transition-all duration-300 flex flex-col items-center text-center group h-full"
             >
               <div className="p-4 bg-brand-light/30 rounded-full mb-5 group-hover:bg-brand-primary/10 transition-colors group-hover:scale-110 duration-300">
@@ -64,7 +77,7 @@ const WhyChooseUs: React.FC = () => {
               </h3>
               <p className="text-sm font-semibold text-brand-dark mb-3">{feature.benefit}</p>
               <p className="text-xs text-neutral-500 leading-relaxed">{feature.detail}</p>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
