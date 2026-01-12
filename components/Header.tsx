@@ -149,11 +149,10 @@ const Header: React.FC<HeaderProps> = ({
   return (
     <>
       <header
-        className={`sticky top-0 z-50 transition-all duration-300 ${
-          isScrolled ? 'bg-white shadow-sm' : 'bg-white border-b border-neutral-200'
-        }`}
+        className={`sticky top-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white shadow-sm' : 'bg-white border-b border-neutral-200'
+          }`}
       >
-        <div className="max-w-7xl mx-auto px-4 md:px-16 h-20 flex items-center justify-between gap-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-8">
           {/* Left: Logo */}
           <Link to="/" className="flex-shrink-0 flex items-center gap-2 cursor-pointer">
             <span className="text-2xl font-serif font-bold text-neutral-900 tracking-tight">
