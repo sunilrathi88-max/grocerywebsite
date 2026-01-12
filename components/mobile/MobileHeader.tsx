@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ShoppingCartIcon } from '../icons/ShoppingCartIcon';
 import { SearchIcon } from '../icons/SearchIcon';
 
@@ -17,6 +18,15 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({
   onSearchChange,
   onCartClick,
 }) => {
+  /* New Hook */
+  const navigate = useNavigate();
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      navigate(`/shop?search=${encodeURIComponent(searchQuery)}`);
+    }
+  };
+
   return (
     <header className="sticky top-0 z-50 bg-amber-50/95 dark:bg-stone-900/95 backdrop-blur-sm border-b border-amber-100 dark:border-stone-800 px-4 py-3">
       <div className="flex items-center justify-between">
@@ -46,6 +56,7 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({
           type="text"
           value={searchQuery}
           onChange={(e) => onSearchChange(e.target.value)}
+          onKeyDown={handleKeyDown}
           placeholder="Search for spices, masalas..."
           className="w-full bg-white dark:bg-stone-800 border-none rounded-full py-2.5 pl-10 pr-4 text-sm shadow-sm focus:ring-2 focus:ring-amber-500/50 text-stone-900 dark:text-stone-100 placeholder-stone-500 dark:placeholder-stone-400"
         />
