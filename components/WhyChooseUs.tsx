@@ -3,43 +3,33 @@ import { SparklesIcon } from './icons/SparklesIcon';
 import { BeakerIcon } from './icons/BeakerIcon';
 import { UsersIcon } from './icons/UsersIcon';
 import { ClockIcon } from './icons/ClockIcon';
-import { ShieldCheckIcon } from './icons/ShieldCheckIcon';
 
 const features = [
   {
-    title: 'COLD GROUND',
-    benefit: 'Retains volatile oils & aroma.',
+    title: 'DIRECT',
+    benefit: 'No middlemen = Better prices',
     detail:
-      'Cold-grinding preserves the essential oils that make spices aromatic, unlike commercial high-heat grinding that destroys them.',
-    icon: <SparklesIcon className="w-8 h-8 text-brand-primary" />,
-  },
-  {
-    title: 'LAB TESTED',
-    benefit: 'Zero aflatoxin, zero salmonella.',
-    detail:
-      'Every batch is tested for microbes, contaminants, and pesticide residues. Validated purity, not just a claim.',
-    icon: <BeakerIcon className="w-8 h-8 text-brand-primary" />,
-  },
-  {
-    title: 'FARM DIRECT',
-    benefit: 'No middlemen. Fairer pay.',
-    detail:
-      'Sourcing directly from partner farms ensures our farmers get paid better and you get the freshest harvest.',
+      'We source directly from farmer co-operatives, ensuring fair pay and lower costs for you.',
     icon: <UsersIcon className="w-8 h-8 text-brand-primary" />,
   },
   {
-    title: 'SMALL BATCH',
-    benefit: 'Freshly ground weekly.',
+    title: 'QUALITY',
+    benefit: 'Tested for pesticides',
+    detail: 'Every batch undergoes rigorous lab testing for purity, potency, and safety.',
+    icon: <BeakerIcon className="w-8 h-8 text-brand-primary" />,
+  },
+  {
+    title: 'FAST',
+    benefit: '24-48 hour shipping',
     detail:
-      'We grind in small batches so the aroma and color stay vivid. No warehousing for months.',
+      'Our streamlined logistics ensure your spices are dispatched same-day for quick delivery.',
     icon: <ClockIcon className="w-8 h-8 text-brand-primary" />,
   },
   {
-    title: 'FSSAI CERTIFIED',
-    benefit: '100% Licensed & Compliant.',
-    detail:
-      'Fully licensed food business following strict safety standards for handling, packing, and storage.',
-    icon: <ShieldCheckIcon className="w-8 h-8 text-brand-primary" />,
+    title: 'FRESH',
+    benefit: 'Packed same week',
+    detail: 'Small batch grinding and immediate packing locks in the aroma and essential oils.',
+    icon: <SparklesIcon className="w-8 h-8 text-brand-primary" />,
   },
 ];
 
@@ -59,8 +49,8 @@ const WhyChooseUs: React.FC = () => {
           </p>
         </div>
 
-        {/* 5-Column Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 justify-center">
+        {/* 4-Column Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 justify-center">
           {features.map((feature, index) => (
             <div
               key={index}

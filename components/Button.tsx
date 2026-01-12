@@ -40,7 +40,7 @@ export const Button: React.FC<ButtonProps> = ({
     lg: 'px-8 py-4 text-lg h-14',
   };
 
-  const hoverScale = 'hover:scale-105 active:scale-100';
+  const hoverScale = 'hover-lift active:scale-100';
 
   return (
     <button

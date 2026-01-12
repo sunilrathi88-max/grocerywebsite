@@ -63,6 +63,22 @@ describe('ProductCard', () => {
       const image = screen.getByAltText('Premium Saffron');
       expect(image).toHaveAttribute('src', '/images/products/saffron-1.svg');
     });
+
+    it('should NOT render heat level indicator for non-chilli products', () => {
+      // Saffron with heatLevel='mild' passed in defaultProps
+      renderWithRouter(<ProductCard {...defaultProps} />);
+      // Should find the useCase 'Spices'
+      expect(screen.getByText('Spices')).toBeInTheDocument();
+      // But should NOT find the heat level emoji/text
+      expect(screen.queryByText(/mild/i)).not.toBeInTheDocument();
+      expect(screen.queryByText(/🌶️/)).not.toBeInTheDocument();
+    });
+
+    it('should render heat level indicator for chilli products', () => {
+      renderWithRouter(<ProductCard {...defaultProps} name="Red Chilli Powder" heatLevel="hot" />);
+      expect(screen.getByText(/hot/i)).toBeInTheDocument();
+      expect(screen.getByText(/🌶️🌶️🌶️/)).toBeInTheDocument();
+    });
   });
 
   describe('Badges', () => {

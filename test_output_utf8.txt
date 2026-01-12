@@ -1,0 +1,845 @@
+﻿
+> tattva-co.---indian-gourmet-products@0.0.0 test
+> jest components/__tests__/CookingContextWidget.test.tsx
+
+node.exe : FAIL compon
+ents/__tests__/Cooking
+ContextWidget.test.tsx
+At line:1 char:1
++ & "C:\Program Files\
+nodejs/node.exe" "C:\U
+sers\shubh\AppData\Roa
+ming\ ...
++ ~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~
+    + CategoryInfo    
+          : NotSpeci  
+  fied: (FAIL compo   
+ nents...Widget.te    
+st.tsx:String) []    
+, RemoteException
+    + FullyQualifiedE 
+   rrorId : NativeCo  
+  mmandError
+ 
+  CookingContextWidget
+    ├ù renders the 
+widget title and 
+description (103 ms)
+    ΓêÜ renders all 
+cooking options (43 
+ms)
+    ΓêÜ displays the 
+kit details when an 
+option is selected 
+(94 ms)
+    ΓêÜ calls 
+onAddBundleToCart 
+when "Add Complete 
+Kit" is clicked (80 
+ms)
+    ├ù toggles 
+selection off when 
+clicking the same 
+option again (63 ms)
+
+  ΓùÅ 
+CookingContextWidget 
+ΓÇ║ renders the 
+widget title and 
+description
+
+    TestingLibraryElem
+entError: Found 
+multiple elements 
+with the text: 
+/Select what you're 
+cooking/i
+
+    Here are the 
+matching elements:
+
+    Ignored nodes: 
+comments, script, 
+style
+    [36m<p[39m
+      [33mclass[39m=
+[32m"text-neutral-600
+ max-w-xl 
+mx-auto"[39m
+    [36m>[39m
+      [0mSelect what 
+you're cooking and 
+get the complete 
+spice kit with 
+exclusive bundle 
+discounts[0m
+    [36m</p>[39m
+
+    Ignored nodes: 
+comments, script, 
+style
+    [36m<p>[39m
+      [0m≡ƒæå Select 
+what you're cooking 
+to see the perfect 
+spice kit![0m
+    [36m</p>[39m
+
+    (If this is 
+intentional, then use 
+the `*AllBy*` variant 
+of the query (like 
+`queryAllByText`, 
+`getAllByText`, or 
+`findAllByText`)).
+
+    Ignored nodes: 
+comments, script, 
+style
+    [36m<body>[39m
+      [36m<div>[39m
+        
+[36m<section[39m
+          [33mclass[
+39m=[32m"py-12 
+bg-gradient-to-b 
+from-amber-50 
+to-white"[39m
+        [36m>[39m
+          
+[36m<div[39m
+            [33mclass
+[39m=[32m"container 
+mx-auto px-4 
+md:px-6"[39m
+          [36m>[39m
+            
+[36m<div[39m
+              [33mcla
+ss[39m=[32m"text-cen
+ter mb-8"[39m
+            
+[36m>[39m
+              
+[36m<h2[39m
+                [33mc
+lass[39m=[32m"text-2
+xl md:text-4xl 
+font-serif font-bold 
+text-neutral-900 
+mb-3"[39m
+              
+[36m>[39m
+                
+[0m≡ƒì│ Cook What 
+You're Craving 
+Today[0m
+              
+[36m</h2>[39m
+              
+[36m<p[39m
+                [33mc
+lass[39m=[32m"text-n
+eutral-600 max-w-xl 
+mx-auto"[39m
+              
+[36m>[39m
+                
+[0mSelect what 
+you're cooking and 
+get the complete 
+spice kit with 
+exclusive bundle 
+discounts[0m
+              
+[36m</p>[39m
+            
+[36m</div>[39m
+            
+[36m<div[39m
+              [33mcla
+ss[39m=[32m"flex 
+flex-wrap 
+justify-center gap-3 
+mb-8"[39m
+            
+[36m>[39m
+              
+[36m<button[39m
+                
+[33mclass[39m=[32m"
+                    
+inline-flex 
+items-center gap-2 
+px-5 py-3 
+                    
+text-base 
+font-semibold 
+rounded-full
+                    
+border-2 
+transition-all 
+duration-300
+                    
+bg-white 
+text-neutral-700 
+border-neutral-200 hov
+er:border-brand-primar
+y 
+hover:text-brand-dark
+                  
+"[39m
+              
+[36m>[39m
+                
+[36m<span[39m
+                  [33
+mclass[39m=[32m"text
+-xl"[39m
+                
+[36m>[39m
+                  
+[0m≡ƒì¢[0m
+                
+[36m</span>[39m
+                
+[36m<span>[39m
+                  
+[0mMaking Dal?[0m
+                
+[36m</span>[39m
+              
+[36m</button>[39m
+              
+[36m<button[39m
+                
+[33mclass[39m=[32m"
+                    
+inline-flex 
+items-center gap-2 
+px-5 py-3 
+                    
+text-base 
+font-semibold 
+rounded-full
+                    
+border-2 
+transition-all 
+duration-300
+                    
+bg-white 
+text-neutral-700 
+border-neutral-200 hov
+er:border-brand-primar
+y 
+hover:text-brand-dark
+                  
+"[39m
+              
+[36m>[39m
+                
+[36m<span[39m
+                  [33
+mclass[39m=[32m"text
+-xl"[39m
+                
+[36m>[39m
+                  
+[0mΓÿò[0m
+                
+[36m</span>[39m
+                
+[36m<span>[39m
+                  
+[0mMaking Chai?[0m
+                
+[36m</span>[39m
+              
+[36m</button>[39m
+              
+[36m<button[39m
+                
+[33mclass[39m=[32m"
+                    
+inline-flex 
+items-center gap-2 
+px-5 py-3 
+                    
+text-base 
+font-semibold 
+rounded-full
+                    
+border-2 
+transition-all 
+duration-300
+                    
+bg-white 
+text-neutral-700 
+border-neutral-200 hov
+er:border-brand-primar
+y 
+hover:text-brand-dark
+                  
+"[39m
+              
+[36m>[39m
+                
+[36m<span[39m
+                  [33
+mclass[39m=[32m"text
+-xl"[39m
+                
+[36m>[39m
+                  
+[0m≡ƒì▓[0m
+                
+[36m</span>[39m
+                
+[36m<span>[39m
+                  
+[0mMaking Curry?[0m
+                
+[36m</span>[39m
+              
+[36m</button>[39m
+              
+[36m<button[39m
+                
+[33mclass[39m=[32m"
+                    
+inline-flex 
+items-center gap-2 
+px-5 py-3 
+                    
+text-base 
+font-semibold 
+rounded-full
+                    
+border-2 
+transition-all 
+duration-300
+                    
+bg-white 
+text-neutral-700 
+border-neutral-200 hov
+er:border-brand-primar
+y 
+hover:text-brand-dark
+                  
+"[39m
+              
+[36m>[39m
+                
+[36m<span[39m
+                  [33
+mclass[39m=[32m"text
+-xl"[39m
+                
+[36m>[39m
+                  
+[0m≡ƒìÜ[0m
+                
+[36m</span>[39m
+                
+[36m<span>[39m
+                  
+[0mBiryani Night?[0m
+                
+[36m</span>[39m
+              
+[36m</button>[39m
+            
+[36m</div>[39m
+            
+[36m<div[39m
+              [33mcla
+ss[39m=[32m"text-cen
+ter py-8 
+text-neutral-500"[39m
+            
+[36m>[39m
+              
+[36m<p>[39m
+                
+[0m≡ƒæå Select what 
+you're cooking to see 
+the perfect spice 
+kit![0m
+              
+[36m</p>[39m
+            
+[36m</div>[39m
+          
+[36m</div>[39m
+        
+[36m</section>[39m
+      [36m</div>[39m
+    [36m</body>[39m
+
+    [0m [90m 14 
+|[39m         render(
+[33m<[39m[33mCookin
+gContextWidget[39m [
+33m/[39m[33m>[39m)
+[33m;[39m
+     [90m 15 |[39m  
+       expect(screen[
+33m.[39mgetByText([3
+5m/Cook What You're 
+Craving Today/i[39m))
+[33m.[39mtoBeInTheDo
+cument()[33m;[39m
+    [31m[1m>[22m[3
+9m[90m 16 |[39m     
+    expect(screen[33m
+.[39mgetByText([35m/
+Select what you're coo
+king/i[39m))[33m.[3
+9mtoBeInTheDocument()
+[33m;[39m
+     [90m    |[39m  
+                     
+[31m[1m^[22m[39m
+     [90m 17 |[39m  
+   })[33m;[39m
+     [90m 18 |[39m
+     [90m 19 |[39m  
+   it([32m'renders 
+all cooking options'[
+39m[33m,[39m () 
+[33m=>[39m {[0m
+
+      at Object.getEle
+mentError (node_module
+s/@testing-library/dom
+/dist/config.js:37:19)
+      at 
+getElementError (node_
+modules/@testing-libra
+ry/dom/dist/query-help
+ers.js:20:35)
+      at getMultipleEl
+ementsFoundError (node
+_modules/@testing-libr
+ary/dom/dist/query-hel
+pers.js:23:10)
+      at node_modules/
+@testing-library/dom/d
+ist/query-helpers.js:5
+5:13
+      at node_modules/
+@testing-library/dom/d
+ist/query-helpers.js:9
+5:19
+      at 
+Object.<anonymous> (co
+mponents/__tests__/Coo
+kingContextWidget.test
+.tsx:16:23)
+
+  ΓùÅ 
+CookingContextWidget 
+ΓÇ║ toggles selection 
+off when clicking the 
+same option again
+
+    TestingLibraryElem
+entError: Found 
+multiple elements 
+with the text: 
+/Select what you're 
+cooking/i
+
+    Here are the 
+matching elements:
+
+    Ignored nodes: 
+comments, script, 
+style
+    [36m<p[39m
+      [33mclass[39m=
+[32m"text-neutral-600
+ max-w-xl 
+mx-auto"[39m
+    [36m>[39m
+      [0mSelect what 
+you're cooking and 
+get the complete 
+spice kit with 
+exclusive bundle 
+discounts[0m
+    [36m</p>[39m
+
+    Ignored nodes: 
+comments, script, 
+style
+    [36m<p>[39m
+      [0m≡ƒæå Select 
+what you're cooking 
+to see the perfect 
+spice kit![0m
+    [36m</p>[39m
+
+    (If this is 
+intentional, then use 
+the `*AllBy*` variant 
+of the query (like 
+`queryAllByText`, 
+`getAllByText`, or 
+`findAllByText`)).
+
+    Ignored nodes: 
+comments, script, 
+style
+    [36m<body>[39m
+      [36m<div>[39m
+        
+[36m<section[39m
+          [33mclass[
+39m=[32m"py-12 
+bg-gradient-to-b 
+from-amber-50 
+to-white"[39m
+        [36m>[39m
+          
+[36m<div[39m
+            [33mclass
+[39m=[32m"container 
+mx-auto px-4 
+md:px-6"[39m
+          [36m>[39m
+            
+[36m<div[39m
+              [33mcla
+ss[39m=[32m"text-cen
+ter mb-8"[39m
+            
+[36m>[39m
+              
+[36m<h2[39m
+                [33mc
+lass[39m=[32m"text-2
+xl md:text-4xl 
+font-serif font-bold 
+text-neutral-900 
+mb-3"[39m
+              
+[36m>[39m
+                
+[0m≡ƒì│ Cook What 
+You're Craving 
+Today[0m
+              
+[36m</h2>[39m
+              
+[36m<p[39m
+                [33mc
+lass[39m=[32m"text-n
+eutral-600 max-w-xl 
+mx-auto"[39m
+              
+[36m>[39m
+                
+[0mSelect what 
+you're cooking and 
+get the complete 
+spice kit with 
+exclusive bundle 
+discounts[0m
+              
+[36m</p>[39m
+            
+[36m</div>[39m
+            
+[36m<div[39m
+              [33mcla
+ss[39m=[32m"flex 
+flex-wrap 
+justify-center gap-3 
+mb-8"[39m
+            
+[36m>[39m
+              
+[36m<button[39m
+                
+[33mclass[39m=[32m"
+                    
+inline-flex 
+items-center gap-2 
+px-5 py-3 
+                    
+text-base 
+font-semibold 
+rounded-full
+                    
+border-2 
+transition-all 
+duration-300
+                    
+bg-white 
+text-neutral-700 
+border-neutral-200 hov
+er:border-brand-primar
+y 
+hover:text-brand-dark
+                  
+"[39m
+              
+[36m>[39m
+                
+[36m<span[39m
+                  [33
+mclass[39m=[32m"text
+-xl"[39m
+                
+[36m>[39m
+                  
+[0m≡ƒì¢[0m
+                
+[36m</span>[39m
+                
+[36m<span>[39m
+                  
+[0mMaking Dal?[0m
+                
+[36m</span>[39m
+              
+[36m</button>[39m
+              
+[36m<button[39m
+                
+[33mclass[39m=[32m"
+                    
+inline-flex 
+items-center gap-2 
+px-5 py-3 
+                    
+text-base 
+font-semibold 
+rounded-full
+                    
+border-2 
+transition-all 
+duration-300
+                    
+bg-white 
+text-neutral-700 
+border-neutral-200 hov
+er:border-brand-primar
+y 
+hover:text-brand-dark
+                  
+"[39m
+              
+[36m>[39m
+                
+[36m<span[39m
+                  [33
+mclass[39m=[32m"text
+-xl"[39m
+                
+[36m>[39m
+                  
+[0mΓÿò[0m
+                
+[36m</span>[39m
+                
+[36m<span>[39m
+                  
+[0mMaking Chai?[0m
+                
+[36m</span>[39m
+              
+[36m</button>[39m
+              
+[36m<button[39m
+                
+[33mclass[39m=[32m"
+                    
+inline-flex 
+items-center gap-2 
+px-5 py-3 
+                    
+text-base 
+font-semibold 
+rounded-full
+                    
+border-2 
+transition-all 
+duration-300
+                    
+bg-white 
+text-neutral-700 
+border-neutral-200 hov
+er:border-brand-primar
+y 
+hover:text-brand-dark
+                  
+"[39m
+              
+[36m>[39m
+                
+[36m<span[39m
+                  [33
+mclass[39m=[32m"text
+-xl"[39m
+                
+[36m>[39m
+                  
+[0m≡ƒì▓[0m
+                
+[36m</span>[39m
+                
+[36m<span>[39m
+                  
+[0mMaking Curry?[0m
+                
+[36m</span>[39m
+              
+[36m</button>[39m
+              
+[36m<button[39m
+                
+[33mclass[39m=[32m"
+                    
+inline-flex 
+items-center gap-2 
+px-5 py-3 
+                    
+text-base 
+font-semibold 
+rounded-full
+                    
+border-2 
+transition-all 
+duration-300
+                    
+bg-white 
+text-neutral-700 
+border-neutral-200 hov
+er:border-brand-primar
+y 
+hover:text-brand-dark
+                  
+"[39m
+              
+[36m>[39m
+                
+[36m<span[39m
+                  [33
+mclass[39m=[32m"text
+-xl"[39m
+                
+[36m>[39m
+                  
+[0m≡ƒìÜ[0m
+                
+[36m</span>[39m
+                
+[36m<span>[39m
+                  
+[0mBiryani Night?[0m
+                
+[36m</span>[39m
+              
+[36m</button>[39m
+            
+[36m</div>[39m
+            
+[36m<div[39m
+              [33mcla
+ss[39m=[32m"text-cen
+ter py-8 
+text-neutral-500"[39m
+            
+[36m>[39m
+              
+[36m<p>[39m
+                
+[0m≡ƒæå Select what 
+you're cooking to see 
+the perfect spice 
+kit![0m
+              
+[36m</p>[39m
+            
+[36m</div>[39m
+          
+[36m</div>[39m
+        
+[36m</section>[39m
+      [36m</div>[39m
+    [36m</body>[39m
+
+    [0m [90m 67 
+|[39m         fireEve
+nt[33m.[39mclick(dal
+Option)[33m;[39m
+     [90m 68 |[39m  
+       expect(screen[
+33m.[39mqueryByText(
+[32m'Complete Dal 
+Tadka Kit'[39m))[33m
+.[39mnot[33m.[39mto
+BeInTheDocument()[33m
+;[39m
+    [31m[1m>[22m[3
+9m[90m 69 |[39m     
+    expect(screen[33m
+.[39mgetByText([35m/
+Select what you're coo
+king/i[39m))[33m.[3
+9mtoBeInTheDocument()
+[33m;[39m
+     [90m    |[39m  
+                     
+[31m[1m^[22m[39m
+     [90m 70 |[39m  
+   })[33m;[39m
+     [90m 71 |[39m 
+})[33m;[39m
+     [90m 72 
+|[39m[0m
+
+      at Object.getEle
+mentError (node_module
+s/@testing-library/dom
+/dist/config.js:37:19)
+      at 
+getElementError (node_
+modules/@testing-libra
+ry/dom/dist/query-help
+ers.js:20:35)
+      at getMultipleEl
+ementsFoundError (node
+_modules/@testing-libr
+ary/dom/dist/query-hel
+pers.js:23:10)
+      at node_modules/
+@testing-library/dom/d
+ist/query-helpers.js:5
+5:13
+      at node_modules/
+@testing-library/dom/d
+ist/query-helpers.js:9
+5:19
+      at 
+Object.<anonymous> (co
+mponents/__tests__/Coo
+kingContextWidget.test
+.tsx:69:23)
+
+Test Suites: 1 
+failed, 1 total
+Tests:       2 
+failed, 3 passed, 5 
+total
+Snapshots:   0 total
+Time:        4.804 s
+Ran all test suites 
+matching components/__
+tests__/CookingContext
+Widget.test.tsx.

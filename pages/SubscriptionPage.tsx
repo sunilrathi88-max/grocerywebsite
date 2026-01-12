@@ -4,12 +4,31 @@ import { SUBSCRIPTION_PLANS } from '../utils/subscription';
 import { UsersIcon } from '../components/icons/UsersIcon';
 import { SparklesIcon } from '../components/icons/SparklesIcon';
 
-// Mock function for now
-const handleSubscribe = (planId: string) => {
-  alert(`Subscribed to ${planId} plan! (Mock)`);
-};
+import { useNavigate } from 'react-router-dom';
+import { useCartStore } from '../store/cartStore';
 
 const SubscriptionPage: React.FC = () => {
+  const navigate = useNavigate();
+  const addToCart = useCartStore((state) => state.addItem);
+
+  const handleSubscribe = (planId: string) => {
+    const plan = SUBSCRIPTION_PLANS.find((p) => p.id === planId);
+    if (!plan) return;
+
+    addToCart({
+      id: `sub-${plan.id}`,
+      name: `Tattva Fresh: ${plan.name}`,
+      price: plan.price,
+      quantity: 1,
+      weight: plan.interval, // Using weight field for interval display
+      image:
+        'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&q=80', // Generic spice box image
+      stock: 999,
+      isSubscription: true,
+      subscriptionInterval: plan.interval,
+    });
+    navigate('/cart');
+  };
   return (
     <div className="bg-white min-h-screen">
       {/* Hero Section */}

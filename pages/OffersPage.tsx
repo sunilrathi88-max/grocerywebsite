@@ -7,6 +7,7 @@ import AdvancedFilters from '../components/AdvancedFilters';
 import { useCartStore } from '../store/cartStore';
 import { useWishlist } from '../hooks/useWishlist';
 import { Product, Variant } from '../types';
+import CountdownTimer from '../components/CountdownTimer';
 
 const OffersPage: React.FC = () => {
   const { products, isLoading: productsLoading } = useProducts();
@@ -149,8 +150,19 @@ const OffersPage: React.FC = () => {
     toggleWishlist(product);
   };
 
+  // Calculate end of sale (7 days from now)
+  const saleEndDate = useMemo(() => {
+    const date = new Date();
+    date.setDate(date.getDate() + 7);
+    date.setHours(23, 59, 59, 999);
+    return date;
+  }, []);
+
   return (
     <>
+      {/* Sale Countdown */}
+      <CountdownTimer endDate={saleEndDate} label="Limited Time Sale Ends In" />
+
       <div className="bg-brand-secondary/20 py-12 mb-8">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-4xl md:text-5xl font-serif font-bold text-brand-dark mb-4">

@@ -9,6 +9,8 @@ export interface CartItem {
   weight: string;
   image: string;
   stock: number;
+  subscriptionInterval?: string; // e.g., 'monthly', 'quarterly'
+  isSubscription?: boolean;
 }
 
 interface CartStore {

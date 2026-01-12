@@ -5,7 +5,7 @@ import ErrorBoundary from './components/ErrorBoundary';
 // import { initGA4 } from './utils/analytics';
 import './src/index.css';
 import './src/mobile.css';
-import './animations.css';
+import './styles/animations.css';
 
 // Initialize Google Analytics if measurement ID is provided
 // const gaId = (import.meta as { env?: { VITE_GA_MEASUREMENT_ID?: string } }).env

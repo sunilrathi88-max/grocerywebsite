@@ -141,14 +141,10 @@ const cookingOptions = [
 ];
 
 interface CookingContextWidgetProps {
-  onAddToCart?: (productIds: number[]) => void;
   onAddBundleToCart?: (kit: CookingKit) => void;
 }
 
-const CookingContextWidget: React.FC<CookingContextWidgetProps> = ({
-  onAddToCart,
-  onAddBundleToCart,
-}) => {
+const CookingContextWidget: React.FC<CookingContextWidgetProps> = ({ onAddBundleToCart }) => {
   const [selectedCooking, setSelectedCooking] = useState<string | null>(null);
   const selectedKit = selectedCooking ? cookingKits[selectedCooking] : null;
 
@@ -168,10 +164,10 @@ const CookingContextWidget: React.FC<CookingContextWidgetProps> = ({
         {/* Header */}
         <div className="text-center mb-8">
           <h2 className="text-2xl md:text-4xl font-serif font-bold text-neutral-900 mb-3">
-            🍳 Cook What You're Craving Today
+            🍳 Cook What You&apos;re Craving Today
           </h2>
           <p className="text-neutral-600 max-w-xl mx-auto">
-            Select what you're cooking and get the complete spice kit with exclusive bundle
+            Select what you&apos;re cooking and get the complete spice kit with exclusive bundle
             discounts
           </p>
         </div>
@@ -275,7 +271,7 @@ const CookingContextWidget: React.FC<CookingContextWidgetProps> = ({
         {/* Empty State Hint */}
         {!selectedKit && (
           <div className="text-center py-8 text-neutral-500">
-            <p>👆 Select what you're cooking to see the perfect spice kit!</p>
+            <p>👆 Select what you&apos;re cooking to see the perfect spice kit!</p>
           </div>
         )}
       </div>

@@ -50,7 +50,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   return (
     <Link to={`/product/${id}`}>
       <div
-        className="group bg-white rounded-xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-300 hover:-translate-y-1 cursor-pointer h-full border border-neutral-200"
+        className="group bg-white rounded-xl overflow-hidden shadow-card hover-lift cursor-pointer h-full border border-neutral-200 animate-fadeInUp"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
@@ -117,9 +117,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         <div className="p-5">
           {/* Tags Row */}
           <div className="flex gap-2 mb-3 flex-wrap">
-            <span className="inline-flex items-center text-[10px] font-bold uppercase tracking-wider text-neutral-600 bg-neutral-100 px-2 py-1 rounded-full">
-              {heatLevelEmoji[heatLevel]} {heatLevel}
-            </span>
+            {heatLevel && name.toLowerCase().includes('chilli') && (
+              <span className="inline-flex items-center text-[10px] font-bold uppercase tracking-wider text-neutral-600 bg-neutral-100 px-2 py-1 rounded-full">
+                {heatLevelEmoji[heatLevel]} {heatLevel}
+              </span>
+            )}
             <span className="inline-flex items-center text-[10px] font-bold uppercase tracking-wider text-neutral-600 bg-neutral-100 px-2 py-1 rounded-full">
               {useCase}
             </span>

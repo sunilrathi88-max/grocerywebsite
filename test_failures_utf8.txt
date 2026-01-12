@@ -1,0 +1,7008 @@
+﻿
+> tattva-co.---indian-gourmet-products@0.0.0 test
+> jest components/__tests__/ProductDetailPage.test.tsx components/__tests__/SubscriptionPage.test.tsx
+
+node.exe : FAIL compon
+ents/__tests__/Subscri
+ptionPage.test.tsx
+At line:1 char:1
++ & "C:\Program Files\
+nodejs/node.exe" "C:\U
+sers\shubh\AppData\Roa
+ming\ ...
++ ~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~
+    + CategoryInfo    
+          : NotSpeci  
+  fied: (FAIL compo   
+ nents...onPage.te    
+st.tsx:String) []    
+, RemoteException
+    + FullyQualifiedE 
+   rrorId : NativeCo  
+  mmandError
+ 
+  ΓùÅ 
+SubscriptionPage ΓÇ║ 
+renders subscription 
+plans
+
+    TestingLibraryElem
+entError: Unable to 
+find an element with 
+the text: 
+Introducting Tattva 
+Fresh Monthly. This 
+could be because the 
+text is broken up by 
+multiple elements. In 
+this case, you can 
+provide a function 
+for your text matcher 
+to make your matcher 
+more flexible.
+
+    Ignored nodes: 
+comments, script, 
+style
+    [36m<body>[39m
+      [36m<div>[39m
+        [36m<div[39m
+          [33mclass[
+39m=[32m"bg-white 
+min-h-screen"[39m
+        [36m>[39m
+          
+[36m<section[39m
+            [33mclass
+[39m=[32m"bg-brand-d
+ark text-white py-20 
+px-4 md:px-6 
+text-center"[39m
+          [36m>[39m
+            
+[36m<div[39m
+              [33mcla
+ss[39m=[32m"containe
+r mx-auto 
+max-w-4xl"[39m
+            
+[36m>[39m
+              
+[36m<span[39m
+                [33mc
+lass[39m=[32m"text-b
+rand-secondary 
+font-bold 
+tracking-widest 
+uppercase text-sm 
+mb-4 block"[39m
+              
+[36m>[39m
+                
+[0mINTRODUCING 
+TATTVA FRESH 
+MONTHLY[0m
+              
+[36m</span>[39m
+              
+[36m<h1[39m
+                [33mc
+lass[39m=[32m"text-4
+xl md:text-6xl 
+font-serif font-bold 
+mb-6"[39m
+              
+[36m>[39m
+                
+[0mNever Run Out of 
+Fresh Flavor.[0m
+              
+[36m</h1>[39m
+              
+[36m<p[39m
+                [33mc
+lass[39m=[32m"text-l
+g md:text-xl 
+text-gray-300 
+max-w-2xl mx-auto 
+mb-10 
+leading-relaxed"[39m
+              
+[36m>[39m
+                
+[0mGet hand-picked, 
+single-origin spices 
+delivered to your 
+door every month. 
+Milled fresh, packed 
+with aroma, and 
+sourced directly from 
+our farmers.[0m
+              
+[36m</p>[39m
+              
+[36m<div[39m
+                [33mc
+lass[39m=[32m"flex 
+flex-col md:flex-row 
+justify-center gap-8 
+text-left max-w-2xl 
+mx-auto"[39m
+              
+[36m>[39m
+                
+[36m<div[39m
+                  [33
+mclass[39m=[32m"flex
+ gap-4"[39m
+                
+[36m>[39m
+                  
+[36m<div[39m
+                    [
+33mclass[39m=[32m"bg
+-brand-primary/20 p-3 
+rounded-full 
+h-fit"[39m
+                  
+[36m>[39m
+                    
+[36m<svg[39m
+                      
+[33mclass[39m=[32m"
+w-6 h-6 text-brand-sec
+ondary"[39m
+                      
+[33mfill[39m=[32m"n
+one"[39m
+                      
+[33mstroke[39m=[32m
+"currentColor"[39m
+                      
+[33mviewBox[39m=[32
+m"0 0 24 24"[39m
+                      
+[33mxmlns[39m=[32m"
+http://www.w3.org/2000
+/svg"[39m
+                    
+[36m>[39m
+                      
+[36m<path[39m
+                      
+  
+[33md[39m=[32m"M5 
+3v4M3 5h4M6 17v4m-2-2h
+4m5-16l2.286 6.857L21 
+12l-5.714 2.143L13 
+21l-2.286-6.857L5 
+12l5.714-2.143L13 
+3z"[39m
+                      
+  [33mstroke-linecap
+[39m=[32m"round"[39m
+                      
+  [33mstroke-linejoin
+[39m=[32m"round"[39
+m
+                      
+  [33mstroke-width[3
+9m=[32m"2"[39m
+                      
+[36m/>[39m
+                    
+[36m</svg>[39m
+                  
+[36m</div>[39m
+                  
+[36m<div>[39m
+                    
+[36m<h3[39m
+                      
+[33mclass[39m=[32m"
+font-bold 
+text-brand-secondary 
+mb-1"[39m
+                    
+[36m>[39m
+                      
+[0mPeak Freshness[0m
+                    
+[36m</h3>[39m
+                    
+[36m<p[39m
+                      
+[33mclass[39m=[32m"
+text-sm 
+text-gray-400"[39m
+                    
+[36m>[39m
+                      
+[0mGround and packed 
+within days of 
+shipping.[0m
+                    
+[36m</p>[39m
+                  
+[36m</div>[39m
+                
+[36m</div>[39m
+                
+[36m<div[39m
+                  [33
+mclass[39m=[32m"flex
+ gap-4"[39m
+                
+[36m>[39m
+                  
+[36m<div[39m
+                    [
+33mclass[39m=[32m"bg
+-brand-primary/20 p-3 
+rounded-full 
+h-fit"[39m
+                  
+[36m>[39m
+                    
+[36m<svg[39m
+                      
+[33mclass[39m=[32m"
+w-6 h-6 text-brand-sec
+ondary"[39m
+                      
+[33mfill[39m=[32m"n
+one"[39m
+                      
+[33mstroke[39m=[32m
+"currentColor"[39m
+                      
+[33mviewBox[39m=[32
+m"0 0 24 24"[39m
+                      
+[33mxmlns[39m=[32m"
+http://www.w3.org/2000
+/svg"[39m
+                    
+[36m>[39m
+                      
+[36m<path[39m
+                      
+  
+[33md[39m=[32m"M12 
+4.354a4 4 0 110 
+5.292M15 21H3v-1a6 6 
+0 0112 0v1zm6-11a4 4 
+0 11-8 0 4 4 0 018 
+0z"[39m
+                      
+  [33mstroke-linecap
+[39m=[32m"round"[39m
+                      
+  [33mstroke-linejoin
+[39m=[32m"round"[39
+m
+                      
+  [33mstroke-width[3
+9m=[32m"2"[39m
+                      
+[36m/>[39m
+                    
+[36m</svg>[39m
+                  
+[36m</div>[39m
+                  
+[36m<div>[39m
+                    
+[36m<h3[39m
+                      
+[33mclass[39m=[32m"
+font-bold 
+text-brand-secondary 
+mb-1"[39m
+                    
+[36m>[39m
+                      
+[0mSupport 
+Farmers[0m
+                    
+[36m</h3>[39m
+                    
+[36m<p[39m
+                      
+[33mclass[39m=[32m"
+text-sm 
+text-gray-400"[39m
+                    
+[36m>[39m
+                      
+[0mFair-trade 
+pricing for every 
+harvest.[0m
+                    
+[36m</p>[39m
+                  
+[36m</div>[39m
+                
+[36m</div>[39m
+              
+[36m</div>[39m
+            
+[36m</div>[39m
+          
+[36m</section>[39m
+          
+[36m<section[39m
+            [33mclass
+[39m=[32m"py-20 
+bg-neutral-50 px-4 
+md:px-6"[39m
+          [36m>[39m
+            
+[36m<div[39m
+              [33mcla
+ss[39m=[32m"containe
+r mx-auto 
+max-w-5xl"[39m
+            
+[36m>[39m
+              
+[36m<div[39m
+                [33mc
+lass[39m=[32m"text-c
+enter mb-16"[39m
+              
+[36m>[39m
+                
+[36m<h2[39m
+                  [33
+mclass[39m=[32m"text
+-3xl md:text-5xl 
+font-serif font-bold 
+text-gray-900 
+mb-4"[39m
+                
+[36m>[39m
+                  
+[0mChoose Your 
+Plan[0m
+                
+[36m</h2>[39m
+                
+[36m<p[39m
+                  [33
+mclass[39m=[32m"text
+-gray-600"[39m
+                
+[36m>[39m
+                  
+[0mPause or cancel 
+anytime. No hidden 
+fees.[0m
+                
+[36m</p>[39m
+              
+[36m</div>[39m
+              
+[36m<div[39m
+                [33mc
+lass[39m=[32m"grid 
+md:grid-cols-2 gap-8 
+max-w-4xl 
+mx-auto"[39m
+              
+[36m>[39m
+                
+[36m<div[39m
+                  [33
+mclass[39m=[32m"rela
+tive bg-white 
+rounded-2xl p-8 
+border-2 
+transition-transform 
+duration-300 
+hover:-translate-y-2 
+border-transparent 
+shadow-lg 
+hover:shadow-xl"[39m
+                
+[36m>[39m
+                  
+[36m<div[39m
+                    [
+33mclass[39m=[32m"te
+xt-center mb-6"[39m
+                  
+[36m>[39m
+                    
+[36m<h3[39m
+                      
+[33mclass[39m=[32m"
+text-xl font-bold 
+text-gray-900 
+mb-2"[39m
+                    
+[36m>[39m
+                      
+[0mStarter Box[0m
+                    
+[36m</h3>[39m
+                    
+[36m<div[39m
+                      
+[33mclass[39m=[32m"
+flex items-baseline 
+justify-center 
+gap-1"[39m
+                    
+[36m>[39m
+                      
+[36m<span[39m
+                      
+  [33mclass[39m=[32
+m"text-4xl font-serif 
+font-bold 
+text-brand-dark"[39m
+                      
+[36m>[39m
+                      
+  [0mΓé╣[0m
+                      
+  [0m999[0m
+                      
+[36m</span>[39m
+                      
+[36m<span[39m
+                      
+  [33mclass[39m=[32
+m"text-gray-500 
+text-sm"[39m
+                      
+[36m>[39m
+                      
+  [0m/ [0m
+                      
+  [0mmonthly[0m
+                      
+[36m</span>[39m
+                    
+[36m</div>[39m
+                    
+[36m<p[39m
+                      
+[33mclass[39m=[32m"
+text-green-600 
+font-bold text-sm 
+mt-3 bg-green-50 
+inline-block px-3 
+py-1 
+rounded-full"[39m
+                    
+[36m>[39m
+                      
+[0mSave [0m
+                      
+[0mΓé╣200 / year...
+
+    [0m [90m 31 
+|[39m     
+it([32m'renders 
+subscription plans'[3
+9m[33m,[39m () 
+[33m=>[39m {
+     [90m 32 |[39m  
+       renderComponent
+()[33m;[39m
+    [31m[1m>[22m[3
+9m[90m 33 |[39m     
+    expect(screen[33m
+.[39mgetByText([32m'
+Introducting Tattva 
+Fresh Monthly'[39m))
+[33m.[39mtoBeInTheDoc
+ument()[33m;[39m 
+[90m// Typo in 
+original file? Let's 
+check logic: 
+"INTRODUCING TATTVA 
+FRESH MONTHLY" is 
+uppercase in 
+source[39m
+     [90m    |[39m  
+                     
+[31m[1m^[22m[39m
+     [90m 34 |[39m  
+       [90m// Case 
+insensitive text 
+match[39m
+     [90m 35 |[39m  
+       expect(screen[
+33m.[39mgetByText([3
+5m/INTRODUCING TATTVA 
+FRESH MONTHLY/i[39m))
+[33m.[39mtoBeInTheDo
+cument()[33m;[39m
+     [90m 36 |[39m  
+       expect(screen[
+33m.[39mgetByText([3
+2m'Starter Box'[39m))
+[33m.[39mtoBeInTheDo
+cument()[33m;[39m[0
+m
+
+      at Object.getEle
+mentError (node_module
+s/@testing-library/dom
+/dist/config.js:37:19)
+      at node_modules/
+@testing-library/dom/d
+ist/query-helpers.js:7
+6:38
+      at node_modules/
+@testing-library/dom/d
+ist/query-helpers.js:5
+2:17
+      at node_modules/
+@testing-library/dom/d
+ist/query-helpers.js:9
+5:19
+      at 
+Object.<anonymous> (co
+mponents/__tests__/Sub
+scriptionPage.test.tsx
+:33:23)
+
+FAIL components/__test
+s__/ProductDetailPage.
+test.tsx
+  ΓùÅ Console
+
+    console.error
+      Error: Uncaught 
+[ReferenceError: 
+useWishlist is not 
+defined]
+          at 
+reportException (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\node
+_modules\jsdom\lib\jsd
+om\living\helpers\runt
+ime-script-errors.js:6
+6:24)
+          at innerInvo
+keEventListeners (C:\U
+sers\shubh\grocerywebs
+ite\grocerywebsite\nod
+e_modules\jsdom\lib\js
+dom\living\events\Even
+tTarget-impl.js:353:9)
+          at 
+invokeEventListeners (
+C:\Users\shubh\grocery
+website\grocerywebsite
+\node_modules\jsdom\li
+b\jsdom\living\events\
+EventTarget-impl.js:28
+6:3)
+          at HTMLUnkno
+wnElementImpl._dispatc
+h (C:\Users\shubh\groc
+erywebsite\grocerywebs
+ite\node_modules\jsdom
+\lib\jsdom\living\even
+ts\EventTarget-impl.js
+:233:9)
+          at HTMLUnkno
+wnElementImpl.dispatch
+Event (C:\Users\shubh\
+grocerywebsite\grocery
+website\node_modules\j
+sdom\lib\jsdom\living\
+events\EventTarget-imp
+l.js:104:17)
+          at HTMLUnkno
+wnElement.dispatchEven
+t (C:\Users\shubh\groc
+erywebsite\grocerywebs
+ite\node_modules\jsdom
+\lib\jsdom\living\gene
+rated\EventTarget.js:2
+41:34)
+          at Object.in
+vokeGuardedCallbackDev
+ (C:\Users\shubh\groce
+rywebsite\grocerywebsi
+te\node_modules\react-
+dom\cjs\react-dom.deve
+lopment.js:4213:16)
+          at 
+invokeGuardedCallback 
+(C:\Users\shubh\grocer
+ywebsite\grocerywebsit
+e\node_modules\react-d
+om\cjs\react-dom.devel
+opment.js:4277:31)
+          at 
+beginWork$1 (C:\Users\
+shubh\grocerywebsite\g
+rocerywebsite\node_mod
+ules\react-dom\cjs\rea
+ct-dom.development.js:
+27490:7)
+          at 
+performUnitOfWork (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\no
+de_modules\react-dom\c
+js\react-dom.developme
+nt.js:26599:12)
+          at 
+workLoopSync (C:\Users
+\shubh\grocerywebsite\
+grocerywebsite\node_mo
+dules\react-dom\cjs\re
+act-dom.development.js
+:26505:5)
+          at 
+renderRootSync (C:\Use
+rs\shubh\grocerywebsit
+e\grocerywebsite\node_
+modules\react-dom\cjs\
+react-dom.development.
+js:26473:7)
+          at performCo
+ncurrentWorkOnRoot (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\react-dom\
+cjs\react-dom.developm
+ent.js:25777:74)
+          at 
+flushActQueue (C:\User
+s\shubh\grocerywebsite
+\grocerywebsite\node_m
+odules\react\cjs\react
+.development.js:2667:2
+4)
+          at act (C:\U
+sers\shubh\grocerywebs
+ite\grocerywebsite\nod
+e_modules\react\cjs\re
+act.development.js:258
+2:11)
+          at C:\Users\
+shubh\grocerywebsite\g
+rocerywebsite\node_mod
+ules\@testing-library\
+react\dist\act-compat.
+js:47:25
+          at 
+renderRoot (C:\Users\s
+hubh\grocerywebsite\gr
+ocerywebsite\node_modu
+les\@testing-library\r
+eact\dist\pure.js:190:
+26)
+          at render (C
+:\Users\shubh\groceryw
+ebsite\grocerywebsite\
+node_modules\@testing-
+library\react\dist\pur
+e.js:292:10)
+          at 
+renderComponent (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\comp
+onents\__tests__\Produ
+ctDetailPage.test.tsx:
+57:15)
+          at 
+Object.<anonymous> (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\c
+omponents\__tests__\Pr
+oductDetailPage.test.t
+sx:64:9)
+          at Promise.f
+inally.completed (C:\U
+sers\shubh\grocerywebs
+ite\grocerywebsite\nod
+e_modules\jest-circus\
+build\jestAdapterInit.
+js:1557:28)
+          at new 
+Promise (<anonymous>)
+          at 
+callAsyncCircusFn (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\no
+de_modules\jest-circus
+\build\jestAdapterInit
+.js:1497:10)
+          at 
+_callCircusTest (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\node
+_modules\jest-circus\b
+uild\jestAdapterInit.j
+s:1007:40)
+          at processTi
+cksAndRejections (node
+:internal/process/task
+_queues:105:5)
+          at _runTest 
+(C:\Users\shubh\grocer
+ywebsite\grocerywebsit
+e\node_modules\jest-ci
+rcus\build\jestAdapter
+Init.js:947:3)
+          at C:\Users\
+shubh\grocerywebsite\g
+rocerywebsite\node_mod
+ules\jest-circus\build
+\jestAdapterInit.js:84
+9:7
+          at _runTests
+ForDescribeBlock (C:\U
+sers\shubh\grocerywebs
+ite\grocerywebsite\nod
+e_modules\jest-circus\
+build\jestAdapterInit.
+js:862:11)
+          at _runTests
+ForDescribeBlock (C:\U
+sers\shubh\grocerywebs
+ite\grocerywebsite\nod
+e_modules\jest-circus\
+build\jestAdapterInit.
+js:857:11)
+          at run (C:\U
+sers\shubh\grocerywebs
+ite\grocerywebsite\nod
+e_modules\jest-circus\
+build\jestAdapterInit.
+js:761:3)
+          at runAndTra
+nsformResultsToJestFor
+mat (C:\Users\shubh\gr
+ocerywebsite\grocerywe
+bsite\node_modules\jes
+t-circus\build\jestAda
+pterInit.js:1918:21)
+          at 
+jestAdapter (C:\Users\
+shubh\grocerywebsite\g
+rocerywebsite\node_mod
+ules\jest-circus\build
+\runner.js:101:19)
+          at 
+runTestInternal (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\node
+_modules\jest-runner\b
+uild\testWorker.js:275
+:16)
+          at runTest (
+C:\Users\shubh\grocery
+website\grocerywebsite
+\node_modules\jest-run
+ner\build\testWorker.j
+s:343:7)
+          at 
+Object.worker (C:\User
+s\shubh\grocerywebsite
+\grocerywebsite\node_m
+odules\jest-runner\bui
+ld\testWorker.js:497:1
+2) {
+        detail: 
+ReferenceError: 
+useWishlist is not 
+defined
+            at 
+ProductDetailPage (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\pa
+ges\ProductDetailPage.
+tsx:23:45)
+            at 
+renderWithHooks (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\node
+_modules\react-dom\cjs
+\react-dom.development
+.js:15486:18)
+            at mountIn
+determinateComponent (
+C:\Users\shubh\grocery
+website\grocerywebsite
+\node_modules\react-do
+m\cjs\react-dom.develo
+pment.js:20103:13)
+            at 
+beginWork (C:\Users\sh
+ubh\grocerywebsite\gro
+cerywebsite\node_modul
+es\react-dom\cjs\react
+-dom.development.js:21
+626:16)
+            at HTMLUnk
+nownElement.callCallba
+ck (C:\Users\shubh\gro
+cerywebsite\groceryweb
+site\node_modules\reac
+t-dom\cjs\react-dom.de
+velopment.js:4164:14)
+            at HTMLUnk
+nownElement.callTheUse
+rObjectsOperation (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\no
+de_modules\jsdom\lib\j
+sdom\living\generated\
+EventListener.js:26:30
+)
+            at innerIn
+vokeEventListeners (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\jsdom\lib\
+jsdom\living\events\Ev
+entTarget-impl.js:350:
+25)
+            at 
+invokeEventListeners (
+C:\Users\shubh\grocery
+website\grocerywebsite
+\node_modules\jsdom\li
+b\jsdom\living\events\
+EventTarget-impl.js:28
+6:3)
+            at HTMLUnk
+nownElementImpl._dispa
+tch (C:\Users\shubh\gr
+ocerywebsite\grocerywe
+bsite\node_modules\jsd
+om\lib\jsdom\living\ev
+ents\EventTarget-impl.
+js:233:9)
+            at HTMLUnk
+nownElementImpl.dispat
+chEvent (C:\Users\shub
+h\grocerywebsite\groce
+rywebsite\node_modules
+\jsdom\lib\jsdom\livin
+g\events\EventTarget-i
+mpl.js:104:17)
+            at HTMLUnk
+nownElement.dispatchEv
+ent (C:\Users\shubh\gr
+ocerywebsite\grocerywe
+bsite\node_modules\jsd
+om\lib\jsdom\living\ge
+nerated\EventTarget.js
+:241:34)
+            at Object.
+invokeGuardedCallbackD
+ev (C:\Users\shubh\gro
+cerywebsite\groceryweb
+site\node_modules\reac
+t-dom\cjs\react-dom.de
+velopment.js:4213:16)
+            at 
+invokeGuardedCallback 
+(C:\Users\shubh\grocer
+ywebsite\grocerywebsit
+e\node_modules\react-d
+om\cjs\react-dom.devel
+opment.js:4277:31)
+            at 
+beginWork$1 (C:\Users\
+shubh\grocerywebsite\g
+rocerywebsite\node_mod
+ules\react-dom\cjs\rea
+ct-dom.development.js:
+27490:7)
+            at 
+performUnitOfWork (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\no
+de_modules\react-dom\c
+js\react-dom.developme
+nt.js:26599:12)
+            at 
+workLoopSync (C:\Users
+\shubh\grocerywebsite\
+grocerywebsite\node_mo
+dules\react-dom\cjs\re
+act-dom.development.js
+:26505:5)
+            at 
+renderRootSync (C:\Use
+rs\shubh\grocerywebsit
+e\grocerywebsite\node_
+modules\react-dom\cjs\
+react-dom.development.
+js:26473:7)
+            at perform
+ConcurrentWorkOnRoot (
+C:\Users\shubh\grocery
+website\grocerywebsite
+\node_modules\react-do
+m\cjs\react-dom.develo
+pment.js:25777:74)
+            at 
+flushActQueue (C:\User
+s\shubh\grocerywebsite
+\grocerywebsite\node_m
+odules\react\cjs\react
+.development.js:2667:2
+4)
+            at act (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\react\cjs\
+react.development.js:2
+582:11)
+            at C:\User
+s\shubh\grocerywebsite
+\grocerywebsite\node_m
+odules\@testing-librar
+y\react\dist\act-compa
+t.js:47:25
+            at 
+renderRoot (C:\Users\s
+hubh\grocerywebsite\gr
+ocerywebsite\node_modu
+les\@testing-library\r
+eact\dist\pure.js:190:
+26)
+            at render 
+(C:\Users\shubh\grocer
+ywebsite\grocerywebsit
+e\node_modules\@testin
+g-library\react\dist\p
+ure.js:292:10)
+            at 
+renderComponent (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\comp
+onents\__tests__\Produ
+ctDetailPage.test.tsx:
+57:15)
+            at 
+Object.<anonymous> (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\c
+omponents\__tests__\Pr
+oductDetailPage.test.t
+sx:64:9)
+            at Promise
+.finally.completed (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\jest-circu
+s\build\jestAdapterIni
+t.js:1557:28)
+            at new 
+Promise (<anonymous>)
+            at 
+callAsyncCircusFn (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\no
+de_modules\jest-circus
+\build\jestAdapterInit
+.js:1497:10)
+            at 
+_callCircusTest (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\node
+_modules\jest-circus\b
+uild\jestAdapterInit.j
+s:1007:40)
+            at process
+TicksAndRejections (no
+de:internal/process/ta
+sk_queues:105:5)
+            at 
+_runTest (C:\Users\shu
+bh\grocerywebsite\groc
+erywebsite\node_module
+s\jest-circus\build\je
+stAdapterInit.js:947:3
+)
+            at C:\User
+s\shubh\grocerywebsite
+\grocerywebsite\node_m
+odules\jest-circus\bui
+ld\jestAdapterInit.js:
+849:7
+            at _runTes
+tsForDescribeBlock (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\jest-circu
+s\build\jestAdapterIni
+t.js:862:11)
+            at _runTes
+tsForDescribeBlock (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\jest-circu
+s\build\jestAdapterIni
+t.js:857:11)
+            at run (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\jest-circu
+s\build\jestAdapterIni
+t.js:761:3)
+            at runAndT
+ransformResultsToJestF
+ormat (C:\Users\shubh\
+grocerywebsite\grocery
+website\node_modules\j
+est-circus\build\jestA
+dapterInit.js:1918:21)
+            at 
+jestAdapter (C:\Users\
+shubh\grocerywebsite\g
+rocerywebsite\node_mod
+ules\jest-circus\build
+\runner.js:101:19)
+            at 
+runTestInternal (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\node
+_modules\jest-runner\b
+uild\testWorker.js:275
+:16)
+            at 
+runTest (C:\Users\shub
+h\grocerywebsite\groce
+rywebsite\node_modules
+\jest-runner\build\tes
+tWorker.js:343:7)
+            at 
+Object.worker (C:\User
+s\shubh\grocerywebsite
+\grocerywebsite\node_m
+odules\jest-runner\bui
+ld\testWorker.js:497:1
+2),
+        type: 
+'unhandled exception'
+      }
+
+    [0m [90m 55 
+|[39m
+     [90m 56 |[39m  
+   [36mconst[39m 
+renderComponent 
+[33m=[39m () 
+[33m=>[39m
+    [31m[1m>[22m[3
+9m[90m 57 |[39m     
+    render(
+     [90m    |[39m  
+             
+[31m[1m^[22m[39m
+     [90m 58 |[39m  
+           [33m<[39m
+[33mBrowserRouter[39
+m[33m>[39m
+     [90m 59 |[39m  
+               [33m<
+[39m[33mProductDetail
+Page[39m 
+[33m/[39m[33m>[39m
+     [90m 60 |[39m  
+           [33m<[39m
+[33m/[39m[33mBrowse
+rRouter[39m[33m>[39
+m[0m
+
+      at VirtualConsol
+e.<anonymous> (node_mo
+dules/@jest/environmen
+t-jsdom-abstract/build
+/index.js:87:23)
+      at 
+reportException (node_
+modules/jsdom/lib/jsdo
+m/living/helpers/runti
+me-script-errors.js:70
+:28)
+      at innerInvokeEv
+entListeners (node_mod
+ules/jsdom/lib/jsdom/l
+iving/events/EventTarg
+et-impl.js:353:9)
+      at 
+invokeEventListeners (
+node_modules/jsdom/lib
+/jsdom/living/events/E
+ventTarget-impl.js:286
+:3)
+      at HTMLUnknownEl
+ementImpl._dispatch (n
+ode_modules/jsdom/lib/
+jsdom/living/events/Ev
+entTarget-impl.js:233:
+9)
+      at HTMLUnknownEl
+ementImpl.dispatchEven
+t (node_modules/jsdom/
+lib/jsdom/living/event
+s/EventTarget-impl.js:
+104:17)
+      at HTMLUnknownEl
+ement.dispatchEvent (n
+ode_modules/jsdom/lib/
+jsdom/living/generated
+/EventTarget.js:241:34
+)
+      at Object.invoke
+GuardedCallbackDev (no
+de_modules/react-dom/c
+js/react-dom.developme
+nt.js:4213:16)
+      at 
+invokeGuardedCallback 
+(node_modules/react-do
+m/cjs/react-dom.develo
+pment.js:4277:31)
+      at beginWork$1 (
+node_modules/react-dom
+/cjs/react-dom.develop
+ment.js:27490:7)
+      at 
+performUnitOfWork (nod
+e_modules/react-dom/cj
+s/react-dom.developmen
+t.js:26599:12)
+      at workLoopSync 
+(node_modules/react-do
+m/cjs/react-dom.develo
+pment.js:26505:5)
+      at 
+renderRootSync (node_m
+odules/react-dom/cjs/r
+eact-dom.development.j
+s:26473:7)
+      at performConcur
+rentWorkOnRoot (node_m
+odules/react-dom/cjs/r
+eact-dom.development.j
+s:25777:74)
+      at 
+flushActQueue (node_mo
+dules/react/cjs/react.
+development.js:2667:24
+)
+      at act (node_mod
+ules/react/cjs/react.d
+evelopment.js:2582:11)
+      at node_modules/
+@testing-library/react
+/dist/act-compat.js:47
+:25
+      at renderRoot (n
+ode_modules/@testing-l
+ibrary/react/dist/pure
+.js:190:26)
+      at render (node_
+modules/@testing-libra
+ry/react/dist/pure.js:
+292:10)
+      at 
+renderComponent (compo
+nents/__tests__/Produc
+tDetailPage.test.tsx:5
+7:15)
+      at 
+Object.<anonymous> (co
+mponents/__tests__/Pro
+ductDetailPage.test.ts
+x:64:9)
+
+    console.error
+      Error: Uncaught 
+[ReferenceError: 
+useWishlist is not 
+defined]
+          at 
+reportException (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\node
+_modules\jsdom\lib\jsd
+om\living\helpers\runt
+ime-script-errors.js:6
+6:24)
+          at innerInvo
+keEventListeners (C:\U
+sers\shubh\grocerywebs
+ite\grocerywebsite\nod
+e_modules\jsdom\lib\js
+dom\living\events\Even
+tTarget-impl.js:353:9)
+          at 
+invokeEventListeners (
+C:\Users\shubh\grocery
+website\grocerywebsite
+\node_modules\jsdom\li
+b\jsdom\living\events\
+EventTarget-impl.js:28
+6:3)
+          at HTMLUnkno
+wnElementImpl._dispatc
+h (C:\Users\shubh\groc
+erywebsite\grocerywebs
+ite\node_modules\jsdom
+\lib\jsdom\living\even
+ts\EventTarget-impl.js
+:233:9)
+          at HTMLUnkno
+wnElementImpl.dispatch
+Event (C:\Users\shubh\
+grocerywebsite\grocery
+website\node_modules\j
+sdom\lib\jsdom\living\
+events\EventTarget-imp
+l.js:104:17)
+          at HTMLUnkno
+wnElement.dispatchEven
+t (C:\Users\shubh\groc
+erywebsite\grocerywebs
+ite\node_modules\jsdom
+\lib\jsdom\living\gene
+rated\EventTarget.js:2
+41:34)
+          at Object.in
+vokeGuardedCallbackDev
+ (C:\Users\shubh\groce
+rywebsite\grocerywebsi
+te\node_modules\react-
+dom\cjs\react-dom.deve
+lopment.js:4213:16)
+          at 
+invokeGuardedCallback 
+(C:\Users\shubh\grocer
+ywebsite\grocerywebsit
+e\node_modules\react-d
+om\cjs\react-dom.devel
+opment.js:4277:31)
+          at 
+beginWork$1 (C:\Users\
+shubh\grocerywebsite\g
+rocerywebsite\node_mod
+ules\react-dom\cjs\rea
+ct-dom.development.js:
+27490:7)
+          at 
+performUnitOfWork (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\no
+de_modules\react-dom\c
+js\react-dom.developme
+nt.js:26599:12)
+          at 
+workLoopSync (C:\Users
+\shubh\grocerywebsite\
+grocerywebsite\node_mo
+dules\react-dom\cjs\re
+act-dom.development.js
+:26505:5)
+          at 
+renderRootSync (C:\Use
+rs\shubh\grocerywebsit
+e\grocerywebsite\node_
+modules\react-dom\cjs\
+react-dom.development.
+js:26473:7)
+          at recoverFr
+omConcurrentError (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\no
+de_modules\react-dom\c
+js\react-dom.developme
+nt.js:25889:20)
+          at performCo
+ncurrentWorkOnRoot (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\react-dom\
+cjs\react-dom.developm
+ent.js:25789:22)
+          at 
+flushActQueue (C:\User
+s\shubh\grocerywebsite
+\grocerywebsite\node_m
+odules\react\cjs\react
+.development.js:2667:2
+4)
+          at act (C:\U
+sers\shubh\grocerywebs
+ite\grocerywebsite\nod
+e_modules\react\cjs\re
+act.development.js:258
+2:11)
+          at C:\Users\
+shubh\grocerywebsite\g
+rocerywebsite\node_mod
+ules\@testing-library\
+react\dist\act-compat.
+js:47:25
+          at 
+renderRoot (C:\Users\s
+hubh\grocerywebsite\gr
+ocerywebsite\node_modu
+les\@testing-library\r
+eact\dist\pure.js:190:
+26)
+          at render (C
+:\Users\shubh\groceryw
+ebsite\grocerywebsite\
+node_modules\@testing-
+library\react\dist\pur
+e.js:292:10)
+          at 
+renderComponent (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\comp
+onents\__tests__\Produ
+ctDetailPage.test.tsx:
+57:15)
+          at 
+Object.<anonymous> (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\c
+omponents\__tests__\Pr
+oductDetailPage.test.t
+sx:64:9)
+          at Promise.f
+inally.completed (C:\U
+sers\shubh\grocerywebs
+ite\grocerywebsite\nod
+e_modules\jest-circus\
+build\jestAdapterInit.
+js:1557:28)
+          at new 
+Promise (<anonymous>)
+          at 
+callAsyncCircusFn (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\no
+de_modules\jest-circus
+\build\jestAdapterInit
+.js:1497:10)
+          at 
+_callCircusTest (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\node
+_modules\jest-circus\b
+uild\jestAdapterInit.j
+s:1007:40)
+          at processTi
+cksAndRejections (node
+:internal/process/task
+_queues:105:5)
+          at _runTest 
+(C:\Users\shubh\grocer
+ywebsite\grocerywebsit
+e\node_modules\jest-ci
+rcus\build\jestAdapter
+Init.js:947:3)
+          at C:\Users\
+shubh\grocerywebsite\g
+rocerywebsite\node_mod
+ules\jest-circus\build
+\jestAdapterInit.js:84
+9:7
+          at _runTests
+ForDescribeBlock (C:\U
+sers\shubh\grocerywebs
+ite\grocerywebsite\nod
+e_modules\jest-circus\
+build\jestAdapterInit.
+js:862:11)
+          at _runTests
+ForDescribeBlock (C:\U
+sers\shubh\grocerywebs
+ite\grocerywebsite\nod
+e_modules\jest-circus\
+build\jestAdapterInit.
+js:857:11)
+          at run (C:\U
+sers\shubh\grocerywebs
+ite\grocerywebsite\nod
+e_modules\jest-circus\
+build\jestAdapterInit.
+js:761:3)
+          at runAndTra
+nsformResultsToJestFor
+mat (C:\Users\shubh\gr
+ocerywebsite\grocerywe
+bsite\node_modules\jes
+t-circus\build\jestAda
+pterInit.js:1918:21)
+          at 
+jestAdapter (C:\Users\
+shubh\grocerywebsite\g
+rocerywebsite\node_mod
+ules\jest-circus\build
+\runner.js:101:19)
+          at 
+runTestInternal (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\node
+_modules\jest-runner\b
+uild\testWorker.js:275
+:16)
+          at runTest (
+C:\Users\shubh\grocery
+website\grocerywebsite
+\node_modules\jest-run
+ner\build\testWorker.j
+s:343:7)
+          at 
+Object.worker (C:\User
+s\shubh\grocerywebsite
+\grocerywebsite\node_m
+odules\jest-runner\bui
+ld\testWorker.js:497:1
+2) {
+        detail: 
+ReferenceError: 
+useWishlist is not 
+defined
+            at 
+ProductDetailPage (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\pa
+ges\ProductDetailPage.
+tsx:23:45)
+            at 
+renderWithHooks (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\node
+_modules\react-dom\cjs
+\react-dom.development
+.js:15486:18)
+            at mountIn
+determinateComponent (
+C:\Users\shubh\grocery
+website\grocerywebsite
+\node_modules\react-do
+m\cjs\react-dom.develo
+pment.js:20103:13)
+            at 
+beginWork (C:\Users\sh
+ubh\grocerywebsite\gro
+cerywebsite\node_modul
+es\react-dom\cjs\react
+-dom.development.js:21
+626:16)
+            at HTMLUnk
+nownElement.callCallba
+ck (C:\Users\shubh\gro
+cerywebsite\groceryweb
+site\node_modules\reac
+t-dom\cjs\react-dom.de
+velopment.js:4164:14)
+            at HTMLUnk
+nownElement.callTheUse
+rObjectsOperation (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\no
+de_modules\jsdom\lib\j
+sdom\living\generated\
+EventListener.js:26:30
+)
+            at innerIn
+vokeEventListeners (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\jsdom\lib\
+jsdom\living\events\Ev
+entTarget-impl.js:350:
+25)
+            at 
+invokeEventListeners (
+C:\Users\shubh\grocery
+website\grocerywebsite
+\node_modules\jsdom\li
+b\jsdom\living\events\
+EventTarget-impl.js:28
+6:3)
+            at HTMLUnk
+nownElementImpl._dispa
+tch (C:\Users\shubh\gr
+ocerywebsite\grocerywe
+bsite\node_modules\jsd
+om\lib\jsdom\living\ev
+ents\EventTarget-impl.
+js:233:9)
+            at HTMLUnk
+nownElementImpl.dispat
+chEvent (C:\Users\shub
+h\grocerywebsite\groce
+rywebsite\node_modules
+\jsdom\lib\jsdom\livin
+g\events\EventTarget-i
+mpl.js:104:17)
+            at HTMLUnk
+nownElement.dispatchEv
+ent (C:\Users\shubh\gr
+ocerywebsite\grocerywe
+bsite\node_modules\jsd
+om\lib\jsdom\living\ge
+nerated\EventTarget.js
+:241:34)
+            at Object.
+invokeGuardedCallbackD
+ev (C:\Users\shubh\gro
+cerywebsite\groceryweb
+site\node_modules\reac
+t-dom\cjs\react-dom.de
+velopment.js:4213:16)
+            at 
+invokeGuardedCallback 
+(C:\Users\shubh\grocer
+ywebsite\grocerywebsit
+e\node_modules\react-d
+om\cjs\react-dom.devel
+opment.js:4277:31)
+            at 
+beginWork$1 (C:\Users\
+shubh\grocerywebsite\g
+rocerywebsite\node_mod
+ules\react-dom\cjs\rea
+ct-dom.development.js:
+27490:7)
+            at 
+performUnitOfWork (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\no
+de_modules\react-dom\c
+js\react-dom.developme
+nt.js:26599:12)
+            at 
+workLoopSync (C:\Users
+\shubh\grocerywebsite\
+grocerywebsite\node_mo
+dules\react-dom\cjs\re
+act-dom.development.js
+:26505:5)
+            at 
+renderRootSync (C:\Use
+rs\shubh\grocerywebsit
+e\grocerywebsite\node_
+modules\react-dom\cjs\
+react-dom.development.
+js:26473:7)
+            at recover
+FromConcurrentError (C
+:\Users\shubh\groceryw
+ebsite\grocerywebsite\
+node_modules\react-dom
+\cjs\react-dom.develop
+ment.js:25889:20)
+            at perform
+ConcurrentWorkOnRoot (
+C:\Users\shubh\grocery
+website\grocerywebsite
+\node_modules\react-do
+m\cjs\react-dom.develo
+pment.js:25789:22)
+            at 
+flushActQueue (C:\User
+s\shubh\grocerywebsite
+\grocerywebsite\node_m
+odules\react\cjs\react
+.development.js:2667:2
+4)
+            at act (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\react\cjs\
+react.development.js:2
+582:11)
+            at C:\User
+s\shubh\grocerywebsite
+\grocerywebsite\node_m
+odules\@testing-librar
+y\react\dist\act-compa
+t.js:47:25
+            at 
+renderRoot (C:\Users\s
+hubh\grocerywebsite\gr
+ocerywebsite\node_modu
+les\@testing-library\r
+eact\dist\pure.js:190:
+26)
+            at render 
+(C:\Users\shubh\grocer
+ywebsite\grocerywebsit
+e\node_modules\@testin
+g-library\react\dist\p
+ure.js:292:10)
+            at 
+renderComponent (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\comp
+onents\__tests__\Produ
+ctDetailPage.test.tsx:
+57:15)
+            at 
+Object.<anonymous> (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\c
+omponents\__tests__\Pr
+oductDetailPage.test.t
+sx:64:9)
+            at Promise
+.finally.completed (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\jest-circu
+s\build\jestAdapterIni
+t.js:1557:28)
+            at new 
+Promise (<anonymous>)
+            at 
+callAsyncCircusFn (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\no
+de_modules\jest-circus
+\build\jestAdapterInit
+.js:1497:10)
+            at 
+_callCircusTest (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\node
+_modules\jest-circus\b
+uild\jestAdapterInit.j
+s:1007:40)
+            at process
+TicksAndRejections (no
+de:internal/process/ta
+sk_queues:105:5)
+            at 
+_runTest (C:\Users\shu
+bh\grocerywebsite\groc
+erywebsite\node_module
+s\jest-circus\build\je
+stAdapterInit.js:947:3
+)
+            at C:\User
+s\shubh\grocerywebsite
+\grocerywebsite\node_m
+odules\jest-circus\bui
+ld\jestAdapterInit.js:
+849:7
+            at _runTes
+tsForDescribeBlock (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\jest-circu
+s\build\jestAdapterIni
+t.js:862:11)
+            at _runTes
+tsForDescribeBlock (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\jest-circu
+s\build\jestAdapterIni
+t.js:857:11)
+            at run (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\jest-circu
+s\build\jestAdapterIni
+t.js:761:3)
+            at runAndT
+ransformResultsToJestF
+ormat (C:\Users\shubh\
+grocerywebsite\grocery
+website\node_modules\j
+est-circus\build\jestA
+dapterInit.js:1918:21)
+            at 
+jestAdapter (C:\Users\
+shubh\grocerywebsite\g
+rocerywebsite\node_mod
+ules\jest-circus\build
+\runner.js:101:19)
+            at 
+runTestInternal (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\node
+_modules\jest-runner\b
+uild\testWorker.js:275
+:16)
+            at 
+runTest (C:\Users\shub
+h\grocerywebsite\groce
+rywebsite\node_modules
+\jest-runner\build\tes
+tWorker.js:343:7)
+            at 
+Object.worker (C:\User
+s\shubh\grocerywebsite
+\grocerywebsite\node_m
+odules\jest-runner\bui
+ld\testWorker.js:497:1
+2),
+        type: 
+'unhandled exception'
+      }
+
+    [0m [90m 55 
+|[39m
+     [90m 56 |[39m  
+   [36mconst[39m 
+renderComponent 
+[33m=[39m () 
+[33m=>[39m
+    [31m[1m>[22m[3
+9m[90m 57 |[39m     
+    render(
+     [90m    |[39m  
+             
+[31m[1m^[22m[39m
+     [90m 58 |[39m  
+           [33m<[39m
+[33mBrowserRouter[39
+m[33m>[39m
+     [90m 59 |[39m  
+               [33m<
+[39m[33mProductDetail
+Page[39m 
+[33m/[39m[33m>[39m
+     [90m 60 |[39m  
+           [33m<[39m
+[33m/[39m[33mBrowse
+rRouter[39m[33m>[39
+m[0m
+
+      at VirtualConsol
+e.<anonymous> (node_mo
+dules/@jest/environmen
+t-jsdom-abstract/build
+/index.js:87:23)
+      at 
+reportException (node_
+modules/jsdom/lib/jsdo
+m/living/helpers/runti
+me-script-errors.js:70
+:28)
+      at innerInvokeEv
+entListeners (node_mod
+ules/jsdom/lib/jsdom/l
+iving/events/EventTarg
+et-impl.js:353:9)
+      at 
+invokeEventListeners (
+node_modules/jsdom/lib
+/jsdom/living/events/E
+ventTarget-impl.js:286
+:3)
+      at HTMLUnknownEl
+ementImpl._dispatch (n
+ode_modules/jsdom/lib/
+jsdom/living/events/Ev
+entTarget-impl.js:233:
+9)
+      at HTMLUnknownEl
+ementImpl.dispatchEven
+t (node_modules/jsdom/
+lib/jsdom/living/event
+s/EventTarget-impl.js:
+104:17)
+      at HTMLUnknownEl
+ement.dispatchEvent (n
+ode_modules/jsdom/lib/
+jsdom/living/generated
+/EventTarget.js:241:34
+)
+      at Object.invoke
+GuardedCallbackDev (no
+de_modules/react-dom/c
+js/react-dom.developme
+nt.js:4213:16)
+      at 
+invokeGuardedCallback 
+(node_modules/react-do
+m/cjs/react-dom.develo
+pment.js:4277:31)
+      at beginWork$1 (
+node_modules/react-dom
+/cjs/react-dom.develop
+ment.js:27490:7)
+      at 
+performUnitOfWork (nod
+e_modules/react-dom/cj
+s/react-dom.developmen
+t.js:26599:12)
+      at workLoopSync 
+(node_modules/react-do
+m/cjs/react-dom.develo
+pment.js:26505:5)
+      at 
+renderRootSync (node_m
+odules/react-dom/cjs/r
+eact-dom.development.j
+s:26473:7)
+      at recoverFromCo
+ncurrentError (node_mo
+dules/react-dom/cjs/re
+act-dom.development.js
+:25889:20)
+      at performConcur
+rentWorkOnRoot (node_m
+odules/react-dom/cjs/r
+eact-dom.development.j
+s:25789:22)
+      at 
+flushActQueue (node_mo
+dules/react/cjs/react.
+development.js:2667:24
+)
+      at act (node_mod
+ules/react/cjs/react.d
+evelopment.js:2582:11)
+      at node_modules/
+@testing-library/react
+/dist/act-compat.js:47
+:25
+      at renderRoot (n
+ode_modules/@testing-l
+ibrary/react/dist/pure
+.js:190:26)
+      at render (node_
+modules/@testing-libra
+ry/react/dist/pure.js:
+292:10)
+      at 
+renderComponent (compo
+nents/__tests__/Produc
+tDetailPage.test.tsx:5
+7:15)
+      at 
+Object.<anonymous> (co
+mponents/__tests__/Pro
+ductDetailPage.test.ts
+x:64:9)
+
+    console.error
+      The above error 
+occurred in the 
+<ProductDetailPage> 
+component:
+      
+          at 
+ProductDetailPage (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\pa
+ges\ProductDetailPage.
+tsx:23:45)
+          at Router (C
+:\Users\shubh\groceryw
+ebsite\grocerywebsite\
+node_modules\react-rou
+ter\dist\development\c
+hunk-RBZI3ZHD.js:9073:
+13)
+          at 
+BrowserRouter (C:\User
+s\shubh\grocerywebsite
+\grocerywebsite\node_m
+odules\react-router\di
+st\development\chunk-H
+MTWJNYB.js:269:3)
+      
+      Consider adding 
+an error boundary to 
+your tree to 
+customize error 
+handling behavior.
+      Visit https://re
+actjs.org/link/error-b
+oundaries to learn 
+more about error 
+boundaries.
+
+    [0m [90m 55 
+|[39m
+     [90m 56 |[39m  
+   [36mconst[39m 
+renderComponent 
+[33m=[39m () 
+[33m=>[39m
+    [31m[1m>[22m[3
+9m[90m 57 |[39m     
+    render(
+     [90m    |[39m  
+             
+[31m[1m^[22m[39m
+     [90m 58 |[39m  
+           [33m<[39m
+[33mBrowserRouter[39
+m[33m>[39m
+     [90m 59 |[39m  
+               [33m<
+[39m[33mProductDetail
+Page[39m 
+[33m/[39m[33m>[39m
+     [90m 60 |[39m  
+           [33m<[39m
+[33m/[39m[33mBrowse
+rRouter[39m[33m>[39
+m[0m
+
+      at 
+logCapturedError (node
+_modules/react-dom/cjs
+/react-dom.development
+.js:18704:23)
+      at 
+update.callback (node_
+modules/react-dom/cjs/
+react-dom.development.
+js:18737:5)
+      at callCallback 
+(node_modules/react-do
+m/cjs/react-dom.develo
+pment.js:15036:12)
+      at 
+commitUpdateQueue (nod
+e_modules/react-dom/cj
+s/react-dom.developmen
+t.js:15057:9)
+      at commitLayoutE
+ffectOnFiber (node_mod
+ules/react-dom/cjs/rea
+ct-dom.development.js:
+23430:13)
+      at commitLayoutM
+ountEffects_complete (
+node_modules/react-dom
+/cjs/react-dom.develop
+ment.js:24727:9)
+      at commitLayoutE
+ffects_begin (node_mod
+ules/react-dom/cjs/rea
+ct-dom.development.js:
+24713:7)
+      at 
+commitLayoutEffects (n
+ode_modules/react-dom/
+cjs/react-dom.developm
+ent.js:24651:3)
+      at 
+commitRootImpl (node_m
+odules/react-dom/cjs/r
+eact-dom.development.j
+s:26862:5)
+      at commitRoot (n
+ode_modules/react-dom/
+cjs/react-dom.developm
+ent.js:26721:5)
+      at finishConcurr
+entRender (node_module
+s/react-dom/cjs/react-
+dom.development.js:259
+31:9)
+      at performConcur
+rentWorkOnRoot (node_m
+odules/react-dom/cjs/r
+eact-dom.development.j
+s:25848:7)
+      at 
+flushActQueue (node_mo
+dules/react/cjs/react.
+development.js:2667:24
+)
+      at act (node_mod
+ules/react/cjs/react.d
+evelopment.js:2582:11)
+      at node_modules/
+@testing-library/react
+/dist/act-compat.js:47
+:25
+      at renderRoot (n
+ode_modules/@testing-l
+ibrary/react/dist/pure
+.js:190:26)
+      at render (node_
+modules/@testing-libra
+ry/react/dist/pure.js:
+292:10)
+      at 
+renderComponent (compo
+nents/__tests__/Produc
+tDetailPage.test.tsx:5
+7:15)
+      at 
+Object.<anonymous> (co
+mponents/__tests__/Pro
+ductDetailPage.test.ts
+x:64:9)
+
+    console.error
+      Error: Uncaught 
+[ReferenceError: 
+useWishlist is not 
+defined]
+          at 
+reportException (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\node
+_modules\jsdom\lib\jsd
+om\living\helpers\runt
+ime-script-errors.js:6
+6:24)
+          at innerInvo
+keEventListeners (C:\U
+sers\shubh\grocerywebs
+ite\grocerywebsite\nod
+e_modules\jsdom\lib\js
+dom\living\events\Even
+tTarget-impl.js:353:9)
+          at 
+invokeEventListeners (
+C:\Users\shubh\grocery
+website\grocerywebsite
+\node_modules\jsdom\li
+b\jsdom\living\events\
+EventTarget-impl.js:28
+6:3)
+          at HTMLUnkno
+wnElementImpl._dispatc
+h (C:\Users\shubh\groc
+erywebsite\grocerywebs
+ite\node_modules\jsdom
+\lib\jsdom\living\even
+ts\EventTarget-impl.js
+:233:9)
+          at HTMLUnkno
+wnElementImpl.dispatch
+Event (C:\Users\shubh\
+grocerywebsite\grocery
+website\node_modules\j
+sdom\lib\jsdom\living\
+events\EventTarget-imp
+l.js:104:17)
+          at HTMLUnkno
+wnElement.dispatchEven
+t (C:\Users\shubh\groc
+erywebsite\grocerywebs
+ite\node_modules\jsdom
+\lib\jsdom\living\gene
+rated\EventTarget.js:2
+41:34)
+          at Object.in
+vokeGuardedCallbackDev
+ (C:\Users\shubh\groce
+rywebsite\grocerywebsi
+te\node_modules\react-
+dom\cjs\react-dom.deve
+lopment.js:4213:16)
+          at 
+invokeGuardedCallback 
+(C:\Users\shubh\grocer
+ywebsite\grocerywebsit
+e\node_modules\react-d
+om\cjs\react-dom.devel
+opment.js:4277:31)
+          at 
+beginWork$1 (C:\Users\
+shubh\grocerywebsite\g
+rocerywebsite\node_mod
+ules\react-dom\cjs\rea
+ct-dom.development.js:
+27490:7)
+          at 
+performUnitOfWork (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\no
+de_modules\react-dom\c
+js\react-dom.developme
+nt.js:26599:12)
+          at 
+workLoopSync (C:\Users
+\shubh\grocerywebsite\
+grocerywebsite\node_mo
+dules\react-dom\cjs\re
+act-dom.development.js
+:26505:5)
+          at 
+renderRootSync (C:\Use
+rs\shubh\grocerywebsit
+e\grocerywebsite\node_
+modules\react-dom\cjs\
+react-dom.development.
+js:26473:7)
+          at performCo
+ncurrentWorkOnRoot (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\react-dom\
+cjs\react-dom.developm
+ent.js:25777:74)
+          at 
+flushActQueue (C:\User
+s\shubh\grocerywebsite
+\grocerywebsite\node_m
+odules\react\cjs\react
+.development.js:2667:2
+4)
+          at act (C:\U
+sers\shubh\grocerywebs
+ite\grocerywebsite\nod
+e_modules\react\cjs\re
+act.development.js:258
+2:11)
+          at C:\Users\
+shubh\grocerywebsite\g
+rocerywebsite\node_mod
+ules\@testing-library\
+react\dist\act-compat.
+js:47:25
+          at 
+renderRoot (C:\Users\s
+hubh\grocerywebsite\gr
+ocerywebsite\node_modu
+les\@testing-library\r
+eact\dist\pure.js:190:
+26)
+          at render (C
+:\Users\shubh\groceryw
+ebsite\grocerywebsite\
+node_modules\@testing-
+library\react\dist\pur
+e.js:292:10)
+          at 
+renderComponent (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\comp
+onents\__tests__\Produ
+ctDetailPage.test.tsx:
+57:15)
+          at 
+Object.<anonymous> (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\c
+omponents\__tests__\Pr
+oductDetailPage.test.t
+sx:69:9)
+          at Promise.f
+inally.completed (C:\U
+sers\shubh\grocerywebs
+ite\grocerywebsite\nod
+e_modules\jest-circus\
+build\jestAdapterInit.
+js:1557:28)
+          at new 
+Promise (<anonymous>)
+          at 
+callAsyncCircusFn (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\no
+de_modules\jest-circus
+\build\jestAdapterInit
+.js:1497:10)
+          at 
+_callCircusTest (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\node
+_modules\jest-circus\b
+uild\jestAdapterInit.j
+s:1007:40)
+          at processTi
+cksAndRejections (node
+:internal/process/task
+_queues:105:5)
+          at _runTest 
+(C:\Users\shubh\grocer
+ywebsite\grocerywebsit
+e\node_modules\jest-ci
+rcus\build\jestAdapter
+Init.js:947:3)
+          at C:\Users\
+shubh\grocerywebsite\g
+rocerywebsite\node_mod
+ules\jest-circus\build
+\jestAdapterInit.js:84
+9:7
+          at _runTests
+ForDescribeBlock (C:\U
+sers\shubh\grocerywebs
+ite\grocerywebsite\nod
+e_modules\jest-circus\
+build\jestAdapterInit.
+js:862:11)
+          at _runTests
+ForDescribeBlock (C:\U
+sers\shubh\grocerywebs
+ite\grocerywebsite\nod
+e_modules\jest-circus\
+build\jestAdapterInit.
+js:857:11)
+          at run (C:\U
+sers\shubh\grocerywebs
+ite\grocerywebsite\nod
+e_modules\jest-circus\
+build\jestAdapterInit.
+js:761:3)
+          at runAndTra
+nsformResultsToJestFor
+mat (C:\Users\shubh\gr
+ocerywebsite\grocerywe
+bsite\node_modules\jes
+t-circus\build\jestAda
+pterInit.js:1918:21)
+          at 
+jestAdapter (C:\Users\
+shubh\grocerywebsite\g
+rocerywebsite\node_mod
+ules\jest-circus\build
+\runner.js:101:19)
+          at 
+runTestInternal (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\node
+_modules\jest-runner\b
+uild\testWorker.js:275
+:16)
+          at runTest (
+C:\Users\shubh\grocery
+website\grocerywebsite
+\node_modules\jest-run
+ner\build\testWorker.j
+s:343:7)
+          at 
+Object.worker (C:\User
+s\shubh\grocerywebsite
+\grocerywebsite\node_m
+odules\jest-runner\bui
+ld\testWorker.js:497:1
+2) {
+        detail: 
+ReferenceError: 
+useWishlist is not 
+defined
+            at 
+ProductDetailPage (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\pa
+ges\ProductDetailPage.
+tsx:23:45)
+            at 
+renderWithHooks (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\node
+_modules\react-dom\cjs
+\react-dom.development
+.js:15486:18)
+            at mountIn
+determinateComponent (
+C:\Users\shubh\grocery
+website\grocerywebsite
+\node_modules\react-do
+m\cjs\react-dom.develo
+pment.js:20103:13)
+            at 
+beginWork (C:\Users\sh
+ubh\grocerywebsite\gro
+cerywebsite\node_modul
+es\react-dom\cjs\react
+-dom.development.js:21
+626:16)
+            at HTMLUnk
+nownElement.callCallba
+ck (C:\Users\shubh\gro
+cerywebsite\groceryweb
+site\node_modules\reac
+t-dom\cjs\react-dom.de
+velopment.js:4164:14)
+            at HTMLUnk
+nownElement.callTheUse
+rObjectsOperation (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\no
+de_modules\jsdom\lib\j
+sdom\living\generated\
+EventListener.js:26:30
+)
+            at innerIn
+vokeEventListeners (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\jsdom\lib\
+jsdom\living\events\Ev
+entTarget-impl.js:350:
+25)
+            at 
+invokeEventListeners (
+C:\Users\shubh\grocery
+website\grocerywebsite
+\node_modules\jsdom\li
+b\jsdom\living\events\
+EventTarget-impl.js:28
+6:3)
+            at HTMLUnk
+nownElementImpl._dispa
+tch (C:\Users\shubh\gr
+ocerywebsite\grocerywe
+bsite\node_modules\jsd
+om\lib\jsdom\living\ev
+ents\EventTarget-impl.
+js:233:9)
+            at HTMLUnk
+nownElementImpl.dispat
+chEvent (C:\Users\shub
+h\grocerywebsite\groce
+rywebsite\node_modules
+\jsdom\lib\jsdom\livin
+g\events\EventTarget-i
+mpl.js:104:17)
+            at HTMLUnk
+nownElement.dispatchEv
+ent (C:\Users\shubh\gr
+ocerywebsite\grocerywe
+bsite\node_modules\jsd
+om\lib\jsdom\living\ge
+nerated\EventTarget.js
+:241:34)
+            at Object.
+invokeGuardedCallbackD
+ev (C:\Users\shubh\gro
+cerywebsite\groceryweb
+site\node_modules\reac
+t-dom\cjs\react-dom.de
+velopment.js:4213:16)
+            at 
+invokeGuardedCallback 
+(C:\Users\shubh\grocer
+ywebsite\grocerywebsit
+e\node_modules\react-d
+om\cjs\react-dom.devel
+opment.js:4277:31)
+            at 
+beginWork$1 (C:\Users\
+shubh\grocerywebsite\g
+rocerywebsite\node_mod
+ules\react-dom\cjs\rea
+ct-dom.development.js:
+27490:7)
+            at 
+performUnitOfWork (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\no
+de_modules\react-dom\c
+js\react-dom.developme
+nt.js:26599:12)
+            at 
+workLoopSync (C:\Users
+\shubh\grocerywebsite\
+grocerywebsite\node_mo
+dules\react-dom\cjs\re
+act-dom.development.js
+:26505:5)
+            at 
+renderRootSync (C:\Use
+rs\shubh\grocerywebsit
+e\grocerywebsite\node_
+modules\react-dom\cjs\
+react-dom.development.
+js:26473:7)
+            at perform
+ConcurrentWorkOnRoot (
+C:\Users\shubh\grocery
+website\grocerywebsite
+\node_modules\react-do
+m\cjs\react-dom.develo
+pment.js:25777:74)
+            at 
+flushActQueue (C:\User
+s\shubh\grocerywebsite
+\grocerywebsite\node_m
+odules\react\cjs\react
+.development.js:2667:2
+4)
+            at act (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\react\cjs\
+react.development.js:2
+582:11)
+            at C:\User
+s\shubh\grocerywebsite
+\grocerywebsite\node_m
+odules\@testing-librar
+y\react\dist\act-compa
+t.js:47:25
+            at 
+renderRoot (C:\Users\s
+hubh\grocerywebsite\gr
+ocerywebsite\node_modu
+les\@testing-library\r
+eact\dist\pure.js:190:
+26)
+            at render 
+(C:\Users\shubh\grocer
+ywebsite\grocerywebsit
+e\node_modules\@testin
+g-library\react\dist\p
+ure.js:292:10)
+            at 
+renderComponent (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\comp
+onents\__tests__\Produ
+ctDetailPage.test.tsx:
+57:15)
+            at 
+Object.<anonymous> (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\c
+omponents\__tests__\Pr
+oductDetailPage.test.t
+sx:69:9)
+            at Promise
+.finally.completed (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\jest-circu
+s\build\jestAdapterIni
+t.js:1557:28)
+            at new 
+Promise (<anonymous>)
+            at 
+callAsyncCircusFn (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\no
+de_modules\jest-circus
+\build\jestAdapterInit
+.js:1497:10)
+            at 
+_callCircusTest (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\node
+_modules\jest-circus\b
+uild\jestAdapterInit.j
+s:1007:40)
+            at process
+TicksAndRejections (no
+de:internal/process/ta
+sk_queues:105:5)
+            at 
+_runTest (C:\Users\shu
+bh\grocerywebsite\groc
+erywebsite\node_module
+s\jest-circus\build\je
+stAdapterInit.js:947:3
+)
+            at C:\User
+s\shubh\grocerywebsite
+\grocerywebsite\node_m
+odules\jest-circus\bui
+ld\jestAdapterInit.js:
+849:7
+            at _runTes
+tsForDescribeBlock (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\jest-circu
+s\build\jestAdapterIni
+t.js:862:11)
+            at _runTes
+tsForDescribeBlock (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\jest-circu
+s\build\jestAdapterIni
+t.js:857:11)
+            at run (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\jest-circu
+s\build\jestAdapterIni
+t.js:761:3)
+            at runAndT
+ransformResultsToJestF
+ormat (C:\Users\shubh\
+grocerywebsite\grocery
+website\node_modules\j
+est-circus\build\jestA
+dapterInit.js:1918:21)
+            at 
+jestAdapter (C:\Users\
+shubh\grocerywebsite\g
+rocerywebsite\node_mod
+ules\jest-circus\build
+\runner.js:101:19)
+            at 
+runTestInternal (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\node
+_modules\jest-runner\b
+uild\testWorker.js:275
+:16)
+            at 
+runTest (C:\Users\shub
+h\grocerywebsite\groce
+rywebsite\node_modules
+\jest-runner\build\tes
+tWorker.js:343:7)
+            at 
+Object.worker (C:\User
+s\shubh\grocerywebsite
+\grocerywebsite\node_m
+odules\jest-runner\bui
+ld\testWorker.js:497:1
+2),
+        type: 
+'unhandled exception'
+      }
+
+    [0m [90m 55 
+|[39m
+     [90m 56 |[39m  
+   [36mconst[39m 
+renderComponent 
+[33m=[39m () 
+[33m=>[39m
+    [31m[1m>[22m[3
+9m[90m 57 |[39m     
+    render(
+     [90m    |[39m  
+             
+[31m[1m^[22m[39m
+     [90m 58 |[39m  
+           [33m<[39m
+[33mBrowserRouter[39
+m[33m>[39m
+     [90m 59 |[39m  
+               [33m<
+[39m[33mProductDetail
+Page[39m 
+[33m/[39m[33m>[39m
+     [90m 60 |[39m  
+           [33m<[39m
+[33m/[39m[33mBrowse
+rRouter[39m[33m>[39
+m[0m
+
+      at VirtualConsol
+e.<anonymous> (node_mo
+dules/@jest/environmen
+t-jsdom-abstract/build
+/index.js:87:23)
+      at 
+reportException (node_
+modules/jsdom/lib/jsdo
+m/living/helpers/runti
+me-script-errors.js:70
+:28)
+      at innerInvokeEv
+entListeners (node_mod
+ules/jsdom/lib/jsdom/l
+iving/events/EventTarg
+et-impl.js:353:9)
+      at 
+invokeEventListeners (
+node_modules/jsdom/lib
+/jsdom/living/events/E
+ventTarget-impl.js:286
+:3)
+      at HTMLUnknownEl
+ementImpl._dispatch (n
+ode_modules/jsdom/lib/
+jsdom/living/events/Ev
+entTarget-impl.js:233:
+9)
+      at HTMLUnknownEl
+ementImpl.dispatchEven
+t (node_modules/jsdom/
+lib/jsdom/living/event
+s/EventTarget-impl.js:
+104:17)
+      at HTMLUnknownEl
+ement.dispatchEvent (n
+ode_modules/jsdom/lib/
+jsdom/living/generated
+/EventTarget.js:241:34
+)
+      at Object.invoke
+GuardedCallbackDev (no
+de_modules/react-dom/c
+js/react-dom.developme
+nt.js:4213:16)
+      at 
+invokeGuardedCallback 
+(node_modules/react-do
+m/cjs/react-dom.develo
+pment.js:4277:31)
+      at beginWork$1 (
+node_modules/react-dom
+/cjs/react-dom.develop
+ment.js:27490:7)
+      at 
+performUnitOfWork (nod
+e_modules/react-dom/cj
+s/react-dom.developmen
+t.js:26599:12)
+      at workLoopSync 
+(node_modules/react-do
+m/cjs/react-dom.develo
+pment.js:26505:5)
+      at 
+renderRootSync (node_m
+odules/react-dom/cjs/r
+eact-dom.development.j
+s:26473:7)
+      at performConcur
+rentWorkOnRoot (node_m
+odules/react-dom/cjs/r
+eact-dom.development.j
+s:25777:74)
+      at 
+flushActQueue (node_mo
+dules/react/cjs/react.
+development.js:2667:24
+)
+      at act (node_mod
+ules/react/cjs/react.d
+evelopment.js:2582:11)
+      at node_modules/
+@testing-library/react
+/dist/act-compat.js:47
+:25
+      at renderRoot (n
+ode_modules/@testing-l
+ibrary/react/dist/pure
+.js:190:26)
+      at render (node_
+modules/@testing-libra
+ry/react/dist/pure.js:
+292:10)
+      at 
+renderComponent (compo
+nents/__tests__/Produc
+tDetailPage.test.tsx:5
+7:15)
+      at 
+Object.<anonymous> (co
+mponents/__tests__/Pro
+ductDetailPage.test.ts
+x:69:9)
+
+    console.error
+      Error: Uncaught 
+[ReferenceError: 
+useWishlist is not 
+defined]
+          at 
+reportException (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\node
+_modules\jsdom\lib\jsd
+om\living\helpers\runt
+ime-script-errors.js:6
+6:24)
+          at innerInvo
+keEventListeners (C:\U
+sers\shubh\grocerywebs
+ite\grocerywebsite\nod
+e_modules\jsdom\lib\js
+dom\living\events\Even
+tTarget-impl.js:353:9)
+          at 
+invokeEventListeners (
+C:\Users\shubh\grocery
+website\grocerywebsite
+\node_modules\jsdom\li
+b\jsdom\living\events\
+EventTarget-impl.js:28
+6:3)
+          at HTMLUnkno
+wnElementImpl._dispatc
+h (C:\Users\shubh\groc
+erywebsite\grocerywebs
+ite\node_modules\jsdom
+\lib\jsdom\living\even
+ts\EventTarget-impl.js
+:233:9)
+          at HTMLUnkno
+wnElementImpl.dispatch
+Event (C:\Users\shubh\
+grocerywebsite\grocery
+website\node_modules\j
+sdom\lib\jsdom\living\
+events\EventTarget-imp
+l.js:104:17)
+          at HTMLUnkno
+wnElement.dispatchEven
+t (C:\Users\shubh\groc
+erywebsite\grocerywebs
+ite\node_modules\jsdom
+\lib\jsdom\living\gene
+rated\EventTarget.js:2
+41:34)
+          at Object.in
+vokeGuardedCallbackDev
+ (C:\Users\shubh\groce
+rywebsite\grocerywebsi
+te\node_modules\react-
+dom\cjs\react-dom.deve
+lopment.js:4213:16)
+          at 
+invokeGuardedCallback 
+(C:\Users\shubh\grocer
+ywebsite\grocerywebsit
+e\node_modules\react-d
+om\cjs\react-dom.devel
+opment.js:4277:31)
+          at 
+beginWork$1 (C:\Users\
+shubh\grocerywebsite\g
+rocerywebsite\node_mod
+ules\react-dom\cjs\rea
+ct-dom.development.js:
+27490:7)
+          at 
+performUnitOfWork (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\no
+de_modules\react-dom\c
+js\react-dom.developme
+nt.js:26599:12)
+          at 
+workLoopSync (C:\Users
+\shubh\grocerywebsite\
+grocerywebsite\node_mo
+dules\react-dom\cjs\re
+act-dom.development.js
+:26505:5)
+          at 
+renderRootSync (C:\Use
+rs\shubh\grocerywebsit
+e\grocerywebsite\node_
+modules\react-dom\cjs\
+react-dom.development.
+js:26473:7)
+          at recoverFr
+omConcurrentError (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\no
+de_modules\react-dom\c
+js\react-dom.developme
+nt.js:25889:20)
+          at performCo
+ncurrentWorkOnRoot (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\react-dom\
+cjs\react-dom.developm
+ent.js:25789:22)
+          at 
+flushActQueue (C:\User
+s\shubh\grocerywebsite
+\grocerywebsite\node_m
+odules\react\cjs\react
+.development.js:2667:2
+4)
+          at act (C:\U
+sers\shubh\grocerywebs
+ite\grocerywebsite\nod
+e_modules\react\cjs\re
+act.development.js:258
+2:11)
+          at C:\Users\
+shubh\grocerywebsite\g
+rocerywebsite\node_mod
+ules\@testing-library\
+react\dist\act-compat.
+js:47:25
+          at 
+renderRoot (C:\Users\s
+hubh\grocerywebsite\gr
+ocerywebsite\node_modu
+les\@testing-library\r
+eact\dist\pure.js:190:
+26)
+          at render (C
+:\Users\shubh\groceryw
+ebsite\grocerywebsite\
+node_modules\@testing-
+library\react\dist\pur
+e.js:292:10)
+          at 
+renderComponent (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\comp
+onents\__tests__\Produ
+ctDetailPage.test.tsx:
+57:15)
+          at 
+Object.<anonymous> (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\c
+omponents\__tests__\Pr
+oductDetailPage.test.t
+sx:69:9)
+          at Promise.f
+inally.completed (C:\U
+sers\shubh\grocerywebs
+ite\grocerywebsite\nod
+e_modules\jest-circus\
+build\jestAdapterInit.
+js:1557:28)
+          at new 
+Promise (<anonymous>)
+          at 
+callAsyncCircusFn (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\no
+de_modules\jest-circus
+\build\jestAdapterInit
+.js:1497:10)
+          at 
+_callCircusTest (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\node
+_modules\jest-circus\b
+uild\jestAdapterInit.j
+s:1007:40)
+          at processTi
+cksAndRejections (node
+:internal/process/task
+_queues:105:5)
+          at _runTest 
+(C:\Users\shubh\grocer
+ywebsite\grocerywebsit
+e\node_modules\jest-ci
+rcus\build\jestAdapter
+Init.js:947:3)
+          at C:\Users\
+shubh\grocerywebsite\g
+rocerywebsite\node_mod
+ules\jest-circus\build
+\jestAdapterInit.js:84
+9:7
+          at _runTests
+ForDescribeBlock (C:\U
+sers\shubh\grocerywebs
+ite\grocerywebsite\nod
+e_modules\jest-circus\
+build\jestAdapterInit.
+js:862:11)
+          at _runTests
+ForDescribeBlock (C:\U
+sers\shubh\grocerywebs
+ite\grocerywebsite\nod
+e_modules\jest-circus\
+build\jestAdapterInit.
+js:857:11)
+          at run (C:\U
+sers\shubh\grocerywebs
+ite\grocerywebsite\nod
+e_modules\jest-circus\
+build\jestAdapterInit.
+js:761:3)
+          at runAndTra
+nsformResultsToJestFor
+mat (C:\Users\shubh\gr
+ocerywebsite\grocerywe
+bsite\node_modules\jes
+t-circus\build\jestAda
+pterInit.js:1918:21)
+          at 
+jestAdapter (C:\Users\
+shubh\grocerywebsite\g
+rocerywebsite\node_mod
+ules\jest-circus\build
+\runner.js:101:19)
+          at 
+runTestInternal (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\node
+_modules\jest-runner\b
+uild\testWorker.js:275
+:16)
+          at runTest (
+C:\Users\shubh\grocery
+website\grocerywebsite
+\node_modules\jest-run
+ner\build\testWorker.j
+s:343:7)
+          at 
+Object.worker (C:\User
+s\shubh\grocerywebsite
+\grocerywebsite\node_m
+odules\jest-runner\bui
+ld\testWorker.js:497:1
+2) {
+        detail: 
+ReferenceError: 
+useWishlist is not 
+defined
+            at 
+ProductDetailPage (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\pa
+ges\ProductDetailPage.
+tsx:23:45)
+            at 
+renderWithHooks (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\node
+_modules\react-dom\cjs
+\react-dom.development
+.js:15486:18)
+            at mountIn
+determinateComponent (
+C:\Users\shubh\grocery
+website\grocerywebsite
+\node_modules\react-do
+m\cjs\react-dom.develo
+pment.js:20103:13)
+            at 
+beginWork (C:\Users\sh
+ubh\grocerywebsite\gro
+cerywebsite\node_modul
+es\react-dom\cjs\react
+-dom.development.js:21
+626:16)
+            at HTMLUnk
+nownElement.callCallba
+ck (C:\Users\shubh\gro
+cerywebsite\groceryweb
+site\node_modules\reac
+t-dom\cjs\react-dom.de
+velopment.js:4164:14)
+            at HTMLUnk
+nownElement.callTheUse
+rObjectsOperation (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\no
+de_modules\jsdom\lib\j
+sdom\living\generated\
+EventListener.js:26:30
+)
+            at innerIn
+vokeEventListeners (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\jsdom\lib\
+jsdom\living\events\Ev
+entTarget-impl.js:350:
+25)
+            at 
+invokeEventListeners (
+C:\Users\shubh\grocery
+website\grocerywebsite
+\node_modules\jsdom\li
+b\jsdom\living\events\
+EventTarget-impl.js:28
+6:3)
+            at HTMLUnk
+nownElementImpl._dispa
+tch (C:\Users\shubh\gr
+ocerywebsite\grocerywe
+bsite\node_modules\jsd
+om\lib\jsdom\living\ev
+ents\EventTarget-impl.
+js:233:9)
+            at HTMLUnk
+nownElementImpl.dispat
+chEvent (C:\Users\shub
+h\grocerywebsite\groce
+rywebsite\node_modules
+\jsdom\lib\jsdom\livin
+g\events\EventTarget-i
+mpl.js:104:17)
+            at HTMLUnk
+nownElement.dispatchEv
+ent (C:\Users\shubh\gr
+ocerywebsite\grocerywe
+bsite\node_modules\jsd
+om\lib\jsdom\living\ge
+nerated\EventTarget.js
+:241:34)
+            at Object.
+invokeGuardedCallbackD
+ev (C:\Users\shubh\gro
+cerywebsite\groceryweb
+site\node_modules\reac
+t-dom\cjs\react-dom.de
+velopment.js:4213:16)
+            at 
+invokeGuardedCallback 
+(C:\Users\shubh\grocer
+ywebsite\grocerywebsit
+e\node_modules\react-d
+om\cjs\react-dom.devel
+opment.js:4277:31)
+            at 
+beginWork$1 (C:\Users\
+shubh\grocerywebsite\g
+rocerywebsite\node_mod
+ules\react-dom\cjs\rea
+ct-dom.development.js:
+27490:7)
+            at 
+performUnitOfWork (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\no
+de_modules\react-dom\c
+js\react-dom.developme
+nt.js:26599:12)
+            at 
+workLoopSync (C:\Users
+\shubh\grocerywebsite\
+grocerywebsite\node_mo
+dules\react-dom\cjs\re
+act-dom.development.js
+:26505:5)
+            at 
+renderRootSync (C:\Use
+rs\shubh\grocerywebsit
+e\grocerywebsite\node_
+modules\react-dom\cjs\
+react-dom.development.
+js:26473:7)
+            at recover
+FromConcurrentError (C
+:\Users\shubh\groceryw
+ebsite\grocerywebsite\
+node_modules\react-dom
+\cjs\react-dom.develop
+ment.js:25889:20)
+            at perform
+ConcurrentWorkOnRoot (
+C:\Users\shubh\grocery
+website\grocerywebsite
+\node_modules\react-do
+m\cjs\react-dom.develo
+pment.js:25789:22)
+            at 
+flushActQueue (C:\User
+s\shubh\grocerywebsite
+\grocerywebsite\node_m
+odules\react\cjs\react
+.development.js:2667:2
+4)
+            at act (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\react\cjs\
+react.development.js:2
+582:11)
+            at C:\User
+s\shubh\grocerywebsite
+\grocerywebsite\node_m
+odules\@testing-librar
+y\react\dist\act-compa
+t.js:47:25
+            at 
+renderRoot (C:\Users\s
+hubh\grocerywebsite\gr
+ocerywebsite\node_modu
+les\@testing-library\r
+eact\dist\pure.js:190:
+26)
+            at render 
+(C:\Users\shubh\grocer
+ywebsite\grocerywebsit
+e\node_modules\@testin
+g-library\react\dist\p
+ure.js:292:10)
+            at 
+renderComponent (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\comp
+onents\__tests__\Produ
+ctDetailPage.test.tsx:
+57:15)
+            at 
+Object.<anonymous> (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\c
+omponents\__tests__\Pr
+oductDetailPage.test.t
+sx:69:9)
+            at Promise
+.finally.completed (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\jest-circu
+s\build\jestAdapterIni
+t.js:1557:28)
+            at new 
+Promise (<anonymous>)
+            at 
+callAsyncCircusFn (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\no
+de_modules\jest-circus
+\build\jestAdapterInit
+.js:1497:10)
+            at 
+_callCircusTest (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\node
+_modules\jest-circus\b
+uild\jestAdapterInit.j
+s:1007:40)
+            at process
+TicksAndRejections (no
+de:internal/process/ta
+sk_queues:105:5)
+            at 
+_runTest (C:\Users\shu
+bh\grocerywebsite\groc
+erywebsite\node_module
+s\jest-circus\build\je
+stAdapterInit.js:947:3
+)
+            at C:\User
+s\shubh\grocerywebsite
+\grocerywebsite\node_m
+odules\jest-circus\bui
+ld\jestAdapterInit.js:
+849:7
+            at _runTes
+tsForDescribeBlock (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\jest-circu
+s\build\jestAdapterIni
+t.js:862:11)
+            at _runTes
+tsForDescribeBlock (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\jest-circu
+s\build\jestAdapterIni
+t.js:857:11)
+            at run (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\jest-circu
+s\build\jestAdapterIni
+t.js:761:3)
+            at runAndT
+ransformResultsToJestF
+ormat (C:\Users\shubh\
+grocerywebsite\grocery
+website\node_modules\j
+est-circus\build\jestA
+dapterInit.js:1918:21)
+            at 
+jestAdapter (C:\Users\
+shubh\grocerywebsite\g
+rocerywebsite\node_mod
+ules\jest-circus\build
+\runner.js:101:19)
+            at 
+runTestInternal (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\node
+_modules\jest-runner\b
+uild\testWorker.js:275
+:16)
+            at 
+runTest (C:\Users\shub
+h\grocerywebsite\groce
+rywebsite\node_modules
+\jest-runner\build\tes
+tWorker.js:343:7)
+            at 
+Object.worker (C:\User
+s\shubh\grocerywebsite
+\grocerywebsite\node_m
+odules\jest-runner\bui
+ld\testWorker.js:497:1
+2),
+        type: 
+'unhandled exception'
+      }
+
+    [0m [90m 55 
+|[39m
+     [90m 56 |[39m  
+   [36mconst[39m 
+renderComponent 
+[33m=[39m () 
+[33m=>[39m
+    [31m[1m>[22m[3
+9m[90m 57 |[39m     
+    render(
+     [90m    |[39m  
+             
+[31m[1m^[22m[39m
+     [90m 58 |[39m  
+           [33m<[39m
+[33mBrowserRouter[39
+m[33m>[39m
+     [90m 59 |[39m  
+               [33m<
+[39m[33mProductDetail
+Page[39m 
+[33m/[39m[33m>[39m
+     [90m 60 |[39m  
+           [33m<[39m
+[33m/[39m[33mBrowse
+rRouter[39m[33m>[39
+m[0m
+
+      at VirtualConsol
+e.<anonymous> (node_mo
+dules/@jest/environmen
+t-jsdom-abstract/build
+/index.js:87:23)
+      at 
+reportException (node_
+modules/jsdom/lib/jsdo
+m/living/helpers/runti
+me-script-errors.js:70
+:28)
+      at innerInvokeEv
+entListeners (node_mod
+ules/jsdom/lib/jsdom/l
+iving/events/EventTarg
+et-impl.js:353:9)
+      at 
+invokeEventListeners (
+node_modules/jsdom/lib
+/jsdom/living/events/E
+ventTarget-impl.js:286
+:3)
+      at HTMLUnknownEl
+ementImpl._dispatch (n
+ode_modules/jsdom/lib/
+jsdom/living/events/Ev
+entTarget-impl.js:233:
+9)
+      at HTMLUnknownEl
+ementImpl.dispatchEven
+t (node_modules/jsdom/
+lib/jsdom/living/event
+s/EventTarget-impl.js:
+104:17)
+      at HTMLUnknownEl
+ement.dispatchEvent (n
+ode_modules/jsdom/lib/
+jsdom/living/generated
+/EventTarget.js:241:34
+)
+      at Object.invoke
+GuardedCallbackDev (no
+de_modules/react-dom/c
+js/react-dom.developme
+nt.js:4213:16)
+      at 
+invokeGuardedCallback 
+(node_modules/react-do
+m/cjs/react-dom.develo
+pment.js:4277:31)
+      at beginWork$1 (
+node_modules/react-dom
+/cjs/react-dom.develop
+ment.js:27490:7)
+      at 
+performUnitOfWork (nod
+e_modules/react-dom/cj
+s/react-dom.developmen
+t.js:26599:12)
+      at workLoopSync 
+(node_modules/react-do
+m/cjs/react-dom.develo
+pment.js:26505:5)
+      at 
+renderRootSync (node_m
+odules/react-dom/cjs/r
+eact-dom.development.j
+s:26473:7)
+      at recoverFromCo
+ncurrentError (node_mo
+dules/react-dom/cjs/re
+act-dom.development.js
+:25889:20)
+      at performConcur
+rentWorkOnRoot (node_m
+odules/react-dom/cjs/r
+eact-dom.development.j
+s:25789:22)
+      at 
+flushActQueue (node_mo
+dules/react/cjs/react.
+development.js:2667:24
+)
+      at act (node_mod
+ules/react/cjs/react.d
+evelopment.js:2582:11)
+      at node_modules/
+@testing-library/react
+/dist/act-compat.js:47
+:25
+      at renderRoot (n
+ode_modules/@testing-l
+ibrary/react/dist/pure
+.js:190:26)
+      at render (node_
+modules/@testing-libra
+ry/react/dist/pure.js:
+292:10)
+      at 
+renderComponent (compo
+nents/__tests__/Produc
+tDetailPage.test.tsx:5
+7:15)
+      at 
+Object.<anonymous> (co
+mponents/__tests__/Pro
+ductDetailPage.test.ts
+x:69:9)
+
+    console.error
+      The above error 
+occurred in the 
+<ProductDetailPage> 
+component:
+      
+          at 
+ProductDetailPage (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\pa
+ges\ProductDetailPage.
+tsx:23:45)
+          at Router (C
+:\Users\shubh\groceryw
+ebsite\grocerywebsite\
+node_modules\react-rou
+ter\dist\development\c
+hunk-RBZI3ZHD.js:9073:
+13)
+          at 
+BrowserRouter (C:\User
+s\shubh\grocerywebsite
+\grocerywebsite\node_m
+odules\react-router\di
+st\development\chunk-H
+MTWJNYB.js:269:3)
+      
+      Consider adding 
+an error boundary to 
+your tree to 
+customize error 
+handling behavior.
+      Visit https://re
+actjs.org/link/error-b
+oundaries to learn 
+more about error 
+boundaries.
+
+    [0m [90m 55 
+|[39m
+     [90m 56 |[39m  
+   [36mconst[39m 
+renderComponent 
+[33m=[39m () 
+[33m=>[39m
+    [31m[1m>[22m[3
+9m[90m 57 |[39m     
+    render(
+     [90m    |[39m  
+             
+[31m[1m^[22m[39m
+     [90m 58 |[39m  
+           [33m<[39m
+[33mBrowserRouter[39
+m[33m>[39m
+     [90m 59 |[39m  
+               [33m<
+[39m[33mProductDetail
+Page[39m 
+[33m/[39m[33m>[39m
+     [90m 60 |[39m  
+           [33m<[39m
+[33m/[39m[33mBrowse
+rRouter[39m[33m>[39
+m[0m
+
+      at 
+logCapturedError (node
+_modules/react-dom/cjs
+/react-dom.development
+.js:18704:23)
+      at 
+update.callback (node_
+modules/react-dom/cjs/
+react-dom.development.
+js:18737:5)
+      at callCallback 
+(node_modules/react-do
+m/cjs/react-dom.develo
+pment.js:15036:12)
+      at 
+commitUpdateQueue (nod
+e_modules/react-dom/cj
+s/react-dom.developmen
+t.js:15057:9)
+      at commitLayoutE
+ffectOnFiber (node_mod
+ules/react-dom/cjs/rea
+ct-dom.development.js:
+23430:13)
+      at commitLayoutM
+ountEffects_complete (
+node_modules/react-dom
+/cjs/react-dom.develop
+ment.js:24727:9)
+      at commitLayoutE
+ffects_begin (node_mod
+ules/react-dom/cjs/rea
+ct-dom.development.js:
+24713:7)
+      at 
+commitLayoutEffects (n
+ode_modules/react-dom/
+cjs/react-dom.developm
+ent.js:24651:3)
+      at 
+commitRootImpl (node_m
+odules/react-dom/cjs/r
+eact-dom.development.j
+s:26862:5)
+      at commitRoot (n
+ode_modules/react-dom/
+cjs/react-dom.developm
+ent.js:26721:5)
+      at finishConcurr
+entRender (node_module
+s/react-dom/cjs/react-
+dom.development.js:259
+31:9)
+      at performConcur
+rentWorkOnRoot (node_m
+odules/react-dom/cjs/r
+eact-dom.development.j
+s:25848:7)
+      at 
+flushActQueue (node_mo
+dules/react/cjs/react.
+development.js:2667:24
+)
+      at act (node_mod
+ules/react/cjs/react.d
+evelopment.js:2582:11)
+      at node_modules/
+@testing-library/react
+/dist/act-compat.js:47
+:25
+      at renderRoot (n
+ode_modules/@testing-l
+ibrary/react/dist/pure
+.js:190:26)
+      at render (node_
+modules/@testing-libra
+ry/react/dist/pure.js:
+292:10)
+      at 
+renderComponent (compo
+nents/__tests__/Produc
+tDetailPage.test.tsx:5
+7:15)
+      at 
+Object.<anonymous> (co
+mponents/__tests__/Pro
+ductDetailPage.test.ts
+x:69:9)
+
+    console.error
+      Error: Uncaught 
+[ReferenceError: 
+useWishlist is not 
+defined]
+          at 
+reportException (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\node
+_modules\jsdom\lib\jsd
+om\living\helpers\runt
+ime-script-errors.js:6
+6:24)
+          at innerInvo
+keEventListeners (C:\U
+sers\shubh\grocerywebs
+ite\grocerywebsite\nod
+e_modules\jsdom\lib\js
+dom\living\events\Even
+tTarget-impl.js:353:9)
+          at 
+invokeEventListeners (
+C:\Users\shubh\grocery
+website\grocerywebsite
+\node_modules\jsdom\li
+b\jsdom\living\events\
+EventTarget-impl.js:28
+6:3)
+          at HTMLUnkno
+wnElementImpl._dispatc
+h (C:\Users\shubh\groc
+erywebsite\grocerywebs
+ite\node_modules\jsdom
+\lib\jsdom\living\even
+ts\EventTarget-impl.js
+:233:9)
+          at HTMLUnkno
+wnElementImpl.dispatch
+Event (C:\Users\shubh\
+grocerywebsite\grocery
+website\node_modules\j
+sdom\lib\jsdom\living\
+events\EventTarget-imp
+l.js:104:17)
+          at HTMLUnkno
+wnElement.dispatchEven
+t (C:\Users\shubh\groc
+erywebsite\grocerywebs
+ite\node_modules\jsdom
+\lib\jsdom\living\gene
+rated\EventTarget.js:2
+41:34)
+          at Object.in
+vokeGuardedCallbackDev
+ (C:\Users\shubh\groce
+rywebsite\grocerywebsi
+te\node_modules\react-
+dom\cjs\react-dom.deve
+lopment.js:4213:16)
+          at 
+invokeGuardedCallback 
+(C:\Users\shubh\grocer
+ywebsite\grocerywebsit
+e\node_modules\react-d
+om\cjs\react-dom.devel
+opment.js:4277:31)
+          at 
+beginWork$1 (C:\Users\
+shubh\grocerywebsite\g
+rocerywebsite\node_mod
+ules\react-dom\cjs\rea
+ct-dom.development.js:
+27490:7)
+          at 
+performUnitOfWork (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\no
+de_modules\react-dom\c
+js\react-dom.developme
+nt.js:26599:12)
+          at 
+workLoopSync (C:\Users
+\shubh\grocerywebsite\
+grocerywebsite\node_mo
+dules\react-dom\cjs\re
+act-dom.development.js
+:26505:5)
+          at 
+renderRootSync (C:\Use
+rs\shubh\grocerywebsit
+e\grocerywebsite\node_
+modules\react-dom\cjs\
+react-dom.development.
+js:26473:7)
+          at performCo
+ncurrentWorkOnRoot (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\react-dom\
+cjs\react-dom.developm
+ent.js:25777:74)
+          at 
+flushActQueue (C:\User
+s\shubh\grocerywebsite
+\grocerywebsite\node_m
+odules\react\cjs\react
+.development.js:2667:2
+4)
+          at act (C:\U
+sers\shubh\grocerywebs
+ite\grocerywebsite\nod
+e_modules\react\cjs\re
+act.development.js:258
+2:11)
+          at C:\Users\
+shubh\grocerywebsite\g
+rocerywebsite\node_mod
+ules\@testing-library\
+react\dist\act-compat.
+js:47:25
+          at 
+renderRoot (C:\Users\s
+hubh\grocerywebsite\gr
+ocerywebsite\node_modu
+les\@testing-library\r
+eact\dist\pure.js:190:
+26)
+          at render (C
+:\Users\shubh\groceryw
+ebsite\grocerywebsite\
+node_modules\@testing-
+library\react\dist\pur
+e.js:292:10)
+          at 
+renderComponent (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\comp
+onents\__tests__\Produ
+ctDetailPage.test.tsx:
+57:15)
+          at 
+Object.<anonymous> (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\c
+omponents\__tests__\Pr
+oductDetailPage.test.t
+sx:76:9)
+          at Promise.f
+inally.completed (C:\U
+sers\shubh\grocerywebs
+ite\grocerywebsite\nod
+e_modules\jest-circus\
+build\jestAdapterInit.
+js:1557:28)
+          at new 
+Promise (<anonymous>)
+          at 
+callAsyncCircusFn (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\no
+de_modules\jest-circus
+\build\jestAdapterInit
+.js:1497:10)
+          at 
+_callCircusTest (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\node
+_modules\jest-circus\b
+uild\jestAdapterInit.j
+s:1007:40)
+          at processTi
+cksAndRejections (node
+:internal/process/task
+_queues:105:5)
+          at _runTest 
+(C:\Users\shubh\grocer
+ywebsite\grocerywebsit
+e\node_modules\jest-ci
+rcus\build\jestAdapter
+Init.js:947:3)
+          at C:\Users\
+shubh\grocerywebsite\g
+rocerywebsite\node_mod
+ules\jest-circus\build
+\jestAdapterInit.js:84
+9:7
+          at _runTests
+ForDescribeBlock (C:\U
+sers\shubh\grocerywebs
+ite\grocerywebsite\nod
+e_modules\jest-circus\
+build\jestAdapterInit.
+js:862:11)
+          at _runTests
+ForDescribeBlock (C:\U
+sers\shubh\grocerywebs
+ite\grocerywebsite\nod
+e_modules\jest-circus\
+build\jestAdapterInit.
+js:857:11)
+          at run (C:\U
+sers\shubh\grocerywebs
+ite\grocerywebsite\nod
+e_modules\jest-circus\
+build\jestAdapterInit.
+js:761:3)
+          at runAndTra
+nsformResultsToJestFor
+mat (C:\Users\shubh\gr
+ocerywebsite\grocerywe
+bsite\node_modules\jes
+t-circus\build\jestAda
+pterInit.js:1918:21)
+          at 
+jestAdapter (C:\Users\
+shubh\grocerywebsite\g
+rocerywebsite\node_mod
+ules\jest-circus\build
+\runner.js:101:19)
+          at 
+runTestInternal (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\node
+_modules\jest-runner\b
+uild\testWorker.js:275
+:16)
+          at runTest (
+C:\Users\shubh\grocery
+website\grocerywebsite
+\node_modules\jest-run
+ner\build\testWorker.j
+s:343:7)
+          at 
+Object.worker (C:\User
+s\shubh\grocerywebsite
+\grocerywebsite\node_m
+odules\jest-runner\bui
+ld\testWorker.js:497:1
+2) {
+        detail: 
+ReferenceError: 
+useWishlist is not 
+defined
+            at 
+ProductDetailPage (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\pa
+ges\ProductDetailPage.
+tsx:23:45)
+            at 
+renderWithHooks (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\node
+_modules\react-dom\cjs
+\react-dom.development
+.js:15486:18)
+            at mountIn
+determinateComponent (
+C:\Users\shubh\grocery
+website\grocerywebsite
+\node_modules\react-do
+m\cjs\react-dom.develo
+pment.js:20103:13)
+            at 
+beginWork (C:\Users\sh
+ubh\grocerywebsite\gro
+cerywebsite\node_modul
+es\react-dom\cjs\react
+-dom.development.js:21
+626:16)
+            at HTMLUnk
+nownElement.callCallba
+ck (C:\Users\shubh\gro
+cerywebsite\groceryweb
+site\node_modules\reac
+t-dom\cjs\react-dom.de
+velopment.js:4164:14)
+            at HTMLUnk
+nownElement.callTheUse
+rObjectsOperation (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\no
+de_modules\jsdom\lib\j
+sdom\living\generated\
+EventListener.js:26:30
+)
+            at innerIn
+vokeEventListeners (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\jsdom\lib\
+jsdom\living\events\Ev
+entTarget-impl.js:350:
+25)
+            at 
+invokeEventListeners (
+C:\Users\shubh\grocery
+website\grocerywebsite
+\node_modules\jsdom\li
+b\jsdom\living\events\
+EventTarget-impl.js:28
+6:3)
+            at HTMLUnk
+nownElementImpl._dispa
+tch (C:\Users\shubh\gr
+ocerywebsite\grocerywe
+bsite\node_modules\jsd
+om\lib\jsdom\living\ev
+ents\EventTarget-impl.
+js:233:9)
+            at HTMLUnk
+nownElementImpl.dispat
+chEvent (C:\Users\shub
+h\grocerywebsite\groce
+rywebsite\node_modules
+\jsdom\lib\jsdom\livin
+g\events\EventTarget-i
+mpl.js:104:17)
+            at HTMLUnk
+nownElement.dispatchEv
+ent (C:\Users\shubh\gr
+ocerywebsite\grocerywe
+bsite\node_modules\jsd
+om\lib\jsdom\living\ge
+nerated\EventTarget.js
+:241:34)
+            at Object.
+invokeGuardedCallbackD
+ev (C:\Users\shubh\gro
+cerywebsite\groceryweb
+site\node_modules\reac
+t-dom\cjs\react-dom.de
+velopment.js:4213:16)
+            at 
+invokeGuardedCallback 
+(C:\Users\shubh\grocer
+ywebsite\grocerywebsit
+e\node_modules\react-d
+om\cjs\react-dom.devel
+opment.js:4277:31)
+            at 
+beginWork$1 (C:\Users\
+shubh\grocerywebsite\g
+rocerywebsite\node_mod
+ules\react-dom\cjs\rea
+ct-dom.development.js:
+27490:7)
+            at 
+performUnitOfWork (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\no
+de_modules\react-dom\c
+js\react-dom.developme
+nt.js:26599:12)
+            at 
+workLoopSync (C:\Users
+\shubh\grocerywebsite\
+grocerywebsite\node_mo
+dules\react-dom\cjs\re
+act-dom.development.js
+:26505:5)
+            at 
+renderRootSync (C:\Use
+rs\shubh\grocerywebsit
+e\grocerywebsite\node_
+modules\react-dom\cjs\
+react-dom.development.
+js:26473:7)
+            at perform
+ConcurrentWorkOnRoot (
+C:\Users\shubh\grocery
+website\grocerywebsite
+\node_modules\react-do
+m\cjs\react-dom.develo
+pment.js:25777:74)
+            at 
+flushActQueue (C:\User
+s\shubh\grocerywebsite
+\grocerywebsite\node_m
+odules\react\cjs\react
+.development.js:2667:2
+4)
+            at act (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\react\cjs\
+react.development.js:2
+582:11)
+            at C:\User
+s\shubh\grocerywebsite
+\grocerywebsite\node_m
+odules\@testing-librar
+y\react\dist\act-compa
+t.js:47:25
+            at 
+renderRoot (C:\Users\s
+hubh\grocerywebsite\gr
+ocerywebsite\node_modu
+les\@testing-library\r
+eact\dist\pure.js:190:
+26)
+            at render 
+(C:\Users\shubh\grocer
+ywebsite\grocerywebsit
+e\node_modules\@testin
+g-library\react\dist\p
+ure.js:292:10)
+            at 
+renderComponent (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\comp
+onents\__tests__\Produ
+ctDetailPage.test.tsx:
+57:15)
+            at 
+Object.<anonymous> (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\c
+omponents\__tests__\Pr
+oductDetailPage.test.t
+sx:76:9)
+            at Promise
+.finally.completed (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\jest-circu
+s\build\jestAdapterIni
+t.js:1557:28)
+            at new 
+Promise (<anonymous>)
+            at 
+callAsyncCircusFn (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\no
+de_modules\jest-circus
+\build\jestAdapterInit
+.js:1497:10)
+            at 
+_callCircusTest (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\node
+_modules\jest-circus\b
+uild\jestAdapterInit.j
+s:1007:40)
+            at process
+TicksAndRejections (no
+de:internal/process/ta
+sk_queues:105:5)
+            at 
+_runTest (C:\Users\shu
+bh\grocerywebsite\groc
+erywebsite\node_module
+s\jest-circus\build\je
+stAdapterInit.js:947:3
+)
+            at C:\User
+s\shubh\grocerywebsite
+\grocerywebsite\node_m
+odules\jest-circus\bui
+ld\jestAdapterInit.js:
+849:7
+            at _runTes
+tsForDescribeBlock (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\jest-circu
+s\build\jestAdapterIni
+t.js:862:11)
+            at _runTes
+tsForDescribeBlock (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\jest-circu
+s\build\jestAdapterIni
+t.js:857:11)
+            at run (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\jest-circu
+s\build\jestAdapterIni
+t.js:761:3)
+            at runAndT
+ransformResultsToJestF
+ormat (C:\Users\shubh\
+grocerywebsite\grocery
+website\node_modules\j
+est-circus\build\jestA
+dapterInit.js:1918:21)
+            at 
+jestAdapter (C:\Users\
+shubh\grocerywebsite\g
+rocerywebsite\node_mod
+ules\jest-circus\build
+\runner.js:101:19)
+            at 
+runTestInternal (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\node
+_modules\jest-runner\b
+uild\testWorker.js:275
+:16)
+            at 
+runTest (C:\Users\shub
+h\grocerywebsite\groce
+rywebsite\node_modules
+\jest-runner\build\tes
+tWorker.js:343:7)
+            at 
+Object.worker (C:\User
+s\shubh\grocerywebsite
+\grocerywebsite\node_m
+odules\jest-runner\bui
+ld\testWorker.js:497:1
+2),
+        type: 
+'unhandled exception'
+      }
+
+    [0m [90m 55 
+|[39m
+     [90m 56 |[39m  
+   [36mconst[39m 
+renderComponent 
+[33m=[39m () 
+[33m=>[39m
+    [31m[1m>[22m[3
+9m[90m 57 |[39m     
+    render(
+     [90m    |[39m  
+             
+[31m[1m^[22m[39m
+     [90m 58 |[39m  
+           [33m<[39m
+[33mBrowserRouter[39
+m[33m>[39m
+     [90m 59 |[39m  
+               [33m<
+[39m[33mProductDetail
+Page[39m 
+[33m/[39m[33m>[39m
+     [90m 60 |[39m  
+           [33m<[39m
+[33m/[39m[33mBrowse
+rRouter[39m[33m>[39
+m[0m
+
+      at VirtualConsol
+e.<anonymous> (node_mo
+dules/@jest/environmen
+t-jsdom-abstract/build
+/index.js:87:23)
+      at 
+reportException (node_
+modules/jsdom/lib/jsdo
+m/living/helpers/runti
+me-script-errors.js:70
+:28)
+      at innerInvokeEv
+entListeners (node_mod
+ules/jsdom/lib/jsdom/l
+iving/events/EventTarg
+et-impl.js:353:9)
+      at 
+invokeEventListeners (
+node_modules/jsdom/lib
+/jsdom/living/events/E
+ventTarget-impl.js:286
+:3)
+      at HTMLUnknownEl
+ementImpl._dispatch (n
+ode_modules/jsdom/lib/
+jsdom/living/events/Ev
+entTarget-impl.js:233:
+9)
+      at HTMLUnknownEl
+ementImpl.dispatchEven
+t (node_modules/jsdom/
+lib/jsdom/living/event
+s/EventTarget-impl.js:
+104:17)
+      at HTMLUnknownEl
+ement.dispatchEvent (n
+ode_modules/jsdom/lib/
+jsdom/living/generated
+/EventTarget.js:241:34
+)
+      at Object.invoke
+GuardedCallbackDev (no
+de_modules/react-dom/c
+js/react-dom.developme
+nt.js:4213:16)
+      at 
+invokeGuardedCallback 
+(node_modules/react-do
+m/cjs/react-dom.develo
+pment.js:4277:31)
+      at beginWork$1 (
+node_modules/react-dom
+/cjs/react-dom.develop
+ment.js:27490:7)
+      at 
+performUnitOfWork (nod
+e_modules/react-dom/cj
+s/react-dom.developmen
+t.js:26599:12)
+      at workLoopSync 
+(node_modules/react-do
+m/cjs/react-dom.develo
+pment.js:26505:5)
+      at 
+renderRootSync (node_m
+odules/react-dom/cjs/r
+eact-dom.development.j
+s:26473:7)
+      at performConcur
+rentWorkOnRoot (node_m
+odules/react-dom/cjs/r
+eact-dom.development.j
+s:25777:74)
+      at 
+flushActQueue (node_mo
+dules/react/cjs/react.
+development.js:2667:24
+)
+      at act (node_mod
+ules/react/cjs/react.d
+evelopment.js:2582:11)
+      at node_modules/
+@testing-library/react
+/dist/act-compat.js:47
+:25
+      at renderRoot (n
+ode_modules/@testing-l
+ibrary/react/dist/pure
+.js:190:26)
+      at render (node_
+modules/@testing-libra
+ry/react/dist/pure.js:
+292:10)
+      at 
+renderComponent (compo
+nents/__tests__/Produc
+tDetailPage.test.tsx:5
+7:15)
+      at 
+Object.<anonymous> (co
+mponents/__tests__/Pro
+ductDetailPage.test.ts
+x:76:9)
+
+    console.error
+      Error: Uncaught 
+[ReferenceError: 
+useWishlist is not 
+defined]
+          at 
+reportException (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\node
+_modules\jsdom\lib\jsd
+om\living\helpers\runt
+ime-script-errors.js:6
+6:24)
+          at innerInvo
+keEventListeners (C:\U
+sers\shubh\grocerywebs
+ite\grocerywebsite\nod
+e_modules\jsdom\lib\js
+dom\living\events\Even
+tTarget-impl.js:353:9)
+          at 
+invokeEventListeners (
+C:\Users\shubh\grocery
+website\grocerywebsite
+\node_modules\jsdom\li
+b\jsdom\living\events\
+EventTarget-impl.js:28
+6:3)
+          at HTMLUnkno
+wnElementImpl._dispatc
+h (C:\Users\shubh\groc
+erywebsite\grocerywebs
+ite\node_modules\jsdom
+\lib\jsdom\living\even
+ts\EventTarget-impl.js
+:233:9)
+          at HTMLUnkno
+wnElementImpl.dispatch
+Event (C:\Users\shubh\
+grocerywebsite\grocery
+website\node_modules\j
+sdom\lib\jsdom\living\
+events\EventTarget-imp
+l.js:104:17)
+          at HTMLUnkno
+wnElement.dispatchEven
+t (C:\Users\shubh\groc
+erywebsite\grocerywebs
+ite\node_modules\jsdom
+\lib\jsdom\living\gene
+rated\EventTarget.js:2
+41:34)
+          at Object.in
+vokeGuardedCallbackDev
+ (C:\Users\shubh\groce
+rywebsite\grocerywebsi
+te\node_modules\react-
+dom\cjs\react-dom.deve
+lopment.js:4213:16)
+          at 
+invokeGuardedCallback 
+(C:\Users\shubh\grocer
+ywebsite\grocerywebsit
+e\node_modules\react-d
+om\cjs\react-dom.devel
+opment.js:4277:31)
+          at 
+beginWork$1 (C:\Users\
+shubh\grocerywebsite\g
+rocerywebsite\node_mod
+ules\react-dom\cjs\rea
+ct-dom.development.js:
+27490:7)
+          at 
+performUnitOfWork (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\no
+de_modules\react-dom\c
+js\react-dom.developme
+nt.js:26599:12)
+          at 
+workLoopSync (C:\Users
+\shubh\grocerywebsite\
+grocerywebsite\node_mo
+dules\react-dom\cjs\re
+act-dom.development.js
+:26505:5)
+          at 
+renderRootSync (C:\Use
+rs\shubh\grocerywebsit
+e\grocerywebsite\node_
+modules\react-dom\cjs\
+react-dom.development.
+js:26473:7)
+          at recoverFr
+omConcurrentError (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\no
+de_modules\react-dom\c
+js\react-dom.developme
+nt.js:25889:20)
+          at performCo
+ncurrentWorkOnRoot (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\react-dom\
+cjs\react-dom.developm
+ent.js:25789:22)
+          at 
+flushActQueue (C:\User
+s\shubh\grocerywebsite
+\grocerywebsite\node_m
+odules\react\cjs\react
+.development.js:2667:2
+4)
+          at act (C:\U
+sers\shubh\grocerywebs
+ite\grocerywebsite\nod
+e_modules\react\cjs\re
+act.development.js:258
+2:11)
+          at C:\Users\
+shubh\grocerywebsite\g
+rocerywebsite\node_mod
+ules\@testing-library\
+react\dist\act-compat.
+js:47:25
+          at 
+renderRoot (C:\Users\s
+hubh\grocerywebsite\gr
+ocerywebsite\node_modu
+les\@testing-library\r
+eact\dist\pure.js:190:
+26)
+          at render (C
+:\Users\shubh\groceryw
+ebsite\grocerywebsite\
+node_modules\@testing-
+library\react\dist\pur
+e.js:292:10)
+          at 
+renderComponent (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\comp
+onents\__tests__\Produ
+ctDetailPage.test.tsx:
+57:15)
+          at 
+Object.<anonymous> (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\c
+omponents\__tests__\Pr
+oductDetailPage.test.t
+sx:76:9)
+          at Promise.f
+inally.completed (C:\U
+sers\shubh\grocerywebs
+ite\grocerywebsite\nod
+e_modules\jest-circus\
+build\jestAdapterInit.
+js:1557:28)
+          at new 
+Promise (<anonymous>)
+          at 
+callAsyncCircusFn (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\no
+de_modules\jest-circus
+\build\jestAdapterInit
+.js:1497:10)
+          at 
+_callCircusTest (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\node
+_modules\jest-circus\b
+uild\jestAdapterInit.j
+s:1007:40)
+          at processTi
+cksAndRejections (node
+:internal/process/task
+_queues:105:5)
+          at _runTest 
+(C:\Users\shubh\grocer
+ywebsite\grocerywebsit
+e\node_modules\jest-ci
+rcus\build\jestAdapter
+Init.js:947:3)
+          at C:\Users\
+shubh\grocerywebsite\g
+rocerywebsite\node_mod
+ules\jest-circus\build
+\jestAdapterInit.js:84
+9:7
+          at _runTests
+ForDescribeBlock (C:\U
+sers\shubh\grocerywebs
+ite\grocerywebsite\nod
+e_modules\jest-circus\
+build\jestAdapterInit.
+js:862:11)
+          at _runTests
+ForDescribeBlock (C:\U
+sers\shubh\grocerywebs
+ite\grocerywebsite\nod
+e_modules\jest-circus\
+build\jestAdapterInit.
+js:857:11)
+          at run (C:\U
+sers\shubh\grocerywebs
+ite\grocerywebsite\nod
+e_modules\jest-circus\
+build\jestAdapterInit.
+js:761:3)
+          at runAndTra
+nsformResultsToJestFor
+mat (C:\Users\shubh\gr
+ocerywebsite\grocerywe
+bsite\node_modules\jes
+t-circus\build\jestAda
+pterInit.js:1918:21)
+          at 
+jestAdapter (C:\Users\
+shubh\grocerywebsite\g
+rocerywebsite\node_mod
+ules\jest-circus\build
+\runner.js:101:19)
+          at 
+runTestInternal (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\node
+_modules\jest-runner\b
+uild\testWorker.js:275
+:16)
+          at runTest (
+C:\Users\shubh\grocery
+website\grocerywebsite
+\node_modules\jest-run
+ner\build\testWorker.j
+s:343:7)
+          at 
+Object.worker (C:\User
+s\shubh\grocerywebsite
+\grocerywebsite\node_m
+odules\jest-runner\bui
+ld\testWorker.js:497:1
+2) {
+        detail: 
+ReferenceError: 
+useWishlist is not 
+defined
+            at 
+ProductDetailPage (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\pa
+ges\ProductDetailPage.
+tsx:23:45)
+            at 
+renderWithHooks (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\node
+_modules\react-dom\cjs
+\react-dom.development
+.js:15486:18)
+            at mountIn
+determinateComponent (
+C:\Users\shubh\grocery
+website\grocerywebsite
+\node_modules\react-do
+m\cjs\react-dom.develo
+pment.js:20103:13)
+            at 
+beginWork (C:\Users\sh
+ubh\grocerywebsite\gro
+cerywebsite\node_modul
+es\react-dom\cjs\react
+-dom.development.js:21
+626:16)
+            at HTMLUnk
+nownElement.callCallba
+ck (C:\Users\shubh\gro
+cerywebsite\groceryweb
+site\node_modules\reac
+t-dom\cjs\react-dom.de
+velopment.js:4164:14)
+            at HTMLUnk
+nownElement.callTheUse
+rObjectsOperation (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\no
+de_modules\jsdom\lib\j
+sdom\living\generated\
+EventListener.js:26:30
+)
+            at innerIn
+vokeEventListeners (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\jsdom\lib\
+jsdom\living\events\Ev
+entTarget-impl.js:350:
+25)
+            at 
+invokeEventListeners (
+C:\Users\shubh\grocery
+website\grocerywebsite
+\node_modules\jsdom\li
+b\jsdom\living\events\
+EventTarget-impl.js:28
+6:3)
+            at HTMLUnk
+nownElementImpl._dispa
+tch (C:\Users\shubh\gr
+ocerywebsite\grocerywe
+bsite\node_modules\jsd
+om\lib\jsdom\living\ev
+ents\EventTarget-impl.
+js:233:9)
+            at HTMLUnk
+nownElementImpl.dispat
+chEvent (C:\Users\shub
+h\grocerywebsite\groce
+rywebsite\node_modules
+\jsdom\lib\jsdom\livin
+g\events\EventTarget-i
+mpl.js:104:17)
+            at HTMLUnk
+nownElement.dispatchEv
+ent (C:\Users\shubh\gr
+ocerywebsite\grocerywe
+bsite\node_modules\jsd
+om\lib\jsdom\living\ge
+nerated\EventTarget.js
+:241:34)
+            at Object.
+invokeGuardedCallbackD
+ev (C:\Users\shubh\gro
+cerywebsite\groceryweb
+site\node_modules\reac
+t-dom\cjs\react-dom.de
+velopment.js:4213:16)
+            at 
+invokeGuardedCallback 
+(C:\Users\shubh\grocer
+ywebsite\grocerywebsit
+e\node_modules\react-d
+om\cjs\react-dom.devel
+opment.js:4277:31)
+            at 
+beginWork$1 (C:\Users\
+shubh\grocerywebsite\g
+rocerywebsite\node_mod
+ules\react-dom\cjs\rea
+ct-dom.development.js:
+27490:7)
+            at 
+performUnitOfWork (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\no
+de_modules\react-dom\c
+js\react-dom.developme
+nt.js:26599:12)
+            at 
+workLoopSync (C:\Users
+\shubh\grocerywebsite\
+grocerywebsite\node_mo
+dules\react-dom\cjs\re
+act-dom.development.js
+:26505:5)
+            at 
+renderRootSync (C:\Use
+rs\shubh\grocerywebsit
+e\grocerywebsite\node_
+modules\react-dom\cjs\
+react-dom.development.
+js:26473:7)
+            at recover
+FromConcurrentError (C
+:\Users\shubh\groceryw
+ebsite\grocerywebsite\
+node_modules\react-dom
+\cjs\react-dom.develop
+ment.js:25889:20)
+            at perform
+ConcurrentWorkOnRoot (
+C:\Users\shubh\grocery
+website\grocerywebsite
+\node_modules\react-do
+m\cjs\react-dom.develo
+pment.js:25789:22)
+            at 
+flushActQueue (C:\User
+s\shubh\grocerywebsite
+\grocerywebsite\node_m
+odules\react\cjs\react
+.development.js:2667:2
+4)
+            at act (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\react\cjs\
+react.development.js:2
+582:11)
+            at C:\User
+s\shubh\grocerywebsite
+\grocerywebsite\node_m
+odules\@testing-librar
+y\react\dist\act-compa
+t.js:47:25
+            at 
+renderRoot (C:\Users\s
+hubh\grocerywebsite\gr
+ocerywebsite\node_modu
+les\@testing-library\r
+eact\dist\pure.js:190:
+26)
+            at render 
+(C:\Users\shubh\grocer
+ywebsite\grocerywebsit
+e\node_modules\@testin
+g-library\react\dist\p
+ure.js:292:10)
+            at 
+renderComponent (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\comp
+onents\__tests__\Produ
+ctDetailPage.test.tsx:
+57:15)
+            at 
+Object.<anonymous> (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\c
+omponents\__tests__\Pr
+oductDetailPage.test.t
+sx:76:9)
+            at Promise
+.finally.completed (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\jest-circu
+s\build\jestAdapterIni
+t.js:1557:28)
+            at new 
+Promise (<anonymous>)
+            at 
+callAsyncCircusFn (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\no
+de_modules\jest-circus
+\build\jestAdapterInit
+.js:1497:10)
+            at 
+_callCircusTest (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\node
+_modules\jest-circus\b
+uild\jestAdapterInit.j
+s:1007:40)
+            at process
+TicksAndRejections (no
+de:internal/process/ta
+sk_queues:105:5)
+            at 
+_runTest (C:\Users\shu
+bh\grocerywebsite\groc
+erywebsite\node_module
+s\jest-circus\build\je
+stAdapterInit.js:947:3
+)
+            at C:\User
+s\shubh\grocerywebsite
+\grocerywebsite\node_m
+odules\jest-circus\bui
+ld\jestAdapterInit.js:
+849:7
+            at _runTes
+tsForDescribeBlock (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\jest-circu
+s\build\jestAdapterIni
+t.js:862:11)
+            at _runTes
+tsForDescribeBlock (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\jest-circu
+s\build\jestAdapterIni
+t.js:857:11)
+            at run (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\jest-circu
+s\build\jestAdapterIni
+t.js:761:3)
+            at runAndT
+ransformResultsToJestF
+ormat (C:\Users\shubh\
+grocerywebsite\grocery
+website\node_modules\j
+est-circus\build\jestA
+dapterInit.js:1918:21)
+            at 
+jestAdapter (C:\Users\
+shubh\grocerywebsite\g
+rocerywebsite\node_mod
+ules\jest-circus\build
+\runner.js:101:19)
+            at 
+runTestInternal (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\node
+_modules\jest-runner\b
+uild\testWorker.js:275
+:16)
+            at 
+runTest (C:\Users\shub
+h\grocerywebsite\groce
+rywebsite\node_modules
+\jest-runner\build\tes
+tWorker.js:343:7)
+            at 
+Object.worker (C:\User
+s\shubh\grocerywebsite
+\grocerywebsite\node_m
+odules\jest-runner\bui
+ld\testWorker.js:497:1
+2),
+        type: 
+'unhandled exception'
+      }
+
+    [0m [90m 55 
+|[39m
+     [90m 56 |[39m  
+   [36mconst[39m 
+renderComponent 
+[33m=[39m () 
+[33m=>[39m
+    [31m[1m>[22m[3
+9m[90m 57 |[39m     
+    render(
+     [90m    |[39m  
+             
+[31m[1m^[22m[39m
+     [90m 58 |[39m  
+           [33m<[39m
+[33mBrowserRouter[39
+m[33m>[39m
+     [90m 59 |[39m  
+               [33m<
+[39m[33mProductDetail
+Page[39m 
+[33m/[39m[33m>[39m
+     [90m 60 |[39m  
+           [33m<[39m
+[33m/[39m[33mBrowse
+rRouter[39m[33m>[39
+m[0m
+
+      at VirtualConsol
+e.<anonymous> (node_mo
+dules/@jest/environmen
+t-jsdom-abstract/build
+/index.js:87:23)
+      at 
+reportException (node_
+modules/jsdom/lib/jsdo
+m/living/helpers/runti
+me-script-errors.js:70
+:28)
+      at innerInvokeEv
+entListeners (node_mod
+ules/jsdom/lib/jsdom/l
+iving/events/EventTarg
+et-impl.js:353:9)
+      at 
+invokeEventListeners (
+node_modules/jsdom/lib
+/jsdom/living/events/E
+ventTarget-impl.js:286
+:3)
+      at HTMLUnknownEl
+ementImpl._dispatch (n
+ode_modules/jsdom/lib/
+jsdom/living/events/Ev
+entTarget-impl.js:233:
+9)
+      at HTMLUnknownEl
+ementImpl.dispatchEven
+t (node_modules/jsdom/
+lib/jsdom/living/event
+s/EventTarget-impl.js:
+104:17)
+      at HTMLUnknownEl
+ement.dispatchEvent (n
+ode_modules/jsdom/lib/
+jsdom/living/generated
+/EventTarget.js:241:34
+)
+      at Object.invoke
+GuardedCallbackDev (no
+de_modules/react-dom/c
+js/react-dom.developme
+nt.js:4213:16)
+      at 
+invokeGuardedCallback 
+(node_modules/react-do
+m/cjs/react-dom.develo
+pment.js:4277:31)
+      at beginWork$1 (
+node_modules/react-dom
+/cjs/react-dom.develop
+ment.js:27490:7)
+      at 
+performUnitOfWork (nod
+e_modules/react-dom/cj
+s/react-dom.developmen
+t.js:26599:12)
+      at workLoopSync 
+(node_modules/react-do
+m/cjs/react-dom.develo
+pment.js:26505:5)
+      at 
+renderRootSync (node_m
+odules/react-dom/cjs/r
+eact-dom.development.j
+s:26473:7)
+      at recoverFromCo
+ncurrentError (node_mo
+dules/react-dom/cjs/re
+act-dom.development.js
+:25889:20)
+      at performConcur
+rentWorkOnRoot (node_m
+odules/react-dom/cjs/r
+eact-dom.development.j
+s:25789:22)
+      at 
+flushActQueue (node_mo
+dules/react/cjs/react.
+development.js:2667:24
+)
+      at act (node_mod
+ules/react/cjs/react.d
+evelopment.js:2582:11)
+      at node_modules/
+@testing-library/react
+/dist/act-compat.js:47
+:25
+      at renderRoot (n
+ode_modules/@testing-l
+ibrary/react/dist/pure
+.js:190:26)
+      at render (node_
+modules/@testing-libra
+ry/react/dist/pure.js:
+292:10)
+      at 
+renderComponent (compo
+nents/__tests__/Produc
+tDetailPage.test.tsx:5
+7:15)
+      at 
+Object.<anonymous> (co
+mponents/__tests__/Pro
+ductDetailPage.test.ts
+x:76:9)
+
+    console.error
+      The above error 
+occurred in the 
+<ProductDetailPage> 
+component:
+      
+          at 
+ProductDetailPage (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\pa
+ges\ProductDetailPage.
+tsx:23:45)
+          at Router (C
+:\Users\shubh\groceryw
+ebsite\grocerywebsite\
+node_modules\react-rou
+ter\dist\development\c
+hunk-RBZI3ZHD.js:9073:
+13)
+          at 
+BrowserRouter (C:\User
+s\shubh\grocerywebsite
+\grocerywebsite\node_m
+odules\react-router\di
+st\development\chunk-H
+MTWJNYB.js:269:3)
+      
+      Consider adding 
+an error boundary to 
+your tree to 
+customize error 
+handling behavior.
+      Visit https://re
+actjs.org/link/error-b
+oundaries to learn 
+more about error 
+boundaries.
+
+    [0m [90m 55 
+|[39m
+     [90m 56 |[39m  
+   [36mconst[39m 
+renderComponent 
+[33m=[39m () 
+[33m=>[39m
+    [31m[1m>[22m[3
+9m[90m 57 |[39m     
+    render(
+     [90m    |[39m  
+             
+[31m[1m^[22m[39m
+     [90m 58 |[39m  
+           [33m<[39m
+[33mBrowserRouter[39
+m[33m>[39m
+     [90m 59 |[39m  
+               [33m<
+[39m[33mProductDetail
+Page[39m 
+[33m/[39m[33m>[39m
+     [90m 60 |[39m  
+           [33m<[39m
+[33m/[39m[33mBrowse
+rRouter[39m[33m>[39
+m[0m
+
+      at 
+logCapturedError (node
+_modules/react-dom/cjs
+/react-dom.development
+.js:18704:23)
+      at 
+update.callback (node_
+modules/react-dom/cjs/
+react-dom.development.
+js:18737:5)
+      at callCallback 
+(node_modules/react-do
+m/cjs/react-dom.develo
+pment.js:15036:12)
+      at 
+commitUpdateQueue (nod
+e_modules/react-dom/cj
+s/react-dom.developmen
+t.js:15057:9)
+      at commitLayoutE
+ffectOnFiber (node_mod
+ules/react-dom/cjs/rea
+ct-dom.development.js:
+23430:13)
+      at commitLayoutM
+ountEffects_complete (
+node_modules/react-dom
+/cjs/react-dom.develop
+ment.js:24727:9)
+      at commitLayoutE
+ffects_begin (node_mod
+ules/react-dom/cjs/rea
+ct-dom.development.js:
+24713:7)
+      at 
+commitLayoutEffects (n
+ode_modules/react-dom/
+cjs/react-dom.developm
+ent.js:24651:3)
+      at 
+commitRootImpl (node_m
+odules/react-dom/cjs/r
+eact-dom.development.j
+s:26862:5)
+      at commitRoot (n
+ode_modules/react-dom/
+cjs/react-dom.developm
+ent.js:26721:5)
+      at finishConcurr
+entRender (node_module
+s/react-dom/cjs/react-
+dom.development.js:259
+31:9)
+      at performConcur
+rentWorkOnRoot (node_m
+odules/react-dom/cjs/r
+eact-dom.development.j
+s:25848:7)
+      at 
+flushActQueue (node_mo
+dules/react/cjs/react.
+development.js:2667:24
+)
+      at act (node_mod
+ules/react/cjs/react.d
+evelopment.js:2582:11)
+      at node_modules/
+@testing-library/react
+/dist/act-compat.js:47
+:25
+      at renderRoot (n
+ode_modules/@testing-l
+ibrary/react/dist/pure
+.js:190:26)
+      at render (node_
+modules/@testing-libra
+ry/react/dist/pure.js:
+292:10)
+      at 
+renderComponent (compo
+nents/__tests__/Produc
+tDetailPage.test.tsx:5
+7:15)
+      at 
+Object.<anonymous> (co
+mponents/__tests__/Pro
+ductDetailPage.test.ts
+x:76:9)
+
+    console.error
+      Error: Uncaught 
+[ReferenceError: 
+useWishlist is not 
+defined]
+          at 
+reportException (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\node
+_modules\jsdom\lib\jsd
+om\living\helpers\runt
+ime-script-errors.js:6
+6:24)
+          at innerInvo
+keEventListeners (C:\U
+sers\shubh\grocerywebs
+ite\grocerywebsite\nod
+e_modules\jsdom\lib\js
+dom\living\events\Even
+tTarget-impl.js:353:9)
+          at 
+invokeEventListeners (
+C:\Users\shubh\grocery
+website\grocerywebsite
+\node_modules\jsdom\li
+b\jsdom\living\events\
+EventTarget-impl.js:28
+6:3)
+          at HTMLUnkno
+wnElementImpl._dispatc
+h (C:\Users\shubh\groc
+erywebsite\grocerywebs
+ite\node_modules\jsdom
+\lib\jsdom\living\even
+ts\EventTarget-impl.js
+:233:9)
+          at HTMLUnkno
+wnElementImpl.dispatch
+Event (C:\Users\shubh\
+grocerywebsite\grocery
+website\node_modules\j
+sdom\lib\jsdom\living\
+events\EventTarget-imp
+l.js:104:17)
+          at HTMLUnkno
+wnElement.dispatchEven
+t (C:\Users\shubh\groc
+erywebsite\grocerywebs
+ite\node_modules\jsdom
+\lib\jsdom\living\gene
+rated\EventTarget.js:2
+41:34)
+          at Object.in
+vokeGuardedCallbackDev
+ (C:\Users\shubh\groce
+rywebsite\grocerywebsi
+te\node_modules\react-
+dom\cjs\react-dom.deve
+lopment.js:4213:16)
+          at 
+invokeGuardedCallback 
+(C:\Users\shubh\grocer
+ywebsite\grocerywebsit
+e\node_modules\react-d
+om\cjs\react-dom.devel
+opment.js:4277:31)
+          at 
+beginWork$1 (C:\Users\
+shubh\grocerywebsite\g
+rocerywebsite\node_mod
+ules\react-dom\cjs\rea
+ct-dom.development.js:
+27490:7)
+          at 
+performUnitOfWork (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\no
+de_modules\react-dom\c
+js\react-dom.developme
+nt.js:26599:12)
+          at 
+workLoopSync (C:\Users
+\shubh\grocerywebsite\
+grocerywebsite\node_mo
+dules\react-dom\cjs\re
+act-dom.development.js
+:26505:5)
+          at 
+renderRootSync (C:\Use
+rs\shubh\grocerywebsit
+e\grocerywebsite\node_
+modules\react-dom\cjs\
+react-dom.development.
+js:26473:7)
+          at performCo
+ncurrentWorkOnRoot (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\react-dom\
+cjs\react-dom.developm
+ent.js:25777:74)
+          at 
+flushActQueue (C:\User
+s\shubh\grocerywebsite
+\grocerywebsite\node_m
+odules\react\cjs\react
+.development.js:2667:2
+4)
+          at act (C:\U
+sers\shubh\grocerywebs
+ite\grocerywebsite\nod
+e_modules\react\cjs\re
+act.development.js:258
+2:11)
+          at C:\Users\
+shubh\grocerywebsite\g
+rocerywebsite\node_mod
+ules\@testing-library\
+react\dist\act-compat.
+js:47:25
+          at 
+renderRoot (C:\Users\s
+hubh\grocerywebsite\gr
+ocerywebsite\node_modu
+les\@testing-library\r
+eact\dist\pure.js:190:
+26)
+          at render (C
+:\Users\shubh\groceryw
+ebsite\grocerywebsite\
+node_modules\@testing-
+library\react\dist\pur
+e.js:292:10)
+          at 
+renderComponent (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\comp
+onents\__tests__\Produ
+ctDetailPage.test.tsx:
+57:15)
+          at 
+Object.<anonymous> (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\c
+omponents\__tests__\Pr
+oductDetailPage.test.t
+sx:91:9)
+          at Promise.f
+inally.completed (C:\U
+sers\shubh\grocerywebs
+ite\grocerywebsite\nod
+e_modules\jest-circus\
+build\jestAdapterInit.
+js:1557:28)
+          at new 
+Promise (<anonymous>)
+          at 
+callAsyncCircusFn (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\no
+de_modules\jest-circus
+\build\jestAdapterInit
+.js:1497:10)
+          at 
+_callCircusTest (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\node
+_modules\jest-circus\b
+uild\jestAdapterInit.j
+s:1007:40)
+          at processTi
+cksAndRejections (node
+:internal/process/task
+_queues:105:5)
+          at _runTest 
+(C:\Users\shubh\grocer
+ywebsite\grocerywebsit
+e\node_modules\jest-ci
+rcus\build\jestAdapter
+Init.js:947:3)
+          at C:\Users\
+shubh\grocerywebsite\g
+rocerywebsite\node_mod
+ules\jest-circus\build
+\jestAdapterInit.js:84
+9:7
+          at _runTests
+ForDescribeBlock (C:\U
+sers\shubh\grocerywebs
+ite\grocerywebsite\nod
+e_modules\jest-circus\
+build\jestAdapterInit.
+js:862:11)
+          at _runTests
+ForDescribeBlock (C:\U
+sers\shubh\grocerywebs
+ite\grocerywebsite\nod
+e_modules\jest-circus\
+build\jestAdapterInit.
+js:857:11)
+          at run (C:\U
+sers\shubh\grocerywebs
+ite\grocerywebsite\nod
+e_modules\jest-circus\
+build\jestAdapterInit.
+js:761:3)
+          at runAndTra
+nsformResultsToJestFor
+mat (C:\Users\shubh\gr
+ocerywebsite\grocerywe
+bsite\node_modules\jes
+t-circus\build\jestAda
+pterInit.js:1918:21)
+          at 
+jestAdapter (C:\Users\
+shubh\grocerywebsite\g
+rocerywebsite\node_mod
+ules\jest-circus\build
+\runner.js:101:19)
+          at 
+runTestInternal (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\node
+_modules\jest-runner\b
+uild\testWorker.js:275
+:16)
+          at runTest (
+C:\Users\shubh\grocery
+website\grocerywebsite
+\node_modules\jest-run
+ner\build\testWorker.j
+s:343:7)
+          at 
+Object.worker (C:\User
+s\shubh\grocerywebsite
+\grocerywebsite\node_m
+odules\jest-runner\bui
+ld\testWorker.js:497:1
+2) {
+        detail: 
+ReferenceError: 
+useWishlist is not 
+defined
+            at 
+ProductDetailPage (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\pa
+ges\ProductDetailPage.
+tsx:23:45)
+            at 
+renderWithHooks (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\node
+_modules\react-dom\cjs
+\react-dom.development
+.js:15486:18)
+            at mountIn
+determinateComponent (
+C:\Users\shubh\grocery
+website\grocerywebsite
+\node_modules\react-do
+m\cjs\react-dom.develo
+pment.js:20103:13)
+            at 
+beginWork (C:\Users\sh
+ubh\grocerywebsite\gro
+cerywebsite\node_modul
+es\react-dom\cjs\react
+-dom.development.js:21
+626:16)
+            at HTMLUnk
+nownElement.callCallba
+ck (C:\Users\shubh\gro
+cerywebsite\groceryweb
+site\node_modules\reac
+t-dom\cjs\react-dom.de
+velopment.js:4164:14)
+            at HTMLUnk
+nownElement.callTheUse
+rObjectsOperation (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\no
+de_modules\jsdom\lib\j
+sdom\living\generated\
+EventListener.js:26:30
+)
+            at innerIn
+vokeEventListeners (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\jsdom\lib\
+jsdom\living\events\Ev
+entTarget-impl.js:350:
+25)
+            at 
+invokeEventListeners (
+C:\Users\shubh\grocery
+website\grocerywebsite
+\node_modules\jsdom\li
+b\jsdom\living\events\
+EventTarget-impl.js:28
+6:3)
+            at HTMLUnk
+nownElementImpl._dispa
+tch (C:\Users\shubh\gr
+ocerywebsite\grocerywe
+bsite\node_modules\jsd
+om\lib\jsdom\living\ev
+ents\EventTarget-impl.
+js:233:9)
+            at HTMLUnk
+nownElementImpl.dispat
+chEvent (C:\Users\shub
+h\grocerywebsite\groce
+rywebsite\node_modules
+\jsdom\lib\jsdom\livin
+g\events\EventTarget-i
+mpl.js:104:17)
+            at HTMLUnk
+nownElement.dispatchEv
+ent (C:\Users\shubh\gr
+ocerywebsite\grocerywe
+bsite\node_modules\jsd
+om\lib\jsdom\living\ge
+nerated\EventTarget.js
+:241:34)
+            at Object.
+invokeGuardedCallbackD
+ev (C:\Users\shubh\gro
+cerywebsite\groceryweb
+site\node_modules\reac
+t-dom\cjs\react-dom.de
+velopment.js:4213:16)
+            at 
+invokeGuardedCallback 
+(C:\Users\shubh\grocer
+ywebsite\grocerywebsit
+e\node_modules\react-d
+om\cjs\react-dom.devel
+opment.js:4277:31)
+            at 
+beginWork$1 (C:\Users\
+shubh\grocerywebsite\g
+rocerywebsite\node_mod
+ules\react-dom\cjs\rea
+ct-dom.development.js:
+27490:7)
+            at 
+performUnitOfWork (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\no
+de_modules\react-dom\c
+js\react-dom.developme
+nt.js:26599:12)
+            at 
+workLoopSync (C:\Users
+\shubh\grocerywebsite\
+grocerywebsite\node_mo
+dules\react-dom\cjs\re
+act-dom.development.js
+:26505:5)
+            at 
+renderRootSync (C:\Use
+rs\shubh\grocerywebsit
+e\grocerywebsite\node_
+modules\react-dom\cjs\
+react-dom.development.
+js:26473:7)
+            at perform
+ConcurrentWorkOnRoot (
+C:\Users\shubh\grocery
+website\grocerywebsite
+\node_modules\react-do
+m\cjs\react-dom.develo
+pment.js:25777:74)
+            at 
+flushActQueue (C:\User
+s\shubh\grocerywebsite
+\grocerywebsite\node_m
+odules\react\cjs\react
+.development.js:2667:2
+4)
+            at act (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\react\cjs\
+react.development.js:2
+582:11)
+            at C:\User
+s\shubh\grocerywebsite
+\grocerywebsite\node_m
+odules\@testing-librar
+y\react\dist\act-compa
+t.js:47:25
+            at 
+renderRoot (C:\Users\s
+hubh\grocerywebsite\gr
+ocerywebsite\node_modu
+les\@testing-library\r
+eact\dist\pure.js:190:
+26)
+            at render 
+(C:\Users\shubh\grocer
+ywebsite\grocerywebsit
+e\node_modules\@testin
+g-library\react\dist\p
+ure.js:292:10)
+            at 
+renderComponent (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\comp
+onents\__tests__\Produ
+ctDetailPage.test.tsx:
+57:15)
+            at 
+Object.<anonymous> (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\c
+omponents\__tests__\Pr
+oductDetailPage.test.t
+sx:91:9)
+            at Promise
+.finally.completed (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\jest-circu
+s\build\jestAdapterIni
+t.js:1557:28)
+            at new 
+Promise (<anonymous>)
+            at 
+callAsyncCircusFn (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\no
+de_modules\jest-circus
+\build\jestAdapterInit
+.js:1497:10)
+            at 
+_callCircusTest (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\node
+_modules\jest-circus\b
+uild\jestAdapterInit.j
+s:1007:40)
+            at process
+TicksAndRejections (no
+de:internal/process/ta
+sk_queues:105:5)
+            at 
+_runTest (C:\Users\shu
+bh\grocerywebsite\groc
+erywebsite\node_module
+s\jest-circus\build\je
+stAdapterInit.js:947:3
+)
+            at C:\User
+s\shubh\grocerywebsite
+\grocerywebsite\node_m
+odules\jest-circus\bui
+ld\jestAdapterInit.js:
+849:7
+            at _runTes
+tsForDescribeBlock (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\jest-circu
+s\build\jestAdapterIni
+t.js:862:11)
+            at _runTes
+tsForDescribeBlock (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\jest-circu
+s\build\jestAdapterIni
+t.js:857:11)
+            at run (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\jest-circu
+s\build\jestAdapterIni
+t.js:761:3)
+            at runAndT
+ransformResultsToJestF
+ormat (C:\Users\shubh\
+grocerywebsite\grocery
+website\node_modules\j
+est-circus\build\jestA
+dapterInit.js:1918:21)
+            at 
+jestAdapter (C:\Users\
+shubh\grocerywebsite\g
+rocerywebsite\node_mod
+ules\jest-circus\build
+\runner.js:101:19)
+            at 
+runTestInternal (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\node
+_modules\jest-runner\b
+uild\testWorker.js:275
+:16)
+            at 
+runTest (C:\Users\shub
+h\grocerywebsite\groce
+rywebsite\node_modules
+\jest-runner\build\tes
+tWorker.js:343:7)
+            at 
+Object.worker (C:\User
+s\shubh\grocerywebsite
+\grocerywebsite\node_m
+odules\jest-runner\bui
+ld\testWorker.js:497:1
+2),
+        type: 
+'unhandled exception'
+      }
+
+    [0m [90m 55 
+|[39m
+     [90m 56 |[39m  
+   [36mconst[39m 
+renderComponent 
+[33m=[39m () 
+[33m=>[39m
+    [31m[1m>[22m[3
+9m[90m 57 |[39m     
+    render(
+     [90m    |[39m  
+             
+[31m[1m^[22m[39m
+     [90m 58 |[39m  
+           [33m<[39m
+[33mBrowserRouter[39
+m[33m>[39m
+     [90m 59 |[39m  
+               [33m<
+[39m[33mProductDetail
+Page[39m 
+[33m/[39m[33m>[39m
+     [90m 60 |[39m  
+           [33m<[39m
+[33m/[39m[33mBrowse
+rRouter[39m[33m>[39
+m[0m
+
+      at VirtualConsol
+e.<anonymous> (node_mo
+dules/@jest/environmen
+t-jsdom-abstract/build
+/index.js:87:23)
+      at 
+reportException (node_
+modules/jsdom/lib/jsdo
+m/living/helpers/runti
+me-script-errors.js:70
+:28)
+      at innerInvokeEv
+entListeners (node_mod
+ules/jsdom/lib/jsdom/l
+iving/events/EventTarg
+et-impl.js:353:9)
+      at 
+invokeEventListeners (
+node_modules/jsdom/lib
+/jsdom/living/events/E
+ventTarget-impl.js:286
+:3)
+      at HTMLUnknownEl
+ementImpl._dispatch (n
+ode_modules/jsdom/lib/
+jsdom/living/events/Ev
+entTarget-impl.js:233:
+9)
+      at HTMLUnknownEl
+ementImpl.dispatchEven
+t (node_modules/jsdom/
+lib/jsdom/living/event
+s/EventTarget-impl.js:
+104:17)
+      at HTMLUnknownEl
+ement.dispatchEvent (n
+ode_modules/jsdom/lib/
+jsdom/living/generated
+/EventTarget.js:241:34
+)
+      at Object.invoke
+GuardedCallbackDev (no
+de_modules/react-dom/c
+js/react-dom.developme
+nt.js:4213:16)
+      at 
+invokeGuardedCallback 
+(node_modules/react-do
+m/cjs/react-dom.develo
+pment.js:4277:31)
+      at beginWork$1 (
+node_modules/react-dom
+/cjs/react-dom.develop
+ment.js:27490:7)
+      at 
+performUnitOfWork (nod
+e_modules/react-dom/cj
+s/react-dom.developmen
+t.js:26599:12)
+      at workLoopSync 
+(node_modules/react-do
+m/cjs/react-dom.develo
+pment.js:26505:5)
+      at 
+renderRootSync (node_m
+odules/react-dom/cjs/r
+eact-dom.development.j
+s:26473:7)
+      at performConcur
+rentWorkOnRoot (node_m
+odules/react-dom/cjs/r
+eact-dom.development.j
+s:25777:74)
+      at 
+flushActQueue (node_mo
+dules/react/cjs/react.
+development.js:2667:24
+)
+      at act (node_mod
+ules/react/cjs/react.d
+evelopment.js:2582:11)
+      at node_modules/
+@testing-library/react
+/dist/act-compat.js:47
+:25
+      at renderRoot (n
+ode_modules/@testing-l
+ibrary/react/dist/pure
+.js:190:26)
+      at render (node_
+modules/@testing-libra
+ry/react/dist/pure.js:
+292:10)
+      at 
+renderComponent (compo
+nents/__tests__/Produc
+tDetailPage.test.tsx:5
+7:15)
+      at 
+Object.<anonymous> (co
+mponents/__tests__/Pro
+ductDetailPage.test.ts
+x:91:9)
+
+    console.error
+      Error: Uncaught 
+[ReferenceError: 
+useWishlist is not 
+defined]
+          at 
+reportException (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\node
+_modules\jsdom\lib\jsd
+om\living\helpers\runt
+ime-script-errors.js:6
+6:24)
+          at innerInvo
+keEventListeners (C:\U
+sers\shubh\grocerywebs
+ite\grocerywebsite\nod
+e_modules\jsdom\lib\js
+dom\living\events\Even
+tTarget-impl.js:353:9)
+          at 
+invokeEventListeners (
+C:\Users\shubh\grocery
+website\grocerywebsite
+\node_modules\jsdom\li
+b\jsdom\living\events\
+EventTarget-impl.js:28
+6:3)
+          at HTMLUnkno
+wnElementImpl._dispatc
+h (C:\Users\shubh\groc
+erywebsite\grocerywebs
+ite\node_modules\jsdom
+\lib\jsdom\living\even
+ts\EventTarget-impl.js
+:233:9)
+          at HTMLUnkno
+wnElementImpl.dispatch
+Event (C:\Users\shubh\
+grocerywebsite\grocery
+website\node_modules\j
+sdom\lib\jsdom\living\
+events\EventTarget-imp
+l.js:104:17)
+          at HTMLUnkno
+wnElement.dispatchEven
+t (C:\Users\shubh\groc
+erywebsite\grocerywebs
+ite\node_modules\jsdom
+\lib\jsdom\living\gene
+rated\EventTarget.js:2
+41:34)
+          at Object.in
+vokeGuardedCallbackDev
+ (C:\Users\shubh\groce
+rywebsite\grocerywebsi
+te\node_modules\react-
+dom\cjs\react-dom.deve
+lopment.js:4213:16)
+          at 
+invokeGuardedCallback 
+(C:\Users\shubh\grocer
+ywebsite\grocerywebsit
+e\node_modules\react-d
+om\cjs\react-dom.devel
+opment.js:4277:31)
+          at 
+beginWork$1 (C:\Users\
+shubh\grocerywebsite\g
+rocerywebsite\node_mod
+ules\react-dom\cjs\rea
+ct-dom.development.js:
+27490:7)
+          at 
+performUnitOfWork (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\no
+de_modules\react-dom\c
+js\react-dom.developme
+nt.js:26599:12)
+          at 
+workLoopSync (C:\Users
+\shubh\grocerywebsite\
+grocerywebsite\node_mo
+dules\react-dom\cjs\re
+act-dom.development.js
+:26505:5)
+          at 
+renderRootSync (C:\Use
+rs\shubh\grocerywebsit
+e\grocerywebsite\node_
+modules\react-dom\cjs\
+react-dom.development.
+js:26473:7)
+          at recoverFr
+omConcurrentError (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\no
+de_modules\react-dom\c
+js\react-dom.developme
+nt.js:25889:20)
+          at performCo
+ncurrentWorkOnRoot (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\react-dom\
+cjs\react-dom.developm
+ent.js:25789:22)
+          at 
+flushActQueue (C:\User
+s\shubh\grocerywebsite
+\grocerywebsite\node_m
+odules\react\cjs\react
+.development.js:2667:2
+4)
+          at act (C:\U
+sers\shubh\grocerywebs
+ite\grocerywebsite\nod
+e_modules\react\cjs\re
+act.development.js:258
+2:11)
+          at C:\Users\
+shubh\grocerywebsite\g
+rocerywebsite\node_mod
+ules\@testing-library\
+react\dist\act-compat.
+js:47:25
+          at 
+renderRoot (C:\Users\s
+hubh\grocerywebsite\gr
+ocerywebsite\node_modu
+les\@testing-library\r
+eact\dist\pure.js:190:
+26)
+          at render (C
+:\Users\shubh\groceryw
+ebsite\grocerywebsite\
+node_modules\@testing-
+library\react\dist\pur
+e.js:292:10)
+          at 
+renderComponent (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\comp
+onents\__tests__\Produ
+ctDetailPage.test.tsx:
+57:15)
+          at 
+Object.<anonymous> (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\c
+omponents\__tests__\Pr
+oductDetailPage.test.t
+sx:91:9)
+          at Promise.f
+inally.completed (C:\U
+sers\shubh\grocerywebs
+ite\grocerywebsite\nod
+e_modules\jest-circus\
+build\jestAdapterInit.
+js:1557:28)
+          at new 
+Promise (<anonymous>)
+          at 
+callAsyncCircusFn (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\no
+de_modules\jest-circus
+\build\jestAdapterInit
+.js:1497:10)
+          at 
+_callCircusTest (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\node
+_modules\jest-circus\b
+uild\jestAdapterInit.j
+s:1007:40)
+          at processTi
+cksAndRejections (node
+:internal/process/task
+_queues:105:5)
+          at _runTest 
+(C:\Users\shubh\grocer
+ywebsite\grocerywebsit
+e\node_modules\jest-ci
+rcus\build\jestAdapter
+Init.js:947:3)
+          at C:\Users\
+shubh\grocerywebsite\g
+rocerywebsite\node_mod
+ules\jest-circus\build
+\jestAdapterInit.js:84
+9:7
+          at _runTests
+ForDescribeBlock (C:\U
+sers\shubh\grocerywebs
+ite\grocerywebsite\nod
+e_modules\jest-circus\
+build\jestAdapterInit.
+js:862:11)
+          at _runTests
+ForDescribeBlock (C:\U
+sers\shubh\grocerywebs
+ite\grocerywebsite\nod
+e_modules\jest-circus\
+build\jestAdapterInit.
+js:857:11)
+          at run (C:\U
+sers\shubh\grocerywebs
+ite\grocerywebsite\nod
+e_modules\jest-circus\
+build\jestAdapterInit.
+js:761:3)
+          at runAndTra
+nsformResultsToJestFor
+mat (C:\Users\shubh\gr
+ocerywebsite\grocerywe
+bsite\node_modules\jes
+t-circus\build\jestAda
+pterInit.js:1918:21)
+          at 
+jestAdapter (C:\Users\
+shubh\grocerywebsite\g
+rocerywebsite\node_mod
+ules\jest-circus\build
+\runner.js:101:19)
+          at 
+runTestInternal (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\node
+_modules\jest-runner\b
+uild\testWorker.js:275
+:16)
+          at runTest (
+C:\Users\shubh\grocery
+website\grocerywebsite
+\node_modules\jest-run
+ner\build\testWorker.j
+s:343:7)
+          at 
+Object.worker (C:\User
+s\shubh\grocerywebsite
+\grocerywebsite\node_m
+odules\jest-runner\bui
+ld\testWorker.js:497:1
+2) {
+        detail: 
+ReferenceError: 
+useWishlist is not 
+defined
+            at 
+ProductDetailPage (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\pa
+ges\ProductDetailPage.
+tsx:23:45)
+            at 
+renderWithHooks (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\node
+_modules\react-dom\cjs
+\react-dom.development
+.js:15486:18)
+            at mountIn
+determinateComponent (
+C:\Users\shubh\grocery
+website\grocerywebsite
+\node_modules\react-do
+m\cjs\react-dom.develo
+pment.js:20103:13)
+            at 
+beginWork (C:\Users\sh
+ubh\grocerywebsite\gro
+cerywebsite\node_modul
+es\react-dom\cjs\react
+-dom.development.js:21
+626:16)
+            at HTMLUnk
+nownElement.callCallba
+ck (C:\Users\shubh\gro
+cerywebsite\groceryweb
+site\node_modules\reac
+t-dom\cjs\react-dom.de
+velopment.js:4164:14)
+            at HTMLUnk
+nownElement.callTheUse
+rObjectsOperation (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\no
+de_modules\jsdom\lib\j
+sdom\living\generated\
+EventListener.js:26:30
+)
+            at innerIn
+vokeEventListeners (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\jsdom\lib\
+jsdom\living\events\Ev
+entTarget-impl.js:350:
+25)
+            at 
+invokeEventListeners (
+C:\Users\shubh\grocery
+website\grocerywebsite
+\node_modules\jsdom\li
+b\jsdom\living\events\
+EventTarget-impl.js:28
+6:3)
+            at HTMLUnk
+nownElementImpl._dispa
+tch (C:\Users\shubh\gr
+ocerywebsite\grocerywe
+bsite\node_modules\jsd
+om\lib\jsdom\living\ev
+ents\EventTarget-impl.
+js:233:9)
+            at HTMLUnk
+nownElementImpl.dispat
+chEvent (C:\Users\shub
+h\grocerywebsite\groce
+rywebsite\node_modules
+\jsdom\lib\jsdom\livin
+g\events\EventTarget-i
+mpl.js:104:17)
+            at HTMLUnk
+nownElement.dispatchEv
+ent (C:\Users\shubh\gr
+ocerywebsite\grocerywe
+bsite\node_modules\jsd
+om\lib\jsdom\living\ge
+nerated\EventTarget.js
+:241:34)
+            at Object.
+invokeGuardedCallbackD
+ev (C:\Users\shubh\gro
+cerywebsite\groceryweb
+site\node_modules\reac
+t-dom\cjs\react-dom.de
+velopment.js:4213:16)
+            at 
+invokeGuardedCallback 
+(C:\Users\shubh\grocer
+ywebsite\grocerywebsit
+e\node_modules\react-d
+om\cjs\react-dom.devel
+opment.js:4277:31)
+            at 
+beginWork$1 (C:\Users\
+shubh\grocerywebsite\g
+rocerywebsite\node_mod
+ules\react-dom\cjs\rea
+ct-dom.development.js:
+27490:7)
+            at 
+performUnitOfWork (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\no
+de_modules\react-dom\c
+js\react-dom.developme
+nt.js:26599:12)
+            at 
+workLoopSync (C:\Users
+\shubh\grocerywebsite\
+grocerywebsite\node_mo
+dules\react-dom\cjs\re
+act-dom.development.js
+:26505:5)
+            at 
+renderRootSync (C:\Use
+rs\shubh\grocerywebsit
+e\grocerywebsite\node_
+modules\react-dom\cjs\
+react-dom.development.
+js:26473:7)
+            at recover
+FromConcurrentError (C
+:\Users\shubh\groceryw
+ebsite\grocerywebsite\
+node_modules\react-dom
+\cjs\react-dom.develop
+ment.js:25889:20)
+            at perform
+ConcurrentWorkOnRoot (
+C:\Users\shubh\grocery
+website\grocerywebsite
+\node_modules\react-do
+m\cjs\react-dom.develo
+pment.js:25789:22)
+            at 
+flushActQueue (C:\User
+s\shubh\grocerywebsite
+\grocerywebsite\node_m
+odules\react\cjs\react
+.development.js:2667:2
+4)
+            at act (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\react\cjs\
+react.development.js:2
+582:11)
+            at C:\User
+s\shubh\grocerywebsite
+\grocerywebsite\node_m
+odules\@testing-librar
+y\react\dist\act-compa
+t.js:47:25
+            at 
+renderRoot (C:\Users\s
+hubh\grocerywebsite\gr
+ocerywebsite\node_modu
+les\@testing-library\r
+eact\dist\pure.js:190:
+26)
+            at render 
+(C:\Users\shubh\grocer
+ywebsite\grocerywebsit
+e\node_modules\@testin
+g-library\react\dist\p
+ure.js:292:10)
+            at 
+renderComponent (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\comp
+onents\__tests__\Produ
+ctDetailPage.test.tsx:
+57:15)
+            at 
+Object.<anonymous> (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\c
+omponents\__tests__\Pr
+oductDetailPage.test.t
+sx:91:9)
+            at Promise
+.finally.completed (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\jest-circu
+s\build\jestAdapterIni
+t.js:1557:28)
+            at new 
+Promise (<anonymous>)
+            at 
+callAsyncCircusFn (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\no
+de_modules\jest-circus
+\build\jestAdapterInit
+.js:1497:10)
+            at 
+_callCircusTest (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\node
+_modules\jest-circus\b
+uild\jestAdapterInit.j
+s:1007:40)
+            at process
+TicksAndRejections (no
+de:internal/process/ta
+sk_queues:105:5)
+            at 
+_runTest (C:\Users\shu
+bh\grocerywebsite\groc
+erywebsite\node_module
+s\jest-circus\build\je
+stAdapterInit.js:947:3
+)
+            at C:\User
+s\shubh\grocerywebsite
+\grocerywebsite\node_m
+odules\jest-circus\bui
+ld\jestAdapterInit.js:
+849:7
+            at _runTes
+tsForDescribeBlock (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\jest-circu
+s\build\jestAdapterIni
+t.js:862:11)
+            at _runTes
+tsForDescribeBlock (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\jest-circu
+s\build\jestAdapterIni
+t.js:857:11)
+            at run (C:
+\Users\shubh\grocerywe
+bsite\grocerywebsite\n
+ode_modules\jest-circu
+s\build\jestAdapterIni
+t.js:761:3)
+            at runAndT
+ransformResultsToJestF
+ormat (C:\Users\shubh\
+grocerywebsite\grocery
+website\node_modules\j
+est-circus\build\jestA
+dapterInit.js:1918:21)
+            at 
+jestAdapter (C:\Users\
+shubh\grocerywebsite\g
+rocerywebsite\node_mod
+ules\jest-circus\build
+\runner.js:101:19)
+            at 
+runTestInternal (C:\Us
+ers\shubh\grocerywebsi
+te\grocerywebsite\node
+_modules\jest-runner\b
+uild\testWorker.js:275
+:16)
+            at 
+runTest (C:\Users\shub
+h\grocerywebsite\groce
+rywebsite\node_modules
+\jest-runner\build\tes
+tWorker.js:343:7)
+            at 
+Object.worker (C:\User
+s\shubh\grocerywebsite
+\grocerywebsite\node_m
+odules\jest-runner\bui
+ld\testWorker.js:497:1
+2),
+        type: 
+'unhandled exception'
+      }
+
+    [0m [90m 55 
+|[39m
+     [90m 56 |[39m  
+   [36mconst[39m 
+renderComponent 
+[33m=[39m () 
+[33m=>[39m
+    [31m[1m>[22m[3
+9m[90m 57 |[39m     
+    render(
+     [90m    |[39m  
+             
+[31m[1m^[22m[39m
+     [90m 58 |[39m  
+           [33m<[39m
+[33mBrowserRouter[39
+m[33m>[39m
+     [90m 59 |[39m  
+               [33m<
+[39m[33mProductDetail
+Page[39m 
+[33m/[39m[33m>[39m
+     [90m 60 |[39m  
+           [33m<[39m
+[33m/[39m[33mBrowse
+rRouter[39m[33m>[39
+m[0m
+
+      at VirtualConsol
+e.<anonymous> (node_mo
+dules/@jest/environmen
+t-jsdom-abstract/build
+/index.js:87:23)
+      at 
+reportException (node_
+modules/jsdom/lib/jsdo
+m/living/helpers/runti
+me-script-errors.js:70
+:28)
+      at innerInvokeEv
+entListeners (node_mod
+ules/jsdom/lib/jsdom/l
+iving/events/EventTarg
+et-impl.js:353:9)
+      at 
+invokeEventListeners (
+node_modules/jsdom/lib
+/jsdom/living/events/E
+ventTarget-impl.js:286
+:3)
+      at HTMLUnknownEl
+ementImpl._dispatch (n
+ode_modules/jsdom/lib/
+jsdom/living/events/Ev
+entTarget-impl.js:233:
+9)
+      at HTMLUnknownEl
+ementImpl.dispatchEven
+t (node_modules/jsdom/
+lib/jsdom/living/event
+s/EventTarget-impl.js:
+104:17)
+      at HTMLUnknownEl
+ement.dispatchEvent (n
+ode_modules/jsdom/lib/
+jsdom/living/generated
+/EventTarget.js:241:34
+)
+      at Object.invoke
+GuardedCallbackDev (no
+de_modules/react-dom/c
+js/react-dom.developme
+nt.js:4213:16)
+      at 
+invokeGuardedCallback 
+(node_modules/react-do
+m/cjs/react-dom.develo
+pment.js:4277:31)
+      at beginWork$1 (
+node_modules/react-dom
+/cjs/react-dom.develop
+ment.js:27490:7)
+      at 
+performUnitOfWork (nod
+e_modules/react-dom/cj
+s/react-dom.developmen
+t.js:26599:12)
+      at workLoopSync 
+(node_modules/react-do
+m/cjs/react-dom.develo
+pment.js:26505:5)
+      at 
+renderRootSync (node_m
+odules/react-dom/cjs/r
+eact-dom.development.j
+s:26473:7)
+      at recoverFromCo
+ncurrentError (node_mo
+dules/react-dom/cjs/re
+act-dom.development.js
+:25889:20)
+      at performConcur
+rentWorkOnRoot (node_m
+odules/react-dom/cjs/r
+eact-dom.development.j
+s:25789:22)
+      at 
+flushActQueue (node_mo
+dules/react/cjs/react.
+development.js:2667:24
+)
+      at act (node_mod
+ules/react/cjs/react.d
+evelopment.js:2582:11)
+      at node_modules/
+@testing-library/react
+/dist/act-compat.js:47
+:25
+      at renderRoot (n
+ode_modules/@testing-l
+ibrary/react/dist/pure
+.js:190:26)
+      at render (node_
+modules/@testing-libra
+ry/react/dist/pure.js:
+292:10)
+      at 
+renderComponent (compo
+nents/__tests__/Produc
+tDetailPage.test.tsx:5
+7:15)
+      at 
+Object.<anonymous> (co
+mponents/__tests__/Pro
+ductDetailPage.test.ts
+x:91:9)
+
+    console.error
+      The above error 
+occurred in the 
+<ProductDetailPage> 
+component:
+      
+          at 
+ProductDetailPage (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\pa
+ges\ProductDetailPage.
+tsx:23:45)
+          at Router (C
+:\Users\shubh\groceryw
+ebsite\grocerywebsite\
+node_modules\react-rou
+ter\dist\development\c
+hunk-RBZI3ZHD.js:9073:
+13)
+          at 
+BrowserRouter (C:\User
+s\shubh\grocerywebsite
+\grocerywebsite\node_m
+odules\react-router\di
+st\development\chunk-H
+MTWJNYB.js:269:3)
+      
+      Consider adding 
+an error boundary to 
+your tree to 
+customize error 
+handling behavior.
+      Visit https://re
+actjs.org/link/error-b
+oundaries to learn 
+more about error 
+boundaries.
+
+    [0m [90m 55 
+|[39m
+     [90m 56 |[39m  
+   [36mconst[39m 
+renderComponent 
+[33m=[39m () 
+[33m=>[39m
+    [31m[1m>[22m[3
+9m[90m 57 |[39m     
+    render(
+     [90m    |[39m  
+             
+[31m[1m^[22m[39m
+     [90m 58 |[39m  
+           [33m<[39m
+[33mBrowserRouter[39
+m[33m>[39m
+     [90m 59 |[39m  
+               [33m<
+[39m[33mProductDetail
+Page[39m 
+[33m/[39m[33m>[39m
+     [90m 60 |[39m  
+           [33m<[39m
+[33m/[39m[33mBrowse
+rRouter[39m[33m>[39
+m[0m
+
+      at 
+logCapturedError (node
+_modules/react-dom/cjs
+/react-dom.development
+.js:18704:23)
+      at 
+update.callback (node_
+modules/react-dom/cjs/
+react-dom.development.
+js:18737:5)
+      at callCallback 
+(node_modules/react-do
+m/cjs/react-dom.develo
+pment.js:15036:12)
+      at 
+commitUpdateQueue (nod
+e_modules/react-dom/cj
+s/react-dom.developmen
+t.js:15057:9)
+      at commitLayoutE
+ffectOnFiber (node_mod
+ules/react-dom/cjs/rea
+ct-dom.development.js:
+23430:13)
+      at commitLayoutM
+ountEffects_complete (
+node_modules/react-dom
+/cjs/react-dom.develop
+ment.js:24727:9)
+      at commitLayoutE
+ffects_begin (node_mod
+ules/react-dom/cjs/rea
+ct-dom.development.js:
+24713:7)
+      at 
+commitLayoutEffects (n
+ode_modules/react-dom/
+cjs/react-dom.developm
+ent.js:24651:3)
+      at 
+commitRootImpl (node_m
+odules/react-dom/cjs/r
+eact-dom.development.j
+s:26862:5)
+      at commitRoot (n
+ode_modules/react-dom/
+cjs/react-dom.developm
+ent.js:26721:5)
+      at finishConcurr
+entRender (node_module
+s/react-dom/cjs/react-
+dom.development.js:259
+31:9)
+      at performConcur
+rentWorkOnRoot (node_m
+odules/react-dom/cjs/r
+eact-dom.development.j
+s:25848:7)
+      at 
+flushActQueue (node_mo
+dules/react/cjs/react.
+development.js:2667:24
+)
+      at act (node_mod
+ules/react/cjs/react.d
+evelopment.js:2582:11)
+      at node_modules/
+@testing-library/react
+/dist/act-compat.js:47
+:25
+      at renderRoot (n
+ode_modules/@testing-l
+ibrary/react/dist/pure
+.js:190:26)
+      at render (node_
+modules/@testing-libra
+ry/react/dist/pure.js:
+292:10)
+      at 
+renderComponent (compo
+nents/__tests__/Produc
+tDetailPage.test.tsx:5
+7:15)
+      at 
+Object.<anonymous> (co
+mponents/__tests__/Pro
+ductDetailPage.test.ts
+x:91:9)
+
+  ΓùÅ 
+ProductDetailPage ΓÇ║ 
+renders product 
+details correctly
+
+    ReferenceError: 
+useWishlist is not 
+defined
+
+    [0m [90m 21 
+|[39m   
+[36mconst[39m { id 
+} [33m=[39m 
+useParams[33m<[39m{ 
+id[33m:[39m string }
+[33m>[39m()[33m;[3
+9m
+     [90m 22 |[39m  
+ [36mconst[39m 
+addToCart [33m=[39m 
+useCartStore((state) 
+[33m=>[39m state[33
+m.[39maddItem)[33m;
+[39m
+    [31m[1m>[22m[3
+9m[90m 23 |[39m   
+[36mconst[39m { togg
+leWishlist[33m,[39m 
+wishlistItems } 
+[33m=[39m useWishlis
+t()[33m;[39m
+     [90m    |[39m  
+                      
+                     
+[31m[1m^[22m[39m
+     [90m 24 |[39m  
+ [36mconst[39m 
+wishlistedIds 
+[33m=[39m 
+[36mnew[39m [33mSet
+[39m(wishlistItems[3
+3m.[39mmap((p) 
+[33m=>[39m p[33m.[
+39mid))[33m;[39m
+     [90m 25 |[39m  
+ [36mconst[39m { 
+products } 
+[33m=[39m 
+useProducts({ useMockD
+ata[33m:[39m 
+[36mtrue[39m 
+})[33m;[39m [90m// 
+Get products from 
+hook[39m
+     [90m 26 
+|[39m[0m
+
+      at 
+ProductDetailPage (pag
+es/ProductDetailPage.t
+sx:23:45)
+      at 
+renderWithHooks (node_
+modules/react-dom/cjs/
+react-dom.development.
+js:15486:18)
+      at mountIndeterm
+inateComponent (node_m
+odules/react-dom/cjs/r
+eact-dom.development.j
+s:20103:13)
+      at beginWork (no
+de_modules/react-dom/c
+js/react-dom.developme
+nt.js:21626:16)
+      at beginWork$1 (
+node_modules/react-dom
+/cjs/react-dom.develop
+ment.js:27465:14)
+      at 
+performUnitOfWork (nod
+e_modules/react-dom/cj
+s/react-dom.developmen
+t.js:26599:12)
+      at workLoopSync 
+(node_modules/react-do
+m/cjs/react-dom.develo
+pment.js:26505:5)
+      at 
+renderRootSync (node_m
+odules/react-dom/cjs/r
+eact-dom.development.j
+s:26473:7)
+      at recoverFromCo
+ncurrentError (node_mo
+dules/react-dom/cjs/re
+act-dom.development.js
+:25889:20)
+      at performConcur
+rentWorkOnRoot (node_m
+odules/react-dom/cjs/r
+eact-dom.development.j
+s:25789:22)
+      at 
+flushActQueue (node_mo
+dules/react/cjs/react.
+development.js:2667:24
+)
+      at act (node_mod
+ules/react/cjs/react.d
+evelopment.js:2582:11)
+      at node_modules/
+@testing-library/react
+/dist/act-compat.js:47
+:25
+      at renderRoot (n
+ode_modules/@testing-l
+ibrary/react/dist/pure
+.js:190:26)
+      at render (node_
+modules/@testing-libra
+ry/react/dist/pure.js:
+292:10)
+      at 
+renderComponent (compo
+nents/__tests__/Produc
+tDetailPage.test.tsx:5
+7:15)
+      at 
+Object.<anonymous> (co
+mponents/__tests__/Pro
+ductDetailPage.test.ts
+x:64:9)
+
+  ΓùÅ 
+ProductDetailPage ΓÇ║ 
+shows related 
+products in slider
+
+    ReferenceError: 
+useWishlist is not 
+defined
+
+    [0m [90m 21 
+|[39m   
+[36mconst[39m { id 
+} [33m=[39m 
+useParams[33m<[39m{ 
+id[33m:[39m string }
+[33m>[39m()[33m;[3
+9m
+     [90m 22 |[39m  
+ [36mconst[39m 
+addToCart [33m=[39m 
+useCartStore((state) 
+[33m=>[39m state[33
+m.[39maddItem)[33m;
+[39m
+    [31m[1m>[22m[3
+9m[90m 23 |[39m   
+[36mconst[39m { togg
+leWishlist[33m,[39m 
+wishlistItems } 
+[33m=[39m useWishlis
+t()[33m;[39m
+     [90m    |[39m  
+                      
+                     
+[31m[1m^[22m[39m
+     [90m 24 |[39m  
+ [36mconst[39m 
+wishlistedIds 
+[33m=[39m 
+[36mnew[39m [33mSet
+[39m(wishlistItems[3
+3m.[39mmap((p) 
+[33m=>[39m p[33m.[
+39mid))[33m;[39m
+     [90m 25 |[39m  
+ [36mconst[39m { 
+products } 
+[33m=[39m 
+useProducts({ useMockD
+ata[33m:[39m 
+[36mtrue[39m 
+})[33m;[39m [90m// 
+Get products from 
+hook[39m
+     [90m 26 
+|[39m[0m
+
+      at 
+ProductDetailPage (pag
+es/ProductDetailPage.t
+sx:23:45)
+      at 
+renderWithHooks (node_
+modules/react-dom/cjs/
+react-dom.development.
+js:15486:18)
+      at mountIndeterm
+inateComponent (node_m
+odules/react-dom/cjs/r
+eact-dom.development.j
+s:20103:13)
+      at beginWork (no
+de_modules/react-dom/c
+js/react-dom.developme
+nt.js:21626:16)
+      at beginWork$1 (
+node_modules/react-dom
+/cjs/react-dom.develop
+ment.js:27465:14)
+      at 
+performUnitOfWork (nod
+e_modules/react-dom/cj
+s/react-dom.developmen
+t.js:26599:12)
+      at workLoopSync 
+(node_modules/react-do
+m/cjs/react-dom.develo
+pment.js:26505:5)
+      at 
+renderRootSync (node_m
+odules/react-dom/cjs/r
+eact-dom.development.j
+s:26473:7)
+      at recoverFromCo
+ncurrentError (node_mo
+dules/react-dom/cjs/re
+act-dom.development.js
+:25889:20)
+      at performConcur
+rentWorkOnRoot (node_m
+odules/react-dom/cjs/r
+eact-dom.development.j
+s:25789:22)
+      at 
+flushActQueue (node_mo
+dules/react/cjs/react.
+development.js:2667:24
+)
+      at act (node_mod
+ules/react/cjs/react.d
+evelopment.js:2582:11)
+      at node_modules/
+@testing-library/react
+/dist/act-compat.js:47
+:25
+      at renderRoot (n
+ode_modules/@testing-l
+ibrary/react/dist/pure
+.js:190:26)
+      at render (node_
+modules/@testing-libra
+ry/react/dist/pure.js:
+292:10)
+      at 
+renderComponent (compo
+nents/__tests__/Produc
+tDetailPage.test.tsx:5
+7:15)
+      at 
+Object.<anonymous> (co
+mponents/__tests__/Pro
+ductDetailPage.test.ts
+x:69:9)
+
+  ΓùÅ 
+ProductDetailPage ΓÇ║ 
+allows adding 
+one-time purchase to 
+cart
+
+    ReferenceError: 
+useWishlist is not 
+defined
+
+    [0m [90m 21 
+|[39m   
+[36mconst[39m { id 
+} [33m=[39m 
+useParams[33m<[39m{ 
+id[33m:[39m string }
+[33m>[39m()[33m;[3
+9m
+     [90m 22 |[39m  
+ [36mconst[39m 
+addToCart [33m=[39m 
+useCartStore((state) 
+[33m=>[39m state[33
+m.[39maddItem)[33m;
+[39m
+    [31m[1m>[22m[3
+9m[90m 23 |[39m   
+[36mconst[39m { togg
+leWishlist[33m,[39m 
+wishlistItems } 
+[33m=[39m useWishlis
+t()[33m;[39m
+     [90m    |[39m  
+                      
+                     
+[31m[1m^[22m[39m
+     [90m 24 |[39m  
+ [36mconst[39m 
+wishlistedIds 
+[33m=[39m 
+[36mnew[39m [33mSet
+[39m(wishlistItems[3
+3m.[39mmap((p) 
+[33m=>[39m p[33m.[
+39mid))[33m;[39m
+     [90m 25 |[39m  
+ [36mconst[39m { 
+products } 
+[33m=[39m 
+useProducts({ useMockD
+ata[33m:[39m 
+[36mtrue[39m 
+})[33m;[39m [90m// 
+Get products from 
+hook[39m
+     [90m 26 
+|[39m[0m
+
+      at 
+ProductDetailPage (pag
+es/ProductDetailPage.t
+sx:23:45)
+      at 
+renderWithHooks (node_
+modules/react-dom/cjs/
+react-dom.development.
+js:15486:18)
+      at mountIndeterm
+inateComponent (node_m
+odules/react-dom/cjs/r
+eact-dom.development.j
+s:20103:13)
+      at beginWork (no
+de_modules/react-dom/c
+js/react-dom.developme
+nt.js:21626:16)
+      at beginWork$1 (
+node_modules/react-dom
+/cjs/react-dom.develop
+ment.js:27465:14)
+      at 
+performUnitOfWork (nod
+e_modules/react-dom/cj
+s/react-dom.developmen
+t.js:26599:12)
+      at workLoopSync 
+(node_modules/react-do
+m/cjs/react-dom.develo
+pment.js:26505:5)
+      at 
+renderRootSync (node_m
+odules/react-dom/cjs/r
+eact-dom.development.j
+s:26473:7)
+      at recoverFromCo
+ncurrentError (node_mo
+dules/react-dom/cjs/re
+act-dom.development.js
+:25889:20)
+      at performConcur
+rentWorkOnRoot (node_m
+odules/react-dom/cjs/r
+eact-dom.development.j
+s:25789:22)
+      at 
+flushActQueue (node_mo
+dules/react/cjs/react.
+development.js:2667:24
+)
+      at act (node_mod
+ules/react/cjs/react.d
+evelopment.js:2582:11)
+      at node_modules/
+@testing-library/react
+/dist/act-compat.js:47
+:25
+      at renderRoot (n
+ode_modules/@testing-l
+ibrary/react/dist/pure
+.js:190:26)
+      at render (node_
+modules/@testing-libra
+ry/react/dist/pure.js:
+292:10)
+      at 
+renderComponent (compo
+nents/__tests__/Produc
+tDetailPage.test.tsx:5
+7:15)
+      at 
+Object.<anonymous> (co
+mponents/__tests__/Pro
+ductDetailPage.test.ts
+x:76:9)
+
+  ΓùÅ 
+ProductDetailPage ΓÇ║ 
+allows toggling to 
+Subscribe & Save and 
+adding to cart
+
+    ReferenceError: 
+useWishlist is not 
+defined
+
+    [0m [90m 21 
+|[39m   
+[36mconst[39m { id 
+} [33m=[39m 
+useParams[33m<[39m{ 
+id[33m:[39m string }
+[33m>[39m()[33m;[3
+9m
+     [90m 22 |[39m  
+ [36mconst[39m 
+addToCart [33m=[39m 
+useCartStore((state) 
+[33m=>[39m state[33
+m.[39maddItem)[33m;
+[39m
+    [31m[1m>[22m[3
+9m[90m 23 |[39m   
+[36mconst[39m { togg
+leWishlist[33m,[39m 
+wishlistItems } 
+[33m=[39m useWishlis
+t()[33m;[39m
+     [90m    |[39m  
+                      
+                     
+[31m[1m^[22m[39m
+     [90m 24 |[39m  
+ [36mconst[39m 
+wishlistedIds 
+[33m=[39m 
+[36mnew[39m [33mSet
+[39m(wishlistItems[3
+3m.[39mmap((p) 
+[33m=>[39m p[33m.[
+39mid))[33m;[39m
+     [90m 25 |[39m  
+ [36mconst[39m { 
+products } 
+[33m=[39m 
+useProducts({ useMockD
+ata[33m:[39m 
+[36mtrue[39m 
+})[33m;[39m [90m// 
+Get products from 
+hook[39m
+     [90m 26 
+|[39m[0m
+
+      at 
+ProductDetailPage (pag
+es/ProductDetailPage.t
+sx:23:45)
+      at 
+renderWithHooks (node_
+modules/react-dom/cjs/
+react-dom.development.
+js:15486:18)
+      at mountIndeterm
+inateComponent (node_m
+odules/react-dom/cjs/r
+eact-dom.development.j
+s:20103:13)
+      at beginWork (no
+de_modules/react-dom/c
+js/react-dom.developme
+nt.js:21626:16)
+      at beginWork$1 (
+node_modules/react-dom
+/cjs/react-dom.develop
+ment.js:27465:14)
+      at 
+performUnitOfWork (nod
+e_modules/react-dom/cj
+s/react-dom.developmen
+t.js:26599:12)
+      at workLoopSync 
+(node_modules/react-do
+m/cjs/react-dom.develo
+pment.js:26505:5)
+      at 
+renderRootSync (node_m
+odules/react-dom/cjs/r
+eact-dom.development.j
+s:26473:7)
+      at recoverFromCo
+ncurrentError (node_mo
+dules/react-dom/cjs/re
+act-dom.development.js
+:25889:20)
+      at performConcur
+rentWorkOnRoot (node_m
+odules/react-dom/cjs/r
+eact-dom.development.j
+s:25789:22)
+      at 
+flushActQueue (node_mo
+dules/react/cjs/react.
+development.js:2667:24
+)
+      at act (node_mod
+ules/react/cjs/react.d
+evelopment.js:2582:11)
+      at node_modules/
+@testing-library/react
+/dist/act-compat.js:47
+:25
+      at renderRoot (n
+ode_modules/@testing-l
+ibrary/react/dist/pure
+.js:190:26)
+      at render (node_
+modules/@testing-libra
+ry/react/dist/pure.js:
+292:10)
+      at 
+renderComponent (compo
+nents/__tests__/Produc
+tDetailPage.test.tsx:5
+7:15)
+      at 
+Object.<anonymous> (co
+mponents/__tests__/Pro
+ductDetailPage.test.ts
+x:91:9)
+
+Test Suites: 2 
+failed, 2 total
+Tests:       5 
+failed, 1 passed, 6 
+total
+Snapshots:   0 total
+Time:        6.607 s
+Ran all test suites 
+matching components/__
+tests__/ProductDetailP
+age.test.tsx|component
+s/__tests__/Subscripti
+onPage.test.tsx.

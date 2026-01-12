@@ -1,17 +1,18 @@
 import React from 'react';
 
 interface CheckoutStepperProps {
-  currentStep: 'shipping' | 'payment' | 'review';
+  currentStep: 'auth' | 'shipping' | 'payment' | 'review';
 }
 
 const CheckoutStepper: React.FC<CheckoutStepperProps> = ({ currentStep }) => {
   const steps = [
+    { id: 'auth', label: 'Login/Guest' },
     { id: 'shipping', label: 'Shipping' },
     { id: 'payment', label: 'Payment' },
     { id: 'review', label: 'Review' },
   ];
 
-  const stepIndex = { shipping: 0, payment: 1, review: 2 };
+  const stepIndex = { auth: 0, shipping: 1, payment: 2, review: 3 };
   const currentIndex = stepIndex[currentStep];
 
   return (

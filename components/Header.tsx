@@ -18,6 +18,8 @@ import { imageErrorHandlers } from '../utils/imageHelpers';
 import { useDarkMode } from '../hooks/useDarkMode';
 import { m, AnimatePresence } from 'framer-motion';
 import { fuzzySearch, getSuggestions } from '../utils/searchUtils';
+import { useLoyaltyStore } from '../store/loyaltyStore';
+import { SparklesIcon } from './icons/SparklesIcon';
 
 interface HeaderProps {
   cartItems: MiniCartItem[];
@@ -59,13 +61,13 @@ const Header: React.FC<HeaderProps> = ({
   const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [isProductsOpen, setProductsOpen] = useState(false);
   const [darkMode, setDarkMode] = useDarkMode();
   const [isAutocompleteOpen, setAutocompleteOpen] = useState(false);
   const [isMiniCartOpen, setMiniCartOpen] = useState(false);
   const [cartBounce, setCartBounce] = useState(false);
   const searchContainerRef = useRef<HTMLDivElement>(null);
   const prevCartCountRef = useRef<number>(0);
+  const { points } = useLoyaltyStore();
 
   const cartItemCount = useMemo(
     () => cartItems.reduce((total, item) => total + item.quantity, 0),
@@ -160,12 +162,7 @@ const Header: React.FC<HeaderProps> = ({
           </Link>
 
           {/* Center: Navigation (Desktop) */}
-          <Navigation
-            categories={categories}
-            onSelectCategory={onSelectCategory}
-            isProductsOpen={isProductsOpen}
-            setProductsOpen={setProductsOpen}
-          />
+          <Navigation onSelectCategory={onSelectCategory} />
 
           {/* Right: Actions */}
           <div className="flex items-center gap-4">
@@ -382,6 +379,15 @@ const Header: React.FC<HeaderProps> = ({
                 >
                   <UserIcon className="w-6 h-6" />
                 </button>
+                {/* Loyalty Badge */}
+                <div
+                  className="hidden md:flex items-center gap-1 bg-amber-100 text-amber-800 px-2 py-1 rounded-full text-xs font-bold cursor-pointer hover:bg-amber-200 transition-colors"
+                  onClick={() => navigate('/profile')}
+                  title="Your Loyalty Points"
+                >
+                  <SparklesIcon className="w-3 h-3" />
+                  {points.current.toLocaleString()}
+                </div>
                 <div className="hidden md:block">
                   <SignOutButton className="text-sm font-medium text-neutral-600 hover:text-brand-secondary" />
                 </div>

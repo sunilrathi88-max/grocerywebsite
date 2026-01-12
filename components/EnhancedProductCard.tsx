@@ -1,15 +1,7 @@
 import React from 'react';
 import { OptimizedImage } from './OptimizedImage';
 
-interface ProductVariant {
-  id: number;
-  weight: string;
-  price: number;
-  salePrice?: number;
-}
-
 interface EnhancedProductCardProps {
-  id: number;
   name: string;
   image: string;
   price: number;
@@ -82,7 +74,6 @@ const RatingStars: React.FC<{ rating: number; reviewCount?: number }> = ({
 };
 
 const EnhancedProductCard: React.FC<EnhancedProductCardProps> = ({
-  id,
   name,
   image,
   price,
@@ -183,8 +174,8 @@ const EnhancedProductCard: React.FC<EnhancedProductCardProps> = ({
           </div>
         )}
 
-        {/* Spice Level */}
-        {spiceLevel && (
+        {/* Spice Level - Only for Chilli/Mirch products */}
+        {spiceLevel && name.toLowerCase().includes('chilli') && (
           <div className="mb-3">
             <SpiceLevelIndicator level={spiceLevel} />
           </div>

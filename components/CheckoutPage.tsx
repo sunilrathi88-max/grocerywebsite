@@ -358,6 +358,28 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [localPromoCode, setLocalPromoCode] = useState('');
 
+  // Checkout Flow State
+  const [currentStep, setCurrentStep] = useState<'auth' | 'shipping' | 'payment'>(
+    user ? 'shipping' : 'auth'
+  );
+
+  // Update step if user logs in mid-session
+  React.useEffect(() => {
+    if (user && currentStep === 'auth') {
+      setCurrentStep('shipping');
+    }
+  }, [user, currentStep]);
+
+  const handleGuestContinue = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!guestEmail || !/\S+@\S+\.\S+/.test(guestEmail)) {
+      setErrors({ ...errors, guestEmail: 'Valid email is required' });
+      return;
+    }
+    // Optional: Validate phone if needed
+    setCurrentStep('shipping');
+  };
+
   const tax = useMemo(() => (subtotal - discount) * 0.05, [subtotal, discount]);
   const total = useMemo(
     () => subtotal + shippingCost + tax - discount,
@@ -678,279 +700,330 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <CheckoutStepper currentStep="shipping" />
+      <CheckoutStepper currentStep={currentStep === 'auth' ? 'auth' : 'shipping'} />
 
-      <h2 className="text-3xl md:text-4xl font-serif font-bold text-center text-brand-dark mb-12 mt-8">
-        Checkout
-      </h2>
-
-      {submitError && (
-        <div className="mb-6 max-w-4xl mx-auto">
-          <APIErrorDisplay
-            error={{ message: submitError }}
-            onRetry={() => setSubmitError(null)}
-            onDismiss={() => setSubmitError(null)}
-          />
-        </div>
-      )}
-
-      <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-        {/* Left/Main Column */}
-        <div className="lg:col-span-2 space-y-8">
-          {/* Guest Checkout Contact Info */}
-          {!user && (
-            <div className="space-y-4">
-              <h3 className="text-lg font-serif font-bold">Contact Information</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label htmlFor="guestEmail" className="block text-sm font-medium text-gray-700">
-                    Email Address
-                  </label>
-                  <input
-                    type="email"
-                    name="guestEmail"
-                    value={guestEmail}
-                    onChange={(e) => setGuestEmail(e.target.value)}
-                    className="mt-1 input-field"
-                    required
-                    placeholder="john@example.com"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="guestPhone" className="block text-sm font-medium text-gray-700">
-                    Phone Number
-                  </label>
-                  <input
-                    type="tel"
-                    name="guestPhone"
-                    value={guestPhone}
-                    onChange={(e) => setGuestPhone(e.target.value)}
-                    className="mt-1 input-field"
-                    required
-                    placeholder="+91 98765 43210"
-                  />
-                </div>
-              </div>
-            </div>
-          )}
-
-          <AddressForm
-            address={shippingAddress}
-            onChange={handleInputChange(setShippingAddress)}
-            onBlur={handleBlur}
-            errors={errors}
-            title="Shipping Address"
-            userName={user?.name}
-          />
-
-          <div className="flex items-center">
-            <input
-              id="same-address"
-              name="same-address"
-              type="checkbox"
-              checked={useSameAddress}
-              onChange={() => setUseSameAddress(!useSameAddress)}
-              className="h-4 w-4 text-brand-primary border-gray-300 rounded focus:ring-brand-primary"
-            />
-            <label htmlFor="same-address" className="ml-2 block text-sm text-gray-900">
-              Billing address is the same as my shipping address
-            </label>
+      {currentStep === 'auth' ? (
+        <div className="max-w-4xl mx-auto mt-12 grid md:grid-cols-2 gap-12">
+          {/* Login Column */}
+          <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+            <h3 className="text-2xl font-serif font-bold mb-6 text-brand-dark">
+              Returning Customer?
+            </h3>
+            <p className="text-gray-600 mb-8">
+              Login to access your saved addresses and loyalty points.
+            </p>
+            <button
+              onClick={() => document.getElementById('login-btn')?.click()} // Hacky but works if Header has login
+              className="w-full bg-brand-dark text-white font-bold py-3 rounded-lg hover:bg-opacity-90 transition-all"
+            >
+              Login to Account
+            </button>
           </div>
 
-          {!useSameAddress && (
-            <AddressForm
-              address={billingAddress}
-              onChange={handleInputChange(setBillingAddress)}
-              onBlur={handleBlur}
-              errors={errors}
-              title="Billing Address"
-              userName={user?.name}
-            />
-          )}
-
-          <DeliverySlotPicker
-            selectedDate={selectedDate}
-            selectedTime={selectedTime}
-            onSelectDate={(date) => {
-              setSelectedDate(date);
-              setSelectedTime(null);
-            }}
-            onSelectTime={setSelectedTime}
-          />
-
-          <div>
-            <h3 className="text-lg font-serif font-bold mb-4">Payment Method</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {['UPI', 'Credit Card', 'PayPal', 'Cash on Delivery'].map((method) => (
-                <button
-                  key={method}
-                  type="button"
-                  onClick={() => setPaymentMethod(method)}
-                  className={`px-4 py-3 font-bold rounded-lg transition-all duration-300 border-2 text-center ${paymentMethod === method ? 'bg-brand-primary text-brand-dark border-brand-primary shadow-lg' : 'bg-white text-brand-dark hover:bg-brand-secondary/50 border-gray-300'}`}
-                >
-                  {method}
-                </button>
-              ))}
-            </div>
-            {paymentMethod === 'UPI' && (
-              <div className="mt-4 animate-fade-in">
-                <label htmlFor="upiId" className="block text-sm font-medium text-gray-700">
-                  UPI ID / VPA
+          {/* Guest Column */}
+          <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+            <h3 className="text-2xl font-serif font-bold mb-6 text-brand-dark">Guest Checkout</h3>
+            <p className="text-gray-600 mb-6">No account? No problem. Proceed with your email.</p>
+            <form onSubmit={handleGuestContinue} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Email Address
                 </label>
                 <input
-                  type="text"
-                  name="upiId"
-                  value={upiId}
-                  onChange={(e) => setUpiId(e.target.value)}
-                  className="mt-1 input-field"
-                  placeholder="username@upi"
+                  type="email"
+                  value={guestEmail}
+                  onChange={(e) => setGuestEmail(e.target.value)}
+                  className="w-full input-field"
+                  placeholder="john@example.com"
                   required
                 />
-                <p className="text-xs text-gray-500 mt-1">
-                  Enter your UPI ID (e.g., mobile@upi, name@bank)
-                </p>
+                {errors.guestEmail && (
+                  <p className="text-red-500 text-xs mt-1">{errors.guestEmail}</p>
+                )}
               </div>
-            )}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Phone Number (Optional)
+                </label>
+                <input
+                  type="tel"
+                  value={guestPhone}
+                  onChange={(e) => setGuestPhone(e.target.value)}
+                  className="w-full input-field"
+                  placeholder="+91..."
+                />
+              </div>
+              <button
+                type="submit"
+                className="w-full bg-brand-primary text-brand-dark font-bold py-3 rounded-lg hover:bg-brand-secondary/20 border border-brand-primary transition-all"
+              >
+                Continue as Guest
+              </button>
+            </form>
           </div>
         </div>
+      ) : (
+        <>
+          <h2 className="text-3xl md:text-4xl font-serif font-bold text-center text-brand-dark mb-12 mt-8">
+            Checkout
+          </h2>
 
-        {/* Right/Sidebar Column */}
-        <div className="lg:col-span-1">
-          <div className="bg-neutral-50 p-6 rounded-xl border border-neutral-200 shadow-sm sticky top-24">
-            <h3 className="text-xl font-serif font-bold text-neutral-900 mb-6">Order Summary</h3>
-
-            <div className="space-y-4 max-h-80 overflow-y-auto mb-6 pr-2">
-              {cartItems.map((item) => (
-                <div key={item.id} className="flex gap-4">
-                  <OptimizedImage
-                    src={item.image}
-                    alt={item.name}
-                    className="w-16 h-16 object-cover rounded bg-white"
-                    type="thumbnail"
-                    width={64}
-                    height={64}
-                  />
-                  <div className="flex-1">
-                    <p className="font-bold text-sm text-neutral-900 line-clamp-1">{item.name}</p>
-                    <p className="text-xs text-neutral-500">
-                      {item.weight} x {item.quantity}
-                    </p>
-                    <p className="text-sm font-bold text-neutral-900">
-                      ₹{(item.price * item.quantity).toFixed(2)}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="border-t border-neutral-200 pt-4 space-y-2 text-neutral-600 text-sm">
-              <div className="flex justify-between">
-                <span>Subtotal</span>
-                <span>₹{subtotal.toFixed(2)}</span>
-              </div>
-              <div className="flex justify-between">
-                <span>Shipping</span>
-                <span>
-                  {shippingCost === 0 ? (
-                    <span className="text-success font-bold">Free</span>
-                  ) : (
-                    `₹${shippingCost.toFixed(2)}`
-                  )}
-                </span>
-              </div>
-              {discount > 0 && (
-                <div className="flex justify-between text-success font-medium">
-                  <span>Discount ({promoCode})</span>
-                  <span>-₹{discount.toFixed(2)}</span>
-                </div>
-              )}
-              <div className="flex justify-between text-sm text-neutral-600">
-                <span>Taxes (5%)</span>
-                <span>₹{tax.toFixed(2)}</span>
-              </div>
-              <div className="flex justify-between font-bold text-xl text-neutral-900 pt-3 border-t border-neutral-200 mt-2">
-                <span>Total</span>
-                <span>₹{total.toFixed(2)}</span>
-              </div>
-            </div>
-
-            {/* Promo Code Input */}
-            <div className="mt-6">
-              {promoCode ? (
-                <div className="flex items-center justify-between text-brand-dark bg-brand-primary/10 px-3 py-2 rounded-lg border border-brand-primary/20">
-                  <span className="font-bold text-sm">Used: {promoCode}</span>
-                  <button
-                    type="button"
-                    onClick={onRemovePromoCode}
-                    className="text-xs text-red-600 hover:text-red-800 font-bold"
-                  >
-                    REMOVE
-                  </button>
-                </div>
-              ) : (
-                <div className="flex gap-2">
-                  <input
-                    type="text"
-                    placeholder="Promo Code"
-                    value={localPromoCode}
-                    onChange={(e) => setLocalPromoCode(e.target.value)}
-                    className="flex-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-brand-primary focus:ring-brand-primary sm:text-sm p-2 border"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => {
-                      if (!localPromoCode) {
-                        addToast('Please enter a promo code.', 'error');
-                        return;
-                      }
-                      if (
-                        ['TATTVA10', 'WELCOME15', 'QUIZMASTER15'].includes(
-                          localPromoCode.toUpperCase()
-                        )
-                      ) {
-                        onApplyPromoCode(localPromoCode);
-                        addToast(`Promo code ${localPromoCode} applied successfully!`, 'success');
-                        setLocalPromoCode('');
-                      } else {
-                        addToast('Invalid promo code.', 'error');
-                      }
-                    }}
-                    className="bg-brand-dark text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-neutral-800 transition-colors"
-                  >
-                    Apply
-                  </button>
-                </div>
-              )}
-            </div>
-
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="w-full bg-brand-primary text-white font-bold py-4 rounded-xl shadow-button hover:shadow-button-hover transform hover:-translate-y-0.5 transition-all mt-6 disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center gap-2"
-            >
-              {isSubmitting ? (
-                <>
-                  <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white"></div>
-                  <span>Processing...</span>
-                </>
-              ) : (
-                <span>Pay ₹{total.toFixed(2)}</span>
-              )}
-            </button>
-
-            <div className="mt-6">
-              <TrustBadges
-                variant="vertical"
-                size="sm"
-                badges={[
-                  { icon: '🔒', text: 'Secure SSL Checkout' },
-                  { icon: '✅', text: 'Satisfaction Guaranteed' },
-                ]}
+          {submitError && (
+            <div className="mb-6 max-w-4xl mx-auto">
+              <APIErrorDisplay
+                error={{ message: submitError }}
+                onRetry={() => setSubmitError(null)}
+                onDismiss={() => setSubmitError(null)}
               />
             </div>
-          </div>
-        </div>
-      </form>
+          )}
+
+          <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+            {/* Left/Main Column */}
+            <div className="lg:col-span-2 space-y-8">
+              {/* Guest Contact Info (Read Only or Hidden in Shipping Step) */}
+              {!user && (
+                <div className="bg-gray-50 p-4 rounded-lg flex justify-between items-center text-sm">
+                  <div>
+                    <span className="font-bold text-gray-700">Contact:</span>{' '}
+                    <span className="text-gray-600">{guestEmail}</span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setCurrentStep('auth')}
+                    className="text-brand-primary hover:underline text-xs"
+                  >
+                    Change
+                  </button>
+                </div>
+              )}
+
+              <AddressForm
+                address={shippingAddress}
+                onChange={handleInputChange(setShippingAddress)}
+                onBlur={handleBlur}
+                errors={errors}
+                title="Shipping Address"
+                userName={user?.name}
+              />
+
+              <div className="flex items-center">
+                <input
+                  id="same-address"
+                  name="same-address"
+                  type="checkbox"
+                  checked={useSameAddress}
+                  onChange={() => setUseSameAddress(!useSameAddress)}
+                  className="h-4 w-4 text-brand-primary border-gray-300 rounded focus:ring-brand-primary"
+                />
+                <label htmlFor="same-address" className="ml-2 block text-sm text-gray-900">
+                  Billing address is the same as my shipping address
+                </label>
+              </div>
+
+              {!useSameAddress && (
+                <AddressForm
+                  address={billingAddress}
+                  onChange={handleInputChange(setBillingAddress)}
+                  onBlur={handleBlur}
+                  errors={errors}
+                  title="Billing Address"
+                  userName={user?.name}
+                />
+              )}
+
+              <DeliverySlotPicker
+                selectedDate={selectedDate}
+                selectedTime={selectedTime}
+                onSelectDate={(date) => {
+                  setSelectedDate(date);
+                  setSelectedTime(null);
+                }}
+                onSelectTime={setSelectedTime}
+              />
+
+              <div>
+                <h3 className="text-lg font-serif font-bold mb-4">Payment Method</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {['UPI', 'Credit Card', 'PayPal', 'Cash on Delivery'].map((method) => (
+                    <button
+                      key={method}
+                      type="button"
+                      onClick={() => setPaymentMethod(method)}
+                      className={`px-4 py-3 font-bold rounded-lg transition-all duration-300 border-2 text-center ${paymentMethod === method ? 'bg-brand-primary text-brand-dark border-brand-primary shadow-lg' : 'bg-white text-brand-dark hover:bg-brand-secondary/50 border-gray-300'}`}
+                    >
+                      {method}
+                    </button>
+                  ))}
+                </div>
+                {paymentMethod === 'UPI' && (
+                  <div className="mt-4 animate-fade-in">
+                    <label htmlFor="upiId" className="block text-sm font-medium text-gray-700">
+                      UPI ID / VPA
+                    </label>
+                    <input
+                      type="text"
+                      name="upiId"
+                      value={upiId}
+                      onChange={(e) => setUpiId(e.target.value)}
+                      className="mt-1 input-field"
+                      placeholder="username@upi"
+                      required
+                    />
+                    <p className="text-xs text-gray-500 mt-1">
+                      Enter your UPI ID (e.g., mobile@upi, name@bank)
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Right/Sidebar Column */}
+            <div className="lg:col-span-1">
+              <div className="bg-neutral-50 p-6 rounded-xl border border-neutral-200 shadow-sm sticky top-24">
+                <h3 className="text-xl font-serif font-bold text-neutral-900 mb-6">
+                  Order Summary
+                </h3>
+
+                <div className="space-y-4 max-h-80 overflow-y-auto mb-6 pr-2">
+                  {cartItems.map((item) => (
+                    <div key={item.id} className="flex gap-4">
+                      <OptimizedImage
+                        src={item.image}
+                        alt={item.name}
+                        className="w-16 h-16 object-cover rounded bg-white"
+                        type="thumbnail"
+                        width={64}
+                        height={64}
+                      />
+                      <div className="flex-1">
+                        <p className="font-bold text-sm text-neutral-900 line-clamp-1">
+                          {item.name}
+                        </p>
+                        <p className="text-xs text-neutral-500">
+                          {item.weight} x {item.quantity}
+                        </p>
+                        <p className="text-sm font-bold text-neutral-900">
+                          ₹{(item.price * item.quantity).toFixed(2)}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="border-t border-neutral-200 pt-4 space-y-2 text-neutral-600 text-sm">
+                  <div className="flex justify-between">
+                    <span>Subtotal</span>
+                    <span>₹{subtotal.toFixed(2)}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Shipping</span>
+                    <span>
+                      {shippingCost === 0 ? (
+                        <span className="text-success font-bold">Free</span>
+                      ) : (
+                        `₹${shippingCost.toFixed(2)}`
+                      )}
+                    </span>
+                  </div>
+                  {discount > 0 && (
+                    <div className="flex justify-between text-success font-medium">
+                      <span>Discount ({promoCode})</span>
+                      <span>-₹{discount.toFixed(2)}</span>
+                    </div>
+                  )}
+                  <div className="flex justify-between text-sm text-neutral-600">
+                    <span>Taxes (5%)</span>
+                    <span>₹{tax.toFixed(2)}</span>
+                  </div>
+                  <div className="flex justify-between font-bold text-xl text-neutral-900 pt-3 border-t border-neutral-200 mt-2">
+                    <span>Total</span>
+                    <span>₹{total.toFixed(2)}</span>
+                  </div>
+                </div>
+
+                {/* Promo Code Input */}
+                <div className="mt-6">
+                  {promoCode ? (
+                    <div className="flex items-center justify-between text-brand-dark bg-brand-primary/10 px-3 py-2 rounded-lg border border-brand-primary/20">
+                      <span className="font-bold text-sm">Used: {promoCode}</span>
+                      <button
+                        type="button"
+                        onClick={onRemovePromoCode}
+                        className="text-xs text-red-600 hover:text-red-800 font-bold"
+                      >
+                        REMOVE
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        placeholder="Promo Code"
+                        value={localPromoCode}
+                        onChange={(e) => setLocalPromoCode(e.target.value)}
+                        className="flex-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-brand-primary focus:ring-brand-primary sm:text-sm p-2 border"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (!localPromoCode) {
+                            addToast('Please enter a promo code.', 'error');
+                            return;
+                          }
+                          if (
+                            ['TATTVA10', 'WELCOME15', 'QUIZMASTER15'].includes(
+                              localPromoCode.toUpperCase()
+                            )
+                          ) {
+                            onApplyPromoCode(localPromoCode);
+                            addToast(
+                              `Promo code ${localPromoCode} applied successfully!`,
+                              'success'
+                            );
+                            setLocalPromoCode('');
+                          } else {
+                            addToast('Invalid promo code.', 'error');
+                          }
+                        }}
+                        className="bg-brand-dark text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-neutral-800 transition-colors"
+                      >
+                        Apply
+                      </button>
+                    </div>
+                  )}
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full bg-brand-primary text-white font-bold py-4 rounded-xl shadow-button hover:shadow-button-hover transform hover:-translate-y-0.5 transition-all mt-6 disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center gap-2"
+                >
+                  {isSubmitting ? (
+                    <>
+                      <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white"></div>
+                      <span>Processing...</span>
+                    </>
+                  ) : (
+                    <span>Pay ₹{total.toFixed(2)}</span>
+                  )}
+                </button>
+
+                <div className="mt-6">
+                  <TrustBadges
+                    variant="vertical"
+                    size="sm"
+                    badges={[
+                      { icon: '🔒', text: 'Secure SSL Checkout' },
+                      { icon: '✅', text: 'Satisfaction Guaranteed' },
+                    ]}
+                  />
+                </div>
+              </div>
+            </div>
+          </form>
+        </>
+      )}
       <style>{`
           .input-field {
             display: block;

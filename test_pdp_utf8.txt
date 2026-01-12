@@ -1,0 +1,132 @@
+﻿
+> tattva-co.---indian-gourmet-products@0.0.0 test
+> jest components/__tests__/ProductDetailPage.test.tsx
+
+node.exe : FAIL compon
+ents/__tests__/Product
+DetailPage.test.tsx
+At line:1 char:1
++ & "C:\Program Files\
+nodejs/node.exe" "C:\U
+sers\shubh\AppData\Roa
+ming\ ...
++ ~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~
+    + CategoryInfo    
+          : NotSpeci  
+  fied: (FAIL compo   
+ nents...ilPage.te    
+st.tsx:String) []    
+, RemoteException
+    + FullyQualifiedE 
+   rrorId : NativeCo  
+  mmandError
+ 
+  ΓùÅ Test suite 
+failed to run
+
+    [96mpages/Product
+DetailPage.tsx[0m:[9
+3m53[0m:[93m10[0m 
+- [91merror[0m[90m 
+TS1005: [0m';' 
+expected.
+
+    [7m53[0m     
+price: v.price,
+    [7m  [0m [91m  
+       ~[0m
+    [96mpages/Product
+DetailPage.tsx[0m:[9
+3m55[0m:[93m15[0m 
+- [91merror[0m[90m 
+TS1005: [0m';' 
+expected.
+
+    [7m55[0m       
+discount: v.salePrice 
+? 
+Math.round(((v.price 
+- v.salePrice) / 
+v.price) * 100) : 0,
+    [7m  [0m [91m  
+            ~[0m
+    [96mpages/Product
+DetailPage.tsx[0m:[9
+3m56[0m:[93m14[0m 
+- [91merror[0m[90m 
+TS1005: [0m';' 
+expected.
+
+    [7m56[0m        
+ badge: v.stock < 10 
+? 'LOW STOCK' : '',
+    [7m  [0m [91m  
+           ~[0m
+    [96mpages/Product
+DetailPage.tsx[0m:[9
+3m57[0m:[93m16[0m 
+- [91merror[0m[90m 
+TS1005: [0m';' 
+expected.
+
+    [7m57[0m        
+   stock: v.stock,
+    [7m  [0m [91m  
+             ~[0m
+    [96mpages/Product
+DetailPage.tsx[0m:[9
+3m58[0m:[93m3[0m - 
+[91merror[0m[90m 
+TS1109: 
+[0mExpression 
+expected.
+
+    [7m58[0m   }));
+    [7m  [0m [91m  
+~[0m
+    [96mpages/Product
+DetailPage.tsx[0m:[9
+3m58[0m:[93m4[0m - 
+[91merror[0m[90m 
+TS1128: 
+[0mDeclaration or 
+statement expected.
+
+    [7m58[0m   }));
+    [7m  [0m [91m  
+ ~[0m
+    [96mpages/Product
+DetailPage.tsx[0m:[9
+3m58[0m:[93m5[0m - 
+[91merror[0m[90m 
+TS1128: 
+[0mDeclaration or 
+statement expected.
+
+    [7m58[0m   }));
+    [7m  [0m [91m  
+  ~[0m
+    [96mpages/Product
+DetailPage.tsx[0m:[9
+3m381[0m:[93m1[0m 
+- [91merror[0m[90m 
+TS1128: 
+[0mDeclaration or 
+statement expected.
+
+    [7m381[0m }
+    [7m   [0m 
+[91m~[0m
+
+Test Suites: 1 
+failed, 1 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        3.702 s
+Ran all test suites 
+matching components/__
+tests__/ProductDetailP
+age.test.tsx.
