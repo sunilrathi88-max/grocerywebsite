@@ -630,17 +630,17 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
                     billingAddress:
                       (saved.useSameAddress ?? useSameAddress)
                         ? {
-                          ...shippingAddress,
-                          ...saved.shippingAddress,
-                          id: '',
-                          type: 'Billing' as const,
-                        }
+                            ...shippingAddress,
+                            ...saved.shippingAddress,
+                            id: '',
+                            type: 'Billing' as const,
+                          }
                         : {
-                          ...billingAddress,
-                          ...saved.billingAddress,
-                          id: '',
-                          type: 'Billing' as const,
-                        },
+                            ...billingAddress,
+                            ...saved.billingAddress,
+                            id: '',
+                            type: 'Billing' as const,
+                          },
                     deliveryMethod: 'Standard' as const,
                     paymentMethod: saved.paymentMethod || paymentMethod || 'Online Payment',
                     shippingCost: shippingCost, // shippingCost is calculated from cart items
@@ -671,7 +671,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
                   console.error(err);
                   setSubmitError(
                     'Failed to create order after payment: ' +
-                    (err instanceof Error ? err.message : 'Unknown error')
+                      (err instanceof Error ? err.message : 'Unknown error')
                   );
                 } finally {
                   setIsSubmitting(false);

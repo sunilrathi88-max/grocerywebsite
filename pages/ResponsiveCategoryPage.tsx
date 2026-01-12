@@ -1,6 +1,6 @@
 import React from 'react';
 import { useIsMobile } from '../hooks/useIsMobile';
-import { Product, Variant, ToastMessage } from '../types';
+import { Product, ToastMessage } from '../types';
 
 // Lazy load both pages
 const CategoryPage = React.lazy(() => import('./CategoryPage'));

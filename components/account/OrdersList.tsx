@@ -32,11 +32,13 @@ const OrdersList: React.FC = () => {
 
   return (
     <div>
-      <h3 className="text-2xl font-serif font-bold mb-6 text-brand-dark border-b pb-4">Order History</h3>
+      <h3 className="text-2xl font-serif font-bold mb-6 text-brand-dark border-b pb-4">
+        Order History
+      </h3>
       {orders.length === 0 ? (
         <div className="text-center py-12 bg-gray-50 rounded-xl border border-dashed border-gray-300">
           <p className="text-gray-600 mb-4">You haven&apos;t placed any orders yet.</p>
-          <Button onClick={() => window.location.href = '/shop'}>Start Shopping</Button>
+          <Button onClick={() => (window.location.href = '/shop')}>Start Shopping</Button>
         </div>
       ) : (
         <div className="space-y-4">
@@ -49,20 +51,23 @@ const OrdersList: React.FC = () => {
                 <div className="flex items-center gap-3 mb-2">
                   <span className="font-mono font-bold text-gray-900">#{order.id}</span>
                   <span
-                    className={`px-2.5 py-0.5 text-xs font-bold rounded-full uppercase tracking-wide ${order.status === 'Delivered'
+                    className={`px-2.5 py-0.5 text-xs font-bold rounded-full uppercase tracking-wide ${
+                      order.status === 'Delivered'
                         ? 'bg-green-100 text-green-800'
                         : order.status === 'Shipped'
                           ? 'bg-blue-100 text-blue-800'
                           : order.status === 'Cancelled'
                             ? 'bg-red-100 text-red-800'
                             : 'bg-yellow-100 text-yellow-800'
-                      }`}
+                    }`}
                   >
                     {order.status}
                   </span>
                 </div>
                 <div className="text-sm text-gray-500 flex gap-4">
-                  <span>{new Date(order.date).toLocaleDateString(undefined, { dateStyle: 'medium' })}</span>
+                  <span>
+                    {new Date(order.date).toLocaleDateString(undefined, { dateStyle: 'medium' })}
+                  </span>
                   <span>•</span>
                   <span className="font-semibold text-gray-900">₹{order.total.toFixed(2)}</span>
                 </div>
@@ -77,7 +82,9 @@ const OrdersList: React.FC = () => {
                 </button>
                 <button
                   className="flex-1 md:flex-none px-4 py-2 bg-brand-primary text-white rounded-lg text-sm font-bold shadow-sm hover:bg-brand-dark transition-colors"
-                  onClick={() => {/* Mock reorder navigation */ }}
+                  onClick={() => {
+                    /* Mock reorder navigation */
+                  }}
                 >
                   Reorder
                 </button>

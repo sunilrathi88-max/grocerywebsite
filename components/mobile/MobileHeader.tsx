@@ -58,9 +58,15 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({
           onChange={(e) => onSearchChange(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder="Search for spices, masalas..."
-          className="w-full bg-white dark:bg-stone-800 border-none rounded-full py-2.5 pl-10 pr-4 text-sm shadow-sm focus:ring-2 focus:ring-amber-500/50 text-stone-900 dark:text-stone-100 placeholder-stone-500 dark:placeholder-stone-400"
+          className="w-full bg-white dark:bg-stone-800 border-none rounded-full py-2.5 pl-10 pr-12 text-sm shadow-sm focus:ring-2 focus:ring-amber-500/50 text-stone-900 dark:text-stone-100 placeholder-stone-500 dark:placeholder-stone-400"
         />
-        <SearchIcon className="absolute left-3 top-2.5 text-stone-500 dark:text-stone-400 w-5 h-5" />
+        <SearchIcon className="absolute left-3 top-2.5 text-stone-500 dark:text-stone-400 w-5 h-5 pointer-events-none" />
+        <button
+          onClick={() => navigate(`/shop?search=${encodeURIComponent(searchQuery)}`)}
+          className="absolute right-1 top-1 bottom-1 px-3 bg-amber-500 text-white rounded-full text-xs font-bold hover:bg-amber-600 transition-colors"
+        >
+          GO
+        </button>
       </div>
     </header>
   );

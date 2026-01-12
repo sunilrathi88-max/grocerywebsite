@@ -62,10 +62,10 @@ const cardVariants = {
     opacity: 1,
     y: 0,
     transition: {
-      type: "spring",
+      type: 'spring',
       stiffness: 40,
-      damping: 15
-    }
+      damping: 15,
+    },
   },
 };
 
@@ -77,7 +77,7 @@ const ShopByCategory: React.FC<ShopByCategoryProps> = ({ onSelectCategory }) => 
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, margin: '-100px' }}
             transition={{ duration: 0.6 }}
             className="text-3xl md:text-5xl font-serif font-bold text-brand-dark mb-6"
           >
@@ -90,7 +90,7 @@ const ShopByCategory: React.FC<ShopByCategoryProps> = ({ onSelectCategory }) => 
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
+          viewport={{ once: true, margin: '-50px' }}
         >
           {categories.map((cat) => (
             <motion.div

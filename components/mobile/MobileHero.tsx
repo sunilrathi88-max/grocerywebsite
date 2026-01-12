@@ -53,7 +53,9 @@ const MobileHero: React.FC<MobileHeroProps> = ({
                 </>
               )}
             </h2>
-            {description && <p className="text-white/95 text-sm mb-5 font-medium drop-shadow-sm">{description}</p>}
+            {description && (
+              <p className="text-white/95 text-sm mb-5 font-medium drop-shadow-sm">{description}</p>
+            )}
             <button
               onClick={ctaAction}
               className="bg-white text-amber-800 px-6 py-2.5 rounded-full font-bold text-sm shadow-xl active:scale-95 transition-all flex items-center gap-2 hover:bg-gray-50"

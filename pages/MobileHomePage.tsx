@@ -9,7 +9,7 @@ import {
   MobileCookingWidget,
   MobileValuePack,
 } from '../components/mobile';
-import MobileBottomNavMinimal from '../components/mobile/MobileBottomNavMinimal';
+
 
 interface MobileHomePageProps {
   products: Product[];
@@ -32,9 +32,9 @@ const MobileHomePage: React.FC<MobileHomePageProps> = ({
   onSearchChange,
   handleAddToCart,
   handleToggleWishlist,
-  setSelectedProduct,
+  setSelectedProduct: _setSelectedProduct,
   onCartClick,
-  addToast,
+  addToast: _addToast,
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -101,18 +101,15 @@ const MobileHomePage: React.FC<MobileHomePageProps> = ({
       {/* Cook Your Cravings */}
       <MobileCookingWidget onSelectOption={handleCookingOption} />
 
-      {/* Value Pack Promo */}
-      <MobileValuePack
-        badge="Value Pack"
-        title="Essential Masala Combo"
-        description="The 4 basic spices every Indian kitchen needs."
-        linkText="View Bundle"
-        onLinkClick={() => navigate('/shop?category=combos')}
-        imageUrl={valuePackImage}
-      />
-
-      {/* Bottom Navigation */}
-      <MobileBottomNavMinimal currentPath={location.pathname} />
+      {/* Shop All Button */}
+      <div className="px-4 py-8 mb-20 text-center">
+        <button
+          onClick={() => navigate('/shop')}
+          className="w-full bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 py-3 rounded-xl font-bold text-lg shadow-lg hover:bg-stone-800 transition-colors"
+        >
+          Shop All Products
+        </button>
+      </div>
     </div>
   );
 };
