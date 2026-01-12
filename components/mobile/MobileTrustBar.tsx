@@ -34,25 +34,27 @@ interface MobileTrustBarProps {
 const MobileTrustBar: React.FC<MobileTrustBarProps> = ({ items = defaultItems }) => {
   return (
     <section className="px-4 py-2">
-      <div className="flex justify-between items-start text-center bg-white dark:bg-stone-800 p-4 rounded-xl shadow-sm border border-amber-50 dark:border-stone-700">
+      <div className="flex overflow-x-auto gap-3 pb-2 scrollbar-hide -mx-4 px-4">
         {items.map((item, index) => (
-          <React.Fragment key={index}>
-            <div className="flex flex-col items-center gap-1 w-1/3">
-              <div className="bg-amber-100 dark:bg-amber-900/30 p-2 rounded-full text-amber-600 mb-1">
-                {item.icon}
-              </div>
-              <span className="text-xs font-semibold text-stone-900 dark:text-stone-100">
+          <div
+            key={index}
+            className="flex-shrink-0 flex items-center gap-2 bg-amber-50 dark:bg-stone-800/50 px-3 py-2 rounded-full border border-amber-100 dark:border-stone-700 whitespace-nowrap"
+          >
+            <div className="text-amber-600 dark:text-amber-500">
+              {item.icon}
+            </div>
+            <div className="flex flex-col leading-none">
+              <span className="text-[10px] uppercase font-bold text-stone-900 dark:text-stone-100 mb-0.5">
                 {item.title}
               </span>
-              <span className="text-[10px] text-stone-500 dark:text-stone-400 leading-tight">
+              <span className="text-[9px] text-stone-500 dark:text-stone-400">
                 {item.subtitle}
               </span>
             </div>
-            {index < items.length - 1 && (
-              <div className="w-px h-12 bg-gray-200 dark:bg-gray-700 self-center" />
-            )}
-          </React.Fragment>
+          </div>
         ))}
+        {/* Spacer for right padding in scroll */}
+        <div className="w-1 flex-shrink-0" />
       </div>
     </section>
   );
