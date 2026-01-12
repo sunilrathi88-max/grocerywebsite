@@ -33,6 +33,7 @@ import { useWishlist } from './hooks/useWishlist';
 import { useProductFilter } from './hooks/useProductFilter';
 import { useProducts } from './hooks/useProducts';
 import { useUserOrders } from './hooks/useUserOrders';
+import { useIsMobile } from './hooks/useIsMobile';
 
 // Mock Data
 import { MOCK_POSTS, MOCK_RECIPES } from './data';
@@ -728,6 +729,10 @@ const App: React.FC = () => {
   const orgSchema = generateOrganizationSchema();
   const GlobalSEO = <SEO title="" description="" structuredData={orgSchema} />;
 
+  // Check if mobile for hiding desktop layout on mobile home
+  const isMobile = useIsMobile(768);
+  const isHomePage = location.pathname === '/';
+
   return (
     <HelmetProvider>
       <ABTestProvider>
@@ -752,26 +757,29 @@ const App: React.FC = () => {
               structuredDataId="organization-schema"
             />
 
-            <FreeShippingBanner />
+            {/* Hide desktop header on mobile home */}
+            {!(isMobile && isHomePage) && <FreeShippingBanner />}
 
-            <Header
-              cartItems={cartItems}
-              wishlistItemCount={wishlistItemCount}
-              searchQuery={searchQuery}
-              onSearchChange={setSearchQuery}
-              onCartClick={() => setIsCartOpen(true)}
-              onWishlistClick={() => setIsWishlistOpen(true)}
-              onMobileMenuClick={() => setIsMobileMenuOpen((prev) => !prev)}
-              isLoggedIn={isLoggedIn}
-              isAdmin={!!currentUser?.isAdmin}
-              onLoginClick={() => setAuthModalOpen(true)}
-              onLogoutClick={handleLogout}
-              allProducts={products}
-              onSelectProduct={setSelectedProduct}
-              categories={categories}
-              onSelectCategory={handleSelectCategoryAndClose}
-              onRemoveItem={removeFromCart}
-            />
+            {!(isMobile && isHomePage) && (
+              <Header
+                cartItems={cartItems}
+                wishlistItemCount={wishlistItemCount}
+                searchQuery={searchQuery}
+                onSearchChange={setSearchQuery}
+                onCartClick={() => setIsCartOpen(true)}
+                onWishlistClick={() => setIsWishlistOpen(true)}
+                onMobileMenuClick={() => setIsMobileMenuOpen((prev) => !prev)}
+                isLoggedIn={isLoggedIn}
+                isAdmin={!!currentUser?.isAdmin}
+                onLoginClick={() => setAuthModalOpen(true)}
+                onLogoutClick={handleLogout}
+                allProducts={products}
+                onSelectProduct={setSelectedProduct}
+                categories={categories}
+                onSelectCategory={handleSelectCategoryAndClose}
+                onRemoveItem={removeFromCart}
+              />
+            )}
 
             <Routes>
               <Route
@@ -1164,9 +1172,12 @@ const App: React.FC = () => {
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
 
-            <React.Suspense fallback={<div className="h-64 bg-gray-100" />}>
-              <Footer onSelectCategory={handleSelectCategoryAndClose} />
-            </React.Suspense>
+            {/* Hide Footer on mobile home */}
+            {!(isMobile && isHomePage) && (
+              <React.Suspense fallback={<div className="h-64 bg-gray-100" />}>
+                <Footer onSelectCategory={handleSelectCategoryAndClose} />
+              </React.Suspense>
+            )}
 
             <ToastContainer
               toasts={toasts}
