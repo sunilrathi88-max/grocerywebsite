@@ -143,7 +143,7 @@ const Cart: React.FC<CartProps> = ({
                 return (
                   <m.div
                     key={item.id}
-                    className="flex items-center justify-between bg-white p-3 rounded-lg shadow-sm border border-gray-100"
+                    className="flex flex-col gap-3 bg-white p-3 rounded-lg shadow-sm border border-gray-100"
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: 20, height: 0 }}
@@ -151,62 +151,68 @@ const Cart: React.FC<CartProps> = ({
                     layout
                     data-testid="cart-item"
                   >
-                    <div className="flex items-center gap-4">
+                    {/* Product info row */}
+                    <div className="flex items-center gap-3">
                       <OptimizedImage
                         src={item.image}
                         alt={item.name}
-                        className="w-16 h-16 object-cover rounded-md bg-gray-200"
+                        className="w-14 h-14 object-cover rounded-md bg-gray-200 flex-shrink-0"
                         type="thumbnail"
                         priority="high"
-                        width={64}
-                        height={64}
+                        width={56}
+                        height={56}
                         onError={imageErrorHandlers.thumb}
                       />
-                      <div>
-                        <p className="font-bold text-brand-dark dark:text-white leading-tight">
+                      <div className="flex-1 min-w-0">
+                        <p className="font-bold text-brand-dark dark:text-white leading-tight text-sm truncate">
                           {item.name}
                         </p>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">{item.weight}</p>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                        <p className="text-xs text-gray-500 dark:text-gray-400">{item.weight}</p>
+                        <p className="text-sm font-bold text-brand-primary">
                           ₹{item.price.toFixed(2)}
                         </p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2">
+                    {/* Controls row */}
+                    <div className="flex items-center justify-between">
                       {isItemLoading ? (
-                        <div className="w-[140px] flex justify-center items-center">
-                          <Spinner className="h-6 w-6 text-brand-primary" />
+                        <div className="w-full flex justify-center items-center py-2">
+                          <Spinner className="h-5 w-5 text-brand-primary" />
                         </div>
                       ) : (
                         <>
-                          <m.button
-                            onClick={() => handleQuantityChange(item, item.quantity - 1)}
-                            className="p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-                            whileTap={{ scale: 0.9 }}
-                          >
-                            <MinusIcon />
-                          </m.button>
-                          <m.span
-                            className="w-8 text-center font-bold"
-                            key={item.quantity}
-                            initial={{ scale: 1.2 }}
-                            animate={{ scale: 1 }}
-                          >
-                            {item.quantity}
-                          </m.span>
-                          <m.button
-                            onClick={() => handleQuantityChange(item, item.quantity + 1)}
-                            className="p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors disabled:text-gray-300 disabled:cursor-not-allowed disabled:hover:bg-transparent"
-                            disabled={item.quantity >= (item.stock || 999)}
-                            whileTap={{ scale: 0.9 }}
-                          >
-                            <PlusIcon />
-                          </m.button>
+                          <div className="flex items-center gap-1 bg-gray-100 dark:bg-gray-800 rounded-full px-2 py-1">
+                            <m.button
+                              onClick={() => handleQuantityChange(item, item.quantity - 1)}
+                              className="p-1.5 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                              whileTap={{ scale: 0.9 }}
+                              aria-label="Decrease quantity"
+                            >
+                              <MinusIcon className="w-4 h-4" />
+                            </m.button>
+                            <m.span
+                              className="w-8 text-center font-bold text-sm"
+                              key={item.quantity}
+                              initial={{ scale: 1.2 }}
+                              animate={{ scale: 1 }}
+                            >
+                              {item.quantity}
+                            </m.span>
+                            <m.button
+                              onClick={() => handleQuantityChange(item, item.quantity + 1)}
+                              className="p-1.5 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors disabled:text-gray-300 disabled:cursor-not-allowed"
+                              disabled={item.quantity >= (item.stock || 999)}
+                              whileTap={{ scale: 0.9 }}
+                              aria-label="Increase quantity"
+                            >
+                              <PlusIcon className="w-4 h-4" />
+                            </m.button>
+                          </div>
                           <m.button
                             onClick={() => handleQuantityChange(item, 0)}
-                            className="p-1 rounded-full text-red-500 hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors ml-2 flex items-center gap-1 px-2"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
+                            className="flex items-center gap-1 px-3 py-1.5 rounded-full text-red-500 bg-red-50 hover:bg-red-100 dark:bg-red-900/30 dark:hover:bg-red-900/50 transition-colors"
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
                             aria-label="Remove item"
                           >
                             <TrashIcon className="w-4 h-4" />
@@ -283,8 +289,8 @@ const Cart: React.FC<CartProps> = ({
             onClick={canCheckout ? onCheckout : undefined}
             disabled={!canCheckout || !!loadingState.type}
             className={`mt-4 block w-full text-center bg-brand-primary text-brand-dark font-bold py-3 rounded-full shadow-lg transition-all duration-300 ${!canCheckout || !!loadingState.type
-                ? 'bg-gray-400 cursor-not-allowed'
-                : 'hover:bg-opacity-90 transform hover:scale-105'
+              ? 'bg-gray-400 cursor-not-allowed'
+              : 'hover:bg-opacity-90 transform hover:scale-105'
               }`}
             data-testid="checkout-btn"
           >
