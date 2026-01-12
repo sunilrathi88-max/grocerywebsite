@@ -32,6 +32,7 @@ const MobileHero: React.FC<MobileHeroProps> = ({
             className="w-full h-full object-cover"
             width={400}
             height={256}
+            priority="high"
           />
           {/* Gradient Overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />

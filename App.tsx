@@ -131,8 +131,8 @@ const OrderConfirmationRoute = ({
         addToast={addToast}
         discount={0}
         promoCode=""
-        onApplyPromoCode={() => {}}
-        onRemovePromoCode={() => {}}
+        onApplyPromoCode={() => { }}
+        onRemovePromoCode={() => { }}
         subtotal={0}
         shippingCost={0}
       />
@@ -730,7 +730,8 @@ const App: React.FC = () => {
   const GlobalSEO = <SEO title="" description="" structuredData={orgSchema} />;
 
   // Check if mobile for hiding desktop layout on mobile pages
-  const isMobile = useIsMobile(768);
+  // Use 1024px breakpoint to include tablets in mobile view
+  const isMobile = useIsMobile(1024);
   const isMobileLayoutPage =
     location.pathname === '/' ||
     location.pathname === '/shop' ||
@@ -1386,16 +1387,18 @@ const App: React.FC = () => {
               {/* Newsletter Popup - Shows after scroll or delay */}
               <NewsletterPopup delayMs={8000} />
             </React.Suspense>
-            <React.Suspense fallback={null}>
-              <MobileBottomNav
-                cartItemCount={cartItems.reduce((acc, item) => acc + item.quantity, 0)}
-                wishlistItemCount={wishlistItems.length}
-                onOpenCart={() => setIsCartOpen(true)}
-                onOpenWishlist={() => setIsWishlistOpen(true)}
-                onOpenMenu={() => setIsMobileMenuOpen((prev) => !prev)}
-                currentView={currentView}
-              />
-            </React.Suspense>
+            {isMobile && (
+              <React.Suspense fallback={null}>
+                <MobileBottomNav
+                  cartItemCount={cartItems.reduce((acc, item) => acc + item.quantity, 0)}
+                  wishlistItemCount={wishlistItems.length}
+                  onOpenCart={() => setIsCartOpen(true)}
+                  onOpenWishlist={() => setIsWishlistOpen(true)}
+                  onOpenMenu={() => setIsMobileMenuOpen((prev) => !prev)}
+                  currentView={currentView}
+                />
+              </React.Suspense>
+            )}
 
             {/* Global UI Elements */}
             <React.Suspense fallback={null}>

@@ -64,7 +64,7 @@ interface ResponsiveHomePageProps {
 }
 
 const ResponsiveHomePage: React.FC<ResponsiveHomePageProps> = (props) => {
-  const isMobile = useIsMobile(768);
+  const isMobile = useIsMobile(1024);
 
   if (isMobile) {
     return (
@@ -84,7 +84,6 @@ const ResponsiveHomePage: React.FC<ResponsiveHomePageProps> = (props) => {
           handleAddToCart={props.handleAddToCart}
           handleToggleWishlist={props.handleToggleWishlist}
           setSelectedProduct={props.setSelectedProduct}
-          onMenuClick={props.onMenuClick}
           onCartClick={props.onCartClick}
           addToast={props.addToast}
         />

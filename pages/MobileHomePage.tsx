@@ -20,7 +20,6 @@ interface MobileHomePageProps {
   handleAddToCart: (product: Product, variant: Variant, quantity?: number) => void;
   handleToggleWishlist: (product: Product) => void;
   setSelectedProduct: (product: Product | null) => void;
-  onMenuClick: () => void;
   onCartClick: () => void;
   addToast: (msg: string, type: ToastMessage['type']) => void;
 }
@@ -34,7 +33,6 @@ const MobileHomePage: React.FC<MobileHomePageProps> = ({
   handleAddToCart,
   handleToggleWishlist,
   setSelectedProduct,
-  onMenuClick,
   onCartClick,
   addToast,
 }) => {
@@ -71,7 +69,6 @@ const MobileHomePage: React.FC<MobileHomePageProps> = ({
         cartItemCount={cartItemCount}
         searchQuery={searchQuery}
         onSearchChange={onSearchChange}
-        onMenuClick={onMenuClick}
         onCartClick={onCartClick}
       />
 
