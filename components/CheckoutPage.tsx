@@ -630,17 +630,17 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
                     billingAddress:
                       (saved.useSameAddress ?? useSameAddress)
                         ? {
-                            ...shippingAddress,
-                            ...saved.shippingAddress,
-                            id: '',
-                            type: 'Billing' as const,
-                          }
+                          ...shippingAddress,
+                          ...saved.shippingAddress,
+                          id: '',
+                          type: 'Billing' as const,
+                        }
                         : {
-                            ...billingAddress,
-                            ...saved.billingAddress,
-                            id: '',
-                            type: 'Billing' as const,
-                          },
+                          ...billingAddress,
+                          ...saved.billingAddress,
+                          id: '',
+                          type: 'Billing' as const,
+                        },
                     deliveryMethod: 'Standard' as const,
                     paymentMethod: saved.paymentMethod || paymentMethod || 'Online Payment',
                     shippingCost: shippingCost, // shippingCost is calculated from cart items
@@ -671,7 +671,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
                   console.error(err);
                   setSubmitError(
                     'Failed to create order after payment: ' +
-                      (err instanceof Error ? err.message : 'Unknown error')
+                    (err instanceof Error ? err.message : 'Unknown error')
                   );
                 } finally {
                   setIsSubmitting(false);
@@ -703,7 +703,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
       <CheckoutStepper currentStep={currentStep === 'auth' ? 'auth' : 'shipping'} />
 
       {currentStep === 'auth' ? (
-        <div className="max-w-4xl mx-auto mt-12 grid md:grid-cols-2 gap-12">
+        <div className="max-w-4xl mx-auto mt-12 grid grid-cols-1 md:grid-cols-2 gap-12">
           {/* Login Column */}
           <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
             <h3 className="text-2xl font-serif font-bold mb-6 text-brand-dark">

@@ -8,11 +8,15 @@ import { useCartStore } from '../store/cartStore';
 import { useWishlist } from '../hooks/useWishlist';
 import { Product, Variant } from '../types';
 import CountdownTimer from '../components/CountdownTimer';
+import SideModal from '../components/SideModal';
+import { useIsMobile } from '../hooks/useIsMobile';
 
 const OffersPage: React.FC = () => {
   const { products, isLoading: productsLoading } = useProducts();
   const addItem = useCartStore((state) => state.addItem);
   const { toggleWishlist } = useWishlist();
+  const isMobile = useIsMobile();
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   // State
   const [sortOrder, setSortOrder] = useState<
@@ -163,7 +167,7 @@ const OffersPage: React.FC = () => {
       {/* Sale Countdown */}
       <CountdownTimer endDate={saleEndDate} label="Limited Time Sale Ends In" />
 
-      <div className="bg-brand-secondary/20 py-12 mb-8">
+      <div className="bg-brand-primary/10 py-12 mb-8">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-4xl md:text-5xl font-serif font-bold text-brand-dark mb-4">
             Special Offers
@@ -173,46 +177,117 @@ const OffersPage: React.FC = () => {
           </p>
         </div>
       </div>
+
       <div
         id="products-section"
         className="grid grid-cols-1 md:grid-cols-[16rem_1fr] gap-8 container mx-auto px-4 py-8"
       >
-        <aside className="sticky top-24 h-fit">
-          <AdvancedFilters
-            showOnSale={showOnSale}
-            onToggleOnSale={() => setShowOnSale(!showOnSale)}
-            showInStock={showInStock}
-            onToggleInStock={() => setShowInStock(!showInStock)}
-            availableTags={availableTags}
-            selectedTags={selectedTags}
-            onToggleTag={handleToggleTag}
-            priceRange={{ min: priceRange[0], max: priceRange[1] }}
-            maxPrice={maxPrice}
-            onPriceChange={(max) => setPriceRange((prev) => [prev[0], max])}
-            origins={availableOrigins}
-            selectedOrigins={selectedOrigins}
-            onToggleOrigin={handleToggleOrigin}
-            heatLevels={availableHeatLevels}
-            selectedHeatLevels={selectedHeatLevels}
-            onToggleHeatLevel={handleToggleHeatLevel}
-            cuisines={availableCuisines}
-            selectedCuisines={selectedCuisines}
-            onToggleCuisine={handleToggleCuisine}
-            sizes={availableSizes}
-            selectedSizes={selectedSizes}
-            onToggleSize={handleToggleSize}
-            grinds={availableGrinds}
-            selectedGrinds={selectedGrinds}
-            onToggleGrind={handleToggleGrind}
-            grades={availableGrades}
-            selectedGrades={selectedGrades}
-            onToggleGrade={handleToggleGrade}
-          />
-        </aside>
+        {/* Mobile Filter Button */}
+        {isMobile && (
+          <div className="col-span-1 mb-4">
+            <button
+              onClick={() => setIsFilterOpen(true)}
+              className="w-full flex items-center justify-center gap-2 bg-white border border-gray-300 py-2.5 rounded-lg text-sm font-bold text-gray-700 shadow-sm"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+              </svg>
+              Filters & Sort
+            </button>
+          </div>
+        )}
+
+        {/* Desktop Sidebar */}
+        {!isMobile && (
+          <aside className="sticky top-24 h-fit">
+            <AdvancedFilters
+              showOnSale={showOnSale}
+              onToggleOnSale={() => setShowOnSale(!showOnSale)}
+              showInStock={showInStock}
+              onToggleInStock={() => setShowInStock(!showInStock)}
+              availableTags={availableTags}
+              selectedTags={selectedTags}
+              onToggleTag={handleToggleTag}
+              priceRange={{ min: priceRange[0], max: priceRange[1] }}
+              maxPrice={maxPrice}
+              onPriceChange={(max) => setPriceRange((prev) => [prev[0], max])}
+              origins={availableOrigins}
+              selectedOrigins={selectedOrigins}
+              onToggleOrigin={handleToggleOrigin}
+              heatLevels={availableHeatLevels}
+              selectedHeatLevels={selectedHeatLevels}
+              onToggleHeatLevel={handleToggleHeatLevel}
+              cuisines={availableCuisines}
+              selectedCuisines={selectedCuisines}
+              onToggleCuisine={handleToggleCuisine}
+              sizes={availableSizes}
+              selectedSizes={selectedSizes}
+              onToggleSize={handleToggleSize}
+              grinds={availableGrinds}
+              selectedGrinds={selectedGrinds}
+              onToggleGrind={handleToggleGrind}
+              grades={availableGrades}
+              selectedGrades={selectedGrades}
+              onToggleGrade={handleToggleGrade}
+            />
+          </aside>
+        )}
+
+        {/* Mobile Sidebar Modal */}
+        {isMobile && (
+          <SideModal isOpen={isFilterOpen} onClose={() => setIsFilterOpen(false)} title="Filters">
+            <div className="p-4 pb-20">
+              <AdvancedFilters
+                showOnSale={showOnSale}
+                onToggleOnSale={() => setShowOnSale(!showOnSale)}
+                showInStock={showInStock}
+                onToggleInStock={() => setShowInStock(!showInStock)}
+                availableTags={availableTags}
+                selectedTags={selectedTags}
+                onToggleTag={handleToggleTag}
+                priceRange={{ min: priceRange[0], max: priceRange[1] }}
+                maxPrice={maxPrice}
+                onPriceChange={(max) => setPriceRange((prev) => [prev[0], max])}
+                origins={availableOrigins}
+                selectedOrigins={selectedOrigins}
+                onToggleOrigin={handleToggleOrigin}
+                heatLevels={availableHeatLevels}
+                selectedHeatLevels={selectedHeatLevels}
+                onToggleHeatLevel={handleToggleHeatLevel}
+                cuisines={availableCuisines}
+                selectedCuisines={selectedCuisines}
+                onToggleCuisine={handleToggleCuisine}
+                sizes={availableSizes}
+                selectedSizes={selectedSizes}
+                onToggleSize={handleToggleSize}
+                grinds={availableGrinds}
+                selectedGrinds={selectedGrinds}
+                onToggleGrind={handleToggleGrind}
+                grades={availableGrades}
+                selectedGrades={selectedGrades}
+                onToggleGrade={handleToggleGrade}
+              />
+              <div className="mt-6 pt-4 border-t border-gray-100 flex gap-3">
+                <button
+                  onClick={handleClearFilters}
+                  className="flex-1 py-3 bg-gray-100 text-gray-800 font-bold rounded-lg"
+                >
+                  Clear
+                </button>
+                <button
+                  onClick={() => setIsFilterOpen(false)}
+                  className="flex-1 py-3 bg-brand-primary text-white font-bold rounded-lg"
+                >
+                  Show Results
+                </button>
+              </div>
+            </div>
+          </SideModal>
+        )}
 
         <div className="min-w-0">
           <div className="flex justify-between items-center mb-6">
-            <p className="text-gray-600">Showing {filteredProducts.length} results</p>
+            <p className="text-gray-600 font-medium">Showing {filteredProducts.length} deals</p>
             <SortDropdown
               currentSort={sortOrder}
               onSortChange={(val) =>
@@ -229,7 +304,7 @@ const OffersPage: React.FC = () => {
             onAddToCart={handleAddToCart}
             onToggleWishlist={handleToggleWishlistFn}
             comparisonIds={new Set<number>()}
-            onNotifyMe={() => {}}
+            onNotifyMe={() => { }}
             onClearFilters={handleClearFilters}
           />
         </div>
