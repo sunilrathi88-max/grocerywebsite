@@ -51,15 +51,15 @@ const MobileHomePage: React.FC<MobileHomePageProps> = ({
   // Handle cooking option selection
   const handleCookingOption = (optionId: string) => {
     const kitNames: Record<string, string> = {
-      dal: 'Dal Tadka Kit',
-      chai: 'Masala Chai Kit',
-      curry: 'Rich Curry Kit',
-      biryani: 'Biryani Masala Kit',
+      dal: 'Dal Tadka',
+      chai: 'Masala Chai',
+      curry: 'Curry Masala',
+      biryani: 'Biryani Masala',
     };
 
-    // Find related products and add to cart
+    // Navigate to shop with search query
     const kitName = kitNames[optionId] || 'Spice Kit';
-    addToast(`Added ${kitName} to cart!`, 'success');
+    navigate(`/shop?search=${encodeURIComponent(kitName)}`);
   };
 
   return (
@@ -93,7 +93,7 @@ const MobileHomePage: React.FC<MobileHomePageProps> = ({
         products={mostLovedProducts}
         onAddToCart={(product, variant) => handleAddToCart(product, variant, 1)}
         onToggleWishlist={handleToggleWishlist}
-        onSelectProduct={setSelectedProduct}
+        onSelectProduct={(product) => navigate(`/product/${product.id}`)}
         wishlistedIds={wishlistedIds}
         onViewAll={() => navigate('/shop')}
       />
