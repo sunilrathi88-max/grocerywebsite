@@ -5,6 +5,7 @@ export interface Review {
   author: string;
   rating: number;
   comment: string;
+  title?: string;
   verifiedPurchase?: boolean;
   date?: string;
   images?: string[];
