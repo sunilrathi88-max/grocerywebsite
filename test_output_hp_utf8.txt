@@ -1,0 +1,86 @@
+﻿
+> tattva-co.---indian-gourmet-products@0.0.0 test
+> jest components/__tests__/HomePage.test.tsx
+
+node.exe : FAIL compon
+ents/__tests__/HomePag
+e.test.tsx
+At line:1 char:1
++ & "C:\Program Files\
+nodejs/node.exe" "C:\U
+sers\shubh\AppData\Roa
+ming\ ...
++ ~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~
+    + CategoryInfo    
+          : NotSpeci  
+  fied: (FAIL compo   
+ nents...mePage.te    
+st.tsx:String) []    
+, RemoteException
+    + FullyQualifiedE 
+   rrorId : NativeCo  
+  mmandError
+ 
+  ΓùÅ Test suite 
+failed to run
+
+    Cannot find 
+module '../HomePage' 
+from 'components/__tes
+ts__/HomePage.test.tsx
+'
+
+    [0m [90m 2 
+|[39m 
+[36mimport[39m { 
+render[33m,[39m 
+screen } 
+[36mfrom[39m [32m'@
+testing-library/react'
+[39m[33m;[39m
+     [90m 3 |[39m 
+[36mimport[39m [32m
+'@testing-library/jest
+-dom'[39m[33m;[39m
+    [31m[1m>[22m[3
+9m[90m 4 |[39m 
+[36mimport[39m 
+[33mHomePage[39m 
+[36mfrom[39m [32m'.
+./HomePage'[39m[33m;
+[39m
+     [90m   |[39m 
+[31m[1m^[22m[39m
+     [90m 5 |[39m 
+[36mimport[39m { 
+[33mProduct[39m } 
+[36mfrom[39m [32m'.
+./../types'[39m[33m;
+[39m
+     [90m 6 |[39m
+     [90m 7 |[39m 
+[90m// Mock 
+dependencies[39m[0m
+
+      at Resolver._thr
+owModNotFoundError (no
+de_modules/jest-resolv
+e/build/index.js:863:1
+1)
+      at 
+Object.<anonymous> (co
+mponents/__tests__/Hom
+ePage.test.tsx:4:1)
+
+Test Suites: 1 
+failed, 1 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        4.611 s
+Ran all test suites 
+matching components/__
+tests__/HomePage.test.
+tsx.

@@ -1,98 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { GiftIcon } from './icons/GiftIcon';
 import { SparklesIcon } from './icons/SparklesIcon';
 import { TruckIcon } from './icons/TruckIcon';
 import { ShoppingBagIcon } from './icons/ShoppingBagIcon';
 import { BadgeCollection } from './BadgeCollection';
 
-interface LoyaltyPoints {
-  current: number;
-  lifetime: number;
-  tier: 'Bronze' | 'Silver' | 'Gold' | 'Platinum';
-  nextTierPoints: number;
-}
-
-interface PointsHistory {
-  id: string;
-  date: string;
-  description: string;
-  points: number;
-  type: 'earned' | 'redeemed';
-}
+import { useLoyaltyStore } from '../store/loyaltyStore';
 
 export const LoyaltyPointsTracker: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'points' | 'badges'>('points');
 
-  const [points, setPoints] = useState<LoyaltyPoints>(() => {
-    const saved = localStorage.getItem('tattva_loyalty_points');
-    return saved
-      ? JSON.parse(saved)
-      : {
-          current: 1250,
-          lifetime: 3800,
-          tier: 'Silver',
-          nextTierPoints: 5000,
-        };
-  });
-
-  const [history, setHistory] = useState<PointsHistory[]>(() => {
-    const saved = localStorage.getItem('tattva_loyalty_history');
-    return saved
-      ? JSON.parse(saved)
-      : [
-          {
-            id: '1',
-            date: '2024-01-15',
-            description: 'Purchase #1234',
-            points: 150,
-            type: 'earned',
-          },
-          {
-            id: '2',
-            date: '2024-01-10',
-            description: 'Product Review',
-            points: 50,
-            type: 'earned',
-          },
-          {
-            id: '4',
-            date: '2024-01-05',
-            description: 'Purchase #1233',
-            points: 220,
-            type: 'earned',
-          },
-          {
-            id: '5',
-            date: '2024-01-01',
-            description: 'Welcome Bonus',
-            points: 100,
-            type: 'earned',
-          },
-        ];
-  });
-
-  useEffect(() => {
-    localStorage.setItem('tattva_loyalty_points', JSON.stringify(points));
-  }, [points]);
-
-  useEffect(() => {
-    localStorage.setItem('tattva_loyalty_history', JSON.stringify(history));
-  }, [history]);
+  const { points, history, redeemPoints } = useLoyaltyStore();
 
   const handleRedeem = (amount: number, reward: string) => {
-    if (points.current >= amount) {
-      const newPoints = { ...points, current: points.current - amount };
-      setPoints(newPoints);
-
-      const newHistoryItem: PointsHistory = {
-        id: Date.now().toString(),
-        date: new Date().toISOString(),
-        description: `Redeemed: ${reward}`,
-        points: -amount,
-        type: 'redeemed',
-      };
-      setHistory([newHistoryItem, ...history]);
+    const success = redeemPoints(amount, reward);
+    if (success) {
       alert(`Successfully redeemed ${reward}!`);
+    } else {
+      alert('Not enough points to redeem this reward.');
     }
   };
 

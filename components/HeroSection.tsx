@@ -1,6 +1,5 @@
 import React from 'react';
 import { Button } from './Button';
-import { OptimizedImage } from './OptimizedImage';
 
 // Pure CSS animated gradient background (shader fallback)
 const AnimatedGradientBackground: React.FC = () => (
@@ -8,21 +7,14 @@ const AnimatedGradientBackground: React.FC = () => (
     <div
       className="absolute inset-0"
       style={{
-        background: 'linear-gradient(135deg, #ff6a1a 0%, #c73c00 25%, #FD4912 50%, #1a1a1a 100%)',
+        background: 'linear-gradient(135deg, #1a1a1a 0%, #2D8B4F 40%, #E67E22 100%)', // Using brand colors: Green -> Orange
         backgroundSize: '400% 400%',
-        animation: 'gradientFlow 12s ease infinite',
+        animation: 'gradientFlow 15s ease infinite',
+        opacity: 0.9,
       }}
     />
-    {/* Animated overlay for depth */}
-    <div
-      className="absolute inset-0 opacity-30"
-      style={{
-        background: 'radial-gradient(ellipse at 30% 70%, #ff6a1a 0%, transparent 50%)',
-        animation: 'pulseGlow 6s ease-in-out infinite',
-      }}
-    />
-    {/* Dark overlay for text readability */}
-    <div className="absolute inset-0 bg-black/70" />
+    {/* Dark overlay for text readability - Increased contrast */}
+    <div className="absolute inset-0 bg-black/60" />
     <style>{`
       @keyframes gradientFlow {
         0%, 100% { background-position: 0% 50%; }
@@ -80,10 +72,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold text-white leading-none tracking-tight drop-shadow-lg">
                 {title || 'Fresh Farm Spices.'}
               </h1>
-              <h2 className="text-4xl md:text-5xl lg:text-7xl font-bold text-brand-primary leading-none tracking-tight drop-shadow-md">
+              <h2 className="text-4xl md:text-5xl lg:text-7xl font-bold text-[#E67E22] leading-none tracking-tight drop-shadow-md">
+                {' '}
+                {/* Brand Orange */}
                 Real Stories.
               </h2>
-              <h2 className="text-4xl md:text-5xl lg:text-7xl font-bold text-gray-200 leading-none tracking-tight">
+              <h2 className="text-4xl md:text-5xl lg:text-7xl font-bold text-gray-100 leading-none tracking-tight">
                 No Middleman.
               </h2>
             </div>

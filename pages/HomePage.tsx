@@ -3,7 +3,7 @@ import { Product, Variant, ToastMessage } from '../types';
 import { useABTest } from '../src/context/ABTestContext'; // A/B Test Hook
 import HeroCarousel from '../components/HeroCarousel';
 import WhyChooseUs from '../components/WhyChooseUs';
-import CertificationsBanner from '../components/CertificationsBanner';
+
 import ShopByCategory from '../components/ShopByCategory';
 import CookingContextWidget from '../components/CookingContextWidget';
 import ShopByUseCase from '../components/ShopByUseCase';
@@ -20,6 +20,9 @@ import SortDropdown from '../components/SortDropdown';
 import AdvancedFilters from '../components/AdvancedFilters';
 import QuizModule from '../components/QuizModule';
 import { MOCK_TESTIMONIALS } from '../data/testimonials';
+import { TrustBadges, CERTIFICATION_BADGES } from '../components/TrustBadges';
+import LoyaltyWidget from '../components/LoyaltyWidget';
+import RecentlyViewed from '../components/RecentlyViewed';
 
 interface HomePageProps {
   products: Product[];
@@ -142,7 +145,7 @@ const HomePage: React.FC<HomePageProps> = ({
       <div id="most-loved-section">
         <FeaturedCollection
           title="Our Most Loved Masalas"
-          products={products.filter((p) => [4, 12, 29, 28, 27].includes(p.id))}
+          products={products.filter((p) => [4, 12, 29, 28].includes(p.id))}
           onAddToCart={handleAddToCartWithTracking}
           onToggleWishlist={handleToggleWishlist}
           wishlistedIds={wishlistedIds}
@@ -155,7 +158,20 @@ const HomePage: React.FC<HomePageProps> = ({
           }}
         />
       </div>
-      <CertificationsBanner className="mt-4 mb-8" />
+      {/* Certifications Banner Removed */}
+
+      {/* Trust & Certification Badges Section */}
+      <section className="py-12 bg-white">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl md:text-3xl font-serif font-bold text-neutral-900 mb-2">
+              Why Trust Rathi Naturals?
+            </h2>
+            <p className="text-neutral-600">Quality you can verify</p>
+          </div>
+          <TrustBadges certifications={CERTIFICATION_BADGES} variant="certification" />
+        </div>
+      </section>
 
       <div id="category-showcase">
         <ShopByCategory
@@ -186,6 +202,9 @@ const HomePage: React.FC<HomePageProps> = ({
 
       <WhyChooseUs />
 
+      {/* Loyalty Program Widget */}
+      <LoyaltyWidget />
+
       <React.Suspense fallback={<div>Loading Testimonials...</div>}>
         <Testimonials testimonials={MOCK_TESTIMONIALS} />
       </React.Suspense>
@@ -211,6 +230,9 @@ const HomePage: React.FC<HomePageProps> = ({
 
       <BrandStory />
 
+      {/* Featured Farmer Section */}
+      {/* Featured Farmer Section Removed */}
+
       {/* Personalized Recommendations */}
       <React.Suspense fallback={null}>
         <RecommendedProducts
@@ -220,6 +242,12 @@ const HomePage: React.FC<HomePageProps> = ({
           onNotifyMe={handleNotifyMe}
         />
       </React.Suspense>
+
+      {/* Recently Viewed Products */}
+      <RecentlyViewed
+        onSelectProduct={setSelectedProduct}
+        onAddToCart={(product, variant) => handleAddToCartWithTracking(product, variant, 1)}
+      />
 
       <BlogStrip />
 

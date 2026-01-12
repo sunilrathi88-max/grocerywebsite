@@ -82,6 +82,7 @@ const AdvancedFilters: React.FC<AdvancedFiltersProps> = ({
   onToggleGrade,
 }) => {
   const [isExpanded, setIsExpanded] = useState(true);
+  const [isAdvancedMode, setIsAdvancedMode] = useState(false);
 
   const activeFilterCount =
     (showOnSale ? 1 : 0) +
@@ -94,6 +95,15 @@ const AdvancedFilters: React.FC<AdvancedFiltersProps> = ({
     selectedGrinds.length +
     selectedGrades.length +
     (priceRange.max < maxPrice ? 1 : 0);
+
+  // Count advanced filter groups that have options
+  const advancedFilterCount = [
+    availableTags.length > 0,
+    grades.length > 0,
+    cuisines.length > 0,
+    sizes.length > 0,
+    grinds.length > 0,
+  ].filter(Boolean).length;
 
   return (
     <div className="w-full bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden transition-all duration-300">
@@ -117,10 +127,49 @@ const AdvancedFilters: React.FC<AdvancedFiltersProps> = ({
         />
       </button>
 
+      {/* Beginner/Advanced Mode Toggle */}
+      {isExpanded && (
+        <div className="px-5 pb-4 border-b border-gray-100">
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setIsAdvancedMode(false)}
+              className={`px-4 py-2 text-sm font-semibold rounded-full transition-all duration-200 ${
+                !isAdvancedMode
+                  ? 'bg-amber-500 text-white shadow-md'
+                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+              }`}
+            >
+              🔰 Beginner
+            </button>
+            <button
+              onClick={() => setIsAdvancedMode(true)}
+              className={`px-4 py-2 text-sm font-semibold rounded-full transition-all duration-200 ${
+                isAdvancedMode
+                  ? 'bg-amber-500 text-white shadow-md'
+                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+              }`}
+            >
+              ⚙️ Advanced
+            </button>
+          </div>
+          {!isAdvancedMode && advancedFilterCount > 0 && (
+            <p className="text-xs text-gray-500 mt-2">
+              Showing essential filters •{' '}
+              <button
+                onClick={() => setIsAdvancedMode(true)}
+                className="text-amber-600 hover:underline font-medium"
+              >
+                Show {advancedFilterCount} more filter groups
+              </button>
+            </p>
+          )}
+        </div>
+      )}
+
       {/* Filters Content */}
       <div
         id="filters-content"
-        className={`transition-all duration-500 ease-in-out overflow-hidden ${isExpanded ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}
+        className={`transition-all duration-500 ease-in-out overflow-hidden ${isExpanded ? 'max-h-[600px] opacity-100' : 'max-h-0 opacity-0'}`}
       >
         <div className="p-5 pt-0 space-y-6">
           {/* Quick Filters */}
@@ -138,11 +187,14 @@ const AdvancedFilters: React.FC<AdvancedFiltersProps> = ({
             </div>
           </div>
 
-          {/* Tags */}
-          {availableTags.length > 0 && (
+          {/* Tags - Advanced Only */}
+          {isAdvancedMode && availableTags.length > 0 && (
             <div className="space-y-3">
-              <h3 className="text-sm font-semibold text-gray-600 uppercase tracking-wide">
+              <h3 className="text-sm font-semibold text-gray-600 uppercase tracking-wide flex items-center gap-2">
                 Categories
+                <span className="text-xs bg-blue-100 text-blue-600 px-1.5 py-0.5 rounded">
+                  Advanced
+                </span>
               </h3>
               <div className="flex items-center flex-wrap gap-3">
                 {availableTags.map((tag) => (
@@ -158,10 +210,15 @@ const AdvancedFilters: React.FC<AdvancedFiltersProps> = ({
             </div>
           )}
 
-          {/* Grade */}
-          {grades && grades.length > 0 && (
+          {/* Grade - Advanced Only */}
+          {isAdvancedMode && grades && grades.length > 0 && (
             <div className="space-y-3">
-              <h3 className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Grade</h3>
+              <h3 className="text-sm font-semibold text-gray-600 uppercase tracking-wide flex items-center gap-2">
+                Grade
+                <span className="text-xs bg-blue-100 text-blue-600 px-1.5 py-0.5 rounded">
+                  Advanced
+                </span>
+              </h3>
               <div className="flex items-center flex-wrap gap-3">
                 {grades.map((grade) => (
                   <FilterButton
@@ -216,11 +273,14 @@ const AdvancedFilters: React.FC<AdvancedFiltersProps> = ({
             </div>
           )}
 
-          {/* Cuisine */}
-          {cuisines.length > 0 && (
+          {/* Cuisine - Advanced Only */}
+          {isAdvancedMode && cuisines.length > 0 && (
             <div className="space-y-3">
-              <h3 className="text-sm font-semibold text-gray-600 uppercase tracking-wide">
+              <h3 className="text-sm font-semibold text-gray-600 uppercase tracking-wide flex items-center gap-2">
                 Cuisine
+                <span className="text-xs bg-blue-100 text-blue-600 px-1.5 py-0.5 rounded">
+                  Advanced
+                </span>
               </h3>
               <div className="flex items-center flex-wrap gap-3">
                 {cuisines.map((cuisine) => (
@@ -236,10 +296,15 @@ const AdvancedFilters: React.FC<AdvancedFiltersProps> = ({
             </div>
           )}
 
-          {/* Size */}
-          {sizes.length > 0 && (
+          {/* Size - Advanced Only */}
+          {isAdvancedMode && sizes.length > 0 && (
             <div className="space-y-3">
-              <h3 className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Size</h3>
+              <h3 className="text-sm font-semibold text-gray-600 uppercase tracking-wide flex items-center gap-2">
+                Size
+                <span className="text-xs bg-blue-100 text-blue-600 px-1.5 py-0.5 rounded">
+                  Advanced
+                </span>
+              </h3>
               <div className="flex items-center flex-wrap gap-3">
                 {sizes.map((size) => (
                   <FilterButton
@@ -254,10 +319,15 @@ const AdvancedFilters: React.FC<AdvancedFiltersProps> = ({
             </div>
           )}
 
-          {/* Grind */}
-          {grinds.length > 0 && (
+          {/* Grind - Advanced Only */}
+          {isAdvancedMode && grinds.length > 0 && (
             <div className="space-y-3">
-              <h3 className="text-sm font-semibold text-gray-600 uppercase tracking-wide">Grind</h3>
+              <h3 className="text-sm font-semibold text-gray-600 uppercase tracking-wide flex items-center gap-2">
+                Grind
+                <span className="text-xs bg-blue-100 text-blue-600 px-1.5 py-0.5 rounded">
+                  Advanced
+                </span>
+              </h3>
               <div className="flex items-center flex-wrap gap-3">
                 {grinds.map((grind) => (
                   <FilterButton

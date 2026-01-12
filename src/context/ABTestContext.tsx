@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
+import { trackEvent } from '../../utils/analytics';
 
 type Variant = 'A' | 'B';
 
@@ -30,10 +31,23 @@ export const ABTestProvider: React.FC<ABTestProviderProps> = ({ children }) => {
     return newVariant;
   });
 
-  const trackConversion = (_eventName: string, _details?: Record<string, unknown>) => {
-    // In production, send to analytics
-    // console.log(`[A/B Test] Conversion: [${eventName}] for Variant [${variant}]`, details);
-    // suppressing console.log for lint
+  // Track experiment view on mount (simplified)
+  React.useEffect(() => {
+    trackEvent({
+      name: 'experiment_viewed',
+      data: { variant, test: 'global_ab_test' },
+    });
+  }, [variant]);
+
+  const trackConversion = (eventName: string, details?: Record<string, unknown>) => {
+    trackEvent({
+      name: 'purchase_completed', // Mapping generic conversion to specific event for now, or make flexible
+      data: {
+        variant,
+        conversionEvent: eventName,
+        ...details,
+      },
+    });
   };
 
   return (

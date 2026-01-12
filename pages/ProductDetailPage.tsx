@@ -6,34 +6,58 @@ import { ProductTabs } from '../components/ProductTabs';
 import { WeightSelector } from '../components/WeightSelector';
 import { QuantitySelector } from '../components/QuantitySelector';
 import { TrustBadges } from '../components/TrustBadges';
-import CertificationsBanner from '../components/CertificationsBanner';
-import { useCartStore } from '../store/cartStore';
-import ReviewsList from '../components/ReviewsList';
-import { GlobeIcon } from '../components/icons/GlobeIcon';
 
-import { MOCK_PRODUCTS } from '../data';
+import { useCartStore } from '../store/cartStore';
+import { ReviewWidget } from '../components/Reviews/ReviewWidget';
+import { GlobeIcon } from '../components/icons/GlobeIcon';
+import { StickyMobileCart } from '../components/StickyMobileCart';
+import { useRef, useEffect } from 'react';
+
+import { useProducts } from '../hooks/useProducts'; // Import hook
 import { getSimilarProducts } from '../utils/recommendations'; // Import recommendation logic
 import ProductSlider from '../components/ProductSlider'; // Import ProductSlider comp
 import { useWishlist } from '../hooks/useWishlist';
+import { useABTest } from '../src/context/ABTestContext';
 
-// Note: If useWishlist is not available in context, check other files.
-// Based on previous files, onToggleWishlist might need a dummy if not implemented contextually.
-// Actually, let's check imports in RecommendedProducts.tsx to be consistent.
-// It uses onToggleWishlist={() => {}} // Optional here.
-// But ProductDetailPage acts as a page, it should probably wire it up if possible.
-// For now, let's stick to the props expected by ProductSlider.
+// ...
 
 export default function ProductDetailPage() {
   const { id } = useParams<{ id: string }>();
   const addToCart = useCartStore((state) => state.addItem);
   const { toggleWishlist, wishlistItems } = useWishlist();
   const wishlistedIds = new Set(wishlistItems.map((p) => p.id));
+  const { products } = useProducts({ useMockData: true }); // Get products from hook
+  const { variant } = useABTest();
 
   const [selectedWeight, setSelectedWeight] = useState(0);
   const [quantity, setQuantity] = useState(1);
+  const [purchaseType, setPurchaseType] = useState<'one-time' | 'subscription'>('one-time');
+  const [showStickyCart, setShowStickyCart] = useState(false);
+  const mainCtaRef = useRef<HTMLDivElement>(null);
 
-  // Fetch product from mock data
-  const product = MOCK_PRODUCTS.find((p) => p.id === Number(id)) || MOCK_PRODUCTS[0];
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // Show sticky cart when main CTA is NOT intersecting (scrolled out of view)
+        // AND it's not above the viewport (scrolled past it)
+        setShowStickyCart(!entry.isIntersecting && entry.boundingClientRect.top < 0);
+      },
+      { threshold: 0 }
+    );
+    if (mainCtaRef.current) observer.observe(mainCtaRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  // Fetch product from data
+  const product = products.find((p) => p.id === Number(id));
+
+  if (!product) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-primary"></div>
+      </div>
+    );
+  }
 
   // Map variants to old 'sizes' structure for compatibility with existing UI components
   // In a real app, we'd update the components to use 'Variant' type directly.
@@ -61,16 +85,23 @@ export default function ProductDetailPage() {
 
   const handleAddToCart = () => {
     const selectedSize = displaySizes[selectedWeight];
+    const isSub = purchaseType === 'subscription';
+
+    // 10% discount for subscription
+    const finalPrice = isSub ? Math.round(selectedSize.price * 0.9) : selectedSize.price;
+
     addToCart({
-      id: `${product.id}-${selectedSize.size}`, // Composite ID
-      name: product.name,
-      price: selectedSize.price,
+      id: `${product.id}-${selectedSize.size}${isSub ? '-sub' : ''}`, // Unique ID for sub items
+      name: isSub ? `${product.name} (Sub)` : product.name,
+      price: finalPrice,
       quantity,
       weight: selectedSize.size,
       image: product.images[0],
-      stock: selectedSize.stock || 50, // Fallback if no stock data
+      stock: selectedSize.stock || 50,
+      isSubscription: isSub,
+      subscriptionInterval: isSub ? 'monthly' : undefined,
     });
-    alert('Added to cart!');
+    alert(`Added ${isSub ? 'subscription' : 'product'} to cart!`);
   };
 
   return (
@@ -128,10 +159,53 @@ export default function ProductDetailPage() {
             {/* Quantity */}
             <QuantitySelector value={quantity} onChange={setQuantity} />
 
+            {/* Subscription Toggle */}
+            <div className="p-4 bg-brand-primary/5 rounded-xl border border-brand-primary/20">
+              <div className="flex gap-4">
+                <label className="flex items-start gap-2 cursor-pointer flex-1">
+                  <input
+                    type="radio"
+                    name="purchaseType"
+                    checked={purchaseType === 'one-time'}
+                    onChange={() => setPurchaseType('one-time')}
+                    className="mt-1 text-brand-primary focus:ring-brand-primary"
+                  />
+                  <div>
+                    <span className="font-bold text-gray-900 block">One-time purchase</span>
+                    <span className="text-gray-500 text-sm">
+                      ₹{displaySizes[selectedWeight]?.price}
+                    </span>
+                  </div>
+                </label>
+                <label className="flex items-start gap-2 cursor-pointer flex-1">
+                  <input
+                    type="radio"
+                    name="purchaseType"
+                    checked={purchaseType === 'subscription'}
+                    onChange={() => setPurchaseType('subscription')}
+                    className="mt-1 text-brand-primary focus:ring-brand-primary"
+                  />
+                  <div>
+                    <span className="font-bold text-gray-900 block">Subscribe & Save</span>
+                    <span className="text-brand-primary font-bold text-sm">
+                      ₹{Math.round(displaySizes[selectedWeight]?.price * 0.9)} (Save 10%)
+                    </span>
+                    <span className="text-xs text-gray-500 block mt-1">Delivered monthly</span>
+                  </div>
+                </label>
+              </div>
+            </div>
+
             {/* Action Buttons */}
-            <div className="space-y-3">
-              <Button variant="primary" size="lg" fullWidth onClick={handleAddToCart}>
-                Add to Cart
+            <div className="space-y-3" ref={mainCtaRef}>
+              <Button
+                variant="primary"
+                size="lg"
+                fullWidth
+                onClick={handleAddToCart}
+                className={variant === 'B' ? '!bg-green-600 hover:!bg-green-700' : ''} // A/B Test Variant
+              >
+                {variant === 'B' ? 'Add to Cart (Save 10%)' : 'Add to Cart'}
               </Button>
               <Button variant="outline" size="lg" fullWidth>
                 Buy Now
@@ -140,7 +214,7 @@ export default function ProductDetailPage() {
 
             {/* Trust Badges */}
             <div className="pt-6 border-t space-y-4">
-              <CertificationsBanner variant="compact" />
+              {/* CertificationsBanner Removed */}
               <TrustBadges badges={trustBadges} variant="vertical" />
             </div>
           </div>
@@ -180,12 +254,13 @@ export default function ProductDetailPage() {
                 id: 'reviews',
                 label: `Reviews (${product.reviews?.length || 0})`,
                 content: (
-                  <ReviewsList
+                  <ReviewWidget
                     reviews={[
                       {
                         id: 1,
                         author: 'Priya M.',
                         rating: 5,
+                        title: 'Authentic Flavor',
                         comment:
                           "Absolutely authentic flavor! Reminds me of my grandmother's cooking. The aroma is distinctively better than store-bought brands.",
                         date: '2023-10-15',
@@ -196,6 +271,7 @@ export default function ProductDetailPage() {
                         id: 2,
                         author: 'Rahul S.',
                         rating: 5,
+                        title: 'Fresh & Aromatic',
                         comment:
                           "Love the packaging and the freshness. You can tell it's cold ground. Will order again.",
                         date: '2023-11-02',
@@ -206,6 +282,7 @@ export default function ProductDetailPage() {
                         id: 3,
                         author: 'Anita D.',
                         rating: 4,
+                        title: 'Good Quality',
                         comment:
                           'Great spice, but shipping took a day longer than expected. Product quality is top notch though.',
                         date: '2023-09-28',
@@ -302,7 +379,7 @@ export default function ProductDetailPage() {
         <div className="mb-12">
           <ProductSlider
             title="You Might Also Like"
-            products={getSimilarProducts(product, MOCK_PRODUCTS)}
+            products={getSimilarProducts(product, products)}
             onAddToCart={(p, v) =>
               addToCart({
                 id: `${p.id}-${v.name}`,
@@ -321,6 +398,13 @@ export default function ProductDetailPage() {
           />
         </div>
       </div>
+      <StickyMobileCart
+        product={product}
+        price={displaySizes[selectedWeight]?.price || 0}
+        onAddToCart={handleAddToCart}
+        isVisible={showStickyCart}
+        image={product.images[0]}
+      />
     </div>
   );
 }

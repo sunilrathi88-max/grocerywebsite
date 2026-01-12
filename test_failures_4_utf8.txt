@@ -1,0 +1,285 @@
+﻿
+> tattva-co.---indian-gourmet-products@0.0.0 test
+> jest components/__tests__/ProductDetailPage.test.tsx components/__tests__/SubscriptionPage.test.tsx
+
+node.exe : PASS compon
+ents/__tests__/Subscri
+ptionPage.test.tsx
+At line:1 char:1
++ & "C:\Program Files\
+nodejs/node.exe" "C:\U
+sers\shubh\AppData\Roa
+ming\ ...
++ ~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~
+    + CategoryInfo    
+          : NotSpeci  
+  fied: (PASS compo   
+ nents...onPage.te    
+st.tsx:String) []    
+, RemoteException
+    + FullyQualifiedE 
+   rrorId : NativeCo  
+  mmandError
+ 
+FAIL components/__test
+s__/ProductDetailPage.
+test.tsx
+  ΓùÅ Console
+
+    console.error
+      Warning: React 
+does not recognize 
+the `fetchPriority` 
+prop on a DOM 
+element. If you 
+intentionally want it 
+to appear in the DOM 
+as a custom 
+attribute, spell it 
+as lowercase 
+`fetchpriority` 
+instead. If you 
+accidentally passed 
+it from a parent 
+component, remove it 
+from the DOM element.
+          at img
+          at picture
+          at 
+OptimizedImage (C:\Use
+rs\shubh\grocerywebsit
+e\grocerywebsite\compo
+nents\OptimizedImage.t
+sx:43:3)
+          at div
+          at div
+          at div
+          at div
+          at 
+ProductDetailPage (C:\
+Users\shubh\groceryweb
+site\grocerywebsite\pa
+ges\ProductDetailPage.
+tsx:28:55)
+          at Router (C
+:\Users\shubh\groceryw
+ebsite\grocerywebsite\
+node_modules\react-rou
+ter\dist\development\c
+hunk-RBZI3ZHD.js:9073:
+13)
+          at 
+BrowserRouter (C:\User
+s\shubh\grocerywebsite
+\grocerywebsite\node_m
+odules\react-router\di
+st\development\chunk-H
+MTWJNYB.js:269:3)
+
+    [0m [90m 56 
+|[39m
+     [90m 57 |[39m  
+   [36mconst[39m 
+renderComponent 
+[33m=[39m () 
+[33m=>[39m
+    [31m[1m>[22m[3
+9m[90m 58 |[39m     
+    render(
+     [90m    |[39m  
+             
+[31m[1m^[22m[39m
+     [90m 59 |[39m  
+           [33m<[39m
+[33mBrowserRouter[39
+m[33m>[39m
+     [90m 60 |[39m  
+               [33m<
+[39m[33mProductDetail
+Page[39m 
+[33m/[39m[33m>[39m
+     [90m 61 |[39m  
+           [33m<[39m
+[33m/[39m[33mBrowse
+rRouter[39m[33m>[39
+m[0m
+
+      at printWarning 
+(node_modules/react-do
+m/cjs/react-dom.develo
+pment.js:86:30)
+      at error (node_m
+odules/react-dom/cjs/r
+eact-dom.development.j
+s:60:7)
+      at 
+validateProperty$1 (no
+de_modules/react-dom/c
+js/react-dom.developme
+nt.js:3757:7)
+      at 
+warnUnknownProperties 
+(node_modules/react-do
+m/cjs/react-dom.develo
+pment.js:3803:21)
+      at 
+validateProperties$2 (
+node_modules/react-dom
+/cjs/react-dom.develop
+ment.js:3827:3)
+      at validatePrope
+rtiesInDevelopment (no
+de_modules/react-dom/c
+js/react-dom.developme
+nt.js:9541:5)
+      at 
+setInitialProperties (
+node_modules/react-dom
+/cjs/react-dom.develop
+ment.js:9830:5)
+      at finalizeIniti
+alChildren (node_modul
+es/react-dom/cjs/react
+-dom.development.js:10
+950:3)
+      at completeWork 
+(node_modules/react-do
+m/cjs/react-dom.develo
+pment.js:22232:17)
+      at 
+completeUnitOfWork (no
+de_modules/react-dom/c
+js/react-dom.developme
+nt.js:26632:16)
+      at 
+performUnitOfWork (nod
+e_modules/react-dom/cj
+s/react-dom.developmen
+t.js:26607:5)
+      at workLoopSync 
+(node_modules/react-do
+m/cjs/react-dom.develo
+pment.js:26505:5)
+      at 
+renderRootSync (node_m
+odules/react-dom/cjs/r
+eact-dom.development.j
+s:26473:7)
+      at performConcur
+rentWorkOnRoot (node_m
+odules/react-dom/cjs/r
+eact-dom.development.j
+s:25777:74)
+      at 
+flushActQueue (node_mo
+dules/react/cjs/react.
+development.js:2667:24
+)
+      at act (node_mod
+ules/react/cjs/react.d
+evelopment.js:2582:11)
+      at node_modules/
+@testing-library/react
+/dist/act-compat.js:47
+:25
+      at renderRoot (n
+ode_modules/@testing-l
+ibrary/react/dist/pure
+.js:190:26)
+      at render (node_
+modules/@testing-libra
+ry/react/dist/pure.js:
+292:10)
+      at 
+renderComponent (compo
+nents/__tests__/Produc
+tDetailPage.test.tsx:5
+8:15)
+      at 
+Object.<anonymous> (co
+mponents/__tests__/Pro
+ductDetailPage.test.ts
+x:65:9)
+
+  ΓùÅ 
+ProductDetailPage ΓÇ║ 
+allows adding 
+one-time purchase to 
+cart
+
+    expect(jest.fn()).
+toHaveBeenCalledWith(.
+..expected)
+
+    Expected: 
+ObjectContaining 
+{"id": "1-100g", 
+"isSubscription": 
+false, "name": "Test 
+Spice", "price": 100}
+    Received: {"id": 
+"1-100g", "image": 
+"img.jpg", 
+"isSubscription": 
+false, "name": "Test 
+Spice ", "price": 
+100, "quantity": 1, 
+"stock": 50, "subscrip
+tionInterval": 
+undefined, "weight": 
+"100g"}
+
+    Number of calls: 1
+
+    [0m [90m 79 
+|[39m         fireEve
+nt[33m.[39mclick(add
+Buttons[[35m0[39m])
+[33m;[39m
+     [90m 80 |[39m
+    [31m[1m>[22m[3
+9m[90m 81 |[39m     
+    expect(mockAddItem
+)[33m.[39mtoHaveBeen
+CalledWith(
+     [90m    |[39m  
+                      
+     
+[31m[1m^[22m[39m
+     [90m 82 |[39m  
+           expect[33m
+.[39mobjectContaining
+({
+     [90m 83 |[39m  
+               
+id[33m:[39m [32m'1-
+100g'[39m[33m,[39m
+     [90m 84 |[39m  
+               
+name[33m:[39m 
+[32m'Test Spice'[39m
+[33m,[39m[0m
+
+      at 
+Object.<anonymous> (co
+mponents/__tests__/Pro
+ductDetailPage.test.ts
+x:81:29)
+
+Test Suites: 1 
+failed, 1 passed, 2 
+total
+Tests:       1 
+failed, 5 passed, 6 
+total
+Snapshots:   0 total
+Time:        7.231 s
+Ran all test suites 
+matching components/__
+tests__/ProductDetailP
+age.test.tsx|component
+s/__tests__/Subscripti
+onPage.test.tsx.

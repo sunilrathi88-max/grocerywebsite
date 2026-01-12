@@ -3,34 +3,40 @@ import { OptimizedImage } from './OptimizedImage'; // Assuming you have this or 
 
 const categories = [
   {
-    id: 'pure-spices',
-    name: 'Pure Spices',
-    description: 'Individual, unmixed spices for custom blending.',
-    image: '/images/products/turmeric-powder-front.jpg',
-  },
-  {
-    id: 'masala-blends',
-    name: 'Masala Blends',
-    description: 'Ready-to-use blends for quick, authentic dishes.',
-    image: '/images/products/garam-masala-front.jpg',
-  },
-  {
-    id: 'whole-spices',
-    name: 'Whole Spices',
-    description: 'Whole seeds and pods for fresh grinding at home.',
-    image: '/images/products/tattv-cumin-seeds-front.jpg',
-  },
-  {
     id: 'single-origin',
     name: 'Single Origin',
-    description: 'High-grade lots sourced from specific regions.',
-    image: '/images/products/tattv-malabar-black-pepper-front.png',
+    description: 'High-grade turmeric, chili, and pepper.',
+    image: 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=800', // Placeholder
   },
   {
-    id: 'combo-packs',
-    name: 'Combo Packs',
-    description: 'Curated sets for daily cooking or gifting.',
-    image: '/images/products/combo-pack-trio.jpg',
+    id: 'spice-blends',
+    name: 'Spice Blends',
+    description: 'Authentic masalas for every dish.',
+    image: 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=800',
+  },
+  {
+    id: 'ready-to-cook',
+    name: 'Ready-to-Cook',
+    description: 'Pastes and marinades for quick meals.',
+    image: 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=800',
+  },
+  {
+    id: 'organic-staples',
+    name: 'Organic Staples',
+    description: 'Daily essentials, 100% certified organic.',
+    image: 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=800',
+  },
+  {
+    id: 'gifting',
+    name: 'Gifting & Hampers',
+    description: 'Beautifully packed spice collections.',
+    image: 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=800',
+  },
+  {
+    id: 'wellness',
+    name: 'Wellness & Herbal',
+    description: 'Teas, infusions, and immunity boosters.',
+    image: 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=800',
   },
 ];
 
@@ -48,7 +54,7 @@ const ShopByCategory: React.FC<ShopByCategoryProps> = ({ onSelectCategory }) => 
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {categories.map((cat) => (
             <div
               key={cat.id}

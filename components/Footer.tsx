@@ -8,7 +8,6 @@ import { TwitterIcon } from './icons/TwitterIcon';
 import { PinterestIcon } from './icons/PinterestIcon';
 import { InstagramIcon } from './icons/InstagramIcon';
 import TrustBadges from './TrustBadges';
-import CertificationsBanner from './CertificationsBanner';
 
 interface FooterProps {
   onSelectCategory: (category: string) => void;
@@ -227,7 +226,7 @@ const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
           </div>
 
           {/* Trust Badges with Payment Methods */}
-          <CertificationsBanner variant="minimal" className="bg-transparent border-0 mb-8" />
+          {/* CertificationsBanner Removed */}
 
           <TrustBadges
             badges={[

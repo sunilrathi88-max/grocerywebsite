@@ -25,6 +25,11 @@ body {
   width: 100%;
 }
 
+/* Safe Area Padding for iOS */
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 20px);
+}
+
 /* Touch-friendly links and buttons */
 a,
 button {
@@ -45,6 +50,7 @@ button {
    ===================================== */
 
 @media (max-width: 768px) {
+
   /* Announcement Banner */
   .announcement-banner {
     font-size: 0.75rem;
@@ -487,6 +493,7 @@ button {
    ===================================== */
 
 @media (max-width: 768px) {
+
   /* Hide desktop sidebar */
   .filters-sidebar-desktop {
     display: none !important;

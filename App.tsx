@@ -13,6 +13,8 @@ import {
   Recipe,
 } from './types';
 
+import { getBundleSuggestions } from './utils/recommendations';
+
 // Performance Utils
 import { usePerformanceMonitoring } from './utils/performance';
 // Framer Motion Optimization
@@ -53,8 +55,11 @@ const AdvancedFilters = React.lazy(() => import('./components/AdvancedFilters'))
 const AuthModal = React.lazy(() => import('./components/AuthModal'));
 const ComparisonBar = React.lazy(() => import('./components/ComparisonBar'));
 const ComparisonModal = React.lazy(() => import('./components/ComparisonModal'));
-const ExitIntentModal = React.lazy(() => import('./components/ExitIntentModal'));
+
 const RecipeDetailModal = React.lazy(() => import('./components/RecipeDetailModal'));
+const NewsletterPopup = React.lazy(() => import('./components/NewsletterPopup'));
+const WhatsAppButton = React.lazy(() => import('./components/WhatsAppButton'));
+const BackToTop = React.lazy(() => import('./components/BackToTop'));
 
 const MobileBottomNav = React.lazy(() => import('./components/MobileBottomNav'));
 
@@ -244,7 +249,7 @@ const App: React.FC = () => {
   const [isComparisonModalOpen, setIsComparisonModalOpen] = useState(false);
 
   // Feature Specific State
-  const [isExitIntentModalOpen, setIsExitIntentModalOpen] = useState(false);
+
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
   const [promoCode, setPromoCode] = useState('');
   const [discount, setDiscount] = useState(0);
@@ -309,19 +314,6 @@ const App: React.FC = () => {
     });
   }, [maxPrice]);
 
-  // Exit Intent (Throttled to once per session)
-  useEffect(() => {
-    const handleMouseLeave = (e: MouseEvent) => {
-      const hasShownExitIntent = sessionStorage.getItem('exitIntentShown');
-      if (e.clientY <= 0 && !isExitIntentModalOpen && cartItems.length > 0 && !hasShownExitIntent) {
-        setIsExitIntentModalOpen(true);
-        sessionStorage.setItem('exitIntentShown', 'true');
-      }
-    };
-    document.addEventListener('mouseleave', handleMouseLeave);
-    return () => document.removeEventListener('mouseleave', handleMouseLeave);
-  }, [isExitIntentModalOpen, cartItems.length]);
-
   // Handle 'offers' route
   useEffect(() => {
     if (location.pathname === '/offers') {
@@ -368,6 +360,23 @@ const App: React.FC = () => {
   const wishlistedIds = useMemo(() => new Set(wishlistItems.map((p) => p.id)), [wishlistItems]);
   const comparisonIds = useMemo(() => new Set(comparisonItems.map((p) => p.id)), [comparisonItems]);
   const shippingCost = useMemo(() => (subtotal > 999 || subtotal === 0 ? 0 : 50), [subtotal]);
+
+  // Smart Cart Recommendations
+  const cartRecommendations = useMemo(() => {
+    if (cartItems.length === 0) {
+      // If cart is empty, show general popular items (first 5 for now)
+      return products.slice(0, 5);
+    }
+
+    // Get recommendations based on the last item added to cart
+    const lastItem = cartItems[cartItems.length - 1];
+    const productId = parseInt(lastItem.id.split('-')[0], 10);
+    const lastProduct = products.find((p) => p.id === productId);
+
+    if (!lastProduct) return products.slice(0, 5);
+
+    return getBundleSuggestions(lastProduct, products);
+  }, [cartItems, products]);
 
   // --- Filter Hook Integration ---
   const { filteredProducts } = useProductFilter(products, {
@@ -1199,7 +1208,7 @@ const App: React.FC = () => {
                   discount={discount}
                   shippingCost={shippingCost}
                   onAddToCart={handleAddToCart}
-                  recommendedProducts={products.slice(0, 5)}
+                  recommendedProducts={cartRecommendations}
                 />
               </SideModal>
 
@@ -1323,16 +1332,6 @@ const App: React.FC = () => {
                 </div>
               </SideModal>
 
-              {isExitIntentModalOpen && (
-                <ExitIntentModal
-                  onClose={() => setIsExitIntentModalOpen(false)}
-                  onApplyPromo={() => {
-                    handleApplyPromoCode('COMEBACK15');
-                    setIsExitIntentModalOpen(false);
-                  }}
-                />
-              )}
-
               {selectedRecipe && (
                 <RecipeDetailModal
                   recipe={selectedRecipe}
@@ -1349,6 +1348,9 @@ const App: React.FC = () => {
               )}
 
               <SocialProofNotifications />
+
+              {/* Newsletter Popup - Shows after scroll or delay */}
+              <NewsletterPopup delayMs={8000} />
             </React.Suspense>
             <React.Suspense fallback={null}>
               <MobileBottomNav
@@ -1359,6 +1361,12 @@ const App: React.FC = () => {
                 onOpenMenu={() => setIsMobileMenuOpen((prev) => !prev)}
                 currentView={currentView}
               />
+            </React.Suspense>
+
+            {/* Global UI Elements */}
+            <React.Suspense fallback={null}>
+              <WhatsAppButton phoneNumber="919876543210" />
+              <BackToTop />
             </React.Suspense>
           </div>
         </LazyMotion>

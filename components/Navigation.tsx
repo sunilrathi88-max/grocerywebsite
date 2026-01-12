@@ -4,18 +4,10 @@ import { Link } from 'react-router-dom';
 import MegaMenu from './MegaMenu';
 
 interface NavigationProps {
-  categories: string[];
   onSelectCategory: (category: string) => void;
-  isProductsOpen: boolean;
-  setProductsOpen: (isOpen: boolean) => void;
 }
 
-const Navigation: React.FC<NavigationProps> = ({
-  categories,
-  onSelectCategory,
-  isProductsOpen,
-  setProductsOpen,
-}) => {
+const Navigation: React.FC<NavigationProps> = ({ onSelectCategory }) => {
   const [isMegaMenuOpen, setMegaMenuOpen] = useState(false);
 
   const handleScrollTo = (id: string) => {

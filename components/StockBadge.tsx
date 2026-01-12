@@ -4,6 +4,8 @@ interface StockBadgeProps {
   stock: number;
   lowStockThreshold?: number;
   restockDate?: string;
+  isPopular?: boolean;
+  isBackInStock?: boolean;
   className?: string;
 }
 
@@ -11,9 +13,25 @@ const StockBadge: React.FC<StockBadgeProps> = ({
   stock,
   lowStockThreshold = 5,
   restockDate,
+  isPopular = false,
+  isBackInStock = false,
   className = '',
 }) => {
   const getStockStatus = () => {
+    // Back in stock takes priority
+    if (isBackInStock && stock > 0) {
+      return {
+        label: '🎉 Back in Stock!',
+        color: 'bg-green-100 text-green-800 border-green-200',
+        animate: true,
+        icon: (
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+          </svg>
+        ),
+      };
+    }
+
     if (stock === 0) {
       if (restockDate) {
         const date = new Date(restockDate);
@@ -21,6 +39,7 @@ const StockBadge: React.FC<StockBadgeProps> = ({
         return {
           label: `Available ${formattedDate}`,
           color: 'bg-blue-100 text-blue-800 border-blue-200',
+          animate: false,
           icon: (
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
@@ -36,6 +55,7 @@ const StockBadge: React.FC<StockBadgeProps> = ({
       return {
         label: 'Out of Stock',
         color: 'bg-red-100 text-red-800 border-red-200',
+        animate: false,
         icon: (
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
@@ -53,6 +73,7 @@ const StockBadge: React.FC<StockBadgeProps> = ({
       return {
         label: `Only ${stock} left!`,
         color: 'bg-orange-100 text-orange-800 border-orange-200',
+        animate: true,
         icon: (
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
@@ -66,9 +87,20 @@ const StockBadge: React.FC<StockBadgeProps> = ({
       };
     }
 
+    // Popular items
+    if (isPopular) {
+      return {
+        label: '🔥 Selling Fast',
+        color: 'bg-amber-100 text-amber-800 border-amber-200',
+        animate: true,
+        icon: null,
+      };
+    }
+
     return {
       label: 'In Stock',
       color: 'bg-green-100 text-green-800 border-green-200',
+      animate: false,
       icon: (
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -81,7 +113,7 @@ const StockBadge: React.FC<StockBadgeProps> = ({
 
   return (
     <div
-      className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border ${status.color} ${className}`}
+      className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border ${status.color} ${status.animate ? 'animate-pulse' : ''} ${className}`}
     >
       {status.icon}
       <span>{status.label}</span>

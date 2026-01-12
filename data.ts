@@ -269,9 +269,7 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Whole Coriander Seeds (Sabut Dhaniya)',
     description:
       'Light, crisp, and full of citrusy, woody notes. Perfect for dry roasting and grinding fresh at home, or for crushing coarsely into Samosa fillings and pickles.',
-    images: [
-      'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
-    ],
+    images: ['/images/products/coriander-seeds-whole.jpg'],
     category: 'Spices',
     variants: [{ id: 1301, name: '200g', price: 80, stock: 45 }],
     reviews: [],
