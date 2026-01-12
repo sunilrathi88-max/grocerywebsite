@@ -40,16 +40,12 @@ const MobileTrustBar: React.FC<MobileTrustBarProps> = ({ items = defaultItems })
             key={index}
             className="flex-shrink-0 flex items-center gap-2 bg-amber-50 dark:bg-stone-800/50 px-3 py-2 rounded-full border border-amber-100 dark:border-stone-700 whitespace-nowrap"
           >
-            <div className="text-amber-600 dark:text-amber-500">
-              {item.icon}
-            </div>
+            <div className="text-amber-600 dark:text-amber-500">{item.icon}</div>
             <div className="flex flex-col leading-none">
               <span className="text-[10px] uppercase font-bold text-stone-900 dark:text-stone-100 mb-0.5">
                 {item.title}
               </span>
-              <span className="text-[9px] text-stone-500 dark:text-stone-400">
-                {item.subtitle}
-              </span>
+              <span className="text-[9px] text-stone-500 dark:text-stone-400">{item.subtitle}</span>
             </div>
           </div>
         ))}

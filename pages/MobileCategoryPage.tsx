@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useProducts } from '../hooks/useProducts';
 import { useCartStore } from '../store/cartStore';
@@ -44,7 +44,7 @@ const MobileCategoryPage: React.FC<MobileCategoryPageProps> = ({
   const initialSearch = searchParams.get('search') || externalSearchQuery || '';
   const [searchQuery, setSearchQuery] = useState(initialSearch);
   const [activeFilters, setActiveFilters] = useState<Set<string>>(new Set());
-  const [sortModalOpen, setSortModalOpen] = useState(false);
+
   const [sortBy, setSortBy] = useState<'popularity' | 'price-asc' | 'price-desc' | 'newest'>(
     'popularity'
   );
@@ -79,6 +79,14 @@ const MobileCategoryPage: React.FC<MobileCategoryPageProps> = ({
       return newFilters;
     });
   };
+
+  // Filter and sort products
+  // Sync with external search query
+  useEffect(() => {
+    if (externalSearchQuery !== undefined && externalSearchQuery !== searchQuery) {
+      setSearchQuery(externalSearchQuery);
+    }
+  }, [externalSearchQuery, searchQuery]);
 
   // Filter and sort products
   const filteredProducts = useMemo(() => {
@@ -220,11 +228,8 @@ const MobileCategoryPage: React.FC<MobileCategoryPageProps> = ({
         onSortClick={handleSortClick}
       />
 
-      {/* Floating Sort/Filter Button */}
+      {/* Sort/Filter FAB */}
       <MobileSortFilterFAB onPress={handleSortClick} />
-
-      {/* Bottom Navigation */}
-      <MobileBottomNavMinimal currentPath={location.pathname} />
     </div>
   );
 };

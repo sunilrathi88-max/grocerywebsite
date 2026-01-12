@@ -288,10 +288,11 @@ const Cart: React.FC<CartProps> = ({
           <button
             onClick={canCheckout ? onCheckout : undefined}
             disabled={!canCheckout || !!loadingState.type}
-            className={`mt-4 block w-full text-center bg-brand-primary text-brand-dark font-bold py-3 rounded-full shadow-lg transition-all duration-300 ${!canCheckout || !!loadingState.type
-              ? 'bg-gray-400 cursor-not-allowed'
-              : 'hover:bg-opacity-90 transform hover:scale-105'
-              }`}
+            className={`mt-4 block w-full text-center bg-brand-primary text-brand-dark font-bold py-3 rounded-full shadow-lg transition-all duration-300 ${
+              !canCheckout || !!loadingState.type
+                ? 'bg-gray-400 cursor-not-allowed'
+                : 'hover:bg-opacity-90 transform hover:scale-105'
+            }`}
             data-testid="checkout-btn"
           >
             Proceed to Checkout

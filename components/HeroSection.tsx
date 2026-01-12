@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { Button } from './Button';
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 // Pure CSS animated gradient background (shader fallback) - kept for background logic
 const AnimatedGradientBackground: React.FC = () => (
@@ -58,7 +58,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   const containerRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start start", "end start"],
+    offset: ['start start', 'end start'],
   });
 
   // Parallax effects
@@ -84,15 +84,18 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       opacity: 1,
       y: 0,
       transition: {
-        type: "spring",
+        type: 'spring',
         stiffness: 50,
-        damping: 20
-      }
+        damping: 20,
+      },
     },
   };
 
   return (
-    <section ref={containerRef} className="relative min-h-[90vh] flex items-center overflow-hidden bg-neutral-900 perspective-1000">
+    <section
+      ref={containerRef}
+      className="relative min-h-[90vh] flex items-center overflow-hidden bg-neutral-900 perspective-1000"
+    >
       {/* Animated CSS Gradient Background */}
       <AnimatedGradientBackground />
 
@@ -108,27 +111,42 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           >
             {/* Main Title */}
             <div className="space-y-2 mb-8">
-              <motion.h1 variants={itemVariants} className="text-4xl md:text-5xl lg:text-7xl font-bold text-white leading-none tracking-tight drop-shadow-lg">
+              <motion.h1
+                variants={itemVariants}
+                className="text-4xl md:text-5xl lg:text-7xl font-bold text-white leading-none tracking-tight drop-shadow-lg"
+              >
                 {title || 'Fresh Farm Spices.'}
               </motion.h1>
-              <motion.h2 variants={itemVariants} className="text-4xl md:text-5xl lg:text-7xl font-bold text-[#E67E22] leading-none tracking-tight drop-shadow-md">
+              <motion.h2
+                variants={itemVariants}
+                className="text-4xl md:text-5xl lg:text-7xl font-bold text-[#E67E22] leading-none tracking-tight drop-shadow-md"
+              >
                 {' '}
                 {/* Brand Orange */}
                 Real Stories.
               </motion.h2>
-              <motion.h2 variants={itemVariants} className="text-4xl md:text-5xl lg:text-7xl font-bold text-gray-100 leading-none tracking-tight">
+              <motion.h2
+                variants={itemVariants}
+                className="text-4xl md:text-5xl lg:text-7xl font-bold text-gray-100 leading-none tracking-tight"
+              >
                 No Middleman.
               </motion.h2>
             </div>
 
             {subtitle && (
-              <motion.p variants={itemVariants} className="text-lg md:text-xl text-gray-300 mb-10 font-medium max-w-lg leading-relaxed">
+              <motion.p
+                variants={itemVariants}
+                className="text-lg md:text-xl text-gray-300 mb-10 font-medium max-w-lg leading-relaxed"
+              >
                 {subtitle}
               </motion.p>
             )}
 
             {/* Badges - Short Labels */}
-            <motion.div variants={itemVariants} className="flex flex-wrap gap-x-6 gap-y-3 mb-10 text-gray-200">
+            <motion.div
+              variants={itemVariants}
+              className="flex flex-wrap gap-x-6 gap-y-3 mb-10 text-gray-200"
+            >
               {badges && badges.length > 0 ? (
                 badges.map((badge, index) => (
                   <div key={index} className="flex items-center gap-2">
@@ -160,7 +178,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
             {/* CTA Buttons */}
             <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 mb-6">
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="w-full sm:w-auto">
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="w-full sm:w-auto"
+              >
                 <Button
                   variant="primary"
                   size="lg"
@@ -172,7 +194,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   {ctaPrimary?.text || 'Shop Masalas'}
                 </Button>
               </motion.div>
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="w-full sm:w-auto">
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="w-full sm:w-auto"
+              >
                 <Button
                   variant="outline"
                   size="lg"
@@ -188,7 +214,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
             {/* Subtext */}
             {subtext && (
-              <motion.p variants={itemVariants} className="text-sm text-gray-400 font-medium flex items-center gap-2">
+              <motion.p
+                variants={itemVariants}
+                className="text-sm text-gray-400 font-medium flex items-center gap-2"
+              >
                 <span className="inline-block w-2 h-2 rounded-full bg-success-green animate-pulse"></span>
                 {subtext}
               </motion.p>
@@ -200,7 +229,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             style={{ y: yImage }}
             initial={{ opacity: 0, scale: 0.9, rotate: -2 }}
             animate={{ opacity: 1, scale: 1, rotate: 0 }}
-            transition={{ duration: 1, ease: "easeOut" }}
+            transition={{ duration: 1, ease: 'easeOut' }}
             className="relative order-1 md:order-2 flex items-start justify-center"
           >
             <div className="absolute inset-0 bg-brand-primary/20 rounded-[2rem] transform rotate-3 scale-95 z-0 blur-xl animate-pulse"></div>

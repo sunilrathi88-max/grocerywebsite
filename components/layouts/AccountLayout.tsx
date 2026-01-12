@@ -39,9 +39,10 @@ const AccountLayout: React.FC<AccountLayoutProps> = ({ user }) => {
                 to={item.path}
                 end={item.end}
                 className={({ isActive }) =>
-                  `w-full flex items-center gap-3 p-3 rounded-r-lg border-l-4 transition-all duration-200 ${isActive
-                    ? 'border-brand-primary bg-brand-primary/10 text-brand-dark'
-                    : 'border-transparent hover:bg-gray-50 text-gray-600 hover:text-brand-primary'
+                  `w-full flex items-center gap-3 p-3 rounded-r-lg border-l-4 transition-all duration-200 ${
+                    isActive
+                      ? 'border-brand-primary bg-brand-primary/10 text-brand-dark'
+                      : 'border-transparent hover:bg-gray-50 text-gray-600 hover:text-brand-primary'
                   }`
                 }
               >

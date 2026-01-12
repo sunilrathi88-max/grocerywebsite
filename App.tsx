@@ -91,7 +91,7 @@ const AccountWishlist = React.lazy(() => import('./components/account/AccountWis
 const LoyaltyPointsTracker = React.lazy(() => import('./components/LoyaltyPointsTracker'));
 const ForgotPasswordPage = React.lazy(() => import('./components/ForgotPasswordPage'));
 const EmailVerificationPage = React.lazy(() => import('./components/EmailVerificationPage'));
-const CartPage = React.lazy(() => import('./pages/CartPage'));
+
 const TwoFactorSetupPage = React.lazy(() => import('./components/TwoFactorSetupPage'));
 const OrderTrackingPage = React.lazy(() => import('./pages/OrderTrackingPage'));
 const ProductDetailPage = React.lazy(() => import('./pages/ProductDetailPage'));
@@ -132,8 +132,8 @@ const OrderConfirmationRoute = ({
         addToast={addToast}
         discount={0}
         promoCode=""
-        onApplyPromoCode={() => { }}
-        onRemovePromoCode={() => { }}
+        onApplyPromoCode={() => {}}
+        onRemovePromoCode={() => {}}
         subtotal={0}
         shippingCost={0}
       />
