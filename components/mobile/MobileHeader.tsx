@@ -1,5 +1,4 @@
 import React from 'react';
-import { MenuIcon } from '../icons/MenuIcon';
 import { ShoppingCartIcon } from '../icons/ShoppingCartIcon';
 import { SearchIcon } from '../icons/SearchIcon';
 
@@ -8,7 +7,6 @@ interface MobileHeaderProps {
   cartItemCount: number;
   searchQuery: string;
   onSearchChange: (query: string) => void;
-  onMenuClick: () => void;
   onCartClick: () => void;
 }
 
@@ -17,23 +15,13 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({
   cartItemCount,
   searchQuery,
   onSearchChange,
-  onMenuClick,
   onCartClick,
 }) => {
   return (
     <header className="sticky top-0 z-50 bg-amber-50/95 dark:bg-stone-900/95 backdrop-blur-sm border-b border-amber-100 dark:border-stone-800 px-4 py-3">
       <div className="flex items-center justify-between">
-        {/* Menu Button */}
-        <button
-          onClick={onMenuClick}
-          className="p-2 -ml-2 text-stone-900 dark:text-stone-100 rounded-full hover:bg-amber-100 dark:hover:bg-stone-800 transition"
-          aria-label="Open menu"
-        >
-          <MenuIcon className="w-6 h-6" />
-        </button>
-
-        {/* Brand Name */}
-        <h1 className="font-serif font-bold text-xl tracking-tight text-center flex-1 text-stone-900 dark:text-stone-100">
+        {/* Brand Name - Centered */}
+        <h1 className="font-serif font-bold text-xl tracking-tight text-stone-900 dark:text-stone-100">
           {brandName}
         </h1>
 
