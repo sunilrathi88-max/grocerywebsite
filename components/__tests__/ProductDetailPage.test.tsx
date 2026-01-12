@@ -21,6 +21,10 @@ jest.mock('../../hooks/useWishlist', () => ({
   useWishlist: () => ({ wishlistItems: [], toggleWishlist: jest.fn() }),
 }));
 
+jest.mock('../../src/context/ABTestContext', () => ({
+  useABTest: () => ({ variant: 'A', trackConversion: jest.fn() }),
+}));
+
 jest.mock('../../hooks/useProducts', () => ({
   useProducts: () => ({
     products: [
