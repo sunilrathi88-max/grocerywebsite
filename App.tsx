@@ -96,7 +96,7 @@ const TwoFactorSetupPage = React.lazy(() => import('./components/TwoFactorSetupP
 const OrderTrackingPage = React.lazy(() => import('./pages/OrderTrackingPage'));
 const ProductDetailPage = React.lazy(() => import('./pages/ProductDetailPage'));
 const ResponsiveHomePage = React.lazy(() => import('./pages/ResponsiveHomePage'));
-const CategoryPage = React.lazy(() => import('./pages/CategoryPage'));
+const ResponsiveCategoryPage = React.lazy(() => import('./pages/ResponsiveCategoryPage'));
 const OffersPage = React.lazy(() => import('./pages/OffersPage'));
 const SubscriptionPage = React.lazy(() => import('./pages/SubscriptionPage'));
 const FarmersPage = React.lazy(() => import('./pages/FarmersPage'));
@@ -729,9 +729,12 @@ const App: React.FC = () => {
   const orgSchema = generateOrganizationSchema();
   const GlobalSEO = <SEO title="" description="" structuredData={orgSchema} />;
 
-  // Check if mobile for hiding desktop layout on mobile home
+  // Check if mobile for hiding desktop layout on mobile pages
   const isMobile = useIsMobile(768);
-  const isHomePage = location.pathname === '/';
+  const isMobileLayoutPage =
+    location.pathname === '/' ||
+    location.pathname === '/shop' ||
+    location.pathname.startsWith('/category');
 
   return (
     <HelmetProvider>
@@ -757,10 +760,10 @@ const App: React.FC = () => {
               structuredDataId="organization-schema"
             />
 
-            {/* Hide desktop header on mobile home */}
-            {!(isMobile && isHomePage) && <FreeShippingBanner />}
+            {/* Hide desktop header on mobile pages */}
+            {!(isMobile && isMobileLayoutPage) && <FreeShippingBanner />}
 
-            {!(isMobile && isHomePage) && (
+            {!(isMobile && isMobileLayoutPage) && (
               <Header
                 cartItems={cartItems}
                 wishlistItemCount={wishlistItemCount}
@@ -794,7 +797,15 @@ const App: React.FC = () => {
                 path="/category/:category"
                 element={
                   <React.Suspense fallback={<PageLoader />}>
-                    <CategoryPage />
+                    <ResponsiveCategoryPage
+                      searchQuery={searchQuery}
+                      onSearchChange={setSearchQuery}
+                      cartItemCount={cartItems.reduce((sum, item) => sum + item.quantity, 0)}
+                      onCartClick={() => setIsCartOpen(true)}
+                      onMenuClick={() => setIsMobileMenuOpen(true)}
+                      addToast={addToast}
+                      setSelectedProduct={setSelectedProduct}
+                    />
                   </React.Suspense>
                 }
               />
@@ -818,7 +829,15 @@ const App: React.FC = () => {
                 path="/shop"
                 element={
                   <React.Suspense fallback={<PageLoader />}>
-                    <CategoryPage />
+                    <ResponsiveCategoryPage
+                      searchQuery={searchQuery}
+                      onSearchChange={setSearchQuery}
+                      cartItemCount={cartItems.reduce((sum, item) => sum + item.quantity, 0)}
+                      onCartClick={() => setIsCartOpen(true)}
+                      onMenuClick={() => setIsMobileMenuOpen(true)}
+                      addToast={addToast}
+                      setSelectedProduct={setSelectedProduct}
+                    />
                   </React.Suspense>
                 }
               />
@@ -1172,8 +1191,8 @@ const App: React.FC = () => {
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
 
-            {/* Hide Footer on mobile home */}
-            {!(isMobile && isHomePage) && (
+            {/* Hide Footer on mobile pages */}
+            {!(isMobile && isMobileLayoutPage) && (
               <React.Suspense fallback={<div className="h-64 bg-gray-100" />}>
                 <Footer onSelectCategory={handleSelectCategoryAndClose} />
               </React.Suspense>
