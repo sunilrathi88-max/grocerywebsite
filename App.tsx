@@ -453,10 +453,14 @@ const App: React.FC = () => {
       setSelectedCategory(category);
       setIsMobileMenuOpen(false);
       window.scrollTo(0, 0);
-      // If not on home/shop, maybe navigate? For now assume categories are on home.
-      if (location.pathname !== '/') navigate('/');
+
+      if (category === 'All') {
+        navigate('/shop');
+      } else {
+        navigate(`/category/${encodeURIComponent(category)}`);
+      }
     },
-    [location.pathname, navigate]
+    [navigate]
   );
 
   const handleAddReview = useCallback(
@@ -836,7 +840,7 @@ const App: React.FC = () => {
                       searchQuery={searchQuery}
                       onSearchChange={setSearchQuery}
                       cartItemCount={cartItems.reduce((sum, item) => sum + item.quantity, 0)}
-                      onCartClick={() => setIsCartOpen(true)}
+                      onCartClick={() => (isMobile ? navigate('/cart') : setIsCartOpen(true))}
                       onMenuClick={() => setIsMobileMenuOpen(true)}
                       addToast={addToast}
                       setSelectedProduct={setSelectedProduct}
@@ -902,7 +906,7 @@ const App: React.FC = () => {
                       addToast={addToast}
                       cartItemCount={cartItems.reduce((sum, item) => sum + item.quantity, 0)}
                       onMenuClick={() => setIsMobileMenuOpen(true)}
-                      onCartClick={() => setIsCartOpen(true)}
+                      onCartClick={() => (isMobile ? navigate('/cart') : setIsCartOpen(true))}
                       onSearchChange={setSearchQuery}
                     />
                   </React.Suspense>
@@ -1394,7 +1398,7 @@ const App: React.FC = () => {
                 <MobileBottomNav
                   cartItemCount={cartItems.reduce((acc, item) => acc + item.quantity, 0)}
                   wishlistItemCount={wishlistItems.length}
-                  onOpenCart={() => setIsCartOpen(true)}
+                  onOpenCart={() => navigate('/cart')}
                   onOpenWishlist={() => setIsWishlistOpen(true)}
                   onOpenMenu={() => setIsMobileMenuOpen((prev) => !prev)}
                   currentView={currentView}

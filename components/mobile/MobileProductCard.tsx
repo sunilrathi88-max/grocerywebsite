@@ -35,7 +35,7 @@ const MobileProductCard: React.FC<MobileProductCardProps> = ({
 
   return (
     <div
-      className="snap-start flex-shrink-0 w-44 bg-white dark:bg-stone-800 rounded-xl shadow-sm border border-stone-100 dark:border-stone-700 overflow-hidden group cursor-pointer"
+      className="snap-start flex-shrink-0 w-44 bg-white dark:bg-stone-800 rounded-xl shadow-sm border border-stone-100 dark:border-stone-700 overflow-hidden group cursor-pointer active:scale-95 transition-transform"
       onClick={() => onSelectProduct(product)}
     >
       {/* Image */}
@@ -77,10 +77,14 @@ const MobileProductCard: React.FC<MobileProductCardProps> = ({
         </h4>
 
         {/* Rating */}
-        <div className="flex items-center text-xs text-stone-500 dark:text-stone-400 mb-3">
-          <StarIcon className="text-amber-400 w-4 h-4 mr-0.5 fill-amber-400" />
-          {rating.toFixed(1)} ({reviewCount})
-        </div>
+        {reviewCount > 0 ? (
+          <div className="flex items-center text-xs text-stone-500 dark:text-stone-400 mb-3">
+            <StarIcon className="text-amber-400 w-4 h-4 mr-0.5 fill-amber-400" />
+            {rating.toFixed(1)} ({reviewCount})
+          </div>
+        ) : (
+          <div className="text-xs text-stone-400 mb-3 italic">No reviews yet</div>
+        )}
 
         {/* Price & Add Button */}
         <div className="flex items-center justify-between">
