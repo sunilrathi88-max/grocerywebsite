@@ -94,7 +94,7 @@ const CartPage = React.lazy(() => import('./pages/CartPage'));
 const TwoFactorSetupPage = React.lazy(() => import('./components/TwoFactorSetupPage'));
 const OrderTrackingPage = React.lazy(() => import('./pages/OrderTrackingPage'));
 const ProductDetailPage = React.lazy(() => import('./pages/ProductDetailPage'));
-const HomePage = React.lazy(() => import('./pages/HomePage'));
+const ResponsiveHomePage = React.lazy(() => import('./pages/ResponsiveHomePage'));
 const CategoryPage = React.lazy(() => import('./pages/CategoryPage'));
 const OffersPage = React.lazy(() => import('./pages/OffersPage'));
 const SubscriptionPage = React.lazy(() => import('./pages/SubscriptionPage'));
@@ -130,8 +130,8 @@ const OrderConfirmationRoute = ({
         addToast={addToast}
         discount={0}
         promoCode=""
-        onApplyPromoCode={() => {}}
-        onRemovePromoCode={() => {}}
+        onApplyPromoCode={() => { }}
+        onRemovePromoCode={() => { }}
         subtotal={0}
         shippingCost={0}
       />
@@ -817,9 +817,9 @@ const App: React.FC = () => {
               <Route
                 path="/"
                 element={
-                  <>
+                  <React.Suspense fallback={<PageLoader />}>
                     {GlobalSEO}
-                    <HomePage
+                    <ResponsiveHomePage
                       products={products}
                       selectedCategory={selectedCategory}
                       setSelectedCategory={(cat) => {
@@ -846,10 +846,10 @@ const App: React.FC = () => {
                       showInStock={showInStock}
                       setShowInStock={setShowInStock}
                       availableTags={availableTags}
-                      selectedTagsState={selectedTags} // Mapping prop name correctly
+                      selectedTagsState={selectedTags}
                       handleToggleTag={handleToggleTag}
                       priceRange={priceRange}
-                      setPriceRange={(range) => setPriceRange((prev) => ({ ...prev, ...range }))} // Simple wrapper match
+                      setPriceRange={(range) => setPriceRange((prev) => ({ ...prev, ...range }))}
                       maxPrice={maxPrice}
                       selectedOrigins={selectedOrigins}
                       handleToggleOrigin={handleToggleOrigin}
@@ -870,8 +870,12 @@ const App: React.FC = () => {
                       handleToggleGrade={handleToggleGrade}
                       availableGrades={availableGrades}
                       addToast={addToast}
+                      cartItemCount={cartItems.reduce((sum, item) => sum + item.quantity, 0)}
+                      onMenuClick={() => setIsMobileMenuOpen(true)}
+                      onCartClick={() => setIsCartOpen(true)}
+                      onSearchChange={setSearchQuery}
                     />
-                  </>
+                  </React.Suspense>
                 }
               />
 
