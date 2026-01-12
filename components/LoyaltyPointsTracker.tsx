@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { m } from 'framer-motion';
 import { GiftIcon } from './icons/GiftIcon';
 import { SparklesIcon } from './icons/SparklesIcon';
 import { TruckIcon } from './icons/TruckIcon';
@@ -55,21 +56,19 @@ export const LoyaltyPointsTracker: React.FC = () => {
       <div className="flex border-b border-gray-200 mb-6">
         <button
           onClick={() => setActiveTab('points')}
-          className={`pb-4 px-6 text-lg font-bold transition-all ${
-            activeTab === 'points'
-              ? 'text-brand-primary border-b-2 border-brand-primary'
-              : 'text-gray-500 hover:text-gray-700'
-          }`}
+          className={`pb-4 px-6 text-lg font-bold transition-all ${activeTab === 'points'
+            ? 'text-brand-primary border-b-2 border-brand-primary'
+            : 'text-gray-500 hover:text-gray-700'
+            }`}
         >
           Loyalty Points
         </button>
         <button
           onClick={() => setActiveTab('badges')}
-          className={`pb-4 px-6 text-lg font-bold transition-all ${
-            activeTab === 'badges'
-              ? 'text-brand-primary border-b-2 border-brand-primary'
-              : 'text-gray-500 hover:text-gray-700'
-          }`}
+          className={`pb-4 px-6 text-lg font-bold transition-all ${activeTab === 'badges'
+            ? 'text-brand-primary border-b-2 border-brand-primary'
+            : 'text-gray-500 hover:text-gray-700'
+            }`}
         >
           Achievements & Badges
         </button>
@@ -110,9 +109,11 @@ export const LoyaltyPointsTracker: React.FC = () => {
                 <span>{progressToNextTier}%</span>
               </div>
               <div className="bg-white/20 rounded-full h-3 overflow-hidden">
-                <div
-                  className="bg-white h-full rounded-full transition-all duration-500"
-                  style={{ width: `${progressToNextTier}%` }}
+                <m.div
+                  initial={{ width: 0 }}
+                  animate={{ width: `${progressToNextTier}%` }}
+                  transition={{ duration: 1.5, ease: "easeOut" }}
+                  className="bg-white h-full rounded-full shadow-sm"
                 />
               </div>
               <p className="text-white/80 text-xs mt-2">
@@ -185,9 +186,8 @@ export const LoyaltyPointsTracker: React.FC = () => {
                     </p>
                   </div>
                   <div
-                    className={`font-bold ${
-                      item.type === 'earned' ? 'text-green-600' : 'text-red-600'
-                    }`}
+                    className={`font-bold ${item.type === 'earned' ? 'text-green-600' : 'text-red-600'
+                      }`}
                   >
                     {item.points > 0 ? '+' : ''}
                     {item.points}
@@ -221,11 +221,10 @@ const RedeemOption: React.FC<RedeemOptionProps> = ({
 }) => {
   return (
     <div
-      className={`border-2 rounded-lg p-4 text-center transition-all ${
-        available
-          ? 'border-brand-primary hover:shadow-lg cursor-pointer'
-          : 'border-gray-200 opacity-50 cursor-not-allowed'
-      }`}
+      className={`border-2 rounded-lg p-4 text-center transition-all ${available
+        ? 'border-brand-primary hover:shadow-lg cursor-pointer'
+        : 'border-gray-200 opacity-50 cursor-not-allowed'
+        }`}
     >
       <div className="mb-3 flex justify-center">{icon}</div>
       <p className="font-bold text-lg text-gray-900 mb-1">{reward}</p>
@@ -233,11 +232,10 @@ const RedeemOption: React.FC<RedeemOptionProps> = ({
       <button
         onClick={() => onRedeem?.()}
         disabled={!available}
-        className={`w-full py-2 rounded-lg font-medium transition-colors ${
-          available
-            ? 'bg-brand-primary text-white hover:bg-brand-dark'
-            : 'bg-gray-200 text-gray-400'
-        }`}
+        className={`w-full py-2 rounded-lg font-medium transition-colors ${available
+          ? 'bg-brand-primary text-white hover:bg-brand-dark'
+          : 'bg-gray-200 text-gray-400'
+          }`}
       >
         {available ? 'Redeem' : 'Not Available'}
       </button>
