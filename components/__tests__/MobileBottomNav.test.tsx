@@ -51,11 +51,11 @@ describe('MobileBottomNav', () => {
     expect(defaultProps.onOpenWishlist).toHaveBeenCalled();
   });
 
-  it('calls onOpenMenu when Shop icon is clicked', () => {
+  it('navigates to Shop when Shop icon is clicked', () => {
     render(<MobileBottomNav {...defaultProps} />);
     const shopButton = screen.getByLabelText('Shop');
     fireEvent.click(shopButton);
-    expect(defaultProps.onOpenMenu).toHaveBeenCalled();
+    expect(mockNavigate).toHaveBeenCalledWith('/shop');
   });
 
   it('displays badge count for Cart when items exist', () => {
