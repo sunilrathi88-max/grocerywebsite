@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom';
 import { TextEncoder, TextDecoder } from 'util';
+import * as React from 'react';
 
 Object.assign(global, { TextEncoder, TextDecoder });
 
@@ -20,13 +21,13 @@ Object.defineProperty(window, 'matchMedia', {
 
 // Mock IntersectionObserver
 global.IntersectionObserver = class IntersectionObserver {
-  constructor() { }
-  disconnect() { }
-  observe() { }
+  constructor() {}
+  disconnect() {}
+  observe() {}
   takeRecords() {
     return [];
   }
-  unobserve() { }
+  unobserve() {}
 } as unknown as typeof IntersectionObserver;
 
 // Mock localStorage
@@ -64,7 +65,6 @@ jest.mock('./utils/env', () => ({
 
 // Mock framer-motion
 jest.mock('framer-motion', () => {
-  const React = require('react');
   const actual = jest.requireActual('framer-motion');
 
   return {
@@ -73,19 +73,30 @@ jest.mock('framer-motion', () => {
       scrollY: { get: () => 0, onChange: jest.fn() },
       scrollYProgress: { get: () => 0, onChange: jest.fn() },
     })),
-    // Ensure useTransform returns something not undefined, although undefined is usually checked by motion
+    // Ensure useTransform returns something not undefined
     useTransform: jest.fn(),
     useSpring: jest.fn(),
     useMotionValue: jest.fn(),
-    AnimatePresence: ({ children }: { children: any }) => children,
-    motion: new Proxy({}, {
-      get: (_target, prop: string) => {
-        return React.forwardRef(({ children, ...props }: any, ref: any) => {
-          // If prop is a string like 'div', it works.
-          // If it's 'custom', it might fail if we pass it to createElement, but framer-motion usually exposes standard tags.
-          return React.createElement(prop, { ref, ...props }, children);
-        });
-      },
-    }),
+    AnimatePresence: ({ children }: { children: React.ReactNode }) => children,
+    motion: new Proxy(
+      {},
+      {
+        get: (_target, prop: string) => {
+          const Component = React.forwardRef(
+            (
+              {
+                children,
+                ...props
+              }: React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>,
+              ref: React.ForwardedRef<HTMLElement>
+            ) => {
+              return React.createElement(prop, { ref, ...props }, children);
+            }
+          );
+          Component.displayName = `Motion.${prop}`;
+          return Component;
+        },
+      }
+    ),
   };
 });
