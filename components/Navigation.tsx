@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ChevronDownIcon } from './icons/ChevronDownIcon';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import MegaMenu from './MegaMenu';
 
 interface NavigationProps {
@@ -9,10 +9,12 @@ interface NavigationProps {
 
 const Navigation: React.FC<NavigationProps> = ({ onSelectCategory }) => {
   const [isMegaMenuOpen, setMegaMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const handleScrollTo = (id: string) => {
-    if (window.location.hash !== '#/') {
-      window.location.assign('#/');
+    if (location.pathname !== '/') {
+      navigate('/');
       setTimeout(() => {
         const element = document.getElementById(id);
         element?.scrollIntoView({ behavior: 'smooth' });
@@ -34,7 +36,7 @@ const Navigation: React.FC<NavigationProps> = ({ onSelectCategory }) => {
       {/* Home */}
       <button
         onClick={() => {
-          if (window.location.hash !== '#/') window.location.assign('#/');
+          navigate('/');
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }}
         className="text-base font-medium text-neutral-900 hover:text-brand-primary transition-colors py-2 relative group"

@@ -149,9 +149,8 @@ const Header: React.FC<HeaderProps> = ({
   return (
     <>
       <header
-        className={`sticky top-0 z-50 transition-all duration-300 ${
-          isScrolled ? 'bg-white shadow-sm' : 'bg-white border-b border-neutral-200'
-        }`}
+        className={`sticky top-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white shadow-sm' : 'bg-white border-b border-neutral-200'
+          }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-8">
           {/* Left: Logo */}
@@ -310,11 +309,7 @@ const Header: React.FC<HeaderProps> = ({
             </button>
 
             {/* Cart */}
-            <div
-              className="relative group"
-              onMouseEnter={handleMiniCartEnter}
-              onMouseLeave={handleMiniCartLeave}
-            >
+            <div className="relative">
               <m.div
                 animate={
                   cartBounce ? { scale: [1, 1.2, 0.9, 1.1, 1], rotate: [0, -10, 10, -5, 0] } : {}
@@ -338,26 +333,6 @@ const Header: React.FC<HeaderProps> = ({
                   )}
                 </button>
               </m.div>
-              {isMiniCartOpen && (
-                <div className="absolute top-full right-0 pt-2 hidden group-hover:block z-50">
-                  <React.Suspense
-                    fallback={
-                      <div className="w-80 h-40 bg-white shadow-xl rounded-xl animate-pulse" />
-                    }
-                  >
-                    <MiniCart
-                      isOpen={true} // Always "open" when parent renders it
-                      onClose={() => setMiniCartOpen(false)}
-                      items={cartItems}
-                      onCheckout={() => navigate('/checkout')}
-                      onContinueShopping={() => setMiniCartOpen(false)}
-                      onRemoveItem={(id) => {
-                        if (onRemoveItem) onRemoveItem(id);
-                      }}
-                    />
-                  </React.Suspense>
-                </div>
-              )}
             </div>
 
             {/* User / Login */}

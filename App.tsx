@@ -132,8 +132,8 @@ const OrderConfirmationRoute = ({
         addToast={addToast}
         discount={0}
         promoCode=""
-        onApplyPromoCode={() => {}}
-        onRemovePromoCode={() => {}}
+        onApplyPromoCode={() => { }}
+        onRemovePromoCode={() => { }}
         subtotal={0}
         shippingCost={0}
       />
@@ -1408,7 +1408,7 @@ const App: React.FC = () => {
 
             {/* Global UI Elements */}
             <React.Suspense fallback={null}>
-              <WhatsAppButton phoneNumber="919876543210" />
+              <WhatsAppButton phoneNumber="918890006364" />
               <BackToTop />
             </React.Suspense>
           </div>

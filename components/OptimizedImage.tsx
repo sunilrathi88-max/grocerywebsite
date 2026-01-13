@@ -133,7 +133,7 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
   const imageSrc = hasError ? safeFallbackSrc : isInView ? safeSrc : safeFallbackSrc;
 
   return (
-    <picture className={`block w-full h-full ${className}`}>
+    <picture className={`block ${className}`}>
       {' '}
       {/* Pass className to picture for layout */}
       {/* WebP source for modern browsers - only use srcSet when we know the variants exist */}
@@ -149,9 +149,8 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
         ref={imgRef}
         src={imageSrc}
         alt={alt}
-        className={`w-full h-full ${
-          isLoaded ? 'opacity-100' : 'opacity-0'
-        } transition-opacity duration-300 ease-in-out`} // className already applied to picture if needed, or split styling
+        className={`w-full h-full object-cover ${isLoaded ? 'opacity-100' : 'opacity-0'
+          } transition-opacity duration-300 ease-in-out`}
         loading={loading}
         fetchPriority={priority === 'high' ? 'high' : 'auto'}
         width={width}
@@ -159,7 +158,7 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
         onLoad={handleLoad}
         onError={handleError}
         decoding={priority === 'high' ? 'sync' : 'async'}
-        style={{ ...style, objectFit: 'cover' }} // Ensure object-cover is applied if passed via style or className. ProductCard passes 'object-cover' in className.
+        style={style}
       />
     </picture>
   );

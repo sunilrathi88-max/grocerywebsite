@@ -225,44 +225,32 @@ const LoginPage: React.FC<LoginPageProps> = ({
             </div>
           </div>
 
-          {/* Demo Credentials */}
-          <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-            <p className="text-xs font-medium text-blue-900 mb-1">Demo Credentials:</p>
-            <p className="text-xs text-blue-700">
-              Email: <span className="font-mono">anika.sharma@example.com</span>
+          {/* Sign Up Link */}
+          <div className="text-center">
+            <p className="text-gray-600">
+              Don&apos;t have an account?{' '}
+              <button
+                onClick={onNavigateToSignup}
+                className="font-medium text-brand-primary hover:text-brand-dark transition-colors"
+              >
+                Sign up now
+              </button>
             </p>
-            <p className="text-xs text-blue-700">
-              Password: <span className="font-mono">password123</span>
-            </p>
+          </div>
+
+          {/* Back to Home */}
+          <div className="text-center">
+            <Button
+              variant="ghost"
+              onClick={() => navigate('/')}
+              className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
+            >
+              ← Back to home
+            </Button>
           </div>
         </div>
 
-        {/* Sign Up Link */}
-        <div className="text-center">
-          <p className="text-gray-600">
-            Don&apos;t have an account?{' '}
-            <button
-              onClick={onNavigateToSignup}
-              className="font-medium text-brand-primary hover:text-brand-dark transition-colors"
-            >
-              Sign up now
-            </button>
-          </p>
-        </div>
-
-        {/* Back to Home */}
-        <div className="text-center">
-          <Button
-            variant="ghost"
-            onClick={() => navigate('/')}
-            className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
-          >
-            ← Back to home
-          </Button>
-        </div>
-      </div>
-
-      <style>{`
+        <style>{`
         @keyframes fade-in-up {
           from {
             opacity: 0;
@@ -285,8 +273,10 @@ const LoginPage: React.FC<LoginPageProps> = ({
           animation: shake 0.4s ease-out;
         }
       `}</style>
+      </div>
     </div>
   );
 };
 
 export default LoginPage;
+

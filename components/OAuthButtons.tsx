@@ -12,12 +12,21 @@ const OAuthButtons: React.FC<OAuthButtonsProps> = ({ onError, mode = 'login' }) 
   const [isLoading, setIsLoading] = useState<'google' | 'facebook' | null>(null);
 
   const handleGoogleLogin = async () => {
+    // Check for placeholder config
+    const sbUrl = import.meta.env.VITE_SUPABASE_URL;
+    if (!sbUrl || sbUrl.includes('placeholder')) {
+      console.error('Supabase URL is missing or placeholder. Check .env file.');
+      alert('Authentication configuration is missing. Please check console.');
+      return;
+    }
+
     setIsLoading('google');
     try {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}${window.location.pathname}#/`,
+          // Simplify redirect to origin only to match typical whitelist settings
+          redirectTo: window.location.origin,
           queryParams: { prompt: 'select_account' },
         },
       });
@@ -34,12 +43,20 @@ const OAuthButtons: React.FC<OAuthButtonsProps> = ({ onError, mode = 'login' }) 
   };
 
   const handleFacebookLogin = async () => {
+    // Check for placeholder config
+    const sbUrl = import.meta.env.VITE_SUPABASE_URL;
+    if (!sbUrl || sbUrl.includes('placeholder')) {
+      console.error('Supabase URL is missing or placeholder. Check .env file.');
+      alert('Authentication configuration is missing. Please check console.');
+      return;
+    }
+
     setIsLoading('facebook');
     try {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'facebook',
         options: {
-          redirectTo: `${window.location.origin}${window.location.pathname}#/`,
+          redirectTo: window.location.origin,
         },
       });
 
@@ -86,22 +103,6 @@ const OAuthButtons: React.FC<OAuthButtonsProps> = ({ onError, mode = 'login' }) 
               />
             </svg>
             <span className="text-sm font-medium text-gray-700">{actionText} with Google</span>
-          </>
-        )}
-      </button>
-
-      {/* Facebook Button */}
-      <button
-        onClick={handleFacebookLogin}
-        disabled={isLoading !== null}
-        className="w-full flex items-center justify-center gap-3 px-4 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        {isLoading === 'facebook' ? (
-          <div className="w-5 h-5 border-2 border-gray-300 border-t-blue-600 rounded-full animate-spin" />
-        ) : (
-          <>
-            <FacebookIcon className="w-5 h-5" />
-            <span className="text-sm font-medium text-gray-700">{actionText} with Facebook</span>
           </>
         )}
       </button>
