@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback, useEffect } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useProducts } from '../hooks/useProducts';
 import { useCartStore } from '../store/cartStore';
@@ -9,7 +9,6 @@ import {
   MobileFilterChips,
   MobileProductGrid,
   MobileSortFilterFAB,
-  MobileBottomNavMinimal,
   FilterChip,
 } from '../components/mobile';
 
@@ -41,7 +40,7 @@ const MobileCategoryPage: React.FC<MobileCategoryPageProps> = ({
 
   // Local state
   const searchParams = new URLSearchParams(location.search);
-  const initialSearch = searchParams.get('search') || externalSearchQuery || '';
+  const initialSearch = externalSearchQuery || searchParams.get('search') || '';
   const [searchQuery, setSearchQuery] = useState(initialSearch);
   const [activeFilters, setActiveFilters] = useState<Set<string>>(new Set());
 
@@ -81,12 +80,6 @@ const MobileCategoryPage: React.FC<MobileCategoryPageProps> = ({
   };
 
   // Filter and sort products
-  // Sync with external search query
-  useEffect(() => {
-    if (externalSearchQuery !== undefined && externalSearchQuery !== searchQuery) {
-      setSearchQuery(externalSearchQuery);
-    }
-  }, [externalSearchQuery, searchQuery]);
 
   // Filter and sort products
   const filteredProducts = useMemo(() => {
