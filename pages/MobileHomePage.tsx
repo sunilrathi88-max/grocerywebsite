@@ -1,15 +1,13 @@
 import React from 'react';
 import { Product, Variant, ToastMessage } from '../types';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
   MobileHeader,
   MobileHero,
   MobileTrustBar,
   MobileFeaturedSection,
   MobileCookingWidget,
-  MobileValuePack,
 } from '../components/mobile';
-
 
 interface MobileHomePageProps {
   products: Product[];
@@ -37,16 +35,12 @@ const MobileHomePage: React.FC<MobileHomePageProps> = ({
   addToast: _addToast,
 }) => {
   const navigate = useNavigate();
-  const location = useLocation();
 
   // Get most loved products (IDs 4, 12, 29, 28)
   const mostLovedProducts = products.filter((p) => [4, 12, 29, 28].includes(p.id));
 
   // Hero image - use first product image or fallback
   const heroImage = products[0]?.images[0] || '/images/hero-spices.jpg';
-
-  // Value pack image
-  const valuePackImage = products[2]?.images[0] || '/images/masala-combo.jpg';
 
   // Handle cooking option selection
   const handleCookingOption = (optionId: string) => {
