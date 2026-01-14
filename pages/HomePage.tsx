@@ -170,22 +170,7 @@ const HomePage: React.FC<HomePageProps> = ({
         </div>
       </section>
 
-      {/* Cook What You're Craving Widget - Drives bundle purchases and higher AOV */}
-      <React.Suspense fallback={null}>
-        <CookingContextWidget />
-      </React.Suspense>
-
-      {/* Shop By Category Section - Removed */}
-
-      {/* Why Choose Us Section - Removed */}
-
-      <React.Suspense fallback={<div>Loading Testimonials...</div>}>
-        <Testimonials testimonials={MOCK_TESTIMONIALS} />
-      </React.Suspense>
-
-      <ShopByUseCase />
-
-      {/* New Arrivals - Different background */}
+      {/* New Arrivals - Moved here per user request */}
       <FeaturedCollection
         title="New Arrivals"
         products={products.slice(8, 16)}
@@ -201,6 +186,23 @@ const HomePage: React.FC<HomePageProps> = ({
           element?.scrollIntoView({ behavior: 'smooth' });
         }}
       />
+
+      {/* Cook What You're Craving Widget - Drives bundle purchases and higher AOV */}
+      <React.Suspense fallback={null}>
+        <CookingContextWidget />
+      </React.Suspense>
+
+      {/* Shop By Category Section - Removed */}
+
+      {/* Why Choose Us Section - Removed */}
+
+      <React.Suspense fallback={<div>Loading Testimonials...</div>}>
+        <Testimonials testimonials={MOCK_TESTIMONIALS} />
+      </React.Suspense>
+
+      <ShopByUseCase />
+
+      {/* New Arrivals section moved above */}
 
       {/* Featured Farmer Section */}
       {/* Featured Farmer Section Removed */}
