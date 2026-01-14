@@ -132,8 +132,8 @@ const OrderConfirmationRoute = ({
         addToast={addToast}
         discount={0}
         promoCode=""
-        onApplyPromoCode={() => { }}
-        onRemovePromoCode={() => { }}
+        onApplyPromoCode={() => {}}
+        onRemovePromoCode={() => {}}
         subtotal={0}
         shippingCost={0}
       />
@@ -262,7 +262,7 @@ const App: React.FC = () => {
   const addToCart = useCartStore((state) => state.addItem);
   const updateQuantity = useCartStore((state) => state.updateQuantity);
   const clearCart = useCartStore((state) => state.clearCart);
-  const removeFromCart = useCartStore((state) => state.removeItem);
+
   const { wishlistItems, wishlistItemCount, toggleWishlist, isInWishlist } = useWishlist();
 
   const {
@@ -787,7 +787,6 @@ const App: React.FC = () => {
                 onSelectProduct={setSelectedProduct}
                 categories={categories}
                 onSelectCategory={handleSelectCategoryAndClose}
-
               />
             )}
 
