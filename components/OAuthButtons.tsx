@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { supabase } from '../supabaseClient';
-import { FacebookIcon } from './icons/FacebookIcon';
 
 interface OAuthButtonsProps {
   onSuccess: (user: { email: string }, isNewUser: boolean) => void;
@@ -37,35 +36,7 @@ const OAuthButtons: React.FC<OAuthButtonsProps> = ({ onError, mode = 'login' }) 
       // After OAuth callback, Supabase will handle the session
     } catch (_error) {
       console.error('Google OAuth _error:', _error);
-      onError(_error instanceof _error ? _error.message : 'Google sign-in failed');
-      setIsLoading(null);
-    }
-  };
-
-  const handleFacebookLogin = async () => {
-    // Check for placeholder config
-    const sbUrl = import.meta.env.VITE_SUPABASE_URL;
-    if (!sbUrl || sbUrl.includes('placeholder')) {
-      console.error('Supabase URL is missing or placeholder. Check .env file.');
-      alert('Authentication configuration is missing. Please check console.');
-      return;
-    }
-
-    setIsLoading('facebook');
-    try {
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider: 'facebook',
-        options: {
-          redirectTo: window.location.origin,
-        },
-      });
-
-      if (error) throw error;
-
-      // The redirect will happen automatically
-    } catch (_error) {
-      console.error('Facebook OAuth _error:', _error);
-      onError(_error instanceof _error ? _error.message : 'Facebook sign-in failed');
+      onError(_error instanceof Error ? _error.message : 'Google sign-in failed');
       setIsLoading(null);
     }
   };
