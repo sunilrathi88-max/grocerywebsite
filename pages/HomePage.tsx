@@ -173,6 +173,11 @@ const HomePage: React.FC<HomePageProps> = ({
         </div>
       </section>
 
+      {/* Cook What You're Craving Widget - Drives bundle purchases and higher AOV */}
+      <React.Suspense fallback={null}>
+        <CookingContextWidget />
+      </React.Suspense>
+
       <div id="category-showcase">
         <ShopByCategory
           onSelectCategory={(cat) => {
@@ -184,26 +189,11 @@ const HomePage: React.FC<HomePageProps> = ({
         />
       </div>
 
-      {/* Cook What You're Craving Widget - drives bundle purchases */}
-      <CookingContextWidget
-        onAddBundleToCart={(kit) => {
-          // Add all products from the kit to cart
-          kit.products.forEach((product) => {
-            const matchedProduct = products.find((p) =>
-              p.name.includes(product.name.split(' ')[0])
-            );
-            if (matchedProduct && matchedProduct.variants[0]) {
-              handleAddToCart(matchedProduct, matchedProduct.variants[0], 1);
-            }
-          });
-          addToast(`Added ${kit.name} to cart!`, 'success');
-        }}
-      />
+
 
       <WhyChooseUs />
 
-      {/* Loyalty Program Widget */}
-      <LoyaltyWidget />
+
 
       <React.Suspense fallback={<div>Loading Testimonials...</div>}>
         <Testimonials testimonials={MOCK_TESTIMONIALS} />
@@ -228,7 +218,7 @@ const HomePage: React.FC<HomePageProps> = ({
         }}
       />
 
-      <BrandStory />
+
 
       {/* Featured Farmer Section */}
       {/* Featured Farmer Section Removed */}
@@ -249,7 +239,7 @@ const HomePage: React.FC<HomePageProps> = ({
         onAddToCart={(product, variant) => handleAddToCartWithTracking(product, variant, 1)}
       />
 
-      <BlogStrip />
+
 
       <FAQPreview />
 
