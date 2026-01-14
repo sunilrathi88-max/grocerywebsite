@@ -175,18 +175,9 @@ const HomePage: React.FC<HomePageProps> = ({
         <CookingContextWidget />
       </React.Suspense>
 
-      <div id="category-showcase">
-        <ShopByCategory
-          onSelectCategory={(cat) => {
-            // Basic handling, ideally filter by category
-            setSelectedCategory(cat);
-            const element = document.getElementById('products-section');
-            element?.scrollIntoView({ behavior: 'smooth' });
-          }}
-        />
-      </div>
+      {/* Shop By Category Section - Removed */}
 
-      <WhyChooseUs />
+      {/* Why Choose Us Section - Removed */}
 
       <React.Suspense fallback={<div>Loading Testimonials...</div>}>
         <Testimonials testimonials={MOCK_TESTIMONIALS} />
