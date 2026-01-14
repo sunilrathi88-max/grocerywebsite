@@ -10,7 +10,6 @@ import { SunIcon } from './icons/SunIcon';
 import { Product } from '../types';
 import SignOutButton from './SignOutButton';
 import { MiniCartItem } from './MiniCart';
-const MiniCart = React.lazy(() => import('./MiniCart'));
 import { TagIcon } from './icons/TagIcon';
 import { SearchIcon } from './icons/SearchIcon';
 import Navigation from './Navigation';
@@ -37,7 +36,6 @@ interface HeaderProps {
   onSelectProduct: (product: Product) => void;
   categories: string[];
   onSelectCategory: (category: string) => void;
-  onRemoveItem?: (id: string) => void;
 }
 
 const Header: React.FC<HeaderProps> = ({
@@ -56,14 +54,12 @@ const Header: React.FC<HeaderProps> = ({
   onSelectProduct,
   categories,
   onSelectCategory,
-  onRemoveItem,
 }) => {
   const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [darkMode, setDarkMode] = useDarkMode();
   const [isAutocompleteOpen, setAutocompleteOpen] = useState(false);
-  const [isMiniCartOpen, setMiniCartOpen] = useState(false);
   const [cartBounce, setCartBounce] = useState(false);
   const searchContainerRef = useRef<HTMLDivElement>(null);
   const prevCartCountRef = useRef<number>(0);
@@ -136,21 +132,12 @@ const Header: React.FC<HeaderProps> = ({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [searchContainerRef]);
 
-  // Mini cart hover handling
-  const miniCartTimeoutRef = useRef<number | undefined>(undefined);
-  const handleMiniCartEnter = () => {
-    if (miniCartTimeoutRef.current) clearTimeout(miniCartTimeoutRef.current);
-    setMiniCartOpen(true);
-  };
-  const handleMiniCartLeave = () => {
-    miniCartTimeoutRef.current = window.setTimeout(() => setMiniCartOpen(false), 200);
-  };
-
   return (
     <>
       <header
-        className={`sticky top-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white shadow-sm' : 'bg-white border-b border-neutral-200'
-          }`}
+        className={`sticky top-0 z-50 transition-all duration-300 ${
+          isScrolled ? 'bg-white shadow-sm' : 'bg-white border-b border-neutral-200'
+        }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-8">
           {/* Left: Logo */}
