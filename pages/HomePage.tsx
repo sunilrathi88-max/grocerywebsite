@@ -8,10 +8,8 @@ import ShopByCategory from '../components/ShopByCategory';
 import CookingContextWidget from '../components/CookingContextWidget';
 import ShopByUseCase from '../components/ShopByUseCase';
 import FeaturedCollection from '../components/FeaturedCollection';
-import BrandStory from '../components/BrandStory';
 import RecommendedProducts from '../components/RecommendedProducts';
 import Testimonials from '../components/Testimonials';
-import BlogStrip from '../components/BlogStrip';
 import FAQPreview from '../components/FAQPreview';
 import Newsletter from '../components/Newsletter';
 import ProductGrid from '../components/ProductGrid';
@@ -21,7 +19,6 @@ import AdvancedFilters from '../components/AdvancedFilters';
 import QuizModule from '../components/QuizModule';
 import { MOCK_TESTIMONIALS } from '../data/testimonials';
 import { TrustBadges, CERTIFICATION_BADGES } from '../components/TrustBadges';
-import LoyaltyWidget from '../components/LoyaltyWidget';
 import RecentlyViewed from '../components/RecentlyViewed';
 
 interface HomePageProps {
@@ -189,11 +186,7 @@ const HomePage: React.FC<HomePageProps> = ({
         />
       </div>
 
-
-
       <WhyChooseUs />
-
-
 
       <React.Suspense fallback={<div>Loading Testimonials...</div>}>
         <Testimonials testimonials={MOCK_TESTIMONIALS} />
@@ -218,8 +211,6 @@ const HomePage: React.FC<HomePageProps> = ({
         }}
       />
 
-
-
       {/* Featured Farmer Section */}
       {/* Featured Farmer Section Removed */}
 
@@ -238,8 +229,6 @@ const HomePage: React.FC<HomePageProps> = ({
         onSelectProduct={setSelectedProduct}
         onAddToCart={(product, variant) => handleAddToCartWithTracking(product, variant, 1)}
       />
-
-
 
       <FAQPreview />
 
