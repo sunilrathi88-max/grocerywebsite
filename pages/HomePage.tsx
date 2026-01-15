@@ -2,9 +2,6 @@ import React from 'react';
 import { Product, Variant, ToastMessage } from '../types';
 import { useABTest } from '../src/context/ABTestContext'; // A/B Test Hook
 import HeroCarousel from '../components/HeroCarousel';
-import WhyChooseUs from '../components/WhyChooseUs';
-
-import ShopByCategory from '../components/ShopByCategory';
 import CookingContextWidget from '../components/CookingContextWidget';
 import ShopByUseCase from '../components/ShopByUseCase';
 import FeaturedCollection from '../components/FeaturedCollection';
@@ -192,42 +189,7 @@ const HomePage: React.FC<HomePageProps> = ({
         <CookingContextWidget />
       </React.Suspense>
 
-      {/* Shop By Category Section - Removed */}
-
-      {/* Why Choose Us Section - Removed */}
-
-      <React.Suspense fallback={<div>Loading Testimonials...</div>}>
-        <Testimonials testimonials={MOCK_TESTIMONIALS} />
-      </React.Suspense>
-
-      <ShopByUseCase />
-
-      {/* New Arrivals section moved above */}
-
-      {/* Featured Farmer Section */}
-      {/* Featured Farmer Section Removed */}
-
-      {/* Personalized Recommendations */}
-      <React.Suspense fallback={null}>
-        <RecommendedProducts
-          allProducts={products}
-          onAddToCart={handleAddToCartWithTracking}
-          onSelectProduct={setSelectedProduct}
-          onNotifyMe={handleNotifyMe}
-        />
-      </React.Suspense>
-
-      {/* Recently Viewed Products */}
-      <RecentlyViewed
-        onSelectProduct={setSelectedProduct}
-        onAddToCart={(product, variant) => handleAddToCartWithTracking(product, variant, 1)}
-      />
-
-      <FAQPreview />
-
-      <Newsletter />
-
-      {/* Main Product Grid Section */}
+      {/* Main Product Grid Section - Moved here per user request */}
       <div id="products-section" className="bg-brand-accent py-20">
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center mb-16">
@@ -359,6 +321,33 @@ const HomePage: React.FC<HomePageProps> = ({
           </div>
         </div>
       </div>
+
+      {/* Sections moved below Shop All */}
+      <React.Suspense fallback={<div>Loading Testimonials...</div>}>
+        <Testimonials testimonials={MOCK_TESTIMONIALS} />
+      </React.Suspense>
+
+      <ShopByUseCase />
+
+      {/* Personalized Recommendations */}
+      <React.Suspense fallback={null}>
+        <RecommendedProducts
+          allProducts={products}
+          onAddToCart={handleAddToCartWithTracking}
+          onSelectProduct={setSelectedProduct}
+          onNotifyMe={handleNotifyMe}
+        />
+      </React.Suspense>
+
+      {/* Recently Viewed Products */}
+      <RecentlyViewed
+        onSelectProduct={setSelectedProduct}
+        onAddToCart={(product, variant) => handleAddToCartWithTracking(product, variant, 1)}
+      />
+
+      <FAQPreview />
+
+      <Newsletter />
 
       {/* Quiz Module */}
       <section
