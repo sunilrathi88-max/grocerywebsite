@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Button } from '../components/Button';
 import { OptimizedImage } from '../components/OptimizedImage';
 import { ProductTabs } from '../components/ProductTabs';
@@ -23,6 +23,7 @@ import { useABTest } from '../src/context/ABTestContext';
 
 export default function ProductDetailPage() {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const addToCart = useCartStore((state) => state.addItem);
   const { toggleWishlist, wishlistItems } = useWishlist();
   const wishlistedIds = new Set(wishlistItems.map((p) => p.id));
@@ -102,6 +103,11 @@ export default function ProductDetailPage() {
       subscriptionInterval: isSub ? 'monthly' : undefined,
     });
     alert(`Added ${isSub ? 'subscription' : 'product'} to cart!`);
+  };
+
+  const handleBuyNow = () => {
+    handleAddToCart();
+    navigate('/checkout');
   };
 
   return (
@@ -207,7 +213,7 @@ export default function ProductDetailPage() {
               >
                 {variant === 'B' ? 'Add to Cart (Save 10%)' : 'Add to Cart'}
               </Button>
-              <Button variant="outline" size="lg" fullWidth>
+              <Button variant="outline" size="lg" fullWidth onClick={handleBuyNow}>
                 Buy Now
               </Button>
             </div>
@@ -354,8 +360,11 @@ export default function ProductDetailPage() {
             </div>
           </div>
 
-          {/* Farmer Highlight (Mock usage for now, linking to farmers page) */}
-          <div className="bg-brand-dark text-white rounded-2xl p-8 relative overflow-hidden group cursor-pointer hover:shadow-xl transition-all">
+          {/* Farmer Highlight - Links to farmers page */}
+          <Link
+            to="/farmers"
+            className="bg-brand-dark text-white rounded-2xl p-8 relative overflow-hidden group cursor-pointer hover:shadow-xl transition-all block"
+          >
             <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1595245842188-4235b2e6669f?auto=format&fit=crop&q=80')] bg-cover bg-center opacity-40 transition-transform duration-700 group-hover:scale-105"></div>
             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
 
@@ -372,7 +381,7 @@ export default function ProductDetailPage() {
                 Meet Our Farmers <span>→</span>
               </div>
             </div>
-          </div>
+          </Link>
         </div>
 
         {/* You Might Also Like Section */}
@@ -393,7 +402,7 @@ export default function ProductDetailPage() {
             }
             onToggleWishlist={toggleWishlist}
             wishlistedIds={wishlistedIds}
-            onSelectProduct={(p) => (window.location.href = `/product/${p.id}`)} // Simple navigation
+            onSelectProduct={(p) => navigate(`/product/${p.id}`)}
             onNotifyMe={() => {}}
           />
         </div>

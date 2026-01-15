@@ -1,9 +1,12 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FARMERS } from '../data/farmers';
 import { UserIcon } from '../components/icons/UserIcon';
 import { OptimizedImage } from '../components/OptimizedImage';
 
 const FarmersPage: React.FC = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="bg-white min-h-screen">
       {/* Hero Section */}
@@ -96,7 +99,10 @@ const FarmersPage: React.FC = () => {
             When you buy from Tattva, 100% of the fair-trade premium goes directly to these
             families.
           </p>
-          <button className="bg-brand-primary text-white px-8 py-3 rounded-lg font-bold hover:bg-white hover:text-brand-dark transition-colors">
+          <button
+            onClick={() => navigate('/shop')}
+            className="bg-brand-primary text-white px-8 py-3 rounded-lg font-bold hover:bg-white hover:text-brand-dark transition-colors"
+          >
             Shop Our Spices
           </button>
         </div>
