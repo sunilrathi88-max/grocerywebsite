@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Button } from '../components/Button';
-import { OptimizedImage } from '../components/OptimizedImage';
+import ImageGallery from '../components/ImageGallery';
 import { ProductTabs } from '../components/ProductTabs';
 import { WeightSelector } from '../components/WeightSelector';
 import { QuantitySelector } from '../components/QuantitySelector';
@@ -127,16 +127,16 @@ export default function ProductDetailPage() {
 
         {/* Product Info Grid */}
         <div className="grid md:grid-cols-2 gap-8 mb-12">
-          {/* Left: Image */}
-          <div className="bg-white rounded-lg p-4">
-            <OptimizedImage
-              src={product.images[0]}
-              alt={product.name}
-              type="detail"
-              className="w-full aspect-square object-cover rounded-lg"
-              width={600}
-              height={600}
-              priority="high"
+          {/* Left: Image Gallery */}
+          <div className="bg-white rounded-2xl p-4 shadow-sm">
+            <ImageGallery
+              media={product.images.map((img) => ({
+                type: 'image' as const,
+                url: img,
+                thumb: img,
+              }))}
+              productName={product.name}
+              isOutOfStock={displaySizes[selectedWeight]?.stock === 0}
             />
           </div>
 
