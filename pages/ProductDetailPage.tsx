@@ -6,6 +6,7 @@ import { ProductTabs } from '../components/ProductTabs';
 import { WeightSelector } from '../components/WeightSelector';
 import { QuantitySelector } from '../components/QuantitySelector';
 import { TrustBadges } from '../components/TrustBadges';
+import { Breadcrumbs } from '../components/ui/Breadcrumbs';
 
 import { useCartStore } from '../store/cartStore';
 import { ReviewWidget } from '../components/Reviews/ReviewWidget';
@@ -113,6 +114,17 @@ export default function ProductDetailPage() {
   return (
     <div className="min-h-screen bg-[#F5F5F0]">
       <div className="max-w-7xl mx-auto px-4 py-8">
+        {/* Breadcrumb Navigation */}
+        <div className="mb-6">
+          <Breadcrumbs
+            items={[
+              { label: 'Home', onClick: () => navigate('/') },
+              { label: product.category || 'Products', onClick: () => navigate('/shop') },
+              { label: product.name },
+            ]}
+          />
+        </div>
+
         {/* Product Info Grid */}
         <div className="grid md:grid-cols-2 gap-8 mb-12">
           {/* Left: Image */}
@@ -165,38 +177,76 @@ export default function ProductDetailPage() {
             {/* Quantity */}
             <QuantitySelector value={quantity} onChange={setQuantity} />
 
-            {/* Subscription Toggle */}
-            <div className="p-4 bg-brand-primary/5 rounded-xl border border-brand-primary/20">
+            {/* Subscription Toggle - Enhanced */}
+            <div className="p-5 bg-gradient-to-br from-brand-primary/5 to-brand-primary/10 rounded-2xl border border-brand-primary/20 shadow-sm">
               <div className="flex gap-4">
-                <label className="flex items-start gap-2 cursor-pointer flex-1">
+                <label
+                  className={`flex items-start gap-3 cursor-pointer flex-1 p-3 rounded-xl transition-all duration-200 ${
+                    purchaseType === 'one-time'
+                      ? 'bg-white shadow-md border-2 border-brand-primary'
+                      : 'bg-transparent border-2 border-transparent hover:bg-white/50'
+                  }`}
+                >
                   <input
                     type="radio"
                     name="purchaseType"
                     checked={purchaseType === 'one-time'}
                     onChange={() => setPurchaseType('one-time')}
-                    className="mt-1 text-brand-primary focus:ring-brand-primary"
+                    className="mt-1 w-5 h-5 text-brand-primary focus:ring-brand-primary accent-brand-primary"
                   />
                   <div>
-                    <span className="font-bold text-gray-900 block">One-time purchase</span>
-                    <span className="text-gray-500 text-sm">
+                    <span className="font-bold text-gray-900 block text-base">
+                      One-time purchase
+                    </span>
+                    <span className="text-gray-600 text-sm font-medium">
                       ₹{displaySizes[selectedWeight]?.price}
                     </span>
                   </div>
                 </label>
-                <label className="flex items-start gap-2 cursor-pointer flex-1">
+                <label
+                  className={`flex items-start gap-3 cursor-pointer flex-1 p-3 rounded-xl transition-all duration-200 relative ${
+                    purchaseType === 'subscription'
+                      ? 'bg-white shadow-md border-2 border-brand-primary'
+                      : 'bg-transparent border-2 border-transparent hover:bg-white/50'
+                  }`}
+                >
+                  {/* Best Value Badge */}
+                  <span className="absolute -top-2 -right-2 bg-brand-primary text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-sm">
+                    BEST VALUE
+                  </span>
                   <input
                     type="radio"
                     name="purchaseType"
                     checked={purchaseType === 'subscription'}
                     onChange={() => setPurchaseType('subscription')}
-                    className="mt-1 text-brand-primary focus:ring-brand-primary"
+                    className="mt-1 w-5 h-5 text-brand-primary focus:ring-brand-primary accent-brand-primary"
                   />
                   <div>
-                    <span className="font-bold text-gray-900 block">Subscribe & Save</span>
-                    <span className="text-brand-primary font-bold text-sm">
-                      ₹{Math.round(displaySizes[selectedWeight]?.price * 0.9)} (Save 10%)
+                    <span className="font-bold text-gray-900 block text-base">
+                      Subscribe & Save
                     </span>
-                    <span className="text-xs text-gray-500 block mt-1">Delivered monthly</span>
+                    <span className="text-brand-primary font-bold text-sm">
+                      ₹{Math.round(displaySizes[selectedWeight]?.price * 0.9)}
+                      <span className="ml-1 bg-green-100 text-green-700 text-xs px-1.5 py-0.5 rounded-full">
+                        Save 10%
+                      </span>
+                    </span>
+                    <span className="text-xs text-gray-500 block mt-1 flex items-center gap-1">
+                      <svg
+                        className="w-3 h-3"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                        />
+                      </svg>
+                      Delivered monthly • Cancel anytime
+                    </span>
                   </div>
                 </label>
               </div>
