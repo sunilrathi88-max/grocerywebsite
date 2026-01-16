@@ -25,6 +25,13 @@ jest.mock('../../src/context/ABTestContext', () => ({
   useABTest: () => ({ variant: 'A', trackConversion: jest.fn() }),
 }));
 
+// Mock ImageGallery to avoid react-slick issues in tests
+jest.mock('../../components/ImageGallery', () => {
+  return function MockImageGallery() {
+    return <div data-testid="image-gallery">Mock Gallery</div>;
+  };
+});
+
 jest.mock('../../hooks/useProducts', () => ({
   useProducts: () => ({
     products: [
@@ -68,7 +75,9 @@ describe('ProductDetailPage', () => {
 
   it('renders product details correctly', () => {
     renderComponent();
-    expect(screen.getByText('Test Spice')).toBeInTheDocument();
+    // Use getAllByText since product name may appear in multiple places (title, breadcrumb, etc.)
+    const productNameElements = screen.getAllByText('Test Spice');
+    expect(productNameElements.length).toBeGreaterThan(0);
   });
 
   it('shows related products in slider', () => {
