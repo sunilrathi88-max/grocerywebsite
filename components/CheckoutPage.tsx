@@ -361,6 +361,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [localPromoCode, setLocalPromoCode] = useState('');
+  const [isMobileSummaryOpen, setIsMobileSummaryOpen] = useState(false);
 
   // Checkout Flow State
   const [currentStep, setCurrentStep] = useState<'auth' | 'shipping' | 'payment'>(
@@ -884,8 +885,40 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
 
             {/* Right/Sidebar Column */}
             <div className="lg:col-span-1">
-              <div className="bg-neutral-50 p-6 rounded-xl border border-neutral-200 shadow-sm sticky top-24">
-                <h3 className="text-xl font-serif font-bold text-neutral-900 mb-6">
+              {/* Collapsible Mobile Summary Header */}
+              <button
+                type="button"
+                onClick={() => setIsMobileSummaryOpen(!isMobileSummaryOpen)}
+                className="lg:hidden w-full flex items-center justify-between bg-neutral-50 p-4 rounded-xl border border-neutral-200 shadow-sm mb-4"
+              >
+                <div className="flex items-center gap-3">
+                  <span className="font-bold text-neutral-900">Order Summary</span>
+                  <span className="bg-brand-primary text-brand-dark text-xs font-bold px-2 py-0.5 rounded-full">
+                    {cartItems.length} items
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="font-bold text-lg text-neutral-900">₹{total.toFixed(2)}</span>
+                  <svg
+                    className={`w-5 h-5 text-neutral-500 transition-transform ${isMobileSummaryOpen ? 'rotate-180' : ''}`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </div>
+              </button>
+
+              <div
+                className={`bg-neutral-50 p-6 rounded-xl border border-neutral-200 shadow-sm sticky top-24 ${isMobileSummaryOpen ? 'block' : 'hidden lg:block'}`}
+              >
+                <h3 className="text-xl font-serif font-bold text-neutral-900 mb-6 hidden lg:block">
                   Order Summary
                 </h3>
 

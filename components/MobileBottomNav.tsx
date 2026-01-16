@@ -25,6 +25,31 @@ const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
   currentView,
 }) => {
   const navigate = useNavigate();
+  const [isVisible, setIsVisible] = React.useState(true);
+  const [lastScrollY, setLastScrollY] = React.useState(0);
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      const scrollThreshold = 10;
+
+      if (currentScrollY < scrollThreshold) {
+        // Always show when at top
+        setIsVisible(true);
+      } else if (currentScrollY > lastScrollY + 5) {
+        // Scrolling down - hide
+        setIsVisible(false);
+      } else if (currentScrollY < lastScrollY - 5) {
+        // Scrolling up - show
+        setIsVisible(true);
+      }
+
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [lastScrollY]);
 
   const navItems = [
     {
@@ -67,7 +92,12 @@ const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-[100] md:hidden pb-safe">
+    <motion.nav
+      className="fixed bottom-0 left-0 right-0 z-[100] md:hidden pb-safe"
+      initial={{ y: 0 }}
+      animate={{ y: isVisible ? 0 : 100 }}
+      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+    >
       {/* Glassmorphism Background */}
       <div className="absolute inset-0 bg-white/90 backdrop-blur-lg border-t border-white/20 shadow-[0_-4px_20px_rgba(0,0,0,0.05)]" />
 
@@ -130,7 +160,7 @@ const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
           );
         })}
       </div>
-    </nav>
+    </motion.nav>
   );
 };
 
