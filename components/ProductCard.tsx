@@ -102,13 +102,13 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               variant="primary"
               size="sm"
               fullWidth
-              className="shadow-lg"
+              className="shadow-lg flex items-center justify-center gap-2"
               onClick={(e) => {
                 e.preventDefault();
                 onAddToCart(id);
               }}
             >
-              Add to Cart
+              <span>+</span> Quick Add
             </Button>
           </div>
         </div>

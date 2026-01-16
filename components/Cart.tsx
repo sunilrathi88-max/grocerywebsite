@@ -125,14 +125,58 @@ const Cart: React.FC<CartProps> = ({
 
       {items.length === 0 ? (
         <div
-          className="flex-1 flex flex-col items-center justify-center text-gray-500"
+          className="flex-1 flex flex-col items-center justify-center text-gray-500 overflow-y-auto"
           data-testid="cart-empty"
         >
-          <ShoppingCartIcon className="h-16 w-16 mb-4 opacity-20" />
-          <p className="text-lg font-medium">Your cart is empty</p>
-          <button onClick={onClose} className="mt-4 text-brand-primary hover:underline">
-            Start Shopping
-          </button>
+          <div className="flex flex-col items-center justify-center py-12">
+            <ShoppingCartIcon className="h-16 w-16 mb-4 opacity-20" />
+            <p className="text-lg font-medium">Your cart is empty</p>
+            <button onClick={onClose} className="mt-4 text-brand-primary hover:underline">
+              Start Shopping
+            </button>
+          </div>
+
+          {/* Recommendations in Empty State */}
+          {recommendedProducts.length > 0 && onAddToCart && (
+            <div className="w-full px-6 pb-6 animate-fadeIn">
+              <h4 className="font-bold text-gray-800 mb-3 text-sm text-left">Trending Products</h4>
+              <div className="space-y-3">
+                {recommendedProducts.slice(0, 3).map((product) => (
+                  <div
+                    key={`empty-${product.id}`}
+                    className="flex items-center justify-between bg-white p-2 rounded-lg border border-gray-100 shadow-sm"
+                  >
+                    <div className="flex items-center gap-3">
+                      <OptimizedImage
+                        src={product.images[0]}
+                        alt={product.name}
+                        className="w-10 h-10 object-cover rounded-md"
+                        type="thumbnail"
+                        width={40}
+                        height={40}
+                        onError={imageErrorHandlers.thumb}
+                      />
+                      <div className="overflow-hidden text-left">
+                        <p className="font-bold text-xs text-brand-dark truncate w-40">
+                          {product.name}
+                        </p>
+                        <p className="text-xs text-gray-500">
+                          ₹{product.variants[0].salePrice || product.variants[0].price}
+                        </p>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => onAddToCart(product, product.variants[0])}
+                      className="text-brand-primary hover:bg-brand-primary hover:text-white p-1.5 rounded-full transition-colors bg-brand-primary/10"
+                      aria-label="Add to cart"
+                    >
+                      <PlusIcon className="w-4 h-4" />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       ) : (
         <>

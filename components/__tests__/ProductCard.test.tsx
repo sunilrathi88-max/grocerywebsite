@@ -97,7 +97,7 @@ describe('ProductCard', () => {
     it('should call onAddToCart when Add button is clicked', () => {
       renderWithRouter(<ProductCard {...defaultProps} />);
 
-      const addButton = screen.getByText('Add to Cart');
+      const addButton = screen.getByText('Quick Add');
       fireEvent.click(addButton);
 
       expect(mockOnAddToCart).toHaveBeenCalledWith('1');
