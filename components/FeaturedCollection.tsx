@@ -24,7 +24,7 @@ const FeaturedCollection: React.FC<FeaturedCollectionProps> = ({
   ...sliderProps
 }) => {
   return (
-    <section className={`py-12 ${bgClass}`}>
+    <section className={`py-12 ${bgClass} animate-fade-in-up`}>
       <div className="max-w-7xl mx-auto px-4 md:px-16">
         <div className="flex items-center justify-between mb-8">
           <h2 className="text-2xl md:text-3xl font-serif font-bold text-neutral-900">{title}</h2>

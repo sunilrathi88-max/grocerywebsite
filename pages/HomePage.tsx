@@ -17,6 +17,7 @@ import QuizModule from '../components/QuizModule';
 import { MOCK_TESTIMONIALS } from '../data/testimonials';
 import { TrustBadges, CERTIFICATION_BADGES } from '../components/TrustBadges';
 import RecentlyViewed from '../components/RecentlyViewed';
+import LoyaltyWidget from '../components/LoyaltyWidget';
 
 interface HomePageProps {
   products: Product[];
@@ -326,6 +327,9 @@ const HomePage: React.FC<HomePageProps> = ({
       <React.Suspense fallback={<div>Loading Testimonials...</div>}>
         <Testimonials testimonials={MOCK_TESTIMONIALS} />
       </React.Suspense>
+
+      {/* Loyalty Rewards Program - Quick Win for customer retention */}
+      <LoyaltyWidget />
 
       <ShopByUseCase />
 
