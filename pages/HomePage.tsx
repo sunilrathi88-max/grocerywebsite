@@ -18,6 +18,7 @@ import { MOCK_TESTIMONIALS } from '../data/testimonials';
 import { TrustBadges, CERTIFICATION_BADGES } from '../components/TrustBadges';
 import RecentlyViewed from '../components/RecentlyViewed';
 import LoyaltyWidget from '../components/LoyaltyWidget';
+import SustainabilitySection from '../components/SustainabilitySection';
 
 interface HomePageProps {
   products: Product[];
@@ -167,6 +168,9 @@ const HomePage: React.FC<HomePageProps> = ({
           <TrustBadges certifications={CERTIFICATION_BADGES} variant="certification" />
         </div>
       </section>
+
+      {/* Sustainability Section */}
+      <SustainabilitySection />
 
       {/* New Arrivals - Moved here per user request */}
       <FeaturedCollection

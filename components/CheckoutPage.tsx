@@ -339,6 +339,10 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
   subtotal,
   shippingCost,
 }) => {
+  const FREE_SHIPPING_THRESHOLD = 1000;
+  const remainingForFreeShipping = Math.max(0, FREE_SHIPPING_THRESHOLD - subtotal);
+  const shippingProgress = Math.min(100, (subtotal / FREE_SHIPPING_THRESHOLD) * 100);
+
   const defaultShipping = user?.addresses.find((a) => a.isDefault && a.type === 'Shipping') ||
     user?.addresses[0] || { street: '', city: '', state: '', zip: '', country: '' };
 
@@ -884,6 +888,32 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
                 <h3 className="text-xl font-serif font-bold text-neutral-900 mb-6">
                   Order Summary
                 </h3>
+
+                {/* Free Shipping Progress */}
+                <div className="mb-6 p-4 bg-white rounded-lg border border-neutral-100 shadow-sm">
+                  <div className="flex justify-between text-xs font-bold mb-2">
+                    <span className="text-gray-600">
+                      {remainingForFreeShipping > 0
+                        ? `Add ₹${remainingForFreeShipping.toFixed(0)} for Free Shipping`
+                        : '🎉 Free Shipping Unlocked!'}
+                    </span>
+                    <span
+                      className={
+                        remainingForFreeShipping > 0 ? 'text-brand-primary' : 'text-green-600'
+                      }
+                    >
+                      {Math.round(shippingProgress)}%
+                    </span>
+                  </div>
+                  <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+                    <div
+                      className={`h-full transition-all duration-500 ease-out ${
+                        remainingForFreeShipping > 0 ? 'bg-brand-primary' : 'bg-green-500'
+                      }`}
+                      style={{ width: `${shippingProgress}%` }}
+                    />
+                  </div>
+                </div>
 
                 <div className="space-y-4 max-h-80 overflow-y-auto mb-6 pr-2">
                   {cartItems.map((item) => (

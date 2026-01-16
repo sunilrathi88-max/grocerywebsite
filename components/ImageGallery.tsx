@@ -59,7 +59,11 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ media, productName, isOutOf
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    arrows: false, // We'll use custom arrows or rely on swipe
+    arrows: false,
+    swipe: true,
+    swipeToSlide: true,
+    touchThreshold: 10, // Increased sensitivity for easier swiping
+    lazyLoad: 'ondemand' as const,
     asNavFor: nav2 || undefined,
     beforeChange: (_current: number, next: number) => setActiveSlide(next),
   };
