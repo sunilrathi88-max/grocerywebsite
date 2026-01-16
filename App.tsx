@@ -101,6 +101,7 @@ const OffersPage = React.lazy(() => import('./pages/OffersPage'));
 const SubscriptionPage = React.lazy(() => import('./pages/SubscriptionPage'));
 const FarmersPage = React.lazy(() => import('./pages/FarmersPage'));
 const ResponsiveCartPage = React.lazy(() => import('./pages/ResponsiveCartPage'));
+const NotFoundPage = React.lazy(() => import('./pages/NotFoundPage'));
 
 const PageLoader = () => (
   <div className="flex items-center justify-center min-h-[60vh]">
@@ -1193,8 +1194,8 @@ const App: React.FC = () => {
                 }
               />
               <Route path="/blog/:slug" element={<BlogPostRoute />} />
-              {/* Catch all redirect */}
-              <Route path="*" element={<Navigate to="/" replace />} />
+              {/* 404 Not Found Page */}
+              <Route path="*" element={<NotFoundPage />} />
             </Routes>
 
             {/* Hide Footer on mobile pages */}
