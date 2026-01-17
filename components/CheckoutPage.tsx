@@ -432,6 +432,16 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
   const [localPromoCode, setLocalPromoCode] = useState('');
   const [isMobileSummaryOpen, setIsMobileSummaryOpen] = useState(false);
 
+  // Enhanced Checkout Features
+  const [orderNotes, setOrderNotes] = useState('');
+  const [isGiftOrder, setIsGiftOrder] = useState(false);
+  const [giftMessage, setGiftMessage] = useState('');
+  const [wantGiftWrap, setWantGiftWrap] = useState(false);
+  const [wantSmsUpdates, setWantSmsUpdates] = useState(false);
+  const [smsPhone, setSmsPhone] = useState('');
+
+  const GIFT_WRAP_FEE = 49;
+
   // Checkout Flow State
   const [currentStep, setCurrentStep] = useState<'auth' | 'shipping' | 'payment'>(
     user ? 'shipping' : 'auth'
@@ -455,9 +465,10 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
   };
 
   const tax = useMemo(() => (subtotal - discount) * 0.05, [subtotal, discount]);
+  const giftWrapCost = wantGiftWrap ? GIFT_WRAP_FEE : 0;
   const total = useMemo(
-    () => subtotal + shippingCost + tax - discount,
-    [subtotal, shippingCost, tax, discount]
+    () => subtotal + shippingCost + tax - discount + giftWrapCost,
+    [subtotal, shippingCost, tax, discount, giftWrapCost]
   );
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -950,6 +961,126 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
                   </div>
                 )}
               </div>
+
+              {/* Order Notes */}
+              <div className="space-y-3">
+                <h3 className="text-lg font-serif font-bold flex items-center gap-2">
+                  📝 Order Notes
+                  <span className="text-xs font-normal text-gray-500">(Optional)</span>
+                </h3>
+                <textarea
+                  value={orderNotes}
+                  onChange={(e) => setOrderNotes(e.target.value)}
+                  placeholder="Any special instructions? (e.g., Leave at door, Call before delivery)"
+                  className="w-full input-field min-h-[80px] resize-none"
+                  maxLength={200}
+                />
+                <p className="text-xs text-gray-400 text-right">{orderNotes.length}/200</p>
+              </div>
+
+              {/* Gift Options */}
+              <div className="space-y-4 p-4 bg-gradient-to-r from-pink-50 to-purple-50 rounded-xl border border-pink-100">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xl">🎁</span>
+                    <span className="font-bold text-gray-800">This is a gift order</span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setIsGiftOrder(!isGiftOrder)}
+                    className={`relative w-12 h-6 rounded-full transition-colors ${isGiftOrder ? 'bg-brand-primary' : 'bg-gray-300'}`}
+                  >
+                    <span
+                      className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform ${isGiftOrder ? 'translate-x-6' : ''}`}
+                    />
+                  </button>
+                </div>
+
+                {isGiftOrder && (
+                  <div className="space-y-3 animate-fade-in">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Gift Message
+                      </label>
+                      <textarea
+                        value={giftMessage}
+                        onChange={(e) => setGiftMessage(e.target.value)}
+                        placeholder="Write a heartfelt message for your recipient..."
+                        className="w-full input-field min-h-[60px] resize-none"
+                        maxLength={150}
+                      />
+                      <p className="text-xs text-gray-400 text-right">{giftMessage.length}/150</p>
+                    </div>
+
+                    <div className="flex items-center justify-between p-3 bg-white rounded-lg border border-pink-200">
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="checkbox"
+                          id="giftWrap"
+                          checked={wantGiftWrap}
+                          onChange={(e) => setWantGiftWrap(e.target.checked)}
+                          className="h-4 w-4 text-brand-primary rounded focus:ring-brand-primary"
+                        />
+                        <label htmlFor="giftWrap" className="text-sm font-medium text-gray-700">
+                          Add premium gift wrapping
+                        </label>
+                      </div>
+                      <span className="text-sm font-bold text-brand-primary">
+                        +₹{GIFT_WRAP_FEE}
+                      </span>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* SMS/WhatsApp Updates */}
+              <div className="p-4 bg-blue-50 rounded-xl border border-blue-100">
+                <div className="flex items-start gap-3">
+                  <input
+                    type="checkbox"
+                    id="smsUpdates"
+                    checked={wantSmsUpdates}
+                    onChange={(e) => setWantSmsUpdates(e.target.checked)}
+                    className="h-4 w-4 mt-1 text-brand-primary rounded focus:ring-brand-primary"
+                  />
+                  <div className="flex-1">
+                    <label htmlFor="smsUpdates" className="font-bold text-gray-800 block">
+                      📲 Get order updates via SMS/WhatsApp
+                    </label>
+                    <p className="text-xs text-gray-500">
+                      Receive real-time tracking and delivery notifications
+                    </p>
+
+                    {wantSmsUpdates && (
+                      <input
+                        type="tel"
+                        value={smsPhone}
+                        onChange={(e) => setSmsPhone(e.target.value)}
+                        placeholder="Enter mobile number"
+                        className="mt-2 input-field text-sm"
+                        pattern="[0-9]{10}"
+                        maxLength={10}
+                      />
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Trust & Security Signals */}
+              <div className="flex flex-wrap items-center justify-center gap-4 py-4 border-t border-b border-gray-100">
+                <div className="flex items-center gap-2 text-sm text-gray-600">
+                  <span className="text-green-600">🔒</span>
+                  <span>Secure Checkout</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm text-gray-600">
+                  <span className="text-blue-600">✓</span>
+                  <span>SSL Encrypted</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm text-gray-600">
+                  <span className="text-amber-600">★</span>
+                  <span>Money Back Guarantee</span>
+                </div>
+              </div>
             </div>
 
             {/* Right/Sidebar Column */}
@@ -1068,6 +1199,12 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
                     <span>Taxes (5%)</span>
                     <span>₹{tax.toFixed(2)}</span>
                   </div>
+                  {giftWrapCost > 0 && (
+                    <div className="flex justify-between text-sm text-neutral-600">
+                      <span className="flex items-center gap-1">🎁 Gift Wrap</span>
+                      <span>₹{giftWrapCost.toFixed(2)}</span>
+                    </div>
+                  )}
                   <div className="flex justify-between font-bold text-xl text-neutral-900 pt-3 border-t border-neutral-200 mt-2">
                     <span>Total</span>
                     <span>₹{total.toFixed(2)}</span>
