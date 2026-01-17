@@ -10,6 +10,7 @@ import { orderAPI } from '../utils/apiService';
 import { paymentService } from '../utils/paymentService';
 import { APIErrorDisplay } from './APIErrorDisplay';
 import CheckoutStepper from './CheckoutStepper';
+import { lookupPinCode } from '../utils/pinCodeLookup';
 
 // Helper to map flat store items to nested Order items
 const mapToOrderItems = (items: StoreCartItem[]): CartItem[] => {
@@ -266,7 +267,18 @@ const AddressForm: React.FC<{
   errors?: Record<string, string>;
   title: string;
   userName?: string;
-}> = ({ address, onChange, onBlur, errors = {}, title, userName }) => (
+  onPinLookup?: (pin: string) => void;
+  pinLookupStatus?: { loading: boolean; success?: boolean; message?: string };
+}> = ({
+  address,
+  onChange,
+  onBlur,
+  errors = {},
+  title,
+  userName,
+  onPinLookup,
+  pinLookupStatus,
+}) => (
   <div className="space-y-4">
     <h3 className="text-lg font-serif font-bold">{title}</h3>
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -354,24 +366,51 @@ const AddressForm: React.FC<{
         <label htmlFor="zip" className="block text-sm font-medium text-gray-700">
           PIN Code
         </label>
-        <input
-          type="text"
-          name="zip"
-          id="zip"
-          autoComplete="postal-code"
-          inputMode="numeric"
-          pattern="[0-9]{6}"
-          maxLength={6}
-          value={address.zip}
-          onChange={onChange}
-          onBlur={onBlur}
-          placeholder="400001"
-          className={`mt-1 input-field transition-all ${errors.zip ? 'border-red-500 ring-2 ring-red-200' : ''}`}
-          required
-        />
+        <div className="relative">
+          <input
+            type="text"
+            name="zip"
+            id="zip"
+            autoComplete="postal-code"
+            inputMode="numeric"
+            pattern="[0-9]{6}"
+            maxLength={6}
+            value={address.zip}
+            onChange={(e) => {
+              onChange(e);
+              // Trigger lookup when 6 digits entered
+              if (e.target.value.length === 6 && /^\d{6}$/.test(e.target.value) && onPinLookup) {
+                onPinLookup(e.target.value);
+              }
+            }}
+            onBlur={onBlur}
+            placeholder="400001"
+            className={`mt-1 input-field transition-all pr-10 ${errors.zip ? 'border-red-500 ring-2 ring-red-200' : ''} ${pinLookupStatus?.success ? 'border-green-500 ring-2 ring-green-200' : ''}`}
+            required
+          />
+          {/* PIN lookup status indicator */}
+          {pinLookupStatus && (
+            <span className="absolute right-3 top-1/2 -translate-y-1/2 mt-0.5">
+              {pinLookupStatus.loading && <span className="animate-spin text-gray-400">⏳</span>}
+              {!pinLookupStatus.loading && pinLookupStatus.success && (
+                <span className="text-green-500">✓</span>
+              )}
+              {!pinLookupStatus.loading && pinLookupStatus.success === false && (
+                <span className="text-amber-500">!</span>
+              )}
+            </span>
+          )}
+        </div>
         {errors.zip && (
           <p className="text-xs text-red-500 mt-1 flex items-center gap-1">
             <span>⚠</span> {errors.zip}
+          </p>
+        )}
+        {pinLookupStatus?.message && !errors.zip && (
+          <p
+            className={`text-xs mt-1 ${pinLookupStatus.success ? 'text-green-600' : 'text-amber-600'}`}
+          >
+            {pinLookupStatus.message}
           </p>
         )}
       </div>
@@ -439,6 +478,45 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
   const [wantGiftWrap, setWantGiftWrap] = useState(false);
   const [wantSmsUpdates, setWantSmsUpdates] = useState(false);
   const [smsPhone, setSmsPhone] = useState('');
+
+  // PIN Code Lookup State
+  const [pinLookupStatus, setPinLookupStatus] = useState<{
+    loading: boolean;
+    success?: boolean;
+    message?: string;
+  }>({ loading: false });
+
+  // Handler for PIN code lookup and autofill
+  const handlePinLookup = (pin: string) => {
+    setPinLookupStatus({ loading: true });
+
+    // Simulate async lookup (in production, this could be an API call)
+    setTimeout(() => {
+      const result = lookupPinCode(pin);
+
+      if (result.success && result.data) {
+        // Autofill city and state
+        setShippingAddress((prev) => ({
+          ...prev,
+          city: result.data!.city,
+          state: result.data!.state,
+          country: 'India',
+        }));
+
+        setPinLookupStatus({
+          loading: false,
+          success: true,
+          message: `✓ ${result.data.city}, ${result.data.state}`,
+        });
+      } else {
+        setPinLookupStatus({
+          loading: false,
+          success: false,
+          message: result.error || 'PIN not found',
+        });
+      }
+    }, 300);
+  };
 
   const GIFT_WRAP_FEE = 49;
 
@@ -883,6 +961,62 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
                 </div>
               )}
 
+              {/* Express Checkout - Saved Addresses (for logged-in users) */}
+              {user && user.addresses && user.addresses.length > 0 && (
+                <div className="p-4 bg-gradient-to-r from-amber-50 to-yellow-50 rounded-xl border border-amber-200">
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="text-lg">⚡</span>
+                    <h4 className="font-bold text-gray-800">Express Checkout</h4>
+                    <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">
+                      Faster
+                    </span>
+                  </div>
+                  <p className="text-sm text-gray-600 mb-3">Use a saved address:</p>
+                  <div className="space-y-2">
+                    {user.addresses.map((addr) => (
+                      <button
+                        key={addr.id}
+                        type="button"
+                        onClick={() => {
+                          setShippingAddress({
+                            street: addr.street,
+                            city: addr.city,
+                            state: addr.state,
+                            zip: addr.zip,
+                            country: addr.country,
+                          });
+                          setPinLookupStatus({
+                            loading: false,
+                            success: true,
+                            message: `✓ ${addr.city}, ${addr.state}`,
+                          });
+                        }}
+                        className={`w-full text-left p-3 rounded-lg border-2 transition-all ${
+                          shippingAddress.street === addr.street && shippingAddress.zip === addr.zip
+                            ? 'border-brand-primary bg-white shadow-md'
+                            : 'border-gray-200 bg-white hover:border-brand-primary/50'
+                        }`}
+                      >
+                        <div className="flex items-start justify-between">
+                          <div>
+                            <p className="font-medium text-sm text-gray-800">{addr.street}</p>
+                            <p className="text-xs text-gray-500">
+                              {addr.city}, {addr.state} - {addr.zip}
+                            </p>
+                          </div>
+                          {addr.isDefault && (
+                            <span className="text-xs bg-brand-primary/20 text-brand-dark px-2 py-0.5 rounded-full">
+                              Default
+                            </span>
+                          )}
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                  <p className="text-xs text-gray-500 mt-3">Or fill in a new address below</p>
+                </div>
+              )}
+
               <AddressForm
                 address={shippingAddress}
                 onChange={handleInputChange(setShippingAddress)}
@@ -890,6 +1024,8 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
                 errors={errors}
                 title="Shipping Address"
                 userName={user?.name}
+                onPinLookup={handlePinLookup}
+                pinLookupStatus={pinLookupStatus}
               />
 
               <div className="flex items-center">
