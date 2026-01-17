@@ -221,6 +221,39 @@ const DeliverySlotPicker: React.FC<{
           </div>
         </div>
       )}
+
+      {/* Estimated Delivery Confirmation */}
+      {selectedDate && selectedTime && (
+        <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg flex items-start gap-3">
+          <div className="flex-shrink-0 w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+            <svg
+              className="w-5 h-5 text-green-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+          </div>
+          <div>
+            <p className="font-bold text-green-800">Estimated Delivery</p>
+            <p className="text-sm text-green-700">
+              {new Date(selectedDate).toLocaleDateString('en-US', {
+                weekday: 'long',
+                month: 'long',
+                day: 'numeric',
+              })}{' '}
+              between <span className="font-bold">{selectedTime}</span>
+            </p>
+            <p className="text-xs text-green-600 mt-1">🚚 Free delivery on orders above ₹1000</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
@@ -244,6 +277,8 @@ const AddressForm: React.FC<{
         <input
           type="text"
           name="name"
+          id="name"
+          autoComplete="name"
           defaultValue={userName || ''}
           className="mt-1 input-field"
           required
@@ -256,13 +291,20 @@ const AddressForm: React.FC<{
         <input
           type="text"
           name="street"
+          id="street"
+          autoComplete="street-address"
           value={address.street}
           onChange={onChange}
           onBlur={onBlur}
-          className={`mt-1 input-field ${errors.street ? 'border-red-500' : ''}`}
+          placeholder="123 Main Street, Apt 4B"
+          className={`mt-1 input-field transition-all ${errors.street ? 'border-red-500 ring-2 ring-red-200' : ''}`}
           required
         />
-        {errors.street && <p className="text-xs text-red-500 mt-1">{errors.street}</p>}
+        {errors.street && (
+          <p className="text-xs text-red-500 mt-1 flex items-center gap-1">
+            <span>⚠</span> {errors.street}
+          </p>
+        )}
       </div>
       <div>
         <label htmlFor="city" className="block text-sm font-medium text-gray-700">
@@ -271,13 +313,20 @@ const AddressForm: React.FC<{
         <input
           type="text"
           name="city"
+          id="city"
+          autoComplete="address-level2"
           value={address.city}
           onChange={onChange}
           onBlur={onBlur}
-          className={`mt-1 input-field ${errors.city ? 'border-red-500' : ''}`}
+          placeholder="Mumbai"
+          className={`mt-1 input-field transition-all ${errors.city ? 'border-red-500 ring-2 ring-red-200' : ''}`}
           required
         />
-        {errors.city && <p className="text-xs text-red-500 mt-1">{errors.city}</p>}
+        {errors.city && (
+          <p className="text-xs text-red-500 mt-1 flex items-center gap-1">
+            <span>⚠</span> {errors.city}
+          </p>
+        )}
       </div>
       <div>
         <label htmlFor="state" className="block text-sm font-medium text-gray-700">
@@ -286,13 +335,20 @@ const AddressForm: React.FC<{
         <input
           type="text"
           name="state"
+          id="state"
+          autoComplete="address-level1"
           value={address.state}
           onChange={onChange}
           onBlur={onBlur}
-          className={`mt-1 input-field ${errors.state ? 'border-red-500' : ''}`}
+          placeholder="Maharashtra"
+          className={`mt-1 input-field transition-all ${errors.state ? 'border-red-500 ring-2 ring-red-200' : ''}`}
           required
         />
-        {errors.state && <p className="text-xs text-red-500 mt-1">{errors.state}</p>}
+        {errors.state && (
+          <p className="text-xs text-red-500 mt-1 flex items-center gap-1">
+            <span>⚠</span> {errors.state}
+          </p>
+        )}
       </div>
       <div>
         <label htmlFor="zip" className="block text-sm font-medium text-gray-700">
@@ -301,13 +357,23 @@ const AddressForm: React.FC<{
         <input
           type="text"
           name="zip"
+          id="zip"
+          autoComplete="postal-code"
+          inputMode="numeric"
+          pattern="[0-9]{6}"
+          maxLength={6}
           value={address.zip}
           onChange={onChange}
           onBlur={onBlur}
-          className={`mt-1 input-field ${errors.zip ? 'border-red-500' : ''}`}
+          placeholder="400001"
+          className={`mt-1 input-field transition-all ${errors.zip ? 'border-red-500 ring-2 ring-red-200' : ''}`}
           required
         />
-        {errors.zip && <p className="text-xs text-red-500 mt-1">{errors.zip}</p>}
+        {errors.zip && (
+          <p className="text-xs text-red-500 mt-1 flex items-center gap-1">
+            <span>⚠</span> {errors.zip}
+          </p>
+        )}
       </div>
       <div>
         <label htmlFor="country" className="block text-sm font-medium text-gray-700">
@@ -316,9 +382,12 @@ const AddressForm: React.FC<{
         <input
           type="text"
           name="country"
+          id="country"
+          autoComplete="country-name"
           value={address.country}
           onChange={onChange}
           onBlur={onBlur}
+          placeholder="India"
           className="mt-1 input-field"
           required
         />
