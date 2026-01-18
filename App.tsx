@@ -102,6 +102,8 @@ const SubscriptionPage = React.lazy(() => import('./pages/SubscriptionPage'));
 const FarmersPage = React.lazy(() => import('./pages/FarmersPage'));
 const ResponsiveCartPage = React.lazy(() => import('./pages/ResponsiveCartPage'));
 const NotFoundPage = React.lazy(() => import('./pages/NotFoundPage'));
+const TrackingPage = React.lazy(() => import('./pages/TrackingPage'));
+const AdminShipmentsPage = React.lazy(() => import('./pages/admin/ShipmentsPage'));
 
 const PageLoader = () => (
   <div className="flex items-center justify-center min-h-[60vh]">
@@ -1194,6 +1196,11 @@ const App: React.FC = () => {
                 }
               />
               <Route path="/blog/:slug" element={<BlogPostRoute />} />
+              {/* Tracking Page */}
+              <Route path="/track" element={<TrackingPage />} />
+              <Route path="/track/:orderId" element={<TrackingPage />} />
+              {/* Admin Routes */}
+              <Route path="/admin/shipments" element={<AdminShipmentsPage />} />
               {/* 404 Not Found Page */}
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
