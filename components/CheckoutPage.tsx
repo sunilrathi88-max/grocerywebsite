@@ -11,6 +11,8 @@ import { paymentService } from '../utils/paymentService';
 import { APIErrorDisplay } from './APIErrorDisplay';
 import CheckoutStepper from './CheckoutStepper';
 import { lookupPinCode } from '../utils/pinCodeLookup';
+import ShippingRateSelector from './ShippingRateSelector';
+import { ShippingOption } from '../types/shipping';
 
 // Helper to map flat store items to nested Order items
 const mapToOrderItems = (items: StoreCartItem[]): CartItem[] => {
@@ -520,6 +522,12 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
 
   const GIFT_WRAP_FEE = 49;
 
+  // ShipRocket Shipping Selection
+  const [selectedShippingOption, setSelectedShippingOption] = useState<ShippingOption | null>(null);
+
+  // Use selected courier's price or fall back to prop shippingCost
+  const effectiveShippingCost = selectedShippingOption?.price ?? shippingCost;
+
   // Checkout Flow State
   const [currentStep, setCurrentStep] = useState<'auth' | 'shipping' | 'payment'>(
     user ? 'shipping' : 'auth'
@@ -545,8 +553,8 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
   const tax = useMemo(() => (subtotal - discount) * 0.05, [subtotal, discount]);
   const giftWrapCost = wantGiftWrap ? GIFT_WRAP_FEE : 0;
   const total = useMemo(
-    () => subtotal + shippingCost + tax - discount + giftWrapCost,
-    [subtotal, shippingCost, tax, discount, giftWrapCost]
+    () => subtotal + effectiveShippingCost + tax - discount + giftWrapCost,
+    [subtotal, effectiveShippingCost, tax, discount, giftWrapCost]
   );
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -1063,6 +1071,18 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
                 onSelectTime={setSelectedTime}
               />
 
+              {/* Shipping Rate Selection */}
+              {shippingAddress.zip && shippingAddress.zip.length === 6 && (
+                <ShippingRateSelector
+                  pickupPincode="400001"
+                  deliveryPincode={shippingAddress.zip}
+                  cartTotal={subtotal}
+                  isCod={paymentMethod === 'Cash on Delivery'}
+                  onSelectShipping={(option) => setSelectedShippingOption(option)}
+                  selectedOptionId={selectedShippingOption?.courierId}
+                />
+              )}
+
               <div>
                 <h3 className="text-lg font-serif font-bold mb-4">Payment Method</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -1316,12 +1336,19 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
                     <span>₹{subtotal.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>Shipping</span>
+                    <span className="flex items-center gap-1">
+                      Shipping
+                      {selectedShippingOption && (
+                        <span className="text-xs text-gray-400">
+                          ({selectedShippingOption.courierName})
+                        </span>
+                      )}
+                    </span>
                     <span>
-                      {shippingCost === 0 ? (
+                      {effectiveShippingCost === 0 ? (
                         <span className="text-success font-bold">Free</span>
                       ) : (
-                        `₹${shippingCost.toFixed(2)}`
+                        `₹${effectiveShippingCost.toFixed(2)}`
                       )}
                     </span>
                   </div>

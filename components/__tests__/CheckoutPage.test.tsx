@@ -10,6 +10,7 @@ jest.mock('../CheckoutStepper', () => (props: any) => (
   <div data-testid="checkout-stepper">{props.currentStep}</div>
 ));
 jest.mock('../OptimizedImage', () => ({ OptimizedImage: () => <img /> }));
+jest.mock('../ShippingRateSelector', () => () => <div data-testid="shipping-rate-selector" />);
 
 describe('CheckoutPage', () => {
   const defaultProps = {
