@@ -3,7 +3,6 @@ import { TrustBadges } from './TrustBadges';
 import { User, Address, Order, ToastMessage, Product, CartItem, Variant } from '../types';
 import { CartItem as StoreCartItem } from '../store/cartStore';
 import { CheckCircleIcon } from './icons/CheckCircleIcon';
-import { CalendarIcon } from './icons/CalendarIcon';
 import { OptimizedImage } from './OptimizedImage';
 import { imageErrorHandlers } from '../utils/imageHelpers';
 import { orderAPI } from '../utils/apiService';
@@ -145,122 +144,6 @@ const OrderConfirmation: React.FC<{ order: Order }> = ({ order }) => {
   );
 };
 
-const DeliverySlotPicker: React.FC<{
-  selectedDate: string | null;
-  selectedTime: string | null;
-  onSelectDate: (date: string) => void;
-  onSelectTime: (time: string) => void;
-}> = ({ selectedDate, selectedTime, onSelectDate, onSelectTime }) => {
-  const deliveryDates = useMemo(() => {
-    const dates = [];
-    const today = new Date();
-    for (let i = 0; i < 5; i++) {
-      const date = new Date(today);
-      date.setDate(today.getDate() + i);
-      dates.push({
-        value: date.toISOString().split('T')[0],
-        label: date.toLocaleDateString('en-US', { weekday: 'short' }),
-        day: date.getDate(),
-      });
-    }
-    return dates;
-  }, []);
-
-  const timeSlots = useMemo(() => {
-    if (!selectedDate) return [];
-    const day = new Date(selectedDate).getDay();
-    if (day % 2 === 0) {
-      return [
-        { time: '09:00 AM - 11:00 AM', available: true },
-        { time: '11:00 AM - 01:00 PM', available: true },
-        { time: '01:00 PM - 03:00 PM', available: false },
-        { time: '03:00 PM - 05:00 PM', available: true },
-      ];
-    }
-    return [
-      { time: '10:00 AM - 12:00 PM', available: true },
-      { time: '12:00 PM - 02:00 PM', available: false },
-      { time: '02:00 PM - 04:00 PM', available: true },
-      { time: '04:00 PM - 06:00 PM', available: true },
-    ];
-  }, [selectedDate]);
-
-  return (
-    <div className="space-y-4">
-      <h3 className="text-lg font-serif font-bold flex items-center gap-2">
-        <CalendarIcon /> Delivery Slot
-      </h3>
-      <div>
-        <h4 className="font-bold text-sm text-gray-600 mb-2">Select a Date:</h4>
-        <div className="flex flex-col sm:flex-row flex-wrap gap-2">
-          {deliveryDates.map((date) => (
-            <button
-              key={date.value}
-              type="button"
-              onClick={() => onSelectDate(date.value)}
-              className={`px-4 py-2 text-sm font-bold rounded-full transition-all duration-300 border text-center ${selectedDate === date.value ? 'bg-brand-primary text-brand-dark border-brand-primary shadow-md' : 'bg-white text-brand-dark hover:bg-brand-secondary/50 border-gray-300'}`}
-            >
-              <span className="block">{date.label}</span>
-              <span className="block text-lg">{date.day}</span>
-            </button>
-          ))}
-        </div>
-      </div>
-      {selectedDate && (
-        <div>
-          <h4 className="font-bold text-sm text-gray-600 mb-2">Select a Time:</h4>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            {timeSlots.map((slot) => (
-              <button
-                key={slot.time}
-                type="button"
-                onClick={() => onSelectTime(slot.time)}
-                disabled={!slot.available}
-                className={`px-4 py-2 text-sm font-bold rounded-lg transition-all duration-300 border text-center ${selectedTime === slot.time ? 'bg-brand-primary text-brand-dark border-brand-primary shadow-md' : 'bg-white text-brand-dark hover:bg-brand-secondary/50 border-gray-300'} ${!slot.available ? 'bg-gray-100 text-gray-400 cursor-not-allowed line-through' : ''}`}
-              >
-                {slot.time}
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* Estimated Delivery Confirmation */}
-      {selectedDate && selectedTime && (
-        <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg flex items-start gap-3">
-          <div className="flex-shrink-0 w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
-            <svg
-              className="w-5 h-5 text-green-600"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M5 13l4 4L19 7"
-              />
-            </svg>
-          </div>
-          <div>
-            <p className="font-bold text-green-800">Estimated Delivery</p>
-            <p className="text-sm text-green-700">
-              {new Date(selectedDate).toLocaleDateString('en-US', {
-                weekday: 'long',
-                month: 'long',
-                day: 'numeric',
-              })}{' '}
-              between <span className="font-bold">{selectedTime}</span>
-            </p>
-            <p className="text-xs text-green-600 mt-1">🚚 Free delivery on orders above ₹1000</p>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-};
-
 // Move AddressForm outside to avoid creating component during render
 const AddressForm: React.FC<{
   address: Omit<Address, 'id' | 'type' | 'isDefault'>;
@@ -281,161 +164,161 @@ const AddressForm: React.FC<{
   onPinLookup,
   pinLookupStatus,
 }) => (
-  <div className="space-y-4">
-    <h3 className="text-lg font-serif font-bold">{title}</h3>
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-      <div>
-        <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-          Full Name
-        </label>
-        <input
-          type="text"
-          name="name"
-          id="name"
-          autoComplete="name"
-          defaultValue={userName || ''}
-          className="mt-1 input-field"
-          required
-        />
-      </div>
-      <div>
-        <label htmlFor="street" className="block text-sm font-medium text-gray-700">
-          Street Address
-        </label>
-        <input
-          type="text"
-          name="street"
-          id="street"
-          autoComplete="street-address"
-          value={address.street}
-          onChange={onChange}
-          onBlur={onBlur}
-          placeholder="123 Main Street, Apt 4B"
-          className={`mt-1 input-field transition-all ${errors.street ? 'border-red-500 ring-2 ring-red-200' : ''}`}
-          required
-        />
-        {errors.street && (
-          <p className="text-xs text-red-500 mt-1 flex items-center gap-1">
-            <span>⚠</span> {errors.street}
-          </p>
-        )}
-      </div>
-      <div>
-        <label htmlFor="city" className="block text-sm font-medium text-gray-700">
-          City
-        </label>
-        <input
-          type="text"
-          name="city"
-          id="city"
-          autoComplete="address-level2"
-          value={address.city}
-          onChange={onChange}
-          onBlur={onBlur}
-          placeholder="Mumbai"
-          className={`mt-1 input-field transition-all ${errors.city ? 'border-red-500 ring-2 ring-red-200' : ''}`}
-          required
-        />
-        {errors.city && (
-          <p className="text-xs text-red-500 mt-1 flex items-center gap-1">
-            <span>⚠</span> {errors.city}
-          </p>
-        )}
-      </div>
-      <div>
-        <label htmlFor="state" className="block text-sm font-medium text-gray-700">
-          State / Province
-        </label>
-        <input
-          type="text"
-          name="state"
-          id="state"
-          autoComplete="address-level1"
-          value={address.state}
-          onChange={onChange}
-          onBlur={onBlur}
-          placeholder="Maharashtra"
-          className={`mt-1 input-field transition-all ${errors.state ? 'border-red-500 ring-2 ring-red-200' : ''}`}
-          required
-        />
-        {errors.state && (
-          <p className="text-xs text-red-500 mt-1 flex items-center gap-1">
-            <span>⚠</span> {errors.state}
-          </p>
-        )}
-      </div>
-      <div>
-        <label htmlFor="zip" className="block text-sm font-medium text-gray-700">
-          PIN Code
-        </label>
-        <div className="relative">
+    <div className="space-y-4">
+      <h3 className="text-lg font-serif font-bold">{title}</h3>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+            Full Name
+          </label>
           <input
             type="text"
-            name="zip"
-            id="zip"
-            autoComplete="postal-code"
-            inputMode="numeric"
-            pattern="[0-9]{6}"
-            maxLength={6}
-            value={address.zip}
-            onChange={(e) => {
-              onChange(e);
-              // Trigger lookup when 6 digits entered
-              if (e.target.value.length === 6 && /^\d{6}$/.test(e.target.value) && onPinLookup) {
-                onPinLookup(e.target.value);
-              }
-            }}
-            onBlur={onBlur}
-            placeholder="400001"
-            className={`mt-1 input-field transition-all pr-10 ${errors.zip ? 'border-red-500 ring-2 ring-red-200' : ''} ${pinLookupStatus?.success ? 'border-green-500 ring-2 ring-green-200' : ''}`}
+            name="name"
+            id="name"
+            autoComplete="name"
+            defaultValue={userName || ''}
+            className="mt-1 input-field"
             required
           />
-          {/* PIN lookup status indicator */}
-          {pinLookupStatus && (
-            <span className="absolute right-3 top-1/2 -translate-y-1/2 mt-0.5">
-              {pinLookupStatus.loading && <span className="animate-spin text-gray-400">⏳</span>}
-              {!pinLookupStatus.loading && pinLookupStatus.success && (
-                <span className="text-green-500">✓</span>
-              )}
-              {!pinLookupStatus.loading && pinLookupStatus.success === false && (
-                <span className="text-amber-500">!</span>
-              )}
-            </span>
+        </div>
+        <div>
+          <label htmlFor="street" className="block text-sm font-medium text-gray-700">
+            Street Address
+          </label>
+          <input
+            type="text"
+            name="street"
+            id="street"
+            autoComplete="street-address"
+            value={address.street}
+            onChange={onChange}
+            onBlur={onBlur}
+            placeholder="123 Main Street, Apt 4B"
+            className={`mt-1 input-field transition-all ${errors.street ? 'border-red-500 ring-2 ring-red-200' : ''}`}
+            required
+          />
+          {errors.street && (
+            <p className="text-xs text-red-500 mt-1 flex items-center gap-1">
+              <span>⚠</span> {errors.street}
+            </p>
           )}
         </div>
-        {errors.zip && (
-          <p className="text-xs text-red-500 mt-1 flex items-center gap-1">
-            <span>⚠</span> {errors.zip}
-          </p>
-        )}
-        {pinLookupStatus?.message && !errors.zip && (
-          <p
-            className={`text-xs mt-1 ${pinLookupStatus.success ? 'text-green-600' : 'text-amber-600'}`}
-          >
-            {pinLookupStatus.message}
-          </p>
-        )}
-      </div>
-      <div>
-        <label htmlFor="country" className="block text-sm font-medium text-gray-700">
-          Country
-        </label>
-        <input
-          type="text"
-          name="country"
-          id="country"
-          autoComplete="country-name"
-          value={address.country}
-          onChange={onChange}
-          onBlur={onBlur}
-          placeholder="India"
-          className="mt-1 input-field"
-          required
-        />
+        <div>
+          <label htmlFor="city" className="block text-sm font-medium text-gray-700">
+            City
+          </label>
+          <input
+            type="text"
+            name="city"
+            id="city"
+            autoComplete="address-level2"
+            value={address.city}
+            onChange={onChange}
+            onBlur={onBlur}
+            placeholder="Mumbai"
+            className={`mt-1 input-field transition-all ${errors.city ? 'border-red-500 ring-2 ring-red-200' : ''}`}
+            required
+          />
+          {errors.city && (
+            <p className="text-xs text-red-500 mt-1 flex items-center gap-1">
+              <span>⚠</span> {errors.city}
+            </p>
+          )}
+        </div>
+        <div>
+          <label htmlFor="state" className="block text-sm font-medium text-gray-700">
+            State / Province
+          </label>
+          <input
+            type="text"
+            name="state"
+            id="state"
+            autoComplete="address-level1"
+            value={address.state}
+            onChange={onChange}
+            onBlur={onBlur}
+            placeholder="Maharashtra"
+            className={`mt-1 input-field transition-all ${errors.state ? 'border-red-500 ring-2 ring-red-200' : ''}`}
+            required
+          />
+          {errors.state && (
+            <p className="text-xs text-red-500 mt-1 flex items-center gap-1">
+              <span>⚠</span> {errors.state}
+            </p>
+          )}
+        </div>
+        <div>
+          <label htmlFor="zip" className="block text-sm font-medium text-gray-700">
+            PIN Code
+          </label>
+          <div className="relative">
+            <input
+              type="text"
+              name="zip"
+              id="zip"
+              autoComplete="postal-code"
+              inputMode="numeric"
+              pattern="[0-9]{6}"
+              maxLength={6}
+              value={address.zip}
+              onChange={(e) => {
+                onChange(e);
+                // Trigger lookup when 6 digits entered
+                if (e.target.value.length === 6 && /^\d{6}$/.test(e.target.value) && onPinLookup) {
+                  onPinLookup(e.target.value);
+                }
+              }}
+              onBlur={onBlur}
+              placeholder="400001"
+              className={`mt-1 input-field transition-all pr-10 ${errors.zip ? 'border-red-500 ring-2 ring-red-200' : ''} ${pinLookupStatus?.success ? 'border-green-500 ring-2 ring-green-200' : ''}`}
+              required
+            />
+            {/* PIN lookup status indicator */}
+            {pinLookupStatus && (
+              <span className="absolute right-3 top-1/2 -translate-y-1/2 mt-0.5">
+                {pinLookupStatus.loading && <span className="animate-spin text-gray-400">⏳</span>}
+                {!pinLookupStatus.loading && pinLookupStatus.success && (
+                  <span className="text-green-500">✓</span>
+                )}
+                {!pinLookupStatus.loading && pinLookupStatus.success === false && (
+                  <span className="text-amber-500">!</span>
+                )}
+              </span>
+            )}
+          </div>
+          {errors.zip && (
+            <p className="text-xs text-red-500 mt-1 flex items-center gap-1">
+              <span>⚠</span> {errors.zip}
+            </p>
+          )}
+          {pinLookupStatus?.message && !errors.zip && (
+            <p
+              className={`text-xs mt-1 ${pinLookupStatus.success ? 'text-green-600' : 'text-amber-600'}`}
+            >
+              {pinLookupStatus.message}
+            </p>
+          )}
+        </div>
+        <div>
+          <label htmlFor="country" className="block text-sm font-medium text-gray-700">
+            Country
+          </label>
+          <input
+            type="text"
+            name="country"
+            id="country"
+            autoComplete="country-name"
+            value={address.country}
+            onChange={onChange}
+            onBlur={onBlur}
+            placeholder="India"
+            className="mt-1 input-field"
+            required
+          />
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
 
 const CheckoutPage: React.FC<CheckoutPageProps> = ({
   cartItems,
@@ -466,8 +349,6 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
   const [guestEmail, setGuestEmail] = useState('');
   const [guestPhone, setGuestPhone] = useState('');
   const [upiId, setUpiId] = useState('');
-  const [selectedDate, setSelectedDate] = useState<string | null>(null);
-  const [selectedTime, setSelectedTime] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [localPromoCode, setLocalPromoCode] = useState('');
@@ -623,8 +504,8 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
       addToast('Please provide your contact information.', 'error');
       return;
     }
-    if (!selectedDate || !selectedTime) {
-      addToast('Please select a delivery slot.', 'error');
+    if (!selectedShippingOption) {
+      addToast('Please select a shipping option.', 'error');
       return;
     }
     if (!paymentMethod) {
@@ -657,15 +538,16 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
             : { ...billingAddress, id: '', type: 'Billing' as const },
           deliveryMethod: 'Standard' as const,
           paymentMethod: paymentMethod,
-          shippingCost: shippingCost,
+          shippingCost: effectiveShippingCost,
           discount,
           deliverySlot: {
-            date: new Date(selectedDate).toLocaleDateString('en-US', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-            }),
-            time: selectedTime,
+            date: selectedShippingOption?.etd || 'Standard Delivery',
+            time: `${selectedShippingOption?.estimatedDays || 3}-${(selectedShippingOption?.estimatedDays || 3) + 2} business days`,
+          },
+          courierInfo: {
+            courierId: selectedShippingOption?.courierId,
+            courierName: selectedShippingOption?.courierName,
+            estimatedDays: selectedShippingOption?.estimatedDays,
           },
           guestEmail: !user ? guestEmail : undefined,
           guestPhone: !user ? guestPhone : undefined,
@@ -698,8 +580,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
           useSameAddress,
           guestEmail,
           guestPhone,
-          selectedDate,
-          selectedTime,
+          selectedShippingOption,
           paymentMethod,
         })
       );
@@ -742,8 +623,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
           setShippingAddress(parsed.shippingAddress);
         if (parsed.billingAddress && !useSameAddress) setBillingAddress(parsed.billingAddress);
         if (typeof parsed.useSameAddress === 'boolean') setUseSameAddress(parsed.useSameAddress);
-        if (parsed.selectedDate) setSelectedDate(parsed.selectedDate);
-        if (parsed.selectedTime) setSelectedTime(parsed.selectedTime);
+        if (parsed.selectedShippingOption) setSelectedShippingOption(parsed.selectedShippingOption);
         if (parsed.paymentMethod) setPaymentMethod(parsed.paymentMethod);
       } catch (e) {
         console.error('Failed to restore checkout state', e);
@@ -801,17 +681,17 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
                     billingAddress:
                       (saved.useSameAddress ?? useSameAddress)
                         ? {
-                            ...shippingAddress,
-                            ...saved.shippingAddress,
-                            id: '',
-                            type: 'Billing' as const,
-                          }
+                          ...shippingAddress,
+                          ...saved.shippingAddress,
+                          id: '',
+                          type: 'Billing' as const,
+                        }
                         : {
-                            ...billingAddress,
-                            ...saved.billingAddress,
-                            id: '',
-                            type: 'Billing' as const,
-                          },
+                          ...billingAddress,
+                          ...saved.billingAddress,
+                          id: '',
+                          type: 'Billing' as const,
+                        },
                     deliveryMethod: 'Standard' as const,
                     paymentMethod: saved.paymentMethod || paymentMethod || 'Online Payment',
                     shippingCost: shippingCost, // shippingCost is calculated from cart items
@@ -842,7 +722,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
                   console.error(err);
                   setSubmitError(
                     'Failed to create order after payment: ' +
-                      (err instanceof Error ? err.message : 'Unknown error')
+                    (err instanceof Error ? err.message : 'Unknown error')
                   );
                 } finally {
                   setIsSubmitting(false);
@@ -999,11 +879,10 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
                             message: `✓ ${addr.city}, ${addr.state}`,
                           });
                         }}
-                        className={`w-full text-left p-3 rounded-lg border-2 transition-all ${
-                          shippingAddress.street === addr.street && shippingAddress.zip === addr.zip
+                        className={`w-full text-left p-3 rounded-lg border-2 transition-all ${shippingAddress.street === addr.street && shippingAddress.zip === addr.zip
                             ? 'border-brand-primary bg-white shadow-md'
                             : 'border-gray-200 bg-white hover:border-brand-primary/50'
-                        }`}
+                          }`}
                       >
                         <div className="flex items-start justify-between">
                           <div>
@@ -1061,17 +940,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
                 />
               )}
 
-              <DeliverySlotPicker
-                selectedDate={selectedDate}
-                selectedTime={selectedTime}
-                onSelectDate={(date) => {
-                  setSelectedDate(date);
-                  setSelectedTime(null);
-                }}
-                onSelectTime={setSelectedTime}
-              />
-
-              {/* Shipping Rate Selection */}
+              {/* Shipping Rate Selection - Real courier delivery via ShipRocket */}
               {shippingAddress.zip && shippingAddress.zip.length === 6 && (
                 <ShippingRateSelector
                   pickupPincode="400001"
@@ -1296,9 +1165,8 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
                   </div>
                   <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
                     <div
-                      className={`h-full transition-all duration-500 ease-out ${
-                        remainingForFreeShipping > 0 ? 'bg-brand-primary' : 'bg-green-500'
-                      }`}
+                      className={`h-full transition-all duration-500 ease-out ${remainingForFreeShipping > 0 ? 'bg-brand-primary' : 'bg-green-500'
+                        }`}
                       style={{ width: `${shippingProgress}%` }}
                     />
                   </div>
