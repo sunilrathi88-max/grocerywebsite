@@ -70,6 +70,7 @@ const ShippingRateSelector: React.FC<ShippingRateSelectorProps> = ({
       }
 
       function useMockOptions() {
+        // Single Standard Delivery option - Free for orders ≥₹1000
         const mockOptions: ShippingOption[] = [
           {
             courierId: 1,
@@ -77,42 +78,20 @@ const ShippingRateSelector: React.FC<ShippingRateSelectorProps> = ({
             price: cartTotal >= 1000 ? 0 : 49,
             estimatedDays: 5,
             etd: '5-7 business days',
-            rating: 4.2,
+            rating: 4.5,
             isRecommended: true,
             isCod: true,
-            realTimeTracking: true,
-          },
-          {
-            courierId: 2,
-            courierName: 'Express Delivery',
-            price: 99,
-            estimatedDays: 3,
-            etd: '2-3 business days',
-            rating: 4.5,
-            isRecommended: false,
-            isCod: true,
-            realTimeTracking: true,
-          },
-          {
-            courierId: 3,
-            courierName: 'Premium Next Day',
-            price: 149,
-            estimatedDays: 1,
-            etd: '1-2 business days',
-            rating: 4.8,
-            isRecommended: false,
-            isCod: false,
             realTimeTracking: true,
           },
         ];
         setShippingOptions(mockOptions);
         setError(null);
 
-        // Auto-select first option
-        const recommended = mockOptions[0];
-        if (recommended && !selectedId) {
-          setSelectedId(recommended.courierId);
-          onSelectShipping(recommended);
+        // Auto-select the only option
+        const standard = mockOptions[0];
+        if (standard && !selectedId) {
+          setSelectedId(standard.courierId);
+          onSelectShipping(standard);
         }
       }
     };
@@ -182,11 +161,10 @@ const ShippingRateSelector: React.FC<ShippingRateSelectorProps> = ({
             key={option.courierId}
             type="button"
             onClick={() => handleSelect(option)}
-            className={`w-full text-left p-4 rounded-xl border-2 transition-all duration-200 ${
-              selectedId === option.courierId
+            className={`w-full text-left p-4 rounded-xl border-2 transition-all duration-200 ${selectedId === option.courierId
                 ? 'border-brand-primary bg-brand-primary/5 shadow-md'
                 : 'border-gray-200 bg-white hover:border-brand-primary/50 hover:shadow-sm'
-            }`}
+              }`}
           >
             <div className="flex items-start justify-between gap-4">
               <div className="flex-1">
