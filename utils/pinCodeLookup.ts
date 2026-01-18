@@ -166,12 +166,13 @@ export const lookupPinCodeAsync = async (pinCode: string): Promise<PinLookupResu
 
     if (result[0]?.Status === 'Success' && result[0]?.PostOffice?.length > 0) {
       const postOffice = result[0].PostOffice[0];
+      // Use Block for city (main area like "Sangaria"), District for region
       return {
         success: true,
         data: {
-          city: postOffice.Name, // Use actual place name (e.g., Sangaria)
+          city: postOffice.Block || postOffice.District || postOffice.Name,
           state: postOffice.State,
-          region: postOffice.District, // District as region
+          region: postOffice.District,
         },
       };
     }
