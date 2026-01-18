@@ -66,6 +66,7 @@ const ShippingRateSelector: React.FC<ShippingRateSelectorProps> = ({
     };
 
     fetchRates();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deliveryPincode, pickupPincode, isCod, cartTotal]);
 
   const handleSelect = (option: ShippingOption) => {
