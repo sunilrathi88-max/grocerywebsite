@@ -169,9 +169,9 @@ export const lookupPinCodeAsync = async (pinCode: string): Promise<PinLookupResu
       return {
         success: true,
         data: {
-          city: postOffice.District || postOffice.Name,
+          city: postOffice.Name, // Use actual place name (e.g., Sangaria)
           state: postOffice.State,
-          region: postOffice.Name,
+          region: postOffice.District, // District as region
         },
       };
     }
