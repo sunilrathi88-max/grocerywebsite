@@ -18,7 +18,6 @@ import { MOCK_TESTIMONIALS } from '../data/testimonials';
 import { TrustBadges, CERTIFICATION_BADGES } from '../components/TrustBadges';
 import RecentlyViewed from '../components/RecentlyViewed';
 import LoyaltyWidget from '../components/LoyaltyWidget';
-import SustainabilitySection from '../components/SustainabilitySection';
 
 interface HomePageProps {
   products: Product[];
@@ -169,8 +168,7 @@ const HomePage: React.FC<HomePageProps> = ({
         </div>
       </section>
 
-      {/* Sustainability Section */}
-      <SustainabilitySection />
+      {/* Sustainability Section Removed */}
 
       {/* New Arrivals - Moved here per user request */}
       <FeaturedCollection

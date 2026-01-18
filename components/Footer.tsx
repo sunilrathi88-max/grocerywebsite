@@ -228,13 +228,7 @@ const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
           {/* Trust Badges with Payment Methods */}
           {/* CertificationsBanner Removed */}
 
-          <TrustBadges
-            badges={[
-              { icon: '💳', text: 'Secure Payment' },
-              { icon: '🛡️', text: 'Data Privacy' },
-            ]}
-            variant="horizontal"
-          />
+          <TrustBadges variant="footer" />
 
           <div className="border-t border-gray-200 pt-8 text-center text-sm text-gray-600">
             <p>&copy; {new Date().getFullYear()} Rathi Naturals. All Rights Reserved.</p>

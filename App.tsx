@@ -751,6 +751,10 @@ const App: React.FC = () => {
       <ABTestProvider>
         <LazyMotion features={domAnimation}>
           <div className="flex flex-col min-h-screen">
+            {/* Skip to main content link for accessibility */}
+            <a href="#main-content" className="skip-link">
+              Skip to main content
+            </a>
             <SEO
               {...(currentView === 'home'
                 ? pageSEO.home()
@@ -793,417 +797,419 @@ const App: React.FC = () => {
               />
             )}
 
-            <Routes>
-              <Route
-                path="/product/:id"
-                element={
-                  <React.Suspense fallback={<PageLoader />}>
-                    <ProductDetailPage />
-                  </React.Suspense>
-                }
-              />
-              <Route
-                path="/category/:category"
-                element={
-                  <React.Suspense fallback={<PageLoader />}>
-                    <ResponsiveCategoryPage
-                      searchQuery={searchQuery}
-                      onSearchChange={setSearchQuery}
-                      cartItemCount={cartItems.reduce((sum, item) => sum + item.quantity, 0)}
-                      onCartClick={() => setIsCartOpen(true)}
-                      onMenuClick={() => setIsMobileMenuOpen(true)}
-                      addToast={addToast}
-                      setSelectedProduct={setSelectedProduct}
-                    />
-                  </React.Suspense>
-                }
-              />
-              <Route
-                path="/subscription"
-                element={
-                  <React.Suspense fallback={<PageLoader />}>
-                    <SubscriptionPage />
-                  </React.Suspense>
-                }
-              />
-              <Route
-                path="/farmers"
-                element={
-                  <React.Suspense fallback={<PageLoader />}>
-                    <FarmersPage />
-                  </React.Suspense>
-                }
-              />
-              <Route
-                path="/shop"
-                element={
-                  <React.Suspense fallback={<PageLoader />}>
-                    <ResponsiveCategoryPage
-                      searchQuery={searchQuery}
-                      onSearchChange={setSearchQuery}
-                      cartItemCount={cartItems.reduce((sum, item) => sum + item.quantity, 0)}
-                      onCartClick={() => (isMobile ? navigate('/cart') : setIsCartOpen(true))}
-                      onMenuClick={() => setIsMobileMenuOpen(true)}
-                      addToast={addToast}
-                      setSelectedProduct={setSelectedProduct}
-                    />
-                  </React.Suspense>
-                }
-              />
-              <Route
-                path="/"
-                element={
-                  <React.Suspense fallback={<PageLoader />}>
-                    {GlobalSEO}
-                    <ResponsiveHomePage
-                      products={products}
-                      selectedCategory={selectedCategory}
-                      setSelectedCategory={(cat) => {
-                        handleSelectCategoryAndClose(cat);
-                        if (cat === 'Offers') navigate('/offers');
-                      }}
-                      searchQuery={searchQuery}
-                      selectedTags={selectedTags}
-                      finalFilteredProducts={finalFilteredProducts}
-                      productsLoading={productsLoading}
-                      wishlistedIds={wishlistedIds}
-                      comparisonIds={comparisonIds}
-                      handleAddToCart={handleAddToCart}
-                      handleToggleWishlist={handleToggleWishlist}
-                      setSelectedProduct={setSelectedProduct}
-                      handleNotifyMe={handleNotifyMe}
-                      handleToggleCompare={handleToggleCompare}
-                      handleClearFilters={handleClearFilters}
-                      setIsFilterOpen={setIsFilterOpen}
-                      setSortOrder={setSortOrder}
-                      sortOrder={sortOrder}
-                      showOnSale={showOnSale}
-                      setShowOnSale={setShowOnSale}
-                      showInStock={showInStock}
-                      setShowInStock={setShowInStock}
-                      availableTags={availableTags}
-                      selectedTagsState={selectedTags}
-                      handleToggleTag={handleToggleTag}
-                      priceRange={priceRange}
-                      setPriceRange={(range) => setPriceRange((prev) => ({ ...prev, ...range }))}
-                      maxPrice={maxPrice}
-                      selectedOrigins={selectedOrigins}
-                      handleToggleOrigin={handleToggleOrigin}
-                      availableOrigins={availableOrigins}
-                      selectedHeatLevels={selectedHeatLevels}
-                      handleToggleHeatLevel={handleToggleHeatLevel}
-                      availableHeatLevels={availableHeatLevels}
-                      selectedCuisines={selectedCuisines}
-                      handleToggleCuisine={handleToggleCuisine}
-                      availableCuisines={availableCuisines}
-                      selectedSizes={selectedSizes}
-                      handleToggleSize={handleToggleSize}
-                      availableSizes={availableSizes}
-                      selectedGrinds={selectedGrinds}
-                      handleToggleGrind={handleToggleGrind}
-                      availableGrinds={availableGrinds}
-                      selectedGrades={selectedGrades}
-                      handleToggleGrade={handleToggleGrade}
-                      availableGrades={availableGrades}
-                      addToast={addToast}
-                      cartItemCount={cartItems.reduce((sum, item) => sum + item.quantity, 0)}
-                      onMenuClick={() => setIsMobileMenuOpen(true)}
-                      onCartClick={() => (isMobile ? navigate('/cart') : setIsCartOpen(true))}
-                      onSearchChange={setSearchQuery}
-                    />
-                  </React.Suspense>
-                }
-              />
-
-              <Route
-                path="/messaging"
-                element={
-                  <React.Suspense fallback={<PageLoader />}>
-                    {GlobalSEO}
-                    <MessagingShowcase />
-                  </React.Suspense>
-                }
-              />
-
-              <Route
-                path="/checkout"
-                element={
-                  <React.Suspense fallback={<PageLoader />}>
-                    {GlobalSEO}
-                    <CheckoutPage
-                      cartItems={cartItems}
-                      user={currentUser}
-                      onPlaceOrder={handlePlaceOrder}
-                      addToast={addToast}
-                      discount={discount}
-                      promoCode={promoCode}
-                      onApplyPromoCode={handleApplyPromoCode}
-                      onRemovePromoCode={handleRemovePromoCode}
-                      subtotal={subtotal}
-                      shippingCost={shippingCost}
-                    />
-                  </React.Suspense>
-                }
-              />
-
-              <Route
-                path="/account"
-                element={
-                  currentUser ? (
-                    <React.Suspense fallback={<PageLoader />}>
-                      <AccountLayout user={currentUser} />
-                    </React.Suspense>
-                  ) : (
-                    <Navigate to="/login" replace />
-                  )
-                }
-              >
+            <main id="main-content" className="flex-1">
+              <Routes>
                 <Route
-                  index
+                  path="/product/:id"
                   element={
                     <React.Suspense fallback={<PageLoader />}>
-                      <AccountOverview
-                        user={currentUser!}
-                        onUpdateUser={(updatedUser) =>
-                          setCurrentUser((prev) => ({ ...prev!, ...updatedUser }))
-                        }
+                      <ProductDetailPage />
+                    </React.Suspense>
+                  }
+                />
+                <Route
+                  path="/category/:category"
+                  element={
+                    <React.Suspense fallback={<PageLoader />}>
+                      <ResponsiveCategoryPage
+                        searchQuery={searchQuery}
+                        onSearchChange={setSearchQuery}
+                        cartItemCount={cartItems.reduce((sum, item) => sum + item.quantity, 0)}
+                        onCartClick={() => setIsCartOpen(true)}
+                        onMenuClick={() => setIsMobileMenuOpen(true)}
+                        addToast={addToast}
+                        setSelectedProduct={setSelectedProduct}
                       />
                     </React.Suspense>
                   }
                 />
                 <Route
-                  path="orders"
+                  path="/subscription"
                   element={
                     <React.Suspense fallback={<PageLoader />}>
-                      <OrdersList />
+                      <SubscriptionPage />
                     </React.Suspense>
                   }
                 />
                 <Route
-                  path="addresses"
+                  path="/farmers"
                   element={
                     <React.Suspense fallback={<PageLoader />}>
-                      <AddressBook />
+                      <FarmersPage />
                     </React.Suspense>
                   }
                 />
                 <Route
-                  path="wishlist"
+                  path="/shop"
                   element={
                     <React.Suspense fallback={<PageLoader />}>
-                      <AccountWishlist />
+                      <ResponsiveCategoryPage
+                        searchQuery={searchQuery}
+                        onSearchChange={setSearchQuery}
+                        cartItemCount={cartItems.reduce((sum, item) => sum + item.quantity, 0)}
+                        onCartClick={() => (isMobile ? navigate('/cart') : setIsCartOpen(true))}
+                        onMenuClick={() => setIsMobileMenuOpen(true)}
+                        addToast={addToast}
+                        setSelectedProduct={setSelectedProduct}
+                      />
                     </React.Suspense>
                   }
                 />
                 <Route
-                  path="loyalty"
+                  path="/"
                   element={
                     <React.Suspense fallback={<PageLoader />}>
-                      <LoyaltyPointsTracker />
+                      {GlobalSEO}
+                      <ResponsiveHomePage
+                        products={products}
+                        selectedCategory={selectedCategory}
+                        setSelectedCategory={(cat) => {
+                          handleSelectCategoryAndClose(cat);
+                          if (cat === 'Offers') navigate('/offers');
+                        }}
+                        searchQuery={searchQuery}
+                        selectedTags={selectedTags}
+                        finalFilteredProducts={finalFilteredProducts}
+                        productsLoading={productsLoading}
+                        wishlistedIds={wishlistedIds}
+                        comparisonIds={comparisonIds}
+                        handleAddToCart={handleAddToCart}
+                        handleToggleWishlist={handleToggleWishlist}
+                        setSelectedProduct={setSelectedProduct}
+                        handleNotifyMe={handleNotifyMe}
+                        handleToggleCompare={handleToggleCompare}
+                        handleClearFilters={handleClearFilters}
+                        setIsFilterOpen={setIsFilterOpen}
+                        setSortOrder={setSortOrder}
+                        sortOrder={sortOrder}
+                        showOnSale={showOnSale}
+                        setShowOnSale={setShowOnSale}
+                        showInStock={showInStock}
+                        setShowInStock={setShowInStock}
+                        availableTags={availableTags}
+                        selectedTagsState={selectedTags}
+                        handleToggleTag={handleToggleTag}
+                        priceRange={priceRange}
+                        setPriceRange={(range) => setPriceRange((prev) => ({ ...prev, ...range }))}
+                        maxPrice={maxPrice}
+                        selectedOrigins={selectedOrigins}
+                        handleToggleOrigin={handleToggleOrigin}
+                        availableOrigins={availableOrigins}
+                        selectedHeatLevels={selectedHeatLevels}
+                        handleToggleHeatLevel={handleToggleHeatLevel}
+                        availableHeatLevels={availableHeatLevels}
+                        selectedCuisines={selectedCuisines}
+                        handleToggleCuisine={handleToggleCuisine}
+                        availableCuisines={availableCuisines}
+                        selectedSizes={selectedSizes}
+                        handleToggleSize={handleToggleSize}
+                        availableSizes={availableSizes}
+                        selectedGrinds={selectedGrinds}
+                        handleToggleGrind={handleToggleGrind}
+                        availableGrinds={availableGrinds}
+                        selectedGrades={selectedGrades}
+                        handleToggleGrade={handleToggleGrade}
+                        availableGrades={availableGrades}
+                        addToast={addToast}
+                        cartItemCount={cartItems.reduce((sum, item) => sum + item.quantity, 0)}
+                        onMenuClick={() => setIsMobileMenuOpen(true)}
+                        onCartClick={() => (isMobile ? navigate('/cart') : setIsCartOpen(true))}
+                        onSearchChange={setSearchQuery}
+                      />
                     </React.Suspense>
                   }
                 />
-              </Route>
 
-              <Route path="/profile" element={<Navigate to="/account" replace />} />
-
-              <Route
-                path="/admin"
-                element={
-                  currentUser?.isAdmin ? (
+                <Route
+                  path="/messaging"
+                  element={
                     <React.Suspense fallback={<PageLoader />}>
-                      <AdminDashboard />
+                      {GlobalSEO}
+                      <MessagingShowcase />
                     </React.Suspense>
-                  ) : (
-                    <div className="text-center py-20">
-                      <h2>Access Denied.</h2>
-                    </div>
-                  )
-                }
-              />
+                  }
+                />
 
-              <Route
-                path="/privacy-policy"
-                element={
-                  <React.Suspense fallback={<PageLoader />}>
-                    <PrivacyPolicyPage />
-                  </React.Suspense>
-                }
-              />
-              <Route
-                path="/refund-policy"
-                element={
-                  <React.Suspense fallback={<PageLoader />}>
-                    <RefundPolicyPage />
-                  </React.Suspense>
-                }
-              />
-              <Route
-                path="/terms-of-service"
-                element={
-                  <React.Suspense fallback={<PageLoader />}>
-                    <TermsOfServicePage />
-                  </React.Suspense>
-                }
-              />
-              <Route
-                path="/about"
-                element={
-                  <React.Suspense fallback={<PageLoader />}>
-                    <AboutPage />
-                  </React.Suspense>
-                }
-              />
-              <Route
-                path="/faqs"
-                element={
-                  <React.Suspense fallback={<PageLoader />}>
-                    <FAQsPage />
-                  </React.Suspense>
-                }
-              />
-              <Route
-                path="/contact"
-                element={
-                  <React.Suspense fallback={<PageLoader />}>
-                    <ContactPage />
-                  </React.Suspense>
-                }
-              />
-              <Route
-                path="/recipes"
-                element={
-                  <React.Suspense fallback={<PageLoader />}>
-                    <RecipesPage recipes={MOCK_RECIPES} onSelectRecipe={setSelectedRecipe} />
-                  </React.Suspense>
-                }
-              />
+                <Route
+                  path="/checkout"
+                  element={
+                    <React.Suspense fallback={<PageLoader />}>
+                      {GlobalSEO}
+                      <CheckoutPage
+                        cartItems={cartItems}
+                        user={currentUser}
+                        onPlaceOrder={handlePlaceOrder}
+                        addToast={addToast}
+                        discount={discount}
+                        promoCode={promoCode}
+                        onApplyPromoCode={handleApplyPromoCode}
+                        onRemovePromoCode={handleRemovePromoCode}
+                        subtotal={subtotal}
+                        shippingCost={shippingCost}
+                      />
+                    </React.Suspense>
+                  }
+                />
 
-              <Route
-                path="/blog"
-                element={
-                  <React.Suspense fallback={<PageLoader />}>
-                    <BlogPage
-                      posts={MOCK_POSTS}
-                      onSelectPost={(slug) => navigate(`/blog/${slug}`)}
-                    />
-                  </React.Suspense>
-                }
-              />
-
-              <Route
-                path="/login"
-                element={
-                  <React.Suspense fallback={<PageLoader />}>
-                    <LoginPage
-                      onLogin={handleLogin}
-                      onNavigateToSignup={() => navigate('/signup')}
-                      onNavigateToForgotPassword={() => navigate('/forgot-password')}
-                    />
-                  </React.Suspense>
-                }
-              />
-
-              <Route
-                path="/signup"
-                element={
-                  <React.Suspense fallback={<PageLoader />}>
-                    <SignUpPage
-                      onSignUp={handleSignUp}
-                      onNavigateToLogin={() => navigate('/login')}
-                    />
-                  </React.Suspense>
-                }
-              />
-
-              <Route
-                path="/forgot-password"
-                element={
-                  <React.Suspense fallback={<PageLoader />}>
-                    <ForgotPasswordPage onNavigateToLogin={() => navigate('/login')} />
-                  </React.Suspense>
-                }
-              />
-
-              <Route
-                path="/verify-email"
-                element={
-                  <React.Suspense fallback={<PageLoader />}>
-                    <EmailVerificationPage
-                      email={
-                        new URLSearchParams(location.hash.split('?')[1] || location.search).get(
-                          'email'
-                        ) ||
-                        currentUser?.email ||
-                        ''
-                      }
-                      onNavigateToHome={() => navigate('/')}
-                      onResendEmail={() => addToast('Verification email sent!', 'success')}
-                    />
-                  </React.Suspense>
-                }
-              />
-
-              <Route
-                path="/cart"
-                element={
-                  <React.Suspense fallback={<PageLoader />}>
-                    <ResponsiveCartPage />
-                  </React.Suspense>
-                }
-              />
-              <Route
-                path="/track-order"
-                element={
-                  <React.Suspense fallback={<PageLoader />}>
-                    <OrderTrackingPage />
-                  </React.Suspense>
-                }
-              />
-
-              <Route
-                path="/2fa-setup"
-                element={
-                  <React.Suspense fallback={<PageLoader />}>
-                    <TwoFactorSetupPage
-                      onComplete={() => {
-                        addToast('2FA enabled successfully!', 'success');
-                        navigate('/profile');
-                      }}
-                      onCancel={() => navigate('/profile')}
-                    />
-                  </React.Suspense>
-                }
-              />
-
-              <Route
-                path="/offers"
-                element={
-                  <React.Suspense fallback={<PageLoader />}>
-                    <OffersPage />
-                  </React.Suspense>
-                }
-              />
-
-              <Route
-                path="/order-confirmation/:orderId"
-                element={
-                  <OrderConfirmationRoute
-                    currentUser={currentUser}
-                    handlePlaceOrder={handlePlaceOrder}
-                    addToast={addToast}
+                <Route
+                  path="/account"
+                  element={
+                    currentUser ? (
+                      <React.Suspense fallback={<PageLoader />}>
+                        <AccountLayout user={currentUser} />
+                      </React.Suspense>
+                    ) : (
+                      <Navigate to="/login" replace />
+                    )
+                  }
+                >
+                  <Route
+                    index
+                    element={
+                      <React.Suspense fallback={<PageLoader />}>
+                        <AccountOverview
+                          user={currentUser!}
+                          onUpdateUser={(updatedUser) =>
+                            setCurrentUser((prev) => ({ ...prev!, ...updatedUser }))
+                          }
+                        />
+                      </React.Suspense>
+                    }
                   />
-                }
-              />
-              <Route path="/blog/:slug" element={<BlogPostRoute />} />
-              {/* Tracking Page */}
-              <Route path="/track" element={<TrackingPage />} />
-              <Route path="/track/:orderId" element={<TrackingPage />} />
-              {/* Admin Routes */}
-              <Route path="/admin/shipments" element={<AdminShipmentsPage />} />
-              {/* 404 Not Found Page */}
-              <Route path="*" element={<NotFoundPage />} />
-            </Routes>
+                  <Route
+                    path="orders"
+                    element={
+                      <React.Suspense fallback={<PageLoader />}>
+                        <OrdersList />
+                      </React.Suspense>
+                    }
+                  />
+                  <Route
+                    path="addresses"
+                    element={
+                      <React.Suspense fallback={<PageLoader />}>
+                        <AddressBook />
+                      </React.Suspense>
+                    }
+                  />
+                  <Route
+                    path="wishlist"
+                    element={
+                      <React.Suspense fallback={<PageLoader />}>
+                        <AccountWishlist />
+                      </React.Suspense>
+                    }
+                  />
+                  <Route
+                    path="loyalty"
+                    element={
+                      <React.Suspense fallback={<PageLoader />}>
+                        <LoyaltyPointsTracker />
+                      </React.Suspense>
+                    }
+                  />
+                </Route>
+
+                <Route path="/profile" element={<Navigate to="/account" replace />} />
+
+                <Route
+                  path="/admin"
+                  element={
+                    currentUser?.isAdmin ? (
+                      <React.Suspense fallback={<PageLoader />}>
+                        <AdminDashboard />
+                      </React.Suspense>
+                    ) : (
+                      <div className="text-center py-20">
+                        <h2>Access Denied.</h2>
+                      </div>
+                    )
+                  }
+                />
+
+                <Route
+                  path="/privacy-policy"
+                  element={
+                    <React.Suspense fallback={<PageLoader />}>
+                      <PrivacyPolicyPage />
+                    </React.Suspense>
+                  }
+                />
+                <Route
+                  path="/refund-policy"
+                  element={
+                    <React.Suspense fallback={<PageLoader />}>
+                      <RefundPolicyPage />
+                    </React.Suspense>
+                  }
+                />
+                <Route
+                  path="/terms-of-service"
+                  element={
+                    <React.Suspense fallback={<PageLoader />}>
+                      <TermsOfServicePage />
+                    </React.Suspense>
+                  }
+                />
+                <Route
+                  path="/about"
+                  element={
+                    <React.Suspense fallback={<PageLoader />}>
+                      <AboutPage />
+                    </React.Suspense>
+                  }
+                />
+                <Route
+                  path="/faqs"
+                  element={
+                    <React.Suspense fallback={<PageLoader />}>
+                      <FAQsPage />
+                    </React.Suspense>
+                  }
+                />
+                <Route
+                  path="/contact"
+                  element={
+                    <React.Suspense fallback={<PageLoader />}>
+                      <ContactPage />
+                    </React.Suspense>
+                  }
+                />
+                <Route
+                  path="/recipes"
+                  element={
+                    <React.Suspense fallback={<PageLoader />}>
+                      <RecipesPage recipes={MOCK_RECIPES} onSelectRecipe={setSelectedRecipe} />
+                    </React.Suspense>
+                  }
+                />
+
+                <Route
+                  path="/blog"
+                  element={
+                    <React.Suspense fallback={<PageLoader />}>
+                      <BlogPage
+                        posts={MOCK_POSTS}
+                        onSelectPost={(slug) => navigate(`/blog/${slug}`)}
+                      />
+                    </React.Suspense>
+                  }
+                />
+
+                <Route
+                  path="/login"
+                  element={
+                    <React.Suspense fallback={<PageLoader />}>
+                      <LoginPage
+                        onLogin={handleLogin}
+                        onNavigateToSignup={() => navigate('/signup')}
+                        onNavigateToForgotPassword={() => navigate('/forgot-password')}
+                      />
+                    </React.Suspense>
+                  }
+                />
+
+                <Route
+                  path="/signup"
+                  element={
+                    <React.Suspense fallback={<PageLoader />}>
+                      <SignUpPage
+                        onSignUp={handleSignUp}
+                        onNavigateToLogin={() => navigate('/login')}
+                      />
+                    </React.Suspense>
+                  }
+                />
+
+                <Route
+                  path="/forgot-password"
+                  element={
+                    <React.Suspense fallback={<PageLoader />}>
+                      <ForgotPasswordPage onNavigateToLogin={() => navigate('/login')} />
+                    </React.Suspense>
+                  }
+                />
+
+                <Route
+                  path="/verify-email"
+                  element={
+                    <React.Suspense fallback={<PageLoader />}>
+                      <EmailVerificationPage
+                        email={
+                          new URLSearchParams(location.hash.split('?')[1] || location.search).get(
+                            'email'
+                          ) ||
+                          currentUser?.email ||
+                          ''
+                        }
+                        onNavigateToHome={() => navigate('/')}
+                        onResendEmail={() => addToast('Verification email sent!', 'success')}
+                      />
+                    </React.Suspense>
+                  }
+                />
+
+                <Route
+                  path="/cart"
+                  element={
+                    <React.Suspense fallback={<PageLoader />}>
+                      <ResponsiveCartPage />
+                    </React.Suspense>
+                  }
+                />
+                <Route
+                  path="/track-order"
+                  element={
+                    <React.Suspense fallback={<PageLoader />}>
+                      <OrderTrackingPage />
+                    </React.Suspense>
+                  }
+                />
+
+                <Route
+                  path="/2fa-setup"
+                  element={
+                    <React.Suspense fallback={<PageLoader />}>
+                      <TwoFactorSetupPage
+                        onComplete={() => {
+                          addToast('2FA enabled successfully!', 'success');
+                          navigate('/profile');
+                        }}
+                        onCancel={() => navigate('/profile')}
+                      />
+                    </React.Suspense>
+                  }
+                />
+
+                <Route
+                  path="/offers"
+                  element={
+                    <React.Suspense fallback={<PageLoader />}>
+                      <OffersPage />
+                    </React.Suspense>
+                  }
+                />
+
+                <Route
+                  path="/order-confirmation/:orderId"
+                  element={
+                    <OrderConfirmationRoute
+                      currentUser={currentUser}
+                      handlePlaceOrder={handlePlaceOrder}
+                      addToast={addToast}
+                    />
+                  }
+                />
+                <Route path="/blog/:slug" element={<BlogPostRoute />} />
+                {/* Tracking Page */}
+                <Route path="/track" element={<TrackingPage />} />
+                <Route path="/track/:orderId" element={<TrackingPage />} />
+                {/* Admin Routes */}
+                <Route path="/admin/shipments" element={<AdminShipmentsPage />} />
+                {/* 404 Not Found Page */}
+                <Route path="*" element={<NotFoundPage />} />
+              </Routes>
+            </main>
 
             {/* Hide Footer on mobile pages */}
             {!(isMobile && isMobileLayoutPage) && (

@@ -49,6 +49,27 @@ const Spinner: React.FC<{ className?: string }> = ({ className = 'h-5 w-5' }) =>
   </svg>
 );
 
+// Success checkmark animation for add-to-cart feedback
+const SuccessCheckmark: React.FC<{ className?: string }> = ({ className = 'h-5 w-5' }) => (
+  <m.div
+    initial={{ scale: 0, opacity: 0 }}
+    animate={{ scale: 1, opacity: 1 }}
+    exit={{ scale: 0, opacity: 0 }}
+    transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+  >
+    <svg
+      className={`text-green-500 ${className}`}
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={3}
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+    </svg>
+  </m.div>
+);
+
 const Cart: React.FC<CartProps> = ({
   items,
   onUpdateQuantity,
@@ -69,7 +90,10 @@ const Cart: React.FC<CartProps> = ({
   const remainingForFreeShipping = Math.max(0, FREE_SHIPPING_THRESHOLD - subtotal);
   const shippingProgress = Math.min(100, (subtotal / FREE_SHIPPING_THRESHOLD) * 100);
 
-  const [loadingState, setLoadingState] = useState<{ type: 'item' | 'promo' | null; id?: string }>({
+  const [loadingState, setLoadingState] = useState<{
+    type: 'item' | 'promo' | 'success' | null;
+    id?: string;
+  }>({
     type: null,
   });
   const tax = (subtotal - discount) * 0.05;
@@ -82,8 +106,16 @@ const Cart: React.FC<CartProps> = ({
       setLoadingState({ type: 'item', id: item.id });
       setTimeout(() => {
         onUpdateQuantity(item.id, newQuantity);
-        setLoadingState({ type: null });
-      }, 500); // Simulate network delay
+        // Show success state briefly after update
+        if (newQuantity > 0) {
+          setLoadingState({ type: 'success', id: item.id });
+          setTimeout(() => {
+            setLoadingState({ type: null });
+          }, 800); // Show success for 800ms
+        } else {
+          setLoadingState({ type: null });
+        }
+      }, 400); // Reduced from 500ms for snappier feel
     };
 
     if (newQuantity <= 0) {
@@ -184,6 +216,8 @@ const Cart: React.FC<CartProps> = ({
             <AnimatePresence>
               {items.map((item) => {
                 const isItemLoading = loadingState.type === 'item' && loadingState.id === item.id;
+                const isItemSuccess =
+                  loadingState.type === 'success' && loadingState.id === item.id;
                 return (
                   <m.div
                     key={item.id}
@@ -216,6 +250,19 @@ const Cart: React.FC<CartProps> = ({
                           ₹{item.price.toFixed(2)}
                         </p>
                       </div>
+                      {/* Success indicator */}
+                      <AnimatePresence>
+                        {isItemSuccess && (
+                          <m.div
+                            initial={{ scale: 0, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0, opacity: 0 }}
+                            className="flex items-center justify-center"
+                          >
+                            <SuccessCheckmark className="h-6 w-6" />
+                          </m.div>
+                        )}
+                      </AnimatePresence>
                     </div>
                     {/* Controls row */}
                     <div className="flex items-center justify-between">

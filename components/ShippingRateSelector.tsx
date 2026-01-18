@@ -59,17 +59,17 @@ const ShippingRateSelector: React.FC<ShippingRateSelectorProps> = ({
           }
         } else {
           // Use mock options if API returns empty
-          useMockOptions();
+          setMockOptions();
         }
       } catch (err) {
         console.error('Failed to fetch shipping rates, using fallback:', err);
         // Use mock shipping options as fallback
-        useMockOptions();
+        setMockOptions();
       } finally {
         setLoading(false);
       }
 
-      function useMockOptions() {
+      function setMockOptions() {
         // Single Standard Delivery option - Free for orders ≥₹1000
         const mockOptions: ShippingOption[] = [
           {
@@ -161,10 +161,11 @@ const ShippingRateSelector: React.FC<ShippingRateSelectorProps> = ({
             key={option.courierId}
             type="button"
             onClick={() => handleSelect(option)}
-            className={`w-full text-left p-4 rounded-xl border-2 transition-all duration-200 ${selectedId === option.courierId
+            className={`w-full text-left p-4 rounded-xl border-2 transition-all duration-200 ${
+              selectedId === option.courierId
                 ? 'border-brand-primary bg-brand-primary/5 shadow-md'
                 : 'border-gray-200 bg-white hover:border-brand-primary/50 hover:shadow-sm'
-              }`}
+            }`}
           >
             <div className="flex items-start justify-between gap-4">
               <div className="flex-1">

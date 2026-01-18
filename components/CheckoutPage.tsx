@@ -703,15 +703,15 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
                     shippingCost: shippingCost, // shippingCost is calculated from cart items
                     discount,
                     deliverySlot: {
-                      date: new Date(saved.selectedDate || selectedDate).toLocaleDateString(
-                        'en-US',
-                        {
-                          year: 'numeric',
-                          month: 'long',
-                          day: 'numeric',
-                        }
-                      ),
-                      time: saved.selectedTime || selectedTime,
+                      date:
+                        saved.selectedShippingOption?.etd ||
+                        selectedShippingOption?.etd ||
+                        'Standard Delivery',
+                      time: saved.selectedShippingOption?.estimatedDays
+                        ? `${saved.selectedShippingOption.estimatedDays}-${saved.selectedShippingOption.estimatedDays + 2} business days`
+                        : selectedShippingOption?.estimatedDays
+                          ? `${selectedShippingOption.estimatedDays}-${selectedShippingOption.estimatedDays + 2} business days`
+                          : '3-5 business days',
                     },
                     guestEmail: !user ? saved.guestEmail || guestEmail : undefined,
                     guestPhone: !user ? saved.guestPhone || guestPhone : undefined,

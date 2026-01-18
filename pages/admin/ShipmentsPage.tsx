@@ -3,15 +3,13 @@
  * Manage all shipments, generate AWB, print labels
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { OrderShipmentData, ShippingOption } from '../../types/shipping';
 import {
   generateAWB,
   generateLabel,
-  generateInvoice,
   requestPickup,
   getShippingRates,
-  cancelShipment,
 } from '../../utils/shiprocketService';
 
 // Mock data for demonstration - in production, fetch from database
