@@ -86,7 +86,7 @@ export interface PinLookupResult {
 }
 
 /**
- * Look up city and state from an Indian PIN code
+ * Look up city and state from an Indian PIN code (sync - uses local database/zone guess)
  * @param pinCode - 6-digit Indian PIN code
  * @returns Lookup result with city and state data
  */
@@ -99,7 +99,7 @@ export const lookupPinCode = (pinCode: string): PinLookupResult => {
     };
   }
 
-  // Check if we have exact data
+  // Check if we have exact data in local database
   const data = pinCodeDatabase[pinCode];
 
   if (data) {
@@ -131,6 +131,64 @@ export const lookupPinCode = (pinCode: string): PinLookupResult => {
     data: {
       city: 'City',
       state: 'State',
+      region: `PIN ${pinCode}`,
+    },
+  };
+};
+
+/**
+ * Look up city and state from an Indian PIN code using real India Post API
+ * @param pinCode - 6-digit Indian PIN code
+ * @returns Promise with lookup result containing accurate city and state data
+ */
+export const lookupPinCodeAsync = async (pinCode: string): Promise<PinLookupResult> => {
+  // Validate PIN code format
+  if (!/^\d{6}$/.test(pinCode)) {
+    return {
+      success: false,
+      error: 'Invalid PIN code format. Must be 6 digits.',
+    };
+  }
+
+  // First check local database for fast response
+  const localData = pinCodeDatabase[pinCode];
+  if (localData) {
+    return {
+      success: true,
+      data: localData,
+    };
+  }
+
+  // Try the India Post API for accurate data
+  try {
+    const response = await fetch(`https://api.postalpincode.in/pincode/${pinCode}`);
+    const result = await response.json();
+
+    if (result[0]?.Status === 'Success' && result[0]?.PostOffice?.length > 0) {
+      const postOffice = result[0].PostOffice[0];
+      return {
+        success: true,
+        data: {
+          city: postOffice.District || postOffice.Name,
+          state: postOffice.State,
+          region: postOffice.Name,
+        },
+      };
+    }
+  } catch (error) {
+    console.error('PIN code API error:', error);
+  }
+
+  // Fallback to zone-based guess if API fails
+  const zone = pinCode.substring(0, 2);
+  const stateGuess = getStateFromZone(zone);
+  const cityGuess = getCityFromZone(zone);
+
+  return {
+    success: true,
+    data: {
+      city: cityGuess || 'City',
+      state: stateGuess || 'State',
       region: `PIN ${pinCode}`,
     },
   };

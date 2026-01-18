@@ -9,7 +9,7 @@ import { orderAPI } from '../utils/apiService';
 import { paymentService } from '../utils/paymentService';
 import { APIErrorDisplay } from './APIErrorDisplay';
 import CheckoutStepper from './CheckoutStepper';
-import { lookupPinCode } from '../utils/pinCodeLookup';
+import { lookupPinCodeAsync } from '../utils/pinCodeLookup';
 import ShippingRateSelector from './ShippingRateSelector';
 import { ShippingOption } from '../types/shipping';
 
@@ -164,161 +164,161 @@ const AddressForm: React.FC<{
   onPinLookup,
   pinLookupStatus,
 }) => (
-    <div className="space-y-4">
-      <h3 className="text-lg font-serif font-bold">{title}</h3>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div>
-          <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-            Full Name
-          </label>
+  <div className="space-y-4">
+    <h3 className="text-lg font-serif font-bold">{title}</h3>
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div>
+        <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+          Full Name
+        </label>
+        <input
+          type="text"
+          name="name"
+          id="name"
+          autoComplete="name"
+          defaultValue={userName || ''}
+          className="mt-1 input-field"
+          required
+        />
+      </div>
+      <div>
+        <label htmlFor="street" className="block text-sm font-medium text-gray-700">
+          Street Address
+        </label>
+        <input
+          type="text"
+          name="street"
+          id="street"
+          autoComplete="street-address"
+          value={address.street}
+          onChange={onChange}
+          onBlur={onBlur}
+          placeholder="123 Main Street, Apt 4B"
+          className={`mt-1 input-field transition-all ${errors.street ? 'border-red-500 ring-2 ring-red-200' : ''}`}
+          required
+        />
+        {errors.street && (
+          <p className="text-xs text-red-500 mt-1 flex items-center gap-1">
+            <span>⚠</span> {errors.street}
+          </p>
+        )}
+      </div>
+      <div>
+        <label htmlFor="city" className="block text-sm font-medium text-gray-700">
+          City
+        </label>
+        <input
+          type="text"
+          name="city"
+          id="city"
+          autoComplete="address-level2"
+          value={address.city}
+          onChange={onChange}
+          onBlur={onBlur}
+          placeholder="Mumbai"
+          className={`mt-1 input-field transition-all ${errors.city ? 'border-red-500 ring-2 ring-red-200' : ''}`}
+          required
+        />
+        {errors.city && (
+          <p className="text-xs text-red-500 mt-1 flex items-center gap-1">
+            <span>⚠</span> {errors.city}
+          </p>
+        )}
+      </div>
+      <div>
+        <label htmlFor="state" className="block text-sm font-medium text-gray-700">
+          State / Province
+        </label>
+        <input
+          type="text"
+          name="state"
+          id="state"
+          autoComplete="address-level1"
+          value={address.state}
+          onChange={onChange}
+          onBlur={onBlur}
+          placeholder="Maharashtra"
+          className={`mt-1 input-field transition-all ${errors.state ? 'border-red-500 ring-2 ring-red-200' : ''}`}
+          required
+        />
+        {errors.state && (
+          <p className="text-xs text-red-500 mt-1 flex items-center gap-1">
+            <span>⚠</span> {errors.state}
+          </p>
+        )}
+      </div>
+      <div>
+        <label htmlFor="zip" className="block text-sm font-medium text-gray-700">
+          PIN Code
+        </label>
+        <div className="relative">
           <input
             type="text"
-            name="name"
-            id="name"
-            autoComplete="name"
-            defaultValue={userName || ''}
-            className="mt-1 input-field"
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="street" className="block text-sm font-medium text-gray-700">
-            Street Address
-          </label>
-          <input
-            type="text"
-            name="street"
-            id="street"
-            autoComplete="street-address"
-            value={address.street}
-            onChange={onChange}
+            name="zip"
+            id="zip"
+            autoComplete="postal-code"
+            inputMode="numeric"
+            pattern="[0-9]{6}"
+            maxLength={6}
+            value={address.zip}
+            onChange={(e) => {
+              onChange(e);
+              // Trigger lookup when 6 digits entered
+              if (e.target.value.length === 6 && /^\d{6}$/.test(e.target.value) && onPinLookup) {
+                onPinLookup(e.target.value);
+              }
+            }}
             onBlur={onBlur}
-            placeholder="123 Main Street, Apt 4B"
-            className={`mt-1 input-field transition-all ${errors.street ? 'border-red-500 ring-2 ring-red-200' : ''}`}
+            placeholder="400001"
+            className={`mt-1 input-field transition-all pr-10 ${errors.zip ? 'border-red-500 ring-2 ring-red-200' : ''} ${pinLookupStatus?.success ? 'border-green-500 ring-2 ring-green-200' : ''}`}
             required
           />
-          {errors.street && (
-            <p className="text-xs text-red-500 mt-1 flex items-center gap-1">
-              <span>⚠</span> {errors.street}
-            </p>
+          {/* PIN lookup status indicator */}
+          {pinLookupStatus && (
+            <span className="absolute right-3 top-1/2 -translate-y-1/2 mt-0.5">
+              {pinLookupStatus.loading && <span className="animate-spin text-gray-400">⏳</span>}
+              {!pinLookupStatus.loading && pinLookupStatus.success && (
+                <span className="text-green-500">✓</span>
+              )}
+              {!pinLookupStatus.loading && pinLookupStatus.success === false && (
+                <span className="text-amber-500">!</span>
+              )}
+            </span>
           )}
         </div>
-        <div>
-          <label htmlFor="city" className="block text-sm font-medium text-gray-700">
-            City
-          </label>
-          <input
-            type="text"
-            name="city"
-            id="city"
-            autoComplete="address-level2"
-            value={address.city}
-            onChange={onChange}
-            onBlur={onBlur}
-            placeholder="Mumbai"
-            className={`mt-1 input-field transition-all ${errors.city ? 'border-red-500 ring-2 ring-red-200' : ''}`}
-            required
-          />
-          {errors.city && (
-            <p className="text-xs text-red-500 mt-1 flex items-center gap-1">
-              <span>⚠</span> {errors.city}
-            </p>
-          )}
-        </div>
-        <div>
-          <label htmlFor="state" className="block text-sm font-medium text-gray-700">
-            State / Province
-          </label>
-          <input
-            type="text"
-            name="state"
-            id="state"
-            autoComplete="address-level1"
-            value={address.state}
-            onChange={onChange}
-            onBlur={onBlur}
-            placeholder="Maharashtra"
-            className={`mt-1 input-field transition-all ${errors.state ? 'border-red-500 ring-2 ring-red-200' : ''}`}
-            required
-          />
-          {errors.state && (
-            <p className="text-xs text-red-500 mt-1 flex items-center gap-1">
-              <span>⚠</span> {errors.state}
-            </p>
-          )}
-        </div>
-        <div>
-          <label htmlFor="zip" className="block text-sm font-medium text-gray-700">
-            PIN Code
-          </label>
-          <div className="relative">
-            <input
-              type="text"
-              name="zip"
-              id="zip"
-              autoComplete="postal-code"
-              inputMode="numeric"
-              pattern="[0-9]{6}"
-              maxLength={6}
-              value={address.zip}
-              onChange={(e) => {
-                onChange(e);
-                // Trigger lookup when 6 digits entered
-                if (e.target.value.length === 6 && /^\d{6}$/.test(e.target.value) && onPinLookup) {
-                  onPinLookup(e.target.value);
-                }
-              }}
-              onBlur={onBlur}
-              placeholder="400001"
-              className={`mt-1 input-field transition-all pr-10 ${errors.zip ? 'border-red-500 ring-2 ring-red-200' : ''} ${pinLookupStatus?.success ? 'border-green-500 ring-2 ring-green-200' : ''}`}
-              required
-            />
-            {/* PIN lookup status indicator */}
-            {pinLookupStatus && (
-              <span className="absolute right-3 top-1/2 -translate-y-1/2 mt-0.5">
-                {pinLookupStatus.loading && <span className="animate-spin text-gray-400">⏳</span>}
-                {!pinLookupStatus.loading && pinLookupStatus.success && (
-                  <span className="text-green-500">✓</span>
-                )}
-                {!pinLookupStatus.loading && pinLookupStatus.success === false && (
-                  <span className="text-amber-500">!</span>
-                )}
-              </span>
-            )}
-          </div>
-          {errors.zip && (
-            <p className="text-xs text-red-500 mt-1 flex items-center gap-1">
-              <span>⚠</span> {errors.zip}
-            </p>
-          )}
-          {pinLookupStatus?.message && !errors.zip && (
-            <p
-              className={`text-xs mt-1 ${pinLookupStatus.success ? 'text-green-600' : 'text-amber-600'}`}
-            >
-              {pinLookupStatus.message}
-            </p>
-          )}
-        </div>
-        <div>
-          <label htmlFor="country" className="block text-sm font-medium text-gray-700">
-            Country
-          </label>
-          <input
-            type="text"
-            name="country"
-            id="country"
-            autoComplete="country-name"
-            value={address.country}
-            onChange={onChange}
-            onBlur={onBlur}
-            placeholder="India"
-            className="mt-1 input-field"
-            required
-          />
-        </div>
+        {errors.zip && (
+          <p className="text-xs text-red-500 mt-1 flex items-center gap-1">
+            <span>⚠</span> {errors.zip}
+          </p>
+        )}
+        {pinLookupStatus?.message && !errors.zip && (
+          <p
+            className={`text-xs mt-1 ${pinLookupStatus.success ? 'text-green-600' : 'text-amber-600'}`}
+          >
+            {pinLookupStatus.message}
+          </p>
+        )}
+      </div>
+      <div>
+        <label htmlFor="country" className="block text-sm font-medium text-gray-700">
+          Country
+        </label>
+        <input
+          type="text"
+          name="country"
+          id="country"
+          autoComplete="country-name"
+          value={address.country}
+          onChange={onChange}
+          onBlur={onBlur}
+          placeholder="India"
+          className="mt-1 input-field"
+          required
+        />
       </div>
     </div>
-  );
+  </div>
+);
 
 const CheckoutPage: React.FC<CheckoutPageProps> = ({
   cartItems,
@@ -369,13 +369,12 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
     message?: string;
   }>({ loading: false });
 
-  // Handler for PIN code lookup and autofill
-  const handlePinLookup = (pin: string) => {
+  // Handler for PIN code lookup and autofill (using real India Post API)
+  const handlePinLookup = async (pin: string) => {
     setPinLookupStatus({ loading: true });
 
-    // Simulate async lookup (in production, this could be an API call)
-    setTimeout(() => {
-      const result = lookupPinCode(pin);
+    try {
+      const result = await lookupPinCodeAsync(pin);
 
       if (result.success && result.data) {
         // Autofill city and state
@@ -398,7 +397,14 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
           message: result.error || 'PIN not found',
         });
       }
-    }, 300);
+    } catch (error) {
+      console.error('PIN lookup failed:', error);
+      setPinLookupStatus({
+        loading: false,
+        success: false,
+        message: 'Failed to lookup PIN code',
+      });
+    }
   };
 
   const GIFT_WRAP_FEE = 49;
@@ -681,17 +687,17 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
                     billingAddress:
                       (saved.useSameAddress ?? useSameAddress)
                         ? {
-                          ...shippingAddress,
-                          ...saved.shippingAddress,
-                          id: '',
-                          type: 'Billing' as const,
-                        }
+                            ...shippingAddress,
+                            ...saved.shippingAddress,
+                            id: '',
+                            type: 'Billing' as const,
+                          }
                         : {
-                          ...billingAddress,
-                          ...saved.billingAddress,
-                          id: '',
-                          type: 'Billing' as const,
-                        },
+                            ...billingAddress,
+                            ...saved.billingAddress,
+                            id: '',
+                            type: 'Billing' as const,
+                          },
                     deliveryMethod: 'Standard' as const,
                     paymentMethod: saved.paymentMethod || paymentMethod || 'Online Payment',
                     shippingCost: shippingCost, // shippingCost is calculated from cart items
@@ -722,7 +728,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
                   console.error(err);
                   setSubmitError(
                     'Failed to create order after payment: ' +
-                    (err instanceof Error ? err.message : 'Unknown error')
+                      (err instanceof Error ? err.message : 'Unknown error')
                   );
                 } finally {
                   setIsSubmitting(false);
@@ -879,10 +885,11 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
                             message: `✓ ${addr.city}, ${addr.state}`,
                           });
                         }}
-                        className={`w-full text-left p-3 rounded-lg border-2 transition-all ${shippingAddress.street === addr.street && shippingAddress.zip === addr.zip
+                        className={`w-full text-left p-3 rounded-lg border-2 transition-all ${
+                          shippingAddress.street === addr.street && shippingAddress.zip === addr.zip
                             ? 'border-brand-primary bg-white shadow-md'
                             : 'border-gray-200 bg-white hover:border-brand-primary/50'
-                          }`}
+                        }`}
                       >
                         <div className="flex items-start justify-between">
                           <div>
@@ -1165,8 +1172,9 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
                   </div>
                   <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
                     <div
-                      className={`h-full transition-all duration-500 ease-out ${remainingForFreeShipping > 0 ? 'bg-brand-primary' : 'bg-green-500'
-                        }`}
+                      className={`h-full transition-all duration-500 ease-out ${
+                        remainingForFreeShipping > 0 ? 'bg-brand-primary' : 'bg-green-500'
+                      }`}
                       style={{ width: `${shippingProgress}%` }}
                     />
                   </div>
