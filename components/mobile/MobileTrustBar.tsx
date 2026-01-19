@@ -1,29 +1,31 @@
 import React from 'react';
-import { ShieldCheckIcon } from '../icons/ShieldCheckIcon';
-import { BeakerIcon } from '../icons/BeakerIcon';
-import { UsersIcon } from '../icons/UsersIcon';
 
 interface TrustItem {
-  icon: React.ReactNode;
+  icon: string;
   title: string;
   subtitle: string;
 }
 
 const defaultItems: TrustItem[] = [
   {
-    icon: <ShieldCheckIcon className="w-5 h-5" />,
-    title: 'Quality',
-    subtitle: 'Uncompromised',
+    icon: 'verified_user',
+    title: 'FSSAI Certified',
+    subtitle: '100% Compliant',
   },
   {
-    icon: <BeakerIcon className="w-5 h-5" />,
-    title: 'Pure',
-    subtitle: 'Lab Tested',
+    icon: 'eco',
+    title: 'Organic Origin',
+    subtitle: 'Pesticide Free',
   },
   {
-    icon: <UsersIcon className="w-5 h-5" />,
-    title: 'Direct',
-    subtitle: 'Farmer First',
+    icon: 'factory',
+    title: 'ISO 9001:2015',
+    subtitle: 'Quality Assured',
+  },
+  {
+    icon: 'location_on',
+    title: 'Single Source',
+    subtitle: 'Farm Traceable',
   },
 ];
 
@@ -33,24 +35,19 @@ interface MobileTrustBarProps {
 
 const MobileTrustBar: React.FC<MobileTrustBarProps> = ({ items = defaultItems }) => {
   return (
-    <section className="px-4 py-2">
-      <div className="flex overflow-x-auto gap-3 pb-2 scrollbar-hide -mx-4 px-4">
+    <section className="bg-stone-900 text-stone-100 py-6 px-4">
+      <div className="grid grid-cols-2 gap-4">
         {items.map((item, index) => (
-          <div
-            key={index}
-            className="flex-shrink-0 flex items-center gap-2 bg-amber-50 dark:bg-stone-800/50 px-3 py-2 rounded-full border border-amber-100 dark:border-stone-700 whitespace-nowrap"
-          >
-            <div className="text-amber-600 dark:text-amber-500">{item.icon}</div>
-            <div className="flex flex-col leading-none">
-              <span className="text-[10px] uppercase font-bold text-stone-900 dark:text-stone-100 mb-0.5">
-                {item.title}
-              </span>
-              <span className="text-[9px] text-stone-500 dark:text-stone-400">{item.subtitle}</span>
+          <div key={index} className="flex items-center gap-3">
+            <div className="size-10 rounded-full border border-white/20 flex items-center justify-center">
+              <span className="material-symbols-outlined text-lg text-white">{item.icon}</span>
+            </div>
+            <div>
+              <p className="font-serif text-sm text-white">{item.title}</p>
+              <p className="text-[10px] text-white/50 uppercase tracking-wider">{item.subtitle}</p>
             </div>
           </div>
         ))}
-        {/* Spacer for right padding in scroll */}
-        <div className="w-1 flex-shrink-0" />
       </div>
     </section>
   );

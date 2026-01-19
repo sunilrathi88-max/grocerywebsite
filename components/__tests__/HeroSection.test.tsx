@@ -1,29 +1,27 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom';
 import HeroSection from '../HeroSection';
 import '@testing-library/jest-dom';
 
 describe('HeroSection', () => {
-  const mockProps = {
-    title: 'Test Title',
-    ctaPrimary: { text: 'Shop Now', href: '#' },
-    ctaSecondary: { text: 'Learn More', href: '#' },
-    badges: [],
-    heroImage: '/test.jpg',
-  };
-
-  it('renders title and CTA buttons', () => {
-    render(<HeroSection {...mockProps} />);
-    expect(screen.getByText('Test Title')).toBeInTheDocument();
-    expect(screen.getByText('Shop Now')).toBeInTheDocument();
-    expect(screen.getByText('Learn More')).toBeInTheDocument();
+  it('renders title and CTA button', () => {
+    render(
+      <BrowserRouter>
+        <HeroSection />
+      </BrowserRouter>
+    );
+    expect(screen.getByText('Pure Origin')).toBeInTheDocument();
+    expect(screen.getByText('Shop Pure')).toBeInTheDocument();
   });
 
   it('renders gradient background element', () => {
-    const { container } = render(<HeroSection {...mockProps} />);
-    // Checking for the gradient div by class or style might be fragile,
-    // but we can check if the component renders without crashing and contains the brand colors in style if possible.
-    // For now, simple existance check of the main container.
+    const { container } = render(
+      <BrowserRouter>
+        <HeroSection />
+      </BrowserRouter>
+    );
+    // Checking for the main container with relative positioning
     expect(container.firstChild).toHaveClass('relative');
   });
 });

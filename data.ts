@@ -356,33 +356,14 @@ export const MOCK_PRODUCTS: Product[] = [
     tags: ['Bitter', 'Pickling', 'Essential'],
   },
 
-  {
-    id: 21,
-    name: 'Pure Assam Black Tea',
-    description:
-      'Experience the sophistication of whole leaf tea. Offers a refined, smooth brew with distinct malty notes and a fragrant aroma. Best enjoyed black or with a splash of lemon.',
-    images: [
-      'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
-    ],
-    category: 'Beverages',
-    variants: [{ id: 2101, name: '500g', price: 750, stock: 30 }],
-    reviews: [],
-    origin: 'Assam, India',
-    harvestDate: 'April 2024 (First Flush)',
-    processingMethod: 'Orthodox, Hand-Rolled',
-    grade: 'FTGFOP1 (Finest Tippy Golden Flowery Orange Pekoe)',
-    purityTest: 'Single Estate',
-    storage: 'Airtight canister',
-    shelfLife: '24 Months',
-    tags: ['Tea', 'Morning', 'Premium'],
-  },
+
   {
     id: 22,
     name: 'Premium Pistachios (Pista)',
     description:
       'Roasted to perfection to bring out their nutty flavor. Bursting with vibrant green kernels inside naturally open shells. A fiber-rich snack that is as delicious as it is healthy.',
     images: [
-      'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
+      '/images/products/pistachios-pista-front.jpg',
     ],
     category: 'Nuts',
     variants: [{ id: 2201, name: '200g', price: 350, stock: 30 }],
@@ -449,7 +430,7 @@ export const MOCK_PRODUCTS: Product[] = [
     description:
       'The Soul of Your Morning Cup. A natural blend dominated by premium Green Cardamom and dry Ginger, balanced with Clove and Cinnamon. No sugar, no fillers—just 100% pure aromatic spices.',
     images: ['/images/products/chai-masala-front.jpg', '/images/products/chai-masala-back.jpg'],
-    category: 'Beverages',
+    category: 'Spices',
     variants: [{ id: 2701, name: '100g', price: 200, stock: 40 }],
     reviews: [],
     tags: ['Tea', 'Spiced', 'Ritual'],

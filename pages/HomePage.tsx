@@ -1,23 +1,14 @@
 import React from 'react';
 import { Product, Variant, ToastMessage } from '../types';
 import { useABTest } from '../src/context/ABTestContext'; // A/B Test Hook
-import HeroCarousel from '../components/HeroCarousel';
-import CookingContextWidget from '../components/CookingContextWidget';
-import ShopByUseCase from '../components/ShopByUseCase';
-import FeaturedCollection from '../components/FeaturedCollection';
-import RecommendedProducts from '../components/RecommendedProducts';
-import Testimonials from '../components/Testimonials';
-import FAQPreview from '../components/FAQPreview';
-import Newsletter from '../components/Newsletter';
+import HeroSection from '../components/HeroSection';
+import TrustSignals from '../components/TrustSignals';
+import JourneyTimeline from '../components/JourneyTimeline';
+import HarvestCollection from '../components/HarvestCollection';
+import CategoryShowcase from '../components/CategoryShowcase';
 import ProductGrid from '../components/ProductGrid';
-import { Breadcrumbs } from '../components/ui/Breadcrumbs';
 import SortDropdown from '../components/SortDropdown';
 import AdvancedFilters from '../components/AdvancedFilters';
-import QuizModule from '../components/QuizModule';
-import { MOCK_TESTIMONIALS } from '../data/testimonials';
-import { TrustBadges, CERTIFICATION_BADGES } from '../components/TrustBadges';
-import RecentlyViewed from '../components/RecentlyViewed';
-import LoyaltyWidget from '../components/LoyaltyWidget';
 
 interface HomePageProps {
   products: Product[];
@@ -133,240 +124,99 @@ const HomePage: React.FC<HomePageProps> = ({
   };
 
   return (
-    <main>
-      <HeroCarousel />
+    <main className="bg-white">
+      {/* 1. Hero Section (New Design) */}
+      <HeroSection />
 
-      {/* Best Sellers - Masalas Only (right after hero) */}
-      <div id="most-loved-section">
-        <FeaturedCollection
-          title="Our Most Loved Masalas"
-          products={products.filter((p) => [4, 12, 29, 28].includes(p.id))}
-          onAddToCart={handleAddToCartWithTracking}
-          onToggleWishlist={handleToggleWishlist}
-          wishlistedIds={wishlistedIds}
-          onSelectProduct={setSelectedProduct}
-          onNotifyMe={handleNotifyMe}
-          onViewAll={() => {
-            setSelectedCategory('Spices');
-            const element = document.getElementById('products-section');
-            element?.scrollIntoView({ behavior: 'smooth' });
-          }}
-        />
-      </div>
-      {/* Certifications Banner Removed */}
+      {/* 2. Trust Signals (Dark Strip) */}
+      <TrustSignals />
 
-      {/* Trust & Certification Badges Section */}
-      <section className="py-12 bg-white">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="text-center mb-8">
-            <h2 className="text-2xl md:text-3xl font-serif font-bold text-neutral-900 mb-2">
-              Why Trust Rathi Naturals?
-            </h2>
-            <p className="text-neutral-600">Quality you can verify</p>
-          </div>
-          <TrustBadges certifications={CERTIFICATION_BADGES} variant="certification" />
-        </div>
-      </section>
+      {/* 3. Journey Timeline (Transparency) */}
+      <JourneyTimeline />
 
-      {/* Sustainability Section Removed */}
+      {/* 4. Harvest Collection (Curated Grid) */}
+      <HarvestCollection products={products} />
 
-      {/* New Arrivals - Moved here per user request */}
-      <FeaturedCollection
-        title="New Arrivals"
-        products={products.slice(8, 16)}
-        onAddToCart={handleAddToCartWithTracking}
-        onToggleWishlist={handleToggleWishlist}
-        wishlistedIds={wishlistedIds}
-        onSelectProduct={setSelectedProduct}
-        onNotifyMe={handleNotifyMe}
-        bgClass="bg-neutral-50"
-        onViewAll={() => {
-          setSortOrder('newest');
-          const element = document.getElementById('products-section');
-          element?.scrollIntoView({ behavior: 'smooth' });
-        }}
-      />
+      {/* 5. Category Showcase (Whole/Blends/Infusions) */}
+      <CategoryShowcase />
 
-      {/* Cook What You're Craving Widget - Drives bundle purchases and higher AOV */}
-      <React.Suspense fallback={null}>
-        <CookingContextWidget />
-      </React.Suspense>
-
-      {/* Main Product Grid Section - Moved here per user request */}
-      <div id="products-section" className="bg-brand-accent py-20">
+      {/* 6. Main Product Grid (Full Catalog) */}
+      <div id="products-section" className="bg-background-light py-20 border-t border-primary/10">
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-serif font-bold text-brand-dark mb-6">
+            <h2 className="text-3xl md:text-5xl font-serif font-bold text-accent-charcoal mb-4">
               Shop All
             </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-              Explore our full range of premium spices.
+            <p className="text-accent-charcoal/60 max-w-2xl mx-auto">
+              Explore our complete collection of ethically sourced, single-origin spices and blends.
             </p>
           </div>
 
-          {/* Advanced Grid Layout */}
-          <div className="grid grid-cols-1 md:grid-cols-[16rem_1fr] gap-10">
-            <aside className="hidden md:block sticky top-24 h-fit z-10">
-              <React.Suspense
-                fallback={<div className="h-[450px] bg-gray-100 rounded-xl animate-pulse" />}
-              >
-                <AdvancedFilters
-                  showOnSale={showOnSale}
-                  onToggleOnSale={() => setShowOnSale(!showOnSale)}
-                  showInStock={showInStock}
-                  onToggleInStock={() => setShowInStock(!showInStock)}
-                  availableTags={availableTags}
-                  selectedTags={selectedTagsState}
-                  onToggleTag={handleToggleTag}
-                  priceRange={priceRange}
-                  maxPrice={maxPrice}
-                  onPriceChange={(max) => setPriceRange({ ...priceRange, max })}
-                  origins={availableOrigins}
-                  selectedOrigins={selectedOrigins}
-                  onToggleOrigin={handleToggleOrigin}
-                  heatLevels={availableHeatLevels}
-                  selectedHeatLevels={selectedHeatLevels}
-                  onToggleHeatLevel={handleToggleHeatLevel}
-                  cuisines={availableCuisines}
-                  selectedCuisines={selectedCuisines}
-                  onToggleCuisine={handleToggleCuisine}
-                  sizes={availableSizes}
-                  selectedSizes={selectedSizes}
-                  onToggleSize={handleToggleSize}
-                  grinds={availableGrinds}
-                  selectedGrinds={selectedGrinds}
-                  onToggleGrind={handleToggleGrind}
-                  grades={availableGrades}
-                  selectedGrades={selectedGrades}
-                  onToggleGrade={handleToggleGrade}
-                />
-              </React.Suspense>
+          <div className="flex flex-col lg:flex-row gap-8">
+            {/* Sidebar Filters */}
+            <aside className="w-full lg:w-1/4 hidden lg:block sticky top-24 self-start max-h-[calc(100vh-120px)] overflow-y-auto pr-4 scrollbar-thin">
+              <AdvancedFilters
+                priceRange={priceRange}
+                maxPrice={maxPrice}
+                onPriceChange={(value) => setPriceRange({ min: 0, max: value })}
+                selectedOrigins={selectedOrigins}
+                onToggleOrigin={handleToggleOrigin}
+                origins={availableOrigins}
+                selectedHeatLevels={selectedHeatLevels}
+                onToggleHeatLevel={handleToggleHeatLevel}
+                heatLevels={availableHeatLevels}
+                selectedCuisines={selectedCuisines}
+                onToggleCuisine={handleToggleCuisine}
+                cuisines={availableCuisines}
+                selectedSizes={selectedSizes}
+                onToggleSize={handleToggleSize}
+                sizes={availableSizes}
+                selectedGrinds={selectedGrinds}
+                onToggleGrind={handleToggleGrind}
+                grinds={availableGrinds}
+                selectedGrades={selectedGrades}
+                onToggleGrade={handleToggleGrade}
+                grades={availableGrades}
+                selectedTags={selectedTagsState}
+                onToggleTag={handleToggleTag}
+                availableTags={availableTags}
+                showOnSale={showOnSale}
+                onToggleOnSale={() => setShowOnSale(!showOnSale)}
+                showInStock={showInStock}
+                onToggleInStock={() => setShowInStock(!showInStock)}
+              />
             </aside>
 
-            <div>
-              {selectedCategory !== 'All' && (
-                <div className="mb-4">
-                  <Breadcrumbs
-                    items={[
-                      {
-                        label: 'Home',
-                        onClick: () => setSelectedCategory('All'),
-                      },
-                      { label: selectedCategory },
-                    ]}
-                  />
-                </div>
-              )}
-              <div className="flex flex-wrap gap-4 justify-between items-center mb-6 bg-white p-4 rounded-lg shadow-sm">
-                <p className="text-gray-600 font-medium whitespace-nowrap hidden sm:block">
-                  Showing {finalFilteredProducts.length} results
+            {/* Product Grid */}
+            <div className="w-full lg:w-3/4">
+              <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
+                <p className="text-sm text-accent-charcoal font-medium">
+                  Showing {finalFilteredProducts.length} Results
                 </p>
-
-                <button
-                  onClick={() => setIsFilterOpen(true)}
-                  className="md:hidden flex items-center gap-2 px-4 py-2 bg-neutral-100 rounded-lg font-medium text-neutral-700 hover:bg-neutral-200 transition-colors"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
+                <div className="flex items-center gap-4 w-full md:w-auto">
+                  <button
+                    className="lg:hidden flex items-center gap-2 px-4 py-2 border border-primary/20 rounded text-sm font-bold text-primary hover:bg-primary/5 transition-colors"
+                    onClick={() => setIsFilterOpen(true)}
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
-                    />
-                  </svg>
-                  Filters
-                </button>
-
-                <SortDropdown
-                  currentSort={sortOrder}
-                  onSortChange={(val) =>
-                    setSortOrder(val as 'name' | 'price-asc' | 'price-desc' | 'rating' | 'newest')
-                  }
-                />
+                    <span className="material-symbols-outlined text-[18px]">filter_list</span>
+                    Filters
+                  </button>
+                  <SortDropdown currentSort={sortOrder} onSortChange={(value) => setSortOrder(value as 'name' | 'price-asc' | 'price-desc' | 'rating' | 'newest')} />
+                </div>
               </div>
 
-              {/* Active Filters Display */}
-              {(selectedCategory !== 'All' || searchQuery || selectedTags.length > 0) && (
-                <div className="flex flex-wrap gap-2 items-center mb-4">
-                  {selectedCategory !== 'All' && (
-                    <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-brand-primary/10 text-brand-primary text-sm font-medium">
-                      {selectedCategory}
-                      <button
-                        onClick={() => setSelectedCategory('All')}
-                        className="hover:text-brand-dark ml-1"
-                      >
-                        ×
-                      </button>
-                    </span>
-                  )}
-                </div>
-              )}
-
               <ProductGrid
-                products={products}
+                products={finalFilteredProducts}
+                isLoading={productsLoading}
                 onAddToCart={handleAddToCartWithTracking}
                 onToggleWishlist={handleToggleWishlist}
-                comparisonIds={comparisonIds}
-                isLoading={productsLoading}
-                onNotifyMe={handleNotifyMe}
                 onSelectProduct={setSelectedProduct}
-                onClearFilters={handleClearFilters}
-                enableFilters
-                title="Our Premium Collection"
+                onNotifyMe={handleNotifyMe}
               />
             </div>
           </div>
         </div>
       </div>
-
-      {/* Sections moved below Shop All */}
-      <React.Suspense fallback={<div>Loading Testimonials...</div>}>
-        <Testimonials testimonials={MOCK_TESTIMONIALS} />
-      </React.Suspense>
-
-      {/* Loyalty Rewards Program - Quick Win for customer retention */}
-      <LoyaltyWidget />
-
-      <ShopByUseCase />
-
-      {/* Personalized Recommendations */}
-      <React.Suspense fallback={null}>
-        <RecommendedProducts
-          allProducts={products}
-          onAddToCart={handleAddToCartWithTracking}
-          onSelectProduct={setSelectedProduct}
-          onNotifyMe={handleNotifyMe}
-        />
-      </React.Suspense>
-
-      {/* Recently Viewed Products */}
-      <RecentlyViewed
-        onSelectProduct={setSelectedProduct}
-        onAddToCart={(product, variant) => handleAddToCartWithTracking(product, variant, 1)}
-      />
-
-      <FAQPreview />
-
-      <Newsletter />
-
-      {/* Quiz Module */}
-      <section
-        data-testid="quiz-section"
-        id="quiz-section"
-        className="bg-brand-secondary/5 py-20 mt-0"
-      >
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <React.Suspense fallback={null}>
-            <QuizModule addToast={addToast} />
-          </React.Suspense>
-        </div>
-      </section>
     </main>
   );
 };

@@ -135,8 +135,8 @@ const OrderConfirmationRoute = ({
         addToast={addToast}
         discount={0}
         promoCode=""
-        onApplyPromoCode={() => {}}
-        onRemovePromoCode={() => {}}
+        onApplyPromoCode={() => { }}
+        onRemovePromoCode={() => { }}
         subtotal={0}
         shippingCost={0}
       />
@@ -1403,8 +1403,8 @@ const App: React.FC = () => {
 
               <SocialProofNotifications />
 
-              {/* Newsletter Popup - Shows after scroll or delay */}
-              <NewsletterPopup delayMs={8000} />
+              {/* Newsletter Popup - Disabled */}
+              {/* <NewsletterPopup delayMs={8000} /> */}
             </React.Suspense>
             {isMobile && (
               <React.Suspense fallback={null}>

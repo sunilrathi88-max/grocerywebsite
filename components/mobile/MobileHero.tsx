@@ -13,64 +13,60 @@ interface MobileHeroProps {
 }
 
 const MobileHero: React.FC<MobileHeroProps> = ({
-  badge = 'New Harvest',
+  badge = 'Est. 1984',
   title,
   subtitle,
   description,
-  ctaText = 'Shop Now',
+  ctaText = 'Shop Pure',
   ctaAction,
   imageUrl,
   imageAlt = 'Hero image',
 }) => {
   return (
-    <section className="relative px-4 py-6">
-      <div className="bg-white dark:bg-stone-800 rounded-2xl overflow-hidden shadow-sm">
-        <div className="relative h-64 w-full">
-          <OptimizedImage
-            src={imageUrl}
-            alt={imageAlt}
-            className="w-full h-full object-cover"
-            width={400}
-            height={256}
-            priority="high"
-          />
-          {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+    <section className="relative w-full h-[70vh] min-h-[450px] flex items-center justify-center overflow-hidden">
+      {/* Background Image */}
+      <div className="absolute inset-0 z-0">
+        <OptimizedImage
+          src={imageUrl}
+          alt={imageAlt}
+          className="w-full h-full object-cover"
+          width={600}
+          height={800}
+          priority="high"
+          style={{ filter: 'brightness(0.9) saturate(0.9)' }}
+        />
+        {/* Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40" />
+      </div>
 
-          {/* Content */}
-          <div className="absolute bottom-0 left-0 p-6 w-full">
-            {badge && (
-              <span className="inline-block px-3 py-1 bg-white/90 text-amber-700 text-[10px] font-extrabold rounded-full mb-3 tracking-wider uppercase border border-white/20 shadow-sm backdrop-blur-sm">
-                {badge}
-              </span>
-            )}
-            <h2 className="font-serif text-3xl font-bold text-white mb-2 leading-tight drop-shadow-md">
-              {title}
-              {subtitle && (
-                <>
-                  <br />
-                  {subtitle}
-                </>
-              )}
-            </h2>
-            {description && (
-              <p className="text-white/95 text-sm mb-5 font-medium drop-shadow-sm">{description}</p>
-            )}
-            <button
-              onClick={ctaAction}
-              className="bg-white text-amber-800 px-6 py-2.5 rounded-full font-bold text-sm shadow-xl active:scale-95 transition-all flex items-center gap-2 hover:bg-gray-50"
-            >
-              {ctaText}
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
-            </button>
-          </div>
+      {/* Content */}
+      <div className="relative z-10 max-w-lg mx-auto text-center px-6 flex flex-col items-center gap-4">
+        {badge && (
+          <span className="text-white/90 font-sans font-bold tracking-[0.2em] text-[10px] uppercase border border-white/30 px-3 py-1.5 bg-black/10 backdrop-blur-sm">
+            {badge}
+          </span>
+        )}
+        <h2 className="text-4xl font-serif font-light text-white drop-shadow-sm leading-tight">
+          {title}
+          {subtitle && (
+            <>
+              <br />
+              <span className="italic font-normal">{subtitle}</span>
+            </>
+          )}
+        </h2>
+        {description && (
+          <p className="text-sm text-white/90 max-w-xs leading-relaxed font-light font-sans mt-1 tracking-wide">
+            {description}
+          </p>
+        )}
+        <div className="flex gap-3 mt-4">
+          <button
+            onClick={ctaAction}
+            className="bg-white text-stone-800 hover:bg-stone-100 px-8 py-3 font-sans font-bold text-xs uppercase tracking-widest transition-all shadow-lg active:scale-95"
+          >
+            {ctaText}
+          </button>
         </div>
       </div>
     </section>

@@ -10,49 +10,55 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
-        serif: ['Playfair Display', 'serif'], // Keeping Playfair for "Premium" feel as per existing design, though guide focuses on Sans.
+        sans: ['Manrope', 'sans-serif'],
+        serif: ['Playfair Display', 'serif'],
       },
       colors: {
-        brand: {
-          primary: '#D4A017', // Gold
-          dark: '#B8860B', // Gold Dark
-          light: '#FFF9E6', // Gold Light
+        primary: {
+          DEFAULT: '#8D6E63', // Earthy Brown
+          dark: '#3E2723',
+          light: '#A1887F',
         },
-        neutral: {
-          900: '#1F2121', // Charcoal (Primary Text)
-          700: '#6F7577', // Slate (Secondary Text)
-          400: '#E5E7EB', // Gray Light (Borders)
-          100: '#F5F5F0', // Background Light
-          50: '#F9FAFB',
-        },
-        semantic: {
-          success: '#2D8F5E',
-          error: '#EF4444',
-          info: '#3B82F6',
+        background: {
+          light: '#FFFCF7', // Warm Paper
+          dark: '#1C1917',
         },
         accent: {
-          brown: '#5F5238',
-          red: '#C01F2F', // Spice Red
+          green: '#556B2F', // Olive
+          charcoal: '#2D2622',
+          cream: '#F5F1E8',
+          beige: '#E3DCCF',
+          footer: '#26201D',
         },
-        // Mapping existing class names to new palette for backward compatibility/smooth transition
-        'brand-primary': '#D4A017',
-        'brand-secondary': '#B8860B',
-        'brand-dark': '#1F2121',
-        'brand-light': '#FFFFFF',
-        'brand-accent': '#F5F5F0',
-        'success-green': '#2D8F5E',
-        'warning-yellow': '#EF4444', // Mapping warning to error color or similar warm tone if needed, or keeping generic.
-        'accent-orange': '#C01F2F', // Mapping old orange to new Spice Red
-        'gray-light': '#E5E7EB',
+        // Backward compatibility mappings (gradual migration)
+        brand: {
+          primary: '#8D6E63',
+          dark: '#3E2723',
+          light: '#FFF9E6',
+        },
+        neutral: {
+          900: '#1F2121',
+          700: '#6F7577',
+          400: '#E5E7EB',
+          100: '#F5F5F0',
+          50: '#F9FAFB',
+        },
+        'brand-primary': '#8D6E63',
+        'brand-dark': '#3E2723',
+        'brand-accent': '#FFFCF7',
+      },
+      borderRadius: {
+        DEFAULT: '0px',
+        lg: '0.25rem',
+        xl: '0.5rem',
+        '2xl': '1rem',
       },
       boxShadow: {
-        card: '0 1px 3px 0 rgba(15, 23, 42, 0.1)',
-        'card-hover': '0 4px 12px 0 rgba(15, 23, 42, 0.15)',
-        button: '0 1px 2px 0 rgba(15, 23, 42, 0.08)',
+        soft: '0 4px 20px -2px rgba(45, 38, 34, 0.04)',
+        card: '0 10px 40px -10px rgba(45, 38, 34, 0.08)',
       },
       backgroundImage: {
-        'gradient-hero': 'linear-gradient(135deg, #FAF5E6 0%, #FFF9E6 100%)', // Lighter, premium gradient
+        'gradient-hero': 'linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.4))',
       },
     },
   },

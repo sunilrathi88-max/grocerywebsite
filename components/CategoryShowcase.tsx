@@ -1,49 +1,78 @@
 import React from 'react';
-import { TagIcon } from './icons/TagIcon';
+import { useNavigate } from 'react-router-dom';
 
-interface CategoryShowcaseProps {
-  onSelectCategory: (category: string) => void;
-}
+const CategoryShowcase: React.FC = () => {
+  const navigate = useNavigate();
 
-const CATEGORIES = [
-  { name: 'Spices', image: '/images/category-spices.jpg', color: 'bg-orange-50' },
-  { name: 'Nuts', image: '/images/category-nuts.jpg', color: 'bg-amber-50' },
-  { name: 'Dry Fruits', image: '/images/category-dryfruits.jpg', color: 'bg-yellow-50' },
-  { name: 'Beverages', image: '/images/category-beverages.jpg', color: 'bg-rose-50' },
-  { name: 'Offers', image: '/images/category-offers.jpg', color: 'bg-green-50' },
-  { name: 'Gift Sets', image: '/images/category-gifts.jpg', color: 'bg-purple-50' },
-];
+  const handleCategoryClick = (category: string) => {
+    navigate(`/category/${encodeURIComponent(category)}`);
+  };
 
-const CategoryShowcase: React.FC<CategoryShowcaseProps> = ({ onSelectCategory }) => {
   return (
-    <section className="py-12 bg-white">
-      <div className="max-w-7xl mx-auto px-4 md:px-16">
-        <h2 className="text-3xl font-serif font-bold text-neutral-900 mb-8 text-center">
-          Shop by Category
-        </h2>
+    <section className="py-24 bg-background-light border-t border-primary/5">
+      <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-24 items-center">
+          <div
+            className="relative h-[500px] md:h-[600px] w-full bg-[#EAEAEA] overflow-hidden group cursor-pointer"
+            onClick={() => handleCategoryClick('Spices')}
+          >
+            <img
+              alt="Spices"
+              className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-105 filter brightness-95"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBUiko4PeG0SntdKOmXzLeIGYiNhPHtJCJrXpkg6Dda41UoJ_J9-6XXjMk4M-9MDyAkSyHxW8tQgakLt_MjErv5nUUIlFHI9bJaoHvcgDCClxoDbLxztg-Tzvp7PTxIwHb6PZQpRgMdJEAY77p7AY_ysoAfzClZR1F5_CixauImNoBGMBrWGil3Dz8wbJqSXUl60Hx9ITsRyATOUO-XWIoLdFzKp-prC-GpZoffK_3nGIAfgdw6jhThOPoe2vkydi1OVhN8q8VPAw"
+              loading="lazy"
+            />
+            <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/10 transition-colors">
+              <div className="text-center p-8 border border-white/30 backdrop-blur-sm bg-white/10">
+                <h3 className="font-serif text-4xl text-white mb-2">Spices</h3>
+                <p className="text-white/90 font-sans text-xs uppercase tracking-widest">
+                  Pure & Fresh
+                </p>
+              </div>
+            </div>
+          </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
-          {CATEGORIES.map((cat) => (
-            <button
-              key={cat.name}
-              onClick={() => onSelectCategory(cat.name === 'Offers' ? 'All' : cat.name)} // Link 'Offers' to All+Filter logic later if needed
-              className={`relative overflow-hidden group rounded-xl aspect-[4/3] ${cat.color} transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg`}
+          <div className="flex flex-col gap-12">
+            <div
+              className="relative h-[250px] w-full bg-[#EAEAEA] overflow-hidden group cursor-pointer"
+              onClick={() => handleCategoryClick('Nuts')}
             >
-              {/* Fallback pattern if image fails or for mock */}
-              <div className="absolute inset-0 flex items-center justify-center opacity-10 group-hover:opacity-20 transition-opacity">
-                <TagIcon className="w-32 h-32 text-brand-dark" />
+              <img
+                alt="Nuts"
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-105 filter brightness-95"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCm_domXhY5rxtzMHSCkaJQLSViPrzYizogFs-OBY3NpcK1rs9-7R3SLLCIJrLn_E3GzBJrCS2U_HOpCYbxyQa2xnitarOiamq31NwkvKYWJBl8XWNPzeG2Y0gbssIGJNeFvXZMgJrMvISEUMKak5HEn_mjTjLfMjD4NBD0kawfUnbpjnXLvFWKo_5sjl4ob9V9vJ_VpLAx6M1fGFXH4kER4B0xMH5AdHI6_lgyp9828hJCD4jmF-tMqDqltceLiIxyZ05Xrmt6IA"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/10 transition-colors">
+                <div className="text-center">
+                  <h3 className="font-serif text-3xl text-white mb-2">Nuts</h3>
+                  <p className="text-white/90 font-sans text-xs uppercase tracking-widest">
+                    Premium Quality
+                  </p>
+                </div>
               </div>
+            </div>
 
-              <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center z-10">
-                <h3 className="text-xl md:text-2xl font-bold text-brand-dark mb-2 group-hover:text-brand-primary transition-colors">
-                  {cat.name}
-                </h3>
-                <span className="text-sm font-medium text-neutral-600 border-b-2 border-transparent group-hover:border-brand-primary transition-all">
-                  View Collection
-                </span>
+            <div
+              className="relative h-[250px] w-full bg-[#EAEAEA] overflow-hidden group cursor-pointer"
+              onClick={() => handleCategoryClick('Beverages')}
+            >
+              <img
+                alt="Beverages"
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-105 filter brightness-95"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuASLBj6id0jZWIPqlG24rpmD3Ti3Re5if-88CM6whCMYqiHnB_Syau36HSG1GPeGGFaWDVdR9nvm0nUtmwJdfPydzjgtq23cM251lJDp4Q3EmRkQtECC16gp5qduZSAEGgJkq66aB8JwHOmNpTC4fAWtcIPc1pss9d2Sb4V4j6_3Bx6124gVz2Z7vM3MysvXrrNP9QLbA8Z8Zy0KY3q1XmowzJ9BitNIXlKejmaWlxJ3h0_yQsS1PY-AGyAPNNX0nikF-6LMxyJkg"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/10 transition-colors">
+                <div className="text-center">
+                  <h3 className="font-serif text-3xl text-white mb-2">Beverages</h3>
+                  <p className="text-white/90 font-sans text-xs uppercase tracking-widest">
+                    Herbal & Pure
+                  </p>
+                </div>
               </div>
-            </button>
-          ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>
