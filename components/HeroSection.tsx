@@ -24,12 +24,13 @@ const HeroSection: React.FC = () => {
           Est. 1984
         </span>
         <h2 className="text-5xl md:text-7xl lg:text-8xl font-serif font-light text-white drop-shadow-sm leading-tight">
-          Pure Origin<br />
+          Pure Origin
+          <br />
           <span className="italic font-normal">Untouched.</span>
         </h2>
         <p className="text-lg text-white/90 max-w-lg leading-relaxed font-light font-sans mt-2 tracking-wide">
-          Single-origin spices sourced directly from heritage farms. Experience
-          the difference of purity.
+          Single-origin spices sourced directly from heritage farms. Experience the difference of
+          purity.
         </p>
         <div className="flex gap-4 mt-8">
           <button

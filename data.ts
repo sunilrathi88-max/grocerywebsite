@@ -356,15 +356,12 @@ export const MOCK_PRODUCTS: Product[] = [
     tags: ['Bitter', 'Pickling', 'Essential'],
   },
 
-
   {
     id: 22,
     name: 'Premium Pistachios (Pista)',
     description:
       'Roasted to perfection to bring out their nutty flavor. Bursting with vibrant green kernels inside naturally open shells. A fiber-rich snack that is as delicious as it is healthy.',
-    images: [
-      '/images/products/pistachios-pista-front.jpg',
-    ],
+    images: ['/images/products/pistachios-pista-front.jpg'],
     category: 'Nuts',
     variants: [{ id: 2201, name: '200g', price: 350, stock: 30 }],
     reviews: [],
@@ -382,9 +379,7 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Premium Walnut Kernels (Akhrot)',
     description:
       'Fresh, earthy, and mildly bitter-sweet. Shelled carefully to keep the butterfly halves intact. Rich in Omega-3 fatty acids, the ultimate brain food.',
-    images: [
-      'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
-    ],
+    images: ['/images/products/walnuts-akhrot-front.jpg'],
     category: 'Nuts',
     variants: [{ id: 2301, name: '500g', price: 500, stock: 20 }],
     reviews: [],

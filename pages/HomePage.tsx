@@ -64,19 +64,19 @@ interface HomePageProps {
 
 const HomePage: React.FC<HomePageProps> = ({
   products,
-  selectedCategory,
-  setSelectedCategory,
-  searchQuery,
-  selectedTags,
+  _selectedCategory,
+  _setSelectedCategory,
+  _searchQuery,
+  _selectedTags,
   finalFilteredProducts,
   productsLoading,
-  wishlistedIds,
-  comparisonIds,
+  _wishlistedIds,
+  _comparisonIds,
   handleAddToCart,
   handleToggleWishlist,
   setSelectedProduct,
   handleNotifyMe,
-  handleClearFilters,
+  _handleClearFilters,
   setIsFilterOpen,
   setSortOrder,
   sortOrder,
@@ -108,7 +108,7 @@ const HomePage: React.FC<HomePageProps> = ({
   selectedGrades,
   handleToggleGrade,
   availableGrades,
-  addToast,
+  _addToast,
 }) => {
   const { variant, trackConversion } = useABTest();
 
@@ -201,7 +201,14 @@ const HomePage: React.FC<HomePageProps> = ({
                     <span className="material-symbols-outlined text-[18px]">filter_list</span>
                     Filters
                   </button>
-                  <SortDropdown currentSort={sortOrder} onSortChange={(value) => setSortOrder(value as 'name' | 'price-asc' | 'price-desc' | 'rating' | 'newest')} />
+                  <SortDropdown
+                    currentSort={sortOrder}
+                    onSortChange={(value) =>
+                      setSortOrder(
+                        value as 'name' | 'price-asc' | 'price-desc' | 'rating' | 'newest'
+                      )
+                    }
+                  />
                 </div>
               </div>
 

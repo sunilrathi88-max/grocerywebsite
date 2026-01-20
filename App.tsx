@@ -58,7 +58,7 @@ const ComparisonBar = React.lazy(() => import('./components/ComparisonBar'));
 const ComparisonModal = React.lazy(() => import('./components/ComparisonModal'));
 
 const RecipeDetailModal = React.lazy(() => import('./components/RecipeDetailModal'));
-const NewsletterPopup = React.lazy(() => import('./components/NewsletterPopup'));
+// NewsletterPopup disabled - const NewsletterPopup = React.lazy(() => import('./components/NewsletterPopup'));
 const WhatsAppButton = React.lazy(() => import('./components/WhatsAppButton'));
 const BackToTop = React.lazy(() => import('./components/BackToTop'));
 
@@ -135,8 +135,8 @@ const OrderConfirmationRoute = ({
         addToast={addToast}
         discount={0}
         promoCode=""
-        onApplyPromoCode={() => { }}
-        onRemovePromoCode={() => { }}
+        onApplyPromoCode={() => {}}
+        onRemovePromoCode={() => {}}
         subtotal={0}
         shippingCost={0}
       />

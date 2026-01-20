@@ -66,7 +66,8 @@ const MobileHomePage: React.FC<MobileHomePageProps> = ({
             Est. 1984
           </span>
           <h2 className="text-4xl font-serif font-light text-white drop-shadow-sm leading-tight">
-            Pure Origin<br />
+            Pure Origin
+            <br />
             <span className="italic font-normal">Untouched.</span>
           </h2>
           <p className="text-sm text-white/90 max-w-xs leading-relaxed font-light font-sans mt-1 tracking-wide">
@@ -131,9 +132,7 @@ const MobileHomePage: React.FC<MobileHomePageProps> = ({
           <span className="text-amber-700 font-bold tracking-[0.15em] text-[10px] uppercase mb-2 block">
             Transparency
           </span>
-          <h3 className="text-2xl font-serif font-medium text-stone-800">
-            The Journey of Purity
-          </h3>
+          <h3 className="text-2xl font-serif font-medium text-stone-800">The Journey of Purity</h3>
         </div>
         <div className="grid grid-cols-2 gap-4">
           {[
@@ -142,9 +141,14 @@ const MobileHomePage: React.FC<MobileHomePageProps> = ({
             { step: '03', title: 'Lab Testing', icon: 'science' },
             { step: '04', title: 'To Your Kitchen', icon: 'inventory_2' },
           ].map((item) => (
-            <div key={item.step} className="flex flex-col items-center text-center p-4 bg-white rounded-xl shadow-sm">
+            <div
+              key={item.step}
+              className="flex flex-col items-center text-center p-4 bg-white rounded-xl shadow-sm"
+            >
               <div className="size-12 rounded-full border border-amber-200 bg-amber-50 flex items-center justify-center mb-3">
-                <span className="material-symbols-outlined text-xl text-amber-700">{item.icon}</span>
+                <span className="material-symbols-outlined text-xl text-amber-700">
+                  {item.icon}
+                </span>
               </div>
               <span className="text-[9px] font-bold text-amber-600/60 uppercase tracking-widest mb-1">
                 Step {item.step}
@@ -199,7 +203,9 @@ const MobileHomePage: React.FC<MobileHomePageProps> = ({
             <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
               <div className="text-center">
                 <h3 className="font-serif text-xl text-white">Nuts</h3>
-                <p className="text-white/80 text-[9px] uppercase tracking-widest">Premium Quality</p>
+                <p className="text-white/80 text-[9px] uppercase tracking-widest">
+                  Premium Quality
+                </p>
               </div>
             </div>
           </div>
