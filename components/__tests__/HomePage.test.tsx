@@ -46,20 +46,20 @@ describe('HomePage UX Redesign Verification', () => {
 
   const defaultProps = {
     products: mockProducts,
-    selectedCategory: 'All',
-    setSelectedCategory: jest.fn(),
-    searchQuery: '',
-    selectedTags: [],
+    _selectedCategory: 'All',
+    _setSelectedCategory: jest.fn(),
+    _searchQuery: '',
+    _selectedTags: [],
     finalFilteredProducts: mockProducts,
     productsLoading: false,
-    wishlistedIds: new Set<number>([4]),
-    comparisonIds: new Set<number>(),
+    _wishlistedIds: new Set<number>([4]),
+    _comparisonIds: new Set<number>(),
     handleAddToCart: jest.fn(),
     handleToggleWishlist: jest.fn(),
     setSelectedProduct: jest.fn(),
     handleNotifyMe: jest.fn(),
     handleToggleCompare: jest.fn(),
-    handleClearFilters: jest.fn(),
+    _handleClearFilters: jest.fn(),
     setIsFilterOpen: jest.fn(),
     setSortOrder: jest.fn(),
     sortOrder: 'name',
@@ -91,7 +91,7 @@ describe('HomePage UX Redesign Verification', () => {
     selectedGrades: [],
     handleToggleGrade: jest.fn(),
     availableGrades: [],
-    addToast: jest.fn(),
+    _addToast: jest.fn(),
   };
 
   it('renders "Our Most Loved Masalas" with exactly 4 curated products', () => {

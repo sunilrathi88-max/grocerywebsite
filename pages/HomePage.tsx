@@ -12,20 +12,20 @@ import AdvancedFilters from '../components/AdvancedFilters';
 
 interface HomePageProps {
   products: Product[];
-  selectedCategory: string;
-  setSelectedCategory: (category: string) => void;
-  searchQuery: string;
-  selectedTags: string[];
+  _selectedCategory: string;
+  _setSelectedCategory: (category: string) => void;
+  _searchQuery: string;
+  _selectedTags: string[];
   finalFilteredProducts: Product[];
   productsLoading: boolean;
-  wishlistedIds: Set<number>;
-  comparisonIds: Set<number>;
+  _wishlistedIds: Set<number>;
+  _comparisonIds: Set<number>;
   handleAddToCart: (product: Product, variant: Variant, quantity?: number) => void;
   handleToggleWishlist: (product: Product) => void;
   setSelectedProduct: (product: Product | null) => void;
   handleNotifyMe: (productName: string) => void;
   handleToggleCompare: (product: Product) => void;
-  handleClearFilters: () => void;
+  _handleClearFilters: () => void;
   setIsFilterOpen: (isOpen: boolean) => void;
   setSortOrder: React.Dispatch<
     React.SetStateAction<'name' | 'price-asc' | 'price-desc' | 'rating' | 'newest'>
@@ -59,7 +59,7 @@ interface HomePageProps {
   selectedGrades: string[];
   handleToggleGrade: (grade: string) => void;
   availableGrades: string[];
-  addToast: (msg: string, type: ToastMessage['type']) => void;
+  _addToast: (msg: string, type: ToastMessage['type']) => void;
 }
 
 const HomePage: React.FC<HomePageProps> = ({

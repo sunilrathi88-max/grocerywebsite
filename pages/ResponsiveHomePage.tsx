@@ -91,7 +91,19 @@ const ResponsiveHomePage: React.FC<ResponsiveHomePageProps> = (props) => {
     );
   }
 
-  return <HomePage {...props} />;
+  return (
+    <HomePage
+      {...props}
+      _selectedCategory={props.selectedCategory}
+      _setSelectedCategory={props.setSelectedCategory}
+      _searchQuery={props.searchQuery}
+      _selectedTags={props.selectedTags}
+      _wishlistedIds={props.wishlistedIds}
+      _comparisonIds={props.comparisonIds}
+      _handleClearFilters={props.handleClearFilters}
+      _addToast={props.addToast}
+    />
+  );
 };
 
 export default ResponsiveHomePage;
