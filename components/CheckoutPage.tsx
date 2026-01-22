@@ -559,6 +559,11 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
           guestPhone: !user ? guestPhone : undefined,
           paymentId: paymentId,
           userId: user?.id.toString(), // Pass user ID if logged in
+          // Enhanced Fields
+          notes: orderNotes,
+          isGift: isGiftOrder,
+          giftMessage: isGiftOrder ? giftMessage : undefined,
+          giftWrap: isGiftOrder ? wantGiftWrap : undefined,
         };
 
         // Try API first
@@ -1321,6 +1326,8 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
                   <TrustBadges
                     variant="vertical"
                     size="sm"
+                    showSecurityBadges={true}
+                    showPaymentMethods={true}
                     badges={[
                       { icon: '🔒', text: 'Secure SSL Checkout' },
                       { icon: '✅', text: 'Satisfaction Guaranteed' },

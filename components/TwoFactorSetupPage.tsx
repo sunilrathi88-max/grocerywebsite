@@ -44,7 +44,7 @@ const TwoFactorSetupPage: React.FC<TwoFactorSetupPageProps> = ({ onComplete, onC
     setVerificationError('');
 
     try {
-      const response = await AuthService.verify2FA(verificationCode, 1); // Replace 1 with actual user ID
+      const response = await AuthService.verify2FA(verificationCode, '1'); // Replace '1' with actual user ID
       if (response.success) {
         setStep('backup');
       } else {

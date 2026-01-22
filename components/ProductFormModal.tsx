@@ -125,6 +125,17 @@ const ProductFormModal: React.FC<ProductFormModalProps> = ({ product, onSave, on
               <option>Dry Fruits</option>
             </select>
           </div>
+          <div>
+            <label className="block text-sm font-medium">SKU (Stock Keeping Unit)</label>
+            <input
+              type="text"
+              name="sku"
+              value={(formData as any).sku || ''}
+              onChange={handleChange}
+              className="mt-1 input-field"
+              placeholder="e.g. TUR-100G-001"
+            />
+          </div>
 
           <div>
             <label className="block text-sm font-medium">Product Images</label>
@@ -276,19 +287,20 @@ const ProductFormModal: React.FC<ProductFormModalProps> = ({ product, onSave, on
           <div className="border-t pt-4">
             <h3 className="font-bold mb-2">Variants</h3>
             {formData.variants.map((variant, index) => (
-              <div key={index} className="grid grid-cols-3 gap-2 p-2 border rounded-md">
+              <div key={index} className="grid grid-cols-4 gap-2 p-2 border rounded-md mb-2">
                 <div>
-                  <label className="block text-xs font-medium">Name</label>
+                  <label className="block text-xs font-medium">Size/Weight</label>
                   <input
                     type="text"
                     name="name"
                     value={variant.name}
                     onChange={(e) => handleVariantChange(e, index)}
                     className="mt-1 input-field-sm"
+                    placeholder="e.g. 100g"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium">Price</label>
+                  <label className="block text-xs font-medium">Price (₹)</label>
                   <input
                     type="number"
                     step="0.01"
@@ -296,6 +308,18 @@ const ProductFormModal: React.FC<ProductFormModalProps> = ({ product, onSave, on
                     value={variant.price}
                     onChange={(e) => handleVariantChange(e, index)}
                     className="mt-1 input-field-sm"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-medium">Sale Price (₹)</label>
+                  <input
+                    type="number"
+                    step="0.01"
+                    name="salePrice"
+                    value={variant.salePrice || ''}
+                    onChange={(e) => handleVariantChange(e, index)}
+                    className="mt-1 input-field-sm"
+                    placeholder="Optional"
                   />
                 </div>
                 <div>
@@ -310,6 +334,16 @@ const ProductFormModal: React.FC<ProductFormModalProps> = ({ product, onSave, on
                 </div>
               </div>
             ))}
+            <button
+              type="button"
+              onClick={() => setFormData({
+                ...formData,
+                variants: [...formData.variants, { id: Date.now(), name: '', price: 0, stock: 0 }]
+              })}
+              className="text-sm text-brand-primary hover:underline mt-2"
+            >
+              + Add Variant
+            </button>
           </div>
 
           <div className="flex justify-end gap-4 pt-4 border-t">

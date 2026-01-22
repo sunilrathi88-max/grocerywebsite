@@ -13,7 +13,7 @@ export interface AuthTokens {
 }
 
 export interface AuthUser {
-  id: number;
+  id: string;
   email: string;
   name: string;
   isAdmin: boolean;
@@ -209,7 +209,7 @@ class AuthService {
       // Mock login for testing verification
       if (email.includes('example.com')) {
         const mockUser: AuthUser = {
-          id: 123,
+          id: '123',
           email: email,
           name: 'Test User',
           isAdmin: false,
@@ -241,7 +241,7 @@ class AuthService {
       TokenStorage.setTokens(tokens);
 
       const user: AuthUser = {
-        id: 0,
+        id: data.user.id,
         email: data.user.email || '',
         name: data.user.user_metadata?.name || data.user.email || '',
         isAdmin: Boolean(data.user.user_metadata?.is_admin),
@@ -280,7 +280,7 @@ class AuthService {
       if (tokens.accessToken) TokenStorage.setTokens(tokens);
 
       const user: AuthUser = {
-        id: 0,
+        id: data.user.id || '0',
         email: data.user.email || '',
         name: name || data.user.email || '',
         isAdmin: false,
@@ -432,7 +432,7 @@ class AuthService {
   /**
    * Verify 2FA code
    */
-  static async verify2FA(code: string, userId: number): Promise<TwoFactorVerifyResponse> {
+  static async verify2FA(code: string, userId: string): Promise<TwoFactorVerifyResponse> {
     try {
       const response = await this.apiRequest<TwoFactorVerifyResponse>('/api/auth/2fa/verify', {
         method: 'POST',

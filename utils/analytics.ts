@@ -45,6 +45,14 @@ const flushQueue = () => {
     console.groupEnd();
   }
 
+  // Send to Google Analytics if available
+  if (typeof window !== 'undefined' && 'gtag' in window) {
+    eventsToSend.forEach((e) => {
+      // @ts-expect-error - gtag is added by script tag
+      window.gtag('event', e.name, e.data);
+    });
+  }
+
   // Here we would send to backend API
   // fetch('/api/analytics/batch', { method: 'POST', body: JSON.stringify(eventsToSend) });
 };

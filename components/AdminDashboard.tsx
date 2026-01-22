@@ -10,6 +10,11 @@ import { UsersIcon } from './icons/UsersIcon';
 import { orderAPI, productAPI, reviewAPI, contentAPI } from '../utils/apiService';
 import OrderDetailModal from './OrderDetailModal';
 import { analyticsHelpers, ProductPerformance, InventoryAlert } from '../utils/analyticsHelpers';
+import SettingsTab from './admin/SettingsTab';
+import CustomersTab from './admin/CustomersTab';
+import DiscountsTab from './admin/DiscountsTab';
+import SubscriptionsTab from './admin/SubscriptionsTab';
+import EmailTemplatesTab from './admin/EmailTemplatesTab';
 
 interface AdminReview extends BaseReview {
   productName: string;
@@ -62,7 +67,7 @@ const SalesChart: React.FC<{ data: { name: string; sales: number }[] }> = ({ dat
               <div
                 className="w-3/4 bg-brand-primary hover:bg-brand-primary/80 rounded-t-md transition-all"
                 style={{ height: `${maxSales > 0 ? (item.sales / maxSales) * 100 : 0}%` }}
-                title={`$${item.sales.toFixed(2)}`}
+                title={`₹${item.sales.toFixed(2)}`}
               />
               <p className="text-xs text-gray-500 mt-2">{item.name}</p>
             </div>
@@ -77,10 +82,19 @@ const SalesChart: React.FC<{ data: { name: string; sales: number }[] }> = ({ dat
 
 const AnalyticsDashboard: React.FC<{ analytics: AnalyticsProps }> = ({ analytics }) => (
   <div>
+    {analytics.totalOrders === 0 && (
+      <div className="mb-6 bg-blue-50 border border-blue-200 rounded-lg p-4 flex items-start gap-3">
+        <span className="text-blue-500 text-xl">ℹ️</span>
+        <div>
+          <p className="font-bold text-blue-800">No orders yet</p>
+          <p className="text-sm text-blue-700">Analytics will populate once customers place orders. All systems are connected and ready!</p>
+        </div>
+      </div>
+    )}
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
       <StatCard
         title="Total Revenue"
-        value={`$${analytics.totalRevenue.toFixed(2)}`}
+        value={`₹${analytics.totalRevenue.toFixed(2)}`}
         icon={<CurrencyDollarIcon className="h-8 w-8 text-brand-primary" />}
       />
       <StatCard
@@ -152,7 +166,7 @@ const AnalyticsDashboard: React.FC<{ analytics: AnalyticsProps }> = ({ analytics
 
 const AdminDashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState<
-    'products' | 'orders' | 'analytics' | 'reviews' | 'content'
+    'products' | 'orders' | 'analytics' | 'reviews' | 'content' | 'discounts' | 'subscriptions' | 'customers' | 'emails' | 'settings'
   >('products');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
@@ -318,6 +332,36 @@ const AdminDashboard: React.FC = () => {
           >
             Content
           </button>
+          <button
+            onClick={() => setActiveTab('discounts')}
+            className={`whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm ${activeTab === 'discounts' ? 'border-brand-primary text-brand-primary' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}`}
+          >
+            🎟️ Discounts
+          </button>
+          <button
+            onClick={() => setActiveTab('subscriptions')}
+            className={`whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm ${activeTab === 'subscriptions' ? 'border-brand-primary text-brand-primary' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}`}
+          >
+            📦 Subscriptions
+          </button>
+          <button
+            onClick={() => setActiveTab('customers')}
+            className={`whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm ${activeTab === 'customers' ? 'border-brand-primary text-brand-primary' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}`}
+          >
+            Customers
+          </button>
+          <button
+            onClick={() => setActiveTab('emails')}
+            className={`whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm ${activeTab === 'emails' ? 'border-brand-primary text-brand-primary' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}`}
+          >
+            📧 Emails
+          </button>
+          <button
+            onClick={() => setActiveTab('settings')}
+            className={`whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm ${activeTab === 'settings' ? 'border-brand-primary text-brand-primary' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}`}
+          >
+            ⚙️ Settings
+          </button>
         </nav>
       </div>
 
@@ -336,6 +380,11 @@ const AdminDashboard: React.FC = () => {
         {activeTab === 'analytics' && <AnalyticsDashboard analytics={analytics} />}
         {activeTab === 'reviews' && <ReviewModeration reviews={reviews} onUpdate={fetchData} />}
         {activeTab === 'content' && <ContentManagement content={content} onUpdate={fetchData} />}
+        {activeTab === 'discounts' && <DiscountsTab />}
+        {activeTab === 'subscriptions' && <SubscriptionsTab />}
+        {activeTab === 'customers' && <CustomersTab orders={orders} />}
+        {activeTab === 'emails' && <EmailTemplatesTab />}
+        {activeTab === 'settings' && <SettingsTab />}
       </div>
 
       {isModalOpen && (
@@ -429,10 +478,14 @@ const ProductManagement: React.FC<{
                     {p.category}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    ${p.variants[0]?.price.toFixed(2)}
+                    {p.variants && p.variants.length > 0 && p.variants[0]?.price != null
+                      ? `₹${p.variants[0].price.toFixed(2)}`
+                      : <span className="text-red-500">No price set</span>}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {p.variants.reduce((sum, v) => sum + v.stock, 0)}
+                    {p.variants && p.variants.length > 0
+                      ? p.variants.reduce((sum, v) => sum + (v.stock || 0), 0)
+                      : <span className="text-red-500">0</span>}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-right space-x-2">
                     <button
@@ -545,7 +598,7 @@ const OrderManagement: React.FC<{
                     {order.shippingAddress?.street || 'N/A'}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    ${order.total.toFixed(2)}
+                    ₹{order.total.toFixed(2)}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm">
                     <select
@@ -633,13 +686,12 @@ const ReviewModeration: React.FC<{ reviews: AdminReview[]; onUpdate: () => void 
                 </td>
                 <td className="px-6 py-4 text-sm">
                   <span
-                    className={`px-2 py-1 rounded-full text-xs font-bold ${
-                      review.status === 'approved'
-                        ? 'bg-green-100 text-green-800'
-                        : review.status === 'rejected'
-                          ? 'bg-red-100 text-red-800'
-                          : 'bg-yellow-100 text-yellow-800'
-                    }`}
+                    className={`px-2 py-1 rounded-full text-xs font-bold ${review.status === 'approved'
+                      ? 'bg-green-100 text-green-800'
+                      : review.status === 'rejected'
+                        ? 'bg-red-100 text-red-800'
+                        : 'bg-yellow-100 text-yellow-800'
+                      }`}
                   >
                     {review.status.toUpperCase()}
                   </span>

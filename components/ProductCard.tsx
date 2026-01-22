@@ -13,7 +13,7 @@ interface ProductCardProps {
   reviewCount: number;
   heatLevel: 'mild' | 'medium' | 'hot';
   useCase: string;
-  sizes?: Array<{ size: string; price: number }>;
+  sizes?: Array<{ size: string; price: number; stock?: number }>;
   badge?: 'new' | 'discount';
   badgeValue?: string;
   onAddToCart: (productId: string) => void;
@@ -37,6 +37,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isWishlisted, setIsWishlisted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const heatLevelEmoji = {
     mild: '🌶️',
@@ -102,13 +104,64 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               variant="primary"
               size="sm"
               fullWidth
-              className="shadow-lg flex items-center justify-center gap-2"
+              disabled={isLoading}
+              className={`shadow-lg flex items-center justify-center gap-2 transition-all duration-300 ${isSuccess ? 'bg-green-600 hover:bg-green-700 border-green-600' : ''
+                }`}
               onClick={(e) => {
                 e.preventDefault();
-                onAddToCart(id);
+                setIsLoading(true);
+                // Simulate network/state delay
+                setTimeout(() => {
+                  onAddToCart(id);
+                  setIsLoading(false);
+                  setIsSuccess(true);
+                  setTimeout(() => setIsSuccess(false), 2000);
+                }, 600);
               }}
             >
-              <span>+</span> Quick Add
+              {isLoading ? (
+                <svg
+                  className="animate-spin h-5 w-5 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  />
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  />
+                </svg>
+              ) : isSuccess ? (
+                <>
+                  <svg
+                    className="w-5 h-5 text-white"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                  Added
+                </>
+              ) : (
+                <>
+                  <span>+</span> Quick Add
+                </>
+              )}
             </Button>
           </div>
         </div>
@@ -142,6 +195,19 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               {rating} ({reviewCount})
             </span>
           </div>
+
+          {/* Low Stock Indicator */}
+          {sizes &&
+            sizes.length > 0 &&
+            sizes[0].stock !== undefined &&
+            sizes[0].stock > 0 &&
+            sizes[0].stock < 10 && (
+              <div className="mb-2">
+                <span className="text-xs font-bold text-red-600 animate-pulse">
+                  🔥 Only {sizes[0].stock} left
+                </span>
+              </div>
+            )}
 
           {/* Pricing Row */}
           <div className="flex items-end justify-between mt-auto">

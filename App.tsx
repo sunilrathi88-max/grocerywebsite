@@ -17,6 +17,7 @@ import { getBundleSuggestions } from './utils/recommendations';
 
 // Performance Utils
 import { usePerformanceMonitoring } from './utils/performance';
+import { trackPageView } from './utils/analytics';
 // Framer Motion Optimization
 import { LazyMotion, domAnimation } from 'framer-motion';
 
@@ -37,6 +38,10 @@ import { useIsMobile } from './hooks/useIsMobile';
 
 // Mock Data
 import { MOCK_POSTS, MOCK_RECIPES } from './data';
+
+// Direct import for AdminDashboard (debugging)
+import AdminDashboard from './components/AdminDashboard';
+// const AdminDashboard = () => <div className="p-10">Admin Dashboard Mock (Debugging)</div>;
 
 // Core Components (Eagerly Loaded - Always Visible)
 // Core Components (Eagerly Loaded - Always Visible)
@@ -69,7 +74,7 @@ const MessagingShowcase = React.lazy(() => import('./components/MessagingShowcas
 // Lazy-Loaded Pages (Route-Based Code Splitting)
 const CheckoutPage = React.lazy(() => import('./components/CheckoutPage'));
 
-const AdminDashboard = React.lazy(() => import('./components/AdminDashboard'));
+// AdminDashboard is imported directly at top of file for debugging
 const PrivacyPolicyPage = React.lazy(() => import('./components/PrivacyPolicyPage'));
 const RefundPolicyPage = React.lazy(() => import('./components/RefundPolicyPage'));
 const TermsOfServicePage = React.lazy(() => import('./components/TermsOfServicePage'));
@@ -104,6 +109,7 @@ const ResponsiveCartPage = React.lazy(() => import('./pages/ResponsiveCartPage')
 const NotFoundPage = React.lazy(() => import('./pages/NotFoundPage'));
 const TrackingPage = React.lazy(() => import('./pages/TrackingPage'));
 const AdminShipmentsPage = React.lazy(() => import('./pages/admin/ShipmentsPage'));
+const ShippingPage = React.lazy(() => import('./pages/ShippingPage'));
 
 const PageLoader = () => (
   <div className="flex items-center justify-center min-h-[60vh]">
@@ -135,8 +141,8 @@ const OrderConfirmationRoute = ({
         addToast={addToast}
         discount={0}
         promoCode=""
-        onApplyPromoCode={() => {}}
-        onRemovePromoCode={() => {}}
+        onApplyPromoCode={() => { }}
+        onRemovePromoCode={() => { }}
         subtotal={0}
         shippingCost={0}
       />
@@ -298,6 +304,7 @@ const App: React.FC = () => {
 
   // Automatically enable "On Sale" filter when on Offers page
   useEffect(() => {
+    trackPageView(location.pathname);
     if (location.pathname === '/offers') {
       setShowOnSale(true);
     }
@@ -554,7 +561,7 @@ const App: React.FC = () => {
             const user = session.user;
             setIsLoggedIn(true);
             setCurrentUser({
-              id: parseInt(user.id.replace(/-/g, '').slice(0, 15), 16),
+              id: user.id,
               email: user.email || '',
               name: user.user_metadata?.name || user.email || '',
               isAdmin: Boolean(user.user_metadata?.is_admin),
@@ -574,7 +581,7 @@ const App: React.FC = () => {
             const user = session.user;
             setIsLoggedIn(true);
             setCurrentUser({
-              id: parseInt(user.id.replace(/-/g, '').slice(0, 15), 16),
+              id: user.id,
               email: user.email || '',
               name: user.user_metadata?.name || user.email || '',
               isAdmin: Boolean(user.user_metadata?.is_admin),
@@ -774,9 +781,8 @@ const App: React.FC = () => {
               structuredDataId="organization-schema"
             />
 
-            {/* Hide desktop header on mobile pages */}
-            {!(isMobile && isMobileLayoutPage) && <FreeShippingBanner />}
 
+            {!(isMobile && isMobileLayoutPage) && <FreeShippingBanner />}
             {!(isMobile && isMobileLayoutPage) && (
               <Header
                 cartItems={cartItems}
@@ -1012,21 +1018,16 @@ const App: React.FC = () => {
 
                 <Route path="/profile" element={<Navigate to="/account" replace />} />
 
+                <Route path="/admin" element={<AdminDashboard />} />
+
                 <Route
-                  path="/admin"
+                  path="/shipping"
                   element={
-                    currentUser?.isAdmin ? (
-                      <React.Suspense fallback={<PageLoader />}>
-                        <AdminDashboard />
-                      </React.Suspense>
-                    ) : (
-                      <div className="text-center py-20">
-                        <h2>Access Denied.</h2>
-                      </div>
-                    )
+                    <React.Suspense fallback={<PageLoader />}>
+                      <ShippingPage />
+                    </React.Suspense>
                   }
                 />
-
                 <Route
                   path="/privacy-policy"
                   element={
@@ -1201,6 +1202,22 @@ const App: React.FC = () => {
                   }
                 />
                 <Route path="/blog/:slug" element={<BlogPostRoute />} />
+                <Route
+                  path="/faq"
+                  element={
+                    <React.Suspense fallback={<PageLoader />}>
+                      <FAQsPage />
+                    </React.Suspense>
+                  }
+                />
+                <Route
+                  path="/return-policy"
+                  element={
+                    <React.Suspense fallback={<PageLoader />}>
+                      <RefundPolicyPage />
+                    </React.Suspense>
+                  }
+                />
                 {/* Tracking Page */}
                 <Route path="/track" element={<TrackingPage />} />
                 <Route path="/track/:orderId" element={<TrackingPage />} />

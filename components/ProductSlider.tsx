@@ -41,6 +41,7 @@ const ProductSlider: React.FC<ProductSliderProps> = ({ title, products, ...props
               sizes={product.variants.map((v) => ({
                 size: v.name,
                 price: v.salePrice || v.price,
+                stock: v.stock, // Pass stock info
               }))}
               onAddToCart={(id) => {
                 const p = products.find((prod) => prod.id.toString() === id);

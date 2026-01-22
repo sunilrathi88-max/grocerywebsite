@@ -167,6 +167,15 @@ export default function ProductDetailPage() {
               </div>
             </div>
 
+            {/* Low Stock Warning */}
+            {displaySizes[selectedWeight]?.stock < 10 &&
+              displaySizes[selectedWeight]?.stock > 0 && (
+                <p className="text-red-600 font-bold text-sm mb-4 animate-pulse flex items-center gap-2">
+                  <span>🔥</span> Only {displaySizes[selectedWeight].stock} left in stock - Order
+                  soon!
+                </p>
+              )}
+
             {/* Weight Selector */}
             <WeightSelector
               options={displaySizes.map((s) => ({ ...s, badge: s.badge || undefined }))}

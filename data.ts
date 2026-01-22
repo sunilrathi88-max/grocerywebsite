@@ -50,7 +50,7 @@ export const MOCK_PRODUCTS: Product[] = [
     storage: 'Store in a cool, dry place away from sunlight',
     shelfLife: '24 Months',
     grind: 'Whole',
-    tags: ['Premium', 'Aromatic', 'Organic', 'Indian', 'Middle Eastern'],
+    tags: ['Premium', 'Aromatic', 'Organic', 'Indian', 'Middle Eastern', 'Bestseller'],
   },
   {
     id: 2,
@@ -76,7 +76,7 @@ export const MOCK_PRODUCTS: Product[] = [
     storage: 'Airtight container',
     shelfLife: '18 Months',
     grind: 'Whole',
-    tags: ['Single-Origin', 'Spicy', 'Indian', 'International'],
+    tags: ['Single-Origin', 'Spicy', 'Indian', 'International', 'Bestseller'],
   },
   {
     id: 3,
@@ -145,7 +145,7 @@ export const MOCK_PRODUCTS: Product[] = [
     purityTest: 'Certified Organic',
     storage: 'Cool, dark place',
     shelfLife: '12 Months',
-    tags: ['Organic', 'Gluten-Free', 'Healthy'],
+    tags: ['Organic', 'Gluten-Free', 'Healthy', 'Bestseller'],
   },
   {
     id: 5,
@@ -201,7 +201,7 @@ export const MOCK_PRODUCTS: Product[] = [
     purityTest: 'Premium Roast',
     storage: 'Airtight container',
     shelfLife: '6 Months',
-    tags: ['Premium', 'Snack', 'Indian'],
+    tags: ['Premium', 'Snack', 'Indian', 'Bestseller'],
   },
 
   {
@@ -467,7 +467,7 @@ export const MOCK_PRODUCTS: Product[] = [
 ];
 
 export const MOCK_USER: User = {
-  id: 1,
+  id: '1',
   name: 'Anika Sharma',
   email: 'anika.sharma@example.com',
   isAdmin: true,

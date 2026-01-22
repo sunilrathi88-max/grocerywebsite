@@ -91,7 +91,7 @@ export interface Address {
 }
 
 export interface User {
-  id: number;
+  id: string;
   name: string;
   email: string;
   addresses: Address[];
@@ -141,6 +141,11 @@ export interface Order {
   trackingNumber?: string;
   carrier?: string;
   userId?: string;
+  // Enhanced Order Fields
+  notes?: string;
+  isGift?: boolean;
+  giftMessage?: string;
+  giftWrap?: boolean;
 }
 // FIX: Added Testimonial interface to be shared across components.
 export interface Testimonial {
@@ -177,15 +182,4 @@ export interface Recipe {
   ingredients: string[];
   instructions: string[];
   relatedProductIds?: number[];
-}
-
-export interface PincodeServiceability {
-  pincode: string;
-  serviceable: boolean;
-  city?: string;
-  state?: string;
-  deliveryDays?: number;
-  codAvailable?: boolean;
-  shippingCost?: number;
-  freeShippingThreshold?: number;
 }

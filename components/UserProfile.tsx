@@ -16,9 +16,9 @@ interface UserProfileProps {
 }
 
 const UserProfile: React.FC<UserProfileProps> = ({ user, orders, onUpdateUser }) => {
-  const [activeTab, setActiveTab] = useState<'profile' | 'addresses' | 'orders' | 'loyalty'>(
-    'profile'
-  );
+  const [activeTab, setActiveTab] = useState<
+    'profile' | 'addresses' | 'orders' | 'loyalty' | 'subscriptions'
+  >('profile');
 
   const renderContent = () => {
     switch (activeTab) {
@@ -32,6 +32,8 @@ const UserProfile: React.FC<UserProfileProps> = ({ user, orders, onUpdateUser })
         return <OrderHistory orders={orders} />;
       case 'loyalty':
         return <LoyaltyPointsTracker />;
+      case 'subscriptions':
+        return <SubscriptionManager user={user} />;
       default:
         return null;
     }
@@ -70,6 +72,26 @@ const UserProfile: React.FC<UserProfileProps> = ({ user, orders, onUpdateUser })
               className={`w-full flex items-center gap-3 p-3 rounded-lg text-left transition-colors ${activeTab === 'loyalty' ? 'bg-brand-primary text-brand-dark' : 'hover:bg-brand-secondary/50'}`}
             >
               <SparklesIcon className="h-6 w-6" /> <span className="font-bold">Loyalty Points</span>
+            </button>
+            <button
+              onClick={() => setActiveTab('subscriptions')}
+              className={`w-full flex items-center gap-3 p-3 rounded-lg text-left transition-colors ${activeTab === 'subscriptions' ? 'bg-brand-primary text-brand-dark' : 'hover:bg-brand-secondary/50'}`}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"
+                />
+              </svg>
+              <span className="font-bold">My Subscriptions</span>
             </button>
           </nav>
         </aside>
@@ -509,6 +531,128 @@ const OrderHistory: React.FC<{ orders: Order[] }> = ({ orders }) => {
       {selectedOrder && (
         <OrderDetailModal order={selectedOrder} onClose={() => setSelectedOrder(null)} />
       )}
+    </div>
+  );
+};
+
+const SubscriptionManager: React.FC<{ user: User }> = ({ user }) => {
+  // Mock subscription state if not present in user object for demo
+  const [subscription, setSubscription] = useState(
+    user.subscription || {
+      planId: 'monthly-box',
+      status: 'active',
+      startDate: '2023-10-01',
+      nextBillingDate: '2023-11-01',
+    }
+  );
+
+  const handleAction = (action: 'pause' | 'cancel' | 'resume') => {
+    if (
+      action === 'cancel' &&
+      !window.confirm('Are you sure you want to cancel your subscription?')
+    )
+      return;
+
+    // Simulate API call
+    setTimeout(() => {
+      setSubscription((prev) => ({
+        ...prev,
+        status: action === 'resume' ? 'active' : action === 'pause' ? 'paused' : 'cancelled',
+      }));
+      alert(`Subscription ${action}d successfully!`);
+    }, 500);
+  };
+
+  return (
+    <div>
+      <h3 className="text-2xl font-serif font-bold mb-6">My Subscriptions</h3>
+      <div className="bg-gray-50 rounded-xl p-6 border border-gray-200">
+        <div className="flex items-start justify-between mb-6">
+          <div>
+            <h4 className="text-lg font-bold text-gray-900">Tattva Fresh: Monthly Spice Box</h4>
+            <p className="text-sm text-gray-500">
+              Next billing date: {new Date(subscription.nextBillingDate).toLocaleDateString()}
+            </p>
+          </div>
+          <span
+            className={`px-3 py-1 rounded-full text-sm font-bold capitalize ${
+              subscription.status === 'active'
+                ? 'bg-green-100 text-green-800'
+                : subscription.status === 'paused'
+                  ? 'bg-yellow-100 text-yellow-800'
+                  : 'bg-red-100 text-red-800'
+            }`}
+          >
+            {subscription.status}
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          <div className="bg-white p-4 rounded-lg border border-gray-100">
+            <p className="text-xs text-gray-500 uppercase font-bold tracking-wider mb-1">Plan</p>
+            <p className="font-medium">Monthly Standard</p>
+          </div>
+          <div className="bg-white p-4 rounded-lg border border-gray-100">
+            <p className="text-xs text-gray-500 uppercase font-bold tracking-wider mb-1">Price</p>
+            <p className="font-medium">₹999.00 / month</p>
+          </div>
+          <div className="bg-white p-4 rounded-lg border border-gray-100">
+            <p className="text-xs text-gray-500 uppercase font-bold tracking-wider mb-1">Started</p>
+            <p className="font-medium">{new Date(subscription.startDate).toLocaleDateString()}</p>
+          </div>
+        </div>
+
+        <div className="flex gap-3">
+          {subscription.status === 'active' ? (
+            <>
+              <button
+                onClick={() => handleAction('pause')}
+                className="px-4 py-2 bg-white border border-gray-300 rounded-lg font-bold text-gray-700 hover:bg-gray-50 transition-colors"
+              >
+                Pause Subscription
+              </button>
+              <button
+                onClick={() => handleAction('cancel')}
+                className="px-4 py-2 bg-white border border-red-200 rounded-lg font-bold text-red-600 hover:bg-red-50 transition-colors"
+              >
+                Cancel Subscription
+              </button>
+            </>
+          ) : (
+            <button
+              onClick={() => handleAction('resume')}
+              className="px-4 py-2 bg-brand-primary text-brand-dark rounded-lg font-bold hover:bg-brand-secondary transition-colors"
+            >
+              Resume Subscription
+            </button>
+          )}
+        </div>
+      </div>
+
+      <div className="mt-8">
+        <h4 className="font-bold text-lg mb-4">Past Deliveries</h4>
+        <div className="space-y-3">
+          {[1, 2, 3].map((i) => (
+            <div
+              key={i}
+              className="flex items-center justify-between p-4 bg-white border border-gray-100 rounded-lg hover:shadow-sm"
+            >
+              <div className="flex items-center gap-4">
+                <div className="h-10 w-10 bg-brand-primary/10 rounded-full flex items-center justify-center text-brand-primary font-bold">
+                  #{100 + i}
+                </div>
+                <div>
+                  <p className="font-medium">October Box</p>
+                  <p className="text-xs text-gray-500">Delivered on Oct {15 - i}, 2023</p>
+                </div>
+              </div>
+              <button className="text-sm font-bold text-brand-primary hover:underline">
+                View Details
+              </button>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };

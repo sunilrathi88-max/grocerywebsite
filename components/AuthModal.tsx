@@ -31,7 +31,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ onClose, onLogin, onSignUp }) => 
       e.preventDefault();
       // Simulate login or call API
       const mockUser: User = {
-        id: Date.now(),
+        id: Date.now().toString(),
         name: email.split('@')[0],
         email: email,
         isAdmin: false,

@@ -538,6 +538,10 @@ export const orderAPI = {
         discount: orderData.discount || 0,
         deliverySlot: orderData.deliverySlot,
         items: orderData.items,
+        notes: orderData.notes,
+        isGift: orderData.isGift,
+        giftMessage: orderData.giftMessage,
+        giftWrap: orderData.giftWrap,
       };
 
       // 3. Trigger Email Notification (Fire and forget, or log error)
@@ -769,7 +773,7 @@ export const userAPI = {
     return {
       data: {
         user: {
-          id: parseInt(data.user.id.replace(/-/g, '').slice(0, 15), 16),
+          id: data.user.id,
           email: data.user.email || '',
           name: data.user.user_metadata?.name || '',
           isAdmin: data.user.email === 'admin@tattva.com', // Mock Admin Logic
@@ -778,7 +782,7 @@ export const userAPI = {
           addresses: data.user.user_metadata?.addresses || [],
           orders: [],
           wishlist: [],
-        } as User,
+        },
         token: data.session?.access_token || '',
       },
       success: true,
@@ -806,7 +810,7 @@ export const userAPI = {
     return {
       data: {
         user: {
-          id: data.user ? parseInt(data.user.id.replace(/-/g, '').slice(0, 15), 16) : 0,
+          id: data.user ? data.user.id : '',
           email: data.user?.email || '',
           name: userData.name,
           isAdmin: false,
@@ -815,7 +819,7 @@ export const userAPI = {
           addresses: [],
           orders: [],
           wishlist: [],
-        } as User,
+        },
         token: data.session?.access_token || '',
       },
       success: true,
@@ -844,7 +848,7 @@ export const userAPI = {
 
     return {
       data: {
-        id: parseInt(user.id.replace(/-/g, '').slice(0, 15), 16),
+        id: user.id,
         email: user.email || '',
         name: user.user_metadata?.name || '',
         isAdmin: false,
@@ -853,7 +857,7 @@ export const userAPI = {
         addresses: user.user_metadata?.addresses || [],
         orders: [],
         wishlist: [],
-      } as User,
+      },
       success: true,
     };
   },
@@ -877,7 +881,7 @@ export const userAPI = {
 
     return {
       data: {
-        id: parseInt(data.user.id.replace(/-/g, '').slice(0, 15), 16),
+        id: data.user.id,
         email: data.user.email || '',
         name: data.user.user_metadata?.name || '',
         isAdmin: false,
@@ -886,7 +890,7 @@ export const userAPI = {
         addresses: data.user.user_metadata?.addresses || [],
         orders: [],
         wishlist: [],
-      } as User,
+      },
       success: true,
     };
   },

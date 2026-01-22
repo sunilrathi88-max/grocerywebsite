@@ -4,11 +4,13 @@ import type { CartItem } from '../store/cartStore';
 import { PlusIcon } from './icons/PlusIcon';
 import { MinusIcon } from './icons/MinusIcon';
 import { TrashIcon } from './icons/TrashIcon';
+import { HeartIcon } from './icons/HeartIcon';
 import { ShoppingCartIcon } from './icons/ShoppingCartIcon';
 import { OptimizedImage } from './OptimizedImage';
 import { imageErrorHandlers } from '../utils/imageHelpers';
 import { m, AnimatePresence } from 'framer-motion';
 import PincodeChecker from './PincodeChecker';
+import { useCartStore } from '../store/cartStore';
 
 interface CartProps {
   items: CartItem[];
@@ -96,6 +98,44 @@ const Cart: React.FC<CartProps> = ({
   }>({
     type: null,
   });
+
+  // Local Storage for "Save for Later"
+  const [savedItems, setSavedItems] = useState<CartItem[]>(() => {
+    try {
+      const saved = localStorage.getItem('tattva_saved_items');
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
+
+  React.useEffect(() => {
+    localStorage.setItem('tattva_saved_items', JSON.stringify(savedItems));
+  }, [savedItems]);
+
+  const addToCartStore = useCartStore((state) => state.addItem);
+
+  const handleSaveForLater = (item: CartItem) => {
+    // Remove from cart
+    onUpdateQuantity(item.id, 0);
+    // Add to saved if not already there
+    setSavedItems((prev) => {
+      if (prev.some((i) => i.id === item.id)) return prev;
+      return [...prev, item];
+    });
+  };
+
+  const handleMoveToCart = (item: CartItem) => {
+    // Add to cart
+    addToCartStore(item);
+    // Remove from saved
+    setSavedItems((prev) => prev.filter((i) => i.id !== item.id));
+  };
+
+  const handleRemoveFromSaved = (itemId: string) => {
+    setSavedItems((prev) => prev.filter((i) => i.id !== itemId));
+  };
+
   const tax = (subtotal - discount) * 0.05;
   const total = subtotal - discount + shippingCost + tax;
 
@@ -246,6 +286,27 @@ const Cart: React.FC<CartProps> = ({
                           {item.name}
                         </p>
                         <p className="text-xs text-gray-500 dark:text-gray-400">{item.weight}</p>
+                        {item.isSubscription && (
+                          <div className="flex items-center gap-1 mt-1">
+                            <span className="text-xs font-bold text-brand-secondary bg-brand-secondary/10 px-2 py-0.5 rounded-full flex items-center gap-1">
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                                className="w-3 h-3"
+                              >
+                                <path
+                                  fillRule="evenodd"
+                                  d="M15.312 11.424a5.5 5.5 0 01-9.201 2.466l-.312-.311h2.433a.75.75 0 000-1.5H3.989a.75.75 0 00-.75.75v4.242a.75.75 0 001.5 0v-2.43l.31.31a7 7 0 0011.712-3.138.75.75 0 00-1.449-.39zm1.23-3.723a.75.75 0 00.219-.53V2.929a.75.75 0 00-1.5 0V5.36l-.31-.31A7 7 0 003.239 8.188a.75.75 0 101.448.389A5.5 5.5 0 0113.89 6.11l.311.31h-2.432a.75.75 0 000 1.5h4.243a.75.75 0 00.53-.219z"
+                                  clipRule="evenodd"
+                                />
+                              </svg>
+                              {item.subscriptionInterval === 'quarterly'
+                                ? 'Every 3 Months'
+                                : 'Every Month'}
+                            </span>
+                          </div>
+                        )}
                         <p className="text-sm font-bold text-brand-primary">
                           ₹{item.price.toFixed(2)}
                         </p>
@@ -299,16 +360,26 @@ const Cart: React.FC<CartProps> = ({
                               <PlusIcon className="w-4 h-4" />
                             </m.button>
                           </div>
-                          <m.button
-                            onClick={() => handleQuantityChange(item, 0)}
-                            className="flex items-center gap-1 px-3 py-1.5 rounded-full text-red-500 bg-red-50 hover:bg-red-100 dark:bg-red-900/30 dark:hover:bg-red-900/50 transition-colors"
-                            whileHover={{ scale: 1.02 }}
-                            whileTap={{ scale: 0.98 }}
-                            aria-label="Remove item"
-                          >
-                            <TrashIcon className="w-4 h-4" />
-                            <span className="text-xs font-bold">Remove</span>
-                          </m.button>
+                          <div className="flex items-center gap-2">
+                            <button
+                              onClick={() => handleSaveForLater(item)}
+                              className="flex items-center gap-1 text-xs font-bold text-brand-primary hover:underline group"
+                            >
+                              <HeartIcon className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                              Save
+                            </button>
+                            <div className="h-4 w-px bg-gray-300"></div>
+                            <m.button
+                              onClick={() => handleQuantityChange(item, 0)}
+                              className="flex items-center gap-1 text-red-500 hover:bg-red-50 rounded px-2 py-1 transition-colors"
+                              whileHover={{ scale: 1.02 }}
+                              whileTap={{ scale: 0.98 }}
+                              aria-label="Remove item"
+                            >
+                              <TrashIcon className="w-4 h-4" />
+                              <span className="text-xs font-bold">Remove</span>
+                            </m.button>
+                          </div>
                         </>
                       )}
                     </div>
@@ -317,6 +388,52 @@ const Cart: React.FC<CartProps> = ({
               })}
             </AnimatePresence>
           </div>
+
+          {/* Saved for Later Section */}
+          {savedItems.length > 0 && (
+            <div className="mt-8 border-t pt-4">
+              <h3 className="font-bold text-gray-800 mb-3 text-sm flex items-center gap-2">
+                <HeartIcon className="w-4 h-4 text-brand-primary" /> Saved for Later (
+                {savedItems.length})
+              </h3>
+              <div className="space-y-3">
+                {savedItems.map((item) => (
+                  <div
+                    key={item.id}
+                    className="flex items-center gap-3 bg-white p-2 rounded-lg border border-gray-100 shadow-sm opacity-80 hover:opacity-100 transition-opacity"
+                  >
+                    <OptimizedImage
+                      src={item.image}
+                      alt={item.name}
+                      className="w-12 h-12 object-cover rounded-md"
+                      type="thumbnail"
+                      width={48}
+                      height={48}
+                      onError={imageErrorHandlers.thumb}
+                    />
+                    <div className="flex-1 min-w-0">
+                      <p className="font-bold text-xs text-gray-800 truncate">{item.name}</p>
+                      <p className="text-xs text-brand-primary font-bold">₹{item.price}</p>
+                    </div>
+                    <div className="flex flex-col gap-1">
+                      <button
+                        onClick={() => handleMoveToCart(item)}
+                        className="text-xs bg-brand-primary text-white px-2 py-1 rounded hover:bg-brand-dark transition-colors"
+                      >
+                        Move to Cart
+                      </button>
+                      <button
+                        onClick={() => handleRemoveFromSaved(item.id)}
+                        className="text-[10px] text-gray-400 hover:text-red-500 text-center hover:underline"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
 
           <div className="mt-4">
             <label htmlFor="promo-code" className="text-sm font-medium text-gray-700">

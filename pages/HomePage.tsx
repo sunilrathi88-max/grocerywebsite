@@ -9,6 +9,10 @@ import CategoryShowcase from '../components/CategoryShowcase';
 import ProductGrid from '../components/ProductGrid';
 import SortDropdown from '../components/SortDropdown';
 import AdvancedFilters from '../components/AdvancedFilters';
+import Testimonials from '../components/Testimonials';
+import { FEATURED_TESTIMONIALS } from '../data/testimonials';
+import QuizModule from '../components/QuizModule';
+import toast from 'react-hot-toast';
 
 interface HomePageProps {
   products: Product[];
@@ -123,6 +127,19 @@ const HomePage: React.FC<HomePageProps> = ({
     handleAddToCart(product, variant, quantity);
   };
 
+  const handleQuizToast = (message: string, type: ToastMessage['type']) => {
+    switch (type) {
+      case 'success':
+        toast.success(message);
+        break;
+      case 'error':
+        toast.error(message);
+        break;
+      default:
+        toast(message);
+    }
+  };
+
   return (
     <main className="bg-white">
       {/* 1. Hero Section (New Design) */}
@@ -224,6 +241,28 @@ const HomePage: React.FC<HomePageProps> = ({
           </div>
         </div>
       </div>
+
+      {/* 7. Testimonials */}
+      <Testimonials testimonials={FEATURED_TESTIMONIALS} />
+
+      {/* Spice Quiz Section - Gamification */}
+      <section className="py-16 bg-gradient-to-br from-brand-secondary/30 to-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-10">
+            <span className="text-brand-primary font-bold tracking-wider uppercase text-sm">
+              Challenge Yourself
+            </span>
+            <h2 className="text-3xl md:text-4xl font-serif font-bold text-brand-dark mt-2 mb-4">
+              Test Your Spice Knowledge
+            </h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Think you know your spices? Take our quick quiz to prove it and unlock exclusive
+              discounts!
+            </p>
+          </div>
+          <QuizModule addToast={handleQuizToast} />
+        </div>
+      </section>
     </main>
   );
 };

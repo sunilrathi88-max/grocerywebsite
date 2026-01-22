@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import TrustBadges from './TrustBadges';
 
 interface FooterProps {
   onSelectCategory: (category: string) => void;
@@ -22,20 +23,20 @@ const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
             <ul className="flex flex-col gap-3 text-sm font-light">
               <li>
                 <Link
-                  to="#"
+                  to="/shop"
                   className="hover:text-primary transition-colors"
-                  onClick={() => onSelectCategory('Spices')}
+                  onClick={() => onSelectCategory('All')}
                 >
                   All Spices
                 </Link>
               </li>
               <li>
-                <Link to="#" className="hover:text-primary transition-colors">
+                <Link to="/shop?sort=newest" className="hover:text-primary transition-colors">
                   New Arrivals
                 </Link>
               </li>
               <li>
-                <Link to="#" className="hover:text-primary transition-colors">
+                <Link to="/category/Gift%20Sets" className="hover:text-primary transition-colors">
                   Gift Sets
                 </Link>
               </li>
@@ -59,6 +60,11 @@ const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
                   Contact
                 </Link>
               </li>
+              <li>
+                <Link to="/faq" className="hover:text-primary transition-colors">
+                  FAQ
+                </Link>
+              </li>
             </ul>
           </div>
           <div className="md:col-span-4">
@@ -76,6 +82,10 @@ const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
                 Join
               </button>
             </div>
+            {/* Trust Badges in Footer */}
+            <div className="mt-8">
+              <TrustBadges variant="footer" showPaymentMethods showSecurityBadges />
+            </div>
           </div>
         </div>
         <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/5 text-xs font-mono text-gray-600 gap-4">
@@ -89,6 +99,9 @@ const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
             </Link>
             <Link to="/shipping" className="hover:text-gray-400">
               Shipping
+            </Link>
+            <Link to="/return-policy" className="hover:text-gray-400">
+              Returns
             </Link>
           </div>
         </div>

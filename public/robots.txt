@@ -1,9 +1,47 @@
+# Robots.txt for Rathi Naturals - www.tattvaco.in
+# Allow all search engines to crawl the site
+
 User-agent: *
 Allow: /
-Sitemap: https://tattvaco.in/sitemap.xml
-
-# Disallow admin/private paths
 Disallow: /admin
-Disallow: /profile
+Disallow: /api
+Disallow: /cart
 Disallow: /checkout
-Disallow: /login
+Disallow: /account
+Disallow: /orders
+Disallow: /*.json
+Disallow: /?
+Disallow: /*?*
+Disallow: /*sort=
+Disallow: /*filter=
+Disallow: /search
+Disallow: /404
+Disallow: /500
+
+# Allow specific pages for better crawling
+Allow: /?
+Allow: /search
+
+# Crawl delay to prevent server overload
+Crawl-delay: 1
+
+# Specify sitemap location
+Sitemap: https://www.tattvaco.in/sitemap.xml
+
+# Google Search Console
+User-agent: Googlebot
+Allow: /
+
+# Bing Search Engine
+User-agent: Bingbot
+Allow: /
+
+# Block bad bots
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /

@@ -208,7 +208,7 @@ const LoginPage: React.FC<LoginPageProps> = ({
                   // OAuth returns AuthUser, need to map to User
                   const appUser: User = {
                     ...user,
-                    id: 0,
+                    id: '0',
                     name: user.email.split('@')[0],
                     isAdmin: false,
                     addresses: [],

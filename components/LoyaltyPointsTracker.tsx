@@ -5,6 +5,7 @@ import { SparklesIcon } from './icons/SparklesIcon';
 import { TruckIcon } from './icons/TruckIcon';
 import { ShoppingBagIcon } from './icons/ShoppingBagIcon';
 import { BadgeCollection } from './BadgeCollection';
+import toast from 'react-hot-toast';
 
 import { useLoyaltyStore } from '../store/loyaltyStore';
 
@@ -13,12 +14,31 @@ export const LoyaltyPointsTracker: React.FC = () => {
 
   const { points, history, redeemPoints } = useLoyaltyStore();
 
+  const [redeemedCode, setRedeemedCode] = useState<string | null>(null);
+
   const handleRedeem = (amount: number, reward: string) => {
-    const success = redeemPoints(amount, reward);
-    if (success) {
-      alert(`Successfully redeemed ${reward}!`);
-    } else {
-      alert('Not enough points to redeem this reward.');
+    // Determine code prefix based on reward
+    let prefix = 'REWARD';
+    if (reward.includes('Free Shipping')) prefix = 'FREESHIP';
+    else if (reward.includes('Off')) prefix = 'SAVE';
+
+    const code = `${prefix}-${Math.floor(Math.random() * 10000)}`.toUpperCase();
+
+    if (window.confirm(`Redeem ${amount} points for "${reward}"?`)) {
+      const success = redeemPoints(amount, reward);
+      if (success) {
+        setRedeemedCode(code);
+        toast.success(`Successfully redeemed! Code: ${code}`);
+      } else {
+        toast.error('Not enough points to redeem this reward.');
+      }
+    }
+  };
+
+  const copyToClipboard = () => {
+    if (redeemedCode) {
+      navigator.clipboard.writeText(redeemedCode);
+      toast.success('Code copied to clipboard!');
     }
   };
 
@@ -78,6 +98,39 @@ export const LoyaltyPointsTracker: React.FC = () => {
 
       {activeTab === 'points' ? (
         <div className="space-y-6">
+          {/* Redemption Success Banner */}
+          {redeemedCode && (
+            <m.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              className="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded shadow-md flex justify-between items-center"
+            >
+              <div>
+                <p className="font-bold">Reward Unlocked!</p>
+                <p>
+                  Use code{' '}
+                  <span className="font-mono bg-white px-2 py-1 rounded border border-green-200 font-bold select-all">
+                    {redeemedCode}
+                  </span>{' '}
+                  at checkout.
+                </p>
+              </div>
+              <div className="flex gap-2">
+                <button
+                  onClick={copyToClipboard}
+                  className="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 text-sm font-bold"
+                >
+                  Copy Code
+                </button>
+                <button
+                  onClick={() => setRedeemedCode(null)}
+                  className="text-green-600 hover:text-green-800 text-xl font-bold px-2"
+                >
+                  &times;
+                </button>
+              </div>
+            </m.div>
+          )}
           {/* Points Overview Card */}
           <div
             className={`bg-gradient-to-br ${tierColors[points.tier]} text-white rounded-2xl p-8 shadow-xl`}
