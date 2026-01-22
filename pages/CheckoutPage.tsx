@@ -53,7 +53,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
     address: user?.addresses?.[0]?.street || '',
     city: user?.addresses?.[0]?.city || '',
     state: user?.addresses?.[0]?.state || '',
-    zip: user?.addresses?.[0]?.zipCode || '',
+    zip: user?.addresses?.[0]?.zip || '',
   });
 
   const [paymentMethod, setPaymentMethod] = useState<'cod' | 'upi'>('cod');
@@ -86,11 +86,32 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
         date: new Date().toISOString(),
         status: 'Processing',
         total: total,
-        items: finalCartItems.map((item) => ({
-          product: { ...item, id: parseInt(item.id) },
-          quantity: item.quantity,
-        })),
+        items: finalCartItems,
         trackingNumber: `TRK-${Math.floor(Math.random() * 10000)}`,
+        shippingAddress: {
+          id: 'temp',
+          street: formData.address,
+          city: formData.city,
+          state: formData.state,
+          zip: formData.zip,
+          country: 'India',
+          type: 'Shipping',
+          isDefault: false,
+        },
+        billingAddress: {
+          id: 'temp',
+          street: formData.address,
+          city: formData.city,
+          state: formData.state,
+          zip: formData.zip,
+          country: 'India',
+          type: 'Billing',
+          isDefault: false,
+        },
+        deliveryMethod: 'Standard',
+        paymentMethod: 'Cash on Delivery',
+        shippingCost: 0,
+        discount: 0,
       };
 
       if (onPlaceOrder) {

@@ -142,6 +142,8 @@ const MobileCategoryPage: React.FC<MobileCategoryPageProps> = ({
     (product: Product, variant: Variant) => {
       addToCart({
         id: `${product.id}-${variant.name}`,
+        productId: product.id,
+        variantId: variant.id,
         name: product.name,
         price: variant.salePrice || variant.price,
         quantity: 1,

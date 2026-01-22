@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import type { Product, Variant } from '../types';
-import type { CartItem } from '../store/cartStore';
+import type { CartItem } from '../types';
 import { PlusIcon } from './icons/PlusIcon';
 import { MinusIcon } from './icons/MinusIcon';
 import { TrashIcon } from './icons/TrashIcon';
@@ -496,11 +496,10 @@ const Cart: React.FC<CartProps> = ({
           <button
             onClick={canCheckout ? onCheckout : undefined}
             disabled={!canCheckout || !!loadingState.type}
-            className={`mt-4 block w-full text-center bg-brand-primary text-brand-dark font-bold py-3 rounded-full shadow-lg transition-all duration-300 ${
-              !canCheckout || !!loadingState.type
-                ? 'bg-gray-400 cursor-not-allowed'
-                : 'hover:bg-opacity-90 transform hover:scale-105'
-            }`}
+            className={`mt-4 block w-full text-center bg-brand-primary text-brand-dark font-bold py-3 rounded-full shadow-lg transition-all duration-300 ${!canCheckout || !!loadingState.type
+              ? 'bg-gray-400 cursor-not-allowed'
+              : 'hover:bg-opacity-90 transform hover:scale-105'
+              }`}
             data-testid="checkout-btn"
           >
             Proceed to Checkout
@@ -514,7 +513,7 @@ const Cart: React.FC<CartProps> = ({
           <h4 className="font-bold text-gray-800 mb-3 text-sm">Customers also bought</h4>
           <div className="space-y-3">
             {recommendedProducts
-              .filter((p) => !items.some((i) => i.id.startsWith(`${p.id}-`)))
+              .filter((p) => !items.some((i) => i.productId === p.id))
               .slice(0, 3)
               .map((product) => (
                 <div

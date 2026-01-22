@@ -141,6 +141,8 @@ const OffersPage: React.FC = () => {
   const handleAddToCart = (product: Product, variant: Variant) => {
     addItem({
       id: `${product.id}-${variant.name}`,
+      productId: product.id,
+      variantId: variant.id,
       name: product.name,
       price: variant.salePrice || variant.price,
       quantity: 1,
@@ -309,7 +311,7 @@ const OffersPage: React.FC = () => {
             onAddToCart={handleAddToCart}
             onToggleWishlist={handleToggleWishlistFn}
             comparisonIds={new Set<number>()}
-            onNotifyMe={() => {}}
+            onNotifyMe={() => { }}
             onClearFilters={handleClearFilters}
           />
         </div>

@@ -67,18 +67,18 @@ const ReturnRequestModal: React.FC<ReturnRequestModalProps> = ({
       // Build return request
       const returnItems = order.items
         .filter((item) => {
-          const key = `${item.product.id}-${item.selectedVariant.id}`;
+          const key = `${item.productId}-${item.variantId}`;
           return selectedItems.has(key) && selectedItems.get(key)! > 0;
         })
         .map((item) => {
-          const key = `${item.product.id}-${item.selectedVariant.id}`;
+          const key = `${item.productId}-${item.variantId}`;
           return {
-            product_id: item.product.id,
-            product_name: item.product.name,
-            variant_id: item.selectedVariant.id,
-            variant_name: item.selectedVariant.name,
+            product_id: item.productId,
+            product_name: item.name,
+            variant_id: item.variantId,
+            variant_name: item.weight,
             quantity: selectedItems.get(key)!,
-            unit_price: item.selectedVariant.salePrice || item.selectedVariant.price,
+            unit_price: item.price,
             condition: itemConditions.get(key) || 'unopened',
           };
         });
@@ -164,13 +164,12 @@ const ReturnRequestModal: React.FC<ReturnRequestModalProps> = ({
                       <React.Fragment key={label}>
                         <div className="flex flex-col items-center">
                           <div
-                            className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm ${
-                              isActive
+                            className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm ${isActive
                                 ? 'bg-brand-primary text-brand-dark'
                                 : isCompleted
                                   ? 'bg-green-500 text-white'
                                   : 'bg-gray-300 text-gray-600'
-                            }`}
+                              }`}
                           >
                             {isCompleted ? '✓' : index + 1}
                           </div>
@@ -199,7 +198,7 @@ const ReturnRequestModal: React.FC<ReturnRequestModalProps> = ({
                 <div className="space-y-4">
                   <h3 className="text-lg font-bold text-gray-900 mb-4">Select items to return</h3>
                   {order.items.map((item) => {
-                    const key = `${item.product.id}-${item.selectedVariant.id}`;
+                    const key = `${item.productId}-${item.variantId}`;
                     const selectedQty = selectedItems.get(key) || 0;
 
                     return (
@@ -208,8 +207,8 @@ const ReturnRequestModal: React.FC<ReturnRequestModalProps> = ({
                         className="border border-gray-200 rounded-lg p-4 flex gap-4 items-start"
                       >
                         <OptimizedImage
-                          src={item.product.images[0]}
-                          alt={item.product.name}
+                          src={item.image}
+                          alt={item.name}
                           className="w-20 h-20 object-cover rounded-lg flex-shrink-0"
                           type="thumbnail"
                           priority="low"
@@ -218,12 +217,12 @@ const ReturnRequestModal: React.FC<ReturnRequestModalProps> = ({
                           onError={imageErrorHandlers.thumb}
                         />
                         <div className="flex-grow">
-                          <h4 className="font-bold text-gray-900">{item.product.name}</h4>
-                          <p className="text-sm text-gray-600">{item.selectedVariant.name}</p>
+                          <h4 className="font-bold text-gray-900">{item.name}</h4>
+                          <p className="text-sm text-gray-600">{item.weight}</p>
                           <p className="text-sm text-gray-600">Ordered: {item.quantity}</p>
                           <p className="text-sm font-bold text-brand-primary">
                             ₹
-                            {(item.selectedVariant.salePrice || item.selectedVariant.price).toFixed(
+                            {item.price.toFixed(
                               2
                             )}
                           </p>
@@ -234,8 +233,8 @@ const ReturnRequestModal: React.FC<ReturnRequestModalProps> = ({
                             value={selectedQty}
                             onChange={(e) =>
                               handleItemSelect(
-                                item.product.id,
-                                item.selectedVariant.id,
+                                item.productId,
+                                item.variantId,
                                 parseInt(e.target.value)
                               )
                             }
@@ -273,11 +272,10 @@ const ReturnRequestModal: React.FC<ReturnRequestModalProps> = ({
                           key={r.value}
                           type="button"
                           onClick={() => setReason(r.value)}
-                          className={`p-4 border-2 rounded-lg text-left transition-all ${
-                            reason === r.value
+                          className={`p-4 border-2 rounded-lg text-left transition-all ${reason === r.value
                               ? 'border-brand-primary bg-brand-accent/20'
                               : 'border-gray-200 hover:border-gray-300'
-                          }`}
+                            }`}
                         >
                           <p className="font-semibold text-gray-900">{r.label}</p>
                         </button>
@@ -368,19 +366,19 @@ const ReturnRequestModal: React.FC<ReturnRequestModalProps> = ({
                     <div className="space-y-2">
                       {order.items
                         .filter((item) => {
-                          const key = `${item.product.id}-${item.selectedVariant.id}`;
+                          const key = `${item.productId}-${item.variantId}`;
                           return selectedItems.has(key) && selectedItems.get(key)! > 0;
                         })
                         .map((item) => {
-                          const key = `${item.product.id}-${item.selectedVariant.id}`;
+                          const key = `${item.productId}-${item.variantId}`;
                           return (
                             <div
                               key={key}
                               className="flex items-center gap-3 p-3 bg-white border border-gray-200 rounded-lg"
                             >
                               <OptimizedImage
-                                src={item.product.images[0]}
-                                alt={item.product.name}
+                                src={item.image}
+                                alt={item.name}
                                 className="w-12 h-12 object-cover rounded"
                                 type="thumbnail"
                                 priority="low"
@@ -390,9 +388,9 @@ const ReturnRequestModal: React.FC<ReturnRequestModalProps> = ({
                               />
                               <div className="flex-grow">
                                 <p className="font-semibold text-sm text-gray-900">
-                                  {item.product.name}
+                                  {item.name}
                                 </p>
-                                <p className="text-xs text-gray-600">{item.selectedVariant.name}</p>
+                                <p className="text-xs text-gray-600">{item.weight}</p>
                               </div>
                               <p className="text-sm font-bold">Qty: {selectedItems.get(key)}</p>
                             </div>

@@ -128,11 +128,13 @@ const CategoryPage: React.FC = () => {
     // Added variant parameter
     addItem({
       id: product.id.toString(),
+      productId: product.id,
+      variantId: variant?.id || product.variants[0]?.id || 0,
       name: product.name,
-      price: product.variants[0]?.salePrice ?? product.variants[0]?.price, // Use salePrice if available
+      price: product.variants[0]?.salePrice ?? product.variants[0]?.price,
       quantity: 1,
       image: product.images[0],
-      weight: variant?.name || 'Standard', // Use variant name for weight
+      weight: variant?.name || 'Standard',
       stock: 10,
     });
   };
@@ -390,7 +392,7 @@ const CategoryPage: React.FC = () => {
                       rating={
                         product.reviews?.length
                           ? product.reviews.reduce((sum, r) => sum + r.rating, 0) /
-                            product.reviews.length
+                          product.reviews.length
                           : 4.5
                       }
                       reviewCount={product.reviews?.length ?? 0}

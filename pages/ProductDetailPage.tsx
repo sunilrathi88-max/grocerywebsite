@@ -64,6 +64,7 @@ export default function ProductDetailPage() {
   // Map variants to old 'sizes' structure for compatibility with existing UI components
   // In a real app, we'd update the components to use 'Variant' type directly.
   const productSizes = product.variants.map((v) => ({
+    id: v.id,
     size: v.name,
     price: v.price,
     // Calculate discount if salePrice exists, else mock based on logic or leave 0
@@ -76,7 +77,7 @@ export default function ProductDetailPage() {
   const displaySizes =
     productSizes.length > 0
       ? productSizes
-      : [{ size: 'Standard', price: 0, discount: 0, badge: 'OUT OF STOCK', stock: 0 }];
+      : [{ id: 0, size: 'Standard', price: 0, discount: 0, badge: 'OUT OF STOCK', stock: 0 }];
 
   const trustBadges = [
     { icon: '🧪', text: 'Lab-Tested Purity' },
@@ -94,6 +95,8 @@ export default function ProductDetailPage() {
 
     addToCart({
       id: `${product.id}-${selectedSize.size}${isSub ? '-sub' : ''}`, // Unique ID for sub items
+      productId: product.id,
+      variantId: selectedSize.id || 0,
       name: isSub ? `${product.name} (Sub)` : product.name,
       price: finalPrice,
       quantity,
@@ -160,7 +163,7 @@ export default function ProductDetailPage() {
                     ₹
                     {Math.round(
                       displaySizes[selectedWeight].price /
-                        (1 - displaySizes[selectedWeight].discount / 100)
+                      (1 - displaySizes[selectedWeight].discount / 100)
                     )}
                   </span>
                 )}
@@ -190,11 +193,10 @@ export default function ProductDetailPage() {
             <div className="p-5 bg-gradient-to-br from-brand-primary/5 to-brand-primary/10 rounded-2xl border border-brand-primary/20 shadow-sm">
               <div className="flex gap-4">
                 <label
-                  className={`flex items-start gap-3 cursor-pointer flex-1 p-3 rounded-xl transition-all duration-200 ${
-                    purchaseType === 'one-time'
+                  className={`flex items-start gap-3 cursor-pointer flex-1 p-3 rounded-xl transition-all duration-200 ${purchaseType === 'one-time'
                       ? 'bg-white shadow-md border-2 border-brand-primary'
                       : 'bg-transparent border-2 border-transparent hover:bg-white/50'
-                  }`}
+                    }`}
                 >
                   <input
                     type="radio"
@@ -213,11 +215,10 @@ export default function ProductDetailPage() {
                   </div>
                 </label>
                 <label
-                  className={`flex items-start gap-3 cursor-pointer flex-1 p-3 rounded-xl transition-all duration-200 relative ${
-                    purchaseType === 'subscription'
+                  className={`flex items-start gap-3 cursor-pointer flex-1 p-3 rounded-xl transition-all duration-200 relative ${purchaseType === 'subscription'
                       ? 'bg-white shadow-md border-2 border-brand-primary'
                       : 'bg-transparent border-2 border-transparent hover:bg-white/50'
-                  }`}
+                    }`}
                 >
                   {/* Best Value Badge */}
                   <span className="absolute -top-2 -right-2 bg-brand-primary text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-sm">
@@ -451,6 +452,8 @@ export default function ProductDetailPage() {
             onAddToCart={(p, v) =>
               addToCart({
                 id: `${p.id}-${v.name}`,
+                productId: p.id,
+                variantId: v.id,
                 name: p.name,
                 price: v.price,
                 quantity: 1,
@@ -462,7 +465,7 @@ export default function ProductDetailPage() {
             onToggleWishlist={toggleWishlist}
             wishlistedIds={wishlistedIds}
             onSelectProduct={(p) => navigate(`/product/${p.id}`)}
-            onNotifyMe={() => {}}
+            onNotifyMe={() => { }}
           />
         </div>
       </div>

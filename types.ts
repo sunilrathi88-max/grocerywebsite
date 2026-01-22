@@ -67,9 +67,17 @@ export interface Product {
 }
 
 export interface CartItem {
-  product: Product;
-  selectedVariant: Variant;
+  id: string;
+  productId: number;
+  variantId: number;
+  name: string;
+  price: number;
   quantity: number;
+  weight: string;
+  image: string;
+  stock: number;
+  subscriptionInterval?: string; // e.g., 'monthly', 'quarterly'
+  isSubscription?: boolean;
 }
 
 export interface ToastMessage {

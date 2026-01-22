@@ -108,9 +108,15 @@ describe('useCart', () => {
         expect(result.current.cartItems).toHaveLength(1);
       });
       expect(result.current.cartItems[0]).toEqual({
-        product: mockProduct,
-        selectedVariant: mockVariant1,
+        id: `${mockProduct.id}-${mockVariant1.name}`,
+        productId: mockProduct.id,
+        variantId: mockVariant1.id,
+        name: mockProduct.name,
+        price: mockVariant1.salePrice || mockVariant1.price,
         quantity: 1,
+        weight: mockVariant1.name,
+        image: mockProduct.images[0],
+        stock: mockVariant1.stock,
       });
     });
 
@@ -262,7 +268,7 @@ describe('useCart', () => {
 
       await waitFor(() => {
         expect(result.current.cartItems).toHaveLength(1);
-        expect(result.current.cartItems[0].selectedVariant.id).toBe(mockVariant2.id);
+        expect(result.current.cartItems[0].variantId).toBe(mockVariant2.id);
       });
     });
 
@@ -287,7 +293,7 @@ describe('useCart', () => {
 
       await waitFor(() => {
         expect(result.current.cartItems).toHaveLength(1);
-        expect(result.current.cartItems[0].product.id).toBe(mockProduct2.id);
+        expect(result.current.cartItems[0].productId).toBe(mockProduct2.id);
       });
     });
   });

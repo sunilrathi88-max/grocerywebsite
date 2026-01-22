@@ -26,10 +26,10 @@ export const analyticsHelpers = {
     // Aggregate sales
     orders.forEach((order) => {
       order.items.forEach((item) => {
-        const current = productMap.get(item.product.id);
+        const current = productMap.get(item.productId);
         if (current) {
           current.unitsSold += item.quantity;
-          current.revenue += item.selectedVariant.price * item.quantity;
+          current.revenue += item.price * item.quantity;
         }
       });
     });

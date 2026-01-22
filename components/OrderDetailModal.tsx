@@ -130,9 +130,8 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
                   {/* Timeline Dot */}
                   <div className="relative flex-shrink-0">
                     <div
-                      className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                        step.isCompleted ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-400'
-                      }`}
+                      className={`w-10 h-10 rounded-full flex items-center justify-center ${step.isCompleted ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-400'
+                        }`}
                     >
                       {step.isCompleted ? (
                         <svg
@@ -166,9 +165,8 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
                     </div>
                     {index < statusSteps.length - 1 && (
                       <div
-                        className={`absolute left-1/2 top-10 w-0.5 h-12 -ml-px ${
-                          step.isCompleted ? 'bg-green-500' : 'bg-gray-200'
-                        }`}
+                        className={`absolute left-1/2 top-10 w-0.5 h-12 -ml-px ${step.isCompleted ? 'bg-green-500' : 'bg-gray-200'
+                          }`}
                       />
                     )}
                   </div>
@@ -176,9 +174,8 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
                   {/* Timeline Content */}
                   <div className="ml-4 flex-1">
                     <p
-                      className={`font-semibold ${
-                        step.isCompleted ? 'text-gray-900' : 'text-gray-400'
-                      }`}
+                      className={`font-semibold ${step.isCompleted ? 'text-gray-900' : 'text-gray-400'
+                        }`}
                     >
                       {step.status}
                     </p>
@@ -199,19 +196,19 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
               {order.items.map((item, index) => (
                 <div key={index} className="flex gap-4 p-4 bg-gray-50 rounded-lg">
                   <img
-                    src={item.product.images[0]}
-                    alt={item.product.name}
+                    src={item.image}
+                    alt={item.name}
                     className="w-20 h-20 object-cover rounded-lg"
                     onError={imageErrorHandlers.thumb}
                   />
                   <div className="flex-1">
-                    <h4 className="font-semibold text-gray-900">{item.product.name}</h4>
-                    <p className="text-sm text-gray-600 mt-1">{item.selectedVariant.name}</p>
+                    <h4 className="font-semibold text-gray-900">{item.name}</h4>
+                    <p className="text-sm text-gray-600 mt-1">{item.weight}</p>
                     <p className="text-sm text-gray-600">Quantity: {item.quantity}</p>
                   </div>
                   <div className="text-right">
                     <p className="font-semibold text-gray-900">
-                      ₹{(item.selectedVariant.price * item.quantity).toFixed(2)}
+                      ₹{(item.price * item.quantity).toFixed(2)}
                     </p>
                   </div>
                 </div>

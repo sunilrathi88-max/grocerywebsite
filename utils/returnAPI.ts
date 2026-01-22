@@ -242,11 +242,11 @@ export const returnAPI = {
     let refundAmount = 0;
 
     order.items.forEach((item) => {
-      const itemKey = `${item.product.id}-${item.selectedVariant.id}`;
+      const itemKey = `${item.productId}-${item.variantId}`;
       const returnQuantity = selectedItems.get(itemKey);
 
       if (returnQuantity && returnQuantity > 0) {
-        const price = item.selectedVariant.salePrice || item.selectedVariant.price;
+        const price = item.price;
         refundAmount += price * returnQuantity;
       }
     });

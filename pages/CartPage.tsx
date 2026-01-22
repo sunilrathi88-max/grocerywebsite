@@ -48,6 +48,8 @@ const CartPage: React.FC = () => {
   const handleAddToCart = (product: Product, variant: Variant) => {
     addItem({
       id: `${product.id}-${variant.name}`,
+      productId: product.id,
+      variantId: variant.id,
       name: product.name,
       price: variant.salePrice || variant.price,
       quantity: 1,

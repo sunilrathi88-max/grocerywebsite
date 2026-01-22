@@ -286,51 +286,47 @@ export const orderAPI = {
         },
         billingAddress: o.billing_street
           ? {
-              id: '',
-              street: o.billing_street as string,
-              city: o.billing_city as string,
-              state: o.billing_state as string,
-              zip: o.billing_zip as string,
-              country: (o.billing_country as string) || 'India',
-              type: 'Billing',
-              isDefault: false,
-            }
+            id: '',
+            street: o.billing_street as string,
+            city: o.billing_city as string,
+            state: o.billing_state as string,
+            zip: o.billing_zip as string,
+            country: (o.billing_country as string) || 'India',
+            type: 'Billing',
+            isDefault: false,
+          }
           : {
-              id: '',
-              street: o.shipping_street as string,
-              city: o.shipping_city as string,
-              state: o.shipping_state as string,
-              zip: o.shipping_zip as string,
-              country: (o.shipping_country as string) || 'India',
-              type: 'Billing',
-              isDefault: false,
-            },
+            id: '',
+            street: o.shipping_street as string,
+            city: o.shipping_city as string,
+            state: o.shipping_state as string,
+            zip: o.shipping_zip as string,
+            country: (o.shipping_country as string) || 'India',
+            type: 'Billing',
+            isDefault: false,
+          },
         deliveryMethod: (o.delivery_method as Order['deliveryMethod']) || 'Standard',
         paymentMethod: o.payment_method as string,
         shippingCost: parseFloat(o.shipping_cost as string) || 0,
         discount: parseFloat(o.discount as string) || 0,
         deliverySlot: o.delivery_date
           ? {
-              date: o.delivery_date as string,
-              time: (o.delivery_time as string) || '',
-            }
+            date: o.delivery_date as string,
+            time: (o.delivery_time as string) || '',
+          }
           : undefined,
         trackingNumber: o.tracking_number as string,
         items: (o.order_items as Record<string, unknown>[]).map(
           (item: Record<string, unknown>) => ({
-            product: {
-              id: item.product_id as string,
-              name: item.product_name as string,
-              images: [item.product_image as string],
-              // Add minimal product data for display
-            } as unknown as Product,
-            selectedVariant: {
-              id: item.variant_id as string,
-              name: item.variant_name as string,
-              price: parseFloat(item.unit_price as string),
-              salePrice: item.sale_price ? parseFloat(item.sale_price as string) : undefined,
-            } as unknown as Variant,
+            id: `${item.product_id}-${item.variant_name}`,
+            productId: parseInt(item.product_id as string),
+            variantId: parseInt(item.variant_id as string),
+            name: item.product_name as string,
+            image: item.product_image as string,
+            price: parseFloat(item.unit_price as string),
             quantity: item.quantity as number,
+            weight: item.variant_name as string,
+            stock: 99, // Fallback
           })
         ),
       }));
@@ -376,50 +372,47 @@ export const orderAPI = {
         },
         billingAddress: data.billing_street
           ? {
-              id: '',
-              street: data.billing_street,
-              city: data.billing_city,
-              state: data.billing_state,
-              zip: data.billing_zip,
-              country: data.billing_country || 'India',
-              type: 'Billing',
-              isDefault: false,
-            }
+            id: '',
+            street: data.billing_street,
+            city: data.billing_city,
+            state: data.billing_state,
+            zip: data.billing_zip,
+            country: data.billing_country || 'India',
+            type: 'Billing',
+            isDefault: false,
+          }
           : {
-              id: '',
-              street: data.shipping_street,
-              city: data.shipping_city,
-              state: data.shipping_state,
-              zip: data.shipping_zip,
-              country: data.shipping_country || 'India',
-              type: 'Billing',
-              isDefault: false,
-            },
+            id: '',
+            street: data.shipping_street,
+            city: data.shipping_city,
+            state: data.shipping_state,
+            zip: data.shipping_zip,
+            country: data.shipping_country || 'India',
+            type: 'Billing',
+            isDefault: false,
+          },
         deliveryMethod: (data.delivery_method as Order['deliveryMethod']) || 'Standard',
         paymentMethod: data.payment_method,
         shippingCost: parseFloat(data.shipping_cost) || 0,
         discount: parseFloat(data.discount) || 0,
         deliverySlot: data.delivery_date
           ? {
-              date: data.delivery_date,
-              time: data.delivery_time || '',
-            }
+            date: data.delivery_date,
+            time: data.delivery_time || '',
+          }
           : undefined,
         trackingNumber: data.tracking_number,
         items: (data.order_items as Record<string, unknown>[]).map(
           (item: Record<string, unknown>) => ({
-            product: {
-              id: item.product_id as string,
-              name: item.product_name as string,
-              images: [item.product_image as string],
-            } as unknown as Product,
-            selectedVariant: {
-              id: item.variant_id as string,
-              name: item.variant_name as string,
-              price: parseFloat(item.unit_price as string),
-              salePrice: item.sale_price ? parseFloat(item.sale_price as string) : undefined,
-            } as unknown as Variant,
+            id: `${item.product_id}-${item.variant_name}`,
+            productId: parseInt(item.product_id as string),
+            variantId: parseInt(item.variant_id as string),
+            name: item.product_name as string,
+            image: item.product_image as string,
+            price: parseFloat(item.unit_price as string),
             quantity: item.quantity as number,
+            weight: item.variant_name as string,
+            stock: 99,
           })
         ),
       };
@@ -502,15 +495,15 @@ export const orderAPI = {
       // 2. Insert Order Items
       const itemsToInsert = orderData.items.map((item) => ({
         order_id: orderId,
-        product_id: item.product.id,
-        product_name: item.product.name,
-        product_image: item.product.images[0] || null,
-        variant_id: item.selectedVariant.id,
-        variant_name: item.selectedVariant.name,
+        product_id: item.productId, // Use strict generic ID
+        product_name: item.name,
+        product_image: item.image,
+        variant_id: item.variantId,
+        variant_name: item.weight,
         quantity: item.quantity,
-        unit_price: item.selectedVariant.price,
-        sale_price: item.selectedVariant.salePrice || null,
-        total: (item.selectedVariant.salePrice || item.selectedVariant.price) * item.quantity,
+        unit_price: item.price,
+        sale_price: null,
+        total: item.price * item.quantity,
       }));
 
       const { error: itemsError } = await (await getSupabase())
@@ -558,14 +551,10 @@ export const orderAPI = {
                 customer_email: customerEmail,
                 total_amount: orderData.total,
                 items: orderData.items.map(
-                  (item: {
-                    product: { name: string };
-                    quantity: number;
-                    selectedVariant: { price: number };
-                  }) => ({
-                    product_name: item.product.name,
+                  (item) => ({
+                    product_name: item.name,
                     quantity: item.quantity,
-                    unit_price: item.selectedVariant.price, // or salePrice? Using price for simplicity or check logic
+                    unit_price: item.price,
                   })
                 ),
               },
@@ -636,18 +625,15 @@ export const orderAPI = {
         discount: parseFloat(data.discount) || 0,
         items: (data.order_items as Record<string, unknown>[]).map(
           (item: Record<string, unknown>) => ({
-            product: {
-              id: item.product_id as string,
-              name: item.product_name as string,
-              images: [item.product_image as string],
-            } as unknown as Product,
-            selectedVariant: {
-              id: item.variant_id as string,
-              name: item.variant_name as string,
-              price: parseFloat(item.unit_price as string),
-              salePrice: item.sale_price ? parseFloat(item.sale_price as string) : undefined,
-            } as unknown as Variant,
+            id: `${item.product_id}-${item.variant_name}`,
+            productId: parseInt(item.product_id as string),
+            variantId: parseInt(item.variant_id as string),
+            name: item.product_name as string,
+            image: item.product_image as string,
+            price: parseFloat(item.unit_price as string),
             quantity: item.quantity as number,
+            weight: item.variant_name as string,
+            stock: 99,
           })
         ),
       };
@@ -736,17 +722,15 @@ export const orderAPI = {
       paymentMethod: orderData.payment_method,
       deliveryMethod: (orderData.delivery_method as Order['deliveryMethod']) || 'Standard',
       items: (orderData.order_items as Record<string, unknown>[]).map((item) => ({
-        product: {
-          id: item.product_id as string,
-          name: item.product_name as string,
-          images: [item.product_image as string],
-        } as unknown as Product,
-        selectedVariant: {
-          id: item.variant_id as string,
-          name: item.variant_name as string,
-          price: parseFloat(item.unit_price as string),
-        } as unknown as Variant,
+        id: `${item.product_id}-${item.variant_name}`,
+        productId: parseInt(item.product_id as string),
+        variantId: parseInt(item.variant_id as string),
+        name: item.product_name as string,
+        image: item.product_image as string,
+        price: parseFloat(item.unit_price as string),
         quantity: item.quantity as number,
+        weight: item.variant_name as string,
+        stock: 99,
       })),
       shippingCost: parseFloat(orderData.shipping_cost || '0'),
       discount: parseFloat(orderData.discount || '0'),

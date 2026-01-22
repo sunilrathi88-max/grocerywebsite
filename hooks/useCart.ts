@@ -53,7 +53,7 @@ export const useCart = (): UseCartReturn => {
     }) => {
       const currentCart = queryClient.getQueryData<CartItem[]>(['cart']) || [];
       const existingItemIndex = currentCart.findIndex(
-        (item) => item.product.id === product.id && item.selectedVariant.id === variant.id
+        (item) => item.productId === product.id && item.variantId === variant.id
       );
 
       let newCart: CartItem[];
@@ -65,7 +65,20 @@ export const useCart = (): UseCartReturn => {
           quantity: Math.min(item.quantity + quantity, variant.stock),
         };
       } else {
-        newCart = [...currentCart, { product, selectedVariant: variant, quantity }];
+        newCart = [
+          ...currentCart,
+          {
+            id: `${product.id}-${variant.name}`,
+            productId: product.id,
+            variantId: variant.id,
+            name: product.name,
+            price: variant.salePrice || variant.price,
+            quantity,
+            weight: variant.name,
+            image: product.images[0],
+            stock: variant.stock,
+          },
+        ];
       }
 
       localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(newCart));
@@ -80,7 +93,7 @@ export const useCart = (): UseCartReturn => {
     mutationFn: async ({ productId, variantId }: { productId: number; variantId: number }) => {
       const currentCart = queryClient.getQueryData<CartItem[]>(['cart']) || [];
       const newCart = currentCart.filter(
-        (item) => !(item.product.id === productId && item.selectedVariant.id === variantId)
+        (item) => !(item.productId === productId && item.variantId === variantId)
       );
       localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(newCart));
       return newCart;
@@ -104,15 +117,15 @@ export const useCart = (): UseCartReturn => {
 
       if (quantity <= 0) {
         const newCart = currentCart.filter(
-          (item) => !(item.product.id === productId && item.selectedVariant.id === variantId)
+          (item) => !(item.productId === productId && item.variantId === variantId)
         );
         localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(newCart));
         return newCart;
       }
 
       const newCart = currentCart.map((item) =>
-        item.product.id === productId && item.selectedVariant.id === variantId
-          ? { ...item, quantity: Math.min(quantity, item.selectedVariant.stock) }
+        item.productId === productId && item.variantId === variantId
+          ? { ...item, quantity: Math.min(quantity, item.stock) }
           : item
       );
       localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(newCart));
@@ -143,8 +156,7 @@ export const useCart = (): UseCartReturn => {
   const subtotal = useMemo(
     () =>
       cartItems.reduce((total, item) => {
-        const price = item.selectedVariant.salePrice ?? item.selectedVariant.price;
-        return total + price * item.quantity;
+        return total + item.price * item.quantity;
       }, 0),
     [cartItems]
   );
@@ -179,7 +191,7 @@ export const useCart = (): UseCartReturn => {
   const isInCart = useCallback(
     (productId: number, variantId: number): boolean => {
       return cartItems.some(
-        (item) => item.product.id === productId && item.selectedVariant.id === variantId
+        (item) => item.productId === productId && item.variantId === variantId
       );
     },
     [cartItems]
@@ -188,7 +200,7 @@ export const useCart = (): UseCartReturn => {
   const getCartItemQuantity = useCallback(
     (productId: number, variantId: number): number => {
       const item = cartItems.find(
-        (item) => item.product.id === productId && item.selectedVariant.id === variantId
+        (item) => item.productId === productId && item.variantId === variantId
       );
       return item?.quantity ?? 0;
     },

@@ -141,8 +141,8 @@ const OrderConfirmationRoute = ({
         addToast={addToast}
         discount={0}
         promoCode=""
-        onApplyPromoCode={() => {}}
-        onRemovePromoCode={() => {}}
+        onApplyPromoCode={() => { }}
+        onRemovePromoCode={() => { }}
         subtotal={0}
         shippingCost={0}
       />
@@ -424,6 +424,8 @@ const App: React.FC = () => {
     (product: Product, variant: Variant, quantity: number = 1) => {
       addToCart({
         id: `${product.id}-${variant.name}`, // Use composite ID matching ProductDetailPage logic
+        productId: product.id,
+        variantId: variant.id,
         name: product.name,
         price: variant.salePrice || variant.price,
         quantity,
@@ -477,7 +479,7 @@ const App: React.FC = () => {
     (productId: number, review: Omit<Review, 'id'>) => {
       // Check for verified purchase
       const hasPurchased = orders.some((order) =>
-        order.items.some((item) => item.product.id === productId)
+        order.items.some((item) => item.productId === productId)
       );
 
       const newReview: Review = {

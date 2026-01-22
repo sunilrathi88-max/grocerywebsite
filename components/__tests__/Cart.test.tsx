@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Cart from '../Cart';
-import { CartItem } from '../../store/cartStore';
+import { CartItem } from '../../types';
 
 // Mock framer-motion
 // Mock framer-motion
@@ -99,6 +99,8 @@ describe('Cart', () => {
   // Mock data using store/cartStore CartItem structure
   const mockCartItem1: CartItem = {
     id: '1-100g',
+    productId: 1,
+    variantId: 101,
     name: 'Premium Saffron',
     price: 249,
     quantity: 2,
@@ -109,6 +111,8 @@ describe('Cart', () => {
 
   const mockCartItem2: CartItem = {
     id: '2-200g',
+    productId: 2,
+    variantId: 201,
     name: 'Black Pepper',
     price: 499,
     quantity: 1,
@@ -250,6 +254,8 @@ describe('Cart', () => {
     it('should disable plus button when quantity reaches stock limit', () => {
       const itemAtLimit: CartItem = {
         id: '1-100g',
+        productId: 1,
+        variantId: 101,
         name: 'Premium Saffron',
         price: 249,
         quantity: 10, // Same as stock
@@ -497,6 +503,8 @@ describe('Cart', () => {
     it('should handle items with same product but different variants', () => {
       const cartItem3: CartItem = {
         id: '1-200g',
+        productId: 1,
+        variantId: 102,
         name: 'Premium Saffron',
         price: 499,
         quantity: 1,

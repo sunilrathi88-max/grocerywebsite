@@ -17,6 +17,8 @@ const SubscriptionPage: React.FC = () => {
 
     addToCart({
       id: `sub-${plan.id}`,
+      productId: 9999, // Subscription Product ID
+      variantId: 9999, // Subscription Variant ID
       name: `Tattva Fresh: ${plan.name}`,
       price: plan.price,
       quantity: 1,

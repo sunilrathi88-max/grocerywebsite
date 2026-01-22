@@ -50,6 +50,8 @@ const MobileCartPage: React.FC = () => {
   const handleAddToCart = (product: Product, variant: Variant) => {
     addItem({
       id: `${product.id}-${variant.name}`,
+      productId: product.id,
+      variantId: variant.id,
       name: product.name,
       price: variant.salePrice || variant.price,
       quantity: 1,
@@ -118,7 +120,7 @@ const MobileCartPage: React.FC = () => {
         cartItemCount={cartItems.reduce((acc, item) => acc + item.quantity, 0)}
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
-        onCartClick={() => {}} // Already on cart
+        onCartClick={() => { }} // Already on cart
       />
 
       <div className="p-4">

@@ -24,7 +24,7 @@ const OrderHistory: React.FC<OrderHistoryProps> = ({ user, orders, onSelectOrder
         searchQuery === '' ||
         order.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
         order.items.some((item) =>
-          item.product.name.toLowerCase().includes(searchQuery.toLowerCase())
+          item.name.toLowerCase().includes(searchQuery.toLowerCase())
         );
       return matchesFilter && matchesSearch;
     });
@@ -85,11 +85,10 @@ const OrderHistory: React.FC<OrderHistoryProps> = ({ user, orders, onSelectOrder
                 <button
                   key={filter}
                   onClick={() => setSelectedFilter(filter)}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                    selectedFilter === filter
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${selectedFilter === filter
                       ? 'bg-brand-primary text-brand-dark shadow-md'
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                  }`}
+                    }`}
                 >
                   {filter}
                   {filter === 'All' && ` (${orders.length})`}
@@ -187,8 +186,8 @@ const OrderHistory: React.FC<OrderHistoryProps> = ({ user, orders, onSelectOrder
                       {order.items.slice(0, 4).map((item, idx) => (
                         <div key={idx} className="flex-shrink-0">
                           <img
-                            src={item.product.images[0]}
-                            alt={item.product.name}
+                            src={item.image}
+                            alt={item.name}
                             className="w-16 h-16 object-cover rounded-lg border border-gray-200"
                             onError={imageErrorHandlers.thumb}
                           />
