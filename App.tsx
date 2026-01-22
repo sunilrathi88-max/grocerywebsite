@@ -72,7 +72,7 @@ const MobileBottomNav = React.lazy(() => import('./components/MobileBottomNav'))
 const MessagingShowcase = React.lazy(() => import('./components/MessagingShowcase'));
 
 // Lazy-Loaded Pages (Route-Based Code Splitting)
-const CheckoutPage = React.lazy(() => import('./components/CheckoutPage'));
+const CheckoutPage = React.lazy(() => import('./pages/CheckoutPage'));
 
 // AdminDashboard is imported directly at top of file for debugging
 const PrivacyPolicyPage = React.lazy(() => import('./components/PrivacyPolicyPage'));
@@ -141,8 +141,8 @@ const OrderConfirmationRoute = ({
         addToast={addToast}
         discount={0}
         promoCode=""
-        onApplyPromoCode={() => { }}
-        onRemovePromoCode={() => { }}
+        onApplyPromoCode={() => {}}
+        onRemovePromoCode={() => {}}
         subtotal={0}
         shippingCost={0}
       />
@@ -780,7 +780,6 @@ const App: React.FC = () => {
                             : pageSEO.home())}
               structuredDataId="organization-schema"
             />
-
 
             {!(isMobile && isMobileLayoutPage) && <FreeShippingBanner />}
             {!(isMobile && isMobileLayoutPage) && (

@@ -35,7 +35,7 @@ const HarvestCollection: React.FC<HarvestCollectionProps> = ({ products }) => {
   };
 
   return (
-    <section className="py-20 bg-white">
+    <section id="most-loved-section" className="py-20 bg-white">
       <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
         <div className="flex flex-row justify-between items-end mb-12">
           <div>

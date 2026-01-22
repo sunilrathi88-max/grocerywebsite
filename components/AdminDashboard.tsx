@@ -87,7 +87,10 @@ const AnalyticsDashboard: React.FC<{ analytics: AnalyticsProps }> = ({ analytics
         <span className="text-blue-500 text-xl">ℹ️</span>
         <div>
           <p className="font-bold text-blue-800">No orders yet</p>
-          <p className="text-sm text-blue-700">Analytics will populate once customers place orders. All systems are connected and ready!</p>
+          <p className="text-sm text-blue-700">
+            Analytics will populate once customers place orders. All systems are connected and
+            ready!
+          </p>
         </div>
       </div>
     )}
@@ -166,7 +169,16 @@ const AnalyticsDashboard: React.FC<{ analytics: AnalyticsProps }> = ({ analytics
 
 const AdminDashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState<
-    'products' | 'orders' | 'analytics' | 'reviews' | 'content' | 'discounts' | 'subscriptions' | 'customers' | 'emails' | 'settings'
+    | 'products'
+    | 'orders'
+    | 'analytics'
+    | 'reviews'
+    | 'content'
+    | 'discounts'
+    | 'subscriptions'
+    | 'customers'
+    | 'emails'
+    | 'settings'
   >('products');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
@@ -478,14 +490,18 @@ const ProductManagement: React.FC<{
                     {p.category}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {p.variants && p.variants.length > 0 && p.variants[0]?.price != null
-                      ? `₹${p.variants[0].price.toFixed(2)}`
-                      : <span className="text-red-500">No price set</span>}
+                    {p.variants && p.variants.length > 0 && p.variants[0]?.price != null ? (
+                      `₹${p.variants[0].price.toFixed(2)}`
+                    ) : (
+                      <span className="text-red-500">No price set</span>
+                    )}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {p.variants && p.variants.length > 0
-                      ? p.variants.reduce((sum, v) => sum + (v.stock || 0), 0)
-                      : <span className="text-red-500">0</span>}
+                    {p.variants && p.variants.length > 0 ? (
+                      p.variants.reduce((sum, v) => sum + (v.stock || 0), 0)
+                    ) : (
+                      <span className="text-red-500">0</span>
+                    )}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-right space-x-2">
                     <button
@@ -686,12 +702,13 @@ const ReviewModeration: React.FC<{ reviews: AdminReview[]; onUpdate: () => void 
                 </td>
                 <td className="px-6 py-4 text-sm">
                   <span
-                    className={`px-2 py-1 rounded-full text-xs font-bold ${review.status === 'approved'
-                      ? 'bg-green-100 text-green-800'
-                      : review.status === 'rejected'
-                        ? 'bg-red-100 text-red-800'
-                        : 'bg-yellow-100 text-yellow-800'
-                      }`}
+                    className={`px-2 py-1 rounded-full text-xs font-bold ${
+                      review.status === 'approved'
+                        ? 'bg-green-100 text-green-800'
+                        : review.status === 'rejected'
+                          ? 'bg-red-100 text-red-800'
+                          : 'bg-yellow-100 text-yellow-800'
+                    }`}
                   >
                     {review.status.toUpperCase()}
                   </span>

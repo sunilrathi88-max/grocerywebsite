@@ -1,116 +1,208 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
-        xmlns:mobile="http://www.mobile.googlebot.com/schemas/mobile/1.0">
-  
-  <!-- Homepage - Highest priority -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://www.tattvaco.in/</loc>
+    <loc>https://tattvaco.in</loc>
     <lastmod>2026-01-22</lastmod>
-    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
-
-  <!-- Main Category Pages -->
   <url>
-    <loc>https://www.tattvaco.in/shop</loc>
+    <loc>https://tattvaco.in/shop</loc>
     <lastmod>2026-01-22</lastmod>
-    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tattvaco.in/about</loc>
+    <lastmod>2026-01-22</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tattvaco.in/contact</loc>
+    <lastmod>2026-01-22</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tattvaco.in/blog</loc>
+    <lastmod>2026-01-22</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tattvaco.in/faqs</loc>
+    <lastmod>2026-01-22</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tattvaco.in/terms-of-service</loc>
+    <lastmod>2026-01-22</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tattvaco.in/privacy-policy</loc>
+    <lastmod>2026-01-22</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tattvaco.in/refund-policy</loc>
+    <lastmod>2026-01-22</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tattvaco.in/recipes</loc>
+    <lastmod>2026-01-22</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tattvaco.in/offers</loc>
+    <lastmod>2026-01-22</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tattvaco.in/product/1</loc>
+    <lastmod>2026-01-22</lastmod>
     <priority>0.9</priority>
   </url>
-
   <url>
-    <loc>https://www.tattvaco.in/popular-masalas</loc>
+    <loc>https://tattvaco.in/product/2</loc>
     <lastmod>2026-01-22</lastmod>
-    <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
-
-  <!-- Popular Products/Spices -->
   <url>
-    <loc>https://www.tattvaco.in/products/garam-masala</loc>
+    <loc>https://tattvaco.in/product/3</loc>
     <lastmod>2026-01-22</lastmod>
-    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tattvaco.in/product/4</loc>
+    <lastmod>2026-01-22</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tattvaco.in/product/5</loc>
+    <lastmod>2026-01-22</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tattvaco.in/product/6</loc>
+    <lastmod>2026-01-22</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tattvaco.in/product/7</loc>
+    <lastmod>2026-01-22</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tattvaco.in/product/8</loc>
+    <lastmod>2026-01-22</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tattvaco.in/product/9</loc>
+    <lastmod>2026-01-22</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tattvaco.in/product/10</loc>
+    <lastmod>2026-01-22</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tattvaco.in/product/11</loc>
+    <lastmod>2026-01-22</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tattvaco.in/product/12</loc>
+    <lastmod>2026-01-22</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tattvaco.in/product/13</loc>
+    <lastmod>2026-01-22</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tattvaco.in/product/14</loc>
+    <lastmod>2026-01-22</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tattvaco.in/product/15</loc>
+    <lastmod>2026-01-22</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tattvaco.in/product/18</loc>
+    <lastmod>2026-01-22</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tattvaco.in/product/19</loc>
+    <lastmod>2026-01-22</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tattvaco.in/product/22</loc>
+    <lastmod>2026-01-22</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tattvaco.in/product/23</loc>
+    <lastmod>2026-01-22</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tattvaco.in/product/24</loc>
+    <lastmod>2026-01-22</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tattvaco.in/product/25</loc>
+    <lastmod>2026-01-22</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tattvaco.in/product/27</loc>
+    <lastmod>2026-01-22</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tattvaco.in/product/28</loc>
+    <lastmod>2026-01-22</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tattvaco.in/product/29</loc>
+    <lastmod>2026-01-22</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tattvaco.in/category/Spices</loc>
+    <lastmod>2026-01-22</lastmod>
     <priority>0.8</priority>
   </url>
-
   <url>
-    <loc>https://www.tattvaco.in/products/turmeric</loc>
+    <loc>https://tattvaco.in/category/Nuts</loc>
     <lastmod>2026-01-22</lastmod>
-    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-
   <url>
-    <loc>https://www.tattvaco.in/products/chaat-masala</loc>
+    <loc>https://tattvaco.in/category/Beverages</loc>
     <lastmod>2026-01-22</lastmod>
-    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-
   <url>
-    <loc>https://www.tattvaco.in/products/sambar-powder</loc>
+    <loc>https://tattvaco.in/category/Dry Fruits</loc>
     <lastmod>2026-01-22</lastmod>
-    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-
   <url>
-    <loc>https://www.tattvaco.in/products/coriander-powder</loc>
+    <loc>https://tattvaco.in/blog/the-secret-to-perfect-biryani</loc>
     <lastmod>2026-01-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- Information Pages -->
-  <url>
-    <loc>https://www.tattvaco.in/about</loc>
-    <lastmod>2026-01-22</lastmod>
-    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
-
   <url>
-    <loc>https://www.tattvaco.in/contact</loc>
+    <loc>https://tattvaco.in/blog/beyond-the-grind-the-power-of-malabar-pepper</loc>
     <lastmod>2026-01-22</lastmod>
-    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
-
-  <url>
-    <loc>https://www.tattvaco.in/faq</loc>
-    <lastmod>2026-01-22</lastmod>
-    <changefreq>quarterly</changefreq>
-    <priority>0.6</priority>
-  </url>
-
-  <!-- Policy Pages -->
-  <url>
-    <loc>https://www.tattvaco.in/privacy-policy</loc>
-    <lastmod>2026-01-22</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.5</priority>
-  </url>
-
-  <url>
-    <loc>https://www.tattvaco.in/terms-conditions</loc>
-    <lastmod>2026-01-22</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.5</priority>
-  </url>
-
-  <url>
-    <loc>https://www.tattvaco.in/shipping-policy</loc>
-    <lastmod>2026-01-22</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.5</priority>
-  </url>
-
-  <url>
-    <loc>https://www.tattvaco.in/return-policy</loc>
-    <lastmod>2026-01-22</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.5</priority>
-  </url>
-
 </urlset>

@@ -102,8 +102,18 @@ const ProductGrid: React.FC<ProductGridProps> = ({
                 image={product.images[0]}
                 rating={product.rating || 0}
                 reviewCount={product.reviews.length}
-                heatLevel="medium" // Default or derive from tags
-                useCase={product.category}
+                heatLevel={
+                  product.tags?.some((t) => t.toLowerCase().includes('hot'))
+                    ? 8
+                    : product.tags?.some((t) => t.toLowerCase().includes('medium'))
+                      ? 5
+                      : product.tags?.some((t) => t.toLowerCase().includes('mild'))
+                        ? 2
+                        : product.name.toLowerCase().includes('chilli')
+                          ? 7
+                          : 0
+                }
+                useCase={product.tags?.filter((t) => t.startsWith('For ')) || [product.category]}
                 sizes={product.variants.map((v) => ({
                   size: v.name,
                   price: v.salePrice || v.price,

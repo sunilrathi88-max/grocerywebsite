@@ -1,17 +1,8 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChefHatIcon } from './icons/ChefHatIcon';
-import { ShoppingBagIcon } from './icons/ShoppingBagIcon';
-import { GiftIcon } from './icons/GiftIcon';
-import { LeafIcon } from './icons/LeafIcon';
-import { SunIcon } from './icons/SunIcon';
-import { GlobeIcon } from './icons/GlobeIcon';
-import { HeartIcon } from './icons/HeartIcon';
-import { SparklesIcon } from './icons/SparklesIcon';
-import { BeakerIcon } from './icons/BeakerIcon';
-import { StarIcon } from './icons/StarIcon';
-import { TagIcon } from './icons/TagIcon';
+import { SparklesIcon, TagIcon, StarIcon } from '@heroicons/react/24/outline';
+import { NAV_GROUPS } from '../data/navigation';
 
 interface MegaMenuProps {
   isOpen: boolean;
@@ -36,49 +27,7 @@ const MegaMenu: React.FC<MegaMenuProps> = ({ isOpen, onClose, onSelectCategory }
     onClose();
   };
 
-  const navGroups = [
-    {
-      title: 'By Customer Intent',
-      items: [
-        {
-          label: 'Essential Kitchen Masalas',
-          sub: 'Start here! 5 must-haves',
-          icon: ChefHatIcon,
-          id: 'Essential Kitchen',
-        },
-        {
-          label: 'Recipe-Ready Bundles',
-          sub: 'Complete kits for dishes',
-          icon: ShoppingBagIcon,
-          id: 'Recipe Bundles',
-        },
-        {
-          label: 'Premium & Gifts',
-          sub: 'Specialty imports & combos',
-          icon: GiftIcon,
-          id: 'Premium & Gifts',
-        },
-      ],
-    },
-    {
-      title: 'By Cooking Needs',
-      items: [
-        { label: 'Making Curry Today', icon: LeafIcon, id: 'Making Curry' },
-        { label: 'Making Chai', icon: SunIcon, id: 'Making Chai' },
-        { label: 'Making Rice Dishes', icon: GlobeIcon, id: 'Making Rice' },
-        { label: 'Health & Wellness', icon: HeartIcon, id: 'Health & Wellness' },
-      ],
-    },
-    {
-      title: 'By Type',
-      items: [
-        { label: 'Pure Single Spices', icon: SparklesIcon, id: 'Pure Spices' },
-        { label: 'Masala Blends', icon: BeakerIcon, id: 'Masala Blends' },
-        { label: 'Whole (Unground)', icon: LeafIcon, id: 'Whole Spices' },
-        { label: 'Organic Certified', icon: StarIcon, id: 'Combo Packs' }, // "Combo Packs" mapped to Organic Certified in UI previously? Keeping ID consistent check.
-      ],
-    },
-  ];
+  const navGroups = NAV_GROUPS;
 
   return (
     <AnimatePresence>

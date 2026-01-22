@@ -187,6 +187,35 @@ const AdvancedFilters: React.FC<AdvancedFiltersProps> = ({
             </div>
           </div>
 
+          {/* Shop by Need (Smart Filters) */}
+          <div className="space-y-3">
+            <h3 className="text-sm font-semibold text-gray-600 uppercase tracking-wide flex items-center gap-2">
+              ✨ Shop by Need
+            </h3>
+            <div className="flex items-center flex-wrap gap-2">
+              {['Immunity', 'Digestion', 'Keto', 'Diabetic Friendly', 'Heart Healthy'].map(
+                (tag) => {
+                  const isAvailable = availableTags.includes(tag);
+                  if (!isAvailable) return null;
+
+                  return (
+                    <button
+                      key={tag}
+                      onClick={() => onToggleTag(tag)}
+                      className={`px-3 py-1.5 text-xs font-bold rounded-full transition-all border ${
+                        selectedTags.includes(tag)
+                          ? 'bg-green-100 text-green-700 border-green-200'
+                          : 'bg-gray-50 text-gray-600 border-gray-200 hover:border-green-200 hover:text-green-600'
+                      }`}
+                    >
+                      {tag}
+                    </button>
+                  );
+                }
+              )}
+            </div>
+          </div>
+
           {/* Tags - Advanced Only */}
           {isAdvancedMode && availableTags.length > 0 && (
             <div className="space-y-3">

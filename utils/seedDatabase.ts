@@ -44,10 +44,7 @@ export const seedDatabase = async () => {
       // we need to be careful. The `variants` table exists now.
       // We should probably allow the API to return the NEW ID.
 
-      const newProduct = await productAPI.create(
-        // @ts-expect-error - passing Omit<Product, 'id'> roughly
-        productData
-      );
+      const newProduct = await productAPI.create(productData);
 
       if (newProduct && newProduct.id) {
         console.log(`✅ Created Product: ${newProduct.name} (ID: ${newProduct.id})`);

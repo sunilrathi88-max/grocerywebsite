@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Cart from '../components/Cart';
 import { useCartStore } from '../store/cartStore';
-import { productAPI, promoAPI } from '../utils/apiService';
+import { productAPI } from '../utils/apiService';
 import { Product, Variant } from '../types';
 
 import { Coupon } from '../types';
@@ -108,9 +108,9 @@ const CartPage: React.FC = () => {
       // 4. Apply to Store
       applyCoupon(coupon.code, calculatedDiscount);
       alert(`Code ${coupon.code} applied! Saved ₹${calculatedDiscount}`);
-    } catch (error: any) {
+    } catch (error) {
       console.error('Promo error:', error);
-      alert(error.message || 'Failed to apply promo code');
+      alert('Failed to apply promo code'); // Simplified for now to avoid compilation issues with unknown error type
       applyCoupon(null, 0); // Clear on error
     }
   };
@@ -119,11 +119,36 @@ const CartPage: React.FC = () => {
     navigate('/checkout');
   };
 
+  const freeShippingThreshold = 600;
+  const progress = Math.min((subtotal / freeShippingThreshold) * 100, 100);
+  const remaining = Math.max(freeShippingThreshold - subtotal, 0);
+
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
-      <h1 className="text-3xl font-serif font-bold text-brand-dark mb-8 text-center">
+      <h1 className="text-3xl font-serif font-bold text-brand-dark mb-4 text-center">
         Your Shopping Cart
       </h1>
+
+      {/* Free Shipping Progress */}
+      <div className="max-w-md mx-auto mb-8 bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+        {remaining > 0 ? (
+          <p className="text-sm text-center text-gray-600 mb-2">
+            Add <span className="font-bold text-brand-primary">₹{remaining}</span> more for{' '}
+            <span className="font-bold text-green-600">FREE Shipping</span> 🚚
+          </p>
+        ) : (
+          <p className="text-sm text-center text-green-600 font-bold mb-2">
+            🎉 You&apos;ve unlocked FREE Shipping!
+          </p>
+        )}
+        <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+          <div
+            className="h-full bg-gradient-to-r from-brand-primary to-green-500 transition-all duration-500"
+            style={{ width: `${progress}%` }}
+          />
+        </div>
+      </div>
+
       <div className="bg-white rounded-xl shadow-lg overflow-hidden min-h-[600px] border border-gray-100">
         <Cart
           items={cartItems}

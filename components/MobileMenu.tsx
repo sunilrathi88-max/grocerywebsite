@@ -3,6 +3,8 @@ import { m, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { XIcon } from './icons/XIcon';
 
+import { NAV_GROUPS } from '../data/navigation';
+
 interface MobileMenuProps {
   isOpen: boolean;
   onClose: () => void;
@@ -146,6 +148,42 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
               >
                 {link.name}
               </m.button>
+            ))}
+
+            {/* Curated Navigation Groups */}
+            {NAV_GROUPS.map((group, groupIdx) => (
+              <div key={group.title} className="border-t border-gray-100 pt-4 mt-2">
+                <p className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-2">
+                  {group.title}
+                </p>
+                <div className="bg-gray-50 rounded-xl overflow-hidden">
+                  {group.items.map((item, itemIdx) => {
+                    const Icon = item.icon;
+                    return (
+                      <button
+                        key={item.label}
+                        className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-100 transition-colors text-left border-b border-gray-100 last:border-0"
+                        onClick={() => {
+                          onSelectCategory(item.id);
+                          onClose();
+                        }}
+                      >
+                        <div className="text-brand-primary/70">
+                          <Icon className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <span className="text-base font-medium text-brand-dark block">
+                            {item.label}
+                          </span>
+                          {item.sub && (
+                            <span className="text-xs text-gray-500 block">{item.sub}</span>
+                          )}
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
             ))}
 
             <div className="border-t border-gray-200 my-4 pt-4">

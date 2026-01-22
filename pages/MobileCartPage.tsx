@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Cart from '../components/Cart';
 import { useCartStore } from '../store/cartStore';
-import { productAPI, promoAPI } from '../utils/apiService';
+import { productAPI } from '../utils/apiService';
 import { Product, Variant } from '../types';
 import { MobileHeader } from '../components/mobile';
 
@@ -37,8 +37,8 @@ const MobileCartPage: React.FC = () => {
       try {
         const products = await productAPI.getAll({ limit: 5 });
         setRecommendedProducts(products || []);
-      } catch (error) {
-        console.error('Failed to fetch recommendations:', error);
+      } catch {
+        // Silently fail or use a proper error logging service
         setRecommendedProducts([]);
       }
     };
@@ -105,9 +105,7 @@ const MobileCartPage: React.FC = () => {
       // 4. Apply to Store
       applyCoupon(coupon.code, calculatedDiscount);
       // Mobile handles alerts differently, usually toast. For now, simple console confirm or rely on UI update.
-      console.log(`Code ${coupon.code} applied! Saved ₹${calculatedDiscount}`);
-    } catch (error: any) {
-      console.error('Promo error:', error);
+    } catch {
       applyCoupon(null, 0);
     }
   };
@@ -120,7 +118,7 @@ const MobileCartPage: React.FC = () => {
         cartItemCount={cartItems.reduce((acc, item) => acc + item.quantity, 0)}
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
-        onCartClick={() => { }} // Already on cart
+        onCartClick={() => {}} // Already on cart
       />
 
       <div className="p-4">

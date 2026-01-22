@@ -13,6 +13,7 @@ import Testimonials from '../components/Testimonials';
 import { FEATURED_TESTIMONIALS } from '../data/testimonials';
 import QuizModule from '../components/QuizModule';
 import toast from 'react-hot-toast';
+import CookingContextWidget from '../components/CookingContextWidget';
 
 interface HomePageProps {
   products: Product[];
@@ -140,6 +141,21 @@ const HomePage: React.FC<HomePageProps> = ({
     }
   };
 
+  // Handler for CookingContextWidget
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleAddBundleToCart = (kit: any) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    kit.products.forEach((p: any) => {
+      // Find full product object if needed, or construct minimal product object
+      // Since existing handleAddToCart might need full Product object, we should probably find it in 'products' prop
+      const fullProduct = products.find((prod) => prod.id === p.id);
+      if (fullProduct) {
+        handleAddToCart(fullProduct, fullProduct.variants[0], 1);
+      }
+    });
+    _addToast(`Added ${kit.name} to cart!`, 'success');
+  };
+
   return (
     <main className="bg-white">
       {/* 1. Hero Section (New Design) */}
@@ -148,16 +164,19 @@ const HomePage: React.FC<HomePageProps> = ({
       {/* 2. Trust Signals (Dark Strip) */}
       <TrustSignals />
 
-      {/* 3. Journey Timeline (Transparency) */}
+      {/* 3. Cooking Context Widget (New) */}
+      <CookingContextWidget onAddBundleToCart={handleAddBundleToCart} />
+
+      {/* 4. Journey Timeline (Transparency) */}
       <JourneyTimeline />
 
-      {/* 4. Harvest Collection (Curated Grid) */}
+      {/* 5. Harvest Collection (Curated Grid) */}
       <HarvestCollection products={products} />
 
-      {/* 5. Category Showcase (Whole/Blends/Infusions) */}
+      {/* 6. Category Showcase (Whole/Blends/Infusions) */}
       <CategoryShowcase />
 
-      {/* 6. Main Product Grid (Full Catalog) */}
+      {/* 7. Main Product Grid (Full Catalog) */}
       <div id="products-section" className="bg-background-light py-20 border-t border-primary/10">
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center mb-16">
@@ -242,7 +261,7 @@ const HomePage: React.FC<HomePageProps> = ({
         </div>
       </div>
 
-      {/* 7. Testimonials */}
+      {/* 8. Testimonials */}
       <Testimonials testimonials={FEATURED_TESTIMONIALS} />
 
       {/* Spice Quiz Section - Gamification */}

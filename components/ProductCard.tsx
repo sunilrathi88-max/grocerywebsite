@@ -11,8 +11,8 @@ interface ProductCardProps {
   image: string;
   rating: number;
   reviewCount: number;
-  heatLevel: 'mild' | 'medium' | 'hot';
-  useCase: string;
+  heatLevel: number | 'mild' | 'medium' | 'hot';
+  useCase: string | string[];
   sizes?: Array<{ size: string; price: number; stock?: number }>;
   badge?: 'new' | 'discount';
   badgeValue?: string;
@@ -49,43 +49,82 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   // Default to 0 based on user logic, though usually it's calculated
   const discount = originalPrice ? Math.round(((originalPrice - price) / originalPrice) * 100) : 0;
 
+  // Helper for visual spice level
+  const renderSpiceLevel = () => {
+    // If numeric level provided
+    if (typeof heatLevel === 'number') {
+      const level = heatLevel as number;
+      const getColor = () => {
+        if (level <= 2) return 'text-green-500';
+        if (level <= 4) return 'text-yellow-500';
+        if (level <= 6) return 'text-orange-500';
+        if (level <= 8) return 'text-red-500';
+        return 'text-red-700';
+      };
+      return (
+        <div
+          className={`flex items-center gap-0.5 ${getColor()}`}
+          title={`Heat Level: ${level}/10`}
+        >
+          {[...Array(5)].map((_, i) => (
+            <span
+              key={i}
+              className={`text-[10px] ${i < Math.ceil(level / 2) ? 'opacity-100' : 'opacity-30 grayscale'}`}
+            >
+              🌶️
+            </span>
+          ))}
+        </div>
+      );
+    }
+
+    // Fallback for string legacy prop
+    if (typeof heatLevel === 'string' && name.toLowerCase().includes('chilli')) {
+      return (
+        <span className="inline-flex items-center text-[10px] font-bold uppercase tracking-wider text-neutral-600 bg-neutral-100 px-2 py-1 rounded-full">
+          {heatLevelEmoji[heatLevel as keyof typeof heatLevelEmoji]} {heatLevel}
+        </span>
+      );
+    }
+    return null;
+  };
+
   return (
-    <Link to={`/product/${id}`}>
+    <Link to={`/product/${id}`} className="h-full block">
       <div
-        className="group bg-white rounded-xl overflow-hidden shadow-card hover-lift cursor-pointer h-full border border-neutral-200 animate-fadeInUp"
+        className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-full border border-neutral-100 flex flex-col"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
         {/* Image Container */}
-        <div className="relative w-full aspect-[4/5] bg-neutral-100 overflow-hidden">
+        <div className="relative w-full aspect-[4/5] bg-neutral-50 overflow-hidden">
           <OptimizedImage
             src={image}
             alt={name}
             type="card"
-            className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500"
+            className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-700"
             width={300}
             height={375}
           />
 
-          {/* Badges */}
-          {badge && (
-            <div className="absolute top-3 left-3 flex flex-col gap-2">
-              {badge === 'new' && (
-                <span className="bg-brand-primary text-white px-2.5 py-1 rounded-md text-xs font-bold shadow-sm uppercase tracking-wide">
-                  New
-                </span>
-              )}
-              {badge === 'discount' && discount > 0 && (
-                <span className="bg-semantic-error text-white px-2.5 py-1 rounded-md text-xs font-bold shadow-sm">
-                  {discount}% OFF
-                </span>
-              )}
-            </div>
-          )}
+          {/* Badges - Enhanced */}
+          <div className="absolute top-3 left-3 flex flex-col gap-2 z-10">
+            {badge === 'new' && (
+              <span className="bg-blue-600 text-white px-2 py-1 rounded-lg text-[10px] font-bold shadow-md uppercase tracking-wider backdrop-blur-md">
+                New Arrival
+              </span>
+            )}
+            {badge === 'discount' && discount > 0 && (
+              <span className="bg-red-600 text-white px-2 py-1 rounded-lg text-[10px] font-bold shadow-md backdrop-blur-md">
+                Save {discount}%
+              </span>
+            )}
+            {/* Dynamic badges from props if added later */}
+          </div>
 
-          {/* Wishlist Button - Visible on Hover for Desktop, Always for Mobile */}
+          {/* Wishlist Button */}
           <button
-            className="absolute top-3 right-3 p-2 bg-white/90 backdrop-blur-sm rounded-full shadow-sm hover:bg-white text-neutral-600 hover:text-accent-red transition-all transform hover:scale-110"
+            className="absolute top-3 right-3 p-2 bg-white/80 backdrop-blur-md rounded-full shadow-sm hover:bg-white text-neutral-400 hover:text-red-500 transition-all transform hover:scale-110 z-20"
             onClick={(e) => {
               e.preventDefault();
               setIsWishlisted(!isWishlisted);
@@ -93,24 +132,33 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             }}
             aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
           >
-            {isWishlisted ? '❤️' : '♡'}
+            <svg
+              className={`w-5 h-5 ${isWishlisted ? 'fill-red-500 text-red-500' : 'text-current fill-none'}`}
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+              />
+            </svg>
           </button>
 
-          {/* Quick View Button */}
+          {/* Quick View Button - Desktop Only */}
           <div
-            className={`absolute inset-x-0 bottom-0 p-4 transition-all duration-300 ${isHovered ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'}`}
+            className={`absolute inset-x-4 bottom-4 transition-all duration-300 transform ${isHovered ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'} hidden md:block`}
           >
             <Button
               variant="primary"
               size="sm"
               fullWidth
               disabled={isLoading}
-              className={`shadow-lg flex items-center justify-center gap-2 transition-all duration-300 ${isSuccess ? 'bg-green-600 hover:bg-green-700 border-green-600' : ''
-                }`}
+              className={`shadow-lg border-0 ${isSuccess ? 'bg-green-600 hover:bg-green-700' : 'bg-brand-primary text-brand-dark hover:bg-brand-dark hover:text-white'}`}
               onClick={(e) => {
                 e.preventDefault();
                 setIsLoading(true);
-                // Simulate network/state delay
                 setTimeout(() => {
                   onAddToCart(id);
                   setIsLoading(false);
@@ -120,108 +168,90 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               }}
             >
               {isLoading ? (
-                <svg
-                  className="animate-spin h-5 w-5 text-white"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                  />
-                  <path
-                    className="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                  />
-                </svg>
+                <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin" />
               ) : isSuccess ? (
-                <>
-                  <svg
-                    className="w-5 h-5 text-white"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                  Added
-                </>
+                <span className="flex items-center gap-1">✓ Added</span>
               ) : (
-                <>
-                  <span>+</span> Quick Add
-                </>
+                <span className="font-bold">Quick Add +</span>
               )}
             </Button>
           </div>
         </div>
 
         {/* Product Info */}
-        <div className="p-5">
-          {/* Tags Row */}
-          <div className="flex gap-2 mb-3 flex-wrap">
-            {heatLevel && name.toLowerCase().includes('chilli') && (
-              <span className="inline-flex items-center text-[10px] font-bold uppercase tracking-wider text-neutral-600 bg-neutral-100 px-2 py-1 rounded-full">
-                {heatLevelEmoji[heatLevel]} {heatLevel}
+        <div className="p-4 flex-1 flex flex-col">
+          {/* Tags / Use Case */}
+          <div className="flex flex-wrap gap-2 mb-2 items-center min-h-[24px]">
+            {renderSpiceLevel()}
+
+            {/* If useCase is an array, map it, else show string. Also support Use Cases prop */}
+            {Array.isArray(useCase) ? (
+              useCase.slice(0, 2).map((tag, i) => (
+                <span
+                  key={i}
+                  className="text-[10px] font-bold uppercase tracking-wider text-amber-700 bg-amber-50 px-2 py-1 rounded-md"
+                >
+                  {tag}
+                </span>
+              ))
+            ) : useCase ? (
+              <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-500 bg-neutral-100 px-2 py-1 rounded-md break-all line-clamp-1">
+                {useCase}
               </span>
-            )}
-            <span className="inline-flex items-center text-[10px] font-bold uppercase tracking-wider text-neutral-600 bg-neutral-100 px-2 py-1 rounded-full">
-              {useCase}
-            </span>
+            ) : null}
           </div>
 
-          {/* Product Name */}
-          <h3 className="text-lg font-bold text-neutral-900 mb-1 line-clamp-1 group-hover:text-brand-primary transition-colors">
+          {/* Name */}
+          <h3 className="text-base font-bold text-neutral-900 mb-1 line-clamp-2 group-hover:text-brand-primary transition-colors h-[44px]">
             {name}
           </h3>
 
-          {/* Rating Row */}
+          {/* Rating */}
           <div className="flex items-center gap-1 mb-3">
-            <div className="flex text-brand-primary text-sm">
-              {'★'.repeat(Math.round(rating))}
-              <span className="text-neutral-300">{'★'.repeat(5 - Math.round(rating))}</span>
+            <div className="flex text-yellow-400 text-xs">
+              {'★★★★★'.split('').map((star, i) => (
+                <span
+                  key={i}
+                  className={i < Math.round(rating) ? 'text-yellow-400' : 'text-gray-200'}
+                >
+                  ★
+                </span>
+              ))}
             </div>
-            <span className="text-xs text-neutral-500 font-medium ml-1">
-              {rating} ({reviewCount})
-            </span>
+            <span className="text-xs text-neutral-400">({reviewCount})</span>
           </div>
 
-          {/* Low Stock Indicator */}
-          {sizes &&
-            sizes.length > 0 &&
-            sizes[0].stock !== undefined &&
-            sizes[0].stock > 0 &&
-            sizes[0].stock < 10 && (
-              <div className="mb-2">
-                <span className="text-xs font-bold text-red-600 animate-pulse">
-                  🔥 Only {sizes[0].stock} left
-                </span>
+          <div className="mt-auto pt-3 border-t border-neutral-50 flex items-center justify-between">
+            <div className="flex flex-col">
+              {originalPrice && originalPrice > price && (
+                <span className="text-xs text-neutral-400 line-through">₹{originalPrice}</span>
+              )}
+              <span className="text-lg font-bold text-brand-dark">₹{price}</span>
+            </div>
+
+            {/* Mobile Add Button */}
+            <button
+              className="md:hidden bg-brand-primary/10 text-brand-dark p-2 rounded-full hover:bg-brand-primary transition-colors"
+              onClick={(e) => {
+                e.preventDefault();
+                onAddToCart(id);
+              }}
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 4v16m8-8H4"
+                />
+              </svg>
+            </button>
+
+            {sizes && sizes.length > 0 && (
+              <div className="text-xs font-medium text-neutral-500 hidden md:block">
+                {sizes[0].size}
               </div>
             )}
-
-          {/* Pricing Row */}
-          <div className="flex items-end justify-between mt-auto">
-            <div>
-              <div className="text-xl font-bold text-neutral-900">₹{price}</div>
-              {originalPrice && (
-                <div className="text-xs text-neutral-400 line-through">₹{originalPrice}</div>
-              )}
-            </div>
-            <div className="text-right">
-              <span className="text-xs font-medium text-neutral-500 block mb-1">
-                {sizes?.[0]?.size || 'Pack'}
-              </span>
-            </div>
           </div>
         </div>
       </div>

@@ -336,10 +336,15 @@ const ProductFormModal: React.FC<ProductFormModalProps> = ({ product, onSave, on
             ))}
             <button
               type="button"
-              onClick={() => setFormData({
-                ...formData,
-                variants: [...formData.variants, { id: Date.now(), name: '', price: 0, stock: 0 }]
-              })}
+              onClick={() =>
+                setFormData({
+                  ...formData,
+                  variants: [
+                    ...formData.variants,
+                    { id: Date.now(), name: '', price: 0, stock: 0 },
+                  ],
+                })
+              }
               className="text-sm text-brand-primary hover:underline mt-2"
             >
               + Add Variant
