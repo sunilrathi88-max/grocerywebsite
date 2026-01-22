@@ -13,12 +13,15 @@ export interface CartItem {
   isSubscription?: boolean;
 }
 
-interface CartStore {
+export interface CartStore {
   items: CartItem[];
+  discountCode: string | null;
+  discountAmount: number;
   addItem: (item: CartItem) => void;
   removeItem: (id: string) => void;
   updateQuantity: (id: string, quantity: number) => void;
   clearCart: () => void;
+  applyCoupon: (code: string | null, amount: number) => void;
   getSubtotal: () => number;
   getTotal: () => number;
 }
@@ -27,6 +30,8 @@ export const useCartStore = create<CartStore>()(
   persist(
     (set, get) => ({
       items: [],
+      discountCode: null,
+      discountAmount: 0,
 
       addItem: (item: CartItem) => {
         set((state) => {
@@ -56,7 +61,9 @@ export const useCartStore = create<CartStore>()(
         }));
       },
 
-      clearCart: () => set({ items: [] }),
+      clearCart: () => set({ items: [], discountCode: null, discountAmount: 0 }),
+
+      applyCoupon: (code, amount) => set({ discountCode: code, discountAmount: amount }),
 
       getSubtotal: () => {
         const { items } = get();
@@ -65,7 +72,9 @@ export const useCartStore = create<CartStore>()(
 
       getTotal: () => {
         const subtotal = get().getSubtotal();
-        return subtotal >= 600 ? subtotal : subtotal + 50; // Free shipping above ₹600
+        const shipping = subtotal >= 600 ? 0 : 50;
+        const discount = get().discountAmount;
+        return Math.max(0, subtotal + shipping - discount);
       },
     }),
     {

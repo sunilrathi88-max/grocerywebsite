@@ -183,3 +183,17 @@ export interface Recipe {
   instructions: string[];
   relatedProductIds?: number[];
 }
+
+export interface Coupon {
+  id: string;
+  code: string;
+  discountType: 'percentage' | 'fixed';
+  discountValue: number;
+  minOrderValue: number;
+  maxUses: number;
+  usedCount: number;
+  validFrom: string;
+  validUntil: string;
+  isActive: boolean;
+  createdAt?: string;
+}
