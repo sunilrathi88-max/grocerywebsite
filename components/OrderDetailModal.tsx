@@ -130,8 +130,9 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
                   {/* Timeline Dot */}
                   <div className="relative flex-shrink-0">
                     <div
-                      className={`w-10 h-10 rounded-full flex items-center justify-center ${step.isCompleted ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-400'
-                        }`}
+                      className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                        step.isCompleted ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-400'
+                      }`}
                     >
                       {step.isCompleted ? (
                         <svg
@@ -165,8 +166,9 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
                     </div>
                     {index < statusSteps.length - 1 && (
                       <div
-                        className={`absolute left-1/2 top-10 w-0.5 h-12 -ml-px ${step.isCompleted ? 'bg-green-500' : 'bg-gray-200'
-                          }`}
+                        className={`absolute left-1/2 top-10 w-0.5 h-12 -ml-px ${
+                          step.isCompleted ? 'bg-green-500' : 'bg-gray-200'
+                        }`}
                       />
                     )}
                   </div>
@@ -174,8 +176,9 @@ const OrderDetailModal: React.FC<OrderDetailModalProps> = ({
                   {/* Timeline Content */}
                   <div className="ml-4 flex-1">
                     <p
-                      className={`font-semibold ${step.isCompleted ? 'text-gray-900' : 'text-gray-400'
-                        }`}
+                      className={`font-semibold ${
+                        step.isCompleted ? 'text-gray-900' : 'text-gray-400'
+                      }`}
                     >
                       {step.status}
                     </p>

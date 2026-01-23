@@ -507,7 +507,8 @@ export const MOCK_ORDERS: Order[] = [
         price: 250,
         quantity: 1,
         weight: '100g',
-        image: 'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=800&q=80',
+        image:
+          'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=800&q=80',
         stock: 50,
       },
       {
@@ -518,7 +519,8 @@ export const MOCK_ORDERS: Order[] = [
         price: 350,
         quantity: 2,
         weight: '250g',
-        image: 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
+        image:
+          'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
         stock: 40,
       },
     ],
@@ -542,7 +544,8 @@ export const MOCK_ORDERS: Order[] = [
         price: 450,
         quantity: 1,
         weight: '50g',
-        image: 'https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80',
+        image:
+          'https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=800&q=80',
         stock: 30,
       },
     ],

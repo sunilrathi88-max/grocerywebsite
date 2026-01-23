@@ -151,13 +151,13 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
             ))}
 
             {/* Curated Navigation Groups */}
-            {NAV_GROUPS.map((group, groupIdx) => (
+            {NAV_GROUPS.map((group) => (
               <div key={group.title} className="border-t border-gray-100 pt-4 mt-2">
                 <p className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-2">
                   {group.title}
                 </p>
                 <div className="bg-gray-50 rounded-xl overflow-hidden">
-                  {group.items.map((item, itemIdx) => {
+                  {group.items.map((item) => {
                     const Icon = item.icon;
                     return (
                       <button

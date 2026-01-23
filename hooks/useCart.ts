@@ -190,9 +190,7 @@ export const useCart = (): UseCartReturn => {
 
   const isInCart = useCallback(
     (productId: number, variantId: number): boolean => {
-      return cartItems.some(
-        (item) => item.productId === productId && item.variantId === variantId
-      );
+      return cartItems.some((item) => item.productId === productId && item.variantId === variantId);
     },
     [cartItems]
   );

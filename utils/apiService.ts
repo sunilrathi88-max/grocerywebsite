@@ -4,7 +4,7 @@
  */
 
 import { api, APIResponse } from './api';
-import { Product, Order, User, Review, QnA, Variant, OrderStatus, Address } from '../types';
+import { Product, Order, User, Review, QnA, OrderStatus, Address } from '../types';
 
 /**
  * Product API endpoints
@@ -286,34 +286,34 @@ export const orderAPI = {
         },
         billingAddress: o.billing_street
           ? {
-            id: '',
-            street: o.billing_street as string,
-            city: o.billing_city as string,
-            state: o.billing_state as string,
-            zip: o.billing_zip as string,
-            country: (o.billing_country as string) || 'India',
-            type: 'Billing',
-            isDefault: false,
-          }
+              id: '',
+              street: o.billing_street as string,
+              city: o.billing_city as string,
+              state: o.billing_state as string,
+              zip: o.billing_zip as string,
+              country: (o.billing_country as string) || 'India',
+              type: 'Billing',
+              isDefault: false,
+            }
           : {
-            id: '',
-            street: o.shipping_street as string,
-            city: o.shipping_city as string,
-            state: o.shipping_state as string,
-            zip: o.shipping_zip as string,
-            country: (o.shipping_country as string) || 'India',
-            type: 'Billing',
-            isDefault: false,
-          },
+              id: '',
+              street: o.shipping_street as string,
+              city: o.shipping_city as string,
+              state: o.shipping_state as string,
+              zip: o.shipping_zip as string,
+              country: (o.shipping_country as string) || 'India',
+              type: 'Billing',
+              isDefault: false,
+            },
         deliveryMethod: (o.delivery_method as Order['deliveryMethod']) || 'Standard',
         paymentMethod: o.payment_method as string,
         shippingCost: parseFloat(o.shipping_cost as string) || 0,
         discount: parseFloat(o.discount as string) || 0,
         deliverySlot: o.delivery_date
           ? {
-            date: o.delivery_date as string,
-            time: (o.delivery_time as string) || '',
-          }
+              date: o.delivery_date as string,
+              time: (o.delivery_time as string) || '',
+            }
           : undefined,
         trackingNumber: o.tracking_number as string,
         items: (o.order_items as Record<string, unknown>[]).map(
@@ -372,34 +372,34 @@ export const orderAPI = {
         },
         billingAddress: data.billing_street
           ? {
-            id: '',
-            street: data.billing_street,
-            city: data.billing_city,
-            state: data.billing_state,
-            zip: data.billing_zip,
-            country: data.billing_country || 'India',
-            type: 'Billing',
-            isDefault: false,
-          }
+              id: '',
+              street: data.billing_street,
+              city: data.billing_city,
+              state: data.billing_state,
+              zip: data.billing_zip,
+              country: data.billing_country || 'India',
+              type: 'Billing',
+              isDefault: false,
+            }
           : {
-            id: '',
-            street: data.shipping_street,
-            city: data.shipping_city,
-            state: data.shipping_state,
-            zip: data.shipping_zip,
-            country: data.shipping_country || 'India',
-            type: 'Billing',
-            isDefault: false,
-          },
+              id: '',
+              street: data.shipping_street,
+              city: data.shipping_city,
+              state: data.shipping_state,
+              zip: data.shipping_zip,
+              country: data.shipping_country || 'India',
+              type: 'Billing',
+              isDefault: false,
+            },
         deliveryMethod: (data.delivery_method as Order['deliveryMethod']) || 'Standard',
         paymentMethod: data.payment_method,
         shippingCost: parseFloat(data.shipping_cost) || 0,
         discount: parseFloat(data.discount) || 0,
         deliverySlot: data.delivery_date
           ? {
-            date: data.delivery_date,
-            time: data.delivery_time || '',
-          }
+              date: data.delivery_date,
+              time: data.delivery_time || '',
+            }
           : undefined,
         trackingNumber: data.tracking_number,
         items: (data.order_items as Record<string, unknown>[]).map(
@@ -550,13 +550,11 @@ export const orderAPI = {
                 customer_name: customerName,
                 customer_email: customerEmail,
                 total_amount: orderData.total,
-                items: orderData.items.map(
-                  (item) => ({
-                    product_name: item.name,
-                    quantity: item.quantity,
-                    unit_price: item.price,
-                  })
-                ),
+                items: orderData.items.map((item) => ({
+                  product_name: item.name,
+                  quantity: item.quantity,
+                  unit_price: item.price,
+                })),
               },
             })
             .then(({ error }) => {

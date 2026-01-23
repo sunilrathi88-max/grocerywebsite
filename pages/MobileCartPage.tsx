@@ -120,7 +120,7 @@ const MobileCartPage: React.FC = () => {
         cartItemCount={cartItems.reduce((acc, item) => acc + item.quantity, 0)}
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
-        onCartClick={() => { }} // Already on cart
+        onCartClick={() => {}} // Already on cart
       />
 
       <div className="p-4">

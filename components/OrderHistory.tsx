@@ -23,9 +23,7 @@ const OrderHistory: React.FC<OrderHistoryProps> = ({ user, orders, onSelectOrder
       const matchesSearch =
         searchQuery === '' ||
         order.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        order.items.some((item) =>
-          item.name.toLowerCase().includes(searchQuery.toLowerCase())
-        );
+        order.items.some((item) => item.name.toLowerCase().includes(searchQuery.toLowerCase()));
       return matchesFilter && matchesSearch;
     });
   }, [orders, selectedFilter, searchQuery]);
@@ -85,10 +83,11 @@ const OrderHistory: React.FC<OrderHistoryProps> = ({ user, orders, onSelectOrder
                 <button
                   key={filter}
                   onClick={() => setSelectedFilter(filter)}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${selectedFilter === filter
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                    selectedFilter === filter
                       ? 'bg-brand-primary text-brand-dark shadow-md'
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                    }`}
+                  }`}
                 >
                   {filter}
                   {filter === 'All' && ` (${orders.length})`}

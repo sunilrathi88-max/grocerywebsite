@@ -163,7 +163,7 @@ export default function ProductDetailPage() {
                     ₹
                     {Math.round(
                       displaySizes[selectedWeight].price /
-                      (1 - displaySizes[selectedWeight].discount / 100)
+                        (1 - displaySizes[selectedWeight].discount / 100)
                     )}
                   </span>
                 )}
@@ -193,10 +193,11 @@ export default function ProductDetailPage() {
             <div className="p-5 bg-gradient-to-br from-brand-primary/5 to-brand-primary/10 rounded-2xl border border-brand-primary/20 shadow-sm">
               <div className="flex gap-4">
                 <label
-                  className={`flex items-start gap-3 cursor-pointer flex-1 p-3 rounded-xl transition-all duration-200 ${purchaseType === 'one-time'
+                  className={`flex items-start gap-3 cursor-pointer flex-1 p-3 rounded-xl transition-all duration-200 ${
+                    purchaseType === 'one-time'
                       ? 'bg-white shadow-md border-2 border-brand-primary'
                       : 'bg-transparent border-2 border-transparent hover:bg-white/50'
-                    }`}
+                  }`}
                 >
                   <input
                     type="radio"
@@ -215,10 +216,11 @@ export default function ProductDetailPage() {
                   </div>
                 </label>
                 <label
-                  className={`flex items-start gap-3 cursor-pointer flex-1 p-3 rounded-xl transition-all duration-200 relative ${purchaseType === 'subscription'
+                  className={`flex items-start gap-3 cursor-pointer flex-1 p-3 rounded-xl transition-all duration-200 relative ${
+                    purchaseType === 'subscription'
                       ? 'bg-white shadow-md border-2 border-brand-primary'
                       : 'bg-transparent border-2 border-transparent hover:bg-white/50'
-                    }`}
+                  }`}
                 >
                   {/* Best Value Badge */}
                   <span className="absolute -top-2 -right-2 bg-brand-primary text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-sm">
@@ -465,7 +467,7 @@ export default function ProductDetailPage() {
             onToggleWishlist={toggleWishlist}
             wishlistedIds={wishlistedIds}
             onSelectProduct={(p) => navigate(`/product/${p.id}`)}
-            onNotifyMe={() => { }}
+            onNotifyMe={() => {}}
           />
         </div>
       </div>

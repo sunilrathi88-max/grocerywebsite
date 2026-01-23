@@ -1,6 +1,5 @@
 import { ChefHatIcon } from '../components/icons/ChefHatIcon';
-import { ShoppingBagIcon } from '../components/icons/ShoppingBagIcon';
-import { GiftIcon } from '../components/icons/GiftIcon';
+
 import { LeafIcon } from '../components/icons/LeafIcon';
 import { SunIcon } from '../components/icons/SunIcon';
 import { GlobeIcon } from '../components/icons/GlobeIcon';
