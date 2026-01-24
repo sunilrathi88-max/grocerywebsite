@@ -27,8 +27,8 @@ describe('MegaMenu', () => {
 
   it('renders menu content when isOpen is true', () => {
     renderWithRouter(<MegaMenu {...defaultProps} />);
-    expect(screen.getByText(/By Customer Intent/i)).toBeInTheDocument();
-    expect(screen.getByText(/By Cooking Needs/i)).toBeInTheDocument();
+    expect(screen.getByText(/Shop by Intent/i)).toBeInTheDocument();
+    expect(screen.getByText(/Shop by Needs/i)).toBeInTheDocument();
   });
 
   it('renders Featured Collection', () => {
@@ -44,7 +44,7 @@ describe('MegaMenu', () => {
     const chaiButton = screen.getByText(/Making Chai/i);
     fireEvent.click(chaiButton);
 
-    expect(defaultProps.onSelectCategory).toHaveBeenCalledWith('Making Chai');
+    expect(defaultProps.onSelectCategory).toHaveBeenCalledWith('Chai Essentials');
     expect(defaultProps.onClose).toHaveBeenCalled();
   });
 

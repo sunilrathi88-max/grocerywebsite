@@ -46,6 +46,11 @@ describe('ProductCard', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.useFakeTimers();
+  });
+
+  afterEach(() => {
+    jest.useRealTimers();
   });
 
   describe('Rendering', () => {
@@ -84,12 +89,12 @@ describe('ProductCard', () => {
   describe('Badges', () => {
     it('should display NEW badge', () => {
       renderWithRouter(<ProductCard {...defaultProps} badge="new" />);
-      expect(screen.getByText('New')).toBeInTheDocument();
+      expect(screen.getByText('New Arrival')).toBeInTheDocument();
     });
 
     it('should display DISCOUNT badge', () => {
       renderWithRouter(<ProductCard {...defaultProps} badge="discount" />);
-      expect(screen.getByText(/OFF/)).toBeInTheDocument();
+      expect(screen.getByText(/Save/)).toBeInTheDocument();
     });
   });
 
@@ -97,8 +102,11 @@ describe('ProductCard', () => {
     it('should call onAddToCart when Add button is clicked', () => {
       renderWithRouter(<ProductCard {...defaultProps} />);
 
-      const addButton = screen.getByText('Quick Add');
+      const addButton = screen.getByText('Quick Add +');
       fireEvent.click(addButton);
+
+      // Fast-forward time for the setTimeout
+      jest.advanceTimersByTime(600);
 
       expect(mockOnAddToCart).toHaveBeenCalledWith('1');
     });
