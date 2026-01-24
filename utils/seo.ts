@@ -195,22 +195,35 @@ export const removeStructuredData = (id: string = 'structured-data'): void => {
 export const generateOrganizationSchema = (): OrganizationStructuredData => ({
   '@context': 'https://schema.org',
   '@type': 'Organization',
-  name: 'THE RATHI SPICE CO',
-  url: 'https://tattva-co.com',
-  logo: 'https://tattva-co.com/images/logo.png',
+  name: 'Rathi Naturals',
+  alternateName: 'The Rathi Spice Co',
+  url: 'https://www.tattvaco.in',
+  logo: 'https://www.tattvaco.in/logo.png',
   description:
-    'Premium Indian gourmet products including authentic spices, saffron, nuts, and organic ingredients.',
+    'Premium single-origin spices sourced directly from heritage farms. FSSAI certified, organic, pesticide-free.',
+  foundingDate: '1984',
+  foundingLocation: {
+    '@type': 'Place',
+    name: 'Jaipur, Rajasthan, India',
+  },
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Jaipur Spice Market',
+    addressLocality: 'Jaipur',
+    addressRegion: 'Rajasthan',
+    postalCode: '302001',
+    addressCountry: 'IN',
+  },
   contactPoint: {
     '@type': 'ContactPoint',
-    telephone: '+1-555-TATTVA',
+    telephone: '+91-9876543210',
     contactType: 'Customer Service',
-    email: 'support@tattva-co.com',
+    email: 'hello@tattvaco.in',
   },
   sameAs: [
-    'https://facebook.com/tattvaco',
-    'https://twitter.com/tattvaco',
-    'https://instagram.com/tattvaco',
-    'https://pinterest.com/tattvaco',
+    'https://www.facebook.com/rathispices',
+    'https://www.instagram.com/rathispices',
+    'https://twitter.com/rathispices',
   ],
 });
 

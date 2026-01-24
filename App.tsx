@@ -780,6 +780,7 @@ const App: React.FC = () => {
                           : selectedCategory !== 'All'
                             ? pageSEO.products(selectedCategory)
                             : pageSEO.home())}
+              structuredData={currentView === 'home' ? orgSchema : undefined}
               structuredDataId="organization-schema"
             />
 

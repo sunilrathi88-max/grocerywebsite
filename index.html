@@ -13,10 +13,9 @@
 
     gtag('config', '%VITE_GA_MEASUREMENT_ID%');
   </script>
-  <!-- Preload LCP hero image (Exact match to Hero.tsx) -->
-  <link rel="preload" as="image"
-    href="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&q=80&w=800"
-    fetchpriority="high" />
+  <!-- Preload LCP hero image (Exact match to Hero.tsx) - Optimizing for WebP -->
+  <link rel="preload" as="image" href="/images/masala-trio-chai-chilli-garam.webp" type="image/webp" />
+  <link rel="preload" as="image" href="/images/masala-trio-chai-chilli-garam.png" />
 
   <!-- Open Graph / Facebook -->
   <style>

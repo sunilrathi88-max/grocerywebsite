@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import OptimizedImage from './OptimizedImage';
 import '../src/styles/hero-carousel.css';
 
 const HeroCarousel: React.FC = () => {
@@ -53,10 +54,14 @@ const HeroCarousel: React.FC = () => {
 
             {/* Right Product Image */}
             <div className="slide-image">
-              <img
+              <OptimizedImage
                 src="/images/masala-trio-chai-chilli-garam.png"
                 alt="Chai Masala, Red Chilli Powder, Garam Masala"
-                className="product-image"
+                className="product-image object-contain"
+                type="hero"
+                priority="high"
+                width={600}
+                height={600}
               />
             </div>
           </div>
@@ -83,10 +88,14 @@ const HeroCarousel: React.FC = () => {
 
             {/* Right Product Image */}
             <div className="slide-image">
-              <img
+              <OptimizedImage
                 src="/images/spice-trio-coriander-chilli-turmeric.png"
                 alt="Coriander Powder, Red Chilli Powder, Turmeric Powder"
-                className="product-image"
+                className="product-image object-contain"
+                type="hero"
+                priority="low"
+                width={600}
+                height={600}
               />
             </div>
           </div>
@@ -111,10 +120,14 @@ const HeroCarousel: React.FC = () => {
 
             {/* Right Product Range Image */}
             <div className="slide-image full-range">
-              <img
+              <OptimizedImage
                 src="/images/full-product-range.png"
                 alt="Complete Rathi Naturals Spice Collection"
-                className="product-image"
+                className="product-image object-contain"
+                type="hero"
+                priority="low"
+                width={800}
+                height={600}
               />
             </div>
           </div>

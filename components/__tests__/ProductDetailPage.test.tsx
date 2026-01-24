@@ -17,6 +17,10 @@ jest.mock('../../store/cartStore', () => ({
   useCartStore: (selector: any) => selector({ addItem: mockAddItem }),
 }));
 
+jest.mock('../../data/recipes', () => ({
+  MOCK_RECIPES: [],
+}));
+
 jest.mock('../../hooks/useWishlist', () => ({
   useWishlist: () => ({ wishlistItems: [], toggleWishlist: jest.fn() }),
 }));

@@ -19,6 +19,9 @@ import { getSimilarProducts } from '../utils/recommendations'; // Import recomme
 import ProductSlider from '../components/ProductSlider'; // Import ProductSlider comp
 import { useWishlist } from '../hooks/useWishlist';
 import { useABTest } from '../src/context/ABTestContext';
+import SEO from '../components/SEO';
+import { pageSEO, generateProductSchema, generateBreadcrumbSchema } from '../utils/seo';
+import { MOCK_RECIPES } from '../data/recipes';
 
 // ...
 
@@ -114,8 +117,29 @@ export default function ProductDetailPage() {
     navigate('/checkout');
   };
 
+  // SEO & Schema Markup
+  const productSchema = product ? generateProductSchema(product) : undefined;
+
+  const breadcrumbItems = [
+    { name: 'Home', url: 'https://www.tattvaco.in/' },
+    {
+      name: product?.category || 'Shop',
+      url: `https://www.tattvaco.in/category/${product?.category || 'all'}`,
+    },
+    { name: product?.name || 'Product', url: `https://www.tattvaco.in/product/${product?.id}` },
+  ];
+
+  const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbItems);
+
   return (
     <div className="min-h-screen bg-[#F5F5F0]">
+      {product && (
+        <SEO
+          {...pageSEO.product(product.name, product.description)}
+          ogImage={product.images[0]}
+          structuredData={[productSchema!, breadcrumbSchema]}
+        />
+      )}
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Breadcrumb Navigation */}
         <div className="mb-6">
@@ -163,7 +187,7 @@ export default function ProductDetailPage() {
                     ₹
                     {Math.round(
                       displaySizes[selectedWeight].price /
-                        (1 - displaySizes[selectedWeight].discount / 100)
+                      (1 - displaySizes[selectedWeight].discount / 100)
                     )}
                   </span>
                 )}
@@ -193,11 +217,10 @@ export default function ProductDetailPage() {
             <div className="p-5 bg-gradient-to-br from-brand-primary/5 to-brand-primary/10 rounded-2xl border border-brand-primary/20 shadow-sm">
               <div className="flex gap-4">
                 <label
-                  className={`flex items-start gap-3 cursor-pointer flex-1 p-3 rounded-xl transition-all duration-200 ${
-                    purchaseType === 'one-time'
-                      ? 'bg-white shadow-md border-2 border-brand-primary'
-                      : 'bg-transparent border-2 border-transparent hover:bg-white/50'
-                  }`}
+                  className={`flex items-start gap-3 cursor-pointer flex-1 p-3 rounded-xl transition-all duration-200 ${purchaseType === 'one-time'
+                    ? 'bg-white shadow-md border-2 border-brand-primary'
+                    : 'bg-transparent border-2 border-transparent hover:bg-white/50'
+                    }`}
                 >
                   <input
                     type="radio"
@@ -216,11 +239,10 @@ export default function ProductDetailPage() {
                   </div>
                 </label>
                 <label
-                  className={`flex items-start gap-3 cursor-pointer flex-1 p-3 rounded-xl transition-all duration-200 relative ${
-                    purchaseType === 'subscription'
-                      ? 'bg-white shadow-md border-2 border-brand-primary'
-                      : 'bg-transparent border-2 border-transparent hover:bg-white/50'
-                  }`}
+                  className={`flex items-start gap-3 cursor-pointer flex-1 p-3 rounded-xl transition-all duration-200 relative ${purchaseType === 'subscription'
+                    ? 'bg-white shadow-md border-2 border-brand-primary'
+                    : 'bg-transparent border-2 border-transparent hover:bg-white/50'
+                    }`}
                 >
                   {/* Best Value Badge */}
                   <span className="absolute -top-2 -right-2 bg-brand-primary text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-sm">
@@ -446,6 +468,66 @@ export default function ProductDetailPage() {
           </Link>
         </div>
 
+        {/* Related Recipes Section */}
+        {(MOCK_RECIPES || []).some((recipe) => recipe.relatedProductIds?.includes(product.id)) && (
+          <div className="mb-16">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="bg-brand-secondary/20 p-2 rounded-lg">
+                <svg
+                  className="w-6 h-6 text-brand-dark"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+                  />
+                </svg>
+              </div>
+              <h2 className="text-2xl font-serif font-bold text-gray-900">
+                Cook with {product.name}
+              </h2>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-6">
+              {(MOCK_RECIPES || [])
+                .filter((recipe) => recipe.relatedProductIds?.includes(product.id))
+                .slice(0, 3)
+                .map((recipe) => (
+                  <a
+                    key={recipe.id}
+                    href={`#/recipe/${recipe.id}`}
+                    className="group block bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+                  >
+                    <div className="relative h-48 overflow-hidden">
+                      <img
+                        src={recipe.image}
+                        alt={recipe.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-4">
+                        <span className="text-white text-xs font-bold bg-brand-primary/90 px-2 py-1 rounded">
+                          {recipe.prepTime}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="p-4">
+                      <h3 className="font-serif font-bold text-lg text-gray-900 group-hover:text-brand-primary transition-colors">
+                        {recipe.title}
+                      </h3>
+                      <p className="text-gray-500 text-sm mt-2 line-clamp-2">
+                        {recipe.description}
+                      </p>
+                    </div>
+                  </a>
+                ))}
+            </div>
+          </div>
+        )}
+
         {/* You Might Also Like Section */}
         <div className="mb-12">
           <ProductSlider
@@ -467,7 +549,7 @@ export default function ProductDetailPage() {
             onToggleWishlist={toggleWishlist}
             wishlistedIds={wishlistedIds}
             onSelectProduct={(p) => navigate(`/product/${p.id}`)}
-            onNotifyMe={() => {}}
+            onNotifyMe={() => { }}
           />
         </div>
       </div>

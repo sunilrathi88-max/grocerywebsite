@@ -71,19 +71,66 @@ const BlogPostPage: React.FC<BlogPostPageProps> = ({ post }) => {
           </div>
         </div>
 
-        {/* Shop CTA */}
-        <div className="mt-12 bg-brand-primary/10 rounded-2xl p-8 text-center border border-brand-primary/20">
-          <h3 className="text-2xl font-serif font-bold text-brand-dark mb-4">Inspired to Cook?</h3>
-          <p className="text-gray-700 mb-6 max-w-lg mx-auto">
-            Discover our premium range of authentic Indian spices and ingredients mentioned in this
-            story.
+        {/* Related Products CTA */}
+        <div className="mt-12 bg-white rounded-2xl p-8 border border-neutral-100 shadow-sm">
+          <h3 className="text-2xl font-serif font-bold text-brand-dark mb-6 text-center">
+            Shop the Story
+          </h3>
+          <p className="text-gray-600 text-center mb-8 max-w-lg mx-auto">
+            Create this dish at home with our premium, lab-tested ingredients.
           </p>
-          <a
-            href="#/products"
-            className="inline-block bg-brand-dark text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-opacity-90 transform hover:scale-105 transition-all"
-          >
-            Shop Premium Spices
-          </a>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {/* Mock Related Products - In real app, filter by post.tags or post.relatedProducts */}
+            <a
+              href="#/product/1"
+              className="group flex items-center gap-4 p-4 rounded-xl hover:bg-neutral-50 transition-colors border border-transparent hover:border-neutral-200"
+            >
+              <div className="w-20 h-20 bg-neutral-100 rounded-lg overflow-hidden shrink-0">
+                <img
+                  src="/images/products/saffron-kesar-front.webp"
+                  alt="Saffron"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                />
+              </div>
+              <div>
+                <h4 className="font-bold text-gray-900 group-hover:text-brand-primary transition-colors">
+                  Kashmiri Mongra Saffron
+                </h4>
+                <p className="text-sm text-gray-500 mb-1">Premium Grade A++</p>
+                <p className="font-bold text-brand-primary">₹599</p>
+              </div>
+            </a>
+
+            <a
+              href="#/product/2"
+              className="group flex items-center gap-4 p-4 rounded-xl hover:bg-neutral-50 transition-colors border border-transparent hover:border-neutral-200"
+            >
+              <div className="w-20 h-20 bg-neutral-100 rounded-lg overflow-hidden shrink-0">
+                <img
+                  src="/images/products/tattv-cardamom.webp"
+                  alt="Cardamom"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                />
+              </div>
+              <div>
+                <h4 className="font-bold text-gray-900 group-hover:text-brand-primary transition-colors">
+                  Green Cardamom (Elaichi)
+                </h4>
+                <p className="text-sm text-gray-500 mb-1">8mm Bold Pods</p>
+                <p className="font-bold text-brand-primary">₹349</p>
+              </div>
+            </a>
+          </div>
+
+          <div className="text-center mt-8">
+            <a
+              href="#/shop"
+              className="inline-flex items-center gap-2 text-brand-primary font-bold hover:underline"
+            >
+              View All Spices <span>→</span>
+            </a>
+          </div>
         </div>
       </div>
       <style>{`

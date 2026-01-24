@@ -3,6 +3,7 @@ import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
 import { visualizer } from 'rollup-plugin-visualizer';
 import { VitePWA } from 'vite-plugin-pwa';
+import viteCompression from 'vite-plugin-compression';
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, '.', '');
@@ -18,6 +19,16 @@ export default defineConfig(({ mode }) => {
         gzipSize: true,
         brotliSize: true,
         filename: 'dist/stats.html',
+      }),
+      // Gzip compression for smaller transfers
+      viteCompression({
+        algorithm: 'gzip',
+        ext: '.gz',
+      }),
+      // Brotli compression for even better compression (modern browsers)
+      viteCompression({
+        algorithm: 'brotliCompress',
+        ext: '.br',
       }),
       VitePWA({
         registerType: 'autoUpdate',
@@ -132,14 +143,18 @@ export default defineConfig(({ mode }) => {
       rollupOptions: {
         output: {
           manualChunks: {
-            'react-vendor': ['react', 'react-dom'],
+            'react-core': ['react', 'react-dom'],
+            'react-router': ['react-router-dom'],
             'framer-motion': ['framer-motion'],
-            'react-slick': ['react-slick', 'slick-carousel'],
+            'ui-basics': ['react-slick', 'slick-carousel'],
+            icons: ['@heroicons/react'],
+            'data-utils': ['@tanstack/react-query', 'axios', 'zustand'],
             supabase: ['@supabase/supabase-js'],
           },
         },
       },
-      chunkSizeWarningLimit: 600,
+      chunkSizeWarningLimit: 800,
+      sourcemap: false, // Disable sourcemaps for production to reduce size
     },
   };
 });
