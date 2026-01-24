@@ -36,7 +36,7 @@ describe('LoyaltyPointsTracker', () => {
       },
       history: [],
     });
-    jest.spyOn(window, 'alert').mockImplementation(() => { });
+    jest.spyOn(window, 'alert').mockImplementation(() => {});
     jest.spyOn(window, 'confirm').mockImplementation(() => true);
     // Mock toast
     jest.mock('react-hot-toast', () => ({

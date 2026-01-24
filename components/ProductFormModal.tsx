@@ -130,7 +130,8 @@ const ProductFormModal: React.FC<ProductFormModalProps> = ({ product, onSave, on
             <input
               type="text"
               name="sku"
-              value={(formData as any).sku || ''}
+              id="sku"
+              value={formData.sku || ''}
               onChange={handleChange}
               className="mt-1 input-field"
               placeholder="e.g. TUR-100G-001"

@@ -64,6 +64,7 @@ export interface Product {
   storageInstructions?: string;
   originRegion?: string;
   processingMethod?: string;
+  sku?: string;
 }
 
 export interface CartItem {
