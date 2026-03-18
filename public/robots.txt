@@ -1,10 +1,28 @@
 User-agent: Googlebot
 Rate-limit: 10 requests per 1 second
 
+User-agent: GPTBot
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Omgili
+Allow: /
+
 User-agent: *
 Allow: /
 Disallow: /admin/
 Disallow: /cart/
 Disallow: /checkout/
 
-Sitemap: https://www.tattvaco.in/sitemap.xml
+Sitemap: https://www.rathinaturals.com/sitemap.xml

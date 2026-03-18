@@ -65,6 +65,19 @@ const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
                   FAQ
                 </Link>
               </li>
+              <li>
+                <Link
+                  to="/tools/spice-freshness-calculator"
+                  className="hover:text-primary transition-colors"
+                >
+                  FreshnessCalculator
+                </Link>
+              </li>
+              <li>
+                <Link to="/affiliate-program" className="hover:text-primary transition-colors">
+                  Affiliate Program
+                </Link>
+              </li>
             </ul>
           </div>
           <div className="md:col-span-4">
@@ -89,7 +102,13 @@ const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
           </div>
         </div>
         <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/5 text-xs font-mono text-gray-600 gap-4">
-          <p>© {new Date().getFullYear()} Rathi Naturals. Pure Origin.</p>
+          <div className="flex flex-col md:flex-row gap-4 items-center">
+            <p>© {new Date().getFullYear()} Rathi Naturals. Pure Origin.</p>
+            <span className="hidden md:inline text-gray-700">|</span>
+            <p className="flex items-center text-primary/80 font-semibold tracking-wide">
+              FSSAI Lic. No. 12225025000253
+            </p>
+          </div>
           <div className="flex gap-6">
             <Link to="/privacy-policy" className="hover:text-gray-400">
               Privacy

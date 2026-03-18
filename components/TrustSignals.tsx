@@ -10,7 +10,7 @@ const TrustSignals: React.FC = () => {
           </div>
           <div>
             <h4 className="font-serif text-lg text-white mb-1">FSSAI Certified</h4>
-            <p className="text-xs text-white/50 uppercase tracking-wider">100% Compliant</p>
+            <p className="text-xs text-white/80 uppercase tracking-wider font-semibold">Lic. 12225025000253</p>
           </div>
         </div>
         <div className="flex flex-col items-center text-center gap-4 group">
@@ -36,7 +36,7 @@ const TrustSignals: React.FC = () => {
             <span className="material-symbols-outlined text-[32px] text-white">location_on</span>
           </div>
           <div>
-            <h4 className="font-serif text-lg text-white mb-1">Single Source</h4>
+            <h4 className="font-serif text-lg text-white mb-1">Direct from Farms</h4>
             <p className="text-xs text-white/50 uppercase tracking-wider">Farm Traceable</p>
           </div>
         </div>
