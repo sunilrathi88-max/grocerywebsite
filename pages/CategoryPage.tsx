@@ -8,19 +8,52 @@ import { ProductCard } from '../components/ProductCard';
 import { Pagination } from '../components/Pagination';
 import { useCartStore } from '../store/cartStore';
 import { useWishlist } from '../hooks/useWishlist';
-import { Product, Variant } from '../types';
+import { Product, Variant, ToastMessage } from '../types';
 
 const ITEMS_PER_PAGE = 12;
 
 // Valid sort options
 type SortOption = 'popular' | 'price-asc' | 'price-desc' | 'rating' | 'newest';
 
-const CategoryPage: React.FC = () => {
+interface CategoryPageProps {
+  searchQuery?: string;
+  defaultCategory?: string;
+  addToast?: (msg: string, type: ToastMessage['type']) => void;
+}
+
+const CategoryPage: React.FC<CategoryPageProps> = ({
+  searchQuery = '',
+  defaultCategory,
+  addToast,
+}) => {
   const { category } = useParams<{ category: string }>();
+  // ...
+  const handleAddToCart = (product: Product, variant?: Variant) => {
+    // Added variant parameter
+    const selectedVariant = variant || product.variants[0];
+    addItem({
+      id: `${product.id}-${selectedVariant.name}`,
+      productId: product.id,
+      variantId: selectedVariant.id,
+      name: product.name,
+      price: selectedVariant.salePrice || selectedVariant.price,
+      quantity: 1,
+      weight: selectedVariant.name,
+      image: product.images[0],
+      stock: selectedVariant.stock,
+    });
+    if (addToast) {
+      addToast(`Added ${product.name} to cart`, 'success');
+    }
+  };
   const [searchParams, setSearchParams] = useSearchParams();
+  const formatCategorySlug = (slug: string) => {
+    if (slug.toLowerCase() === 'shop') return defaultCategory || 'All';
+    return slug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+  };
   const displayCategory = category
-    ? category.charAt(0).toUpperCase() + category.slice(1)
-    : 'Shop All';
+    ? formatCategorySlug(category)
+    : defaultCategory || 'Shop All';
 
   // Hooks
   const { products, isLoading, error } = useProducts({ useMockData: true });
@@ -73,8 +106,8 @@ const CategoryPage: React.FC = () => {
   // Derived Filter Options for hook
   const filterOptions: FilterOptions = useMemo(
     () => ({
-      category: category === 'shop' || !category ? 'All' : displayCategory,
-      searchQuery: '',
+      category: category === 'shop' || !category ? defaultCategory || 'All' : displayCategory,
+      searchQuery: searchQuery, // Use prop
       priceRange: priceRange,
       sortBy: sortBy,
       heatLevel: selectedFilters['heatLevel'],
@@ -122,21 +155,6 @@ const CategoryPage: React.FC = () => {
   const handleClearAllFilters = () => {
     setSelectedFilters({});
     setPriceRange([0, 2000]);
-  };
-
-  const handleAddToCart = (product: Product, variant?: Variant) => {
-    // Added variant parameter
-    addItem({
-      id: product.id.toString(),
-      productId: product.id,
-      variantId: variant?.id || product.variants[0]?.id || 0,
-      name: product.name,
-      price: product.variants[0]?.salePrice ?? product.variants[0]?.price,
-      quantity: 1,
-      image: product.images[0],
-      weight: variant?.name || 'Standard',
-      stock: 10,
-    });
   };
 
   const handleWishlist = (productId: string) => {

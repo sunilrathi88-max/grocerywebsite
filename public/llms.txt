@@ -1,0 +1,24 @@
+# Tattva Co. / Rathi Naturals
+
+Welcome to the AI documentation for Tattva Co. (Rathi Naturals), providing authentic Indian gourmet products including premium saffron, spices, nuts, and organic ingredients. 
+
+## About Us
+Rathi Naturals brings you premium single-origin spices sourced directly from heritage farms in India. All our products are FSSAI certified, organically grown, and pesticide-free.
+
+## Categories & Products
+- Saffron (Kashmiri Mongra)
+- Pure Spices (Turmeric, Chilli, Coriander, Malabar Pepper)
+- Essential Spice Blends (Garam Masala, Chai Masala)
+- Nuts & Dry Fruits 
+- Beverages
+
+## Why Choose Us?
+- Ethically Sourced from Indian Farms
+- Lab Tested for Purity & Potency
+- No Additives or Preservatives
+- Premium Grade Quality
+
+## Contact and Links
+- Website: https://rathinaturals.com
+- Shop: https://rathinaturals.com/products
+- Contact: rathinaturals@gmail.com

@@ -95,9 +95,9 @@ export interface OrganizationStructuredData extends Record<string, unknown> {
  * Generate default SEO configuration
  */
 export const getDefaultSEO = (): SEOConfig => ({
-  title: 'THE RATHI SPICE CO - Authentic Indian Gourmet Products | Premium Spices & Organic Foods',
+  title: 'Tattva Co. - Authentic Indian Gourmet Spices | Premium & Organic',
   description:
-    'Discover authentic Indian gourmet products including premium saffron, spices, nuts, and organic ingredients. Free shipping on orders over $50. Shop now!',
+    'Discover authentic Indian gourmet products including premium saffron, spices, nuts, and organic ingredients. Free shipping on orders over ₹499.',
   keywords: [
     'indian spices',
     'gourmet products',
@@ -112,14 +112,14 @@ export const getDefaultSEO = (): SEOConfig => ({
   ],
   ogType: 'website',
   ogImage: '/images/og-image.jpg',
-  ogImageAlt: 'THE RATHI SPICE CO - Authentic Indian Gourmet Products',
+  ogImageAlt: 'Tattva Co. - Authentic Indian Gourmet Products',
   twitterCard: 'summary_large_image',
 });
 
 /**
  * Update document title
  */
-export const updateTitle = (title: string, siteName: string = 'THE RATHI SPICE CO'): void => {
+export const updateTitle = (title: string, siteName: string = 'Tattva Co.'): void => {
   if (typeof document !== 'undefined') {
     document.title = title.includes(siteName) ? title : `${title} | ${siteName}`;
   }
@@ -197,8 +197,8 @@ export const generateOrganizationSchema = (): OrganizationStructuredData => ({
   '@type': 'Organization',
   name: 'Rathi Naturals',
   alternateName: 'The Rathi Spice Co',
-  url: 'https://www.tattvaco.in',
-  logo: 'https://www.tattvaco.in/logo.png',
+  url: 'https://www.rathinaturals.com',
+  logo: 'https://www.rathinaturals.com/logo.png',
   description:
     'Premium single-origin spices sourced directly from heritage farms. FSSAI certified, organic, pesticide-free.',
   foundingDate: '1984',
@@ -218,7 +218,7 @@ export const generateOrganizationSchema = (): OrganizationStructuredData => ({
     '@type': 'ContactPoint',
     telephone: '+91-9876543210',
     contactType: 'Customer Service',
-    email: 'hello@tattvaco.in',
+    email: 'rathinaturals@gmail.com',
   },
   sameAs: [
     'https://www.facebook.com/rathispices',
@@ -247,14 +247,14 @@ export const generateProductSchema = (product: Product): ProductStructuredData =
     sku: `TATTVA-${product.id}`,
     brand: {
       '@type': 'Brand',
-      name: 'THE RATHI SPICE CO',
+      name: 'Tattva Co.',
     },
     offers: {
       '@type': 'Offer',
       price: lowestPrice,
       priceCurrency: 'INR',
       availability: inStock ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
-      url: `https://tattva-co.com/product/${product.id}`,
+      url: `https://rathinaturals.com/product/${product.id}`,
       shippingDetails: {
         '@type': 'OfferShippingDetails',
         shippingRate: {
@@ -427,7 +427,7 @@ export const generateBlogPostingSchema = (post: {
     name: 'THE RATHI SPICE CO',
     logo: {
       '@type': 'ImageObject',
-      url: 'https://tattva-co.com/images/logo.png',
+      url: 'https://rathinaturals.com/images/logo.png',
     },
   },
 });
@@ -533,10 +533,9 @@ export const applySEO = (config: SEOConfig): void => {
  */
 export const pageSEO = {
   home: (): SEOConfig => ({
-    title:
-      'THE RATHI SPICE CO - Authentic Indian Gourmet Products | Premium Spices & Organic Foods',
+    title: 'Tattva Co. - Authentic Indian Gourmet Spices | Premium & Organic',
     description:
-      'Shop authentic Indian gourmet products including premium saffron, spices, nuts, and organic ingredients. Free shipping on orders over $50. 100% satisfaction guaranteed.',
+      'Shop authentic Indian gourmet products including premium saffron, spices, nuts, and organic ingredients. Free shipping on orders over ₹499. 100% satisfaction guaranteed.',
     keywords: [
       'indian grocery online',
       'premium spices',
@@ -545,7 +544,7 @@ export const pageSEO = {
       'indian gourmet',
       'spices delivery',
     ],
-    canonical: 'https://tattva-co.com',
+    canonical: 'https://rathinaturals.com',
     ogType: 'website',
     ogImage: '/images/og-home.jpg',
     twitterCard: 'summary_large_image',
@@ -553,20 +552,20 @@ export const pageSEO = {
 
   products: (category?: string): SEOConfig => ({
     title: category
-      ? `${category} - Premium Indian ${category} | THE RATHI SPICE CO`
-      : 'Shop All Products - Authentic Indian Gourmet | THE RATHI SPICE CO',
+      ? `${category} - Premium Indian ${category} | Tattva Co.`
+      : 'Shop All Products - Authentic Indian Gourmet | Tattva Co.',
     description: category
-      ? `Browse our selection of premium ${category.toLowerCase()}. Authentic, organic, and sourced directly from India. Free shipping on orders over $50.`
+      ? `Browse our selection of premium ${category.toLowerCase()}. Authentic, organic, and sourced directly from India. Free shipping on orders over ₹499.`
       : 'Explore our complete collection of authentic Indian gourmet products. Premium spices, nuts, organic ingredients, and more. Shop now!',
     keywords: ['indian products', 'shop indian spices', category?.toLowerCase(), 'buy online'],
     canonical: category
-      ? `https://tattva-co.com/products/${category}`
-      : 'https://tattva-co.com/products',
+      ? `https://rathinaturals.com/products/${category}`
+      : 'https://rathinaturals.com/products',
     ogType: 'website',
   }),
 
   product: (name: string, description: string): SEOConfig => ({
-    title: `${name} - Premium Quality | THE RATHI SPICE CO`,
+    title: `${name} - Premium Quality | Tattva Co.`,
     description: description.substring(0, 160),
     keywords: [name.toLowerCase(), 'buy online', 'authentic', 'premium quality'],
     ogType: 'product',
@@ -574,38 +573,38 @@ export const pageSEO = {
   }),
 
   recipes: (): SEOConfig => ({
-    title: 'Indian Recipes & Cooking Tips | THE RATHI SPICE CO',
+    title: 'Indian Recipes & Cooking Tips | Tattva Co.',
     description:
       'Discover authentic Indian recipes, cooking tips, and culinary inspiration. Learn to cook traditional dishes with our premium ingredients.',
     keywords: ['indian recipes', 'cooking tips', 'authentic indian food', 'recipe ideas'],
-    canonical: 'https://tattva-co.com/recipes',
+    canonical: 'https://rathinaturals.com/recipes',
     ogType: 'website',
   }),
 
   blog: (): SEOConfig => ({
-    title: 'Blog - Indian Cuisine & Culture | THE RATHI SPICE CO',
+    title: 'Blog - Indian Cuisine & Culture | Tattva Co.',
     description:
       'Read about Indian cuisine, spices, cooking techniques, and the cultural heritage behind our gourmet products.',
     keywords: ['indian cuisine blog', 'spice guide', 'cooking blog', 'food culture'],
-    canonical: 'https://tattva-co.com/blog',
+    canonical: 'https://rathinaturals.com/blog',
     ogType: 'website',
   }),
 
   about: (): SEOConfig => ({
-    title: 'About Us - Our Story & Mission | THE RATHI SPICE CO',
+    title: 'About Us - Our Story & Mission | Tattva Co.',
     description:
-      "Learn about THE RATHI SPICE CO's mission to bring authentic Indian gourmet products to your kitchen. Discover our commitment to quality and sustainability.",
+      "Learn about Tattva Co.'s mission to bring authentic Indian gourmet products to your kitchen. Discover our commitment to quality and sustainability.",
     keywords: ['about tattva co', 'our story', 'indian gourmet mission'],
-    canonical: 'https://tattva-co.com/about',
+    canonical: 'https://rathinaturals.com/about',
     ogType: 'website',
   }),
 
   contact: (): SEOConfig => ({
-    title: 'Contact Us - Get in Touch | THE RATHI SPICE CO',
+    title: 'Contact Us - Get in Touch | Tattva Co.',
     description:
-      "Have questions? Contact THE RATHI SPICE CO for support, inquiries, or feedback. We're here to help with your gourmet Indian product needs.",
+      "Have questions? Contact Tattva Co. for support, inquiries, or feedback. We're here to help with your gourmet Indian product needs.",
     keywords: ['contact', 'customer support', 'get in touch'],
-    canonical: 'https://tattva-co.com/contact',
+    canonical: 'https://rathinaturals.com/contact',
     ogType: 'website',
   }),
 };

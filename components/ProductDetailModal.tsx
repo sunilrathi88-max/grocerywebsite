@@ -28,7 +28,7 @@ import TrustBadges from './TrustBadges';
 import ImageGallery from './ImageGallery';
 import { getBundleSuggestions } from '../utils/recommendations';
 import PincodeChecker from './PincodeChecker';
-import { FrequentlyBoughtTogether } from './FrequentlyBoughtTogether';
+import FrequentlyBoughtTogether from './FrequentlyBoughtTogether';
 
 interface ProductDetailModalProps {
   product: Product;
@@ -46,6 +46,7 @@ interface ProductDetailModalProps {
   onToggleWishlist: (product: Product) => void;
   isWishlisted: boolean;
   isOpen: boolean;
+  onSelectRecipe?: (recipe: Recipe) => void;
 }
 
 import { PLACEHOLDER_URLS, imageErrorHandlers } from '../utils/imageHelpers';
@@ -81,6 +82,7 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
   onAskQuestion,
   onSelectProduct,
   onNotifyMe,
+  onSelectRecipe,
 }) => {
   const [selectedVariant, setSelectedVariant] = useState(
     product.variants.find((v) => v.stock > 0) || product.variants[0]
@@ -210,10 +212,10 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
     // 2. Breadcrumb Schema
     schemas.push(
       generateBreadcrumbSchema([
-        { name: 'Home', url: 'https://tattva-co.com' },
-        { name: 'Products', url: 'https://tattva-co.com/products' },
-        { name: product.category, url: `https://tattva-co.com/products/${product.category}` },
-        { name: product.name, url: `https://tattva-co.com/products/${product.id}` }, // Fallback URL
+        { name: 'Home', url: 'https://rathinaturals.com' },
+        { name: 'Products', url: 'https://rathinaturals.com/products' },
+        { name: product.category, url: `https://rathinaturals.com/category/${product.category.toLowerCase().replace(/\s+/g, '-')}` },
+        { name: product.name, url: `https://rathinaturals.com/products/${product.id}` }, // Fallback URL
       ])
     );
 
@@ -511,9 +513,9 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                 <div className="mt-8">
                   {/* Frequently Bought Together Bundle */}
                   <FrequentlyBoughtTogether
-                    mainProduct={product}
-                    recommendations={getBundleSuggestions(product, allProducts)}
-                    onAddBundle={(products) => {
+                    currentProduct={product}
+                    allProducts={allProducts}
+                    onAddBundleToCart={(products) => {
                       products.forEach((p) => {
                         onAddToCart(p, p.variants[0], 1);
                       });
@@ -978,7 +980,8 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                   {relatedRecipes.map((recipe) => (
                     <div
                       key={recipe.id}
-                      className="bg-white border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all"
+                      className="bg-white border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all cursor-pointer group"
+                      onClick={() => onSelectRecipe?.(recipe)}
                     >
                       <div className="h-48 overflow-hidden">
                         <img

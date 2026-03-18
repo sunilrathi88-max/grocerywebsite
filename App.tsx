@@ -18,6 +18,7 @@ import { getBundleSuggestions } from './utils/recommendations';
 // Performance Utils
 import { usePerformanceMonitoring } from './utils/performance';
 import { trackPageView } from './utils/analytics';
+
 // Framer Motion Optimization
 import { LazyMotion, domAnimation } from 'framer-motion';
 
@@ -37,10 +38,11 @@ import { useUserOrders } from './hooks/useUserOrders';
 import { useIsMobile } from './hooks/useIsMobile';
 
 // Mock Data
-import { MOCK_POSTS, MOCK_RECIPES } from './data';
+import { BLOG_POSTS_DATA, MOCK_RECIPES } from './data';
 
-// Direct import for AdminDashboard (debugging)
-import AdminDashboard from './components/AdminDashboard';
+// Direct import for AdminDashboard (debugging) - REVERTED TO LAZY LOAD FOR PERFORMANCE
+// import AdminDashboard from './components/AdminDashboard';
+const AdminDashboard = React.lazy(() => import('./components/AdminDashboard'));
 // const AdminDashboard = () => <div className="p-10">Admin Dashboard Mock (Debugging)</div>;
 
 // Core Components (Eagerly Loaded - Always Visible)
@@ -74,7 +76,8 @@ const MessagingShowcase = React.lazy(() => import('./components/MessagingShowcas
 // Lazy-Loaded Pages (Route-Based Code Splitting)
 const CheckoutPage = React.lazy(() => import('./pages/CheckoutPage'));
 
-// AdminDashboard is imported directly at top of file for debugging
+// AdminDashboard is imported lazily at top of file
+// const AdminDashboard = React.lazy(() => import('./components/AdminDashboard'));
 const PrivacyPolicyPage = React.lazy(() => import('./components/PrivacyPolicyPage'));
 const RefundPolicyPage = React.lazy(() => import('./components/RefundPolicyPage'));
 const TermsOfServicePage = React.lazy(() => import('./components/TermsOfServicePage'));
@@ -106,10 +109,13 @@ const OffersPage = React.lazy(() => import('./pages/OffersPage'));
 const SubscriptionPage = React.lazy(() => import('./pages/SubscriptionPage'));
 const FarmersPage = React.lazy(() => import('./pages/FarmersPage'));
 const ResponsiveCartPage = React.lazy(() => import('./pages/ResponsiveCartPage'));
+const MobileHomePage = React.lazy(() => import('./pages/MobileHomePage'));
 const NotFoundPage = React.lazy(() => import('./pages/NotFoundPage'));
 const TrackingPage = React.lazy(() => import('./pages/TrackingPage'));
 const AdminShipmentsPage = React.lazy(() => import('./pages/admin/ShipmentsPage'));
 const ShippingPage = React.lazy(() => import('./pages/ShippingPage'));
+const FreshnessCalculatorPage = React.lazy(() => import('./pages/FreshnessCalculatorPage'));
+const AffiliateProgramPage = React.lazy(() => import('./pages/AffiliateProgramPage'));
 
 const PageLoader = () => (
   <div className="flex items-center justify-center min-h-[60vh]">
@@ -154,16 +160,22 @@ const OrderConfirmationRoute = ({
   );
 };
 
-const BlogPostRoute = () => {
+const BlogPostRoute = ({ posts }: { posts: import('./types').BlogPost[] }) => {
   const { slug } = useParams();
-  const post = MOCK_POSTS.find((p) => p.slug === slug);
+  console.log('DEBUG: BlogPostRoute', {
+    slug,
+    postsCount: posts.length,
+    postSlugs: posts.map((p) => p.slug),
+  });
+  const post = posts.find((p) => p.slug === slug);
   return post ? (
     <React.Suspense fallback={<PageLoader />}>
       <BlogPostPage post={post} />
     </React.Suspense>
   ) : (
     <div className="text-center py-20">
-      <h2>Post not found</h2>
+      <h2>Post not found: {slug}</h2>
+      <p className="text-sm text-gray-500 mt-2">Available posts: {posts.length}</p>
     </div>
   );
 };
@@ -220,11 +232,6 @@ const App: React.FC = () => {
   }, [location.pathname]);
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  // Auth State
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
-  const [isAuthModalOpen, setAuthModalOpen] = useState(false);
 
   // Cart & Wishlist UI State
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -469,7 +476,7 @@ const App: React.FC = () => {
       if (category === 'All') {
         navigate('/shop');
       } else {
-        navigate(`/category/${encodeURIComponent(category)}`);
+        navigate(`/category/${category.toLowerCase().replace(/\s+/g, '-')}`);
       }
     },
     [navigate]
@@ -546,76 +553,78 @@ const App: React.FC = () => {
     [addToast, navigate]
   );
 
-  // Supabase Auth Listener
+  // Auth State
+  const [isAuthLoading, setIsAuthLoading] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [isAuthModalOpen, setAuthModalOpen] = useState(false);
+
+  // ... (other state)
+
   // Supabase Auth Listener (Lazy Loaded & Delayed)
+  // Supabase Auth Listener (Immediate Check)
   useEffect(() => {
     let subscription: { unsubscribe: () => void } | null = null;
 
-    // Delay auth initialization to prioritize LCP and main thread for initial render
-    const timer = setTimeout(() => {
-      const initializeAuth = async () => {
+    const initializeAuth = async () => {
+      try {
         const { supabase } = await import('./supabaseClient');
-        try {
-          const {
-            data: { session },
-          } = await supabase.auth.getSession();
-          if (session?.user) {
-            const user = session.user;
-            setIsLoggedIn(true);
-            setCurrentUser({
-              id: user.id,
-              email: user.email || '',
-              name: user.user_metadata?.name || user.email || '',
-              isAdmin: Boolean(user.user_metadata?.is_admin),
-              profilePicture: user.user_metadata?.picture || user.user_metadata?.avatar_url,
-              phone: user.user_metadata?.phone || user.phone || undefined,
-              wishlist: [],
-              orders: [],
-              addresses: user.user_metadata?.addresses || [],
-            });
-          }
-        } catch (error) {
-          console.error('Auth initialization error:', error);
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
+
+        if (session?.user) {
+          const user = session.user;
+          setIsLoggedIn(true);
+          setCurrentUser({
+            id: user.id,
+            email: user.email || '',
+            name: user.user_metadata?.name || user.email || '',
+            isAdmin: Boolean(user.user_metadata?.is_admin),
+            profilePicture: user.user_metadata?.picture || user.user_metadata?.avatar_url,
+            phone: user.user_metadata?.phone || user.phone || undefined,
+            wishlist: [],
+            orders: [],
+            addresses: user.user_metadata?.addresses || [],
+          });
         }
+      } catch (error) {
+        console.error('Auth initialization error:', error);
+      } finally {
+        setIsAuthLoading(false);
+      }
 
-        const { data } = supabase.auth.onAuthStateChange(async (event, session) => {
-          if (event === 'SIGNED_IN' && session?.user) {
-            const user = session.user;
-            setIsLoggedIn(true);
-            setCurrentUser({
-              id: user.id,
-              email: user.email || '',
-              name: user.user_metadata?.name || user.email || '',
-              isAdmin: Boolean(user.user_metadata?.is_admin),
-              profilePicture: user.user_metadata?.picture || user.user_metadata?.avatar_url,
-              phone: user.user_metadata?.phone || user.phone || undefined,
-              wishlist: [],
-              orders: [],
-              addresses: [],
-            });
-            if (event === 'SIGNED_IN') {
-              addToast(`Welcome back, ${user.user_metadata?.name || user.email}!`, 'success');
-            }
-            if (location.hash.includes('access_token')) {
-              // Supabase auth redirect handling if using hash
-              navigate('/');
-            }
-          } else if (event === 'SIGNED_OUT' || !session) {
-            setIsLoggedIn(false);
-            setCurrentUser(null);
-          }
-        });
-        subscription = data.subscription;
-      };
+      const { supabase } = await import('./supabaseClient');
+      const { data } = supabase.auth.onAuthStateChange(async (event, session) => {
+        if (event === 'SIGNED_IN' && session?.user) {
+          const user = session.user;
+          setIsLoggedIn(true);
+          setCurrentUser({
+            id: user.id,
+            email: user.email || '',
+            name: user.user_metadata?.name || user.email || '',
+            isAdmin: Boolean(user.user_metadata?.is_admin),
+            profilePicture: user.user_metadata?.picture || user.user_metadata?.avatar_url,
+            phone: user.user_metadata?.phone || user.phone || undefined,
+            wishlist: [],
+            orders: [],
+            addresses: user.user_metadata?.addresses || [],
+          });
+          addToast(`Welcome back, ${user.user_metadata?.name || user.email}!`, 'success');
+        } else if (event === 'SIGNED_OUT') {
+          setIsLoggedIn(false);
+          setCurrentUser(null);
+        }
+      });
+      subscription = data.subscription;
+    };
 
-      initializeAuth();
-    }, 2000); // 2 second delay to clear TBT
+    initializeAuth();
 
     return () => {
-      clearTimeout(timer);
-      if (subscription) subscription.unsubscribe();
+      subscription?.unsubscribe();
     };
-  }, [addToast, location.hash, navigate]);
+  }, [addToast]);
 
   const handleSignUp = useCallback(
     async (name: string, _email: string, _password: string) => {
@@ -755,6 +764,25 @@ const App: React.FC = () => {
     location.pathname === '/cart' ||
     location.pathname.startsWith('/category');
 
+  // --- Data Loading: Blog Posts ---
+  const [blogPosts, setBlogPosts] = useState<typeof BLOG_POSTS_DATA>(BLOG_POSTS_DATA);
+
+  useEffect(() => {
+    // Load markdown posts and merge with mock data
+    import('./src/utils/markdownLoader').then(({ getAllPosts }) => {
+      getAllPosts().then((mdPosts) => {
+        setBlogPosts((prev) => {
+          // Avoid duplicates if HMR runs
+          const existingIds = new Set(prev.map((p) => p.id));
+          const newPosts = mdPosts.filter((p) => !existingIds.has(p.id));
+          return [...prev, ...newPosts].sort(
+            (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+          );
+        });
+      });
+    });
+  }, []);
+
   return (
     <HelmetProvider>
       <ABTestProvider>
@@ -784,8 +812,8 @@ const App: React.FC = () => {
               structuredDataId="organization-schema"
             />
 
-            {!(isMobile && isMobileLayoutPage) && <FreeShippingBanner />}
-            {!(isMobile && isMobileLayoutPage) && (
+            {location.pathname !== '/checkout' && <FreeShippingBanner />}
+            {location.pathname !== '/checkout' && (
               <Header
                 cartItems={cartItems}
                 wishlistItemCount={wishlistItemCount}
@@ -805,7 +833,7 @@ const App: React.FC = () => {
               />
             )}
 
-            <main id="main-content" className="flex-1">
+            <main id="main-content" className="flex-grow pt-16 md:pt-20">
               <Routes>
                 <Route
                   path="/product/:id"
@@ -822,9 +850,8 @@ const App: React.FC = () => {
                       <ResponsiveCategoryPage
                         searchQuery={searchQuery}
                         onSearchChange={setSearchQuery}
-                        cartItemCount={cartItems.reduce((sum, item) => sum + item.quantity, 0)}
+                        cartItemCount={cartItems.reduce((acc, item) => acc + item.quantity, 0)}
                         onCartClick={() => setIsCartOpen(true)}
-                        onMenuClick={() => setIsMobileMenuOpen(true)}
                         addToast={addToast}
                         setSelectedProduct={setSelectedProduct}
                       />
@@ -854,11 +881,11 @@ const App: React.FC = () => {
                       <ResponsiveCategoryPage
                         searchQuery={searchQuery}
                         onSearchChange={setSearchQuery}
-                        cartItemCount={cartItems.reduce((sum, item) => sum + item.quantity, 0)}
-                        onCartClick={() => (isMobile ? navigate('/cart') : setIsCartOpen(true))}
-                        onMenuClick={() => setIsMobileMenuOpen(true)}
+                        cartItemCount={cartItems.reduce((acc, item) => acc + item.quantity, 0)}
+                        onCartClick={() => setIsCartOpen(true)}
                         addToast={addToast}
                         setSelectedProduct={setSelectedProduct}
+                        defaultCategory="All"
                       />
                     </React.Suspense>
                   }
@@ -868,62 +895,79 @@ const App: React.FC = () => {
                   element={
                     <React.Suspense fallback={<PageLoader />}>
                       {GlobalSEO}
-                      <ResponsiveHomePage
-                        products={products}
-                        selectedCategory={selectedCategory}
-                        setSelectedCategory={(cat) => {
-                          handleSelectCategoryAndClose(cat);
-                          if (cat === 'Offers') navigate('/offers');
-                        }}
-                        searchQuery={searchQuery}
-                        selectedTags={selectedTags}
-                        finalFilteredProducts={finalFilteredProducts}
-                        productsLoading={productsLoading}
-                        wishlistedIds={wishlistedIds}
-                        comparisonIds={comparisonIds}
-                        handleAddToCart={handleAddToCart}
-                        handleToggleWishlist={handleToggleWishlist}
-                        setSelectedProduct={setSelectedProduct}
-                        handleNotifyMe={handleNotifyMe}
-                        handleToggleCompare={handleToggleCompare}
-                        handleClearFilters={handleClearFilters}
-                        setIsFilterOpen={setIsFilterOpen}
-                        setSortOrder={setSortOrder}
-                        sortOrder={sortOrder}
-                        showOnSale={showOnSale}
-                        setShowOnSale={setShowOnSale}
-                        showInStock={showInStock}
-                        setShowInStock={setShowInStock}
-                        availableTags={availableTags}
-                        selectedTagsState={selectedTags}
-                        handleToggleTag={handleToggleTag}
-                        priceRange={priceRange}
-                        setPriceRange={(range) => setPriceRange((prev) => ({ ...prev, ...range }))}
-                        maxPrice={maxPrice}
-                        selectedOrigins={selectedOrigins}
-                        handleToggleOrigin={handleToggleOrigin}
-                        availableOrigins={availableOrigins}
-                        selectedHeatLevels={selectedHeatLevels}
-                        handleToggleHeatLevel={handleToggleHeatLevel}
-                        availableHeatLevels={availableHeatLevels}
-                        selectedCuisines={selectedCuisines}
-                        handleToggleCuisine={handleToggleCuisine}
-                        availableCuisines={availableCuisines}
-                        selectedSizes={selectedSizes}
-                        handleToggleSize={handleToggleSize}
-                        availableSizes={availableSizes}
-                        selectedGrinds={selectedGrinds}
-                        handleToggleGrind={handleToggleGrind}
-                        availableGrinds={availableGrinds}
-                        selectedGrades={selectedGrades}
-                        handleToggleGrade={handleToggleGrade}
-                        availableGrades={availableGrades}
-                        addToast={addToast}
-                        cartItemCount={cartItems.reduce((sum, item) => sum + item.quantity, 0)}
-                        onMenuClick={() => setIsMobileMenuOpen(true)}
-                        onCartClick={() => (isMobile ? navigate('/cart') : setIsCartOpen(true))}
-                        onSearchChange={setSearchQuery}
-                      />
+                      {isMobile ? (
+                        <MobileHomePage
+                          products={products}
+                          wishlistedIds={wishlistedIds}
+                          cartItemCount={cartItems.reduce((acc, item) => acc + item.quantity, 0)}
+                          searchQuery={searchQuery}
+                          onSearchChange={setSearchQuery}
+                          handleAddToCart={handleAddToCart}
+                          handleToggleWishlist={handleToggleWishlist}
+                          setSelectedProduct={() => {}}
+                          onCartClick={() => setIsCartOpen(true)}
+                          addToast={addToast}
+                        />
+                      ) : (
+                        <ResponsiveHomePage
+                          products={products}
+                          selectedCategory={selectedCategory}
+                          setSelectedCategory={(cat) => {
+                            handleSelectCategoryAndClose(cat);
+                            if (cat === 'Offers') navigate('/offers');
+                          }}
+                          searchQuery={searchQuery}
+                          selectedTags={selectedTags}
+                          finalFilteredProducts={finalFilteredProducts}
+                          productsLoading={productsLoading}
+                          wishlistedIds={wishlistedIds}
+                          comparisonIds={comparisonIds}
+                          handleAddToCart={handleAddToCart}
+                          handleToggleWishlist={handleToggleWishlist}
+                          setSelectedProduct={setSelectedProduct}
+                          handleNotifyMe={handleNotifyMe}
+                          handleToggleCompare={handleToggleCompare}
+                          handleClearFilters={handleClearFilters}
+                          setIsFilterOpen={setIsFilterOpen}
+                          setSortOrder={setSortOrder}
+                          sortOrder={sortOrder}
+                          showOnSale={showOnSale}
+                          setShowOnSale={setShowOnSale}
+                          showInStock={showInStock}
+                          setShowInStock={setShowInStock}
+                          availableTags={availableTags}
+                          selectedTagsState={selectedTags}
+                          handleToggleTag={handleToggleTag}
+                          priceRange={priceRange}
+                          setPriceRange={(range) =>
+                            setPriceRange((prev) => ({ ...prev, ...range }))
+                          }
+                          maxPrice={maxPrice}
+                          selectedOrigins={selectedOrigins}
+                          handleToggleOrigin={handleToggleOrigin}
+                          availableOrigins={availableOrigins}
+                          selectedHeatLevels={selectedHeatLevels}
+                          handleToggleHeatLevel={handleToggleHeatLevel}
+                          availableHeatLevels={availableHeatLevels}
+                          selectedCuisines={selectedCuisines}
+                          handleToggleCuisine={handleToggleCuisine}
+                          availableCuisines={availableCuisines}
+                          selectedSizes={selectedSizes}
+                          handleToggleSize={handleToggleSize}
+                          availableSizes={availableSizes}
+                          selectedGrinds={selectedGrinds}
+                          handleToggleGrind={handleToggleGrind}
+                          availableGrinds={availableGrinds}
+                          selectedGrades={selectedGrades}
+                          handleToggleGrade={handleToggleGrade}
+                          availableGrades={availableGrades}
+                          addToast={addToast}
+                          cartItemCount={cartItems.reduce((sum, item) => sum + item.quantity, 0)}
+                          onMenuClick={() => setIsMobileMenuOpen(true)}
+                          onCartClick={() => (isMobile ? navigate('/cart') : setIsCartOpen(true))}
+                          onSearchChange={setSearchQuery}
+                        />
+                      )}
                     </React.Suspense>
                   }
                 />
@@ -964,7 +1008,14 @@ const App: React.FC = () => {
                   element={
                     currentUser ? (
                       <React.Suspense fallback={<PageLoader />}>
-                        <AccountLayout user={currentUser} />
+                        <AccountLayout user={currentUser} onLogout={handleLogout}>
+                          <AccountOverview
+                            user={currentUser!}
+                            onUpdateUser={(updatedUser) =>
+                              setCurrentUser((prev) => ({ ...prev!, ...updatedUser }))
+                            }
+                          />
+                        </AccountLayout>
                       </React.Suspense>
                     ) : (
                       <Navigate to="/login" replace />
@@ -988,7 +1039,9 @@ const App: React.FC = () => {
                     path="orders"
                     element={
                       <React.Suspense fallback={<PageLoader />}>
-                        <OrdersList />
+                        <AccountLayout user={currentUser!} onLogout={handleLogout}>
+                          <OrdersList />
+                        </AccountLayout>
                       </React.Suspense>
                     }
                   />
@@ -996,7 +1049,9 @@ const App: React.FC = () => {
                     path="addresses"
                     element={
                       <React.Suspense fallback={<PageLoader />}>
-                        <AddressBook />
+                        <AccountLayout user={currentUser!} onLogout={handleLogout}>
+                          <AddressBook />
+                        </AccountLayout>
                       </React.Suspense>
                     }
                   />
@@ -1004,7 +1059,9 @@ const App: React.FC = () => {
                     path="wishlist"
                     element={
                       <React.Suspense fallback={<PageLoader />}>
-                        <AccountWishlist />
+                        <AccountLayout user={currentUser!} onLogout={handleLogout}>
+                          <AccountWishlist />
+                        </AccountLayout>
                       </React.Suspense>
                     }
                   />
@@ -1012,7 +1069,22 @@ const App: React.FC = () => {
                     path="loyalty"
                     element={
                       <React.Suspense fallback={<PageLoader />}>
-                        <LoyaltyPointsTracker />
+                        <AccountLayout user={currentUser!} onLogout={handleLogout}>
+                          <LoyaltyPointsTracker />
+                        </AccountLayout>
+                      </React.Suspense>
+                    }
+                  />
+                  <Route
+                    path="security/2fa"
+                    element={
+                      <React.Suspense fallback={<PageLoader />}>
+                        <AccountLayout user={currentUser!} onLogout={handleLogout}>
+                          <TwoFactorSetupPage
+                            onComplete={() => addToast('2FA Enabled', 'success')}
+                            onCancel={() => {}}
+                          />
+                        </AccountLayout>
                       </React.Suspense>
                     }
                   />
@@ -1021,6 +1093,30 @@ const App: React.FC = () => {
                 <Route path="/profile" element={<Navigate to="/account" replace />} />
 
                 <Route path="/admin" element={<AdminDashboard />} />
+                <Route
+                  path="/admin/dashboard"
+                  element={
+                    currentUser?.isAdmin ? (
+                      <React.Suspense fallback={<PageLoader />}>
+                        <AdminDashboard />
+                      </React.Suspense>
+                    ) : (
+                      <Navigate to="/" replace />
+                    )
+                  }
+                />
+                <Route
+                  path="/admin/shipments"
+                  element={
+                    currentUser?.isAdmin ? (
+                      <React.Suspense fallback={<PageLoader />}>
+                        <AdminShipmentsPage />
+                      </React.Suspense>
+                    ) : (
+                      <Navigate to="/" replace />
+                    )
+                  }
+                />
 
                 <Route
                   path="/shipping"
@@ -1092,7 +1188,7 @@ const App: React.FC = () => {
                   element={
                     <React.Suspense fallback={<PageLoader />}>
                       <BlogPage
-                        posts={MOCK_POSTS}
+                        posts={blogPosts}
                         onSelectPost={(slug) => navigate(`/blog/${slug}`)}
                       />
                     </React.Suspense>
@@ -1192,6 +1288,14 @@ const App: React.FC = () => {
                     </React.Suspense>
                   }
                 />
+                <Route
+                  path="/offers/subscription"
+                  element={
+                    <React.Suspense fallback={<PageLoader />}>
+                      <SubscriptionPage />
+                    </React.Suspense>
+                  }
+                />
 
                 <Route
                   path="/order-confirmation/:orderId"
@@ -1203,7 +1307,7 @@ const App: React.FC = () => {
                     />
                   }
                 />
-                <Route path="/blog/:slug" element={<BlogPostRoute />} />
+                <Route path="/blog/:slug" element={<BlogPostRoute posts={blogPosts} />} />
                 <Route
                   path="/faq"
                   element={
@@ -1220,9 +1324,51 @@ const App: React.FC = () => {
                     </React.Suspense>
                   }
                 />
-                {/* Tracking Page */}
+                {/* Tools & Utilities */}
+                <Route
+                  path="/tools/spice-freshness-calculator"
+                  element={
+                    <React.Suspense fallback={<PageLoader />}>
+                      <FreshnessCalculatorPage />
+                    </React.Suspense>
+                  }
+                />
+
+                {/* Legal & Info Pages */}
                 <Route path="/track" element={<TrackingPage />} />
                 <Route path="/track/:orderId" element={<TrackingPage />} />
+                <Route
+                  path="/order-tracking"
+                  element={
+                    <React.Suspense fallback={<PageLoader />}>
+                      <OrderTrackingPage />
+                    </React.Suspense>
+                  }
+                />
+                <Route
+                  path="/tracking/:orderId"
+                  element={
+                    <React.Suspense fallback={<PageLoader />}>
+                      <TrackingPage />
+                    </React.Suspense>
+                  }
+                />
+                <Route
+                  path="/shipping-policy"
+                  element={
+                    <React.Suspense fallback={<PageLoader />}>
+                      <ShippingPage />
+                    </React.Suspense>
+                  }
+                />
+                <Route
+                  path="/affiliate-program"
+                  element={
+                    <React.Suspense fallback={<PageLoader />}>
+                      <AffiliateProgramPage />
+                    </React.Suspense>
+                  }
+                />
                 {/* Admin Routes */}
                 <Route path="/admin/shipments" element={<AdminShipmentsPage />} />
                 {/* 404 Not Found Page */}
@@ -1261,6 +1407,7 @@ const App: React.FC = () => {
                   onAskQuestion={handleAskQuestion}
                   onSelectProduct={setSelectedProduct}
                   onNotifyMe={handleNotifyMe}
+                  onSelectRecipe={setSelectedRecipe}
                 />
               )}
 

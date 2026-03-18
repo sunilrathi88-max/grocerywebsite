@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const BASE_URL = 'https://tattvaco.in';
+const BASE_URL = 'https://rathinaturals.com';
 const DATA_FILE_PATH = path.resolve(__dirname, '../data.ts');
 
 const STATIC_PAGES = [
@@ -16,6 +16,10 @@ const STATIC_PAGES = [
   '/refund-policy',
   '/recipes',
   '/offers',
+  '/affiliate-program',
+  '/tools/spice-freshness-calculator',
+  '/subscription',
+  '/farmers',
 ];
 
 const generateSitemap = () => {
@@ -59,7 +63,7 @@ const generateSitemap = () => {
   }
 
   // Extract Blog Slugs
-  const postsBlock = dataContent.split('export const MOCK_POSTS')[1].split('export const')[0];
+  const postsBlock = dataContent.split('export const BLOG_POSTS_DATA')[1].split('export const')[0];
   const slugRegex = /slug:\s*'([^']+)'/g;
   const slugs = [];
   while ((match = slugRegex.exec(postsBlock)) !== null) {
@@ -92,9 +96,10 @@ const generateSitemap = () => {
 
   // Categories
   categories.forEach((cat) => {
+    const slug = cat.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and');
     xml += `
   <url>
-    <loc>${BASE_URL}/category/${cat.replace(/&/g, '&amp;')}</loc>
+    <loc>${BASE_URL}/category/${slug}</loc>
     <lastmod>${currentDate}</lastmod>
     <priority>0.8</priority>
   </url>`;
