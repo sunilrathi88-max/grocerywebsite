@@ -16,16 +16,10 @@ const AboutPage: React.FC = () => {
               Our Story
             </h2>
             <p className="text-lg text-gray-600 mb-6 leading-relaxed">
-              THE RATHI SPICE CO was born from a passion for authentic Indian flavors and a desire
-              to share them with the world. We travel to the heart of India, from the saffron fields
-              of Kashmir to the pepper vines of the Malabar Coast, to source the finest, most
-              aromatic spices and gourmet products.
+              Rooted in a <strong className="text-brand-dark">60-year Rajasthani heritage</strong>, Rathi Naturals was born from a generational commitment to authentic Indian flavours. Long before the era of mass-produced, hot-ground spices, our family traded the finest yields directly from India&apos;s most renowned agricultural hubs.
             </p>
             <p className="text-gray-600 mb-4 leading-relaxed">
-              Our philosophy is simple: quality, authenticity, and sustainability. We work directly
-              with farmers and artisans who share our commitment to traditional methods and ethical
-              practices. Every product we offer tells a story of its origin, its people, and the
-              rich culinary heritage of India.
+              Today, we bypass the middlemen to work directly with farmers in the heartland. From the bustling coriander markets of <strong className="text-brand-dark">Ramganj Mandi</strong> to the turmeric fields of <strong className="text-brand-dark">Salem</strong> and the red chilli farms of <strong className="text-brand-dark">Mathania</strong>, every product we offer is a testament to unwavering quality, precision cold-ground processing, and transparent, ethical sourcing.
             </p>
           </div>
           <div className="relative">
@@ -57,10 +51,9 @@ const AboutPage: React.FC = () => {
               <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">
                 ❄️
               </div>
-              <h3 className="font-bold text-xl mb-2 text-brand-dark">Cold Ground</h3>
+              <h3 className="font-bold text-xl mb-2 text-brand-dark">Cold-Grinding Moat</h3>
               <p className="text-gray-600 text-sm">
-                We grind our spices at low temperatures to prevent the loss of volatile essential
-                oils, ensuring maximum aroma and flavor in every pinch.
+                Unlike mass-market brands reliant on high-speed hot-grinding, we uphold our heritage by slowly grinding spices at low temperatures. This scientifically defensible process prevents the loss of volatile essential oils, locking in maximum aroma, potency, and vibrant color.
               </p>
             </div>
             <div className="bg-white p-6 rounded-xl shadow-sm text-center">
@@ -70,17 +63,16 @@ const AboutPage: React.FC = () => {
               <h3 className="font-bold text-xl mb-2 text-brand-dark">Lab Tested</h3>
               <p className="text-gray-600 text-sm">
                 Every batch undergoes rigorous testing for pesticides, heavy metals, and
-                adulteration. Only the purest spices make it to your kitchen.
+                adulteration. Only the purest spices make it to your kitchen with FSSAI-certified transparency.
               </p>
             </div>
             <div className="bg-white p-6 rounded-xl shadow-sm text-center">
               <div className="w-16 h-16 bg-yellow-50 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">
                 🌿
               </div>
-              <h3 className="font-bold text-xl mb-2 text-brand-dark">Single Origin</h3>
+              <h3 className="font-bold text-xl mb-2 text-brand-dark">Authentic Origins</h3>
               <p className="text-gray-600 text-sm">
-                We source from specific regions known for their superior produce—Lakadong for
-                Turmeric, Guntur for Chilli, and Idukki for Cardamom.
+                We source exclusively from historically significant regions: <strong className="text-brand-dark">Ramganj Mandi</strong> for Coriander, <strong className="text-brand-dark">Mathania</strong> for Red Chilli, and <strong className="text-brand-dark">Salem</strong> for Turmeric. We never compromise on geographic authenticity.
               </p>
             </div>
           </div>

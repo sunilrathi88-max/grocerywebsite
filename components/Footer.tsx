@@ -78,6 +78,11 @@ const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
                   Affiliate Program
                 </Link>
               </li>
+              <li>
+                <Link to="/reviews" className="hover:text-primary transition-colors">
+                  Customer Reviews
+                </Link>
+              </li>
             </ul>
           </div>
           <div className="md:col-span-4">

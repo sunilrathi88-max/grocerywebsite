@@ -83,6 +83,7 @@ const RefundPolicyPage = React.lazy(() => import('./components/RefundPolicyPage'
 const TermsOfServicePage = React.lazy(() => import('./components/TermsOfServicePage'));
 const AboutPage = React.lazy(() => import('./components/AboutPage'));
 const FAQsPage = React.lazy(() => import('./components/FAQsPage'));
+const ReviewsPage = React.lazy(() => import('./pages/ReviewsPage'));
 const ContactPage = React.lazy(() => import('./components/ContactPage'));
 const RecipesPage = React.lazy(() => import('./components/RecipesPage'));
 const BlogPage = React.lazy(() => import('./components/BlogPage'));
@@ -1155,6 +1156,14 @@ const App: React.FC = () => {
                   element={
                     <React.Suspense fallback={<PageLoader />}>
                       <AboutPage />
+                    </React.Suspense>
+                  }
+                />
+                <Route
+                  path="/reviews"
+                  element={
+                    <React.Suspense fallback={<PageLoader />}>
+                      <ReviewsPage />
                     </React.Suspense>
                   }
                 />

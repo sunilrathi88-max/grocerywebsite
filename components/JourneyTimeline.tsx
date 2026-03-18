@@ -31,7 +31,7 @@ const JourneyTimeline: React.FC = () => {
               </span>
               <h4 className="font-serif text-2xl text-accent-charcoal mb-3">Harvest</h4>
               <p className="text-sm text-accent-charcoal/60 leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform translate-y-2 group-hover:translate-y-0">
-                Hand-picked at peak potency from our partner farms in Kerala and Guntur.
+                Hand-picked at peak potency directly from our partner farms in regions like Ramganj Mandi, Mathania, and Salem.
               </p>
             </div>
           </div>
