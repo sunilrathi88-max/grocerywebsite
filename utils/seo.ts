@@ -245,6 +245,19 @@ export const generateProductSchema = (product: Product): ProductStructuredData =
     description: product.description,
     image: product.images,
     sku: `TATTVA-${product.id}`,
+    hasCertification: {
+      '@type': 'Certification',
+      name: 'FSSAI License',
+      authority: {
+        '@type': 'Organization',
+        name: 'Food Safety and Standards Authority of India (FSSAI)',
+        url: 'https://fssai.gov.in/'
+      },
+      hasCredential: {
+        '@type': 'Credential',
+        credentialId: '12225025000253'
+      }
+    },
     brand: {
       '@type': 'Brand',
       name: 'Tattva Co.',
