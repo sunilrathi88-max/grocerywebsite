@@ -1,4 +1,4 @@
-# TATTVA CO. - QUICK WINS IMPLEMENTATION GUIDE
+# RATHI NATURALS CO. - QUICK WINS IMPLEMENTATION GUIDE
 
 ## 30/60/90 Day Action Plan
 
@@ -25,7 +25,7 @@
 **Copy Template for Homepage**:
 
 ```
-"Why Choose Tattva Co?"
+"Why Choose Rathi Naturals?"
 ├─ ✓ FSSAI Certified - Government approved
 ├─ ✓ Certified Organic - No pesticides/chemicals
 ├─ ✓ Fair-Trade Sourcing - Farmers paid fairly
@@ -44,7 +44,7 @@
 **Action Items**:
 
 - [ ] Collect 5-10 customer reviews/testimonials
-  - Email template: "Share your Tattva experience - get [discount]"
+  - Email template: "Share your Rathi Naturals experience - get [discount]"
   - Select testimonials with variety (different products, ages, locations)
   - Get permission for photo/name usage
 - [ ] Create testimonial carousel on homepage
@@ -108,7 +108,7 @@
 **Content to Create**:
 
 ```
-SECTION: Why Tattva Co?
+SECTION: Why Rathi Naturals?
 
 1. DIRECT FROM FARMERS
    ✓ No middlemen = Better prices
@@ -150,7 +150,7 @@ SECTION: Why Tattva Co?
 **Email 1** (Day 5 after delivery)
 
 ```
-Subject: How was your Tattva experience?
+Subject: How was your Rathi Naturals experience?
 
 Hi [Customer Name],
 
@@ -164,7 +164,7 @@ Would you mind sharing your experience?
 It takes just 2 minutes!
 
 Cheers,
-The Tattva Team
+The Rathi Naturals Team
 ```
 
 **Email 2** (Day 15, if no review)
@@ -181,7 +181,7 @@ for you (or if there's room for improvement).
 
 [Button: Leave a Review]
 
-Thanks for being part of the Tattva family.
+Thanks for being part of the Rathi Naturals family.
 ```
 
 ---
@@ -245,7 +245,7 @@ Complete your order now:
 Free shipping on orders over ₹599 🚚
 
 Cheers,
-Tattva Team
+Rathi Naturals Team
 ```
 
 **Email 2** (24 hours later)
@@ -265,7 +265,7 @@ Valid until [Tomorrow Date] only!
 Fresh, quality spices delivered in 24-48 hours.
 
 Cheers,
-Tattva Team
+Rathi Naturals Team
 ```
 
 ---
@@ -277,14 +277,14 @@ Tattva Team
 **Time**: 3-4 weeks (with developer)  
 **Impact**: Very High (Recurring revenue, customer loyalty)
 
-**"Tattva Fresh Monthly" Subscription Box**:
+**"Rathi Naturals Fresh Monthly" Subscription Box**:
 
 ```
 WHAT'S INCLUDED:
 ├─ 4-5 curated spices/products based on your preferences
 ├─ 15-20% discount vs. buying separately
 ├─ Free shipping on all orders
-├─ Monthly "Tattva's Pick" exclusive blend
+├─ Monthly "Rathi Naturals' Pick" exclusive blend
 └─ Early access to seasonal products
 
 PRICING:
@@ -303,11 +303,11 @@ SETUP:
 **Launch Email**:
 
 ```
-Subject: Save 20% with Tattva Fresh Monthly 🌶️
+Subject: Save 20% with Rathi Naturals Fresh Monthly 🌶️
 
 Hi [Name],
 
-We just launched Tattva Fresh Monthly -
+We just launched Rathi Naturals Fresh Monthly -
 your personalized spice subscription!
 
 Every month, we'll send:
@@ -320,10 +320,10 @@ Every month, we'll send:
 
 First box: Just ₹999 | Cancel anytime | Free shipping
 
-Join 100+ Tattva enthusiasts already subscribed!
+Join 100+ Rathi Naturals enthusiasts already subscribed!
 
 Cheers,
-The Tattva Family
+The Rathi Naturals Family
 ```
 
 ---
@@ -367,7 +367,7 @@ Fair-Trade Partner since: 2021
 
 - Feature one farmer on homepage each month
 - Send email: "Meet the farmer behind your spices"
-- Create Instagram video series #TattvaFarmers
+- Create Instagram video series #RathiNaturalsFarmers
 - QR code on packaging linking to farmer story
 
 ---
@@ -382,7 +382,7 @@ Fair-Trade Partner since: 2021
 ```
 MON: Recipe Post
 - Title: "Perfect [Dish] with [Spice] - Easy 15-min Recipe"
-- Ingredients list (with Tattva products linked)
+- Ingredients list (with Rathi Naturals products linked)
 - Step-by-step photos
 - Health benefits callout
 - Related product recommendations
@@ -423,7 +423,7 @@ FRI: Story Post
 **Program Structure**:
 
 ```
-TATTVA REWARDS PROGRAM
+RATHI NATURALS REWARDS PROGRAM
 
 Earn Points:
 ├─ 1 point = ₹1 spent
@@ -510,7 +510,7 @@ SERIES 1: Farmer Stories (2-3 min each)
 - Fair-trade partnership explanation
 
 SERIES 2: Cooking Tutorials (5-7 min each)
-- How to make [dish] with Tattva [spice]
+- How to make [dish] with Rathi Naturals [spice]
 - Tempering spices: dos & don'ts
 - Storing spices for maximum freshness
 - Health benefits of [spice]
@@ -518,13 +518,13 @@ SERIES 2: Cooking Tutorials (5-7 min each)
 SERIES 3: Educational (3-5 min each)
 - Spice origins: Where does turmeric come from?
 - Quality check: How we test for pesticides
-- What makes Tattva different
+- What makes Rathi Naturals different
 - Sustainability practices
 
 SERIES 4: Customer Stories (2-3 min each)
 - Customer testimonials (on video)
 - Recipes they love making
-- Why they switched to Tattva
+- Why they switched to Rathi Naturals
 ```
 
 **Production Tips**:
@@ -619,7 +619,7 @@ Secondary CTA:
 
 ```
 Testimonial Request:
-- "How was your Tattva experience?"
+- "How was your Rathi Naturals experience?"
 - "Your feedback matters! [Product]"
 - "2 minutes to help other spice lovers"
 

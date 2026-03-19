@@ -8,7 +8,7 @@ const PEACECards: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-5xl font-serif font-bold text-gray-900 mb-4">
-            Why Tattva Co.?
+            Why Rathi Naturals.?
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             We&apos;re not just selling spices. We&apos;re fighting the mediocrity in your pantry.

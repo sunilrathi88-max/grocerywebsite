@@ -32,7 +32,7 @@ const FreshnessCalculatorPage = () => {
   return (
     <>
       <SEO
-        title="Spice Freshness Calculator | Check Spice Expiry & Potency | Tattva Co."
+        title="Spice Freshness Calculator | Check Spice Expiry & Potency | Rathi Naturals."
         description="Is your garam masala past its prime? Use our free interactive tool to check spice freshness, calculate shelf life, and get storage tips. Don't cook with dust!"
         structuredData={[structuredData, breadCrumbSchema]}
       />
@@ -82,7 +82,7 @@ const FreshnessCalculatorPage = () => {
             </ul>
 
             <h3 className="text-xl font-bold text-gray-900 mt-6">
-              How Tattva Co. Ensures Freshness
+              How Rathi Naturals. Ensures Freshness
             </h3>
             <p>
               We solve this by cold-grinding our spices to preserve oils, testing them for purity in

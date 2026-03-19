@@ -11,7 +11,7 @@ target_audience: 'Home Cooks, Culinary Enthusiasts'
 
 While "Curry Powder" and generic "Garam Masala" might be the global face of Indian cuisine, the true soul of India’s culinary heritage lies in its regional spice blends. Every state—sometimes every district—has its own signature masala, evolved over centuries not just for flavor, but for preservation, digestion (Ayurveda), and to complement local produce.
 
-At Tattva Co., we believe in the science behind the spice. Through our work with heritage farms across India, we’ve uncovered the secrets behind five distinct regional blends that define their cuisines. Here is your guide to mastering them, backed by history and food science.
+At Rathi Naturals., we believe in the science behind the spice. Through our work with heritage farms across India, we’ve uncovered the secrets behind five distinct regional blends that define their cuisines. Here is your guide to mastering them, backed by history and food science.
 
 ## 1. Maharashtrian Goda Masala: The "Sweet" Black Masala
 
@@ -109,7 +109,7 @@ Kashmir’s freezing winters demand food that warms the body. _Vur_ is a unique 
 
 ### The Regional Factor
 
-Kashmir is the land of saffron and aromatic spices. This blend heavily utilizes **Kashmiri Red Chilies** (vibrant color, mild heat) and **Ginger Powder** (Sonth). Tattva Co. sources its ginger from the high-altitude regions where the rhizomes develop a sharper, cleaner flavor profile essential for warmth (Agni).
+Kashmir is the land of saffron and aromatic spices. This blend heavily utilizes **Kashmiri Red Chilies** (vibrant color, mild heat) and **Ginger Powder** (Sonth). Rathi Naturals. sources its ginger from the high-altitude regions where the rhizomes develop a sharper, cleaner flavor profile essential for warmth (Agni).
 
 ### The Blend
 
@@ -152,6 +152,6 @@ Survival in the desert meant relying on dried berries (_Kair_) and beans (_Sangr
 
 ### Conclusion
 
-Mastering these blends allows you to travel through India’s culinary landscape from your own kitchen. At Tattva Co., we always recommend starting with whole spices and grinding them fresh for each use if possible, or in small batches for the week.
+Mastering these blends allows you to travel through India’s culinary landscape from your own kitchen. At Rathi Naturals., we always recommend starting with whole spices and grinding them fresh for each use if possible, or in small batches for the week.
 
-_Ready to stock your pantry? Explore our range of lab-tested, farm-direct whole spices at [tattvaco.in/shop](https://tattvaco.in/shop)._
+_Ready to stock your pantry? Explore our range of lab-tested, farm-direct whole spices at [rathinaturals.com/shop](https://rathinaturals.com/shop)._

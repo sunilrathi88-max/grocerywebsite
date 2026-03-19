@@ -19,7 +19,7 @@ const SubscriptionPage: React.FC = () => {
       id: `sub-${plan.id}`,
       productId: 9999, // Subscription Product ID
       variantId: 9999, // Subscription Variant ID
-      name: `Tattva Fresh: ${plan.name}`,
+      name: `Rathi Naturals Fresh: ${plan.name}`,
       price: plan.price,
       quantity: 1,
       weight: plan.interval, // Using weight field for interval display
@@ -37,7 +37,7 @@ const SubscriptionPage: React.FC = () => {
       <section className="bg-brand-dark text-white py-20 px-4 md:px-6 text-center">
         <div className="container mx-auto max-w-4xl">
           <span className="text-brand-secondary font-bold tracking-widest uppercase text-sm mb-4 block">
-            INTRODUCING TATTVA FRESH MONTHLY
+            INTRODUCING RATHI NATURALS FRESH MONTHLY
           </span>
           <h1 className="text-4xl md:text-6xl font-serif font-bold mb-6">
             Never Run Out of Fresh Flavor.

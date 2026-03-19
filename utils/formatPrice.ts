@@ -1,6 +1,6 @@
 /**
  * Utility functions for formatting prices in INR currency
- * TattvaCo - Indian Spice Store
+ * rathinaturals - Indian Spice Store
  */
 
 /**

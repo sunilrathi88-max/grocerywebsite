@@ -30,7 +30,7 @@ const BrandStory: React.FC = () => {
           transition={{ duration: 0.6 }}
         >
           <span className="text-brand-primary font-bold tracking-wider uppercase text-sm mb-3 block">
-            Why Tattva Co?
+            Why Rathi Naturals?
           </span>
           <h2 className="text-3xl md:text-5xl font-serif font-bold text-brand-dark mb-6 leading-tight max-w-2xl mx-auto">
             Fighting Mediocrity in Your Pantry

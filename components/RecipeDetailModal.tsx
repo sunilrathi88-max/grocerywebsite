@@ -43,7 +43,7 @@ const RecipeDetailModal: React.FC<RecipeDetailModalProps> = ({
     <AnimatePresence>
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
         <SEO
-          title={`${recipe.title} - Recipe | Tattva Co.`}
+          title={`${recipe.title} - Recipe | Rathi Naturals.`}
           description={recipe.description}
           ogType="article"
           ogImage={recipe.image}

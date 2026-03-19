@@ -16,7 +16,7 @@ const SubscriptionBanner: React.FC = () => {
               Members Only
             </span>
             <h3 className="text-3xl md:text-4xl font-serif font-bold text-[#431407] mb-4">
-              Tattva Fresh Monthly
+              Rathi Naturals Fresh Monthly
             </h3>
             <p className="text-gray-600 text-lg mb-6 leading-relaxed">
               Experience the freshest harvest delivered to your door. Get a curated box of 4-5

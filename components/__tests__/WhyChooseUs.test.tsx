@@ -10,7 +10,7 @@ describe('WhyChooseUs', () => {
     // Using regex to match benefits or titles specifically if needed,
     // but counting containers/headings is easier.
     // Features have h3 titles.
-    // There is also the main section title "Why Choose Tattva?", so we filter or check specific titles.
+    // There is also the main section title "Why Choose Rathi Naturals?", so we filter or check specific titles.
 
     expect(screen.getByText('DIRECT')).toBeInTheDocument();
     expect(screen.getByText('QUALITY')).toBeInTheDocument();

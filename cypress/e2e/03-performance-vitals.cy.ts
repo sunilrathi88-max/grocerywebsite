@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 /**
- * Tattva Co. - Performance & Web Vitals Test
+ * Rathi Naturals - Performance & Web Vitals Test
  * Tests Core Web Vitals: LCP, FID, CLS
  */
 

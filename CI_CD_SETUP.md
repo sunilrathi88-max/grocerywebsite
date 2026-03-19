@@ -2,7 +2,7 @@
 
 ## Overview
 
-This guide explains how to set up continuous integration and deployment for Tattva Co. using GitHub Actions, Cypress, and Lighthouse CI.
+This guide explains how to set up continuous integration and deployment for Rathi Naturals. using GitHub Actions, Cypress, and Lighthouse CI.
 
 ## Prerequisites
 

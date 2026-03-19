@@ -31,9 +31,9 @@ describe('SubscriptionPage', () => {
 
   it('renders subscription plans', () => {
     renderComponent();
-    expect(screen.getByText('INTRODUCING TATTVA FRESH MONTHLY')).toBeInTheDocument();
+    expect(screen.getByText('INTRODUCING RATHI NATURALS FRESH MONTHLY')).toBeInTheDocument();
     // Case insensitive text match
-    expect(screen.getByText(/INTRODUCING TATTVA FRESH MONTHLY/i)).toBeInTheDocument();
+    expect(screen.getByText(/INTRODUCING RATHI NATURALS FRESH MONTHLY/i)).toBeInTheDocument();
     expect(screen.getByText('Starter Box')).toBeInTheDocument();
     expect(screen.getByText('Chef’s Collection')).toBeInTheDocument();
   });
@@ -49,7 +49,7 @@ describe('SubscriptionPage', () => {
     expect(mockAddItem).toHaveBeenCalledWith(
       expect.objectContaining({
         id: 'sub-starter',
-        name: 'Tattva Fresh: Starter Box',
+        name: 'Rathi Naturals Fresh: Starter Box',
         price: 999,
         isSubscription: true,
       })

@@ -45,7 +45,7 @@ const FarmerSpotlight: React.FC = () => {
                 prioritize yield, Rajesh focuses on <strong>curcumin content</strong> and aroma.
               </p>
               <p>
-                By partnering directly with Tattva Co., Rajesh earns{' '}
+                By partnering directly with Rathi Naturals., Rajesh earns{' '}
                 <strong>30% above market rate</strong>, which has allowed him to transition 15 acres
                 of land to fully organic practices.
               </p>

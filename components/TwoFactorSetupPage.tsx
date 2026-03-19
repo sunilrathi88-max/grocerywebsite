@@ -74,7 +74,7 @@ const TwoFactorSetupPage: React.FC<TwoFactorSetupPageProps> = ({ onComplete, onC
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'tattva-co-backup-codes.txt';
+    a.download = 'rathi naturals-co-backup-codes.txt';
     a.click();
     URL.revokeObjectURL(url);
   };

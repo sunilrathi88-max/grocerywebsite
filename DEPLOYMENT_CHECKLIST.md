@@ -164,7 +164,7 @@ After deployment, test PWA features:
 
 1. DevTools → **Application** → **Manifest**
 2. Verify:
-   - [ ] Name: "Tattva & Co."
+   - [ ] Name: "Rathi Naturals & Co."
    - [ ] Theme Color: #FFB7C1
    - [ ] Icons: 192x192, 512x512
    - [ ] Display: standalone
@@ -332,7 +332,7 @@ If you want to use a custom domain:
 
 1. In Vercel Dashboard → **Settings** → **Domains**
 2. Click **Add Domain**
-3. Enter your domain (e.g., `tattva-co.com`)
+3. Enter your domain (e.g., `rathi naturals-co.com`)
 4. Follow DNS configuration instructions
 5. Wait for SSL certificate (auto-provisioned in ~1 minute)
 

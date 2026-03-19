@@ -16,7 +16,7 @@ Hi [Editor's Name],
 
 I've been a long-time reader of [Site Name] and love your focus on authentic regional recipes.
 
-I'm writing from **Tattva Co.**, a farm-direct spice brand that focuses on the science and history behind Indian ingredients.
+I'm writing from **Rathi Naturals.**, a farm-direct spice brand that focuses on the science and history behind Indian ingredients.
 
 I’ve written a comprehensive article titled **"5 Regional Indian Spice Blends Every Home Cook Should Master"** that I think your audience would love.
 
@@ -33,8 +33,8 @@ I’d be happy to make any edits to fit your style guide. Let me know if you’d
 Best regards,
 
 Sunil Rathi
-Founder, Tattva Co.
-tattvaco.in
+Founder, Rathi Naturals.
+rathinaturals.com
 
 ---
 

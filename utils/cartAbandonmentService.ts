@@ -4,7 +4,7 @@
  * Stores cart data with timestamps for follow-up reminder logic.
  */
 
-const CART_ABANDONMENT_KEY = 'tattva_cart_abandonment';
+const CART_ABANDONMENT_KEY = 'rathi_cart_abandonment';
 const ABANDONMENT_THRESHOLD_MS = 30 * 60 * 1000; // 30 minutes
 
 interface AbandonedCart {

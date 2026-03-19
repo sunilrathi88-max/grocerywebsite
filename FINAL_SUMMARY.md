@@ -339,7 +339,7 @@ gh run download
 
 2. **Add Percy token:**
    - Sign up at percy.io
-   - Create project "Tattva Co"
+   - Create project "Rathi Naturals"
    - Add `PERCY_TOKEN` to GitHub Secrets
 
 3. **Enable branch protection:**

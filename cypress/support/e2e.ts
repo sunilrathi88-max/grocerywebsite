@@ -1,5 +1,5 @@
 // ***********************************************************
-// Tattva Co. - Cypress Support File
+// Rathi Naturals - Cypress Support File
 // ***********************************************************
 
 import './commands';
@@ -26,7 +26,7 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 
 // Global before hook - runs once before all tests
 before(() => {
-  cy.log('🚀 Starting Tattva Co. Test Suite');
+  cy.log('🚀 Starting Rathi Naturals Test Suite');
 });
 
 // Global beforeEach hook - runs before each test

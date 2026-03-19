@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 /**
- * Tattva Co. - Social Proof Notification Test
+ * Rathi Naturals - Social Proof Notification Test
  * Tests "X just purchased Y" notifications
  */
 

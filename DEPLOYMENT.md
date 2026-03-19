@@ -289,7 +289,7 @@ The following security headers are configured in `vercel.json`:
 
 1. Go to your project in Vercel Dashboard
 2. Navigate to **Settings → Domains**
-3. Add your custom domain (e.g., `tattva-co.com`)
+3. Add your custom domain (e.g., `rathi naturals-co.com`)
 4. Configure DNS:
    - **Type**: `CNAME`
    - **Name**: `@` or `www`

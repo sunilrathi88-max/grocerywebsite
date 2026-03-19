@@ -4,7 +4,7 @@ describe('Admin Dashboard Features', () => {
     cy.visit('/#/login');
 
     // 2. Login as Admin
-    cy.get('input[type="email"]').type('admin@tattva.com');
+    cy.get('input[type="email"]').type('admin@rathi naturals.com');
     cy.get('input[type="password"]').type('password123');
     cy.get('button[type="submit"]').click();
 

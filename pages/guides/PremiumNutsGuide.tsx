@@ -8,7 +8,7 @@ const PremiumNutsGuide = () => {
     description:
       'The ultimate guide to grading, sourcing, and storing premium Indian cashews, almonds, and pistachios for maximum nutritional and sensory yield.',
     author: {
-      name: 'Tattva Food Science Team',
+      name: 'Rathi Naturals Food Science Team',
       title: 'Quality Assurance',
       url: 'https://rathinaturals.com/about',
     },

@@ -1,5 +1,5 @@
 // ***********************************************************
-// Tattva Co. - Custom Cypress Commands
+// Rathi Naturals - Custom Cypress Commands
 // ***********************************************************
 
 // Import Percy for visual regression testing

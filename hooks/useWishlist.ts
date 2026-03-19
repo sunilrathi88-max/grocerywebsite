@@ -9,7 +9,7 @@ export interface UseWishlistReturn {
   clearWishlist: () => void;
 }
 
-const WISHLIST_STORAGE_KEY = 'tattva_wishlist';
+const WISHLIST_STORAGE_KEY = 'rathi_wishlist';
 
 /**
  * Custom hook for managing wishlist state with localStorage persistence via React Query

@@ -758,7 +758,7 @@ export const userAPI = {
           id: data.user.id,
           email: data.user.email || '',
           name: data.user.user_metadata?.name || '',
-          isAdmin: data.user.email === 'admin@tattva.com', // Mock Admin Logic
+          isAdmin: data.user.email === 'admin@rathi naturals.com', // Mock Admin Logic
           isEmailVerified: !!data.user.email_confirmed_at,
           has2FA: false,
           addresses: data.user.user_metadata?.addresses || [],
@@ -1279,7 +1279,7 @@ let mockRecipes = [
     title: 'Golden Milk',
     status: 'published',
     type: 'recipe',
-    author: 'Tattva Kitchen',
+    author: 'Rathi Naturals Kitchen',
     date: '2023-11-10',
   },
   {
@@ -1287,7 +1287,7 @@ let mockRecipes = [
     title: 'Saffron Rice',
     status: 'published',
     type: 'recipe',
-    author: 'Tattva Kitchen',
+    author: 'Rathi Naturals Kitchen',
     date: '2023-12-05',
   },
 ];

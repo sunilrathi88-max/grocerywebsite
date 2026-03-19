@@ -35,7 +35,7 @@ serve(async (req) => {
       currency: 'INR',
       receipt: `receipt_${Date.now()}`,
       notes: {
-        description: 'TattvaCo Grocery Order',
+        description: 'rathinaturals Grocery Order',
       },
     };
 

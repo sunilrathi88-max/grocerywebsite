@@ -1266,7 +1266,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
                             return;
                           }
                           if (
-                            ['TATTVA10', 'WELCOME15', 'QUIZMASTER15'].includes(
+                            ['RATHI10', 'WELCOME15', 'QUIZMASTER15'].includes(
                               localPromoCode.toUpperCase()
                             )
                           ) {

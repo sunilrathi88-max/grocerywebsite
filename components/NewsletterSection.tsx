@@ -21,7 +21,7 @@ const NewsletterSection: React.FC = () => {
             Unlock 10% Off Your First Order
           </h2>
           <p className="text-white/70 text-lg mb-10 font-light">
-            Join the Tattva family. Get exclusive recipes, early access to new harvests, and chef
+            Join the Rathi Naturals family. Get exclusive recipes, early access to new harvests, and chef
             tips delivered to your inbox.
           </p>
 

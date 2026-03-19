@@ -1,10 +1,10 @@
-# Tattva Co. (tattvaco.in): Strategic Link-Building & SEO Competitor Analysis Report
+# Rathi Naturals. (rathinaturals.com): Strategic Link-Building & SEO Competitor Analysis Report
 
 ## Executive Overview
 
 This comprehensive analysis identifies your top 5 e-commerce spice competitors, maps their backlink profiles across five distinct earning channels, and provides a **zero-outreach link-building strategy** to dominate the "premium gourmet spices online" vertical in India.
 
-**Key Finding:** Your competitors (Kerala Spices Online, Earthy Tales, Bharat Masala, KBM Foods, Goosebumps) are collectively mentioned in 20+ listicles, resource pages, and partnership networks—yet none of these sources currently mention tattvaco.in. This gap represents immediate acquisition opportunities worth an estimated 60-100+ backlinks over 6 months through strategic asset creation.
+**Key Finding:** Your competitors (Kerala Spices Online, Earthy Tales, Bharat Masala, KBM Foods, Goosebumps) are collectively mentioned in 20+ listicles, resource pages, and partnership networks—yet none of these sources currently mention rathinaturals.com. This gap represents immediate acquisition opportunities worth an estimated 60-100+ backlinks over 6 months through strategic asset creation.
 
 ---
 
@@ -17,35 +17,35 @@ This comprehensive analysis identifies your top 5 e-commerce spice competitors, 
 - **Positioning:** Premium Kerala spices, geographic specialization
 - **Backlink strength:** Active affiliate marketing program, mentions in Kerala sourcing guides
 - **Why they rank:** Regional authority + unique origin story
-- **Replication gap:** Tattva hasn't positioned "Rajasthan-sourced authenticity" as aggressively
+- **Replication gap:** Rathi Naturals hasn't positioned "Rajasthan-sourced authenticity" as aggressively
 
 **2. Earthy Tales (earthytales.in)**
 
 - **Positioning:** Organic spices + farm-to-table positioning
 - **Backlink strength:** Wellness content, NCR delivery authority, mentions in organic food guides
 - **Why they rank:** Content marketing (blog strategy) + same-day delivery differentiation
-- **Replication gap:** Tattva can emphasize "lab-tested purity" + farm-direct positioning more
+- **Replication gap:** Rathi Naturals can emphasize "lab-tested purity" + farm-direct positioning more
 
 **3. Bharat Masala (bharatmasala.net)**
 
 - **Positioning:** 72-year heritage brand, Gujarati authenticity
 - **Backlink strength:** Listed in all "Top Indian Spice Brands" articles, retail partnerships
 - **Why they rank:** Legacy storytelling + widespread brand mentions in cultural content
-- **Replication gap:** Tattva's newer brand but can compete through quality/technology narrative
+- **Replication gap:** Rathi Naturals' newer brand but can compete through quality/technology narrative
 
 **4. KBM Foods (kbmfoods.com)**
 
 - **Positioning:** Premium masalas, 57+ year history
 - **Backlink strength:** E-commerce + retail presence, mentions in premium spice guides
 - **Why they rank:** Longevity + omnichannel presence
-- **Replication gap:** Tattva's pure e-commerce focus is actually an advantage for online audiences
+- **Replication gap:** Rathi Naturals' pure e-commerce focus is actually an advantage for online audiences
 
 **5. Goosebumps (goosebumps.store)**
 
 - **Positioning:** Handpicked, freshly ground, quality-obsessed
 - **Backlink strength:** Community engagement content, social proof through reviews
 - **Why they rank:** Authentic quality narrative resonates with niche audience
-- **Replication gap:** Tattva can emphasize scientific testing (where Goosebumps emphasizes craft)
+- **Replication gap:** Rathi Naturals can emphasize scientific testing (where Goosebumps emphasizes craft)
 
 ---
 
@@ -62,7 +62,7 @@ Competitors appear in "Top 10/11 Spice Brands" articles across:
 
 **Why they got these links:** Established brand recognition + story credentials + product depth
 
-**How Tattva replicates WITHOUT outreach:**
+**How Rathi Naturals replicates WITHOUT outreach:**
 Create a superior "Premium Gourmet Spice Brands 2025" comparison guide that listicle creators naturally link to. When someone Googles "spice brands comparison" to research their listicle, your guide becomes the reference—not a pitch, just better content.
 
 **Expected outcome:** 3-5 listicles will cite you organically within 8 weeks
@@ -79,7 +79,7 @@ Competitors linked from:
 
 **Why they got these links:** Comprehensive catalog + verified reviews + unique positioning + service advantage
 
-**How Tattva replicates WITHOUT outreach:**
+**How Rathi Naturals replicates WITHOUT outreach:**
 Build a "Spice Quality Certifications & Testing Guide" (FSSAI, ISO, HACCP explained) that solves a real pain point—buyers don't understand certification acronyms. This becomes the go-to resource linked from food safety blogs, regulatory sites, and e-commerce guides.
 
 **Expected outcome:** 4-6 resource page backlinks within 12 weeks
@@ -102,14 +102,14 @@ Competitors mentioned naturally when food bloggers:
 3. My Weekend Kitchen (20k+ monthly readers)
 4. Swasthi's Indian Healthy Recipes (200k+ monthly readers)
 
-**How Tattva replicates WITHOUT outreach:**
-Write 3-5 educational guest posts focused on YOUR audience's needs, not Tattva's marketing:
+**How Rathi Naturals replicates WITHOUT outreach:**
+Write 3-5 educational guest posts focused on YOUR audience's needs, not Rathi Naturals' marketing:
 
 - "5 Regional Indian Spice Blends Revived for Modern Cooking"
 - "Ayurvedic Spice Science: Why Whole Spices Trump Ground Masalas"
 - "Building a Minimal Spice Pantry: A Buyer's Guide"
 
-Include natural author bio mention: "About the author: Tattva Co. sources authentic spice blends..."
+Include natural author bio mention: "About the author: Rathi Naturals. sources authentic spice blends..."
 
 **Expected outcome:** 1 link per post × 3-5 posts = 3-5 backlinks, plus brand authority signals
 
@@ -127,7 +127,7 @@ Currently appearing unprompted in:
 
 **Why this matters:** These are high-intent audiences already discussing spices. They don't HAVE to mention your brand—they're choosing to.
 
-**How Tattva converts unlinked to linked WITHOUT outreach:**
+**How Rathi Naturals converts unlinked to linked WITHOUT outreach:**
 Create tools/assets so valuable that when mentioned unprompted, site owners realize: "This deserves a link." Once mentioned, low friction to add hyperlink.
 
 **Example:** Build a "Spice Freshness Calculator" tool. When food bloggers mention it in articles ("Check your spices' freshness using this calculator"), they naturally link.
@@ -146,9 +146,9 @@ Competitors gaining visibility through:
 - Influencer collaborations
 - Content syndication deals
 
-**How Tattva replicates WITHOUT outreach:**
+**How Rathi Naturals replicates WITHOUT outreach:**
 
-1. **Launch Tattva affiliate program** (visible on site—food bloggers self-select)
+1. **Launch Rathi Naturals affiliate program** (visible on site—food bloggers self-select)
 2. **Build interactive tools** that are embed-friendly (spice pairing matrix, freshness calculator)
 3. **Syndicate content** to Medium, LinkedIn, Substack (republication = backlinks)
 4. **Partner with influencers** proactively by offering affiliate access (no pitch needed)
@@ -190,7 +190,7 @@ Competitors gaining visibility through:
 | **Content Syndication Network**    | Ongoing     | Republish blog posts to Medium, LinkedIn, Substack food networks (each = backlink). 1 article = 5-7 republications.                                                                                 | 5-8                |
 | **Food Publication Features**      | Weeks 12-24 | Build editor relationships; create content THEY want to cover ("How E-Commerce is Disrupting Spice Distribution"). Get featured in Progressive Grocer, businessoffood.in, Food & Beverage Magazine. | 2-3                |
 | **"2025 Spice Trends Report"**     | Week 14-20  | Release original research on spice searches, regional preferences, health trends. Journalists/roundup creators cite it.                                                                             | 4-7                |
-| **Influencer/Affiliate Expansion** | Weeks 10-24 | Recruit 20+ food creators to affiliate program. Each naturally links in their content ("I recommend Tattva via my affiliate link")                                                                  | 6-10               |
+| **Influencer/Affiliate Expansion** | Weeks 10-24 | Recruit 20+ food creators to affiliate program. Each naturally links in their content ("I recommend Rathi Naturals via my affiliate link")                                                                  | 6-10               |
 |                                    |             | **TIER 3 TOTAL (per quarter)**                                                                                                                                                                      | **17-28**          |
 
 ---
@@ -218,7 +218,7 @@ Competitors gaining visibility through:
 5. Buyer's guide: How to choose for YOUR kitchen
 6. Storage + freshness tips
 7. FAQs: "Is pricier always better?" "How to detect adulteration?"
-8. CTA: "Explore Tattva's Premium Collection"
+8. CTA: "Explore Rathi Naturals' Premium Collection"
 ```
 
 **SEO Keywords to target:**
@@ -248,10 +248,10 @@ Output Screen:
 - Freshness Score: 1-100 (animated gauge)
 - Specific recommendations ("Turmeric lasts best when frozen; move to airtight container")
 - Shelf life estimate ("12 months remaining")
-- CTA: "Refresh Your Spice Pantry with Fresh Tattva Blends"
+- CTA: "Refresh Your Spice Pantry with Fresh Rathi Naturals Blends"
 ```
 
-**Embedding mechanism:** Make shareable (tool.tattvaco.in/spice-checker) so blogs can:
+**Embedding mechanism:** Make shareable (tool.rathinaturals.com/spice-checker) so blogs can:
 
 - Link in articles ("Use our spice freshness calculator")
 - Embed iframe in blog posts
@@ -349,7 +349,7 @@ Output Screen:
 ✅ Making it irresistible for influencers to link (affiliate incentives)
 ✅ Syndicating content across networks (auto-backlinks)
 
-### **Why This Works Better for Tattva Specifically**
+### **Why This Works Better for Rathi Naturals Specifically**
 
 1. **Your unique positioning ("Lab-tested purity + farm-direct") is undermarketed**
    - Create content around this → becomes the authority

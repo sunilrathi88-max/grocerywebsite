@@ -44,7 +44,7 @@ const OrderTrackingPage: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>Track Your Order | Tattva</title>
+        <title>Track Your Order | Rathi Naturals</title>
         <meta name="description" content="Track your order status securely." />
       </Helmet>
 

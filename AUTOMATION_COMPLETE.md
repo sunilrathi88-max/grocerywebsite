@@ -2,7 +2,7 @@
 
 ## Summary
 
-Successfully implemented comprehensive automated testing suite for Tattva Co. grocery website with Cypress E2E framework, Lighthouse CI performance monitoring, and GitHub Actions CI/CD pipeline.
+Successfully implemented comprehensive automated testing suite for Rathi Naturals. grocery website with Cypress E2E framework, Lighthouse CI performance monitoring, and GitHub Actions CI/CD pipeline.
 
 ---
 

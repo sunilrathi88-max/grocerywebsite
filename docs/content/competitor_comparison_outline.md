@@ -37,7 +37,7 @@ _(Create a visual matrix here)_
 
 - **Columns:** Brand Name, Best For, Price Point (₹-₹₹₹), Key Certification, Unique Selling Proposition.
 - **Brands to Include:**
-  1.  Tattva Co. (Best for: Lab-tested Purity & Transparency)
+  1.  Rathi Naturals. (Best for: Lab-tested Purity & Transparency)
   2.  Kerala Spices Online (Best for: South Indian Specials)
   3.  Earthy Tales (Best for: Certified Organic)
   4.  Two Brothers Organic Farms (Best for: Regenerative Farming Story)
@@ -51,7 +51,7 @@ _(Create a visual matrix here)_
 
 _(Structure for each brand review)_
 
-### **1. Tattva Co. (The Purity Specialist)**
+### **1. Rathi Naturals. (The Purity Specialist)**
 
 - **The Story:** Born from a need for certified chemical-free spices. Direct farm partnerships in Wayanad & Rajasthan.
 - **Star Product:** Lakadong Turmeric (High Curcumin) or Coorg Cardamom.
@@ -90,13 +90,13 @@ _(Continue for 3-4 more top competitors...)_
 
 ## 8. Conclusion & Final Verdict
 
-- Summary: If you want heritage, go with [Brand X]. If you want raw sourcing power, [Brand Y]. If you want verified purity and modern freshness, **Tattva Co.** is the 2025 choice.
-- **CTA:** Shop the Tattva Trial Bundle (3 Essential Spices).
+- Summary: If you want heritage, go with [Brand X]. If you want raw sourcing power, [Brand Y]. If you want verified purity and modern freshness, **Rathi Naturals.** is the 2025 choice.
+- **CTA:** Shop the Rathi Naturals Trial Bundle (3 Essential Spices).
 
 ---
 
 **Next Steps for Content Team:**
 
 1.  Gather data for the Comparison Matrix (Pricing/SKUs).
-2.  Shoot high-res comparison photos (Tattva vs Generic spice piles).
+2.  Shoot high-res comparison photos (Rathi Naturals vs Generic spice piles).
 3.  Draft full copy (~2000 words).

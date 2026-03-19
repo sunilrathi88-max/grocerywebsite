@@ -1,4 +1,4 @@
-# 🛒 Tattva Co. - Premium Organic Grocery Store
+# 🛒 Rathi Naturals. - Premium Organic Grocery Store
 
 <div align="center">
 
@@ -430,7 +430,7 @@ npx vite-bundle-visualizer
 Create `.env` file:
 
 ```env
-VITE_API_URL=https://api.tattva.com
+VITE_API_URL=https://api.rathi naturals.com
 VITE_STRIPE_KEY=pk_live_...
 VITE_ANALYTICS_ID=UA-XXXXX-X
 ```
@@ -540,7 +540,7 @@ git push origin feature/my-feature
 
 ### Contact
 
-- **Email:** support@tattva.com
+- **Email:** support@rathi naturals.com
 - **GitHub Issues:** [Create Issue](./issues)
 
 ---
@@ -565,7 +565,7 @@ This project is licensed under the MIT License.
 
 **Made with ❤️ for organic food lovers**
 
-[⬆ Back to Top](#-tattva-co---premium-organic-grocery-store)
+[⬆ Back to Top](#-rathi naturals-co---premium-organic-grocery-store)
 
 </div>
 

@@ -18,7 +18,7 @@ Your homepage now features a **premium, slider-based hero section** with:
 ### **Slide 1: Brand Essence**
 
 - **Heading:** "The Essence of India, Delivered."
-- **Image:** Tattva Co. logo with leaf emoji 🌿
+- **Image:** Rathi Naturals. logo with leaf emoji 🌿
 - **CTA:** "Explore Collection" → Scrolls to products
 
 ### **Slide 2: Featured Product (Saffron)**

@@ -69,7 +69,7 @@ describe('useWishlist', () => {
     it('should load wishlist from localStorage on initialization', async () => {
       const savedWishlist = [mockProduct1, mockProduct2];
       // Set up localStorage before creating the hook
-      localStorage.setItem('tattva_wishlist', JSON.stringify(savedWishlist));
+      localStorage.setItem('rathi_wishlist', JSON.stringify(savedWishlist));
 
       const { result } = renderHook(() => useWishlist(), { wrapper: createWrapper() });
 
@@ -199,7 +199,7 @@ describe('useWishlist', () => {
 
       await waitFor(() => {
         // Check that data was persisted
-        const saved = localStorage.getItem('tattva_wishlist');
+        const saved = localStorage.getItem('rathi_wishlist');
         expect(saved).toBeTruthy();
         expect(JSON.parse(saved!)).toEqual([mockProduct1]);
       });
@@ -228,7 +228,7 @@ describe('useWishlist', () => {
       });
 
       await waitFor(() => {
-        const saved = localStorage.getItem('tattva_wishlist');
+        const saved = localStorage.getItem('rathi_wishlist');
         expect(saved).toBeTruthy();
         expect(JSON.parse(saved!)).toEqual([mockProduct2]);
       });
@@ -336,7 +336,7 @@ describe('useWishlist', () => {
       });
 
       await waitFor(() => {
-        const saved = localStorage.getItem('tattva_wishlist');
+        const saved = localStorage.getItem('rathi_wishlist');
         expect(saved).toBeTruthy();
         expect(JSON.parse(saved!)).toEqual([]);
       });
@@ -471,7 +471,7 @@ describe('useWishlist', () => {
       });
       await waitFor(() => {
         // Check localStorage directly
-        const saved = localStorage.getItem('tattva_wishlist');
+        const saved = localStorage.getItem('rathi_wishlist');
         expect(saved).toBeTruthy();
         const savedData = JSON.parse(saved!);
         expect(savedData).toEqual([mockProduct1, mockProduct2]);

@@ -143,7 +143,7 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ onSignUp, onNavigateToLogin }) 
             </div>
           </div>
           <h2 className="text-4xl font-serif font-bold text-gray-900 mb-2">Create Account</h2>
-          <p className="text-gray-600">Join Tattva Co. and discover premium Indian products</p>
+          <p className="text-gray-600">Join Rathi Naturals. and discover premium Indian products</p>
         </div>
 
         {/* Sign Up Form */}

@@ -20,7 +20,7 @@ export async function getAllPosts(): Promise<BlogPost[]> {
       id: idCounter++,
       slug,
       title: data.title || 'Untitled Post',
-      author: data.author || 'Tattva Co.',
+      author: data.author || 'Rathi Naturals.',
       date: data.date || new Date().toISOString(),
       image: data.image || '',
       excerpt: data.excerpt || '',

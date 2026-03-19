@@ -10,12 +10,12 @@ export const MOCK_RECIPES: Recipe[] = [
     cookTime: '40 mins',
     serves: 4,
     description:
-      'Aromatic and flavorful one-pot meal made with saffron-infused rice, tender chicken, and a blend of Tattva Co. spices.',
+      'Aromatic and flavorful one-pot meal made with saffron-infused rice, tender chicken, and a blend of Rathi Naturals. spices.',
     ingredients: [
       '500g Chicken',
       '2 cups Basmati Rice',
-      '1 pinch Tattva Co. Himalayan Saffron',
-      '2 tbsp Tattva Co. Garam Masala',
+      '1 pinch Rathi Naturals. Himalayan Saffron',
+      '2 tbsp Rathi Naturals. Garam Masala',
       '1 cup Yogurt',
       '2 Onions, sliced',
       'Ginger-garlic paste',
@@ -40,8 +40,8 @@ export const MOCK_RECIPES: Recipe[] = [
       'A quick and fiery appetizer featuring fresh prawns coated in freshly ground Malabar black pepper and other spices.',
     ingredients: [
       '250g Prawns, deveined',
-      '2 tbsp Tattva Co. Malabar Black Pepper, coarsely ground',
-      '1 tsp Tattva Co. Turmeric Powder',
+      '2 tbsp Rathi Naturals. Malabar Black Pepper, coarsely ground',
+      '1 tsp Rathi Naturals. Turmeric Powder',
       'Curry leaves',
       'Coconut oil',
     ],
@@ -65,7 +65,7 @@ export const MOCK_RECIPES: Recipe[] = [
       'A comforting and healthy beverage made with our organic turmeric powder, milk, and a hint of sweetness.',
     ingredients: [
       '1 cup Milk (of choice)',
-      '1 tsp Tattva Co. Organic Turmeric Powder',
+      '1 tsp Rathi Naturals. Organic Turmeric Powder',
       '1/4 tsp Cinnamon powder',
       'Pinch of black pepper',
       '1 tsp Honey or Maple Syrup',
@@ -87,11 +87,11 @@ export const MOCK_RECIPES: Recipe[] = [
     cookTime: '15 mins',
     serves: 6,
     description:
-      'An addictive snack of mixed nuts roasted with Tattva Co. Garam Masala, a little salt, and a touch of maple syrup.',
+      'An addictive snack of mixed nuts roasted with Rathi Naturals. Garam Masala, a little salt, and a touch of maple syrup.',
     ingredients: [
-      '2 cups Mixed Nuts (Tattva Co. Almonds, Cashews)',
+      '2 cups Mixed Nuts (Rathi Naturals. Almonds, Cashews)',
       '1 tbsp Coconut oil, melted',
-      '1.5 tsp Tattva Co. Garam Masala',
+      '1.5 tsp Rathi Naturals. Garam Masala',
       '1/2 tsp Salt',
       '1 tbsp Maple syrup',
     ],
@@ -116,8 +116,8 @@ export const MOCK_RECIPES: Recipe[] = [
     ingredients: [
       '500g Fish (pomfret or kingfish), cut into steaks',
       '1 cup Coconut milk',
-      '1 tsp Tattva Co. Malabar Black Pepper',
-      '1 tsp Tattva Co. Turmeric Powder',
+      '1 tsp Rathi Naturals. Malabar Black Pepper',
+      '1 tsp Rathi Naturals. Turmeric Powder',
       '2 tbsp Coconut oil',
       '2 tbsp Tamarind paste',
       'Curry leaves, green chillies',

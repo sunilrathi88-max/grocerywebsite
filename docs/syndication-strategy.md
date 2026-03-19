@@ -13,7 +13,7 @@
 
 | Platform                           | Audience                       | Submission Type                   | Timeline | Status  |
 | ---------------------------------- | ------------------------------ | --------------------------------- | -------- | ------- |
-| Medium.com (@tattvaco)             | 10M+ food/health readers       | Native republish + canonical link | Week 1   | Pending |
+| Medium.com (@rathinaturals)             | 10M+ food/health readers       | Native republish + canonical link | Week 1   | Pending |
 | LinkedIn Article                   | 50K+ food industry connections | LinkedIn native article           | Week 1   | Pending |
 | Substack Newsletter                | Food-focused readers           | Premium food publication          | Week 2   | Pending |
 | Dev.to (repurpose calculator post) | Food tech/DIY audience         | Technical spice content           | Week 2   | Pending |
@@ -36,7 +36,7 @@ Each syndication platform has different SEO weight. Medium articles rank well fo
 When syndicting, always include:
 
 ```html
-<link rel="canonical" href="https://tattvaco.in/blog/article-name" />
+<link rel="canonical" href="https://rathinaturals.com/blog/article-name" />
 ```
 
 This tells Google the original source is your site, passing SEO authority back home.

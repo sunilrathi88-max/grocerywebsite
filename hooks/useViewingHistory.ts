@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react';
 import { Product } from '../types';
 
-const HISTORY_KEY = 'tattva_viewing_history';
+const HISTORY_KEY = 'rathi_viewing_history';
 const MAX_HISTORY = 6;
 
 export const useViewingHistory = () => {

@@ -67,7 +67,7 @@ export const useCartStore = create<CartStore>()(
       },
     }),
     {
-      name: 'tattva_cart_store',
+      name: 'rathi_cart_store',
     }
   )
 );

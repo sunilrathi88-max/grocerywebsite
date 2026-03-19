@@ -15,7 +15,7 @@ export const CategorySEO: React.FC<CategorySEOProps> = ({ category }) => {
             Buy Premium Authentic Indian Spices Online
           </h2>
           <p className="mb-4">
-            Elevate your culinary creations with Tattva Co.&apos;s exclusive collection of
+            Elevate your culinary creations with Rathi Naturals.&apos;s exclusive collection of
             <strong>authentic Indian spices</strong>. Sourced directly from heritage farms in Kerala
             and Kashmir, our spices are hand-picked, sun-dried, and stone-ground to preserve their
             natural essential oils and potent aroma.

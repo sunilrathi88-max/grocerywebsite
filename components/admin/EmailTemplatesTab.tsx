@@ -14,7 +14,7 @@ const DEFAULT_TEMPLATES: EmailTemplate[] = [
   {
     id: 'order-confirmation',
     name: 'Order Confirmation',
-    subject: 'Your Tattva Co. Order #{{order_id}} is Confirmed! 🎉',
+    subject: 'Your Rathi Naturals. Order #{{order_id}} is Confirmed! 🎉',
     body: `Dear {{customer_name}},
 
 Thank you for your order! We're thrilled to have you as a customer.
@@ -33,7 +33,7 @@ Total Amount: ₹{{order_total}}
 Your order is being prepared with care and will be shipped soon. You'll receive a tracking number once it's on its way!
 
 With love,
-The Tattva Co. Team 🌿`,
+The Rathi Naturals. Team 🌿`,
     type: 'transactional',
     lastUpdated: '2024-01-15',
   },
@@ -59,14 +59,14 @@ Items: {{order_items}}
 If you have any questions, just reply to this email.
 
 Happy anticipating!
-The Tattva Co. Team`,
+The Rathi Naturals. Team`,
     type: 'transactional',
     lastUpdated: '2024-01-15',
   },
   {
     id: 'delivery-complete',
     name: 'Delivery Complete',
-    subject: 'Your Tattva Co. order has been delivered! ✅',
+    subject: 'Your Rathi Naturals. order has been delivered! ✅',
     body: `Dear {{customer_name}},
 
 Your order #{{order_id}} has been successfully delivered!
@@ -79,7 +79,7 @@ We hope you love your products. If you have a moment, we'd really appreciate a r
 If anything isn't perfect, please let us know. We're here to make it right.
 
 Enjoy your spices!
-The Tattva Co. Team 🌶️`,
+The Rathi Naturals. Team 🌶️`,
     type: 'transactional',
     lastUpdated: '2024-01-15',
   },
@@ -103,17 +103,17 @@ Complete your order now and continue your flavor journey!
 Use code COMEBACK10 for 10% off your order!
 
 Cheers,
-The Tattva Co. Team`,
+The Rathi Naturals. Team`,
     type: 'marketing',
     lastUpdated: '2024-01-20',
   },
   {
     id: 'welcome-email',
     name: 'Welcome Email',
-    subject: 'Welcome to Tattva Co.! 🌿 Your flavor journey begins',
+    subject: 'Welcome to Rathi Naturals.! 🌿 Your flavor journey begins',
     body: `Dear {{customer_name}},
 
-Welcome to the Tattva Co. family! We're so excited to have you with us.
+Welcome to the Rathi Naturals. family! We're so excited to have you with us.
 
 **What makes us special:**
 ✨ Farm-to-table premium spices
@@ -127,11 +127,11 @@ Use code WELCOME10 for 10% off your first purchase!
 Explore our collection: {{shop_url}}
 
 Follow us for recipes and tips:
-Instagram: @tattvaco
-Facebook: /tattvaco
+Instagram: @rathinaturals
+Facebook: /rathinaturals
 
 Here's to flavorful cooking!
-The Tattva Co. Team`,
+The Rathi Naturals. Team`,
     type: 'marketing',
     lastUpdated: '2024-01-10',
   },
@@ -139,11 +139,11 @@ The Tattva Co. Team`,
 
 const EmailTemplatesTab: React.FC = () => {
   const [templates, setTemplates] = useState<EmailTemplate[]>(() => {
-    const saved = localStorage.getItem('tattva_email_templates');
+    const saved = localStorage.getItem('rathi_email_templates');
     if (saved) {
       return JSON.parse(saved);
     }
-    localStorage.setItem('tattva_email_templates', JSON.stringify(DEFAULT_TEMPLATES));
+    localStorage.setItem('rathi_email_templates', JSON.stringify(DEFAULT_TEMPLATES));
     return DEFAULT_TEMPLATES;
   });
   const [selectedTemplate, setSelectedTemplate] = useState<EmailTemplate | null>(null);
@@ -152,7 +152,7 @@ const EmailTemplatesTab: React.FC = () => {
 
   const saveTemplates = (updated: EmailTemplate[]) => {
     setTemplates(updated);
-    localStorage.setItem('tattva_email_templates', JSON.stringify(updated));
+    localStorage.setItem('rathi_email_templates', JSON.stringify(updated));
   };
 
   const handleSelectTemplate = (template: EmailTemplate) => {
@@ -274,7 +274,7 @@ const EmailTemplatesTab: React.FC = () => {
                     <div className="bg-white rounded-lg shadow-md overflow-hidden max-w-xl mx-auto">
                       {/* Email Header */}
                       <div className="bg-brand-primary p-4">
-                        <h2 className="text-white text-xl font-bold text-center">Tattva Co.</h2>
+                        <h2 className="text-white text-xl font-bold text-center">Rathi Naturals.</h2>
                       </div>
                       {/* Email Subject */}
                       <div className="p-4 border-b">

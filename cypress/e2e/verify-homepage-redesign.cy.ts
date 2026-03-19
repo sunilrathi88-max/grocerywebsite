@@ -8,7 +8,7 @@ describe('Homepage Redesign Verification', () => {
     cy.contains('Free shipping on all orders over ₹999', { timeout: 10000 }).should('be.visible');
 
     // Logo
-    cy.contains('Tattva Co.').should('be.visible');
+    cy.contains('Rathi Naturals').should('be.visible');
 
     // Navigation (Desktop)
     cy.get('nav').within(() => {

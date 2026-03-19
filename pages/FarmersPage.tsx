@@ -96,7 +96,7 @@ const FarmersPage: React.FC = () => {
             Taste the Difference of Direct Trade
           </h2>
           <p className="text-neutral-300 max-w-xl mx-auto mb-8">
-            When you buy from Tattva, 100% of the fair-trade premium goes directly to these
+            When you buy from Rathi Naturals, 100% of the fair-trade premium goes directly to these
             families.
           </p>
           <button

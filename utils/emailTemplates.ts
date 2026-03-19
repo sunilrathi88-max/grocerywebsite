@@ -1,5 +1,5 @@
 /**
- * Email Templates for Tattva.co
+ * Email Templates for Rathi Naturals.co
  * These templates can be used with email services like SendGrid, Mailgun, etc.
  */
 
@@ -57,14 +57,14 @@ export function generateOrderConfirmationEmail(data: OrderEmailData): string {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Order Confirmation - Tattva.co</title>
+  <title>Order Confirmation - Rathi Naturals.co</title>
 </head>
 <body style="margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f9f9f9;">
   <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
     
     <!-- Header -->
     <div style="background: linear-gradient(135deg, #8B5CF6 0%, #D4A017 100%); padding: 30px; text-align: center; border-radius: 8px 8px 0 0;">
-      <h1 style="color: white; margin: 0; font-size: 28px;">Tattva.co</h1>
+      <h1 style="color: white; margin: 0; font-size: 28px;">Rathi Naturals.co</h1>
       <p style="color: rgba(255,255,255,0.9); margin: 8px 0 0 0;">Premium Indian Spices & Gourmet Products</p>
     </div>
     
@@ -131,19 +131,19 @@ export function generateOrderConfirmationEmail(data: OrderEmailData): string {
       
       <!-- CTA -->
       <div style="text-align: center; margin-top: 30px;">
-        <a href="https://tattva.co/orders" style="background: #8B5CF6; color: white; padding: 14px 30px; text-decoration: none; border-radius: 25px; font-weight: bold; display: inline-block;">Track Your Order</a>
+        <a href="https://rathi naturals.co/orders" style="background: #8B5CF6; color: white; padding: 14px 30px; text-decoration: none; border-radius: 25px; font-weight: bold; display: inline-block;">Track Your Order</a>
       </div>
       
     </div>
     
     <!-- Footer -->
     <div style="text-align: center; padding: 20px; color: #999; font-size: 12px;">
-      <p>Questions? Reply to this email or contact us at <a href="mailto:hello@tattva.co" style="color: #8B5CF6;">hello@tattva.co</a></p>
-      <p>© 2024 Tattva.co. All rights reserved.</p>
+      <p>Questions? Reply to this email or contact us at <a href="mailto:hello@rathi naturals.co" style="color: #8B5CF6;">hello@rathi naturals.co</a></p>
+      <p>© 2024 Rathi Naturals.co. All rights reserved.</p>
       <p style="margin-top: 15px;">
-        <a href="https://tattva.co" style="color: #666; margin: 0 10px;">Website</a>
-        <a href="https://instagram.com/tattvaco" style="color: #666; margin: 0 10px;">Instagram</a>
-        <a href="https://tattva.co/unsubscribe" style="color: #666; margin: 0 10px;">Unsubscribe</a>
+        <a href="https://rathi naturals.co" style="color: #666; margin: 0 10px;">Website</a>
+        <a href="https://instagram.com/rathinaturals" style="color: #666; margin: 0 10px;">Instagram</a>
+        <a href="https://rathi naturals.co/unsubscribe" style="color: #666; margin: 0 10px;">Unsubscribe</a>
       </p>
     </div>
     
@@ -163,14 +163,14 @@ export function generateWelcomeEmail(data: WelcomeEmailData): string {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Welcome to Tattva.co</title>
+  <title>Welcome to Rathi Naturals.co</title>
 </head>
 <body style="margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f9f9f9;">
   <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
     
     <!-- Header -->
     <div style="background: linear-gradient(135deg, #8B5CF6 0%, #D4A017 100%); padding: 40px 30px; text-align: center; border-radius: 8px 8px 0 0;">
-      <h1 style="color: white; margin: 0; font-size: 32px;">Welcome to Tattva.co</h1>
+      <h1 style="color: white; margin: 0; font-size: 32px;">Welcome to Rathi Naturals.co</h1>
       <p style="color: rgba(255,255,255,0.9); margin: 12px 0 0 0; font-size: 16px;">Where purity meets flavor</p>
     </div>
     
@@ -180,7 +180,7 @@ export function generateWelcomeEmail(data: WelcomeEmailData): string {
       <h2 style="color: #1a1a1a; margin: 0 0 20px 0;">Hello ${data.customerName}! 🌿</h2>
       
       <p style="color: #555; line-height: 1.8; font-size: 16px;">
-        Thank you for joining the Tattva family. We're thrilled to have you on this journey toward authentic, pure, and incredibly flavorful spices.
+        Thank you for joining the Rathi Naturals family. We're thrilled to have you on this journey toward authentic, pure, and incredibly flavorful spices.
       </p>
       
       <p style="color: #555; line-height: 1.8; font-size: 16px;">
@@ -224,7 +224,7 @@ export function generateWelcomeEmail(data: WelcomeEmailData): string {
       
       <!-- CTA -->
       <div style="text-align: center; margin-top: 30px;">
-        <a href="https://tattva.co/shop" style="background: #8B5CF6; color: white; padding: 16px 40px; text-decoration: none; border-radius: 25px; font-weight: bold; display: inline-block; font-size: 16px;">Start Shopping →</a>
+        <a href="https://rathi naturals.co/shop" style="background: #8B5CF6; color: white; padding: 16px 40px; text-decoration: none; border-radius: 25px; font-weight: bold; display: inline-block; font-size: 16px;">Start Shopping →</a>
       </div>
       
     </div>
@@ -233,12 +233,12 @@ export function generateWelcomeEmail(data: WelcomeEmailData): string {
     <div style="text-align: center; padding: 25px; color: #999; font-size: 12px;">
       <p>Follow us for recipes, tips, and behind-the-scenes</p>
       <p style="margin: 10px 0;">
-        <a href="https://instagram.com/tattvaco" style="color: #8B5CF6; margin: 0 15px;">Instagram</a>
-        <a href="https://facebook.com/tattvaco" style="color: #8B5CF6; margin: 0 15px;">Facebook</a>
-        <a href="https://youtube.com/tattvaco" style="color: #8B5CF6; margin: 0 15px;">YouTube</a>
+        <a href="https://instagram.com/rathinaturals" style="color: #8B5CF6; margin: 0 15px;">Instagram</a>
+        <a href="https://facebook.com/rathinaturals" style="color: #8B5CF6; margin: 0 15px;">Facebook</a>
+        <a href="https://youtube.com/rathinaturals" style="color: #8B5CF6; margin: 0 15px;">YouTube</a>
       </p>
-      <p style="margin-top: 20px;">© 2024 Tattva.co. All rights reserved.</p>
-      <p><a href="https://tattva.co/unsubscribe" style="color: #666;">Unsubscribe</a></p>
+      <p style="margin-top: 20px;">© 2024 Rathi Naturals.co. All rights reserved.</p>
+      <p><a href="https://rathi naturals.co/unsubscribe" style="color: #666;">Unsubscribe</a></p>
     </div>
     
   </div>
@@ -298,8 +298,8 @@ export function generateShippingConfirmationEmail(data: {
     
     <!-- Footer -->
     <div style="text-align: center; padding: 20px; color: #999; font-size: 12px;">
-      <p>Questions? Reply to this email or contact us at <a href="mailto:hello@tattva.co" style="color: #8B5CF6;">hello@tattva.co</a></p>
-      <p>© 2024 Tattva.co. All rights reserved.</p>
+      <p>Questions? Reply to this email or contact us at <a href="mailto:hello@rathi naturals.co" style="color: #8B5CF6;">hello@rathi naturals.co</a></p>
+      <p>© 2024 Rathi Naturals.co. All rights reserved.</p>
     </div>
     
   </div>

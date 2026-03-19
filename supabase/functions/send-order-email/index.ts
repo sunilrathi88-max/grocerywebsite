@@ -76,7 +76,7 @@ serve(async (req) => {
         </table>
 
         <p>We will notify you once your order has been shipped.</p>
-        <p>Best regards,<br>The Tattva Team</p>
+        <p>Best regards,<br>The Rathi Naturals Team</p>
       </div>
     `;
 
@@ -87,7 +87,7 @@ serve(async (req) => {
         Authorization: `Bearer ${RESEND_API_KEY}`,
       },
       body: JSON.stringify({
-        from: 'Tattva Orders <orders@tattva.com>', // User needs to verify domain or use Resend test domain
+        from: 'Rathi Naturals Orders <orders@rathi naturals.com>', // User needs to verify domain or use Resend test domain
         to: [customer_email],
         subject: `Order Confirmation #${order_id}`,
         html: htmlContent,

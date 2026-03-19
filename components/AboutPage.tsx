@@ -43,11 +43,11 @@ const AboutPage: React.FC = () => {
           </div>
         </div>
 
-        {/* The Tattva Difference - Lab & Process */}
+        {/* The Rathi Naturals Difference - Lab & Process */}
         <div className="bg-stone-50 rounded-2xl p-8 md:p-12 mb-20">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <h2 className="text-3xl font-serif font-bold text-brand-dark mb-4">
-              The Tattva Difference
+              The Rathi Naturals Difference
             </h2>
             <p className="text-gray-600">
               We believe in transparency and purity. Here&apos;s how we ensure you get nothing but

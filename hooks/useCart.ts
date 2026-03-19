@@ -14,7 +14,7 @@ export interface UseCartReturn {
   getCartItemQuantity: (productId: number, variantId: number) => number;
 }
 
-const CART_STORAGE_KEY = 'tattva_cart';
+const CART_STORAGE_KEY = 'rathi_cart';
 
 /**
  * Custom hook for managing shopping cart state and operations using React Query

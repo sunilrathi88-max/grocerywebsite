@@ -70,7 +70,7 @@ const MobileCartPage: React.FC = () => {
 
     try {
       // 1. Fetch generic coupons from localStorage (Admin Panel)
-      const savedCoupons = localStorage.getItem('tattva_coupons');
+      const savedCoupons = localStorage.getItem('rathi_coupons');
       let coupon: Coupon | undefined;
 
       if (savedCoupons) {

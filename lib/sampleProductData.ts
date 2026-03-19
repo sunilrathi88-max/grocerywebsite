@@ -24,7 +24,7 @@ export const SAMPLE_PRODUCTS: Partial<Product>[] = [
     // Inventory
     sku: 'SAFF-KASH-001',
     barcode: '8901234567890',
-    brand: 'Tattva Co.',
+    brand: 'Rathi Naturals.',
     min_order_qty: 1,
     max_order_qty: 10,
 
@@ -33,7 +33,7 @@ export const SAMPLE_PRODUCTS: Partial<Product>[] = [
     review_count: 127,
 
     // SEO
-    meta_title: 'Premium Kashmiri Saffron - Grade A Quality | Tattva Co.',
+    meta_title: 'Premium Kashmiri Saffron - Grade A Quality | Rathi Naturals.',
     meta_description:
       'Buy authentic Kashmiri saffron threads online. Grade A quality with ISO certification. Free shipping on orders above ₹500.',
 
@@ -85,14 +85,14 @@ export const SAMPLE_PRODUCTS: Partial<Product>[] = [
 
     sku: 'TURM-ORG-250',
     barcode: '8901234567891',
-    brand: 'Tattva Co.',
+    brand: 'Rathi Naturals.',
     min_order_qty: 1,
     max_order_qty: 20,
 
     rating: 4.7,
     review_count: 243,
 
-    meta_title: 'Organic Turmeric Powder - High Curcumin | Tattva Co.',
+    meta_title: 'Organic Turmeric Powder - High Curcumin | Rathi Naturals.',
     meta_description:
       'Premium organic turmeric powder with high curcumin content. USDA Organic certified. Perfect for cooking and health benefits.',
 
@@ -133,14 +133,14 @@ export const SAMPLE_PRODUCTS: Partial<Product>[] = [
 
     sku: 'SALT-HIM-500',
     barcode: '8901234567892',
-    brand: 'Tattva Co.',
+    brand: 'Rathi Naturals.',
     min_order_qty: 1,
     max_order_qty: 15,
 
     rating: 4.6,
     review_count: 89,
 
-    meta_title: 'Himalayan Pink Salt - 84 Trace Minerals | Tattva Co.',
+    meta_title: 'Himalayan Pink Salt - 84 Trace Minerals | Rathi Naturals.',
     meta_description:
       'Buy authentic Himalayan pink salt online. Rich in 84 trace minerals. Natural and unrefined.',
 
@@ -180,14 +180,14 @@ export const SAMPLE_PRODUCTS: Partial<Product>[] = [
 
     sku: 'PEPP-BLK-250',
     barcode: '8901234567893',
-    brand: 'Tattva Co.',
+    brand: 'Rathi Naturals.',
     min_order_qty: 1,
     max_order_qty: 10,
 
     rating: 4.9,
     review_count: 56,
 
-    meta_title: 'Black Pepper Whole - Premium Kerala Peppercorns | Tattva Co.',
+    meta_title: 'Black Pepper Whole - Premium Kerala Peppercorns | Rathi Naturals.',
     meta_description:
       'Freshly sourced whole black peppercorns from Kerala. Bold flavor and aroma. Perfect for cooking.',
 
@@ -228,14 +228,14 @@ export const SAMPLE_PRODUCTS: Partial<Product>[] = [
 
     sku: 'CINN-CEY-100',
     barcode: '8901234567894',
-    brand: 'Tattva Co.',
+    brand: 'Rathi Naturals.',
     min_order_qty: 1,
     max_order_qty: 10,
 
     rating: 4.5,
     review_count: 34,
 
-    meta_title: 'Organic Ceylon Cinnamon Sticks | Tattva Co.',
+    meta_title: 'Organic Ceylon Cinnamon Sticks | Rathi Naturals.',
     meta_description:
       'Premium Ceylon cinnamon sticks. Organic and authentic. Perfect for tea and cooking.',
 

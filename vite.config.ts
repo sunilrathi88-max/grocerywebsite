@@ -35,8 +35,8 @@ export default defineConfig(({ mode }) => {
         injectRegister: 'script-defer',
         includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'],
         manifest: {
-          name: 'Tattva & Co. - Indian Gourmet Products',
-          short_name: 'Tattva & Co.',
+          name: 'Rathi Naturals & Co. - Indian Gourmet Products',
+          short_name: 'Rathi Naturals & Co.',
           description: 'Premium Indian spices, condiments, and gourmet products',
           theme_color: '#FFB7C1',
           background_color: '#ffffff',

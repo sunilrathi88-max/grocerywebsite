@@ -11,7 +11,7 @@ target_audience: 'Wellness Enthusiasts, Yoga Practitioners, Health-Conscious Coo
 
 In the modern kitchen, convenience often trumps tradition. We reach for pre-ground powders, "curry mixes," and shaker bottles without a second thought. But according to Ayurveda—the 5,000-year-old Indian science of life—and modern nutritional biochemistry, swapping whole spices for ground ones might be costing you more than just flavor. It could be costing you your health.
 
-At Tattva Co., we stand at the intersection of ancient wisdom and modern science. Our analysis of spice potency reveals a compelling story about bio-availability, digestion (_Agni_), and the microscopic magic that happens when you crush a seed just before eating it.
+At Rathi Naturals., we stand at the intersection of ancient wisdom and modern science. Our analysis of spice potency reveals a compelling story about bio-availability, digestion (_Agni_), and the microscopic magic that happens when you crush a seed just before eating it.
 
 ## The Science of Potency: Whole vs. Ground
 
@@ -102,4 +102,4 @@ You don't need a pharmacy to harness this science. You just need a mortar and pe
 
 When you switch from generic powders to whole spices, you aren't just improving the taste of your food; you are participating in a chemical and energetic process that optimizes your biology. Your body recognizes and responds to the _Prana_ in real food.
 
-_Transform your health with high-potency, lab-tested whole spices. Visit [tattvaco.in](https://tattvaco.in) to learn more about our sourcing standards._
+_Transform your health with high-potency, lab-tested whole spices. Visit [rathinaturals.com](https://rathinaturals.com) to learn more about our sourcing standards._

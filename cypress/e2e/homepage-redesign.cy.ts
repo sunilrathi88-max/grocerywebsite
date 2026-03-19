@@ -31,7 +31,7 @@ describe('Homepage UX Redesign', () => {
   });
 
   it('should display the refactored Brand Story', () => {
-    cy.contains('Why Tattva Co?').scrollIntoView().should('be.visible');
+    cy.contains('Why Rathi Naturals?').scrollIntoView().should('be.visible');
     cy.contains('Uncompromised Quality').should('be.visible');
     cy.contains('Radical Transparency').should('be.visible');
   });
@@ -67,7 +67,7 @@ describe('Homepage UX Redesign', () => {
     // Assuming these are anchor links to sections on the homepage or separate pages
     // If they are on the homepage:
     cy.get('a[href*="#why-us"], button:contains("Why Us")').click({ multiple: true, force: true });
-    cy.get('#why-us, h2:contains("Why Tattva Co?")').should('be.visible');
+    cy.get('#why-us, h2:contains("Why Rathi Naturals?")').should('be.visible');
 
     // Reset/Go back if needed, or just check the second one
     cy.visit('/');

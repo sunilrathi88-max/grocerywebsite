@@ -147,7 +147,7 @@ export default function SpiceFreshnessCalculator() {
 
     // Tip 4: If poor/expired
     if (score < 40) {
-      tips.push('🛒 Shop fresh spices at Tattva Co. | Lab-tested, farm-direct quality');
+      tips.push('🛒 Shop fresh spices at Rathi Naturals. | Lab-tested, farm-direct quality');
     }
 
     return tips;
@@ -350,9 +350,9 @@ export default function SpiceFreshnessCalculator() {
 
               <div className={styles.ctaBox}>
                 <h4>🌶️ Need Fresh Spices?</h4>
-                <p>Tattva Co. delivers lab-tested, farm-direct spices with guaranteed freshness.</p>
+                <p>Rathi Naturals. delivers lab-tested, farm-direct spices with guaranteed freshness.</p>
                 <a href="/shop" className={styles.ctaButton}>
-                  Shop Fresh Spices at Tattva Co →
+                  Shop Fresh Spices at Rathi Naturals →
                 </a>
               </div>
 

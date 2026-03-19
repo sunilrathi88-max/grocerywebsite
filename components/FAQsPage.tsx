@@ -94,7 +94,7 @@ const FAQsPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50 py-12">
       <SEO
-        title="Frequently Asked Questions | Tattva Co."
+        title="Frequently Asked Questions | Rathi Naturals."
         description="Find answers to common questions about our products, shipping, returns, and more."
         structuredData={faqSchema}
         structuredDataId="faq-schema"

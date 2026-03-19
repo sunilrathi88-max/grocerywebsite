@@ -13,7 +13,7 @@ Walk down the spice aisle of any Indian grocery store, and it’s easy to feel i
 
 The short answer is: **No.**
 
-While complex blends like _Goda Masala_ or _Biryani Masala_ have their place, the backbone of Indian home cooking relies on a surprisingly small set of core ingredients. At Tattva Co., we believe in quality over quantity. A pantry stocked with 7 high-quality, fresh spices is infinitely better than one cluttered with 50 stale jars you never use.
+While complex blends like _Goda Masala_ or _Biryani Masala_ have their place, the backbone of Indian home cooking relies on a surprisingly small set of core ingredients. At Rathi Naturals., we believe in quality over quantity. A pantry stocked with 7 high-quality, fresh spices is infinitely better than one cluttered with 50 stale jars you never use.
 
 Here is the definitive guide to the **Essential 7**—a minimalist spice kit that allows you to cook over 20 authentic regional dishes for under ₹500.
 
@@ -113,4 +113,4 @@ Since you're buying fewer spices, treat them better.
 
 Cooking authentic Indian food isn't about hoarding 100 rare ingredients. It's about understanding how to layer the fundamental flavors of heat, earth, and aroma. Start with the Essential 7, master them, and you'll realize you're already a better cook than the instructions on the back of a box ever allowed you to be.
 
-_Start your minimalist journey with Tattva Co.'s "Essential Potency Pack" – 7 lab-tested spices, zero fillers. Shop now at [tattvaco.in](https://tattvaco.in)._
+_Start your minimalist journey with Rathi Naturals.'s "Essential Potency Pack" – 7 lab-tested spices, zero fillers. Shop now at [rathinaturals.com](https://rathinaturals.com)._

@@ -1,10 +1,10 @@
-# TATTVA CO. COMPETITIVE ANALYSIS & IMPROVEMENT ROADMAP
+# RATHI NATURALS CO. COMPETITIVE ANALYSIS & IMPROVEMENT ROADMAP
 
 ## Executive Summary Report
 
 **Date**: January 2025  
-**Analysis Scope**: 6 organic e-commerce competitors + your website (tattvaco.in)  
-**Prepared for**: Tattva Co. Management
+**Analysis Scope**: 6 organic e-commerce competitors + your website (rathinaturals.com)  
+**Prepared for**: Rathi Naturals. Management
 
 ---
 
@@ -16,7 +16,7 @@ This comprehensive competitive analysis evaluated your website against 6 major o
 2. **Organic India** (organicindia.com) - 25+ years, nationwide, 800+ products
 3. **Adya Organics** (adyaorganics.com) - 500-1000 employees
 4. **Conscious Food** (consciousfood.com) - Since 1990, Pan-India leader
-5. **Organic Tattva** (organictattva.com) - Nationwide staples
+5. **Organic Rathi Naturals** (organicrathiNaturals.com) - Nationwide staples
 6. **Tulua** (tulua.shop) - Spices & ready-to-cook focused
 
 ---
@@ -110,7 +110,7 @@ This comprehensive competitive analysis evaluated your website against 6 major o
 **5. Launch Subscription Program** 🚀
 
 - **Currently**: Absent (all top competitors have this)
-- **Recommendation**: "Tattva Fresh Monthly" - ₹999/month, 4-5 curated spices, 15-20% discount
+- **Recommendation**: "Rathi Naturals Fresh Monthly" - ₹999/month, 4-5 curated spices, 15-20% discount
 - **Impact**: 30%+ recurring revenue, increased lifetime value
 - **Effort**: 3-4 weeks (developer time: 40-60 hours)
 - **Revenue Potential**: High (20-30% of customers could subscribe)
@@ -321,7 +321,7 @@ This comprehensive competitive analysis evaluated your website against 6 major o
 
 Imagine 12 months from now:
 
-> "Tattva Co. grew from a spice seller to a trusted wellness partner.
+> "Rathi Naturals. grew from a spice seller to a trusted wellness partner.
 > Our customers don't just buy spices—they're part of a community
 > supporting 50+ fair-trade farmers across India. Our subscription
 > box is the #1 rated spice service. Customer reviews average 4.8/5.
@@ -394,4 +394,4 @@ _Confidence Level: High_
 
 **The opportunity is now. The time to act is today.**
 
-🌶️ Let's build the future of Tattva Co. 🚀
+🌶️ Let's build the future of Rathi Naturals. 🚀

@@ -104,7 +104,7 @@ Open your deployed site in Chrome:
 
 1. In DevTools → **Application** → **Manifest**
 2. ✅ Verify:
-   - Name: "Tattva & Co. - Indian Gourmet Products"
+   - Name: "Rathi Naturals & Co. - Indian Gourmet Products"
    - Theme color: #FFB7C1
    - Icons present (192x192, 512x512)
    - No errors
@@ -268,7 +268,7 @@ Total Initial: ~109 KB gzipped ✅
    - See instructions above
 
 5. **Custom Domain** (15 minutes)
-   - Buy a domain (e.g., tattva-co.com)
+   - Buy a domain (e.g., rathi naturals-co.com)
    - Add to Vercel: Settings → Domains
    - Configure DNS
 

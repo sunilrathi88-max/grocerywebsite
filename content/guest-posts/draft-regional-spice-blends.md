@@ -103,4 +103,4 @@ Your palate (and your dinner guests) will thank you.
 ---
 
 _About the Author:_
-_Tattva Co. is dedicated to reviving India's heritage spices. We source directly from farmers who have preserved these regional traditions for generations. Our spices are cold-ground and lab-tested to ensure that the history in the jar matches the flavor on your plate._
+_Rathi Naturals is dedicated to reviving India's heritage spices. We source directly from farmers who have preserved these regional traditions for generations. Our spices are cold-ground and lab-tested to ensure that the history in the jar matches the flavor on your plate._

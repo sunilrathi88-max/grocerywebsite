@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 /**
- * Tattva Co. - Advanced Test Scenarios
+ * Rathi Naturals - Advanced Test Scenarios
  * Custom test scenarios for edge cases and specific user flows
  */
 
@@ -141,7 +141,7 @@ describe('Advanced Test Scenarios', () => {
 
       // Cart should still have items
       cy.window().then((win) => {
-        const cartData = win.localStorage.getItem('tattva_cart');
+        const cartData = win.localStorage.getItem('rathi_cart');
         expect(cartData).to.exist;
       });
     });

@@ -29,8 +29,8 @@ const AffiliateProgramPage = () => {
   return (
     <>
       <SEO
-        title="Affiliate Program | Partner with Tattva Co."
-        description="Join the Tattva Co. Affiliate Program. Earn 15% commission promoting India's most authentic, lab-tested spices to your audience."
+        title="Affiliate Program | Partner with Rathi Naturals."
+        description="Join the Rathi Naturals. Affiliate Program. Earn 15% commission promoting India's most authentic, lab-tested spices to your audience."
         structuredData={generateOrganizationSchema()}
       />
 
@@ -64,7 +64,7 @@ const AffiliateProgramPage = () => {
           <div className="container mx-auto max-w-6xl">
             <div className="text-center mb-16">
               <h2 className="text-3xl font-serif font-bold text-gray-900 mb-4">
-                Why Partner With Tattva Co.?
+                Why Partner With Rathi Naturals.?
               </h2>
               <p className="text-gray-600 max-w-2xl mx-auto">
                 We treat our affiliates like true partners. No "points" or "store credit"—just cash

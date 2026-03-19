@@ -15,7 +15,7 @@ git init
 git add .
 
 # Create initial commit
-git commit -m "Initial commit: Tattva Co. with automated testing"
+git commit -m "Initial commit: Rathi Naturals. with automated testing"
 ```
 
 ### 2. Create GitHub Repository
@@ -23,7 +23,7 @@ git commit -m "Initial commit: Tattva Co. with automated testing"
 **Option A: Using GitHub Website**
 
 1. Go to [github.com/new](https://github.com/new)
-2. Repository name: `grocerywebsite` or `tattva-co`
+2. Repository name: `grocerywebsite` or `rathi naturals-co`
 3. Description: "Premium organic grocery e-commerce platform with automated testing"
 4. Choose **Public** or **Private**
 5. **DO NOT** initialize with README (we have one)
@@ -68,7 +68,7 @@ git push -u origin main
 **For Percy Visual Testing:**
 
 1. Sign up at [percy.io](https://percy.io)
-2. Create new project: "Tattva Co"
+2. Create new project: "Rathi Naturals"
 3. Copy your **PERCY_TOKEN**
 4. In GitHub:
    - Settings → Secrets and variables → Actions
@@ -134,7 +134,7 @@ git push origin main
 **After signing up at percy.io:**
 
 1. **Create Project:**
-   - Project name: "Tattva Co"
+   - Project name: "Rathi Naturals"
    - Type: Web
    - Framework: Cypress
 

@@ -1,4 +1,4 @@
-# Figma-Ready Frame Spec: tattvaco.in Homepage Redesign
+# Figma-Ready Frame Spec: rathinaturals.com Homepage Redesign
 
 Based on your current site, here's a complete Figma specification with exact component names, styles, and auto-layout properties.
 
@@ -182,7 +182,7 @@ shadow/button
 
 **Content:**
 
-- Text: "Tattva Co." (replace with logo image)
+- Text: "Rathi Naturals." (replace with logo image)
 - Style: `H3/Card-Title`, size 24px
 - Color: `neutral-900`
 

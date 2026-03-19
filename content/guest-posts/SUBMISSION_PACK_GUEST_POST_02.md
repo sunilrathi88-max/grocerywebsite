@@ -16,7 +16,7 @@ Hi [Editor's Name],
 
 I'm a big admirer of your collection of authentic Indian recipes at [Site Name]—especially how you focus on healthy, home-cooked meals.
 
-I'm writing from **Tattva Co.**, where we focus on bridging the gap between traditional Indian farming and modern kitchen science.
+I'm writing from **Rathi Naturals.**, where we focus on bridging the gap between traditional Indian farming and modern kitchen science.
 
 I’ve written a well-researched article titled **"Ayurvedic Spice Science: Why Whole Spices Beat Ground Masalas"** that digs deep into _why_ our grandmothers insisted on fresh grinding.
 
@@ -33,8 +33,8 @@ Would you be open to sharing this science-backed perspective with your readers?
 Best regards,
 
 Sunil Rathi
-Founder, Tattva Co.
-tattvaco.in
+Founder, Rathi Naturals.
+rathinaturals.com
 
 ---
 

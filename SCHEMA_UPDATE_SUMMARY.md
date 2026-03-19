@@ -2,7 +2,7 @@
 
 ## 🎉 What's Been Updated
 
-Your Tattva Co. e-commerce project now has a **comprehensive product schema** with 25+ new fields to support a full-featured online grocery store.
+Your Rathi Naturals. e-commerce project now has a **comprehensive product schema** with 25+ new fields to support a full-featured online grocery store.
 
 ---
 

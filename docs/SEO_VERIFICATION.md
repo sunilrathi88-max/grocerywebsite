@@ -13,7 +13,7 @@
 - ✅ **Title Tag**: 74 characters (optimal: 50-60)
 
   ```html
-  <title>Tattva Co. - Authentic Indian Gourmet Products | Premium Spices & Organic Foods</title>
+  <title>Rathi Naturals. - Authentic Indian Gourmet Products | Premium Spices & Organic Foods</title>
   ```
 
 - ✅ **Meta Description**: 160 characters (optimal: 150-160)
@@ -33,7 +33,7 @@
   kashmiri saffron, indian superfoods
   ```
 
-- ✅ **Author**: Tattva Co.
+- ✅ **Author**: Rathi Naturals.
 - ✅ **Robots**: index, follow
 - ✅ **Language**: English
 - ✅ **Revisit-after**: 7 days
@@ -41,12 +41,12 @@
 ### Open Graph Tags (Facebook/LinkedIn) - 8 tags
 
 - ✅ `og:type` = website
-- ✅ `og:url` = https://tattva-co.com/
-- ✅ `og:title` = Tattva Co. - Authentic Indian Gourmet Products
+- ✅ `og:url` = https://rathi naturals-co.com/
+- ✅ `og:title` = Rathi Naturals. - Authentic Indian Gourmet Products
 - ✅ `og:description` = Shop authentic Indian gourmet products...
-- ✅ `og:image` = https://tattva-co.com/images/og-image.jpg
-- ✅ `og:image:alt` = Tattva Co. - Premium Indian Gourmet Products
-- ✅ `og:site_name` = Tattva Co.
+- ✅ `og:image` = https://rathi naturals-co.com/images/og-image.jpg
+- ✅ `og:image:alt` = Rathi Naturals. - Premium Indian Gourmet Products
+- ✅ `og:site_name` = Rathi Naturals.
 - ✅ `og:locale` = en_US
 
 **Impact**: Perfect social media sharing preview on Facebook, LinkedIn
@@ -54,18 +54,18 @@
 ### Twitter Card Tags - 7 tags
 
 - ✅ `twitter:card` = summary_large_image
-- ✅ `twitter:url` = https://tattva-co.com/
-- ✅ `twitter:title` = Tattva Co. - Authentic Indian Gourmet Products
+- ✅ `twitter:url` = https://rathi naturals-co.com/
+- ✅ `twitter:title` = Rathi Naturals. - Authentic Indian Gourmet Products
 - ✅ `twitter:description` = Shop authentic Indian gourmet products...
-- ✅ `twitter:image` = https://tattva-co.com/images/og-image.jpg
-- ✅ `twitter:site` = @tattvaco
-- ✅ `twitter:creator` = @tattvaco
+- ✅ `twitter:image` = https://rathi naturals-co.com/images/og-image.jpg
+- ✅ `twitter:site` = @rathinaturals
+- ✅ `twitter:creator` = @rathinaturals
 
 **Impact**: Professional Twitter card with large image preview
 
 ### Additional SEO Tags
 
-- ✅ **Canonical URL**: https://tattva-co.com/
+- ✅ **Canonical URL**: https://rathi naturals-co.com/
 - ✅ **Theme Color**: #FFB7C1 (brand pink)
 - ✅ **MS Tile Color**: #FFB7C1
 - ✅ **Favicon**: SVG + ICO + Apple Touch Icon
@@ -134,21 +134,21 @@
 {
   "@context": "https://schema.org",
   "@type": "Organization",
-  "name": "Tattva Co.",
-  "url": "https://tattva-co.com",
-  "logo": "https://tattva-co.com/images/logo.png",
+  "name": "Rathi Naturals.",
+  "url": "https://rathi naturals-co.com",
+  "logo": "https://rathi naturals-co.com/images/logo.png",
   "description": "Premium Indian gourmet products...",
   "contactPoint": {
     "@type": "ContactPoint",
-    "telephone": "+1-555-TATTVA",
+    "telephone": "+1-555-RATHI NATURALS",
     "contactType": "Customer Service",
-    "email": "support@tattva-co.com"
+    "email": "support@rathi naturals-co.com"
   },
   "sameAs": [
-    "https://facebook.com/tattvaco",
-    "https://twitter.com/tattvaco",
-    "https://instagram.com/tattvaco",
-    "https://pinterest.com/tattvaco"
+    "https://facebook.com/rathinaturals",
+    "https://twitter.com/rathinaturals",
+    "https://instagram.com/rathinaturals",
+    "https://pinterest.com/rathinaturals"
   ]
 }
 ```
@@ -171,14 +171,14 @@
   "image": ["/images/products/saffron-1.jpg"],
   "brand": {
     "@type": "Brand",
-    "name": "Tattva Co."
+    "name": "Rathi Naturals."
   },
   "offers": {
     "@type": "Offer",
     "price": 12.99,
     "priceCurrency": "USD",
     "availability": "https://schema.org/InStock",
-    "url": "https://tattva-co.com/product/1"
+    "url": "https://rathi naturals-co.com/product/1"
   },
   "aggregateRating": {
     "@type": "AggregateRating",
@@ -274,7 +274,7 @@ Allow: /*.js
 Allow: /images/
 
 # Sitemap location
-Sitemap: https://tattva-co.com/sitemap.xml
+Sitemap: https://rathi naturals-co.com/sitemap.xml
 ```
 
 **Bot-Specific Rules**:

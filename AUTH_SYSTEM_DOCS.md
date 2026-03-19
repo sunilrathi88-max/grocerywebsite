@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Tattva Co. grocery website now features a complete authentication system with dedicated pages for login, signup, and password recovery. The system includes comprehensive form validation, error handling, and a polished user experience.
+The Rathi Naturals. grocery website now features a complete authentication system with dedicated pages for login, signup, and password recovery. The system includes comprehensive form validation, error handling, and a polished user experience.
 
 ---
 
@@ -203,7 +203,7 @@ const handleSignUp = (name: string, email: string, password: string) => {
   const newUser = { ...MOCK_USER, name, email, isAdmin: false };
   setIsLoggedIn(true);
   setCurrentUser(newUser);
-  addToast(`Welcome to Tattva Co., ${name}!`, 'success');
+  addToast(`Welcome to Rathi Naturals., ${name}!`, 'success');
   window.location.hash = '#/';
 };
 

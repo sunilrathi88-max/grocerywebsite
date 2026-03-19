@@ -102,7 +102,7 @@ const Cart: React.FC<CartProps> = ({
   // Local Storage for "Save for Later"
   const [savedItems, setSavedItems] = useState<CartItem[]>(() => {
     try {
-      const saved = localStorage.getItem('tattva_saved_items');
+      const saved = localStorage.getItem('rathi_saved_items');
       return saved ? JSON.parse(saved) : [];
     } catch {
       return [];
@@ -110,7 +110,7 @@ const Cart: React.FC<CartProps> = ({
   });
 
   React.useEffect(() => {
-    localStorage.setItem('tattva_saved_items', JSON.stringify(savedItems));
+    localStorage.setItem('rathi_saved_items', JSON.stringify(savedItems));
   }, [savedItems]);
 
   const addToCartStore = useCartStore((state) => state.addItem);
@@ -453,7 +453,7 @@ const Cart: React.FC<CartProps> = ({
                 value={promoCode}
                 onChange={(e) => onPromoCodeChange(e.target.value)}
                 className="flex-1 block w-full rounded-none rounded-l-md border-gray-300 focus:ring-brand-primary focus:border-brand-primary sm:text-sm"
-                placeholder="TATTVA10"
+                placeholder="RATHI10"
                 disabled={loadingState.type === 'promo'}
               />
               <button

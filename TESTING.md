@@ -2,7 +2,7 @@
 
 ## Overview
 
-Comprehensive automated testing suite for Tattva Co. grocery website covering:
+Comprehensive automated testing suite for Rathi Naturals. grocery website covering:
 
 - Products dropdown navigation
 - Quiz and promo code system

@@ -23,7 +23,7 @@
 **Sample Tags:**
 
 ```html
-<title>Tattva Co. - Authentic Indian Gourmet Products | Premium Spices & Organic Foods</title>
+<title>Rathi Naturals. - Authentic Indian Gourmet Products | Premium Spices & Organic Foods</title>
 <meta
   name="description"
   content="Shop authentic Indian gourmet products including premium saffron, spices, nuts, and organic ingredients. Free shipping on orders over $50. 100% satisfaction guaranteed."
@@ -159,7 +159,7 @@
 
 ```xml
 <url>
-  <loc>https://tattva-co.com/</loc>
+  <loc>https://rathi naturals-co.com/</loc>
   <lastmod>2025-10-21</lastmod>
   <changefreq>daily</changefreq>
   <priority>1.0</priority>
@@ -181,7 +181,7 @@
 - ✅ Disallow private paths: `/admin/`, `/user/`, `/checkout/`, `/cart/`, `/account/`, `/api/`
 - ✅ Disallow duplicate content: `?sort=`, `?filter=`, `?page=` query params
 - ✅ Allow CSS/JS/images for proper rendering
-- ✅ Sitemap reference: `https://tattva-co.com/sitemap.xml`
+- ✅ Sitemap reference: `https://rathi naturals-co.com/sitemap.xml`
 
 **Bot-Specific Rules:**
 
@@ -245,9 +245,9 @@ Since automated testing is blocked, here's how to verify the SEO implementation 
    {
      "@context": "https://schema.org",
      "@type": "Organization",
-     "name": "Tattva Co.",
-     "url": "https://tattva-co.com",
-     "logo": "https://tattva-co.com/images/logo.png",
+     "name": "Rathi Naturals.",
+     "url": "https://rathi naturals-co.com",
+     "logo": "https://rathi naturals-co.com/images/logo.png",
      ...
    }
    ```
@@ -383,13 +383,13 @@ Since automated testing is blocked, here's how to verify the SEO implementation 
 1. **Submit Sitemap to Google Search Console**
 
    ```bash
-   https://www.google.com/ping?sitemap=https://tattva-co.com/sitemap.xml
+   https://www.google.com/ping?sitemap=https://rathi naturals-co.com/sitemap.xml
    ```
 
 2. **Submit Sitemap to Bing Webmaster Tools**
 
    ```bash
-   https://www.bing.com/ping?sitemap=https://tattva-co.com/sitemap.xml
+   https://www.bing.com/ping?sitemap=https://rathi naturals-co.com/sitemap.xml
    ```
 
 3. **Run Rich Results Test** on production URL
@@ -481,4 +481,4 @@ All SEO code has been implemented and verified through code inspection and file 
 
 **Report Generated:** October 22, 2025  
 **Author:** GitHub Copilot  
-**Project:** Tattva Co. Grocery Website
+**Project:** Rathi Naturals. Grocery Website

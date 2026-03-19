@@ -145,7 +145,7 @@ export const useLoyaltyStore = create<LoyaltyState>()(
       },
     }),
     {
-      name: 'tattva_loyalty_store',
+      name: 'rathi_loyalty_store',
     }
   )
 );

@@ -36,7 +36,7 @@ const LoyaltyWidget: React.FC<LoyaltyWidgetProps> = ({ className = '' }) => {
             Earn Points. Unlock Rewards.
           </h2>
           <p className="text-lg text-neutral-600 max-w-2xl mx-auto">
-            Join Tattva Rewards and get exclusive benefits with every purchase.
+            Join Rathi Naturals Rewards and get exclusive benefits with every purchase.
           </p>
         </div>
 

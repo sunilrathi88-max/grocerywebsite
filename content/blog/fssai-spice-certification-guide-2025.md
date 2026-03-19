@@ -1,6 +1,6 @@
 ---
 title: 'The 2025 FSSAI Spice Safety Enforcement: A Complete Guide for Consumers & Brands'
-author: 'Tattva Co. Editorial Team'
+author: 'Rathi Naturals. Editorial Team'
 date: '2026-01-29'
 category: 'Food Safety & Standards'
 description: "Everything you need to know about the FSSAI's October 2025 spice enforcement drive. Learn about the 18,000+ testing parameters, mandatory NABL certification, and how to spot safe spices."
@@ -13,7 +13,7 @@ If you've noticed a shift in the spice market recently—more certifications, QR
 
 Why now? And more importantly, what does this mean for the turmeric in your kitchen cabinet?
 
-At Tattva Co., food safety has been our DNA since Day 1. We welcome these stricter standards as they align perfectly with our mission of transparency. Here is a breakdown of the new regulations and why they are a victory for Indian consumers.
+At Rathi Naturals., food safety has been our DNA since Day 1. We welcome these stricter standards as they align perfectly with our mission of transparency. Here is a breakdown of the new regulations and why they are a victory for Indian consumers.
 
 ## Section 1: The October 2025 Enforcement Drive
 
@@ -91,12 +91,12 @@ Beyond the product, the _process_ is now under scrutiny. The enforcement emphasi
 As a consumer, how do you navigate this? You can't run a lab test in your kitchen, but you can look for the markers of compliance.
 
 1.  **The FSSAI License Number:** Every pack _must_ display a 14-digit FSSAI license number. You can verify this number on the [FoSCoS website](https://foscos.fssai.gov.in) to check the validity of the manufacturer's license.
-2.  **NABL-Accredited Lab Reports:** Premium brands like Tattva Co. are now taking the extra step of linking batch-specific lab reports via QR codes on the packaging. Scan to see the exact test results for _your_ jar of spices.
+2.  **NABL-Accredited Lab Reports:** Premium brands like Rathi Naturals. are now taking the extra step of linking batch-specific lab reports via QR codes on the packaging. Scan to see the exact test results for _your_ jar of spices.
 3.  **Packaging Integrity:** Avoid loose spices sold in open sacks. The breakdown of essential oils and the risk of biological contamination (dust, pests) is significantly higher.
 4.  **Price vs. Purity:** Pure spices have a high cost of production. If a 500g pack of Turmeric is cheaper than the raw cost of dried turmeric fingers, it is mathematically impossible for it to be pure.
 
-### The Tattva Co. Promise
+### The Rathi Naturals. Promise
 
-We didn't wait for the enforcement drive to start testing. Every batch of Tattva Co. spices has arguably—and proudly—been subjected to rigorous NABL-accredited testing for pesticides, heavy metals, and essential oil content since our inception.
+We didn't wait for the enforcement drive to start testing. Every batch of Rathi Naturals. spices has arguably—and proudly—been subjected to rigorous NABL-accredited testing for pesticides, heavy metals, and essential oil content since our inception.
 
-_Safe food is a right, not a luxury. Choose verified. Choose Tattva Co._
+_Safe food is a right, not a luxury. Choose verified. Choose Rathi Naturals_

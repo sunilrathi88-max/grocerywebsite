@@ -2,7 +2,7 @@
 
 ## 🎯 Mission Accomplished
 
-Successfully built and deployed a **production-ready authentication system** for Tattva Co. grocery website with three dedicated pages, comprehensive validation, and modern UI/UX.
+Successfully built and deployed a **production-ready authentication system** for Rathi Naturals. grocery website with three dedicated pages, comprehensive validation, and modern UI/UX.
 
 ---
 

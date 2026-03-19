@@ -289,7 +289,7 @@ npm install --save-dev jest @testing-library/react @testing-library/jest-dom @te
 
    ```tsx
    <Helmet>
-     <title>Premium Indian Spices | Tattva & Co.</title>
+     <title>Premium Indian Spices | Rathi Naturals & Co.</title>
      <meta name="description" content="..." />
      <meta property="og:title" content="..." />
      <meta property="og:image" content="..." />
@@ -556,8 +556,8 @@ npm run build
 
    ```json
    {
-     "name": "Tattva & Co. - Indian Spices",
-     "short_name": "Tattva",
+     "name": "Rathi Naturals & Co. - Indian Spices",
+     "short_name": "Rathi Naturals",
      "start_url": "/",
      "display": "standalone",
      "background_color": "#ffffff",

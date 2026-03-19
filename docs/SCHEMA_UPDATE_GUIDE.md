@@ -2,7 +2,7 @@
 
 ## 📦 Overview
 
-This guide documents the comprehensive e-commerce schema update for the Tattva Co. products table. All new fields have been added to support a full-featured online grocery store.
+This guide documents the comprehensive e-commerce schema update for the Rathi Naturals. products table. All new fields have been added to support a full-featured online grocery store.
 
 ## 🛠️ SQL Schema Migration
 
@@ -60,7 +60,7 @@ COMMENT ON COLUMN products.slug IS 'URL-friendly product identifier';
 | Field     | Type     | Description                | Example                             |
 | --------- | -------- | -------------------------- | ----------------------------------- |
 | `tags`    | `text[]` | Product tags for filtering | `["saffron", "premium", "organic"]` |
-| `brand`   | `text`   | Brand name                 | `"Tattva Co."`                      |
+| `brand`   | `text`   | Brand name                 | `"Rathi Naturals."`                      |
 | `sku`     | `text`   | Stock keeping unit         | `"SAFF-KASH-001"`                   |
 | `barcode` | `text`   | Product barcode            | `"8901234567890"`                   |
 | `slug`    | `text`   | URL-friendly identifier    | `"premium-kashmiri-saffron"`        |

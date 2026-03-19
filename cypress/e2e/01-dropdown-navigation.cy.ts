@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 /**
- * Tattva Co. - Products Dropdown Navigation Test
+ * Rathi Naturals - Products Dropdown Navigation Test
  * Tests the hover delay fix and category filtering
  */
 

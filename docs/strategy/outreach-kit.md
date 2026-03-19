@@ -36,7 +36,7 @@ Would you be open to taking a look at the draft? If it's a fit for [Blog Name], 
 
 Best,
 [Your Name]
-Founder, Tattva Co.
+Founder, Rathi Naturals.
 ```
 
 ---
@@ -76,7 +76,7 @@ Cheers,
 **Target:** Influencers/Bloggers who do product reviews (Instagram/YouTube focus).
 
 **Subject:** Paid Collab: Sourcing authentic spices for [Blog Name]
-**Alt Subject:** Sending you some samples (Tattva Co.)
+**Alt Subject:** Sending you some samples (Rathi Naturals.)
 
 **Body:**
 
@@ -85,7 +85,7 @@ Hi [Name],
 
 Big fan of your [Platform] channel. Your recent video on [Topic] was fantastic.
 
-I'm the founder of **Tattva Co.**, a new spice brand focusing on lab-tested purity and farm-direct sourcing from Rajasthan and Kerala. We're trying to solve the "adulterated spice" problem in India.
+I'm the founder of **Rathi Naturals.**, a new spice brand focusing on lab-tested purity and farm-direct sourcing from Rajasthan and Kerala. We're trying to solve the "adulterated spice" problem in India.
 
 I'd love to send you a **free "Essentials Box"** (our Turmeric, 8mm Cardamom, and Lakadong Chilli) for you to try in your kitchen. No strings attached—I just want real cooks to taste the difference.
 

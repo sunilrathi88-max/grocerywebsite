@@ -1,8 +1,8 @@
-# Competitive Analysis Report: Tattva Co. vs Organic E-Commerce Competitors
+# Competitive Analysis Report: Rathi Naturals. vs Organic E-Commerce Competitors
 
 ## Executive Summary
 
-Based on comprehensive research of 6 major organic food e-commerce platforms in India, this report identifies key strengths, weaknesses, and opportunities for tattvaco.in to enhance user experience and competitiveness.
+Based on comprehensive research of 6 major organic food e-commerce platforms in India, this report identifies key strengths, weaknesses, and opportunities for rathinaturals.com to enhance user experience and competitiveness.
 
 ## Competitors Analyzed
 
@@ -10,7 +10,7 @@ Based on comprehensive research of 6 major organic food e-commerce platforms in 
 2. **Organic India** (organicindia.com) - 25+ years, nationwide, 800+ products
 3. **Adya Organics** (adyaorganics.com) - Traditional sourced, 500-1000 employees
 4. **Conscious Food** (consciousfood.com) - Longest running (since 1990), Pan-India
-5. **Organic Tattva** (organictattva.com) - Nationwide staples focus
+5. **Organic Rathi Naturals** (organicrathiNaturals.com) - Nationwide staples focus
 6. **Tulua** (tulua.shop) - Spices & ready-to-cook pastes, focused on transparency
 
 ---
@@ -55,7 +55,7 @@ Based on comprehensive research of 6 major organic food e-commerce platforms in 
 - **Local sourcing emphasis**
 - **Comprehensive collections** well-organized
 
-### Organic Tattva - Design Strengths
+### Organic Rathi Naturals - Design Strengths
 
 - **Blog content integration** (educational component)
 - **Customer testimonials prominent**
@@ -71,44 +71,44 @@ Based on comprehensive research of 6 major organic food e-commerce platforms in 
 
 ---
 
-## KEY FINDINGS FOR TATTVA CO.
+## KEY FINDINGS FOR RATHI NATURALS CO.
 
 ### Currently Missing Elements (Critical)
 
 1. **Subscription/Loyalty Program**
    - Earthy Tales: ET Circle (5% on fruits, 20% on groceries, unlimited free delivery)
    - Conscious Food: Cashback system integrated
-   - **Tattva Co. Opportunity**: Introduce "Tattva Premium" or "Fresh Monthly" subscription
+   - **Rathi Naturals. Opportunity**: Introduce "Rathi Naturals Premium" or "Fresh Monthly" subscription
 
 2. **Trust Indicators & Transparency**
    - Earthy Tales: Quarterly pesticide testing, test results accessible
    - Organic India: Triple lab testing, certifications
    - Conscious Food: Heritage since 1990, farmer stories
-   - **Tattva Co. Gap**: Needs more visible certification badges, sourcing transparency
+   - **Rathi Naturals. Gap**: Needs more visible certification badges, sourcing transparency
 
 3. **Farmer Connection Stories**
    - Earthy Tales: Founder quit corporate (GE, PEPSI, TATA) narrative
    - Adya: Women farmer empowerment, traditional methods
    - Conscious Food: Direct farmer support messaging
-   - **Tattva Co. Opportunity**: Highlight farmer partnerships, success stories
+   - **Rathi Naturals. Opportunity**: Highlight farmer partnerships, success stories
 
 4. **Multiple Product Categories**
    - Earthy Tales: Fruits, Veggies, Oils, Ghee, Spices, Flours, Dry Fruits, Bakery
    - Organic India: 800+ products across teas, supplements, packaged foods
-   - **Tattva Co. Focus**: Currently appears spice-centric; need category expansion messaging
+   - **Rathi Naturals. Focus**: Currently appears spice-centric; need category expansion messaging
 
 5. **Prominent CTAs & Conversion Elements**
    - All competitors show: Free delivery threshold (₹499+), discount codes, cashback
-   - **Tattva Co. Opportunity**: Make promotions more visible above fold
+   - **Rathi Naturals. Opportunity**: Make promotions more visible above fold
 
 6. **Customer Testimonials Integration**
    - Organic India: Testimonials throughout site
    - Tulua: Multiple customer reviews visible
-   - **Tattva Co. Gap**: Needs more social proof integrated throughout user journey
+   - **Rathi Naturals. Gap**: Needs more social proof integrated throughout user journey
 
 7. **Mobile-Optimized Experience**
    - Competitors: All have smooth mobile checkout
-   - **Tattva Co. Opportunity**: Ensure 1-click reorder, mobile payment optimization
+   - **Rathi Naturals. Opportunity**: Ensure 1-click reorder, mobile payment optimization
 
 ---
 
@@ -282,7 +282,7 @@ Step 4: Order Confirmation
 **Recommended Implementation**:
 
 ```
-"Tattva Fresh Pass" - Subscription Program
+"Rathi Naturals Fresh Pass" - Subscription Program
 ├─ Monthly auto-replenishment orders
 ├─ 15-20% discount on regular purchases
 ├─ Free shipping on all orders
@@ -387,7 +387,7 @@ Create a dedicated page showing:
 
 - User-generated content
   - Customer recipe sharing
-  - Photo contests (#TattvaEats)
+  - Photo contests (#RathiNaturalsEats)
   - Farmer spotlight (followers' favorite)
 - Community features
   - Recipe collection board
@@ -461,7 +461,7 @@ Create a dedicated page showing:
 
 ## COMPETITIVE DIFFERENTIATION STRATEGY
 
-### What Tattva Co. Can Leverage
+### What Rathi Naturals. Can Leverage
 
 **If spice-focused brand**:
 
@@ -531,7 +531,7 @@ Create a dedicated page showing:
 
 ## COMPETITIVE BENCHMARKING METRICS
 
-| Metric                  | Best Practice      | Tattva Co. Target    |
+| Metric                  | Best Practice      | Rathi Naturals. Target    |
 | ----------------------- | ------------------ | -------------------- |
 | Product Page Load Time  | < 2 seconds        | < 1.5 seconds        |
 | Checkout Steps          | 3-4 steps          | 3 steps max          |

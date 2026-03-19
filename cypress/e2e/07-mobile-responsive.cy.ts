@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 /**
- * Tattva Co. - Mobile Responsiveness Test
+ * Rathi Naturals - Mobile Responsiveness Test
  * Tests mobile viewport and touch interactions
  */
 

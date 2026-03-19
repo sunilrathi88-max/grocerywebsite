@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document details the social proof features and enhanced review system implemented for Tattva Co.'s e-commerce grocery website. These features build trust and encourage conversions through real-time purchase notifications and improved review displays.
+This document details the social proof features and enhanced review system implemented for Rathi Naturals.'s e-commerce grocery website. These features build trust and encourage conversions through real-time purchase notifications and improved review displays.
 
 ---
 

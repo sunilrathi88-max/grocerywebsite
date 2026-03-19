@@ -13,7 +13,7 @@ const RecipesPage: React.FC<RecipesPageProps> = ({ recipes, onSelectRecipe }) =>
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="text-center mb-12">
         <h2 className="text-3xl md:text-4xl font-serif font-bold text-brand-dark">
-          Tattva Co. Recipes
+          Rathi Naturals. Recipes
         </h2>
         <p className="mt-4 text-lg text-gray-600">
           Inspiration for your next culinary adventure using our finest ingredients.

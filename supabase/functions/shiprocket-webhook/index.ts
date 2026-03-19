@@ -8,7 +8,7 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 
 const WEBHOOK_SECRET =
-  Deno.env.get('SHIPROCKET_WEBHOOK_SECRET') || 'tattvaco_shiprocket_webhook_2024';
+  Deno.env.get('SHIPROCKET_WEBHOOK_SECRET') || 'rathinaturals_shiprocket_webhook_2024';
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
 

@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document describes the comprehensive image fallback system implemented across the Tattva Co. grocery website to ensure a polished user experience even when remote images fail to load.
+This document describes the comprehensive image fallback system implemented across the Rathi Naturals. grocery website to ensure a polished user experience even when remote images fail to load.
 
 ## Problem Statement
 
@@ -16,11 +16,11 @@ This document describes the comprehensive image fallback system implemented acro
 
 ```typescript
 export const PLACEHOLDER_URLS = {
-  product: 'https://via.placeholder.com/400x400/F8E3D9/333333?text=Tattva+Co.',
-  thumb: 'https://via.placeholder.com/100x100/F8E3D9/333333?text=Tattva+Co.',
-  hero: 'https://via.placeholder.com/600x600/F8E3D9/333333?text=Tattva+Co.',
-  blog: 'https://via.placeholder.com/800x400/F8E3D9/333333?text=Tattva+Co.',
-  recipe: 'https://via.placeholder.com/600x256/F8E3D9/333333?text=Tattva+Co.',
+  product: 'https://via.placeholder.com/400x400/F8E3D9/333333?text=Rathi Naturals+Co.',
+  thumb: 'https://via.placeholder.com/100x100/F8E3D9/333333?text=Rathi Naturals+Co.',
+  hero: 'https://via.placeholder.com/600x600/F8E3D9/333333?text=Rathi Naturals+Co.',
+  blog: 'https://via.placeholder.com/800x400/F8E3D9/333333?text=Rathi Naturals+Co.',
+  recipe: 'https://via.placeholder.com/600x256/F8E3D9/333333?text=Rathi Naturals+Co.',
 };
 
 export const imageErrorHandlers = {
@@ -35,7 +35,7 @@ export const imageErrorHandlers = {
 ### 2. Branded Placeholder Design
 
 - **Colors**: Brand accent (#F8E3D9) background with dark text (#333333)
-- **Text**: "Tattva Co." branding maintains visual consistency
+- **Text**: "Rathi Naturals." branding maintains visual consistency
 - **Sizes**: Optimized for different use cases (product cards, thumbnails, hero images)
 
 ### 3. Components Updated (14 total)

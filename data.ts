@@ -564,7 +564,7 @@ export const MOCK_TESTIMONIALS: Testimonial[] = [
     id: 1,
     name: 'Aarav Chen',
     quote:
-      'Tattva Co. has completely transformed my cooking. The freshness and quality of the spices are unparalleled.',
+      'Rathi Naturals. has completely transformed my cooking. The freshness and quality of the spices are unparalleled.',
     rating: 5,
   },
   {
@@ -599,7 +599,7 @@ export const BLOG_POSTS_DATA: BlogPost[] = [
 
 If you grew up around an Indian kitchen, you have already met some of the best “gut supplements” on the planet—they just sit quietly in your masala dabba. Modern research is now validating what our grandparents knew: everyday spices like turmeric, ginger, and cumin can support digestion, microbial balance, and overall gut comfort.
 
-Throughout this guide, you will see gentle CTAs to our own Tattva Co. pantry heroes like Salem Turmeric and Mathania Chilli, so you can actually cook with what you learn.
+Throughout this guide, you will see gentle CTAs to our own Rathi Naturals. pantry heroes like Salem Turmeric and Mathania Chilli, so you can actually cook with what you learn.
 
 ---
 
@@ -614,7 +614,7 @@ For daily use, a high‑curcumin variety like Salem turmeric is particularly val
 - Make a quick “haldi doodh” with milk (or plant milk), black pepper, and a drizzle of honey before bed.
 - Add a pinch to your morning warm water with lemon to support digestion and immunity.
 
-> **Upgrade your everyday haldi to our single‑origin [Tattva Co. Salem Turmeric Powder](/product/4)—sun‑dried, low‑heat ground, and packed for maximum colour and aroma.**
+> **Upgrade your everyday haldi to our single‑origin [Rathi Naturals. Salem Turmeric Powder](/product/4)—sun‑dried, low‑heat ground, and packed for maximum colour and aroma.**
 
 ---
 
@@ -629,7 +629,7 @@ Because ginger warms the system, it pairs beautifully with lentils, vegetables, 
 - Add grated ginger to dal tadka, sambar, or vegetable stir‑fries.
 - Brew a post‑meal ginger‑fennel tea to cut heaviness after a rich lunch or dinner.
 
-> **Pair fresh ginger with our [Tattva Co. Salem Turmeric Powder](/product/4) in your khichdi or curries for a gentle but powerful gut‑supportive combo.**
+> **Pair fresh ginger with our [Rathi Naturals. Salem Turmeric Powder](/product/4) in your khichdi or curries for a gentle but powerful gut‑supportive combo.**
 
 ---
 
@@ -642,7 +642,7 @@ Cumin (jeera) is one of those spices you barely notice—until you skip it and y
 - Use roasted, ground cumin over chaas, raita, salads, and fruit bowls.
 - Temper cumin in ghee for dals and khichdi to make them lighter on the stomach.
 
-> **Make jeera water using our whole [Tattva Co. Cumin Seeds](/product/14), cleaned, graded, and packed to retain volatile oils and flavour.**
+> **Make jeera water using our whole [Rathi Naturals. Cumin Seeds](/product/14), cleaned, graded, and packed to retain volatile oils and flavour.**
 
 ---
 
@@ -655,7 +655,7 @@ Fennel seeds (saunf) are that sweet little handful you get after a restaurant me
 - Brew fennel tea by steeping crushed seeds in hot water for 8–10 minutes.
 - Add a pinch to pickles, masala chai, or certain vegetable dishes for gentle sweetness.
 
-> **Try our [Tattva Co. Roasted Fennel (Saunf Mix)](/product/15) as a natural, gut‑friendly mukhwas alternative—no artificial colours or candy bits.**
+> **Try our [Rathi Naturals. Roasted Fennel (Saunf Mix)](/product/15) as a natural, gut‑friendly mukhwas alternative—no artificial colours or candy bits.**
 
 ---
 
@@ -668,7 +668,7 @@ Black pepper is not just about heat; piperine, its active compound, can enhance 
 - Always pair turmeric with black pepper in curries or golden milk for better curcumin bioavailability.
 - Use pepper instead of excess chilli if your gut is sensitive to high heat.
 
-> **For maximum aroma, switch to [Tattva Co. Whole Black Pepper](/product/2), crush fresh just before serving, and experience the difference in flavour and digestion.**
+> **For maximum aroma, switch to [Rathi Naturals. Whole Black Pepper](/product/2), crush fresh just before serving, and experience the difference in flavour and digestion.**
 
 ---
 
@@ -678,7 +678,7 @@ Interesting clinical work has looked at what happens when people eat a “typica
 
 In simple terms: the balanced masala in your curry is already a mini gut‑health formula—when built from clean, high‑quality spices.
 
-> **Build your daily gut‑friendly masala base with [Tattva Co. Salem Turmeric](/product/4), [Whole Cumin Seeds](/product/14), and [Whole Black Pepper](/product/2), then layer in your favourite chillies.**
+> **Build your daily gut‑friendly masala base with [Rathi Naturals. Salem Turmeric](/product/4), [Whole Cumin Seeds](/product/14), and [Whole Black Pepper](/product/2), then layer in your favourite chillies.**
 
 ---
 
@@ -686,7 +686,7 @@ In simple terms: the balanced masala in your curry is already a mini gut‑healt
 
 A comforting, gut‑friendly plate does not need fancy ingredients. A classic example is moong dal khichdi tempered with ghee, cumin, ginger, turmeric, and a pinch of black pepper, served with a fennel‑jeera chaas. This combination gives you fibre, gentle protein, and the digestive support of five powerful spices in one meal.
 
-> **Recreate this plate at home using [Tattva Co. Salem Turmeric](/product/4), [Cumin Seeds](/product/14), [Black Pepper](/product/2), and [Roasted Fennel](/product/15)—all curated for everyday Ayurvedic cooking.**
+> **Recreate this plate at home using [Rathi Naturals. Salem Turmeric](/product/4), [Cumin Seeds](/product/14), [Black Pepper](/product/2), and [Roasted Fennel](/product/15)—all curated for everyday Ayurvedic cooking.**
 
 ---
 
@@ -725,7 +725,7 @@ Whole spices retain essential oils longer and give you more control over flavour
     id: 102,
     slug: 'premium-spice-brands-comparison-2025',
     title: "Premium Gourmet Spice Brands of India: The Complete Buyer's Guide (2025)",
-    author: 'Tattva Co. Team',
+    author: 'Rathi Naturals. Team',
     date: 'Jan 25, 2025',
     image:
       'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
@@ -738,7 +738,7 @@ Whole spices retain essential oils longer and give you more control over flavour
 
 If you love cooking Indian food, the difference between “good” and “unforgettable” often comes down to the quality of your spices. Premium brands focus on cleaner sourcing, better processing, and fresher packaging, which means more flavour, colour, and aroma per pinch—and fewer worries about adulteration.
 
-This guide will help you decode what “premium” actually means and how Tattva Co. fits into that landscape with products like Salem Turmeric and Mathania Chilli.
+This guide will help you decode what “premium” actually means and how Rathi Naturals. fits into that landscape with products like Salem Turmeric and Mathania Chilli.
 
 ---
 
@@ -751,7 +751,7 @@ Premium is more than fancy labels. Here are the pillars you should look for when
 - **Processing quality:** Low‑temperature grinding, hygienic plants, and minimal hand‑contamination help preserve volatile oils and prevent mould or off‑flavours.
 - **Packaging:** Light‑proof, airtight packaging slows oxidation so your masala does not die in two months.
 
-> **At [Tattva Co.](/), we apply these same principles—small‑batch sourcing, careful cleaning, and protective packaging—across our [Salem Turmeric](/product/4), [Mathania Chilli](/product/12), and other whole‑spice lines.**
+> **At [Rathi Naturals.](/), we apply these same principles—small‑batch sourcing, careful cleaning, and protective packaging—across our [Salem Turmeric](/product/4), [Mathania Chilli](/product/12), and other whole‑spice lines.**
 
 ---
 
@@ -760,12 +760,12 @@ Premium is more than fancy labels. Here are the pillars you should look for when
 ### Salem Turmeric – High‑Curcumin, High Colour
 Salem in Tamil Nadu is known for turmeric with rich colour and good curcumin content, which gives you deeper flavour and stronger “golden” tones in gravies. High‑quality Salem turmeric is valued for its potential health properties and is widely used in Ayurvedic and everyday cooking.
 
-> **Choose [Tattva Co. Salem Turmeric Powder](/product/4) for your daily curries, golden milk, and pickles when you want vibrant colour and clean, single‑origin sourcing.**
+> **Choose [Rathi Naturals. Salem Turmeric Powder](/product/4) for your daily curries, golden milk, and pickles when you want vibrant colour and clean, single‑origin sourcing.**
 
 ### Mathania Chilli – Rajasthan’s Culinary Jewel
 Mathania chilli comes from a small region near Jodhpur and is loved for its bright red colour, flavour‑forward profile, and relatively moderate heat. It gives dishes like Laal Maas their signature deep red hue without overpowering them with harsh spiciness.
 
-> **If you want that authentic Rajasthani look and layered heat, reach for [Tattva Co. Mathania Chilli](/product/12) (Whole & Powder) in your tadkas, marinades, and Laal Maas.**
+> **If you want that authentic Rajasthani look and layered heat, reach for [Rathi Naturals. Mathania Chilli](/product/12) (Whole & Powder) in your tadkas, marinades, and Laal Maas.**
 
 ---
 
@@ -778,7 +778,7 @@ Mathania chilli comes from a small region near Jodhpur and is loved for its brig
 | Regional specialists | MTR, Pravin, local masala houses | Authentic regional blends, strong local loyalty |
 | Gourmet/single‑origin brands | Salem‑ and Mathania‑focused labels and similar | Story‑driven sourcing, high aroma, whole‑spice quality |
 
-> **[Tattva Co.](/) sits in the gourmet/single‑origin space—focused on carefully sourced Indian staples like Salem Turmeric, Mathania Chilli, and premium whole spices for home cooks who care about both flavour and purity.**
+> **[Rathi Naturals.](/) sits in the gourmet/single‑origin space—focused on carefully sourced Indian staples like Salem Turmeric, Mathania Chilli, and premium whole spices for home cooks who care about both flavour and purity.**
 
 ---
 
@@ -790,7 +790,7 @@ Instead of hunting for a single “best” brand, match the brand to your needs.
 - **Love experimenting and hosting?** Invest in gourmet whole spices and region‑specific chillies for signature dishes.
 - **Run a cafe or cloud kitchen?** Look at export‑oriented or B2B suppliers for bulk staples, and add a few hero products like Mathania chilli for speciality menu items.
 
-> **Use [Tattva Co. Salem Turmeric](/product/4) for all‑purpose cooking, and [Tattva Co. Mathania Chilli](/product/12) when you specifically want rich colour and Rajasthani character.**
+> **Use [Rathi Naturals. Salem Turmeric](/product/4) for all‑purpose cooking, and [Rathi Naturals. Mathania Chilli](/product/12) when you specifically want rich colour and Rajasthani character.**
 
 ---
 
@@ -803,7 +803,7 @@ When you’re scrolling through listings, this quick checklist helps you avoid f
 - **Whole spices look clean**, well‑dried, with strong aroma and natural colour (not neon).
 - **Reasonable pricing:** real single‑origin spices cost more than generic masala, but they should not be unrealistically cheap or wildly overpriced.
 
-> **Check our product pages for detailed sourcing notes, batch coding, and transparent ingredient lists before you add [Tattva Co. spices](/shop) to your cart.**
+> **Check our product pages for detailed sourcing notes, batch coding, and transparent ingredient lists before you add [Rathi Naturals. spices](/shop) to your cart.**
 
 ---
 
@@ -883,7 +883,7 @@ Restaurant biryani uses a "Potli Masala" (spice bag) or whole spices fried in gh
 - **Cinnamon Bark:** For sweet, woody warmth.
 - **Mace (Javitri) & Nutmeg:** The "secret weapons" of Mughlai cuisine.
 
-> **Start with a base of [Tattva Co. Whole Cumin](/product/14) and crushed [Green Cardamom](/product/10) to mimic the restaurant flavor profile.**
+> **Start with a base of [Rathi Naturals. Whole Cumin](/product/14) and crushed [Green Cardamom](/product/10) to mimic the restaurant flavor profile.**
 
 ---
 
@@ -988,12 +988,12 @@ export const MOCK_RECIPES: Recipe[] = [
     cookTime: '40 mins',
     serves: 4,
     description:
-      'Aromatic and flavorful one-pot meal made with saffron-infused rice, tender chicken, and a blend of Tattva Co. spices.',
+      'Aromatic and flavorful one-pot meal made with saffron-infused rice, tender chicken, and a blend of Rathi Naturals. spices.',
     ingredients: [
       '500g Chicken',
       '2 cups Basmati Rice',
-      '1 pinch Tattva Co. Himalayan Saffron',
-      '2 tbsp Tattva Co. Garam Masala',
+      '1 pinch Rathi Naturals. Himalayan Saffron',
+      '2 tbsp Rathi Naturals. Garam Masala',
       '1 cup Yogurt',
       '2 Onions, sliced',
       'Ginger-garlic paste',
@@ -1018,8 +1018,8 @@ export const MOCK_RECIPES: Recipe[] = [
       'A quick and fiery appetizer featuring fresh prawns coated in freshly ground Malabar black pepper and other spices.',
     ingredients: [
       '250g Prawns, deveined',
-      '2 tbsp Tattva Co. Malabar Black Pepper, coarsely ground',
-      '1 tsp Tattva Co. Turmeric Powder',
+      '2 tbsp Rathi Naturals. Malabar Black Pepper, coarsely ground',
+      '1 tsp Rathi Naturals. Turmeric Powder',
       'Curry leaves',
       'Coconut oil',
     ],
@@ -1043,7 +1043,7 @@ export const MOCK_RECIPES: Recipe[] = [
       'A comforting and healthy beverage made with our organic turmeric powder, milk, and a hint of sweetness.',
     ingredients: [
       '1 cup Milk (of choice)',
-      '1 tsp Tattva Co. Organic Turmeric Powder',
+      '1 tsp Rathi Naturals. Organic Turmeric Powder',
       '1/4 tsp Cinnamon powder',
       'Pinch of black pepper',
       '1 tsp Honey or Maple Syrup',
@@ -1065,11 +1065,11 @@ export const MOCK_RECIPES: Recipe[] = [
     cookTime: '15 mins',
     serves: 6,
     description:
-      'An addictive snack of mixed nuts roasted with Tattva Co. Garam Masala, a little salt, and a touch of maple syrup.',
+      'An addictive snack of mixed nuts roasted with Rathi Naturals. Garam Masala, a little salt, and a touch of maple syrup.',
     ingredients: [
-      '2 cups Mixed Nuts (Tattva Co. Almonds, Cashews)',
+      '2 cups Mixed Nuts (Rathi Naturals. Almonds, Cashews)',
       '1 tbsp Coconut oil, melted',
-      '1.5 tsp Tattva Co. Garam Masala',
+      '1.5 tsp Rathi Naturals. Garam Masala',
       '1/2 tsp Salt',
       '1 tbsp Maple syrup',
     ],
@@ -1094,8 +1094,8 @@ export const MOCK_RECIPES: Recipe[] = [
     ingredients: [
       '500g Fish (pomfret or kingfish), cut into steaks',
       '1 cup Coconut milk',
-      '1 tsp Tattva Co. Malabar Black Pepper',
-      '1 tsp Tattva Co. Turmeric Powder',
+      '1 tsp Rathi Naturals. Malabar Black Pepper',
+      '1 tsp Rathi Naturals. Turmeric Powder',
       '2 tbsp Coconut oil',
       '2 tbsp Tamarind paste',
       'Curry leaves, green chillies',

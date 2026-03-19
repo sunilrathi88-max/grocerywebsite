@@ -1,6 +1,6 @@
 # VISUAL UX IMPROVEMENTS - DESIGN MOCKUP GUIDE
 
-## Website Layout & User Flow Enhancements for Tattva Co.
+## Website Layout & User Flow Enhancements for Rathi Naturals.
 
 ---
 
@@ -48,7 +48,7 @@
 │  │  [SHOP]      │  [SHOP]      │  [SHOP]     │
 │  └──────────────┴──────────────┴──────────────┘
 │
-│  WHY CHOOSE TATTVA CO? (4 columns)                          │
+│  WHY CHOOSE RATHI NATURALS CO? (4 columns)                          │
 │  ┌──────────────┬──────────────┬──────────────┬──────────────┐
 │  │  ✓ DIRECT    │  ✓ QUALITY   │  ✓ FAST     │  ✓ FRESH     │
 │  │              │              │              │              │
@@ -60,7 +60,7 @@
 │
 │  SUBSCRIPTION OFFER (Highlight box)                          │
 │  ┌─────────────────────────────────────────────────────────┐
-│  │  🌶️ TATTVA FRESH MONTHLY                               │
+│  │  🌶️ RATHI NATURALS FRESH MONTHLY                               │
 │  │                                                           │
 │  │  Save 20% | 4-5 spices curated for you | Free shipping  │
 │  │                                                           │
@@ -109,7 +109,7 @@
 │
 │  SUSTAINABILITY SECTION                                      │
 │  ┌──────────────────────────────────────────────────────────┐
-│  │  YOUR IMPACT WITH TATTVA                                 │
+│  │  YOUR IMPACT WITH RATHI NATURALS                                 │
 │  │                                                           │
 │  │  🌍 [X] Kg of plastic saved                             │
 │  │  👨‍🌾 [X] Farmers directly supported                    │

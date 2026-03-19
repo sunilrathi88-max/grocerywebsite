@@ -14,7 +14,7 @@ export const PEACE_SOUNDBITES: PEACESet[] = [
     label: 'Quality',
     problem: 'Most spices on the shelf are dead—flavorless dust that ruins your hard work.',
     empathy: "We know how frustrating it is to cook a meal that tastes 'just okay'.",
-    answer: 'Tattva Co. sources spices within weeks of harvest, sealing in the volatile oils.',
+    answer: 'Rathi Naturals. sources spices within weeks of harvest, sealing in the volatile oils.',
     change: 'From Bland & Boring...',
     result: '...To dishes that taste alive and vibrate with flavor.',
   },

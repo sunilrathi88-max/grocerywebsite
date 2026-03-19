@@ -10,7 +10,7 @@ import { seedDatabase } from '../utils/seedDatabase';
 const useAdminAuth = () => {
   // In a real app, this should check the Supabase session role via explicit API call or context
   // For now, checks local storage but we treat this as a critical path to upgrade
-  const user = JSON.parse(localStorage.getItem('tattva_user') || '{}');
+  const user = JSON.parse(localStorage.getItem('rathi_user') || '{}');
   // Allow if explicitly admin OR if we are in a dev/demo capability (relaxed for now to prevent lockout during dev)
   return user?.email?.includes('admin') || user?.role === 'admin' || true;
 };
@@ -100,7 +100,7 @@ const OrdersManager: React.FC = () => {
         // Mocking a delay and data fetch
         await new Promise((resolve) => setTimeout(resolve, 800));
         // Attempt to get from local storage "orders" key if exists (mock db)
-        const storedOrders = JSON.parse(localStorage.getItem('tattva_orders_db') || '[]');
+        const storedOrders = JSON.parse(localStorage.getItem('rathi_orders_db') || '[]');
         if (storedOrders.length > 0) {
           setOrders(storedOrders);
         } else {
@@ -121,7 +121,7 @@ const OrdersManager: React.FC = () => {
 
     // Sync with "DB"
     const updatedOrders = orders.map((o) => (o.id === orderId ? { ...o, status: newStatus } : o));
-    localStorage.setItem('tattva_orders_db', JSON.stringify(updatedOrders));
+    localStorage.setItem('rathi_orders_db', JSON.stringify(updatedOrders));
 
     toast.success(`Order #${orderId} marked as ${newStatus}`);
   };

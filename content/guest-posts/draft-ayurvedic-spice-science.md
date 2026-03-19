@@ -92,4 +92,4 @@ So the next time you temper spices in hot oil, remember: You aren't just a cook.
 ---
 
 _About the Author:_
-_Tattva Co. bridges ancient spice wisdom with modern science. Our spices are lab-tested for purity to ensure they contain the medicinal-grade potent oils your body needs. Sourced directly from heritage farms in India._
+_Rathi Naturals bridges ancient spice wisdom with modern science. Our spices are lab-tested for purity to ensure they contain the medicinal-grade potent oils your body needs. Sourced directly from heritage farms in India._

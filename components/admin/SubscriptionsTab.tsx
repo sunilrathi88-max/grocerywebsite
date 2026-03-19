@@ -116,11 +116,11 @@ const SAMPLE_SUBSCRIPTIONS: Subscription[] = [
 
 const SubscriptionsTab: React.FC = () => {
   const [subscriptions, setSubscriptions] = useState<Subscription[]>(() => {
-    const saved = localStorage.getItem('tattva_subscriptions');
+    const saved = localStorage.getItem('rathi_subscriptions');
     if (saved) {
       return JSON.parse(saved);
     }
-    localStorage.setItem('tattva_subscriptions', JSON.stringify(SAMPLE_SUBSCRIPTIONS));
+    localStorage.setItem('rathi_subscriptions', JSON.stringify(SAMPLE_SUBSCRIPTIONS));
     return SAMPLE_SUBSCRIPTIONS;
   });
   const [statusFilter, setStatusFilter] = useState<'all' | 'active' | 'paused' | 'cancelled'>(
@@ -130,7 +130,7 @@ const SubscriptionsTab: React.FC = () => {
 
   const saveSubscriptions = (updated: Subscription[]) => {
     setSubscriptions(updated);
-    localStorage.setItem('tattva_subscriptions', JSON.stringify(updated));
+    localStorage.setItem('rathi_subscriptions', JSON.stringify(updated));
   };
 
   const handleStatusChange = (id: string, newStatus: 'active' | 'paused' | 'cancelled') => {

@@ -77,7 +77,7 @@ images: ['/images/products/saffron-1.svg', '/images/products/saffron-2.svg'];
 
 ```typescript
 export const PLACEHOLDER_URLS = {
-  product: 'https://via.placeholder.com/400x400/F8E3D9/333333?text=Tattva+Co.',
+  product: 'https://via.placeholder.com/400x400/F8E3D9/333333?text=Rathi Naturals+Co.',
   // ... external placeholder URLs
 };
 ```

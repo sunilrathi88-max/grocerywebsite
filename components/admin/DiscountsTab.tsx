@@ -30,11 +30,11 @@ const DEFAULT_COUPON: Omit<Coupon, 'id' | 'createdAt' | 'usedCount'> = {
 
 const DiscountsTab: React.FC = () => {
   const [coupons, setCoupons] = useState<Coupon[]>(() => {
-    const saved = localStorage.getItem('tattva_coupons');
+    const saved = localStorage.getItem('rathi_coupons');
     if (saved) {
       return JSON.parse(saved);
     }
-    // Set realistic Tattva Co. promotional coupons
+    // Set realistic Rathi Naturals. promotional coupons
     const sampleCoupons: Coupon[] = [
       {
         id: '1',
@@ -115,7 +115,7 @@ const DiscountsTab: React.FC = () => {
         createdAt: '2025-01-22',
       },
     ];
-    localStorage.setItem('tattva_coupons', JSON.stringify(sampleCoupons));
+    localStorage.setItem('rathi_coupons', JSON.stringify(sampleCoupons));
     return sampleCoupons;
   });
   const [isCreating, setIsCreating] = useState(false);
@@ -124,7 +124,7 @@ const DiscountsTab: React.FC = () => {
 
   const saveCoupons = (updatedCoupons: Coupon[]) => {
     setCoupons(updatedCoupons);
-    localStorage.setItem('tattva_coupons', JSON.stringify(updatedCoupons));
+    localStorage.setItem('rathi_coupons', JSON.stringify(updatedCoupons));
   };
 
   const handleCreateCoupon = () => {

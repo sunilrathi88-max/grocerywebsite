@@ -16,7 +16,7 @@ Hi [Editor's Name],
 
 I love how [Site Name] makes Indian cooking accessible to everyone. Your guides are always my go-to recommendation for beginners.
 
-I'm writing from **Tattva Co.** with an article idea that helps solve a common pain point for new cooks: **"Spice Overwhelm."**
+I'm writing from **Rathi Naturals.** with an article idea that helps solve a common pain point for new cooks: **"Spice Overwhelm."**
 
 Countless people want to cook authentic Indian food but get intimidated by the long shopping lists. My article, **"Building a Minimal Spice Pantry: The Essential 7 Spices,"** proves you don't need 50 jars to cook authentic food.
 
@@ -33,8 +33,8 @@ The full 1,900-word draft is attached. I'd love to hear your thoughts!
 Best regards,
 
 Sunil Rathi
-Founder, Tattva Co.
-tattvaco.in
+Founder, Rathi Naturals.
+rathinaturals.com
 
 ---
 

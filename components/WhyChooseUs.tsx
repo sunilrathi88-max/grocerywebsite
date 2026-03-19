@@ -46,10 +46,10 @@ const WhyChooseUs: React.FC = () => {
             transition={{ duration: 0.6 }}
           >
             <span className="text-brand-primary font-bold tracking-wider uppercase text-sm mb-2 block">
-              The Tattvaco Difference
+              The rathinaturals Difference
             </span>
             <h2 className="text-3xl md:text-5xl font-serif font-bold text-neutral-900 mb-4">
-              Why Choose Tattva?
+              Why Choose Rathi Naturals?
             </h2>
             <p className="text-xl text-neutral-600 font-medium max-w-2xl mx-auto">
               Pure Spices. Zero Compromise. Delivered Fresh.

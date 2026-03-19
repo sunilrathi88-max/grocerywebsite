@@ -121,13 +121,13 @@ Updated with comprehensive meta tags:
 **Before:**
 
 ```html
-<title>Tattva Co. - Indian Gourmet Products</title>
+<title>Rathi Naturals. - Indian Gourmet Products</title>
 ```
 
 **After:**
 
 ```html
-<title>Tattva Co. - Authentic Indian Gourmet Products | Premium Spices & Organic Foods</title>
+<title>Rathi Naturals. - Authentic Indian Gourmet Products | Premium Spices & Organic Foods</title>
 <meta
   name="description"
   content="Shop authentic Indian gourmet products including premium saffron, spices, nuts, and organic ingredients. Free shipping on orders over $50. 100% satisfaction guaranteed."
@@ -161,8 +161,8 @@ XML sitemap for search engine crawlers:
 
 **Submission URLs:**
 
-- Google: `https://www.google.com/ping?sitemap=https://tattva-co.com/sitemap.xml`
-- Bing: `https://www.bing.com/ping?sitemap=https://tattva-co.com/sitemap.xml`
+- Google: `https://www.google.com/ping?sitemap=https://rathi naturals-co.com/sitemap.xml`
+- Bing: `https://www.bing.com/ping?sitemap=https://rathi naturals-co.com/sitemap.xml`
 
 ---
 
@@ -199,19 +199,19 @@ Added to every page for brand recognition:
 {
   "@context": "https://schema.org",
   "@type": "Organization",
-  "name": "Tattva Co.",
-  "url": "https://tattva-co.com",
-  "logo": "https://tattva-co.com/images/logo.png",
+  "name": "Rathi Naturals.",
+  "url": "https://rathi naturals-co.com",
+  "logo": "https://rathi naturals-co.com/images/logo.png",
   "description": "Premium Indian gourmet products...",
   "contactPoint": {
     "@type": "ContactPoint",
-    "telephone": "+1-555-TATTVA",
+    "telephone": "+1-555-RATHI NATURALS",
     "contactType": "Customer Service"
   },
   "sameAs": [
-    "https://facebook.com/tattvaco",
-    "https://twitter.com/tattvaco",
-    "https://instagram.com/tattvaco"
+    "https://facebook.com/rathinaturals",
+    "https://twitter.com/rathinaturals",
+    "https://instagram.com/rathinaturals"
   ]
 }
 ```
@@ -237,7 +237,7 @@ Added when product detail modal opens:
   "image": ["/images/products/saffron-1.jpg"],
   "brand": {
     "@type": "Brand",
-    "name": "Tattva Co."
+    "name": "Rathi Naturals."
   },
   "offers": {
     "@type": "Offer",
@@ -328,7 +328,7 @@ Added when product detail modal opens:
 - `og:type` - Content type (website/product/article)
 - `og:image` - Preview image (1200x630px recommended)
 - `og:url` - Canonical URL
-- `og:site_name` - "Tattva Co."
+- `og:site_name` - "Rathi Naturals."
 - `og:locale` - "en_US"
 
 **Twitter:**
@@ -337,8 +337,8 @@ Added when product detail modal opens:
 - `twitter:title` - Page title
 - `twitter:description` - Page description
 - `twitter:image` - Preview image
-- `twitter:site` - @tattvaco
-- `twitter:creator` - @tattvaco
+- `twitter:site` - @rathinaturals
+- `twitter:creator` - @rathinaturals
 
 ### Social Preview Examples:
 
@@ -346,9 +346,9 @@ Added when product detail modal opens:
 
 ```
 [Image: Himalayan Saffron]
-Himalayan Saffron - Premium Quality | Tattva Co.
+Himalayan Saffron - Premium Quality | Rathi Naturals.
 The finest, hand-picked saffron from the valleys of Kashmir...
-tattva-co.com
+rathi naturals-co.com
 ```
 
 ---
@@ -421,26 +421,26 @@ tattva-co.com
 ### Google Search Console:
 
 1. Go to: https://search.google.com/search-console
-2. Add property: https://tattva-co.com
+2. Add property: https://rathi naturals-co.com
 3. Verify ownership (HTML meta tag method)
-4. Submit sitemap: https://tattva-co.com/sitemap.xml
+4. Submit sitemap: https://rathi naturals-co.com/sitemap.xml
 5. Request indexing for key pages
 
 ### Bing Webmaster Tools:
 
 1. Go to: https://www.bing.com/webmasters
-2. Add site: https://tattva-co.com
+2. Add site: https://rathi naturals-co.com
 3. Verify ownership
-4. Submit sitemap: https://tattva-co.com/sitemap.xml
+4. Submit sitemap: https://rathi naturals-co.com/sitemap.xml
 
 ### Indexing Commands:
 
 ```bash
 # Google ping
-curl "https://www.google.com/ping?sitemap=https://tattva-co.com/sitemap.xml"
+curl "https://www.google.com/ping?sitemap=https://rathi naturals-co.com/sitemap.xml"
 
 # Bing ping
-curl "https://www.bing.com/ping?sitemap=https://tattva-co.com/sitemap.xml"
+curl "https://www.bing.com/ping?sitemap=https://rathi naturals-co.com/sitemap.xml"
 ```
 
 ---
@@ -453,8 +453,8 @@ curl "https://www.bing.com/ping?sitemap=https://tattva-co.com/sitemap.xml"
 [Primary Keyword] - [Modifier] | [Brand Name]
 
 Examples:
-✅ "Himalayan Saffron - Premium Quality | Tattva Co."
-✅ "Indian Spices - Authentic Organic | Tattva Co."
+✅ "Himalayan Saffron - Premium Quality | Rathi Naturals."
+✅ "Indian Spices - Authentic Organic | Rathi Naturals."
 ❌ "Saffron" (too short, no branding)
 ❌ "Buy the best quality premium authentic Himalayan saffron..." (too long)
 ```

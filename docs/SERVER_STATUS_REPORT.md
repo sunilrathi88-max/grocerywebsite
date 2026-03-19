@@ -339,7 +339,7 @@ Open DevTools → Console → Look for:
 ### Shopping Flow Tests:
 
 - [ ] Add items to cart → Go to checkout
-- [ ] Apply promo codes (TATTVA10, COMEBACK15, QUIZMASTER15, SPICEFAN10)
+- [ ] Apply promo codes (RATHI10, COMEBACK15, QUIZMASTER15, SPICEFAN10)
 - [ ] Complete checkout (mock order)
 - [ ] View order in profile
 

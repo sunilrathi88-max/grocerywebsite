@@ -7,7 +7,7 @@ interface NewsletterPopupProps {
   onClose?: () => void;
 }
 
-const STORAGE_KEY = 'tattva_newsletter_dismissed';
+const STORAGE_KEY = 'rathi_newsletter_dismissed';
 const PROMO_CODE = 'WELCOME10';
 
 const NewsletterPopup: React.FC<NewsletterPopupProps> = ({ delayMs = 5000, onClose }) => {
@@ -61,9 +61,9 @@ const NewsletterPopup: React.FC<NewsletterPopupProps> = ({ delayMs = 5000, onClo
 
     // Store email (in real app, send to backend)
     try {
-      const subscribers = JSON.parse(localStorage.getItem('tattva_subscribers') || '[]');
+      const subscribers = JSON.parse(localStorage.getItem('rathi_subscribers') || '[]');
       subscribers.push({ email, date: new Date().toISOString() });
-      localStorage.setItem('tattva_subscribers', JSON.stringify(subscribers));
+      localStorage.setItem('rathi_subscribers', JSON.stringify(subscribers));
     } catch {
       // Silently fail
     }

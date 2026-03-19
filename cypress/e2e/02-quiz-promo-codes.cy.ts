@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 /**
- * Tattva Co. - Quiz and Promo Code Test
+ * Rathi Naturals - Quiz and Promo Code Test
  * Tests the enhanced quiz with 8 questions and promo code generation
  */
 

@@ -18,7 +18,7 @@ export const BLOG_POSTS_DATA: BlogPost[] = [
 
 If you grew up around an Indian kitchen, you have already met some of the best "gut supplements" on the planet—they just sit quietly in your masala dabba. Modern research is now validating what our grandparents knew: everyday spices like turmeric, ginger, and cumin can support digestion, microbial balance, and overall gut comfort.
 
-Throughout this guide, you will see gentle CTAs to our own Tattva Co. pantry heroes like Salem Turmeric and Mathania Chilli, so you can actually cook with what you learn.
+Throughout this guide, you will see gentle CTAs to our own Rathi Naturals. pantry heroes like Salem Turmeric and Mathania Chilli, so you can actually cook with what you learn.
 
 ---
 
@@ -33,7 +33,7 @@ For daily use, a high-curcumin variety like Salem turmeric is particularly value
 - Make a quick "haldi doodh" with milk (or plant milk), black pepper, and a drizzle of honey before bed.
 - Add a pinch to your morning warm water with lemon to support digestion and immunity.
 
-> **Shop Now:** Upgrade your everyday haldi to our single-origin **[Tattva Co. Salem Turmeric Powder](/product/4)**—sun-dried, low-heat ground, and packed for maximum colour and aroma.
+> **Shop Now:** Upgrade your everyday haldi to our single-origin **[Rathi Naturals. Salem Turmeric Powder](/product/4)**—sun-dried, low-heat ground, and packed for maximum colour and aroma.
 
 ---
 
@@ -48,7 +48,7 @@ Because ginger warms the system, it pairs beautifully with lentils, vegetables, 
 - Add grated ginger to dal tadka, sambar, or vegetable stir-fries.
 - Brew a post-meal ginger-fennel tea to cut heaviness after a rich lunch or dinner.
 
-> **Pro Tip:** Pair fresh ginger with our **[Tattva Co. Salem Turmeric Powder](/product/4)** in your khichdi or curries for a gentle but powerful gut-supportive combo.
+> **Pro Tip:** Pair fresh ginger with our **[Rathi Naturals. Salem Turmeric Powder](/product/4)** in your khichdi or curries for a gentle but powerful gut-supportive combo.
 
 ---
 
@@ -61,7 +61,7 @@ Cumin (jeera) is one of those spices you barely notice—until you skip it and y
 - Use roasted, ground cumin over chaas, raita, salads, and fruit bowls.
 - Temper cumin in ghee for dals and khichdi to make them lighter on the stomach.
 
-> **Shop Now:** Make jeera water using our whole **[Tattva Co. Cumin Seeds](/product/14)**—cleaned, graded, and packed to retain volatile oils and flavour.
+> **Shop Now:** Make jeera water using our whole **[Rathi Naturals. Cumin Seeds](/product/14)**—cleaned, graded, and packed to retain volatile oils and flavour.
 
 ---
 
@@ -74,7 +74,7 @@ Fennel seeds (saunf) are that sweet little handful you get after a restaurant me
 - Brew fennel tea by steeping crushed seeds in hot water for 8–10 minutes.
 - Add a pinch to pickles, masala chai, or certain vegetable dishes for gentle sweetness.
 
-> **Shop Now:** Try our **[Tattva Co. Fennel Seeds (Saunf)](/product/15)** as a natural, gut-friendly mukhwas alternative—no artificial colours or candy bits.
+> **Shop Now:** Try our **[Rathi Naturals. Fennel Seeds (Saunf)](/product/15)** as a natural, gut-friendly mukhwas alternative—no artificial colours or candy bits.
 
 ---
 
@@ -87,7 +87,7 @@ Black pepper is not just about heat; piperine, its active compound, can enhance 
 - Always pair turmeric with black pepper in curries or golden milk for better curcumin bioavailability.
 - Use pepper instead of excess chilli if your gut is sensitive to high heat.
 
-> **Shop Now:** For maximum aroma, switch to **[Tattva Co. Whole Black Pepper](/product/2)**—crush fresh just before serving and experience the difference in flavour and digestion.
+> **Shop Now:** For maximum aroma, switch to **[Rathi Naturals. Whole Black Pepper](/product/2)**—crush fresh just before serving and experience the difference in flavour and digestion.
 
 ---
 
@@ -140,7 +140,7 @@ Whole spices retain essential oils longer and give you more control over flavour
     id: 102,
     slug: 'premium-spice-brands-comparison-2025',
     title: "Premium Gourmet Spice Brands of India: The Complete Buyer's Guide (2025)",
-    author: 'Tattva Co. Team',
+    author: 'Rathi Naturals. Team',
     date: 'Jan 25, 2025',
     image:
       'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
@@ -153,7 +153,7 @@ Whole spices retain essential oils longer and give you more control over flavour
 
 If you love cooking Indian food, the difference between "good" and "unforgettable" often comes down to the quality of your spices. Premium brands focus on cleaner sourcing, better processing, and fresher packaging, which means more flavour, colour, and aroma per pinch—and fewer worries about adulteration.
 
-This guide will help you decode what "premium" actually means and how Tattva Co. fits into that landscape with products like Salem Turmeric and Mathania Chilli.
+This guide will help you decode what "premium" actually means and how Rathi Naturals. fits into that landscape with products like Salem Turmeric and Mathania Chilli.
 
 ---
 
@@ -168,7 +168,7 @@ Premium is more than fancy labels. Here are the pillars you should look for when
 | **Processing Quality** | Low-temperature grinding, hygienic plants, minimal hand-contamination |
 | **Packaging** | Light-proof, airtight packaging that slows oxidation |
 
-> At **Tattva Co.**, we apply these same principles—small-batch sourcing, careful cleaning, and protective packaging—across our Salem Turmeric, Mathania Chilli, and other whole-spice lines.
+> At **Rathi Naturals.**, we apply these same principles—small-batch sourcing, careful cleaning, and protective packaging—across our Salem Turmeric, Mathania Chilli, and other whole-spice lines.
 
 ---
 
@@ -178,13 +178,13 @@ Premium is more than fancy labels. Here are the pillars you should look for when
 
 Salem in Tamil Nadu is known for turmeric with rich colour and good curcumin content, which gives you deeper flavour and stronger "golden" tones in gravies. High-quality Salem turmeric is valued for its potential health properties and is widely used in Ayurvedic and everyday cooking.
 
-> **Shop Now:** Choose **[Tattva Co. Salem Turmeric Powder](/product/4)** for your daily curries, golden milk, and pickles when you want vibrant colour and clean, single-origin sourcing.
+> **Shop Now:** Choose **[Rathi Naturals. Salem Turmeric Powder](/product/4)** for your daily curries, golden milk, and pickles when you want vibrant colour and clean, single-origin sourcing.
 
 ### Mathania Chilli – Rajasthan's Culinary Jewel
 
 Mathania chilli comes from a small region near Jodhpur and is loved for its bright red colour, flavour-forward profile, and relatively moderate heat. It gives dishes like Laal Maas their signature deep red hue without overpowering them with harsh spiciness.
 
-> **Shop Now:** If you want that authentic Rajasthani look and layered heat, reach for **[Tattva Co. Mathania Chilli](/product/12)** in your tadkas, marinades, and Laal Maas.
+> **Shop Now:** If you want that authentic Rajasthani look and layered heat, reach for **[Rathi Naturals. Mathania Chilli](/product/12)** in your tadkas, marinades, and Laal Maas.
 
 ---
 
@@ -197,7 +197,7 @@ Mathania chilli comes from a small region near Jodhpur and is loved for its brig
 | **Regional Specialists** | MTR, Pravin, local masala houses | Authentic regional blends, strong local loyalty |
 | **Gourmet/Single-Origin Brands** | Salem- and Mathania-focused labels | Story-driven sourcing, high aroma, whole-spice quality |
 
-**Tattva Co.** sits in the gourmet/single-origin space—focused on carefully sourced Indian staples like Salem Turmeric, Mathania Chilli, and premium whole spices for home cooks who care about both flavour and purity.
+**Rathi Naturals.** sits in the gourmet/single-origin space—focused on carefully sourced Indian staples like Salem Turmeric, Mathania Chilli, and premium whole spices for home cooks who care about both flavour and purity.
 
 ---
 
@@ -209,7 +209,7 @@ Instead of hunting for a single "best" brand, match the brand to your needs:
 - **Love experimenting and hosting?** Invest in gourmet whole spices and region-specific chillies for signature dishes.
 - **Run a cafe or cloud kitchen?** Look at export-oriented or B2B suppliers for bulk staples, and add a few hero products like Mathania chilli for speciality menu items.
 
-> **Our Recommendation:** Use **[Tattva Co. Salem Turmeric](/product/4)** for all-purpose cooking, and **[Tattva Co. Mathania Chilli](/product/12)** when you specifically want rich colour and Rajasthani character.
+> **Our Recommendation:** Use **[Rathi Naturals. Salem Turmeric](/product/4)** for all-purpose cooking, and **[Rathi Naturals. Mathania Chilli](/product/12)** when you specifically want rich colour and Rajasthani character.
 
 ---
 
@@ -222,7 +222,7 @@ When you're scrolling through listings, this quick checklist helps you avoid fla
 ✅ Whole spices look clean, well-dried, with strong aroma and natural colour (not neon)  
 ✅ Reasonable pricing: real single-origin spices cost more than generic masala, but they should not be unrealistically cheap or wildly overpriced  
 
-> Check our product pages for detailed sourcing notes, batch coding, and transparent ingredient lists before you add **Tattva Co. spices** to your cart.
+> Check our product pages for detailed sourcing notes, batch coding, and transparent ingredient lists before you add **Rathi Naturals. spices** to your cart.
 
 ---
 
@@ -349,7 +349,7 @@ Mathania is a relatively small growing region, with labour-intensive sun-drying 
             <li><strong>Red Flag:</strong> If the water turns cloudy, dark yellow instantly, or if you see bright yellow streaks dropping down, it may contain chalk or artificial colors.</li>
         </ol>
 
-        > **The Safe Choice:** **[Tattva Co. Salem Turmeric](/product/4)** is lab-tested for heavy metals and contains zero artificial colors. Pure, high-curcumin goodness straight from the farm.
+        > **The Safe Choice:** **[Rathi Naturals. Salem Turmeric](/product/4)** is lab-tested for heavy metals and contains zero artificial colors. Pure, high-curcumin goodness straight from the farm.
 
         ---
 
@@ -455,15 +455,15 @@ Beyond the product, the *process* is now under scrutiny. The enforcement emphasi
 As a consumer, how do you navigate this? You can't run a lab test in your kitchen, but you can look for the markers of compliance.
 
 1.  **The FSSAI License Number:** Every pack *must* display a 14-digit FSSAI license number. You can verify this number on the [FoSCoS website](https://foscos.fssai.gov.in) to check the validity of the manufacturer's license.
-2.  **NABL-Accredited Lab Reports:** Premium brands like Tattva Co. are now taking the extra step of linking batch-specific lab reports via QR codes on the packaging. Scan to see the exact test results for *your* jar of spices.
+2.  **NABL-Accredited Lab Reports:** Premium brands like Rathi Naturals. are now taking the extra step of linking batch-specific lab reports via QR codes on the packaging. Scan to see the exact test results for *your* jar of spices.
 3.  **Packaging Integrity:** Avoid loose spices sold in open sacks. The breakdown of essential oils and the risk of biological contamination (dust, pests) is significantly higher.
 4.  **Price vs. Purity:** Pure spices have a high cost of production. If a 500g pack of Turmeric is cheaper than the raw cost of dried turmeric fingers, it is mathematically impossible for it to be pure.
 
-### The Tattva Co. Promise
+### The Rathi Naturals. Promise
 
-We didn't wait for the enforcement drive to start testing. Every batch of Tattva Co. spices has arguably—and proudly—been subjected to rigorous NABL-accredited testing for pesticides, heavy metals, and essential oil content since our inception.
+We didn't wait for the enforcement drive to start testing. Every batch of Rathi Naturals. spices has arguably—and proudly—been subjected to rigorous NABL-accredited testing for pesticides, heavy metals, and essential oil content since our inception.
 
-*Safe food is a right, not a luxury. Choose verified. Choose Tattva Co.*
+*Safe food is a right, not a luxury. Choose verified. Choose Rathi Naturals.*
 `,
     faqs: [
       {

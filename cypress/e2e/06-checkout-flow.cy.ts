@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 /**
- * Tattva Co. - Complete Checkout Flow Test
+ * Rathi Naturals - Complete Checkout Flow Test
  * Tests end-to-end purchase journey with promo codes
  */
 
@@ -9,7 +9,7 @@ describe('Complete Checkout Flow', () => {
   beforeEach(() => {
     cy.visit('/');
     cy.window().then((win) => {
-      win.localStorage.removeItem('tattva_cart');
+      win.localStorage.removeItem('rathi_cart');
       win.localStorage.removeItem('cart-storage'); // Legacy cleanup just in case
     });
     cy.reload();

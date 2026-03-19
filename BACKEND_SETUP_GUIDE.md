@@ -583,8 +583,8 @@ app.post('/api/auth/2fa/setup', authenticateToken, async (req, res) => {
 
   // Generate secret
   const secret = speakeasy.generateSecret({
-    name: `TattvaCo (${req.user.email})`,
-    issuer: 'TattvaCo',
+    name: `rathinaturals (${req.user.email})`,
+    issuer: 'rathinaturals',
   });
 
   // Generate QR code

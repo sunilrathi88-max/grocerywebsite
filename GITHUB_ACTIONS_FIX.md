@@ -134,7 +134,7 @@ Artifacts Generated:
 
 1. **Add Percy Token** (for visual tests to pass)
    - Sign up at https://percy.io
-   - Create project "Tattva Co"
+   - Create project "Rathi Naturals"
    - Copy PERCY_TOKEN
    - Add to GitHub Secrets: https://github.com/sunilrathi88-max/grocerywebsite/settings/secrets/actions
 

@@ -337,13 +337,13 @@ describe('Cart', () => {
       render(<Cart {...defaultProps} />);
 
       expect(screen.getByLabelText('Promo Code')).toBeInTheDocument();
-      expect(screen.getByPlaceholderText('TATTVA10')).toBeInTheDocument();
+      expect(screen.getByPlaceholderText('RATHI10')).toBeInTheDocument();
     });
 
     it('should call onPromoCodeChange when input value changes', () => {
       render(<Cart {...defaultProps} />);
 
-      const input = screen.getByPlaceholderText('TATTVA10');
+      const input = screen.getByPlaceholderText('RATHI10');
       fireEvent.change(input, { target: { value: 'SAVE20' } });
 
       expect(mockOnPromoCodeChange).toHaveBeenCalledWith('SAVE20');
@@ -352,7 +352,7 @@ describe('Cart', () => {
     it('should display current promo code value', () => {
       render(<Cart {...defaultProps} promoCode="DISCOUNT10" />);
 
-      const input = screen.getByPlaceholderText('TATTVA10') as HTMLInputElement;
+      const input = screen.getByPlaceholderText('RATHI10') as HTMLInputElement;
       expect(input.value).toBe('DISCOUNT10');
     });
 
@@ -377,7 +377,7 @@ describe('Cart', () => {
       const applyButton = screen.getByRole('button', { name: /Apply/i });
       fireEvent.click(applyButton);
 
-      const input = screen.getByPlaceholderText('TATTVA10');
+      const input = screen.getByPlaceholderText('RATHI10');
       expect(input).toBeDisabled();
       expect(applyButton).toBeDisabled();
     });

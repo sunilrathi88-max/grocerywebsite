@@ -652,7 +652,7 @@ const App: React.FC = () => {
         return;
       }
 
-      if (['TATTVA10', 'SPICEFAN10'].includes(code.toUpperCase())) {
+      if (['RATHI10', 'SPICEFAN10'].includes(code.toUpperCase())) {
         setDiscount(subtotal * 0.1);
         setPromoCode(code);
         addToast('Promo code applied!', 'success');

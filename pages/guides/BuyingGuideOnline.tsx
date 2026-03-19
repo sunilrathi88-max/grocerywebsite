@@ -8,7 +8,7 @@ const BuyingGuideOnline = () => {
     description:
       'The definitive defense protocol for navigating the digital marketplace. Learn how to identify single-origin authenticity, avoid adulterated powders, and verify supply chains.',
     author: {
-      name: 'Tattva Supply Chain Experts',
+      name: 'Rathi Naturals Supply Chain Experts',
       title: 'Procurement Verification',
       url: 'https://rathinaturals.com/about',
     },
@@ -139,7 +139,7 @@ const BuyingGuideOnline = () => {
             <div className="w-full h-[1px] bg-char my-6"></div>
             <p className="text-mist relative z-10">
               <strong className="text-saffron block mb-2 font-serif text-xl">
-                The Tattva Path:
+                The Rathi Naturals Path:
               </strong>
               Partner Farm → Cold-Grind Facility (Ramganj Mandi) → Sealed Composite Pouch → Kitchen.{' '}
               <br />

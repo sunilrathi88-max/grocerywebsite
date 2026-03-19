@@ -1,6 +1,6 @@
 # Link Building Action Tracker
 
-## Tattva Co. Link-Building Action Tracker
+## Rathi Naturals. Link-Building Action Tracker
 
 _Start date: January 25, 2026_
 _Target: 85+ backlinks in 6 months (by late July 2026)_
@@ -37,7 +37,7 @@ _Target: 85+ backlinks in 6 months (by late July 2026)_
 | Component                             | Status             | Deadline   | Owner    | Notes                                 |
 | ------------------------------------- | ------------------ | ---------- | -------- | ------------------------------------- |
 | Write guest post                      | ⏳ Ready to start  | 2026-01-30 | [You]    | Template provided (1,500-1,800 words) |
-| Customize author bio                  | ⏳ After writing   | 2026-01-30 | [You]    | Include tattvaco.in link              |
+| Customize author bio                  | ⏳ After writing   | 2026-01-30 | [You]    | Include rathinaturals.com link              |
 | Proofread & format                    | ⏳ After writing   | 2026-01-31 | [Editor] | Use Grammarly, check formatting       |
 | Submit to indianfoodrecipesonline.com | ⏳ After proofread | 2026-02-01 | [You]    | Use email template provided           |
 | Follow up (if no response)            | ⏳ Scheduled       | 2026-02-08 | [You]    | Polite follow-up email                |

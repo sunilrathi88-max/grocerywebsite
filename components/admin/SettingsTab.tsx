@@ -63,9 +63,9 @@ const SettingsTab: React.FC = () => {
 
   // Load settings from localStorage on mount
   useEffect(() => {
-    const savedStore = localStorage.getItem('tattva_store_settings');
-    const savedPayment = localStorage.getItem('tattva_payment_settings');
-    const savedShipping = localStorage.getItem('tattva_shipping_settings');
+    const savedStore = localStorage.getItem('rathi_store_settings');
+    const savedPayment = localStorage.getItem('rathi_payment_settings');
+    const savedShipping = localStorage.getItem('rathi_shipping_settings');
 
     if (savedStore) setStoreSettings(JSON.parse(savedStore));
     if (savedPayment) setPaymentSettings(JSON.parse(savedPayment));
@@ -76,9 +76,9 @@ const SettingsTab: React.FC = () => {
     setIsSaving(true);
     try {
       // Save to localStorage (in production, this would be Supabase)
-      localStorage.setItem('tattva_store_settings', JSON.stringify(storeSettings));
-      localStorage.setItem('tattva_payment_settings', JSON.stringify(paymentSettings));
-      localStorage.setItem('tattva_shipping_settings', JSON.stringify(shippingSettings));
+      localStorage.setItem('rathi_store_settings', JSON.stringify(storeSettings));
+      localStorage.setItem('rathi_payment_settings', JSON.stringify(paymentSettings));
+      localStorage.setItem('rathi_shipping_settings', JSON.stringify(shippingSettings));
 
       toast.success('Settings saved successfully!');
     } catch (error) {

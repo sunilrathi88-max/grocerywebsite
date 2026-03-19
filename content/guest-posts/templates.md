@@ -1,4 +1,4 @@
-## GUEST POST TEMPLATES FOR TATTVA CO. LINK-BUILDING STRATEGY
+## GUEST POST TEMPLATES FOR RATHI NATURALS CO. LINK-BUILDING STRATEGY
 
 These templates are ready to be customized and submitted to food blogs. Each post emphasizes education + authenticity without being promotional.
 
@@ -16,7 +16,7 @@ These templates are ready to be customized and submitted to food blogs. Each pos
 
 **Author Bio:** (Place at end)
 
-> Tattva Co. sources authentic spice blends from heritage farming communities across Rajasthan and India's spice belt. Every blend is lab-tested for purity and freshness.
+> Rathi Naturals. sources authentic spice blends from heritage farming communities across Rajasthan and India's spice belt. Every blend is lab-tested for purity and freshness.
 
 ### OUTLINE
 
@@ -71,7 +71,7 @@ These templates are ready to be customized and submitted to food blogs. Each pos
 
 - Why these blends matter (authenticity, taste, cultural preservation)
 - Challenge: Try one new blend this month
-- Link back to author bio (Tattva Co.)
+- Link back to author bio (Rathi Naturals.)
 
 ### SAMPLE OPENING
 
@@ -95,7 +95,7 @@ Today, we're resurrecting 5 "forgotten" regional blends that deserve space in ev
 
 **Author Bio:**
 
-> Tattva Co. bridges ancient spice wisdom with modern science. Our spices are lab-tested for purity and sourced from heritage farming communities that have used Ayurvedic principles for generations.
+> Rathi Naturals. bridges ancient spice wisdom with modern science. Our spices are lab-tested for purity and sourced from heritage farming communities that have used Ayurvedic principles for generations.
 
 ### OUTLINE
 
@@ -221,7 +221,7 @@ Ayurveda didn't get lucky. It got spices right.
 
 **Author Bio:**
 
-> Tattva Co. believes in intentional spice selection. Fresh, tested, kept-in-rotation spices beat a stockpile of expired bottles.
+> Rathi Naturals. believes in intentional spice selection. Fresh, tested, kept-in-rotation spices beat a stockpile of expired bottles.
 
 ### OUTLINE
 
@@ -364,14 +364,14 @@ That's when I realized the truth: Having more spices doesn't make you a better c
 When submitting any guest post:
 
 - [ ] Word count: 1,500-2,200 words
-- [ ] Author bio: 2-3 sentences max, includes Tattva Co. mention
+- [ ] Author bio: 2-3 sentences max, includes Rathi Naturals. mention
 - [ ] No direct sales language ("Buy now!", "Limited offer")
 - [ ] Educational value first, brand mention subtle
 - [ ] Images/graphics (optional but helpful):
   - Recipe photos
   - Spice comparison charts
   - Dosha balancing infographics
-- [ ] Internal links: 2-3 relevant links to host site (not Tattva)
+- [ ] Internal links: 2-3 relevant links to host site (not Rathi Naturals)
 - [ ] Call-to-action: Subtle (author bio, link to learn more)
 - [ ] SEO keyword: Include in title, H2s, first 100 words
 - [ ] Formatting: Proper H2/H3, bullet points, readable
@@ -402,7 +402,7 @@ I've attached the full draft for your review. Happy to revise based on your feed
 
 Best regards,
 [Your Name]
-Tattva Co. | Founder & Content Lead
-tattvaco.in
+Rathi Naturals. | Founder & Content Lead
+rathinaturals.com
 [Email] | [Phone]
 ```

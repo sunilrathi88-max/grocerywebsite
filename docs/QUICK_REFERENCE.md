@@ -52,7 +52,7 @@ tags: string[];  // ["saffron", "kashmiri", "premium", "organic"]
 ### Brand & Origin
 
 ```typescript
-brand: string;              // "Tattva Co."
+brand: string;              // "Rathi Naturals."
 origin_country: string;     // "India"
 certifications: string[];   // ["ISO 9001", "FSSAI", "Organic"]
 ```
@@ -128,7 +128,7 @@ const product = {
   rating: 4.8,
   review_count: 127,
   tags: ['saffron', 'premium', 'kashmiri'],
-  brand: 'Tattva Co.',
+  brand: 'Rathi Naturals.',
 };
 ```
 

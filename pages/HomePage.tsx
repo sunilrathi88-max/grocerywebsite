@@ -177,7 +177,7 @@ const HomePage: React.FC<HomePageProps> = ({
       {/* 4. Pinned Process */}
       <PinnedProcessSection />
 
-      {/* 4. Why Choose Tattva Co? */}
+      {/* 4. Why Choose Rathi Naturals? */}
       {/* Removed BrandStory and CategoryShowcase as per user request */}
       <TrustSignals />
 

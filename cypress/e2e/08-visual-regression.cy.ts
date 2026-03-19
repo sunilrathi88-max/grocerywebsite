@@ -2,7 +2,7 @@
 /// <reference types="@percy/cypress" />
 
 /**
- * Tattva Co. - Visual Regression Testing with Percy
+ * Rathi Naturals - Visual Regression Testing with Percy
  * Tests visual consistency across different pages and states
  */
 

@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 /**
- * Tattva Co. - Lazy Loading Test
+ * Rathi Naturals - Lazy Loading Test
  * Tests image lazy loading on scroll
  */
 

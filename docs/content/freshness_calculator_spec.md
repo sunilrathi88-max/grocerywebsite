@@ -78,7 +78,7 @@ _(No page reload, instant JS calculation)_
 
 ### **Step 3: Conversion (The Hook)**
 
-- **"Replace This Now":** One-click button to add the specific fresh spice (e.g., Tattva Lakadong Turmeric) to cart with a 10% "Pantry Refresh" discount.
+- **"Replace This Now":** One-click button to add the specific fresh spice (e.g., Rathi Naturals Lakadong Turmeric) to cart with a 10% "Pantry Refresh" discount.
 - **"Share Result":** "My pantry scored 42/100 😱 Check yours here!" (Twitter/WhatsApp link).
 
 ---

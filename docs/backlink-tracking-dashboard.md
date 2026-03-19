@@ -1,4 +1,4 @@
-# Tattva Co. Backlink Tracking Dashboard
+# Rathi Naturals. Backlink Tracking Dashboard
 
 ## Month: January 2026
 
@@ -32,7 +32,7 @@
 
 ### Google Alerts Setup
 
-- ✅ "Tattva Co" + "spice"
+- ✅ "Rathi Naturals" + "spice"
 - ✅ "Rathi Naturals" + "premium spices"
 - ✅ "farm direct spices India"
 - ✅ "FSSAI certified spices"
