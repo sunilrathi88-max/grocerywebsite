@@ -123,10 +123,10 @@ const EnhancedProductCard: React.FC<EnhancedProductCardProps> = ({
           e.stopPropagation();
           onSaveForLater?.();
         }}
-        className="absolute top-3 right-3 z-10 w-9 h-9 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center text-neutral-400 hover:text-red-500 hover:bg-white transition-all shadow-sm"
+        className="absolute top-3 right-3 z-10 w-11 h-11 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center text-neutral-400 hover:text-red-500 hover:bg-white transition-all shadow-sm"
         aria-label="Save for later"
       >
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -208,7 +208,7 @@ const EnhancedProductCard: React.FC<EnhancedProductCardProps> = ({
             e.stopPropagation();
             onAddToCart?.();
           }}
-          className="w-full bg-brand-primary text-brand-dark font-bold py-3 px-4 rounded-xl hover:bg-amber-500 transition-all duration-300 flex items-center justify-center gap-2 shadow-sm hover:shadow-md"
+          className="w-full min-h-[44px] bg-brand-primary text-brand-dark font-bold py-3 px-4 rounded-xl hover:bg-amber-500 transition-all duration-300 flex items-center justify-center gap-2 shadow-sm hover:shadow-md"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path

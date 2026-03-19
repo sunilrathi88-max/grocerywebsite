@@ -15,6 +15,7 @@ interface ResponsiveCategoryPageProps {
   onMenuClick?: () => void;
   addToast?: (msg: string, type: ToastMessage['type']) => void;
   setSelectedProduct?: (product: Product | null) => void;
+  defaultCategory?: string;
 }
 
 const ResponsiveCategoryPage: React.FC<ResponsiveCategoryPageProps> = (props) => {
@@ -50,7 +51,11 @@ const ResponsiveCategoryPage: React.FC<ResponsiveCategoryPageProps> = (props) =>
         </div>
       }
     >
-      <CategoryPage />
+      <CategoryPage
+        searchQuery={props.searchQuery}
+        defaultCategory={props.defaultCategory}
+        addToast={props.addToast}
+      />
     </React.Suspense>
   );
 };

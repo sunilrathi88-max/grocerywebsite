@@ -1,7 +1,8 @@
 import React from 'react';
 import { Product, Variant, ToastMessage } from '../types';
 import { useNavigate } from 'react-router-dom';
-import { MobileHeader, MobileFeaturedSection } from '../components/mobile';
+import { MobileFeaturedSection } from '../components/mobile';
+import Hero from '../components/Hero';
 
 interface MobileHomePageProps {
   products: Product[];
@@ -40,49 +41,9 @@ const MobileHomePage: React.FC<MobileHomePageProps> = ({
   return (
     <div className="min-h-screen bg-[#FAF9F6] pb-24">
       {/* Header */}
-      <MobileHeader
-        cartItemCount={cartItemCount}
-        searchQuery={searchQuery}
-        onSearchChange={onSearchChange}
-        onCartClick={onCartClick}
-      />
 
       {/* Pure Origin Hero Section */}
-      <section className="relative w-full h-[70vh] min-h-[450px] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <div
-            className="w-full h-full bg-cover bg-center"
-            style={{
-              backgroundImage: `url("${heroImage}")`,
-              filter: 'brightness(0.9) saturate(0.9)',
-            }}
-          ></div>
-          {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40"></div>
-        </div>
-
-        <div className="relative z-10 max-w-lg mx-auto text-center px-6 flex flex-col items-center gap-4">
-          <span className="text-white/90 font-sans font-bold tracking-[0.2em] text-[10px] uppercase border border-white/30 px-3 py-1.5 bg-black/10 backdrop-blur-sm">
-            Est. 1984
-          </span>
-          <h2 className="text-4xl font-serif font-light text-white drop-shadow-sm leading-tight">
-            Pure Origin
-            <br />
-            <span className="italic font-normal">Untouched.</span>
-          </h2>
-          <p className="text-sm text-white/90 max-w-xs leading-relaxed font-light font-sans mt-1 tracking-wide">
-            Single-origin spices sourced directly from heritage farms.
-          </p>
-          <div className="flex gap-3 mt-4">
-            <button
-              onClick={() => navigate('/shop')}
-              className="bg-white text-stone-800 hover:bg-stone-100 px-8 py-3 font-sans font-bold text-xs uppercase tracking-widest transition-all shadow-lg active:scale-95"
-            >
-              Shop Pure
-            </button>
-          </div>
-        </div>
-      </section>
+      <Hero />
 
       {/* Trust Signals - Dark Strip */}
       <section className="bg-stone-900 text-stone-100 py-6 px-4">

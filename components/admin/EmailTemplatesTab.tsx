@@ -190,12 +190,12 @@ const EmailTemplatesTab: React.FC = () => {
       .replace(/\{\{tracking_number\}\}/g, 'TRACK123456')
       .replace(/\{\{carrier_name\}\}/g, 'Delhivery')
       .replace(/\{\{expected_delivery\}\}/g, 'Jan 25, 2025')
-      .replace(/\{\{tracking_url\}\}/g, 'https://tracking.tattvaco.in/TRACK123456')
-      .replace(/\{\{review_url\}\}/g, 'https://tattvaco.in/review/ORD-12345')
+      .replace(/\{\{tracking_url\}\}/g, 'https://tracking.rathinaturals.com/TRACK123456')
+      .replace(/\{\{review_url\}\}/g, 'https://rathinaturals.com/review/ORD-12345')
       .replace(/\{\{cart_items\}\}/g, '• Saffron (1g) - ₹300\n• Cardamom (100g) - ₹450')
       .replace(/\{\{cart_total\}\}/g, '750')
-      .replace(/\{\{checkout_url\}\}/g, 'https://tattvaco.in/checkout')
-      .replace(/\{\{shop_url\}\}/g, 'https://tattvaco.in/shop');
+      .replace(/\{\{checkout_url\}\}/g, 'https://rathinaturals.com/checkout')
+      .replace(/\{\{shop_url\}\}/g, 'https://rathinaturals.com/shop');
   };
 
   return (

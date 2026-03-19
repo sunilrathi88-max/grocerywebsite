@@ -168,10 +168,10 @@ const TrackingPage: React.FC = () => {
             <h3 className="text-lg font-bold text-gray-800 mb-4">Need Help?</h3>
             <div className="flex flex-col md:flex-row gap-4 justify-center">
               <a
-                href="mailto:support@tattvaco.in"
+                href="mailto:rathinaturals@gmail.com"
                 className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
               >
-                📧 support@tattvaco.in
+                📧 rathinaturals@gmail.com
               </a>
               <a
                 href="https://wa.me/919876543210"

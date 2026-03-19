@@ -1,0 +1,340 @@
+.spiceCalculatorContainer {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    font-family: 'Lato', sans-serif;
+    color: #333;
+}
+
+.calculatorCard {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    padding: 2rem;
+    border: 1px solid #f0f0f0;
+}
+
+.calculatorHeader {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.calculatorHeader h2 {
+    font-family: 'Playfair Display', serif;
+    color: #c2410c;
+    /* brand-primary approx */
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.calculatorHeader p {
+    color: #666;
+    margin: 0;
+}
+
+.formGroup {
+    margin-bottom: 1.5rem;
+}
+
+.formGroup label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: #1f2937;
+}
+
+.formInput {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+    background-color: #fff;
+}
+
+.formInput:focus {
+    border-color: #c2410c;
+    outline: none;
+}
+
+.formSlider {
+    width: 100%;
+    margin: 0.5rem 0;
+    accent-color: #c2410c;
+}
+
+.sliderLabels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+.visualIndicator {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.faded,
+.weak {
+    font-size: 0.875rem;
+    color: #9ca3af;
+}
+
+.vibrant,
+.strong {
+    font-size: 0.875rem;
+    color: #c2410c;
+    font-weight: 600;
+}
+
+.sliderValue {
+    text-align: right;
+    font-weight: 600;
+    color: #c2410c;
+    margin-top: 0.25rem;
+    height: 1.5rem;
+}
+
+.calculateBtn {
+    width: 100%;
+    background-color: #c2410c;
+    color: white;
+    padding: 1rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-top: 1rem;
+}
+
+.calculateBtn:hover {
+    background-color: #9a3412;
+}
+
+.infoBox {
+    background-color: #fff7ed;
+    border-left: 4px solid #c2410c;
+    padding: 1rem;
+    margin-top: 2rem;
+    border-radius: 4px;
+}
+
+.infoBox h3 {
+    font-size: 1rem;
+    margin-top: 0;
+    color: #c2410c;
+}
+
+.infoBox p {
+    margin-bottom: 0;
+    font-size: 0.9rem;
+}
+
+/* Result View Styles */
+.resultHeader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.resultScore {
+    background: #fff7ed;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border: 4px solid #c2410c;
+    margin-bottom: 1rem;
+}
+
+.scoreNumber {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #c2410c;
+    line-height: 1;
+}
+
+.scoreMax {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.resultStatus {
+    background: #f3f4f6;
+    padding: 0.5rem 1.5rem;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.emoji {
+    font-size: 1.5rem;
+}
+
+.statusText {
+    font-weight: 700;
+    color: #1f2937;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.resultSpice {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.resultSpice h3 {
+    margin-top: 0;
+    color: #374151;
+}
+
+.resultRecommendation {
+    font-size: 1.1rem;
+    line-height: 1.5;
+    color: #1f2937;
+}
+
+.resultInfo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    background: #f9fafb;
+    padding: 1.5rem;
+    border-radius: 12px;
+}
+
+.infoItem {
+    display: flex;
+    flex-direction: column;
+}
+
+.label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: #6b7280;
+    margin-bottom: 0.25rem;
+}
+
+.value {
+    font-weight: 700;
+    color: #111827;
+}
+
+.capitalize {
+    text-transform: capitalize;
+}
+
+.tipsSection {
+    margin-bottom: 2rem;
+}
+
+.tipsSection h4 {
+    color: #c2410c;
+    margin-bottom: 0.75rem;
+}
+
+.tipsList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.tipsList li {
+    padding: 0.75rem;
+    background: #fff;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 0.95rem;
+}
+
+.storageBox {
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.storageBox h4 {
+    color: #059669;
+    margin-top: 0;
+}
+
+.storageBox ul {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0 0 0;
+}
+
+.storageBox li {
+    margin-bottom: 0.5rem;
+}
+
+.ctaBox {
+    background: linear-gradient(135deg, #fff7ed, #ffedd5);
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.ctaBox h4 {
+    color: #9a3412;
+    margin-top: 0;
+    font-size: 1.25rem;
+}
+
+.ctaButton {
+    display: inline-block;
+    background: #c2410c;
+    color: white;
+    text-decoration: none;
+    padding: 0.75rem 2rem;
+    border-radius: 50px;
+    font-weight: 700;
+    margin-top: 1rem;
+    transition: transform 0.2s;
+}
+
+.ctaButton:hover {
+    transform: translateY(-2px);
+    background: #9a3412;
+}
+
+.resetBtn {
+    width: 100%;
+    background: transparent;
+    border: 2px solid #e5e7eb;
+    padding: 0.75rem;
+    border-radius: 8px;
+    color: #6b7280;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.resetBtn:hover {
+    border-color: #9ca3af;
+    color: #374151;
+}
+
+.calculatorFooter {
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 0.875rem;
+    color: #6b7280;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}

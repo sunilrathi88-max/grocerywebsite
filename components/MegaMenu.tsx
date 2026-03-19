@@ -8,9 +8,17 @@ interface MegaMenuProps {
   isOpen: boolean;
   onClose: () => void;
   onSelectCategory?: (category: string) => void;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
 }
 
-const MegaMenu: React.FC<MegaMenuProps> = ({ isOpen, onClose, onSelectCategory }) => {
+const MegaMenu: React.FC<MegaMenuProps> = ({
+  isOpen,
+  onClose,
+  onSelectCategory,
+  onMouseEnter,
+  onMouseLeave,
+}) => {
   // Close on escape
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
@@ -39,8 +47,9 @@ const MegaMenu: React.FC<MegaMenuProps> = ({ isOpen, onClose, onSelectCategory }
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 bg-black/5 z-40 md:top-[120px]" // Below header
+            className="fixed inset-0 bg-transparent z-40 top-20" // Starts below header
             onClick={onClose}
+            onMouseEnter={onMouseLeave}
           />
 
           {/* Menu Content */}
@@ -49,10 +58,11 @@ const MegaMenu: React.FC<MegaMenuProps> = ({ isOpen, onClose, onSelectCategory }
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2, ease: 'easeOut' }}
-            className="absolute top-full left-0 w-full bg-white/95 backdrop-blur-md border-t border-white/20 shadow-xl z-50 origin-top"
+            className="fixed top-20 left-0 w-full bg-white/95 backdrop-blur-md border-t border-white/20 shadow-xl z-50 origin-top"
             role="menu"
             aria-label="Shop menu"
-            onMouseLeave={onClose} // Optional: Close on mouse leave for desktop convenience
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
           >
             <div className="container mx-auto px-6 py-10">
               <div className="grid grid-cols-1 md:grid-cols-4 gap-10">

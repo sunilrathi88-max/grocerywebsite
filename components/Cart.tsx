@@ -177,6 +177,13 @@ const Cart: React.FC<CartProps> = ({
 
   return (
     <div className="h-full flex flex-col">
+      {/* Header - Item Count */}
+      <div className="px-6 pt-6 pb-2">
+        <h3 className="font-bold text-lg text-brand-dark">
+          Your Cart ({items.reduce((acc, i) => acc + i.quantity, 0)} Items)
+        </h3>
+      </div>
+
       {/* Free Shipping Progress Bar */}
       <div className="p-4 bg-gray-50 border-b border-gray-100">
         <div className="flex justify-between text-xs font-bold mb-1">

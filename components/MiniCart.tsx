@@ -137,62 +137,77 @@ export const MiniCart: React.FC<MiniCartProps> = ({
             </div>
           ) : (
             <ul className="space-y-6">
-              {items.map((item) => (
-                <li key={item.id} className="flex gap-4">
-                  <div className="w-20 h-24 bg-neutral-100 rounded-lg overflow-hidden flex-shrink-0 border border-neutral-200">
-                    <OptimizedImage
-                      src={item.image}
-                      alt={item.name}
-                      type="thumbnail"
-                      className="w-full h-full object-cover"
-                      width={80}
-                      height={96}
-                      priority="high"
-                    />
-                  </div>
-                  <div className="flex-1 flex flex-col justify-between">
-                    <div>
-                      <div className="flex justify-between items-start">
-                        <h4 className="font-bold text-neutral-900 line-clamp-2">{item.name}</h4>
-                        <button
-                          onClick={() => onRemoveItem(item.id)}
-                          className="text-neutral-400 hover:text-red-500 transition-colors -mt-1 -mr-1 p-1"
-                        >
-                          <span className="sr-only">Remove</span>
-                          <svg
-                            className="w-4 h-4"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
+              {items &&
+                items.length > 0 &&
+                items.map((item) => (
+                  <li key={item.id} className="flex gap-4">
+                    <div className="w-20 h-24 bg-neutral-100 rounded-lg overflow-hidden flex-shrink-0 border border-neutral-200 relative">
+                      {/* Fallback if image fails to load or is empty */}
+                      {!item.image ? (
+                        <div className="w-full h-full flex items-center justify-center bg-gray-200 text-xs text-gray-400">
+                          No Img
+                        </div>
+                      ) : (
+                        <OptimizedImage
+                          src={item.image}
+                          alt={item.name}
+                          type="thumbnail"
+                          className="w-full h-full object-cover"
+                          width={80}
+                          height={96}
+                          priority="high"
+                        />
+                      )}
+                    </div>
+                    <div className="flex-1 flex flex-col justify-between min-w-0">
+                      <div>
+                        <div className="flex justify-between items-start">
+                          <h4 className="font-bold text-neutral-900 line-clamp-2 text-sm">
+                            {item.name || 'Unknown Product'}
+                          </h4>
+                          <button
+                            onClick={() => onRemoveItem(item.id)}
+                            className="text-neutral-400 hover:text-red-500 transition-colors -mt-1 -mr-1 p-1"
+                            aria-label="Remove item"
                           >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M6 18L18 6M6 6l12 12"
-                            />
-                          </svg>
-                        </button>
+                            <span className="sr-only">Remove</span>
+                            <svg
+                              className="w-4 h-4"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M6 18L18 6M6 6l12 12"
+                              />
+                            </svg>
+                          </button>
+                        </div>
+                        <p className="text-xs text-neutral-500">{item.weight || 'Std'}</p>
                       </div>
-                      <p className="text-sm text-neutral-500">{item.weight}</p>
-                    </div>
-                    <div className="flex justify-between items-center mt-2">
-                      <div className="flex items-center border border-neutral-200 rounded-md">
-                        <button className="px-2 py-1 text-sm text-neutral-600 hover:bg-neutral-50">
-                          -
-                        </button>
-                        <span className="px-2 text-sm font-medium text-neutral-900">
-                          {item.quantity}
-                        </span>
-                        <button className="px-2 py-1 text-sm text-neutral-600 hover:bg-neutral-50">
-                          +
-                        </button>
+                      <div className="flex justify-between items-center mt-2">
+                        {/* Quantity Controls */}
+                        <div className="flex items-center border border-neutral-200 rounded-md">
+                          <button className="px-2 py-0.5 text-sm text-neutral-600 hover:bg-neutral-50">
+                            -
+                          </button>
+                          <span className="px-2 text-sm font-medium text-neutral-900">
+                            {item.quantity}
+                          </span>
+                          <button className="px-2 py-0.5 text-sm text-neutral-600 hover:bg-neutral-50">
+                            +
+                          </button>
+                        </div>
+                        <p className="font-bold text-neutral-900 text-sm">
+                          ₹{(item.price * item.quantity).toFixed(2)}
+                        </p>
                       </div>
-                      <p className="font-bold text-neutral-900">₹{item.price * item.quantity}</p>
                     </div>
-                  </div>
-                </li>
-              ))}
+                  </li>
+                ))}
             </ul>
           )}
 

@@ -55,7 +55,11 @@ export const WeightSelector: React.FC<WeightSelectorProps> = ({
               <div className="text-lg font-bold text-[#1F2121]">₹{option.price}</div>
 
               {option.badge && (
-                <div className="text-xs font-bold text-[#2D8F5E] uppercase">{option.badge}</div>
+                <div
+                  className={`text-xs font-bold uppercase ${option.badge.includes('OUT') ? 'text-red-600' : 'text-[#2D8F5E]'}`}
+                >
+                  {option.badge}
+                </div>
               )}
 
               {option.discount && (

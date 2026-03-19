@@ -68,7 +68,7 @@ const SideModal: React.FC<SideModalProps> = ({ isOpen, onClose, title, children 
               <XIcon className="h-6 w-6 text-gray-600" />
             </button>
           </div>
-          <div className="flex-grow overflow-y-auto p-6">{children}</div>
+          <div className="flex-grow overflow-hidden relative">{children}</div>
         </m.div>,
       ]}
       {/* eslint-enable @typescript-eslint/no-explicit-any */}

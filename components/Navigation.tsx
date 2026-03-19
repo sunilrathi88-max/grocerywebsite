@@ -11,6 +11,21 @@ const Navigation: React.FC<NavigationProps> = ({ onSelectCategory }) => {
   const [isMegaMenuOpen, setMegaMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const closeTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
+
+  const handleMouseEnter = () => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
+    setMegaMenuOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    closeTimeoutRef.current = setTimeout(() => {
+      setMegaMenuOpen(false);
+    }, 200); // 200ms delay to bridge the gap
+  };
 
   const handleScrollTo = (id: string) => {
     if (location.pathname !== '/') {
@@ -45,23 +60,28 @@ const Navigation: React.FC<NavigationProps> = ({ onSelectCategory }) => {
         <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-primary transition-all duration-300 group-hover:w-full" />
       </button>
 
-      {/* Shop - with MegaMenu */}
-      <div
-        className="relative"
-        onMouseEnter={() => setMegaMenuOpen(true)}
-        onMouseLeave={() => setMegaMenuOpen(false)}
+      {/* Blog */}
+      <Link
+        to="/blog"
+        className="text-base font-medium text-neutral-900 hover:text-brand-primary transition-colors py-2 relative group"
       >
-        <button
+        Blog
+        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-primary transition-all duration-300 group-hover:w-full" />
+      </Link>
+
+      {/* Shop - with MegaMenu */}
+      <div className="relative" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+        <Link
+          to="/shop"
           className={`text-base font-medium transition-colors py-2 flex items-center gap-1 ${
             isMegaMenuOpen ? 'text-brand-primary' : 'text-neutral-900 hover:text-brand-primary'
           }`}
-          onClick={() => handleScrollTo('products-section')}
         >
           Shop
           <ChevronDownIcon
             className={`h-4 w-4 transition-transform duration-200 ${isMegaMenuOpen ? 'rotate-180' : ''}`}
           />
-        </button>
+        </Link>
       </div>
 
       {/* Popular Masalas - Quick Access */}
@@ -96,6 +116,8 @@ const Navigation: React.FC<NavigationProps> = ({ onSelectCategory }) => {
         isOpen={isMegaMenuOpen}
         onClose={() => setMegaMenuOpen(false)}
         onSelectCategory={handleCategorySelect}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
       />
     </nav>
   );

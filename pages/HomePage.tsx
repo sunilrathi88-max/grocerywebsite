@@ -1,11 +1,12 @@
 import React from 'react';
 import { Product, Variant, ToastMessage } from '../types';
 import { useABTest } from '../src/context/ABTestContext'; // A/B Test Hook
-import HeroSection from '../components/HeroSection';
+import Hero from '../components/Hero';
+import MarqueeStrip from '../components/ui/MarqueeStrip';
+import PhilosophySection from '../components/ui/PhilosophySection';
+import PinnedProcessSection from '../components/ui/PinnedProcessSection';
 import TrustSignals from '../components/TrustSignals';
-import JourneyTimeline from '../components/JourneyTimeline';
 import HarvestCollection from '../components/HarvestCollection';
-import CategoryShowcase from '../components/CategoryShowcase';
 import ProductGrid from '../components/ProductGrid';
 import SortDropdown from '../components/SortDropdown';
 import AdvancedFilters from '../components/AdvancedFilters';
@@ -14,6 +15,11 @@ import { FEATURED_TESTIMONIALS } from '../data/testimonials';
 import QuizModule from '../components/QuizModule';
 import toast from 'react-hot-toast';
 import CookingContextWidget from '../components/CookingContextWidget';
+import BlogHighlights from '../components/BlogHighlights';
+import NewsletterSection from '../components/NewsletterSection';
+import RecommendedProducts from '../components/RecommendedProducts';
+import SEO from '../components/SEO';
+import { pageSEO } from '../utils/seo';
 
 interface HomePageProps {
   products: Product[];
@@ -157,131 +163,71 @@ const HomePage: React.FC<HomePageProps> = ({
   };
 
   return (
-    <main className="bg-white">
+    <main className="bg-ink min-h-screen">
+      <SEO {...pageSEO.home()} />
       {/* 1. Hero Section (New Design) */}
-      <HeroSection />
+      <Hero />
 
-      {/* 2. Trust Signals (Dark Strip) */}
+      {/* 2. Marquee Strip */}
+      <MarqueeStrip />
+
+      {/* 3. Heritage Philosophy */}
+      <PhilosophySection />
+
+      {/* 4. Pinned Process */}
+      <PinnedProcessSection />
+
+      {/* 4. Why Choose Tattva Co? */}
+      {/* Removed BrandStory and CategoryShowcase as per user request */}
       <TrustSignals />
 
-      {/* 3. Cooking Context Widget (New) */}
-      <CookingContextWidget onAddBundleToCart={handleAddBundleToCart} />
+      {/* 4b. Personalized Recommendations (Based on History) */}
+      <RecommendedProducts
+        allProducts={products}
+        onAddToCart={handleAddToCartWithTracking}
+        onSelectProduct={setSelectedProduct}
+        onNotifyMe={handleNotifyMe}
+      />
 
-      {/* 4. Journey Timeline (Transparency) */}
-      <JourneyTimeline />
-
-      {/* 5. Harvest Collection (Curated Grid) */}
-      <HarvestCollection products={products} />
-
-      {/* 6. Category Showcase (Whole/Blends/Infusions) */}
-      <CategoryShowcase />
-
-      {/* 7. Main Product Grid (Full Catalog) */}
-      <div id="products-section" className="bg-background-light py-20 border-t border-primary/10">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-serif font-bold text-accent-charcoal mb-4">
-              Shop All
-            </h2>
-            <p className="text-accent-charcoal/60 max-w-2xl mx-auto">
-              Explore our complete collection of ethically sourced, single-origin spices and blends.
-            </p>
-          </div>
-
-          <div className="flex flex-col lg:flex-row gap-8">
-            {/* Sidebar Filters */}
-            <aside className="w-full lg:w-1/4 hidden lg:block sticky top-24 self-start max-h-[calc(100vh-120px)] overflow-y-auto pr-4 scrollbar-thin">
-              <AdvancedFilters
-                priceRange={priceRange}
-                maxPrice={maxPrice}
-                onPriceChange={(value) => setPriceRange({ min: 0, max: value })}
-                selectedOrigins={selectedOrigins}
-                onToggleOrigin={handleToggleOrigin}
-                origins={availableOrigins}
-                selectedHeatLevels={selectedHeatLevels}
-                onToggleHeatLevel={handleToggleHeatLevel}
-                heatLevels={availableHeatLevels}
-                selectedCuisines={selectedCuisines}
-                onToggleCuisine={handleToggleCuisine}
-                cuisines={availableCuisines}
-                selectedSizes={selectedSizes}
-                onToggleSize={handleToggleSize}
-                sizes={availableSizes}
-                selectedGrinds={selectedGrinds}
-                onToggleGrind={handleToggleGrind}
-                grinds={availableGrinds}
-                selectedGrades={selectedGrades}
-                onToggleGrade={handleToggleGrade}
-                grades={availableGrades}
-                selectedTags={selectedTagsState}
-                onToggleTag={handleToggleTag}
-                availableTags={availableTags}
-                showOnSale={showOnSale}
-                onToggleOnSale={() => setShowOnSale(!showOnSale)}
-                showInStock={showInStock}
-                onToggleInStock={() => setShowInStock(!showInStock)}
-              />
-            </aside>
-
-            {/* Product Grid */}
-            <div className="w-full lg:w-3/4">
-              <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
-                <p className="text-sm text-accent-charcoal font-medium">
-                  Showing {finalFilteredProducts.length} Results
-                </p>
-                <div className="flex items-center gap-4 w-full md:w-auto">
-                  <button
-                    className="lg:hidden flex items-center gap-2 px-4 py-2 border border-primary/20 rounded text-sm font-bold text-primary hover:bg-primary/5 transition-colors"
-                    onClick={() => setIsFilterOpen(true)}
-                  >
-                    <span className="material-symbols-outlined text-[18px]">filter_list</span>
-                    Filters
-                  </button>
-                  <SortDropdown
-                    currentSort={sortOrder}
-                    onSortChange={(value) =>
-                      setSortOrder(
-                        value as 'name' | 'price-asc' | 'price-desc' | 'rating' | 'newest'
-                      )
-                    }
-                  />
-                </div>
-              </div>
-
-              <ProductGrid
-                products={finalFilteredProducts}
-                isLoading={productsLoading}
-                onAddToCart={handleAddToCartWithTracking}
-                onToggleWishlist={handleToggleWishlist}
-                onSelectProduct={setSelectedProduct}
-                onNotifyMe={handleNotifyMe}
-              />
-            </div>
-          </div>
-        </div>
+      {/* 5. Cooking Context Widget (Moved up for better engagement) */}
+      <div className="py-8 bg-[#fafafa]">
+        <CookingContextWidget onAddBundleToCart={handleAddBundleToCart} />
       </div>
 
-      {/* 8. Testimonials */}
+      {/* 6. Customer Testimonials */}
       <Testimonials testimonials={FEATURED_TESTIMONIALS} />
 
-      {/* Spice Quiz Section - Gamification */}
-      <section className="py-16 bg-gradient-to-br from-brand-secondary/30 to-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-10">
-            <span className="text-brand-primary font-bold tracking-wider uppercase text-sm">
-              Challenge Yourself
-            </span>
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-brand-dark mt-2 mb-4">
-              Test Your Spice Knowledge
-            </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Think you know your spices? Take our quick quiz to prove it and unlock exclusive
-              discounts!
-            </p>
-          </div>
-          <QuizModule addToast={handleQuizToast} />
-        </div>
-      </section>
+      {/* 7. Featured Products - Best Sellers */}
+      <HarvestCollection
+        products={products}
+        title="Best Sellers"
+        subtitle="Most loved by our customers."
+      />
+
+      {/* 8. Featured Products - New Arrivals */}
+      <HarvestCollection
+        products={products.slice(0, 4)}
+        title="New Arrivals"
+        subtitle="Fresh from the latest harvest."
+      />
+
+      {/* 11. Blog Highlights */}
+      <BlogHighlights />
+
+      {/* 12. Newsletter Signup */}
+      <NewsletterSection />
+
+      {/* (Hidden) Main Product Grid for SEO/Fallback purposes - kept but de-emphasized */}
+      <div className="hidden">
+        <ProductGrid
+          products={finalFilteredProducts}
+          isLoading={productsLoading}
+          onAddToCart={handleAddToCartWithTracking}
+          onToggleWishlist={handleToggleWishlist}
+          onSelectProduct={setSelectedProduct}
+          onNotifyMe={handleNotifyMe}
+        />
+      </div>
     </main>
   );
 };

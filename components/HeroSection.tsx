@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import CategoryQuickScroll from './CategoryQuickScroll';
 
 const HeroSection: React.FC = () => {
   const navigate = useNavigate();
@@ -35,10 +36,15 @@ const HeroSection: React.FC = () => {
         <div className="flex gap-4 mt-8">
           <button
             onClick={() => navigate('/shop')}
-            className="bg-white text-accent-charcoal hover:bg-accent-cream px-10 py-3.5 font-sans font-bold text-sm uppercase tracking-widest transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+            className="bg-white text-accent-charcoal hover:bg-accent-charcoal hover:text-white px-10 py-3.5 font-sans font-bold text-sm uppercase tracking-widest transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1"
           >
             Shop Pure
           </button>
+        </div>
+
+        {/* Mobile Quick Chips */}
+        <div className="w-full mt-8 md:hidden">
+          <CategoryQuickScroll />
         </div>
       </div>
     </div>

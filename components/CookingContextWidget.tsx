@@ -131,6 +131,51 @@ const cookingKits: Record<string, CookingKit> = {
     discount: 20,
     bundlePrice: 797,
   },
+  immunity: {
+    id: 'immunity',
+    name: 'Immunity Booster Pack',
+    description: 'Golden milk essentials and antioxidants',
+    products: [
+      {
+        id: 1,
+        name: 'Turmeric Powder',
+        image: '/images/products/turmeric-powder-front.jpg',
+        price: 149,
+      },
+      {
+        id: 15,
+        name: 'Black Pepper',
+        image: '/images/products/tattv-malabar-black-pepper-front.png',
+        price: 249,
+      },
+      {
+        id: 16,
+        name: 'Dry Ginger Powder',
+        image: '/images/products/dry-ginger-powder-front.jpg',
+        price: 159,
+      }, // Assuming ID 16 exists or mocked
+      {
+        id: 3,
+        name: 'Cinnamon Bark',
+        image: '/images/products/tattv-cinnamon-bark-front.png',
+        price: 199,
+      },
+    ],
+    discount: 15,
+    bundlePrice: 642,
+  },
+  snacking: {
+    id: 'snacking',
+    name: 'Healthy Snacking Combo',
+    description: 'Premium nuts for guilt-free munching',
+    products: [
+      { id: 17, name: 'Cashews (W240)', image: '/images/products/cashews-front.jpg', price: 399 },
+      { id: 18, name: 'Almonds (Mamra)', image: '/images/products/almonds-front.jpg', price: 499 },
+      { id: 19, name: 'Walnuts', image: '/images/products/walnuts-front.jpg', price: 449 },
+    ],
+    discount: 10,
+    bundlePrice: 1212,
+  },
 };
 
 const cookingOptions = [
@@ -138,6 +183,8 @@ const cookingOptions = [
   { id: 'chai', label: 'Making Chai?', emoji: '☕' },
   { id: 'curry', label: 'Making Curry?', emoji: '🍲' },
   { id: 'biryani', label: 'Biryani Night?', emoji: '🍚' },
+  { id: 'immunity', label: 'Immunity Boost?', emoji: '🛡️' },
+  { id: 'snacking', label: 'Healthy Snack?', emoji: '🥜' },
 ];
 
 interface CookingContextWidgetProps {

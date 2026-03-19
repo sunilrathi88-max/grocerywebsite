@@ -36,7 +36,7 @@ const Wishlist: React.FC<WishlistProps> = ({ items, onToggleWishlist, onAddToCar
   }
 
   return (
-    <div className="h-full flex flex-col">
+    <div className="h-full flex flex-col p-6">
       <div className="flex-grow space-y-4 pr-2 -mr-2 overflow-y-auto">
         {items.map((item) => (
           <div

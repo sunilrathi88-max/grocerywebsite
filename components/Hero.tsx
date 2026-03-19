@@ -1,126 +1,114 @@
-import React from 'react';
-import { m } from 'framer-motion';
-import { trackEvent } from '../utils/analytics';
-import { OptimizedImage } from './OptimizedImage';
+import React, { useRef } from 'react';
+import { gsap } from 'gsap';
+import { useGSAP } from '../hooks/useGSAP';
+import MagneticButton from './ui/MagneticButton';
+import SpiceWorld from './ui/SpiceWorld';
 
-interface HeroProps {
-  onShopNow: () => void;
-}
+export default function Hero() {
+  const containerRef = useRef<HTMLElement>(null);
+  
+  useGSAP(() => {
+    // Entrance Animation Timeline - triggers after Preloader completes (delay 2.1s)
+    const tl = gsap.timeline({ delay: 2.1 });
+    
+    tl.from('.hero-text-line', {
+      y: 80,
+      opacity: 0,
+      duration: 1.2,
+      stagger: 0.15,
+      ease: 'power4.out',
+    })
+    .from('.hero-cta', {
+      y: 30,
+      opacity: 0,
+      duration: 0.8,
+      ease: 'power3.out'
+    }, "-=0.8")
+    .from('.hero-badge', {
+      scale: 0.8,
+      opacity: 0,
+      duration: 0.6,
+      ease: 'back.out(1.5)'
+    }, "-=0.6");
+    
+    // Slight 3D tilt tracking for cursor across the whole hero section
+    const moveArea = containerRef.current;
+    if (moveArea) {
+      moveArea.addEventListener('mousemove', (e) => {
+        const { width, height, left, top } = moveArea.getBoundingClientRect();
+        const x = (e.clientX - left) / width - 0.5;
+        const y = (e.clientY - top) / height - 0.5;
+        
+        gsap.to('.hero-parallax-bg', {
+          x: x * -30,
+          y: y * -30,
+          duration: 1.5,
+          ease: 'power2.out'
+        });
+        
+        gsap.to('.hero-parallax-foreground', {
+          x: x * 20,
+          y: y * 20,
+          duration: 1.5,
+          ease: 'power2.out'
+        });
+      });
+    }
+  }, []);
 
-const Hero: React.FC<HeroProps> = ({ onShopNow }) => {
   return (
-    <section className="relative w-full overflow-hidden bg-gradient-hero min-h-[500px] flex items-center">
-      {/* Background Decorative Elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-0 right-0 w-1/2 h-full bg-white/5 skew-x-12 transform origin-bottom-left" />
-        <div className="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-brand-secondary/20 rounded-full blur-3xl opacity-60 mix-blend-overlay" />
-        <div className="absolute top-[20%] right-[10%] w-[300px] h-[300px] bg-brand-primary/40 rounded-full blur-3xl opacity-60 mix-blend-overlay" />
-      </div>
+    <section 
+      ref={containerRef}
+      className="relative w-full min-h-[90vh] lg:min-h-screen flex items-center bg-ink overflow-hidden border-b border-char"
+      aria-label="Welcome to The Rathi Spice Co."
+    >
+      {/* Subtle Grid Background */}
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(122,96,64,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(122,96,64,0.03)_1px,transparent_1px)] bg-[size:4rem_4rem] hero-parallax-bg" />
 
-      <div className="relative max-w-7xl mx-auto px-4 md:px-6 lg:px-8 w-full h-full flex flex-col md:flex-row items-center py-12 gap-8 md:gap-16">
-        {/* Left: Content */}
-        <div className="w-full md:w-1/2 z-10 text-center md:text-left">
-          <m.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="flex flex-col gap-6 items-center md:items-start"
-          >
-            {/* Tagline Badge */}
-            <span className="inline-block px-4 py-1.5 rounded-full bg-brand-light/10 text-brand-light border border-brand-light/20 text-sm font-bold tracking-widest uppercase backdrop-blur-md shadow-sm">
-              Harvest to Home
+      <div className="container mx-auto px-4 md:px-8 xl:px-12 grid grid-cols-1 lg:grid-cols-12 gap-8 relative z-10 hero-parallax-foreground pb-20 pt-32 lg:py-0">
+        
+        {/* Left Column (55%): Typography */}
+        <div className="col-span-1 lg:col-span-7 flex flex-col justify-center order-2 lg:order-1 pt-8 lg:pt-0">
+          
+          <div className="overflow-hidden mb-6 flex flex-col gap-2">
+            <span className="hero-badge inline-flex items-center gap-2 text-saffron tracking-[0.2em] text-xs font-bold uppercase w-fit">
+              <span className="w-8 h-[1px] bg-saffron inline-block"></span>
+              Established 1968
             </span>
+          </div>
 
-            {/* Headline */}
-            <h1 className="text-4xl md:text-5xl lg:text-7xl font-serif font-bold text-white leading-[1.1] drop-shadow-md">
-              Fresh, Lab-Tested Spices from Indian Farms
-            </h1>
-
-            {/* Subheading & Bullets */}
-            <div className="flex flex-col gap-3 text-white/95 text-lg md:text-xl font-medium max-w-lg">
-              <p>Experience the aroma of spices sourced within weeks of harvest.</p>
-              <ul className="flex flex-col gap-2 text-base md:text-lg text-brand-light/90 pl-1">
-                <li className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-brand-secondary"></span> Freshly Sourced
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-brand-secondary"></span> Lab Tested for
-                  Purity
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-brand-secondary"></span> No Fillers or
-                  Additives
-                </li>
-              </ul>
+          <h1 className="text-5xl md:text-7xl lg:text-[5.5rem] leading-[1.05] text-cream mb-6 tracking-tight">
+            <div className="overflow-hidden p-1 -m-1">
+              <span className="hero-text-line block">The Absolute</span>
             </div>
-
-            {/* CTAs */}
-            <div className="flex flex-col sm:flex-row items-center gap-4 mt-6 w-full sm:w-auto">
-              <button
-                onClick={() => {
-                  trackEvent({ name: 'hero_cta_primary_click' });
-                  // Use specific filter if possible, or shop now
-                  onShopNow();
-                }}
-                className="w-full sm:w-auto bg-brand-secondary text-white px-8 py-3.5 rounded-full font-bold text-lg hover:bg-brand-secondary/90 transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-              >
-                Shop Spices
-              </button>
-              <button
-                onClick={() => {
-                  trackEvent({ name: 'hero_cta_secondary_click' });
-                  onShopNow();
-                }}
-                className="w-full sm:w-auto bg-white/10 text-white border border-white/30 px-8 py-3.5 rounded-full font-bold text-lg hover:bg-white/20 transition-all backdrop-blur-sm"
-              >
-                Browse All Products
-              </button>
+            <div className="overflow-hidden p-1 -m-1">
+              <span className="hero-text-line block font-serif italic text-saffron font-medium pr-4">Apex of Flavor.</span>
             </div>
-          </m.div>
+          </h1>
+
+          <div className="overflow-hidden mb-12 max-w-xl">
+            <p className="hero-text-line text-lg lg:text-xl text-dust font-light leading-relaxed">
+              Unearth the ancient lineages of single-origin spices, cold-ground exclusively in Ramganj Mandi to preserve volatile oils and sensory truth.
+            </p>
+          </div>
+
+          <div className="hero-cta flex flex-wrap items-center gap-6">
+            <MagneticButton href="/shop" className="bg-saffron hover:bg-gold text-ink px-8 py-4 rounded-none uppercase tracking-wider text-sm font-bold transition-colors">
+              Explore the Harvest
+            </MagneticButton>
+            <a href="/about" data-cursor="link" className="text-cream hover:text-saffron transition-colors uppercase tracking-wider text-xs font-bold border-b border-mist pb-1">
+              Our 60-Year Legacy
+            </a>
+          </div>
+          
         </div>
 
-        {/* Right: Visual */}
-        <div className="w-full md:w-1/2 relative h-[350px] md:h-[500px] flex items-center justify-center">
-          <m.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative z-10 w-full max-w-sm md:max-w-md"
-          >
-            {/* Feature Card Layout */}
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-white/5 backdrop-blur-sm group">
-              <OptimizedImage
-                src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&q=80&w=800"
-                alt="Premium Cardamom"
-                className="w-full h-auto object-cover hover:scale-105 transition-transform duration-700"
-                priority="high"
-                width={500}
-                height={400}
-              />
-
-              {/* Quick Product overlay */}
-              <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent text-white">
-                <div className="flex justify-between items-end">
-                  <div>
-                    <h3 className="font-bold text-lg">Royal Green Cardamom</h3>
-                    <div className="flex text-yellow-400 text-sm">
-                      ★★★★★ <span className="text-white/70 ml-1">(128)</span>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <p className="font-bold text-xl">₹599</p>
-                    <span className="text-xs bg-brand-secondary px-2 py-0.5 rounded text-white font-bold">
-                      BESTSELLER
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </m.div>
+        {/* Right Column (45%): SpiceWorld Orb */}
+        <div className="col-span-1 lg:col-span-5 flex items-center justify-center order-1 lg:order-2">
+          <SpiceWorld />
         </div>
+
       </div>
     </section>
   );
-};
-
-export default Hero;
+}

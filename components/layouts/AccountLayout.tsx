@@ -9,9 +9,11 @@ import { User } from '../../types';
 
 interface AccountLayoutProps {
   user: User | null;
+  onLogout: () => Promise<void>;
+  children?: React.ReactNode;
 }
 
-const AccountLayout: React.FC<AccountLayoutProps> = ({ user }) => {
+const AccountLayout: React.FC<AccountLayoutProps> = ({ user, children, onLogout }) => {
   if (!user) {
     return <Navigate to="/login" replace />;
   }

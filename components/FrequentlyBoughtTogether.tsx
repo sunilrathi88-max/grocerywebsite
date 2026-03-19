@@ -1,160 +1,127 @@
-import React, { useMemo, useState } from 'react';
-import { Product } from '../types';
-import { imageErrorHandlers } from '../utils/imageHelpers';
-
-// Fallback icon if heroicons missing or path wrong
-const PlusSymbol = () => (
-  <svg className="w-5 h-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-  </svg>
-);
+import React, { useMemo } from 'react';
+import { Product, Variant } from '../types';
+import { OptimizedImage } from './OptimizedImage';
 
 interface FrequentlyBoughtTogetherProps {
-  mainProduct: Product;
-  recommendations: Product[];
-  onAddBundle: (products: Product[]) => void;
+  currentProduct: Product;
+  allProducts: Product[];
+  onAddBundleToCart: (products: Product[]) => void;
 }
 
-export const FrequentlyBoughtTogether: React.FC<FrequentlyBoughtTogetherProps> = ({
-  mainProduct,
-  recommendations,
-  onAddBundle,
+const FrequentlyBoughtTogether: React.FC<FrequentlyBoughtTogetherProps> = ({
+  currentProduct,
+  allProducts,
+  onAddBundleToCart,
 }) => {
-  const [selectedIds, setSelectedIds] = useState<Set<number>>(
-    new Set(recommendations.map((p) => p.id))
+  // Simple rule-based logic for complementary products
+  const complementaryProducts = useMemo(() => {
+    let suggestions: Product[] = [];
+
+    // Rule 1: Spices -> Suggest Cumin, Black Pepper, or Turmeric (if not current)
+    if (currentProduct.category === 'Spices') {
+      const staples = ['Cumin', 'Black Pepper', 'Turmeric', 'Coriander'];
+      suggestions = allProducts.filter(
+        (p) =>
+          p.category === 'Spices' &&
+          p.id !== currentProduct.id &&
+          staples.some((s) => p.name.includes(s))
+      );
+    }
+    // Rule 2: Tea -> Suggest Cardamom, Saffron, or Lemongrass
+    else if (currentProduct.category === 'Beverages') {
+      suggestions = allProducts.filter(
+        (p) =>
+          (p.name.includes('Cardamom') || p.name.includes('Saffron')) && p.id !== currentProduct.id
+      );
+    }
+    // Rule 3: Nuts -> Suggest other Nuts
+    else if (currentProduct.category === 'Nuts') {
+      suggestions = allProducts.filter((p) => p.category === 'Nuts' && p.id !== currentProduct.id);
+    }
+
+    // Fallback: Random robust suggestions
+    if (suggestions.length < 2) {
+      suggestions = allProducts.filter((p) => p.id !== currentProduct.id).slice(0, 5);
+    }
+
+    // Take top 2
+    return suggestions.slice(0, 2);
+  }, [currentProduct, allProducts]);
+
+  if (complementaryProducts.length === 0) return null;
+
+  const bundleProducts = [currentProduct, ...complementaryProducts].filter(
+    (p) => p && p.variants && p.variants.length > 0
   );
 
-  const toggleSelection = (id: number) => {
-    const newSet = new Set(selectedIds);
-    if (newSet.has(id)) {
-      newSet.delete(id);
-    } else {
-      newSet.add(id);
-    }
-    setSelectedIds(newSet);
-  };
+  if (bundleProducts.length < 2) return null;
 
-  const bundleItems = useMemo(() => {
-    return [mainProduct, ...recommendations.filter((p) => selectedIds.has(p.id))];
-  }, [mainProduct, recommendations, selectedIds]);
-
-  const totalPrice = useMemo(() => {
-    return bundleItems.reduce((sum, p) => {
-      const price = p.variants[0].salePrice || p.variants[0].price;
-      return sum + price;
-    }, 0);
-  }, [bundleItems]);
-
-  if (recommendations.length === 0) return null;
+  const totalPrice = bundleProducts.reduce((sum, p) => sum + (p.variants[0]?.price || 0), 0);
+  const bundlePrice = Math.round(totalPrice * 0.85); // 15% discount
+  const savings = totalPrice - bundlePrice;
 
   return (
-    <div className="mt-8 border border-neutral-200 rounded-xl p-5 bg-white shadow-sm">
-      <h3 className="font-serif font-bold text-gray-900 text-lg mb-4">
+    <div className="bg-white border border-neutral-200 rounded-2xl p-6 my-12 shadow-sm">
+      <h3 className="font-serif text-2xl font-bold text-brand-dark mb-6">
         Frequently Bought Together
       </h3>
 
-      <div className="flex flex-col md:flex-row gap-4 items-center mb-6">
-        <div className="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0 w-full md:w-auto">
-          {/* Main Product */}
-          <div className="flex-shrink-0 relative">
-            <img
-              src={mainProduct.images[0]}
-              alt={mainProduct.name}
-              className="w-20 h-20 object-cover rounded-md border border-gray-100"
-              onError={imageErrorHandlers.thumb}
-            />
-          </div>
-
-          {[...recommendations].map((product) => (
+      <div className="flex flex-col md:flex-row items-center gap-6 md:gap-8">
+        {/* Products List */}
+        <div className="flex items-center gap-3 overflow-x-auto pb-4 md:pb-0 w-full md:w-auto">
+          {bundleProducts.map((product, index) => (
             <React.Fragment key={product.id}>
-              <div className="flex-shrink-0 text-gray-400">
-                <PlusSymbol />
-              </div>
-              <div className="flex-shrink-0 relative">
-                <img
-                  src={product.images[0]}
-                  alt={product.name}
-                  className={`w-20 h-20 object-cover rounded-md border ${
-                    selectedIds.has(product.id)
-                      ? 'border-brand-primary ring-2 ring-brand-primary/20'
-                      : 'border-gray-100 opacity-60'
-                  } transition-all cursor-pointer`}
-                  onClick={() => toggleSelection(product.id)}
-                  onError={imageErrorHandlers.thumb}
-                />
-                {selectedIds.has(product.id) && (
-                  <div className="absolute -top-2 -right-2 bg-brand-primary text-white rounded-full p-0.5">
-                    <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={3}
-                        d="M5 13l4 4L19 7"
-                      />
-                    </svg>
-                  </div>
-                )}
+              {/* Plus Icon */}
+              {index > 0 && <span className="text-neutral-300 font-bold text-xl">+</span>}
+
+              {/* Product Item */}
+              <div className="flex flex-col items-center w-28 shrink-0">
+                <div className="w-24 h-24 bg-neutral-50 rounded-lg overflow-hidden border border-neutral-100 mb-2">
+                  <OptimizedImage
+                    src={product.images[0]}
+                    alt={product.name}
+                    className="w-full h-full object-contain"
+                    width={96}
+                    height={96}
+                  />
+                </div>
+                <p className="text-xs font-medium text-center line-clamp-2 text-neutral-800 h-8">
+                  {product.name}
+                </p>
+                <p className="text-sm font-bold text-neutral-900 mt-1">
+                  ₹{product.variants?.[0]?.price || 'N/A'}
+                </p>
               </div>
             </React.Fragment>
           ))}
         </div>
 
-        <div className="flex-1 text-center md:text-left md:pl-4">
-          <div className="text-sm text-gray-500 mb-1">
-            Total Price for {bundleItems.length} items:
-          </div>
-          <div className="text-2xl font-bold text-gray-900 mb-3">₹{totalPrice.toFixed(2)}</div>
-          <button
-            onClick={() => onAddBundle(bundleItems)}
-            className="bg-brand-dark text-white px-6 py-2 rounded-full font-bold text-sm hover:bg-opacity-90 transition-all shadow-md active:scale-95 w-full md:w-auto"
-          >
-            Add Bundle to Cart
-          </button>
-        </div>
-      </div>
+        {/* Divider */}
+        <div className="hidden md:block w-px h-32 bg-neutral-200"></div>
 
-      <div className="space-y-2">
-        <div className="flex items-center gap-2">
-          <div className="w-5 h-5 flex items-center justify-center bg-gray-100 rounded text-gray-500 text-xs font-bold">
-            1
-          </div>
-          <span className="text-sm text-gray-700 font-medium">This item: {mainProduct.name}</span>
-        </div>
-        {recommendations.map((product) => (
-          <div
-            key={product.id}
-            className="flex items-center gap-2 cursor-pointer"
-            onClick={() => toggleSelection(product.id)}
-          >
-            <div
-              className={`w-5 h-5 flex items-center justify-center rounded border ${
-                selectedIds.has(product.id)
-                  ? 'bg-brand-primary border-brand-primary text-white'
-                  : 'border-gray-300 bg-white'
-              }`}
-            >
-              {selectedIds.has(product.id) && (
-                <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={3}
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-              )}
+        {/* CTA Section */}
+        <div className="flex flex-col items-center md:items-start ml-auto min-w-[200px]">
+          <div className="mb-4 text-center md:text-left">
+            <p className="text-neutral-500 text-sm">Total Price:</p>
+            <div className="flex items-baseline gap-2">
+              <span className="text-2xl font-bold text-brand-primary">₹{bundlePrice}</span>
+              <span className="text-neutral-400 line-through text-lg">₹{totalPrice}</span>
             </div>
-            <span
-              className={`text-sm ${selectedIds.has(product.id) ? 'text-gray-900' : 'text-gray-400 line-through'}`}
-            >
-              {product.name}{' '}
-              <span className="text-brand-primary opacity-80 font-bold ml-1">
-                ₹{product.variants[0].salePrice || product.variants[0].price}
-              </span>
+            <span className="text-green-600 text-sm font-bold bg-green-50 px-2 py-1 rounded-full mt-1 inline-block">
+              Save ₹{savings} (15%)
             </span>
           </div>
-        ))}
+
+          <button
+            onClick={() => onAddBundleToCart(bundleProducts)}
+            className="w-full bg-brand-dark text-white font-bold py-3 px-6 rounded-xl hover:bg-black transition-colors shadow-md transform active:scale-95"
+          >
+            Add All to Cart
+          </button>
+        </div>
       </div>
     </div>
   );
 };
+
+export default FrequentlyBoughtTogether;

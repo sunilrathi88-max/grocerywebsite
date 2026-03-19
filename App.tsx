@@ -46,8 +46,10 @@ const AdminDashboard = React.lazy(() => import('./components/AdminDashboard'));
 // const AdminDashboard = () => <div className="p-10">Admin Dashboard Mock (Debugging)</div>;
 
 // Core Components (Eagerly Loaded - Always Visible)
-// Core Components (Eagerly Loaded - Always Visible)
 import Header from './components/Header';
+import CustomCursor from './components/ui/CustomCursor';
+import SeedTrail from './components/ui/SeedTrail';
+import Preloader from './components/ui/Preloader';
 import { ToastContainer } from './components/ui/ToastContainer';
 import FreeShippingBanner from './components/FreeShippingBanner';
 
@@ -85,6 +87,8 @@ const AboutPage = React.lazy(() => import('./components/AboutPage'));
 const FAQsPage = React.lazy(() => import('./components/FAQsPage'));
 const ReviewsPage = React.lazy(() => import('./pages/ReviewsPage'));
 const IndianSpicesGuide = React.lazy(() => import('./pages/guides/IndianSpicesGuide'));
+const PremiumNutsGuide = React.lazy(() => import('./pages/guides/PremiumNutsGuide'));
+const BuyingGuideOnline = React.lazy(() => import('./pages/guides/BuyingGuideOnline'));
 const ContactPage = React.lazy(() => import('./components/ContactPage'));
 const RecipesPage = React.lazy(() => import('./components/RecipesPage'));
 const BlogPage = React.lazy(() => import('./components/BlogPage'));
@@ -789,6 +793,9 @@ const App: React.FC = () => {
     <HelmetProvider>
       <ABTestProvider>
         <LazyMotion features={domAnimation}>
+          <Preloader />
+          <CustomCursor />
+          <SeedTrail />
           <div className="flex flex-col min-h-screen">
             {/* Skip to main content link for accessibility */}
             <a href="#main-content" className="skip-link">
@@ -1173,6 +1180,22 @@ const App: React.FC = () => {
                   element={
                     <React.Suspense fallback={<PageLoader />}>
                       <IndianSpicesGuide />
+                    </React.Suspense>
+                  }
+                />
+                <Route
+                  path="/premium-nuts-guide"
+                  element={
+                    <React.Suspense fallback={<PageLoader />}>
+                      <PremiumNutsGuide />
+                    </React.Suspense>
+                  }
+                />
+                <Route
+                  path="/buying-guide-indian-spices-nuts-online"
+                  element={
+                    <React.Suspense fallback={<PageLoader />}>
+                      <BuyingGuideOnline />
                     </React.Suspense>
                   }
                 />
