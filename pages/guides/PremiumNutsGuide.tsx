@@ -49,10 +49,9 @@ const PremiumNutsGuide = () => {
       <PillarPageLayout
         title={guideData.title}
         description={guideData.description}
-        author={guideData.author}
-        publishedDate={guideData.publishedDate}
-        modifiedDate={guideData.modifiedDate}
-        tableOfContents={guideData.tableOfContents}
+        author={guideData.author.name}
+        lastUpdated={guideData.modifiedDate}
+        sections={guideData.tableOfContents}
         faqs={guideData.faqs}
       >
         <section id="grading-cashews" className="mb-16">
