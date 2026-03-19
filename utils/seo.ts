@@ -251,12 +251,12 @@ export const generateProductSchema = (product: Product): ProductStructuredData =
       authority: {
         '@type': 'Organization',
         name: 'Food Safety and Standards Authority of India (FSSAI)',
-        url: 'https://fssai.gov.in/'
+        url: 'https://fssai.gov.in/',
       },
       hasCredential: {
         '@type': 'Credential',
-        credentialId: '12225025000253'
-      }
+        credentialId: '12225025000253',
+      },
     },
     brand: {
       '@type': 'Brand',

@@ -5,11 +5,11 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const BASE_URL = 'https://tattva-co.com'; // Replace with real domain
+const BASE_URL = 'https://rathinaturals.com'; // Updated domain
 
 const STATIC_routes = [
   '/',
-  '/products',
+  '/shop',
   '/about',
   '/contact',
   '/blog',
@@ -18,6 +18,11 @@ const STATIC_routes = [
   '/returns',
   '/privacy-policy',
   '/terms',
+  '/affiliate-program',
+  '/tools/spice-freshness-calculator',
+  '/subscription',
+  '/farmers',
+  '/offers',
 ];
 
 // Helper to extract product IDs from data.ts (Regex to avoid TS compilation issues)

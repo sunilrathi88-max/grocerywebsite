@@ -55,7 +55,7 @@ export default function SeedTrail() {
       if (speed > 3) {
         // Spawn 1-2 seeds per tick based on velocity
         const maxSpawn = Math.min(Math.floor(speed / 10) + 1, 3);
-        
+
         for (let i = 0; i < maxSpawn; i++) {
           particlesRef.current.push({
             x: cx,
@@ -68,7 +68,7 @@ export default function SeedTrail() {
             rotV: random(-0.12, 0.12), // rotation speed
             rx: 3 + random(0, 3), // ellipse x radius (seed length)
             ry: 1.2 + random(0, 1.5), // ellipse y radius (seed width)
-            col: colors[Math.floor(Math.random() * colors.length)]
+            col: colors[Math.floor(Math.random() * colors.length)],
           });
         }
       }
@@ -125,8 +125,8 @@ export default function SeedTrail() {
   }, []);
 
   return (
-    <canvas 
-      ref={canvasRef} 
+    <canvas
+      ref={canvasRef}
       className="fixed top-0 left-0 w-full h-full pointer-events-none z-[9990]"
     />
   );

@@ -119,9 +119,7 @@ const HarvestCollection: React.FC<HarvestCollectionProps> = ({
                     </p>
                   )}
                   <div className="flex items-center justify-between mt-2 border-t border-char pt-3">
-                    <span className="font-medium text-dust">
-                      ₹{getProductPrice(product)}
-                    </span>
+                    <span className="font-medium text-dust">₹{getProductPrice(product)}</span>
                     <button
                       onClick={(e) => {
                         e.stopPropagation();

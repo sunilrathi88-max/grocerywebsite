@@ -12,7 +12,7 @@ const publicClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 const adminClient = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
 // Allowlist of admin emails (optional, in addition to user_metadata.is_admin)
-const ADMIN_EMAILS = ['sunilrathi88@gmail.com', 'admin@tattvaco.in'];
+const ADMIN_EMAILS = ['sunilrathi88@gmail.com', 'rathinaturals@gmail.com'];
 
 export default async function handler(req, res) {
   const authHeader = req.headers.authorization;

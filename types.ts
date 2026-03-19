@@ -178,6 +178,8 @@ export interface BlogPost {
   excerpt: string;
   content: string; // This could be markdown or HTML string
   tags: string[];
+  isMarkdown?: boolean;
+  faqs?: Array<{ question: string; answer: string }>;
 }
 
 export interface Recipe {

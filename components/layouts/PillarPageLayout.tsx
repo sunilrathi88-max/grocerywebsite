@@ -31,28 +31,31 @@ const PillarPageLayout: React.FC<PillarPageLayoutProps> = ({
   children,
 }) => {
   // Generate FAQ Schema specifically for AI LLM parsing
-  const faqSchema = faqs && faqs.length > 0 ? {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": faqs.map(faq => ({
-      "@type": "Question",
-      "name": faq.question,
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": faq.answer
-      }
-    }))
-  } : undefined;
+  const faqSchema =
+    faqs && faqs.length > 0
+      ? {
+          '@context': 'https://schema.org',
+          '@type': 'FAQPage',
+          mainEntity: faqs.map((faq) => ({
+            '@type': 'Question',
+            name: faq.question,
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: faq.answer,
+            },
+          })),
+        }
+      : undefined;
 
   return (
     <div className="bg-white min-h-screen pt-24 pb-16">
-      <SEO 
-        title={title} 
-        description={description} 
+      <SEO
+        title={title}
+        description={description}
         structuredData={faqSchema}
         structuredDataId="faq-schema"
       />
-      
+
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         {/* Header Block */}
         <header className="mb-12 max-w-4xl">
@@ -62,10 +65,8 @@ const PillarPageLayout: React.FC<PillarPageLayoutProps> = ({
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-gray-900 mb-6 leading-tight">
             {title}
           </h1>
-          <p className="text-xl text-neutral-600 mb-8 leading-relaxed">
-            {description}
-          </p>
-          
+          <p className="text-xl text-neutral-600 mb-8 leading-relaxed">{description}</p>
+
           {/* E-E-A-T Signals: Author & Recency */}
           <div className="flex items-center gap-4 text-sm font-medium text-neutral-500 border-t border-neutral-100 pt-6">
             <div className="flex items-center gap-2">
@@ -87,7 +88,7 @@ const PillarPageLayout: React.FC<PillarPageLayoutProps> = ({
           {/* Main Content Area */}
           <main className="lg:w-3/4 prose prose-lg max-w-none prose-headings:font-serif prose-headings:text-brand-dark prose-a:text-brand-primary hover:prose-a:text-brand-dark">
             {children}
-            
+
             {/* FAQ Section */}
             {faqs && faqs.length > 0 && (
               <section id="faq" className="mt-16 pt-16 border-t border-neutral-100 scroll-mt-24">
@@ -117,16 +118,19 @@ const AsideNav: React.FC<{ sections: Section[] }> = ({ sections }) => {
           Table of Contents
         </h3>
         <nav className="flex flex-col gap-3">
-          {sections.map(section => (
-            <a 
-              key={section.id} 
+          {sections.map((section) => (
+            <a
+              key={section.id}
               href={`#${section.id}`}
               className="text-neutral-600 hover:text-brand-primary hover:translate-x-1 transition-all text-sm font-medium"
             >
               {section.title}
             </a>
           ))}
-          <a href="#faq" className="text-neutral-600 hover:text-brand-primary hover:translate-x-1 transition-all text-sm font-medium mt-2 pt-2 border-t border-neutral-200">
+          <a
+            href="#faq"
+            className="text-neutral-600 hover:text-brand-primary hover:translate-x-1 transition-all text-sm font-medium mt-2 pt-2 border-t border-neutral-200"
+          >
             Frequently Asked Questions
           </a>
         </nav>

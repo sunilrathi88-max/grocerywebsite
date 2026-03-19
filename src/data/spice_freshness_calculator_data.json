@@ -1,0 +1,433 @@
+{
+  "calculator_metadata": {
+    "version": "1.0",
+    "created": "2026-01-25",
+    "purpose": "Spice Freshness Scoring Calculator Tool",
+    "algorithm": "Weighted scoring based on age, storage, visual, aromatic factors"
+  },
+  "spice_types": [
+    {
+      "id": "turmeric",
+      "name": "Turmeric (Haldi)",
+      "common_forms": ["whole", "powder"],
+      "shelf_life_months": 12,
+      "storage_bonus": {
+        "freezer": 15,
+        "airtight": 10,
+        "open": -5,
+        "fridge": 8
+      },
+      "quality_factors": {
+        "color_vibrant": "Deep golden yellow",
+        "color_faded": "Pale yellow or brownish",
+        "aroma_strong": "Warm, earthy, slightly bitter",
+        "aroma_weak": "Faint or musty"
+      }
+    },
+    {
+      "id": "cumin",
+      "name": "Cumin (Jeera)",
+      "common_forms": ["whole", "powder"],
+      "shelf_life_months": 12,
+      "storage_bonus": {
+        "freezer": 15,
+        "airtight": 10,
+        "open": -5,
+        "fridge": 8
+      },
+      "quality_factors": {
+        "color_vibrant": "Brown with visible seeds",
+        "color_faded": "Pale or grayish brown",
+        "aroma_strong": "Warm, nutty, distinctive",
+        "aroma_weak": "Flat, no distinctive smell"
+      }
+    },
+    {
+      "id": "coriander",
+      "name": "Coriander (Dhania)",
+      "common_forms": ["whole", "powder"],
+      "shelf_life_months": 12,
+      "storage_bonus": {
+        "freezer": 15,
+        "airtight": 10,
+        "open": -5,
+        "fridge": 8
+      },
+      "quality_factors": {
+        "color_vibrant": "Light brown to tan",
+        "color_faded": "Gray or discolored",
+        "aroma_strong": "Citrusy, sweet, distinctive",
+        "aroma_weak": "Faint or stale"
+      }
+    },
+    {
+      "id": "cardamom",
+      "name": "Cardamom (Elaichi)",
+      "common_forms": ["whole_pod", "powder"],
+      "shelf_life_months": 18,
+      "storage_bonus": {
+        "freezer": 20,
+        "airtight": 12,
+        "open": -5,
+        "fridge": 10
+      },
+      "quality_factors": {
+        "color_vibrant": "Green (whole) or light tan (powder)",
+        "color_faded": "Brown or blackish",
+        "aroma_strong": "Strong, sweet, complex",
+        "aroma_weak": "Barely perceptible"
+      }
+    },
+    {
+      "id": "black_pepper",
+      "name": "Black Pepper (Kali Mirch)",
+      "common_forms": ["whole", "powder"],
+      "shelf_life_months": 12,
+      "storage_bonus": {
+        "freezer": 15,
+        "airtight": 10,
+        "open": -5,
+        "fridge": 8
+      },
+      "quality_factors": {
+        "color_vibrant": "Deep black with shine",
+        "color_faded": "Dull black or grayish",
+        "aroma_strong": "Pungent, spicy, hot",
+        "aroma_weak": "Mild or flavorless"
+      }
+    },
+    {
+      "id": "chilli_powder",
+      "name": "Red Chilli Powder (Mirch Powder)",
+      "common_forms": ["powder"],
+      "shelf_life_months": 6,
+      "storage_bonus": {
+        "freezer": 12,
+        "airtight": 8,
+        "open": -10,
+        "fridge": 6
+      },
+      "quality_factors": {
+        "color_vibrant": "Bright red",
+        "color_faded": "Dark red or brownish",
+        "aroma_strong": "Spicy, fruity, hot",
+        "aroma_weak": "Stale or burnt smell"
+      }
+    },
+    {
+      "id": "garam_masala",
+      "name": "Garam Masala (Spice Blend)",
+      "common_forms": ["powder"],
+      "shelf_life_months": 8,
+      "storage_bonus": {
+        "freezer": 12,
+        "airtight": 8,
+        "open": -8,
+        "fridge": 6
+      },
+      "quality_factors": {
+        "color_vibrant": "Medium brown with spice specs",
+        "color_faded": "Uniform dull brown",
+        "aroma_strong": "Complex, warm, multiple spice notes",
+        "aroma_weak": "Flat, one-dimensional"
+      }
+    },
+    {
+      "id": "cinnamon",
+      "name": "Cinnamon (Dalchini)",
+      "common_forms": ["stick", "powder"],
+      "shelf_life_months": 18,
+      "storage_bonus": {
+        "freezer": 20,
+        "airtight": 12,
+        "open": -5,
+        "fridge": 10
+      },
+      "quality_factors": {
+        "color_vibrant": "Reddish-brown (sticks) or tan (powder)",
+        "color_faded": "Pale or grayish",
+        "aroma_strong": "Sweet, warm, distinctive",
+        "aroma_weak": "Faint or absent"
+      }
+    },
+    {
+      "id": "cloves",
+      "name": "Cloves (Laung)",
+      "common_forms": ["whole"],
+      "shelf_life_months": 12,
+      "storage_bonus": {
+        "freezer": 15,
+        "airtight": 10,
+        "open": -5,
+        "fridge": 8
+      },
+      "quality_factors": {
+        "color_vibrant": "Deep brown with visible bulbous head",
+        "color_faded": "Pale or grayish",
+        "aroma_strong": "Strong, sweet, warm",
+        "aroma_weak": "Mild or absent"
+      }
+    }
+  ],
+  "freshness_scoring_algorithm": {
+    "base_score": 100,
+    "factors": {
+      "age_penalty": {
+        "description": "Spice degradation over time",
+        "calculation": "(age_in_months / shelf_life_months) * 30",
+        "max_penalty": 30
+      },
+      "visual_quality": {
+        "description": "Color vibrancy assessment (1-5 slider)",
+        "calculation": "(5 - visual_score) * 10",
+        "max_penalty": 40,
+        "notes": "1=very faded, 5=vibrant and fresh"
+      },
+      "aromatic_quality": {
+        "description": "Aroma strength assessment (1-5 slider)",
+        "calculation": "(5 - aroma_score) * 15",
+        "max_penalty": 60,
+        "notes": "1=no aroma, 5=strong distinctive aroma"
+      },
+      "storage_method_bonus": {
+        "description": "Positive adjustment based on storage conditions",
+        "options": {
+          "freezer": 15,
+          "airtight_container": 10,
+          "fridge": 8,
+          "normal_shelf": 0,
+          "open_container": -5
+        }
+      }
+    },
+    "final_calculation": "max(0, min(100, base_score - age_penalty - visual_penalty - aroma_penalty + storage_bonus))",
+    "score_interpretation": {
+      "80_100": {
+        "status": "Excellent",
+        "emoji": "✅",
+        "recommendation": "Use immediately. Peak flavor and aroma.",
+        "shelf_life_remaining": "6+ months"
+      },
+      "60_79": {
+        "status": "Good",
+        "emoji": "👍",
+        "recommendation": "Good to use. Consider replacing within 1-2 months.",
+        "shelf_life_remaining": "3-6 months"
+      },
+      "40_59": {
+        "status": "Fair",
+        "emoji": "⚠️",
+        "recommendation": "Still usable but losing quality. Replace soon.",
+        "shelf_life_remaining": "1-3 months"
+      },
+      "20_39": {
+        "status": "Poor",
+        "emoji": "❌",
+        "recommendation": "Consider replacing. Flavor compromised.",
+        "shelf_life_remaining": "Less than 1 month"
+      },
+      "0_19": {
+        "status": "Expired",
+        "emoji": "🚫",
+        "recommendation": "Replace immediately. Health/safety risk.",
+        "shelf_life_remaining": "Expired"
+      }
+    }
+  },
+  "storage_recommendations": {
+    "by_storage_type": {
+      "freezer": {
+        "temperature": "-18°C or below",
+        "ideal_container": "Airtight glass jar",
+        "benefits": [
+          "Extends shelf life by 50%",
+          "Slows oxidation completely",
+          "Prevents moisture absorption"
+        ],
+        "downsides": [
+          "Condensation on removal (let sit 15 min before opening)",
+          "Takes freezer space"
+        ],
+        "best_for": ["Chilli powder", "Ground spices", "Cardamom", "Cinnamon"]
+      },
+      "airtight_container": {
+        "temperature": "15-25°C (room temperature)",
+        "ideal_container": "Opaque glass jar with seal",
+        "benefits": ["Easy access", "Preserves flavor for 12 months", "No condensation issues"],
+        "downsides": ["Requires cool, dark location", "Must keep away from heat/light"],
+        "best_for": ["Whole spices", "Everyday use spices"]
+      },
+      "fridge": {
+        "temperature": "2-8°C",
+        "ideal_container": "Airtight container",
+        "benefits": ["Extends shelf life", "Good for powders"],
+        "downsides": ["Condensation risk when removed", "Fridge space limitations"],
+        "best_for": ["Ground spices", "Blended masalas"]
+      },
+      "open_shelf": {
+        "temperature": "Room temperature",
+        "ideal_container": "Opaque container",
+        "benefits": ["Most convenient", "Daily use accessible"],
+        "downsides": ["Fastest deterioration", "Light + heat damage", "Moisture absorption"],
+        "best_for": ["Very short-term (2-3 weeks)"]
+      }
+    }
+  },
+  "spice_specific_storage": {
+    "chilli_powder": {
+      "why_sensitive": "Bright color fades quickly; heat and light sensitive",
+      "best_storage": "Freezer or fridge in dark container",
+      "shelf_life_days": 180,
+      "warning_signs": "Color turns dark/dull, loses spicy aroma"
+    },
+    "garam_masala": {
+      "why_sensitive": "Blend of multiple spices; volatile oils escape",
+      "best_storage": "Airtight dark glass jar, cool location",
+      "shelf_life_days": 240,
+      "warning_signs": "Flat flavor, musty smell"
+    },
+    "whole_spices": {
+      "why_sensitive": "Less sensitive than powders; longer shelf life",
+      "best_storage": "Airtight jar in cool, dark place",
+      "shelf_life_days": 365,
+      "warning_signs": "Loss of aroma, discoloration"
+    },
+    "cardamom": {
+      "why_sensitive": "Volatile oils; loses fragrance quickly if exposed",
+      "best_storage": "Freezer in airtight container (whole pods)",
+      "shelf_life_days": 540,
+      "warning_signs": "No aroma when crushed"
+    }
+  },
+  "user_input_ranges": {
+    "spice_type": {
+      "input_type": "dropdown",
+      "required": true,
+      "options": [
+        "Select a spice",
+        "turmeric",
+        "cumin",
+        "coriander",
+        "cardamom",
+        "black_pepper",
+        "chilli_powder",
+        "garam_masala",
+        "cinnamon",
+        "cloves"
+      ]
+    },
+    "age_months": {
+      "input_type": "slider_or_input",
+      "range": [0, 36],
+      "unit": "months",
+      "required": true,
+      "label": "How old is your spice (in months)?"
+    },
+    "storage_method": {
+      "input_type": "dropdown",
+      "options": ["freezer", "airtight_container", "fridge", "normal_shelf", "open_container"],
+      "required": true,
+      "label": "Where do you store this spice?"
+    },
+    "visual_check": {
+      "input_type": "slider",
+      "range": [1, 5],
+      "required": true,
+      "label": "Color vibrancy (1=very faded, 5=bright and vibrant)",
+      "descriptions": {
+        "1": "Very faded/discolored",
+        "2": "Noticeably faded",
+        "3": "Somewhat faded",
+        "4": "Good color",
+        "5": "Vibrant and fresh"
+      }
+    },
+    "smell_test": {
+      "input_type": "slider",
+      "range": [1, 5],
+      "required": true,
+      "label": "Aroma strength (1=no aroma, 5=strong distinctive aroma)",
+      "descriptions": {
+        "1": "No aroma or stale smell",
+        "2": "Very faint aroma",
+        "3": "Noticeable but weak aroma",
+        "4": "Good aroma",
+        "5": "Strong, distinctive aroma"
+      }
+    }
+  },
+  "example_calculations": [
+    {
+      "scenario": "1-month-old turmeric, airtight container, vibrant color, strong aroma",
+      "inputs": {
+        "spice": "turmeric",
+        "age_months": 1,
+        "storage": "airtight_container",
+        "visual": 5,
+        "aroma": 5
+      },
+      "calculation": {
+        "base": 100,
+        "age_penalty": "(1/12)*30 = 2.5",
+        "visual_penalty": "(5-5)*10 = 0",
+        "aroma_penalty": "(5-5)*15 = 0",
+        "storage_bonus": 10,
+        "final_score": "100 - 2.5 - 0 - 0 + 10 = 107 → capped at 100"
+      },
+      "result": {
+        "score": 100,
+        "status": "Excellent ✅",
+        "recommendation": "Use immediately. Peak flavor.",
+        "shelf_life_remaining": "11 months"
+      }
+    },
+    {
+      "scenario": "8-month-old garam masala, open shelf, faded color, weak aroma",
+      "inputs": {
+        "spice": "garam_masala",
+        "age_months": 8,
+        "storage": "normal_shelf",
+        "visual": 2,
+        "aroma": 2
+      },
+      "calculation": {
+        "base": 100,
+        "age_penalty": "(8/8)*30 = 30",
+        "visual_penalty": "(5-2)*10 = 30",
+        "aroma_penalty": "(5-2)*15 = 45",
+        "storage_bonus": 0,
+        "final_score": "100 - 30 - 30 - 45 + 0 = -5 → capped at 0"
+      },
+      "result": {
+        "score": 5,
+        "status": "Expired 🚫",
+        "recommendation": "Replace immediately. Health/safety risk.",
+        "shelf_life_remaining": "Expired"
+      }
+    },
+    {
+      "scenario": "3-month-old chilli powder, freezer, good color, good aroma",
+      "inputs": {
+        "spice": "chilli_powder",
+        "age_months": 3,
+        "storage": "freezer",
+        "visual": 4,
+        "aroma": 4
+      },
+      "calculation": {
+        "base": 100,
+        "age_penalty": "(3/6)*30 = 15",
+        "visual_penalty": "(5-4)*10 = 10",
+        "aroma_penalty": "(5-4)*15 = 15",
+        "storage_bonus": 15,
+        "final_score": "100 - 15 - 10 - 15 + 15 = 75"
+      },
+      "result": {
+        "score": 75,
+        "status": "Good 👍",
+        "recommendation": "Good to use. Consider replacing within 1-2 months.",
+        "shelf_life_remaining": "3 months"
+      }
+    }
+  ]
+}

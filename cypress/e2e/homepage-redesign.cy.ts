@@ -39,17 +39,18 @@ describe('Homepage UX Redesign', () => {
   it('should have updated Navigation', () => {
     // Desktop Nav
     cy.get('nav').within(() => {
-      cy.contains('Spices').should('be.visible');
+      cy.contains('Shop').should('be.visible');
+      cy.contains('Popular Masalas').should('be.visible');
       cy.contains('Offers').should('be.visible');
-      cy.contains('Shop All').should('be.visible');
+      cy.contains('Subscription').should('be.visible');
     });
   });
 
   it('should show Categories in Mobile Bottom Nav', () => {
     // Simulate mobile viewport
     cy.viewport('iphone-x');
-    cy.contains('Categories').should('be.visible');
-    cy.get('button[aria-label="Categories"]').should('be.visible');
+    cy.contains('Shop').should('be.visible');
+    cy.get('button[aria-label="Shop"]').should('be.visible');
   });
 
   it('should show Filter button on Mobile', () => {

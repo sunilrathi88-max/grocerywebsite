@@ -10,7 +10,9 @@ const TrustSignals: React.FC = () => {
           </div>
           <div>
             <h4 className="font-serif text-lg text-white mb-1">FSSAI Certified</h4>
-            <p className="text-xs text-white/80 uppercase tracking-wider font-semibold">Lic. 12225025000253</p>
+            <p className="text-xs text-white/80 uppercase tracking-wider font-semibold">
+              Lic. 12225025000253
+            </p>
           </div>
         </div>
         <div className="flex flex-col items-center text-center gap-4 group">

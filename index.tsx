@@ -30,9 +30,7 @@ if (!rootElement) {
   throw new Error('Could not find root element to mount to');
 }
 
-const root = ReactDOM.createRoot(rootElement);
-
-root.render(
+const appContent = (
   <React.StrictMode>
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
@@ -54,3 +52,10 @@ root.render(
     </ErrorBoundary>
   </React.StrictMode>
 );
+
+if (rootElement.hasChildNodes()) {
+  ReactDOM.hydrateRoot(rootElement, appContent);
+} else {
+  const root = ReactDOM.createRoot(rootElement);
+  root.render(appContent);
+}

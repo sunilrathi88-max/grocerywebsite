@@ -1,0 +1,123 @@
+{
+  "spice_types": [
+    {
+      "id": "turmeric_powder",
+      "name": "Turmeric Powder",
+      "common_forms": ["Ground"],
+      "shelf_life_months": 12,
+      "storage_bonus": {
+        "airtight_container": 10,
+        "freezer": 15
+      },
+      "quality_factors": {
+        "visual": "Bright yellow-orange",
+        "aroma": "Earthy, musky"
+      }
+    },
+    {
+      "id": "chili_powder",
+      "name": "Red Chili Powder",
+      "common_forms": ["Ground"],
+      "shelf_life_months": 10,
+      "storage_bonus": {
+        "airtight_container": 10,
+        "freezer": 20
+      },
+      "quality_factors": {
+        "visual": "Vibrant red",
+        "aroma": "Pungent"
+      }
+    },
+    {
+      "id": "coriander_powder",
+      "name": "Coriander Powder",
+      "common_forms": ["Ground"],
+      "shelf_life_months": 6,
+      "storage_bonus": {
+        "airtight_container": 15,
+        "freezer": 25
+      },
+      "quality_factors": {
+        "visual": "Light brown/greenish",
+        "aroma": "Citrusy, floral"
+      }
+    },
+    {
+      "id": "garam_masala",
+      "name": "Garam Masala",
+      "common_forms": ["Ground Blend"],
+      "shelf_life_months": 6,
+      "storage_bonus": {
+        "airtight_container": 15,
+        "freezer": 30
+      },
+      "quality_factors": {
+        "visual": "Deep brown",
+        "aroma": "Complex, warming"
+      }
+    },
+    {
+      "id": "cumin_whole",
+      "name": "Cumin Seeds (Whole)",
+      "common_forms": ["Whole"],
+      "shelf_life_months": 24,
+      "storage_bonus": {
+        "airtight_container": 5,
+        "freezer": 10
+      },
+      "quality_factors": {
+        "visual": "Brown, ridged seeds",
+        "aroma": "Earthy when crushed"
+      }
+    }
+  ],
+  "storage_recommendations": {
+    "by_storage_type": {
+      "airtight_container": {
+        "temperature": "Room Temperature (20-25°C)",
+        "ideal_container": "Glass jar with rubber seal or tin can",
+        "benefits": ["Prevents oxidation", "Blocks moisture", "Keeps pests out"],
+        "downsides": ["Still exposed to ambient heat"],
+        "best_for": ["Daily use spices"]
+      },
+      "freezer": {
+        "temperature": "Freezer (-18°C)",
+        "ideal_container": "Vacuum sealed bag or moisture-proof jar",
+        "benefits": ["Significantly slows oil evaporation", "Kills pests", "Preserves color"],
+        "downsides": ["Condensation risk if opened cold"],
+        "best_for": ["Bulk spices", "Rarely used blends"]
+      },
+      "open_container": {
+        "temperature": "Room Temperature",
+        "ideal_container": "None",
+        "benefits": ["Access ease"],
+        "downsides": ["Rapid flavor loss", "Moisture clumps", "Pest risk"],
+        "best_for": ["Salt (maybe)", "Nothing else"]
+      },
+      "fridge": {
+        "temperature": "4°C",
+        "ideal_container": "Airtight",
+        "benefits": ["Cooler than shelf"],
+        "downsides": ["High humidity environment", "Condensation risk"],
+        "best_for": ["Sesame seeds", "Poppy seeds"]
+      },
+      "normal_shelf": {
+        "temperature": "Room Temperature",
+        "ideal_container": "Store packaging",
+        "benefits": ["None"],
+        "downsides": ["Light exposure", "Heat fluctuations"],
+        "best_for": ["None"]
+      }
+    }
+  },
+  "spice_specific_storage": {
+    "turmeric_powder": {
+      "why_sensitive": "Curcumin degrades primarily in light.",
+      "best_practice": "Use opaque jars."
+    },
+    "coriander_powder": {
+      "why_sensitive": "Volatile oils (linalool) evaporate very quickly.",
+      "best_practice": "Buy whole and grind fresh if possible."
+    }
+  }
+}

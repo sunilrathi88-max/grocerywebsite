@@ -18,23 +18,34 @@ export default function Preloader() {
         setComplete(true);
         // Trigger generic event so Hero component knows it can animate in
         window.dispatchEvent(new Event('preloader-complete'));
-      }
+      },
     });
 
     // The Stroke path math assumes the SVG path has pathLength="100" injected
-    tl.to('#pre-text path', { strokeDashoffset: 0, duration: 1.0, ease: 'power2.inOut', stagger: 0.1 }, 0.2)
+    tl.to(
+      '#pre-text path',
+      { strokeDashoffset: 0, duration: 1.0, ease: 'power2.inOut', stagger: 0.1 },
+      0.2
+    )
       .to('#pre-text path', { fill: '#f2e8d0', fillOpacity: 1, duration: 0.4 }, 1.4)
-      .to('#pre-counter', {
-        textContent: 100, 
-        duration: 1.1, 
-        snap: { textContent: 1 },
-        onUpdate: function() {
-          const el = document.getElementById('pre-counter');
-          if (el) {
-            el.innerHTML = String(Math.round(Number(this.targets()[0].textContent))).padStart(3, '0');
-          }
-        }
-      }, 0.4)
+      .to(
+        '#pre-counter',
+        {
+          textContent: 100,
+          duration: 1.1,
+          snap: { textContent: 1 },
+          onUpdate: function () {
+            const el = document.getElementById('pre-counter');
+            if (el) {
+              el.innerHTML = String(Math.round(Number(this.targets()[0].textContent))).padStart(
+                3,
+                '0'
+              );
+            }
+          },
+        },
+        0.4
+      )
       .to('#pre-line', { width: '360px', duration: 0.6, ease: 'power3.inOut' }, 1.5)
       .to('#preloader', { opacity: 0, duration: 0.5, ease: 'power2.in' }, 2.1);
   }, []);
@@ -42,13 +53,15 @@ export default function Preloader() {
   if (complete) return null;
 
   return (
-    <div id="preloader" className="fixed inset-0 z-[10000] bg-ink flex flex-col items-center justify-center pointer-events-none">
-      
+    <div
+      id="preloader"
+      className="fixed inset-0 z-[10000] bg-ink flex flex-col items-center justify-center pointer-events-none"
+    >
       {/* Brand SVG Wordmark */}
       <div className="w-64 md:w-96 mb-16">
         <svg id="pre-text" viewBox="0 0 400 60" className="w-full h-auto overflow-hidden">
           {/* Temporary placeholder shapes, will be replaced with real brand SVG */}
-          <path 
+          <path
             className="stroke-saffron stroke-1 fill-transparent"
             strokeDasharray="1000"
             strokeDashoffset="1000"
@@ -66,7 +79,6 @@ export default function Preloader() {
         {/* Progress Line */}
         <div className="w-0 bg-saffron h-[1px] opacity-70" id="pre-line" />
       </div>
-
     </div>
   );
 }

@@ -214,7 +214,10 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
       generateBreadcrumbSchema([
         { name: 'Home', url: 'https://rathinaturals.com' },
         { name: 'Products', url: 'https://rathinaturals.com/products' },
-        { name: product.category, url: `https://rathinaturals.com/category/${product.category.toLowerCase().replace(/\s+/g, '-')}` },
+        {
+          name: product.category,
+          url: `https://rathinaturals.com/category/${product.category.toLowerCase().replace(/\s+/g, '-')}`,
+        },
         { name: product.name, url: `https://rathinaturals.com/products/${product.id}` }, // Fallback URL
       ])
     );

@@ -10,42 +10,48 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Manrope', 'sans-serif'],
-        serif: ['Playfair Display', 'serif'],
+        sans: ['DM Sans', 'system-ui', 'sans-serif'],
+        serif: ['Cormorant Garamond', 'Georgia', 'serif'],
+        label: ['Syne', 'system-ui', 'sans-serif'],
       },
       colors: {
+        ink: 'var(--ink)',
+        char: 'var(--char)',
+        ember: 'var(--ember)',
+        saffron: 'var(--saffron)',
+        turmeric: 'var(--turmeric)',
+        gold: 'var(--gold)',
+        cream: 'var(--cream)',
+        dust: 'var(--dust)',
+        mist: 'var(--mist)',
+        rouge: 'var(--rouge)',
+
         primary: {
-          DEFAULT: '#8D6E63', // Earthy Brown
-          dark: '#3E2723',
-          light: '#A1887F',
+          DEFAULT: 'var(--saffron)',
+          dark: 'var(--ember)',
+          light: 'var(--turmeric)',
         },
         background: {
-          light: '#FFFCF7', // Warm Paper
-          dark: '#1C1917',
+          light: 'var(--cream)',
+          dark: 'var(--ink)',
         },
         accent: {
-          green: '#556B2F', // Olive
-          charcoal: '#2D2622',
-          cream: '#F5F1E8',
-          beige: '#E3DCCF',
-          footer: '#26201D',
-        },
-        // Backward compatibility mappings (gradual migration)
-        brand: {
-          primary: '#8D6E63',
-          dark: '#3E2723',
-          light: '#FFF9E6',
+          green: '#556B2F',
+          charcoal: 'var(--ink)',
+          cream: 'var(--cream)',
+          beige: 'var(--dust)',
+          footer: 'var(--char)',
         },
         neutral: {
-          900: '#1F2121',
-          700: '#6F7577',
-          400: '#E5E7EB',
-          100: '#F5F5F0',
+          900: 'var(--ink)',
+          700: 'var(--char)',
+          400: 'var(--dust)',
+          100: 'var(--cream)',
           50: '#F9FAFB',
         },
-        'brand-primary': '#8D6E63',
-        'brand-dark': '#3E2723',
-        'brand-accent': '#FFFCF7',
+        'brand-primary': 'var(--saffron)',
+        'brand-dark': 'var(--ember)',
+        'brand-accent': 'var(--cream)',
       },
       borderRadius: {
         DEFAULT: '0px',

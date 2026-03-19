@@ -84,7 +84,9 @@ const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
                 </Link>
               </li>
               <li className="pt-4 mt-2 border-t border-white/10">
-                <span className="block text-[10px] uppercase font-bold tracking-widest text-primary mb-1">Learning Hub</span>
+                <span className="block text-[10px] uppercase font-bold tracking-widest text-primary mb-1">
+                  Learning Hub
+                </span>
                 <Link to="/indian-spices-guide" className="hover:text-white transition-colors">
                   Indian Spices Guide
                 </Link>

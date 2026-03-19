@@ -583,48 +583,384 @@ export const MOCK_TESTIMONIALS: Testimonial[] = [
   },
 ];
 
-export const MOCK_POSTS: BlogPost[] = [
+export const BLOG_POSTS_DATA: BlogPost[] = [
   {
-    id: 1,
-    slug: 'the-secret-to-perfect-biryani',
-    title: "The Secret to Perfect Biryani: It's All in the Saffron",
-    author: 'Anika Sharma',
-    date: 'July 15, 2024',
+    id: 101,
+    slug: 'top-5-spices-for-gut-health',
+    title: 'Top 5 Spices for Gut Health (With Everyday Indian Recipes)',
+    author: 'Dr. Aditi Sharma',
+    date: 'March 15, 2025',
     image:
-      'https://images.unsplash.com/photo-1589302168068-964664d93dc0?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
     excerpt:
-      'Unlock the secrets to a truly aromatic and flavorful biryani. We dive deep into why high-quality saffron, like our Himalayan variety, is the game-changer you need in your kitchen.',
+      'Discover which spices can aid digestion and improve your gut microbiome naturally. From turmeric to black pepper, learn how to use them in everyday cooking.',
     content: `
-      <p>Biryani is more than just a dish; it's a celebration. And at the heart of every great biryani is the quality of its ingredients. While the blend of spices is crucial, the one element that elevates it from good to unforgettable is saffron.</p>
-      <p>Our <strong>Tattva Co. Himalayan Saffron</strong> is sourced from the pristine valleys of Kashmir, where it is hand-picked and carefully dried to preserve its potent aroma, vibrant color, and distinct flavor. A few strands are enough to infuse your entire dish with a golden hue and a fragrance that is simply intoxicating.</p>
-      <h3 class="text-xl font-serif font-bold my-4">Why Quality Matters</h3>
-      <p>Not all saffron is created equal. Lower-grade saffron can be dull in color and weak in flavor, requiring you to use much more for a fraction of the effect. High-quality saffron releases its color and flavor slowly, ensuring a perfectly balanced and aromatic dish every time.</p>
-      <h3 class="text-xl font-serif font-bold my-4">Tips for Using Saffron</h3>
-      <ul>
-        <li>Steep the saffron strands in a few tablespoons of warm milk or water for at least 15 minutes before adding to your rice. This helps to fully release its color and flavor.</li>
-        <li>Be gentle. Saffron is delicate. Add it towards the end of the cooking process to preserve its aroma.</li>
-        <li>A little goes a long way. For a family-sized biryani, a generous pinch (about 15-20 strands) is usually sufficient.</li>
-      </ul>
+### Why Your Gut Loves Indian Spices
+
+If you grew up around an Indian kitchen, you have already met some of the best “gut supplements” on the planet—they just sit quietly in your masala dabba. Modern research is now validating what our grandparents knew: everyday spices like turmeric, ginger, and cumin can support digestion, microbial balance, and overall gut comfort.
+
+Throughout this guide, you will see gentle CTAs to our own Tattva Co. pantry heroes like Salem Turmeric and Mathania Chilli, so you can actually cook with what you learn.
+
+---
+
+## 1. Turmeric – The Golden Soother
+
+Turmeric is famous for curcumin, a compound with strong anti‑inflammatory and antioxidant properties that may help calm an irritated gut lining and support digestion. Studies suggest curcumin can influence gut microbiota, bile secretion, and even metabolic health when combined with a balanced diet.
+
+For daily use, a high‑curcumin variety like Salem turmeric is particularly valued for colour, aroma, and potential health benefits.
+
+**How to use in real life (simple ideas)**
+- Stir ½ teaspoon turmeric into your dal tadka or sabzi base.
+- Make a quick “haldi doodh” with milk (or plant milk), black pepper, and a drizzle of honey before bed.
+- Add a pinch to your morning warm water with lemon to support digestion and immunity.
+
+> **Upgrade your everyday haldi to our single‑origin [Tattva Co. Salem Turmeric Powder](/product/4)—sun‑dried, low‑heat ground, and packed for maximum colour and aroma.**
+
+---
+
+## 2. Ginger – For Bloating, Nausea, and Slow Digestion
+
+Ginger is the spice you reach for when your stomach feels heavy, gassy, or queasy. It stimulates saliva and digestive juices and may help food move more smoothly through the GI tract. Research also links ginger with reduced nausea and improved gastric motility.
+
+Because ginger warms the system, it pairs beautifully with lentils, vegetables, and even warm beverages.
+
+**Easy ways to add more ginger**
+- Start your day with ginger‑infused warm water and a squeeze of lemon.
+- Add grated ginger to dal tadka, sambar, or vegetable stir‑fries.
+- Brew a post‑meal ginger‑fennel tea to cut heaviness after a rich lunch or dinner.
+
+> **Pair fresh ginger with our [Tattva Co. Salem Turmeric Powder](/product/4) in your khichdi or curries for a gentle but powerful gut‑supportive combo.**
+
+---
+
+## 3. Cumin – The Everyday Digestive
+
+Cumin (jeera) is one of those spices you barely notice—until you skip it and your stomach feels off. Traditional systems use cumin for gas, bloating, and “weak digestion,” and modern research supports its role in stimulating digestive enzymes. It also acts as a carminative, helping reduce gas and discomfort.
+
+**Everyday cumin rituals**
+- Boil 1 teaspoon cumin seeds in water, then sip it warm as jeera water after meals.
+- Use roasted, ground cumin over chaas, raita, salads, and fruit bowls.
+- Temper cumin in ghee for dals and khichdi to make them lighter on the stomach.
+
+> **Make jeera water using our whole [Tattva Co. Cumin Seeds](/product/14), cleaned, graded, and packed to retain volatile oils and flavour.**
+
+---
+
+## 4. Fennel – Cooling Comfort for Acidity and Gas
+
+Fennel seeds (saunf) are that sweet little handful you get after a restaurant meal—and they are more than just a mouth freshener. Fennel contains compounds that relax smooth muscles in the digestive tract, which can ease cramping, gas, and bloating. It also offers mild antimicrobial and carminative benefits that support a balanced gut environment.
+
+**How to bring fennel into your day**
+- Keep roasted fennel in a jar on your dining table and chew a teaspoon after meals.
+- Brew fennel tea by steeping crushed seeds in hot water for 8–10 minutes.
+- Add a pinch to pickles, masala chai, or certain vegetable dishes for gentle sweetness.
+
+> **Try our [Tattva Co. Roasted Fennel (Saunf Mix)](/product/15) as a natural, gut‑friendly mukhwas alternative—no artificial colours or candy bits.**
+
+---
+
+## 5. Black Pepper – The Absorption Booster
+
+Black pepper is not just about heat; piperine, its active compound, can enhance the absorption of key nutrients and phytochemicals like curcumin. It also stimulates digestive enzymes and may support gut microbial diversity when used with fibre‑rich foods.
+
+**Small tweaks that make a big difference**
+- Finish soups, eggs, and salads with freshly crushed pepper instead of pre‑ground powder.
+- Always pair turmeric with black pepper in curries or golden milk for better curcumin bioavailability.
+- Use pepper instead of excess chilli if your gut is sensitive to high heat.
+
+> **For maximum aroma, switch to [Tattva Co. Whole Black Pepper](/product/2), crush fresh just before serving, and experience the difference in flavour and digestion.**
+
+---
+
+## What Science Says About Mixed Spices
+
+Interesting clinical work has looked at what happens when people eat a “typical” mixed‑spice meal. A single serving of curry with spices like cinnamon, ginger, rosemary, black pepper, and cayenne has been shown to shift gut microbial markers within hours. Another study on Indian spice blends found that spiced meals increased gastric emptying and sped up gut transit time compared with non‑spiced meals.
+
+In simple terms: the balanced masala in your curry is already a mini gut‑health formula—when built from clean, high‑quality spices.
+
+> **Build your daily gut‑friendly masala base with [Tattva Co. Salem Turmeric](/product/4), [Whole Cumin Seeds](/product/14), and [Whole Black Pepper](/product/2), then layer in your favourite chillies.**
+
+---
+
+## Simple Gut‑Friendly Indian Meal Idea
+
+A comforting, gut‑friendly plate does not need fancy ingredients. A classic example is moong dal khichdi tempered with ghee, cumin, ginger, turmeric, and a pinch of black pepper, served with a fennel‑jeera chaas. This combination gives you fibre, gentle protein, and the digestive support of five powerful spices in one meal.
+
+> **Recreate this plate at home using [Tattva Co. Salem Turmeric](/product/4), [Cumin Seeds](/product/14), [Black Pepper](/product/2), and [Roasted Fennel](/product/15)—all curated for everyday Ayurvedic cooking.**
+
+---
+
+## FAQs – Spices and Gut Health
+
+### Can these spices replace medical treatment?
+No. While spices like turmeric, ginger, and cumin can support digestion, they are not a substitute for professional medical care, especially for conditions like ulcers, IBD, or severe GERD. Always consult your doctor before making major changes.
+
+### How much spice is safe per day?
+Most people tolerate 1–2 teaspoons of mixed spices per meal, but tolerance is individual. If you feel burning, pain, or loose motions, reduce the quantity or switch to milder spices like fennel.
+
+### Are whole spices better than powders?
+Whole spices retain essential oils longer and give you more control over flavour and freshness. Ground spices are convenient but should be bought in small batches from trusted brands to avoid adulteration.
     `,
-    tags: ['Saffron', 'Biryani', 'Cooking Tips'],
+    tags: ['Health', 'Ayurveda', 'Digestion'],
+    isMarkdown: true,
+    faqs: [
+      {
+        question: 'Can these spices replace medical treatment?',
+        answer:
+          'No. While spices like turmeric, ginger, and cumin can support digestion, they are not a substitute for professional medical care. Always consult your doctor.',
+      },
+      {
+        question: 'How much spice is safe per day?',
+        answer:
+          'Most people tolerate 1–2 teaspoons of mixed spices per meal, but tolerance is individual.',
+      },
+      {
+        question: 'Are whole spices better than powders?',
+        answer:
+          'Whole spices retain essential oils longer and give you more control over flavour and freshness.',
+      },
+    ],
   },
   {
-    id: 2,
-    slug: 'beyond-the-grind-the-power-of-malabar-pepper',
-    title: 'Beyond the Grind: The Power of Malabar Pepper',
-    author: 'Rohan Gupta',
-    date: 'June 28, 2024',
+    id: 102,
+    slug: 'premium-spice-brands-comparison-2025',
+    title: "Premium Gourmet Spice Brands of India: The Complete Buyer's Guide (2025)",
+    author: 'Tattva Co. Team',
+    date: 'Jan 25, 2025',
     image:
-      'https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
     excerpt:
-      'Think all pepper is the same? Think again. We explore the bold, complex flavors of Tellicherry peppercorns from the Malabar Coast and why they deserve a prime spot in your spice rack.',
+      'This comprehensive guide breaks down the top premium and gourmet spice brands of India—comparing their sourcing practices, certifications, unique positioning, and pricing.',
+    tags: ['Premium Spices', 'Guide', 'Buying Guide'],
+    isMarkdown: true,
     content: `
-      <p>Pepper is one of the most common spices in the world, but it's often overlooked. We're here to change that. The <strong>Tattva Co. Malabar Black Pepper</strong> features Tellicherry peppercorns, the largest and most aromatic of all peppercorns.</p>
-      <p>Grown on the lush Malabar Coast in Kerala, these peppercorns are left on the vine longer to develop a deep, rich, and complex flavor profile with notes of citrus and pine. When you grind it fresh, the difference is undeniable.</p>
-      <h3 class="text-xl font-serif font-bold my-4">How to Use It</h3>
-      <p>Use it to finish dishes, not just during cooking. A fresh grind over a finished steak, a simple salad, or even a bowl of strawberries can be a revelation. Its robust flavor stands up well to strong meats and adds a surprising kick to desserts.</p>
+## Why Premium Spices Are Worth It
+
+If you love cooking Indian food, the difference between “good” and “unforgettable” often comes down to the quality of your spices. Premium brands focus on cleaner sourcing, better processing, and fresher packaging, which means more flavour, colour, and aroma per pinch—and fewer worries about adulteration.
+
+This guide will help you decode what “premium” actually means and how Tattva Co. fits into that landscape with products like Salem Turmeric and Mathania Chilli.
+
+---
+
+## What Makes a Spice Brand “Premium”?
+
+Premium is more than fancy labels. Here are the pillars you should look for when you evaluate any brand online or offline.
+
+- **Source transparency:** Single‑origin or region‑specific claims (Salem turmeric, Mathania chilli, Lakadong turmeric) suggest traceability and terroir‑driven flavour.
+- **Purity and testing:** Look for FSSAI licences, ISO systems, organic or residue‑free certifications, and mention of lab testing for contaminants.
+- **Processing quality:** Low‑temperature grinding, hygienic plants, and minimal hand‑contamination help preserve volatile oils and prevent mould or off‑flavours.
+- **Packaging:** Light‑proof, airtight packaging slows oxidation so your masala does not die in two months.
+
+> **At [Tattva Co.](/), we apply these same principles—small‑batch sourcing, careful cleaning, and protective packaging—across our [Salem Turmeric](/product/4), [Mathania Chilli](/product/12), and other whole‑spice lines.**
+
+---
+
+## Spotlight on Salem Turmeric and Mathania Chilli
+
+### Salem Turmeric – High‑Curcumin, High Colour
+Salem in Tamil Nadu is known for turmeric with rich colour and good curcumin content, which gives you deeper flavour and stronger “golden” tones in gravies. High‑quality Salem turmeric is valued for its potential health properties and is widely used in Ayurvedic and everyday cooking.
+
+> **Choose [Tattva Co. Salem Turmeric Powder](/product/4) for your daily curries, golden milk, and pickles when you want vibrant colour and clean, single‑origin sourcing.**
+
+### Mathania Chilli – Rajasthan’s Culinary Jewel
+Mathania chilli comes from a small region near Jodhpur and is loved for its bright red colour, flavour‑forward profile, and relatively moderate heat. It gives dishes like Laal Maas their signature deep red hue without overpowering them with harsh spiciness.
+
+> **If you want that authentic Rajasthani look and layered heat, reach for [Tattva Co. Mathania Chilli](/product/12) (Whole & Powder) in your tadkas, marinades, and Laal Maas.**
+
+---
+
+## Types of Spice Brands You’ll See in India (2025)
+
+| Segment | Typical examples | What they’re good at |
+| --- | --- | --- |
+| Legacy household brands | MDH, Everest, Tata Sampann, Badshah | Familiar flavours, strong distribution, budget‑friendly |
+| Export/B2B manufacturers | Eastern, Ramdev, others in industry guides | Bulk supply, certifications, consistent batches |
+| Regional specialists | MTR, Pravin, local masala houses | Authentic regional blends, strong local loyalty |
+| Gourmet/single‑origin brands | Salem‑ and Mathania‑focused labels and similar | Story‑driven sourcing, high aroma, whole‑spice quality |
+
+> **[Tattva Co.](/) sits in the gourmet/single‑origin space—focused on carefully sourced Indian staples like Salem Turmeric, Mathania Chilli, and premium whole spices for home cooks who care about both flavour and purity.**
+
+---
+
+## How to Choose the Right Brand for Your Kitchen
+
+Instead of hunting for a single “best” brand, match the brand to your needs.
+
+- **Cook daily for a family and want predictable taste?** A trusted national brand for some blends plus a few premium single‑origin spices is a great combo.
+- **Love experimenting and hosting?** Invest in gourmet whole spices and region‑specific chillies for signature dishes.
+- **Run a cafe or cloud kitchen?** Look at export‑oriented or B2B suppliers for bulk staples, and add a few hero products like Mathania chilli for speciality menu items.
+
+> **Use [Tattva Co. Salem Turmeric](/product/4) for all‑purpose cooking, and [Tattva Co. Mathania Chilli](/product/12) when you specifically want rich colour and Rajasthani character.**
+
+---
+
+## How to Spot Genuine Premium Quality (Online and Offline)
+
+When you’re scrolling through listings, this quick checklist helps you avoid flashy but low‑grade masalas.
+
+- **Region and variety clearly mentioned:** “Salem Turmeric,” “Mathania Chilli,” etc.
+- **Lab testing and certifications** noted in the description or images.
+- **Whole spices look clean**, well‑dried, with strong aroma and natural colour (not neon).
+- **Reasonable pricing:** real single‑origin spices cost more than generic masala, but they should not be unrealistically cheap or wildly overpriced.
+
+> **Check our product pages for detailed sourcing notes, batch coding, and transparent ingredient lists before you add [Tattva Co. spices](/shop) to your cart.**
+
+---
+
+## FAQs – Buying Premium Indian Spices
+
+### Do I need all my spices to be premium?
+Not necessarily. For everyday uses like basic chilli powder in large quantities, a good mid‑range brand is fine. Reserve premium options like Salem Turmeric or Mathania Chilli for dishes where flavour and colour really matter.
+
+### Are single‑origin spices always better?
+Single‑origin does not automatically mean higher quality, but it usually signals better traceability and a clearer flavour profile. Always cross‑check reviews, aroma, and packaging.
+
+### How should I store premium spices?
+Store them in airtight containers away from heat, light, and moisture to protect essential oils and colour. Ground spices benefit from being bought in smaller packs and used within a few months.
+
+### Why are Mathania chillies so expensive?
+Mathania is a relatively small growing region, with labour‑intensive sun‑drying and grading practices, and demand from chefs and exporters keeps prices high. You are paying for rarity, colour, and a very specific flavour profile.
     `,
-    tags: ['Pepper', 'Spices', 'History'],
+    faqs: [
+      {
+        question: 'Do I need all my spices to be premium?',
+        answer:
+          'Not necessarily. Reserve premium options for dishes where flavour and colour really matter.',
+      },
+      {
+        question: 'Are single-origin spices always better?',
+        answer:
+          'Usually signals better traceability and a clearer flavour profile, but check reviews.',
+      },
+      {
+        question: 'How should I store premium spices?',
+        answer: 'Airtight containers away from heat, light, and moisture.',
+      },
+      {
+        question: 'Why are Mathania chillies so expensive?',
+        answer:
+          'Due to labour-intensive sun-drying, grading practices, and demand for its rarity and specific flavour.',
+      },
+    ],
+  },
+  {
+    id: 103,
+    slug: 'restaurant-style-biryani-secret',
+    title: 'The Secret to Restaurant-Style Biryani (Hint: It’s Not Just the Rice)',
+    author: 'Chef Anjali D.',
+    date: 'Jan 15, 2025',
+    image:
+      'https://images.unsplash.com/photo-1589302168068-964664d93dc0?auto=format&fit=crop&q=80&w=800',
+    excerpt:
+      'It’s not just about the rice. The secret lies in the "Dum" technique and the layering of whole spices. Learn how to master it at home.',
+    tags: ['Recipe', 'Cooking Tips', 'Biryani'],
+    isMarkdown: true,
+    content: `
+### The Art of Dum Biryani
+
+Most home cooks struggle to get that distinctive aroma that hits you when you open a clay pot of biryani at a fine dining restaurant. The secret isn't MSG—it's high-quality whole spices infused into the fat *before* the meat/vegetables are added, and the slow "Dum" cooking process that traps every molecule of flavor.
+
+---
+
+## Secret 1: The "Dum" Technique (Steam Cooking)
+
+"Dum Pukht" literally means "choked steam." By sealing the pot with dough or a heavy lid, you create a high-pressure environment where the meat cooks in its own juices and the rice absorbs the aromatic steam. This prevents the delicate top layer of saffron rice from drying out while the bottom layer creates a delicious crust.
+
+**How to do it at home:**
+- Use a heavy-bottomed pot (Dutch oven or heavy steel/copper handi).
+- Seal the lid with wheat dough (atta) or use a tight-fitting lid with a weight on top.
+- Cook on the lowest flame for the final 20 minutes.
+
+---
+
+## Secret 2: The Whole Spice Infusion
+
+Restaurant biryani uses a "Potli Masala" (spice bag) or whole spices fried in ghee. You cannot get this depth of flavor from powder alone. The oil/ghee extracts the essential oils from the spices, which then coat every grain of rice.
+
+**Key Spices You Need:**
+- **Shahi Jeera (Caraway Seeds):** Essential for that earthy, royal scent.
+- **Whole Cardamom & Cloves:** Provide the floral high notes.
+- **Cinnamon Bark:** For sweet, woody warmth.
+- **Mace (Javitri) & Nutmeg:** The "secret weapons" of Mughlai cuisine.
+
+> **Start with a base of [Tattva Co. Whole Cumin](/product/14) and crushed [Green Cardamom](/product/10) to mimic the restaurant flavor profile.**
+
+---
+
+## Secret 3: The Saffron Milk Finish
+
+That beautiful gradient of yellow and orange rice? It comes from high-quality Saffron (Kesar). Never throw dry saffron strands on top. Always bloom them in warm milk for 20 minutes to release the "Crocin" (color) and "Safranal" (aroma).
+
+**Pro Tip:** Add a few drops of rose water or kewra water to the saffron milk for that wedding-banquet aroma.
+
+> **Our [Himalayan Saffron (Kesar)](/product/1) is Grade A Mongra, meaning you only need a few strands for a potent color and smell.**
+
+---
+
+## Recipe: Simplified Chicken Dum Biryani
+
+**Ingredients:**
+- 500g Chicken, marinated
+- 2 cups Basmati Rice (70% par-cooked)
+- 1/2 cup Fried Onions (Birista)
+- 2 tbsp Ghee
+- **Whole Spices:** Bay leaf, [Cinnamon](/product/11), [Cardamom](/product/10), Cloves
+
+**Instructions:**
+1. **Marinate:** Mix chicken with yogurt, ginger-garlic paste, red chilli powder, and salt. Let it sit for 2 hours.
+2. **Layer:** Place marinated chicken at the bottom of a heavy pot.
+3. **Rice:** Spread the 70% cooked rice over the chicken. Do not press it down.
+4. **Garnish:** Sprinkle fried onions, mint leaves, and pour the saffron milk over the rice.
+5. **Dum:** Seal the pot and cook on high for 5 mins, then low for 20 mins. Rest for 10 mins before opening.
+
+> **For the marinade, use our [Jodhpuri Mathania Chilli Powder](/product/12) for a vibrant red color without excessive heat.**
+
+---
+
+## FAQs – Biryani Mastery
+
+### Which rice is best for Biryani?
+Always use "Extra Long Grain" or "aged" Basmati rice. Aged rice absorbs flavors better and doesn't turn mushy.
+
+### Can I make this Vegetarian?
+Absolutely. Replace chicken with mixed vegetables (cauliflower, carrot, beans) or Paneer. The spice layering technique remains exactly the same.
+
+### Why is my rice breaking?
+You likely overcooked it before the Dum stage. Boil the rice only until it is 70% done (still has a "bite" in the center). It will finish cooking in the steam.
+    `,
+    faqs: [
+      {
+        question: 'Which rice is best for Biryani?',
+        answer: 'Use Extra Long Grain or aged Basmati rice for better absorption and texture.',
+      },
+      {
+        question: 'Can I make this Vegetarian?',
+        answer: 'Yes, substitute meat with mixed vegetables or Paneer; the technique is the same.',
+      },
+      {
+        question: 'Why is my rice breaking?',
+        answer: 'Avoid overcooking before the Dum stage; rice should be only 70% cooked initially.',
+      },
+    ],
+  },
+  {
+    id: 104,
+    slug: 'fake-turmeric-warning',
+    title: 'Why "Supermarket Turmeric" Might Be Fake',
+    author: 'Suresh R., Agronomist',
+    date: 'Jan 10, 2025',
+    image:
+      'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=800',
+    excerpt:
+      'Lead chromate is often used to give stale turmeric a bright yellow color. Here is a simple water test you can do at home to check for purity.',
+    tags: ['Education', 'Food Safety', 'Turmeric'],
+    isMarkdown: false,
+    content: `
+        <h2>The Adulteration Crisis</h2>
+        <p>Recent reliable studies have shown high levels of lead in commodity turmeric sold in loose markets. The bright yellow color often comes from *Lead Chromate*, a neurotoxin, rather than high heavy Curcumin content.</p>
+        <h3>The Water Test</h3>
+        <p>Mix a teaspoon of turmeric in warm water. If it settles calmly and leaves clear yellow water, it's likely pure. If it turns dark cloudy instantly, proceed with caution.</p>
+        `,
   },
 ];
 

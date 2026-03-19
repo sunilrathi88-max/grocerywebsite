@@ -3,26 +3,54 @@
 @tailwind utilities;
 
 :root {
-  /* Colors */
-  --primary-gold: #d4a017;
-  --primary-gold-dark: #b8860b;
-  --primary-gold-light: #fff9e6;
+  /* Dark Luxury Editorial Palette */
+  --ink: #110c06; /* primary background — near-black warm */
+  --char: #1e1408; /* elevated surfaces */
+  --ember: #c45e1a; /* deep saffron */
+  --saffron: #e07830; /* primary accent — all CTAs, highlights */
+  --turmeric: #c89518; /* secondary accent — warm gold */
+  --gold: #a87820; /* hover state for saffron */
+  --cream: #f2e8d0; /* primary text on dark, light section bg */
+  --dust: #b89868; /* secondary text, labels */
+  --mist: #7a6040; /* tertiary text, decorative lines */
+  --rouge: #7a2010; /* deep red spice — use sparingly */
 
-  --neutral-900: #1f2121;
-  --neutral-700: #6f7577;
-  --neutral-400: #e5e7eb;
-  --neutral-100: #f5f5f0;
-  --white: #ffffff;
-
+  /* Fallbacks mapped to preserve UI during transition */
+  --primary-gold: var(--saffron);
+  --primary-gold-dark: var(--ember);
+  --primary-gold-light: var(--turmeric);
+  --neutral-900: var(--ink);
+  --neutral-700: var(--char);
+  --neutral-400: var(--dust);
+  --neutral-100: var(--cream);
+  --white: var(--cream);
   --success: #2d8f5e;
   --error: #ef4444;
   --info: #3b82f6;
-
-  --accent-brown: #5f5238;
-  --accent-red: #c01f2f;
-
-  /* Spacing Base (4px) */
+  --accent-brown: var(--mist);
+  --accent-red: var(--rouge);
   --spacing-base: 4px;
+}
+
+@layer base {
+  body {
+    background-color: var(--ink);
+    color: var(--dust);
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-weight: 300;
+    letter-spacing: 0.01em;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    color: var(--cream);
+    font-weight: 300;
+  }
 }
 
 @layer components {
