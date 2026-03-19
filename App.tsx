@@ -18,6 +18,7 @@ import { getBundleSuggestions } from './utils/recommendations';
 // Performance Utils
 import { usePerformanceMonitoring } from './utils/performance';
 import { trackPageView } from './utils/analytics';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 
 // Framer Motion Optimization
 import { LazyMotion, domAnimation } from 'framer-motion';
@@ -1633,6 +1634,7 @@ const App: React.FC = () => {
             </React.Suspense>
           </div>
         </LazyMotion>
+        <SpeedInsights />
       </ABTestProvider>
     </HelmetProvider>
   );
