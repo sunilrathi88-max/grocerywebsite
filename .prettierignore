@@ -10,3 +10,16 @@ package-lock.json
 cypress/videos
 cypress/screenshots
 cypress/results
+
+# Ignore massive AI/Amazon Metadata dumps
+image
+Amazon*
+Salem_Turmeric*
+Turmeric_Amazon*
+*.txt
+lighthouse-*.json
+latest-audit.json
+.git
+.agents
+_agents
+.gemini
