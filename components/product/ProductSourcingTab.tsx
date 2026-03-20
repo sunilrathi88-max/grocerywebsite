@@ -28,8 +28,8 @@ const ProductSourcingTab: React.FC<ProductSourcingTabProps> = ({ product }) => {
             <h3 className="font-serif font-bold text-2xl mb-4">Met The Farmer</h3>
             <p className="text-gray-600 mb-6 leading-relaxed">
               &quot;I've been growing turmeric on my family's land in Telengana for 25 years. We
-              don't use chemical sprays—only neem oil and natural compost. Rathi Naturals. pays us fair
-              rates, which lets me send my daughter to college.&quot;
+              don't use chemical sprays—only neem oil and natural compost. Rathi Naturals. pays us
+              fair rates, which lets me send my daughter to college.&quot;
             </p>
 
             <div className="grid grid-cols-2 gap-4 border-t pt-4">

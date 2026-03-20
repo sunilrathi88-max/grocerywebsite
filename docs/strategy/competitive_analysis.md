@@ -531,18 +531,18 @@ Create a dedicated page showing:
 
 ## COMPETITIVE BENCHMARKING METRICS
 
-| Metric                  | Best Practice      | Rathi Naturals. Target    |
-| ----------------------- | ------------------ | -------------------- |
-| Product Page Load Time  | < 2 seconds        | < 1.5 seconds        |
-| Checkout Steps          | 3-4 steps          | 3 steps max          |
-| Abandonment Recovery    | 3 email sequence   | Implement            |
-| Product Images          | 5+ angles          | Min. 8 angles        |
-| Customer Reviews        | >1000 (cumulative) | Scale to 1000+       |
-| Conversion Rate         | 2-3%               | Target 2.5%          |
-| Average Order Value     | ₹1500-2500         | Track & improve      |
-| Customer Lifetime Value | High repeat rate   | >3 orders/year       |
-| Mobile Traffic          | >60%               | Optimize accordingly |
-| Page Speed (Mobile)     | >80 Lighthouse     | Target 90+           |
+| Metric                  | Best Practice      | Rathi Naturals. Target |
+| ----------------------- | ------------------ | ---------------------- |
+| Product Page Load Time  | < 2 seconds        | < 1.5 seconds          |
+| Checkout Steps          | 3-4 steps          | 3 steps max            |
+| Abandonment Recovery    | 3 email sequence   | Implement              |
+| Product Images          | 5+ angles          | Min. 8 angles          |
+| Customer Reviews        | >1000 (cumulative) | Scale to 1000+         |
+| Conversion Rate         | 2-3%               | Target 2.5%            |
+| Average Order Value     | ₹1500-2500         | Track & improve        |
+| Customer Lifetime Value | High repeat rate   | >3 orders/year         |
+| Mobile Traffic          | >60%               | Optimize accordingly   |
+| Page Speed (Mobile)     | >80 Lighthouse     | Target 90+             |
 
 ---
 

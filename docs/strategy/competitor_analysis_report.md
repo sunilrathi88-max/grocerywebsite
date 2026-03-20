@@ -190,7 +190,7 @@ Competitors gaining visibility through:
 | **Content Syndication Network**    | Ongoing     | Republish blog posts to Medium, LinkedIn, Substack food networks (each = backlink). 1 article = 5-7 republications.                                                                                 | 5-8                |
 | **Food Publication Features**      | Weeks 12-24 | Build editor relationships; create content THEY want to cover ("How E-Commerce is Disrupting Spice Distribution"). Get featured in Progressive Grocer, businessoffood.in, Food & Beverage Magazine. | 2-3                |
 | **"2025 Spice Trends Report"**     | Week 14-20  | Release original research on spice searches, regional preferences, health trends. Journalists/roundup creators cite it.                                                                             | 4-7                |
-| **Influencer/Affiliate Expansion** | Weeks 10-24 | Recruit 20+ food creators to affiliate program. Each naturally links in their content ("I recommend Rathi Naturals via my affiliate link")                                                                  | 6-10               |
+| **Influencer/Affiliate Expansion** | Weeks 10-24 | Recruit 20+ food creators to affiliate program. Each naturally links in their content ("I recommend Rathi Naturals via my affiliate link")                                                          | 6-10               |
 |                                    |             | **TIER 3 TOTAL (per quarter)**                                                                                                                                                                      | **17-28**          |
 
 ---

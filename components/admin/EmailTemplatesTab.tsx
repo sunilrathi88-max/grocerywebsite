@@ -274,7 +274,9 @@ const EmailTemplatesTab: React.FC = () => {
                     <div className="bg-white rounded-lg shadow-md overflow-hidden max-w-xl mx-auto">
                       {/* Email Header */}
                       <div className="bg-brand-primary p-4">
-                        <h2 className="text-white text-xl font-bold text-center">Rathi Naturals.</h2>
+                        <h2 className="text-white text-xl font-bold text-center">
+                          Rathi Naturals.
+                        </h2>
                       </div>
                       {/* Email Subject */}
                       <div className="p-4 border-b">

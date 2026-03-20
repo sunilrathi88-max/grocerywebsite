@@ -13,7 +13,9 @@
 - ✅ **Title Tag**: 74 characters (optimal: 50-60)
 
   ```html
-  <title>Rathi Naturals. - Authentic Indian Gourmet Products | Premium Spices & Organic Foods</title>
+  <title>
+    Rathi Naturals. - Authentic Indian Gourmet Products | Premium Spices & Organic Foods
+  </title>
   ```
 
 - ✅ **Meta Description**: 160 characters (optimal: 150-160)

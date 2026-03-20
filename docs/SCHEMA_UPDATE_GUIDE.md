@@ -60,7 +60,7 @@ COMMENT ON COLUMN products.slug IS 'URL-friendly product identifier';
 | Field     | Type     | Description                | Example                             |
 | --------- | -------- | -------------------------- | ----------------------------------- |
 | `tags`    | `text[]` | Product tags for filtering | `["saffron", "premium", "organic"]` |
-| `brand`   | `text`   | Brand name                 | `"Rathi Naturals."`                      |
+| `brand`   | `text`   | Brand name                 | `"Rathi Naturals."`                 |
 | `sku`     | `text`   | Stock keeping unit         | `"SAFF-KASH-001"`                   |
 | `barcode` | `text`   | Product barcode            | `"8901234567890"`                   |
 | `slug`    | `text`   | URL-friendly identifier    | `"premium-kashmiri-saffron"`        |

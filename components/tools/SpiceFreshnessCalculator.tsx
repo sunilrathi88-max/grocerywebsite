@@ -350,7 +350,9 @@ export default function SpiceFreshnessCalculator() {
 
               <div className={styles.ctaBox}>
                 <h4>🌶️ Need Fresh Spices?</h4>
-                <p>Rathi Naturals. delivers lab-tested, farm-direct spices with guaranteed freshness.</p>
+                <p>
+                  Rathi Naturals. delivers lab-tested, farm-direct spices with guaranteed freshness.
+                </p>
                 <a href="/shop" className={styles.ctaButton}>
                   Shop Fresh Spices at Rathi Naturals →
                 </a>

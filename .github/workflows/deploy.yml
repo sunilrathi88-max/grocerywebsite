@@ -15,6 +15,7 @@ jobs:
   quality:
     name: Code Quality & Tests
     runs-on: ubuntu-latest
+    timeout-minutes: 15
 
     steps:
       - name: 📥 Checkout code
@@ -39,7 +40,7 @@ jobs:
         run: npm run format:check
 
       - name: 🧪 Run unit tests
-        run: npm run test:coverage
+        run: npx jest --forceExit --coverage
 
       - name: 📊 Upload coverage reports
         uses: codecov/codecov-action@v3
@@ -53,6 +54,7 @@ jobs:
   build:
     name: Build & Bundle Analysis
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     needs: quality
 
     steps:

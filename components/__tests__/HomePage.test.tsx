@@ -10,18 +10,38 @@ jest.mock('../../src/context/ABTestContext', () => ({
   useABTest: () => ({ variant: 'control', trackConversion: jest.fn() }),
 }));
 
-jest.mock('../HeroSection', () => () => <div data-testid="hero-section" />);
+// Mock all child components used by current HomePage
+jest.mock('../Hero', () => () => <div data-testid="hero" />);
+jest.mock('../ui/MarqueeStrip', () => () => <div data-testid="marquee-strip" />);
+jest.mock('../ui/PhilosophySection', () => () => <div data-testid="philosophy-section" />);
+jest.mock('../ui/PinnedProcessSection', () => () => <div data-testid="pinned-process" />);
 jest.mock('../TrustSignals', () => () => <div data-testid="trust-signals" />);
-jest.mock('../JourneyTimeline', () => () => <div data-testid="journey-timeline" />);
 jest.mock('../HarvestCollection', () => () => <div data-testid="harvest-collection" />);
-jest.mock('../CategoryShowcase', () => () => <div data-testid="category-showcase" />);
 jest.mock('../ProductGrid', () => () => <div data-testid="product-grid" />);
 jest.mock('../SortDropdown', () => () => <div data-testid="sort-dropdown" />);
 jest.mock('../AdvancedFilters', () => () => <div data-testid="advanced-filters" />);
+jest.mock('../Testimonials', () => () => <div data-testid="testimonials" />);
+jest.mock('../QuizModule', () => () => <div data-testid="quiz-module" />);
+jest.mock('../CookingContextWidget', () => () => <div data-testid="cooking-context" />);
+jest.mock('../BlogHighlights', () => () => <div data-testid="blog-highlights" />);
+jest.mock('../NewsletterSection', () => () => <div data-testid="newsletter" />);
+jest.mock('../RecommendedProducts', () => () => <div data-testid="recommended-products" />);
+jest.mock('../SEO', () => () => null);
+jest.mock('../../utils/seo', () => ({
+  pageSEO: { home: () => ({ title: 'Test', description: 'Test' }) },
+}));
+jest.mock('../../data/testimonials', () => ({
+  FEATURED_TESTIMONIALS: [],
+}));
+jest.mock('react-hot-toast', () => ({
+  __esModule: true,
+  default: Object.assign(jest.fn(), {
+    success: jest.fn(),
+    error: jest.fn(),
+  }),
+}));
 
 describe('HomePage UX Redesign Verification', () => {
-  // Create sample products including the IDs we care about: 4, 12, 29, 28
-  // and some extras
   const mockProducts: Product[] = [
     { id: 4, name: 'Target Spices 1', variants: [] } as any,
     { id: 12, name: 'Target Spices 2', variants: [] } as any,
@@ -80,8 +100,17 @@ describe('HomePage UX Redesign Verification', () => {
     _addToast: jest.fn(),
   };
 
-  it('renders the harvest collection', () => {
+  it('renders the harvest collection sections', () => {
     render(<HomePage {...defaultProps} />);
-    expect(screen.getByTestId('harvest-collection')).toBeInTheDocument();
+    const collections = screen.getAllByTestId('harvest-collection');
+    expect(collections.length).toBe(2); // Best Sellers + New Arrivals
+  });
+
+  it('renders core page sections', () => {
+    render(<HomePage {...defaultProps} />);
+    expect(screen.getByTestId('hero')).toBeInTheDocument();
+    expect(screen.getByTestId('trust-signals')).toBeInTheDocument();
+    expect(screen.getByTestId('testimonials')).toBeInTheDocument();
+    expect(screen.getByTestId('newsletter')).toBeInTheDocument();
   });
 });

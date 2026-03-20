@@ -569,7 +569,9 @@ const SubscriptionManager: React.FC<{ user: User }> = ({ user }) => {
       <div className="bg-gray-50 rounded-xl p-6 border border-gray-200">
         <div className="flex items-start justify-between mb-6">
           <div>
-            <h4 className="text-lg font-bold text-gray-900">Rathi Naturals Fresh: Monthly Spice Box</h4>
+            <h4 className="text-lg font-bold text-gray-900">
+              Rathi Naturals Fresh: Monthly Spice Box
+            </h4>
             <p className="text-sm text-gray-500">
               Next billing date: {new Date(subscription.nextBillingDate).toLocaleDateString()}
             </p>
