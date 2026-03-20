@@ -33,6 +33,8 @@ jobs:
         run: npm ci --prefer-offline --no-audit --no-fund
         env:
           CI: true
+          PUPPETEER_SKIP_DOWNLOAD: true
+          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
       - name: Verify Cypress installation
         run: npx cypress verify
@@ -108,6 +110,8 @@ jobs:
         run: npm ci --prefer-offline --no-audit --no-fund
         env:
           CI: true
+          PUPPETEER_SKIP_DOWNLOAD: true
+          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
       - name: Start dev server
         run: npm run dev &

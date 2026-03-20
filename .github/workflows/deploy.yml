@@ -32,6 +32,8 @@ jobs:
         env:
           CI: true
           CYPRESS_INSTALL_BINARY: 0
+          PUPPETEER_SKIP_DOWNLOAD: true
+          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
       - name: 🔍 TypeScript check
         run: npm run type-check
@@ -75,9 +77,13 @@ jobs:
         env:
           CI: true
           CYPRESS_INSTALL_BINARY: 0
+          PUPPETEER_SKIP_DOWNLOAD: true
+          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
       - name: 🏗️ Build production bundle
         run: npm run build
+        env:
+          PUPPETEER_EXECUTABLE_PATH: /usr/bin/google-chrome
 
       - name: 📊 Analyze bundle size
         run: |
