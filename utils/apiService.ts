@@ -1,4 +1,4 @@
-﻿/**
+/**
  * API Service Layer
  * Business logic for API calls with proper typing
  */
@@ -895,7 +895,7 @@ export const userAPI = {
     const { error } = await (
       await getSupabase()
     ).auth.resetPasswordForEmail(email, {
-      redirectTo: window.location.origin + '/#/reset-password',
+      redirectTo: window.location.origin + '/reset-password',
     });
     if (error) throw error;
     return { success: true, data: undefined };

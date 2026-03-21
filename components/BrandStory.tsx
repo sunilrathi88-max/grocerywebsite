@@ -1,5 +1,6 @@
 import React from 'react';
 import { m } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 const BrandStory: React.FC = () => {
   const features = [
@@ -61,13 +62,13 @@ const BrandStory: React.FC = () => {
         </div>
 
         <div className="mt-16">
-          <a
-            href="#/about"
+          <Link
+            to="/about"
             className="inline-flex items-center gap-2 text-brand-primary font-bold hover:text-brand-dark transition-colors group"
           >
             Read Our Full Story
             <span className="transform group-hover:translate-x-1 transition-transform">→</span>
-          </a>
+          </Link>
         </div>
       </div>
     </section>

@@ -15,7 +15,7 @@ interface BlogPostPageProps {
 const BlogPostPage: React.FC<BlogPostPageProps> = ({ post }) => {
   // SEO Configuration
   const seoConfig = React.useMemo(
-    () => (post ? pageSEO.product(post.title, post.excerpt) : null),
+    () => (post ? { title: post.metaTitle || post.title, description: post.metaDescription || post.excerpt } : null),
     [post]
   );
 
@@ -42,8 +42,8 @@ const BlogPostPage: React.FC<BlogPostPageProps> = ({ post }) => {
   }
 
   const breadcrumbItems = [
-    { label: 'Home', href: '#/' },
-    { label: 'Blog', href: '#/blog' },
+    { label: 'Home', href: '/' },
+    { label: 'Blog', href: '/blog' },
     { label: post.title },
   ];
 
@@ -61,10 +61,16 @@ const BlogPostPage: React.FC<BlogPostPageProps> = ({ post }) => {
         <h1 className="text-4xl md:text-6xl font-serif font-bold text-brand-dark mb-4 leading-tight">
           {post.title}
         </h1>
-        <div className="flex items-center justify-center gap-3 text-neutral-500 font-medium tracking-wide text-sm uppercase">
+        <div className="flex items-center justify-center gap-3 text-neutral-500 font-medium tracking-wide text-sm uppercase flex-wrap">
           <span>{post.author}</span>
           <span className="w-1 h-1 bg-neutral-300 rounded-full" />
           <span>{post.date}</span>
+          {post.updateDate && (
+            <>
+              <span className="w-1 h-1 bg-neutral-300 rounded-full" />
+              <span className="italic text-neutral-400 normal-case">Last updated: {post.updateDate}</span>
+            </>
+          )}
           {post.tags?.[0] && (
             <>
               <span className="w-1 h-1 bg-neutral-300 rounded-full" />
@@ -74,13 +80,28 @@ const BlogPostPage: React.FC<BlogPostPageProps> = ({ post }) => {
         </div>
       </div>
 
-      <div className="w-full max-w-5xl mx-auto mb-12">
-        <img
-          src={post.image}
-          alt={post.title}
-          className="w-full h-auto max-h-[650px] object-cover rounded-sm shadow-xl"
-          onError={imageErrorHandlers.blog}
-        />
+      <div className="w-full max-w-5xl mx-auto mb-12 rounded-sm shadow-xl overflow-hidden relative" style={{ minHeight: '400px' }}>
+        {post.image.includes('fallback') ? (
+          <div className="w-full h-full min-h-[400px] md:min-h-[500px] bg-gradient-to-br from-brand-primary to-brand-dark flex flex-col items-center justify-center p-8 md:p-12 text-center relative">
+            {/* Animated SVG background pattern */}
+            <div className="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPgo8cmVjdCB3aWR0aD0iOCIgaGVpZ2h0PSI4IiBmaWxsPSIjZmZmIj48L3JlY3Q+CjxwYXRoIGQ9Ik0wIDBMODg4TTggMEwwIDgiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIxIj48L3BhdGg+Cjwvc3ZnPg==')] animate-[slide_20s_linear_infinite]" />
+            <div className="relative z-10 max-w-3xl">
+              <span className="inline-block px-4 py-1.5 border border-white/40 text-white/90 uppercase tracking-widest text-xs font-bold rounded-full mb-6 backdrop-blur-sm">
+                Editorial
+              </span>
+              <h2 className="text-4xl md:text-5xl lg:text-6xl text-white font-serif italic drop-shadow-md leading-tight">
+                {post.title}
+              </h2>
+            </div>
+          </div>
+        ) : (
+          <img
+            src={post.image}
+            alt={post.title}
+            className="w-full h-auto max-h-[650px] object-cover"
+            onError={imageErrorHandlers.blog}
+          />
+        )}
       </div>
 
       <div className="max-w-2xl mx-auto">

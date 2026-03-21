@@ -3,7 +3,7 @@ import { useGSAP } from '../../hooks/useGSAP';
 import { gsap } from 'gsap';
 
 const MARQUEE_ITEMS = [
-  'ESTABLISHED 1968',
+  'ESTABLISHED 1965',
   'COLD-GROUND IN RAMGANJ MANDI',
   'SINGLE-ORIGIN PROCUREMENT',
   'ZERO PRESERVATIVES',

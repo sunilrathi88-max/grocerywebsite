@@ -1,16 +1,18 @@
 import { BlogPost } from '../types';
+import { PILLAR_POSTS } from './pillarPosts';
 
 export const BLOG_POSTS_DATA: BlogPost[] = [
   {
     id: 101,
-    slug: 'top-5-spices-for-gut-health',
-    title: 'Top 5 Spices for Gut Health (With Everyday Indian Recipes)',
+    slug: 'spices-for-gut-health-india',
+    title: 'Top 5 Spices for Gut Health in India',
+    metaTitle: 'Top 5 Spices for Gut Health in India | Rathi Naturals',
+    metaDescription: 'Discover the best spices for gut health in India. From Salem turmeric to cumin, learn how everyday Indian cold-ground spices improve digestion and microbiome balance.',
     author: 'Dr. Aditi Sharma',
     date: 'March 15, 2025',
-    image:
-      'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
-    excerpt:
-      'Discover which spices can aid digestion and improve your gut microbiome naturally. From turmeric to black pepper, learn how to use them in everyday cooking.',
+    updateDate: 'March 21, 2026',
+    image: 'fallback-blog-gut-health',
+    excerpt: 'Discover which spices can aid digestion and improve your gut microbiome naturally. From turmeric to black pepper, learn how to use them in everyday cooking.',
     tags: ['Health', 'Gut Health', 'Ayurveda', 'Digestion'],
     isMarkdown: true,
     content: `
@@ -18,7 +20,7 @@ export const BLOG_POSTS_DATA: BlogPost[] = [
 
 If you grew up around an Indian kitchen, you have already met some of the best "gut supplements" on the planet—they just sit quietly in your masala dabba. Modern research is now validating what our grandparents knew: everyday spices like turmeric, ginger, and cumin can support digestion, microbial balance, and overall gut comfort.
 
-Throughout this guide, you will see gentle CTAs to our own Rathi Naturals. pantry heroes like Salem Turmeric and Mathania Chilli, so you can actually cook with what you learn.
+Throughout this guide, you will see gentle CTAs to our own Rathi Naturals pantry heroes like Salem Turmeric and Mathania Chilli, so you can actually cook with what you learn.
 
 ---
 
@@ -33,7 +35,7 @@ For daily use, a high-curcumin variety like Salem turmeric is particularly value
 - Make a quick "haldi doodh" with milk (or plant milk), black pepper, and a drizzle of honey before bed.
 - Add a pinch to your morning warm water with lemon to support digestion and immunity.
 
-> **Shop Now:** Upgrade your everyday haldi to our single-origin **[Rathi Naturals. Salem Turmeric Powder](/product/4)**—sun-dried, low-heat ground, and packed for maximum colour and aroma.
+> **Shop Now:** Upgrade your everyday haldi to our single-origin **[Rathi Naturals Salem Turmeric Powder](/product/4)**—sun-dried, low-heat ground, and packed for maximum colour and aroma.
 
 ---
 
@@ -48,7 +50,7 @@ Because ginger warms the system, it pairs beautifully with lentils, vegetables, 
 - Add grated ginger to dal tadka, sambar, or vegetable stir-fries.
 - Brew a post-meal ginger-fennel tea to cut heaviness after a rich lunch or dinner.
 
-> **Pro Tip:** Pair fresh ginger with our **[Rathi Naturals. Salem Turmeric Powder](/product/4)** in your khichdi or curries for a gentle but powerful gut-supportive combo.
+> **Pro Tip:** Pair fresh ginger with our **[Rathi Naturals Salem Turmeric Powder](/product/4)** in your khichdi or curries for a gentle but powerful gut-supportive combo.
 
 ---
 
@@ -61,7 +63,7 @@ Cumin (jeera) is one of those spices you barely notice—until you skip it and y
 - Use roasted, ground cumin over chaas, raita, salads, and fruit bowls.
 - Temper cumin in ghee for dals and khichdi to make them lighter on the stomach.
 
-> **Shop Now:** Make jeera water using our whole **[Rathi Naturals. Cumin Seeds](/product/14)**—cleaned, graded, and packed to retain volatile oils and flavour.
+> **Shop Now:** Make jeera water using our whole **[Rathi Naturals Cumin Seeds](/product/14)**—cleaned, graded, and packed to retain volatile oils and flavour.
 
 ---
 
@@ -74,7 +76,7 @@ Fennel seeds (saunf) are that sweet little handful you get after a restaurant me
 - Brew fennel tea by steeping crushed seeds in hot water for 8–10 minutes.
 - Add a pinch to pickles, masala chai, or certain vegetable dishes for gentle sweetness.
 
-> **Shop Now:** Try our **[Rathi Naturals. Fennel Seeds (Saunf)](/product/15)** as a natural, gut-friendly mukhwas alternative—no artificial colours or candy bits.
+> **Shop Now:** Try our natural, gut-friendly mukhwas alternatives.
 
 ---
 
@@ -87,7 +89,7 @@ Black pepper is not just about heat; piperine, its active compound, can enhance 
 - Always pair turmeric with black pepper in curries or golden milk for better curcumin bioavailability.
 - Use pepper instead of excess chilli if your gut is sensitive to high heat.
 
-> **Shop Now:** For maximum aroma, switch to **[Rathi Naturals. Whole Black Pepper](/product/2)**—crush fresh just before serving and experience the difference in flavour and digestion.
+> **Shop Now:** For maximum aroma, switch to **[Rathi Naturals Whole Black Pepper](/product/2)**—crush fresh just before serving and experience the difference in flavour and digestion.
 
 ---
 
@@ -107,45 +109,37 @@ A comforting, gut-friendly plate does not need fancy ingredients. A classic exam
 
 ---
 
-## FAQs – Spices and Gut Health
+***
 
-### Can these spices replace medical treatment?
-No. While spices like turmeric, ginger, and cumin can support digestion, they are not a substitute for professional medical care, especially for conditions like ulcers, IBD, or severe GERD. Always consult your doctor before making major changes.
-
-### How much spice is safe per day?
-Most people tolerate 1–2 teaspoons of mixed spices per meal, but tolerance is individual. If you feel burning, pain, or loose motions, reduce the quantity or switch to milder spices like fennel.
-
-### Are whole spices better than powders?
-Whole spices retain essential oils longer and give you more control over flavour and freshness. Ground spices are convenient but should be bought in small batches from trusted brands to avoid adulteration.
+**About the Author:**  
+Dr. Aditi Sharma is an Ayurvedic practitioner and clinical nutritionist. She specializes in integrating traditional Indian dietary wisdom with modern microbiome science to help patients achieve sustainable digestive wellness.
 `,
     faqs: [
       {
         question: 'Can spices replace medical treatment for gut issues?',
-        answer:
-          'No. Spices may support digestion but cannot replace professional medical treatment for diagnosed gut conditions.',
+        answer: 'No. Spices may support digestion but cannot replace professional medical treatment for diagnosed gut conditions.',
       },
       {
         question: 'How much spice can I safely consume per day?',
-        answer:
-          'Most healthy adults tolerate 1–2 teaspoons of mixed spices per meal, but individual tolerance varies.',
+        answer: 'Most healthy adults tolerate 1–2 teaspoons of mixed spices per meal, but individual tolerance varies.',
       },
       {
         question: 'Are whole spices better than ground spices for gut health?',
-        answer:
-          'Whole spices keep essential oils and flavour longer, while ground spices are convenient but should be sourced from trusted brands.',
+        answer: 'Whole spices keep essential oils and flavour longer, while ground spices are convenient but should be sourced from trusted brands.',
       },
     ],
   },
   {
     id: 102,
-    slug: 'premium-spice-brands-comparison-2025',
-    title: "Premium Gourmet Spice Brands of India: The Complete Buyer's Guide (2025)",
-    author: 'Rathi Naturals. Team',
+    slug: 'best-gourmet-spice-brands-india',
+    title: 'The Best Gourmet Spice Brands in India: A 2025 Buyer\'s Guide',
+    metaTitle: 'Best Gourmet Spice Brands in India (2025 Buyer\'s Guide) | Rathi Naturals',
+    metaDescription: 'Find the best gourmet spice brands in India for 2025. Learn how to identify premium cold-ground spices, check FSSAI certifications, and avoid adulteration.',
+    author: 'Rathi Naturals Team',
     date: 'Jan 25, 2025',
-    image:
-      'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
-    excerpt:
-      'This comprehensive guide breaks down what makes premium spices worth it—covering sourcing practices, certifications, unique positioning, and how to spot genuine quality.',
+    updateDate: 'March 21, 2026',
+    image: 'fallback-blog-gourmet',
+    excerpt: 'This comprehensive guide breaks down what makes premium spices worth it—covering sourcing practices, certifications, unique positioning, and how to spot genuine quality.',
     tags: ['Premium Spices', 'Guide', 'Buying Guide', '2025'],
     isMarkdown: true,
     content: `
@@ -153,7 +147,7 @@ Whole spices retain essential oils longer and give you more control over flavour
 
 If you love cooking Indian food, the difference between "good" and "unforgettable" often comes down to the quality of your spices. Premium brands focus on cleaner sourcing, better processing, and fresher packaging, which means more flavour, colour, and aroma per pinch—and fewer worries about adulteration.
 
-This guide will help you decode what "premium" actually means and how Rathi Naturals. fits into that landscape with products like Salem Turmeric and Mathania Chilli.
+This guide will help you decode what "premium" actually means and how Rathi Naturals fits into that landscape with products like Salem Turmeric and Mathania Chilli.
 
 ---
 
@@ -165,10 +159,10 @@ Premium is more than fancy labels. Here are the pillars you should look for when
 |----------------|------------------|
 | **Source Transparency** | Single-origin or region-specific claims (Salem turmeric, Mathania chilli, Lakadong turmeric) |
 | **Purity & Testing** | FSSAI licences, ISO systems, organic or residue-free certifications, lab testing for contaminants |
-| **Processing Quality** | Low-temperature grinding, hygienic plants, minimal hand-contamination |
+| **Processing Quality** | Low-temperature cold grinding, hygienic plants, minimal hand-contamination |
 | **Packaging** | Light-proof, airtight packaging that slows oxidation |
 
-> At **Rathi Naturals.**, we apply these same principles—small-batch sourcing, careful cleaning, and protective packaging—across our Salem Turmeric, Mathania Chilli, and other whole-spice lines.
+> At **Rathi Naturals**, we apply these same principles—small-batch sourcing, careful cleaning, and protective packaging—across our cold ground arrays and other whole-spice lines. Consider starting your premium journey with our flagship **[Salem Turmeric Powder](/product/4)**.
 
 ---
 
@@ -178,13 +172,13 @@ Premium is more than fancy labels. Here are the pillars you should look for when
 
 Salem in Tamil Nadu is known for turmeric with rich colour and good curcumin content, which gives you deeper flavour and stronger "golden" tones in gravies. High-quality Salem turmeric is valued for its potential health properties and is widely used in Ayurvedic and everyday cooking.
 
-> **Shop Now:** Choose **[Rathi Naturals. Salem Turmeric Powder](/product/4)** for your daily curries, golden milk, and pickles when you want vibrant colour and clean, single-origin sourcing.
+> **Shop Now:** Choose **[Rathi Naturals Salem Turmeric Powder](/product/4)** for your daily curries, golden milk, and pickles when you want vibrant colour and clean, single-origin sourcing.
 
 ### Mathania Chilli – Rajasthan's Culinary Jewel
 
 Mathania chilli comes from a small region near Jodhpur and is loved for its bright red colour, flavour-forward profile, and relatively moderate heat. It gives dishes like Laal Maas their signature deep red hue without overpowering them with harsh spiciness.
 
-> **Shop Now:** If you want that authentic Rajasthani look and layered heat, reach for **[Rathi Naturals. Mathania Chilli](/product/12)** in your tadkas, marinades, and Laal Maas.
+> **Shop Now:** If you want that authentic Rajasthani look and layered heat, reach for **[Rathi Naturals Mathania Chilli](/product/12)** in your tadkas, marinades, and Laal Maas.
 
 ---
 
@@ -197,7 +191,7 @@ Mathania chilli comes from a small region near Jodhpur and is loved for its brig
 | **Regional Specialists** | MTR, Pravin, local masala houses | Authentic regional blends, strong local loyalty |
 | **Gourmet/Single-Origin Brands** | Salem- and Mathania-focused labels | Story-driven sourcing, high aroma, whole-spice quality |
 
-**Rathi Naturals.** sits in the gourmet/single-origin space—focused on carefully sourced Indian staples like Salem Turmeric, Mathania Chilli, and premium whole spices for home cooks who care about both flavour and purity.
+**Rathi Naturals** sits in the gourmet/single-origin space—focused on carefully sourced Indian staples like Salem Turmeric, Mathania Chilli, and premium whole spices for home cooks who care about both flavour and purity.
 
 ---
 
@@ -206,10 +200,8 @@ Mathania chilli comes from a small region near Jodhpur and is loved for its brig
 Instead of hunting for a single "best" brand, match the brand to your needs:
 
 - **Cook daily for a family and want predictable taste?** A trusted national brand for some blends plus a few premium single-origin spices is a great combo.
-- **Love experimenting and hosting?** Invest in gourmet whole spices and region-specific chillies for signature dishes.
+- **Love experimenting and hosting?** Invest in gourmet whole spices and region-specific chillies for signature dishes. Try our pure **[Kashmiri Saffron](/product/1)** for ultimate luxury.
 - **Run a cafe or cloud kitchen?** Look at export-oriented or B2B suppliers for bulk staples, and add a few hero products like Mathania chilli for speciality menu items.
-
-> **Our Recommendation:** Use **[Rathi Naturals. Salem Turmeric](/product/4)** for all-purpose cooking, and **[Rathi Naturals. Mathania Chilli](/product/12)** when you specifically want rich colour and Rajasthani character.
 
 ---
 
@@ -222,158 +214,155 @@ When you're scrolling through listings, this quick checklist helps you avoid fla
 ✅ Whole spices look clean, well-dried, with strong aroma and natural colour (not neon)  
 ✅ Reasonable pricing: real single-origin spices cost more than generic masala, but they should not be unrealistically cheap or wildly overpriced  
 
-> Check our product pages for detailed sourcing notes, batch coding, and transparent ingredient lists before you add **Rathi Naturals. spices** to your cart.
+***
 
----
-
-## FAQs – Buying Premium Indian Spices
-
-### Do I need all my spices to be premium?
-Not necessarily. For everyday uses like basic chilli powder in large quantities, a good mid-range brand is fine. Reserve premium options like Salem Turmeric or Mathania Chilli for dishes where flavour and colour really matter.
-
-### Are single-origin spices always better?
-Single-origin does not automatically mean higher quality, but it usually signals better traceability and a clearer flavour profile. Always cross-check reviews, aroma, and packaging.
-
-### How should I store premium spices?
-Store them in airtight containers away from heat, light, and moisture to protect essential oils and colour. Ground spices benefit from being bought in smaller packs and used within a few months.
-
-### Why are Mathania chillies so expensive?
-Mathania is a relatively small growing region, with labour-intensive sun-drying and grading practices, and demand from chefs and exporters keeps prices high. You are paying for rarity, colour, and a very specific flavour profile.
+**About the Author:**  
+The Rathi Naturals Team consists of third-generation spice merchants and agronomists rooted in Sangaria, Rajasthan. They are dedicated to preserving the 1965 family legacy of cold-grinding purity and bringing unadulterated heritage spices directly to modern Indian kitchens.
 `,
     faqs: [
       {
         question: 'Do I need all my spices to be premium?',
-        answer:
-          'No. Use a mix of reliable everyday brands and premium single-origin spices like Salem turmeric and Mathania chilli for dishes where flavour and colour matter most.',
+        answer: 'No. Use a mix of reliable everyday brands and premium single-origin spices like Salem turmeric and Mathania chilli for dishes where flavour and colour matter most.',
       },
       {
         question: 'Are single-origin spices always better?',
-        answer:
-          'Single-origin spices offer traceability and consistent flavour, but quality still depends on farming, processing, and storage.',
+        answer: 'Single-origin spices offer traceability and consistent flavour, but quality still depends on farming, processing, and storage.',
       },
       {
         question: 'How should I store premium spices?',
-        answer:
-          'Keep spices in airtight containers away from light, heat, and moisture; buy ground spices in smaller packs and use within a few months.',
-      },
-      {
-        question: 'Why are Mathania chillies so expensive?',
-        answer:
-          'Mathania is a small growing region with labour-intensive sun-drying practices. You are paying for rarity, colour, and a specific flavour profile.',
+        answer: 'Keep spices in airtight containers away from light, heat, and moisture; buy ground spices in smaller packs and use within a few months.',
       },
     ],
   },
   {
     id: 103,
-    slug: 'restaurant-style-biryani-secret',
-    title: 'The Secret to Restaurant-Style Biryani',
+    slug: 'restaurant-style-biryani-recipe-spices',
+    title: 'The Secret Spices for a Perfect Restaurant-Style Biryani Recipe',
+    metaTitle: 'Secret Spices for Restaurant Style Biryani | Rathi Naturals',
+    metaDescription: 'Master the secret restaurant style biryani recipe simply by upgrading your spices. Learn the Dum technique and how to layer Shahi Jeera and Star Anise.',
     author: 'Chef Anjali D.',
     date: 'Jan 15, 2025',
-    image:
-      'https://images.unsplash.com/photo-1589302168068-964664d93dc0?auto=format&fit=crop&q=80&w=800',
-    excerpt:
-      'It\'s not just about the rice. The secret lies in the "Dum" technique and the layering of whole spices. Learn how to master it at home.',
+    updateDate: 'March 21, 2026',
+    image: 'fallback-blog-biryani',
+    excerpt: 'It\'s not just about the rice. The secret lies in the "Dum" technique and the layering of whole spices. Learn how to master it at home.',
     tags: ['Recipe', 'Cooking Tips', 'Biryani'],
-    isMarkdown: false,
+    isMarkdown: true,
     content: `
-        <h2>The Art of Dum Biryani</h2>
-        <p>Most home cooks struggle to get that distinctive aroma that hits you when you open a clay pot of biryani at a fine dining restaurant. The secret isn't MSG—it's high-quality whole spices infused into the fat *before* the meat/vegetables are added, and the "Dum" (slow steam cooking) technique.</p>
+## The Art of Dum Biryani
 
-        <h3>1. The "Khada Masala" Foundation</h3>
-        <p>You cannot make great biryani with just powder. You need whole aromatics that release oils slowly over the hour-long cooking process.</p>
-        <ul>
-            <li><strong>Star Anise (Chakri Phool):</strong> Provides that sweet, licorice undertone that balances the heat.</li>
-            <li><strong>Mace (Javitri):</strong> The floral high-note that is lighter than nutmeg but more complex.</li>
-            <li><strong>Shahi Jeera:</strong> Darker and earthier than regular cumin, this is non-negotiable for the rice layer.</li>
-        </ul>
+Most home cooks struggle to get that distinctive aroma that hits you when you open a clay pot of biryani at a fine dining restaurant. The secret isn't MSG—it's high-quality whole spices infused into the fat *before* the meat/vegetables are added, and the "Dum" (slow steam cooking) technique. 
 
-        > **Shop Now:** Get the essential **[Biryani Whole Spice Kit](/product/kit-biryani)** or buy **[Shahi Jeera](/product/21)** and **[Star Anise](/product/22)** separately.
+To achieve this royalty in flavor, you need spices that haven't lost their soul sitting in warehouses.
 
-        ---
+---
 
-        <h3>2. The Layering Technique</h3>
-        <p>Never mix everything like a pulao. Biryani is about contrast. The bottom layer should be the rich, spicy gravy (yakhni), followed by 70% cooked rice, then a sprinkle of saffron milk, fried onions (birista), and more whole spices.</p>
+## 1. The "Khada Masala" Foundation
 
-        > **Pro Tip:** Infuse your milk with **[Kashmiri Mongra Saffron](/product/1)** for at least 20 minutes to get that signature orange-yellow streak.
+You cannot make great biryani with just powder. You need whole aromatics that release oils slowly over the hour-long cooking process.
 
-        ---
+- **Star Anise (Chakri Phool):** Provides that sweet, licorice undertone that balances the heat.
+- **Mace (Javitri):** The floral high-note that is lighter than nutmeg but more complex.
+- **Shahi Jeera:** Darker and earthier than regular cumin, this is non-negotiable for the rice layer.
 
-        <h3>3. The Dum (Steaming)</h3>
-        <p>Seal your pot with dough or a heavy lid wrapped in a wet cloth. Cook on the lowest flame for 15-20 minutes. This traps the steam (dum), forcing the aroma of the spices to penetrate deep into the rice grains.</p>
-        `,
+> **Shop Now:** Grab our ultra-aromatic **[Shahi Jeera](/product/21)** and **[Whole Black Pepper](/product/2)** to build your ultimate Khada Masala foundation from scratch.
+
+---
+
+## 2. The Layering Technique
+
+Never mix everything like a pulao. Biryani is about contrast. The bottom layer should be the rich, spicy gravy (yakhni), followed by 70% cooked rice, then a sprinkle of saffron milk, fried onions (birista), and more whole spices.
+
+> **Pro Tip:** Infuse your milk with **[Kashmiri Mongra Saffron](/product/1)** for at least 20 minutes to get that signature orange-yellow streak and regal fragrance.
+
+---
+
+## 3. The Dum (Steaming)
+
+Seal your pot with dough or a heavy lid wrapped in a wet cloth. Cook on the lowest flame for 15-20 minutes. This traps the steam (dum), forcing the aroma of the spices to penetrate deep into the rice grains. By using pure ingredients, you guarantee the oils released in this trapped steam coat every single grain in authentic flavor.
+
+***
+
+**About the Author:**  
+Chef Anjali D. is a culinary consultant and former executive sous-chef specializing in Awadhi and Hyderabadi cuisine. She currently runs heritage cooking workshops teaching home cooks how to leverage authentic spices and traditional Dum techniques.
+`,
     faqs: [
       {
         question: 'What is the best rice for biryani?',
-        answer:
-          'Aged Basmati rice (at least 1-2 years old) is best because it expands significantly without becoming sticky or mushy.',
+        answer: 'Aged Basmati rice (at least 1-2 years old) is best because it expands significantly without becoming sticky or mushy.',
       },
       {
         question: 'Can I make Dum Biryani without a clay pot?',
-        answer:
-          'Yes, any heavy-bottomed pot (like a Dutch oven) works nicely. The key is a tight seal to trap steam.',
+        answer: 'Yes, any heavy-bottomed pot (like a Dutch oven) works nicely. The key is a tight seal to trap steam.',
       },
       {
         question: 'Why is my biryani mushy?',
-        answer:
-          'Usually due to overcooking the rice before layering. Boil rice only until 70% done (still has a bite) before the final Dum phase.',
+        answer: 'Usually due to overcooking the rice before layering. Boil rice only until 70% done (still has a bite) before the final Dum phase.',
       },
     ],
   },
   {
     id: 104,
-    slug: 'fake-turmeric-warning',
-    title: 'Why "Supermarket Turmeric" Might Be Fake',
+    slug: 'how-to-identify-fake-turmeric',
+    title: 'How to Identify Fake Turmeric From Supermarkets',
+    metaTitle: 'How to Identify Fake Turmeric (Water Test) | Rathi Naturals',
+    metaDescription: 'Is your supermarket turmeric fake? Learn how to identify fake turmeric and test for dangerous adulterants like Lead Chromate with a simple water test.',
     author: 'Suresh R., Agronomist',
     date: 'Jan 10, 2025',
-    image:
-      'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=800',
-    excerpt:
-      'Lead chromate is often used to give stale turmeric a bright yellow color. Here is a simple water test you can do at home to check for purity.',
+    updateDate: 'March 21, 2026',
+    image: 'fallback-blog-adulteration',
+    excerpt: 'Lead chromate is often used to give stale turmeric a bright yellow color. Here is a simple water test you can do at home to check for purity.',
     tags: ['Education', 'Food Safety', 'Turmeric'],
-    isMarkdown: false,
+    isMarkdown: true,
     content: `
-        <h2>The Adulteration Crisis</h2>
-        <p>Recent studies have shown concerning levels of adulterants in loose market turmeric. The bright yellow color often comes from **Lead Chromate** (an industrial pigment) or Metanil Yellow, rather than high natural Curcumin content. Chalk powder and starch are also common fillers used to increase weight.</p>
+## The Adulteration Crisis
 
-        <h3>Why Lead Chromate?</h3>
-        <p>It mimics the golden hue of premium turmeric, hiding the dull color of stale or low-quality roots. However, lead is a potent neurotoxin that can accumulate in the body over time.</p>
+Recent studies have shown concerning levels of adulterants in loose market turmeric. The bright yellow color often comes from **Lead Chromate** (an industrial pigment) or Metanil Yellow, rather than high natural Curcumin content. Chalk powder and starch are also common fillers used to increase weight.
 
-        ---
+When you buy cheap off-the-shelf turmeric, you may be missing the entire point of consuming haldi in the first place, trading highly beneficial antioxidants for literal toxins.
 
-        <h3>The Simple Water Test</h3>
-        <p>You can check your turmeric quality at home in 30 seconds:</p>
-        <ol>
-            <li>Take a glass of warm water.</li>
-            <li>Add 1 teaspoon of turmeric powder. Do not stir immediately.</li>
-            <li><strong>Observe:</strong> Pure turmeric will settle slowly to the bottom, leaving the water relatively clear with a light yellow tint.</li>
-            <li><strong>Red Flag:</strong> If the water turns cloudy, dark yellow instantly, or if you see bright yellow streaks dropping down, it may contain chalk or artificial colors.</li>
-        </ol>
+### Why Lead Chromate?
+It mimics the golden hue of premium turmeric, hiding the dull color of stale or low-quality roots. However, lead is a potent neurotoxin that can accumulate in the body over time. 
 
-        > **The Safe Choice:** **[Rathi Naturals. Salem Turmeric](/product/4)** is lab-tested for heavy metals and contains zero artificial colors. Pure, high-curcumin goodness straight from the farm.
+---
 
-        ---
+## The Simple Water Test
 
-        <h3>Other Signs of Purity</h3>
-        <ul>
-            <li><strong>Aroma:</strong> Pure turmeric has a pungent, earthy, almost medicinal smell. Adulterated powder often smells like nothing or slightly chemical.</li>
-            <li><strong>Stain:</strong> Real turmeric stains your skin bright yellow but washes off with soap eventually. Synthetic dyes can leave stubborn, unnatural orange stains.</li>
-        </ul>
-        `,
+You can check your turmeric quality at home in 30 seconds:
+1. Take a glass of warm water.
+2. Add 1 teaspoon of turmeric powder. Do not stir immediately.
+3. **Observe:** Pure turmeric will settle slowly to the bottom, leaving the water relatively clear with a light yellow tint.
+4. **Red Flag:** If the water turns cloudy, dark yellow instantly, or if you see bright yellow streaks dropping down, it may contain chalk or artificial colors.
+
+> **The Safe Choice:** **[Rathi Naturals Salem Turmeric](/product/4)** is lab-tested for heavy metals and contains zero artificial colors. Pure, high-curcumin goodness straight from the farm.
+
+---
+
+## Other Signs of Purity
+
+- **Aroma:** Pure turmeric has a pungent, earthy, almost medicinal smell. Adulterated powder often smells like nothing or slightly chemical.
+- **Stain:** Real turmeric stains your skin bright yellow but washes off with soap eventually. Synthetic dyes can leave stubborn, unnatural orange stains.
+
+Don't assume your spice drawer is safe just because the brand is familiar. The easiest way to avoid adulterants is to buy strictly from certified, direct-source providers who cold-grind their own whole spices.
+
+> Try our **[Mathania Chilli](/product/12)** and **[Coriander Powder](/product/5)** to experience what unadulterated, cold-ground spices actually smell and taste like.
+
+***
+
+**About the Author:**  
+Suresh R. is an agronomist and quality control specialist with over three decades of experience in the Indian spice trade. He works closely with the FSSAI and independent NABL labs to establish stringent safety benchmarks for raw ingredient sourcing.
+`,
     faqs: [
       {
         question: 'Is Lead Chromate dangerous?',
-        answer:
-          'Yes, it is a neurotoxin. Long-term consumption can lead to serious health issues, particularly affecting the nervous system.',
+        answer: 'Yes, it is a neurotoxin. Long-term consumption can lead to serious health issues, particularly affecting the nervous system.',
       },
       {
         question: 'Why is organic/tested turmeric more expensive?',
-        answer:
-          'It reflects the cost of genuine farming, lack of cheap fillers, and the expense of rigorous lab testing for purity.',
+        answer: 'It reflects the cost of genuine farming, lack of cheap fillers, and the expense of rigorous lab testing for purity.',
       },
       {
         question: 'Does the water test detect all adulterants?',
-        answer:
-          'It detects common fillers like chalk and some dyes, but lab testing is the only way to confirm 100% purity and absence of heavy metals.',
+        answer: 'It detects common fillers like chalk and some dyes, but lab testing is the only way to confirm 100% purity and absence of heavy metals.',
       },
     ],
   },
@@ -381,12 +370,13 @@ Mathania is a relatively small growing region, with labour-intensive sun-drying 
     id: 105,
     slug: 'fssai-spice-certification-guide-2025',
     title: 'The 2025 FSSAI Spice Safety Enforcement: A Complete Guide for Consumers & Brands',
+    metaTitle: 'FSSAI Spice Safety Enforcement Complete Guide 2025 | Rathi Naturals',
+    metaDescription: 'Everything you need to know about the FSSAI October 2025 spice enforcement drive. Learn about the 18,000+ testing parameters and mandatory NABL certification.',
     author: 'Sunil Rathi',
     date: 'Jan 29, 2026',
-    image:
-      'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
-    excerpt:
-      "Everything you need to know about the FSSAI's October 2025 spice enforcement drive. Learn about the 18,000+ testing parameters, mandatory NABL certification, and how to spot safe spices.",
+    updateDate: 'March 21, 2026',
+    image: 'fallback-blog-fssai',
+    excerpt: 'Everything you need to know about the FSSAI\'s October 2025 spice enforcement drive. Learn about the 18,000+ testing parameters, mandatory NABL certification, and how to spot safe spices.',
     tags: ['FSSAI', 'Food Safety', 'Spices', 'Compliance', 'Health'],
     isMarkdown: true,
     content: `
@@ -459,28 +449,31 @@ As a consumer, how do you navigate this? You can't run a lab test in your kitche
 3.  **Packaging Integrity:** Avoid loose spices sold in open sacks. The breakdown of essential oils and the risk of biological contamination (dust, pests) is significantly higher.
 4.  **Price vs. Purity:** Pure spices have a high cost of production. If a 500g pack of Turmeric is cheaper than the raw cost of dried turmeric fingers, it is mathematically impossible for it to be pure.
 
-### The Rathi Naturals. Promise
+### The Rathi Naturals Promise
 
-We didn't wait for the enforcement drive to start testing. Every batch of Rathi Naturals. spices has arguably—and proudly—been subjected to rigorous NABL-accredited testing for pesticides, heavy metals, and essential oil content since our inception.
+We didn't wait for the enforcement drive to start testing. Every batch of Rathi Naturals spices has arguably—and proudly—been subjected to rigorous NABL-accredited testing for pesticides, heavy metals, and essential oil content since our inception.
 
 *Safe food is a right, not a luxury. Choose verified. Choose Rathi Naturals.*
+
+***
+
+**About the Author:**  
+Sunil Rathi is the Managing Director of Rathi Naturals. Drawing from a 1965 family lineage in the spice trade, he spearheaded the brand's shift toward absolute transparency, zero-additive cold-grinding, and consumer education regarding food adulteration at scale.
 `,
     faqs: [
       {
         question: 'What is the FSSAI enforcement drive?',
-        answer:
-          'A targeted surveillance campaign to check for adulteration, pesticide residues, and heavy metals in spices.',
+        answer: 'A targeted surveillance campaign to check for adulteration, pesticide residues, and heavy metals in spices.',
       },
       {
         question: 'Why are heavy metals found in spices?',
-        answer:
-          'Contaminated soil, wastewater irrigation, or intentional adulteration (like Lead Chromate for color) are the main causes.',
+        answer: 'Contaminated soil, wastewater irrigation, or intentional adulteration (like Lead Chromate for color) are the main causes.',
       },
       {
         question: 'How can I check if my spices are safe?',
-        answer:
-          'Check for the FSSAI license number, look for NABL-accredited lab reports (often via QR code), and avoid loose unbranded spices.',
+        answer: 'Check for the FSSAI license number, look for NABL-accredited lab reports (often via QR code), and avoid loose unbranded spices.',
       },
     ],
   },
+  ...PILLAR_POSTS,
 ];

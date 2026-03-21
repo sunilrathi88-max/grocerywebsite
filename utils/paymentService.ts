@@ -193,7 +193,7 @@ export const paymentService = {
       await cashfree.checkout({
         paymentSessionId: orderData.payment_session_id,
         redirectTarget: '_self', // or _blank
-        returnUrl: window.location.origin + '/#/checkout?order_id=' + orderData.order_id, // Example return URL
+        returnUrl: window.location.origin + '/checkout?order_id=' + orderData.order_id, // Example return URL
       });
 
       // Note: Since Cashfree redirects, onSuccess might not be called directly here unless we use a popup/iframe mode that returns control.

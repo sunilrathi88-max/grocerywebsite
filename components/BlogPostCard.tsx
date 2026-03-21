@@ -9,11 +9,13 @@ interface BlogPostCardProps {
   onSelectPost: (slug: string) => void;
 }
 
+import { Link } from 'react-router-dom';
+
 const BlogPostCard: React.FC<BlogPostCardProps> = ({ post, onSelectPost }) => {
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden group transform hover:-translate-y-2 transition-all duration-300">
-      <a
-        href={`#/blog/${post.slug}`}
+      <Link
+        to={`/blog/${post.slug}`}
         onClick={(e) => {
           e.preventDefault();
           onSelectPost(post.slug);
@@ -44,7 +46,7 @@ const BlogPostCard: React.FC<BlogPostCardProps> = ({ post, onSelectPost }) => {
             <ArrowRightIcon className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
           </div>
         </div>
-      </a>
+      </Link>
     </div>
   );
 };

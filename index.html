@@ -3,7 +3,7 @@
 
 <head>
   <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=%VITE_GA_MEASUREMENT_ID%"></script>
+  <script defer src="https://www.googletagmanager.com/gtag/js?id=%VITE_GA_MEASUREMENT_ID%"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag() {
@@ -13,9 +13,7 @@
 
     gtag('config', '%VITE_GA_MEASUREMENT_ID%');
   </script>
-  <!-- Preload LCP hero image (Exact match to Hero.tsx) - Optimizing for WebP -->
-  <link rel="preload" as="image" href="/images/masala-trio-chai-chilli-garam.webp" type="image/webp" />
-  <link rel="preload" as="image" href="/images/masala-trio-chai-chilli-garam.png" />
+
 
   <!-- Open Graph / Facebook -->
   <style>

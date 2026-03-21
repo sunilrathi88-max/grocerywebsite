@@ -12,6 +12,7 @@ import CheckoutStepper from './CheckoutStepper';
 import { lookupPinCodeAsync } from '../utils/pinCodeLookup';
 import ShippingRateSelector from './ShippingRateSelector';
 import { ShippingOption } from '../types/shipping';
+import { Link } from 'react-router-dom';
 
 // Helper to map flat store items to nested Order items
 // Helper to map flat store items to Order items (Identity for now as types adhere)
@@ -98,18 +99,18 @@ const OrderConfirmation: React.FC<{ order: Order }> = ({ order }) => {
         </div>
 
         <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4">
-          <a
-            href="#/"
+          <Link
+            to="/"
             className="bg-brand-primary text-brand-dark font-bold py-3 px-6 rounded-full shadow-lg hover:bg-opacity-90 transform hover:scale-105 transition-all duration-300"
           >
             Continue Shopping
-          </a>
-          <a
-            href="#/profile"
+          </Link>
+          <Link
+            to="/profile"
             className="bg-brand-dark text-white font-bold py-3 px-6 rounded-full shadow-lg hover:bg-opacity-90 transform hover:scale-105 transition-all duration-300"
           >
             View My Orders
-          </a>
+          </Link>
         </div>
       </div>
       <style>{`

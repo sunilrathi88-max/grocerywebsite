@@ -1,100 +1,106 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '../hooks/useGSAP';
+
+gsap.registerPlugin(ScrollTrigger);
+
+const STEPS = [
+  {
+    id: '01',
+    title: 'Direct Sourcing',
+    desc: "Hand-selected from Ramganj Mandi — Asia's largest spice market. Third-generation farmer relationships, no middlemen, no compromises.",
+    tag: 'Rajasthan, India',
+  },
+  {
+    id: '02',
+    title: 'Hand Sorting',
+    desc: 'Every batch manually sorted to remove foreign matter and substandard units. The step that mass brands eliminated when they scaled.',
+    tag: '100% manual inspection',
+  },
+  {
+    id: '03',
+    title: 'Cold Grinding',
+    desc: 'Cryogenic mills kept below 10°C throughout. Volatile aromatic oils — the soul of any spice — are fully preserved, never destroyed by heat.',
+    tag: 'Below 10°C always',
+  },
+  {
+    id: '04',
+    title: 'FSSAI Testing',
+    desc: 'Every batch tested and certified under FSSAI Lic. 12225025000253. Proof of purity that arrives in your kitchen before the spice does.',
+    tag: 'Lab certified',
+  },
+];
 
 const JourneyTimeline: React.FC = () => {
+  const containerRef = useRef<HTMLElement>(null);
+
+  useGSAP(() => {
+    if (!containerRef.current) return;
+
+    gsap.from('.journey-step', {
+      y: 40,
+      opacity: 0,
+      duration: 0.8,
+      stagger: 0.15,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: 'top 75%',
+      },
+    });
+  }, []);
+
   return (
-    <section className="py-24 max-w-[1440px] mx-auto px-6 lg:px-12 bg-background-light">
-      <div className="text-center mb-20">
-        <span className="text-primary font-bold tracking-[0.2em] text-xs uppercase mb-4 block">
-          Transparency
-        </span>
-        <h3 className="text-4xl md:text-5xl font-serif font-medium text-accent-charcoal">
-          The Journey of Purity
-        </h3>
-      </div>
-      <div className="relative">
-        {/* Line for desktop */}
-        <div className="hidden md:block absolute top-12 left-0 right-0 h-px bg-primary/20 z-0"></div>
+    <section
+      ref={containerRef}
+      className="py-24 w-full bg-ink relative overflow-hidden border-t border-b border-char"
+    >
+      <div className="max-w-[1440px] mx-auto px-6 lg:px-12 relative z-10">
+        <div className="text-center mb-24">
+          <span className="text-saffron font-bold tracking-[0.2em] text-xs uppercase mb-4 block">
+            The Methodology
+          </span>
+          <h3 className="text-4xl md:text-5xl font-serif font-medium text-cream">
+            Zero Shortcuts. <br className="md:hidden" />
+            <span className="italic text-dust">Maximum Purity.</span>
+          </h3>
+        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 relative z-10">
-          {/* Step 01 */}
-          <div className="group relative flex flex-col items-center text-center timeline-item cursor-default">
-            <div className="bg-background-light p-2 relative">
-              <div className="size-20 rounded-full border border-primary/20 bg-background-light flex items-center justify-center timeline-icon transition-all duration-500 group-hover:scale-110 group-hover:shadow-soft">
-                <span className="material-symbols-outlined text-[32px] text-primary group-hover:text-white">
-                  agriculture
-                </span>
-              </div>
-            </div>
-            <div className="mt-6 px-4">
-              <span className="text-xs font-bold text-primary/60 uppercase tracking-widest mb-2 block">
-                Step 01
-              </span>
-              <h4 className="font-serif text-2xl text-accent-charcoal mb-3">Harvest</h4>
-              <p className="text-sm text-accent-charcoal/60 leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform translate-y-2 group-hover:translate-y-0">
-                Hand-picked at peak potency directly from our partner farms in regions like Ramganj
-                Mandi, Mathania, and Salem.
-              </p>
-            </div>
-          </div>
+        <div className="relative">
+          {/* Horizontal Connecting Line (Desktop) */}
+          <div className="hidden lg:block absolute top-[50%] left-[5%] right-[5%] h-px bg-gradient-to-r from-transparent via-saffron/30 to-transparent -translate-y-1/2 z-0"></div>
 
-          {/* Step 02 */}
-          <div className="group relative flex flex-col items-center text-center timeline-item cursor-default">
-            <div className="bg-background-light p-2 relative">
-              <div className="size-20 rounded-full border border-primary/20 bg-background-light flex items-center justify-center timeline-icon transition-all duration-500 group-hover:scale-110 group-hover:shadow-soft">
-                <span className="material-symbols-outlined text-[32px] text-primary group-hover:text-white">
-                  wb_sunny
-                </span>
-              </div>
-            </div>
-            <div className="mt-6 px-4">
-              <span className="text-xs font-bold text-primary/60 uppercase tracking-widest mb-2 block">
-                Step 02
-              </span>
-              <h4 className="font-serif text-2xl text-accent-charcoal mb-3">Sun Drying</h4>
-              <p className="text-sm text-accent-charcoal/60 leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform translate-y-2 group-hover:translate-y-0">
-                Naturally dried under the sun to preserve essential oils and natural color.
-              </p>
-            </div>
-          </div>
+          {/* Vertical Connecting Line (Mobile) */}
+          <div className="lg:hidden absolute top-[5%] bottom-[5%] left-8 w-px bg-gradient-to-b from-transparent via-saffron/30 to-transparent z-0"></div>
 
-          {/* Step 03 */}
-          <div className="group relative flex flex-col items-center text-center timeline-item cursor-default">
-            <div className="bg-background-light p-2 relative">
-              <div className="size-20 rounded-full border border-primary/20 bg-background-light flex items-center justify-center timeline-icon transition-all duration-500 group-hover:scale-110 group-hover:shadow-soft">
-                <span className="material-symbols-outlined text-[32px] text-primary group-hover:text-white">
-                  science
-                </span>
-              </div>
-            </div>
-            <div className="mt-6 px-4">
-              <span className="text-xs font-bold text-primary/60 uppercase tracking-widest mb-2 block">
-                Step 03
-              </span>
-              <h4 className="font-serif text-2xl text-accent-charcoal mb-3">Lab Testing</h4>
-              <p className="text-sm text-accent-charcoal/60 leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform translate-y-2 group-hover:translate-y-0">
-                Rigorously tested for purity, potency, and safety standards in ISO labs.
-              </p>
-            </div>
-          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-12 lg:gap-8 relative z-10">
+            {STEPS.map((step) => (
+              <div
+                key={step.id}
+                className="journey-step group relative flex flex-col items-start lg:items-center text-left lg:text-center pl-20 lg:pl-0"
+              >
+                {/* Ghost Number Behind */}
+                <div className="absolute -top-6 -left-4 lg:left-1/2 lg:-translate-x-1/2 text-[8rem] font-serif font-bold text-char/40 transition-colors duration-500 group-hover:text-char select-none z-0 pointer-events-none">
+                  {step.id}
+                </div>
 
-          {/* Step 04 */}
-          <div className="group relative flex flex-col items-center text-center timeline-item cursor-default">
-            <div className="bg-background-light p-2 relative">
-              <div className="size-20 rounded-full border border-primary/20 bg-background-light flex items-center justify-center timeline-icon transition-all duration-500 group-hover:scale-110 group-hover:shadow-soft">
-                <span className="material-symbols-outlined text-[32px] text-primary group-hover:text-white">
-                  inventory_2
-                </span>
+                {/* Content Card */}
+                <div className="relative z-10 bg-char/40 backdrop-blur-sm border border-mist/10 rounded-xl p-8 transition-all duration-300 transform group-hover:-translate-y-2 group-hover:border-saffron/50 group-hover:shadow-[0_10px_40px_-15px_rgba(234,179,8,0.15)] w-full w-full h-full flex flex-col justify-between">
+                  <div className="mb-6">
+                    <span className="inline-block px-3 py-1 bg-saffron/10 text-saffron font-bold tracking-widest text-[10px] uppercase rounded-full mb-6 border border-saffron/20">
+                      {step.tag}
+                    </span>
+                    <h4 className="font-serif text-2xl text-cream mb-4 leading-tight">
+                      {step.title}
+                    </h4>
+                    <p className="text-sm text-dust leading-relaxed font-light">
+                      {step.desc}
+                    </p>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div className="mt-6 px-4">
-              <span className="text-xs font-bold text-primary/60 uppercase tracking-widest mb-2 block">
-                Step 04
-              </span>
-              <h4 className="font-serif text-2xl text-accent-charcoal mb-3">To Your Kitchen</h4>
-              <p className="text-sm text-accent-charcoal/60 leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform translate-y-2 group-hover:translate-y-0">
-                Sealed in eco-friendly packaging to deliver farm freshness to your home.
-              </p>
-            </div>
+            ))}
           </div>
         </div>
       </div>

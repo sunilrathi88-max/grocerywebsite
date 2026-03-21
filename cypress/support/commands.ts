@@ -27,7 +27,6 @@ Cypress.Commands.add('waitForLazyImages', () => {
 });
 
 // Custom command for checking social proof notifications
-Cypress.Commands.add('waitForSocialProofNotification', () => {
   cy.get('[data-testid="social-proof-notification"]', { timeout: 20000 })
     .should('be.visible')
     .and('contain.text', 'purchased');
@@ -117,7 +116,6 @@ declare global {
     interface Chainable {
       checkWebVitals(): Chainable<void>;
       waitForLazyImages(): Chainable<void>;
-      waitForSocialProofNotification(): Chainable<void>;
       addProductToCart(productName?: string): Chainable<void>;
       navigateTo(page: string): Chainable<void>;
       goToCheckout(): Chainable<void>;

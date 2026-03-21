@@ -59,7 +59,7 @@ const ProductDetailModal = React.lazy(() => import('./components/ProductDetailMo
 const SideModal = React.lazy(() => import('./components/SideModal'));
 const Cart = React.lazy(() => import('./components/Cart'));
 const Wishlist = React.lazy(() => import('./components/Wishlist'));
-const SocialProofNotifications = React.lazy(() => import('./components/SocialProofNotifications'));
+
 const MobileMenu = React.lazy(() => import('./components/MobileMenu'));
 const AdvancedFilters = React.lazy(() => import('./components/AdvancedFilters'));
 const AuthModal = React.lazy(() => import('./components/AuthModal'));
@@ -1608,7 +1608,6 @@ const App: React.FC = () => {
                 />
               )}
 
-              <SocialProofNotifications />
 
               {/* Newsletter Popup - Disabled */}
               {/* <NewsletterPopup delayMs={8000} /> */}

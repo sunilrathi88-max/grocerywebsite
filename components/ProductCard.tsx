@@ -16,6 +16,8 @@ interface ProductCardProps {
   sizes?: Array<{ size: string; price: number; stock?: number }>;
   badge?: 'new' | 'discount';
   badgeValue?: string;
+  category?: string;
+  origin?: string;
   onAddToCart: (productId: string) => void;
   onWishlist: (productId: string) => void;
 }
@@ -32,6 +34,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   useCase,
   sizes,
   badge,
+  category,
+  origin,
   onAddToCart,
   onWishlist,
 }) => {
@@ -48,6 +52,18 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
   // Default to 0 based on user logic, though usually it's calculated
   const discount = originalPrice ? Math.round(((originalPrice - price) / originalPrice) * 100) : 0;
+
+  // CSS fallback styling mapping
+  const getGradientClass = (cat?: string, productName?: string) => {
+    const search = ((cat || '') + ' ' + (productName || '')).toLowerCase();
+    if (search.includes('turmeric') || search.includes('haldi')) return 'bg-gradient-to-br from-amber-400 to-amber-600';
+    if (search.includes('chilli') || search.includes('mirch')) return 'bg-gradient-to-br from-red-600 to-red-900';
+    if (search.includes('coriander') || search.includes('green') || search.includes('mint') || search.includes('cardamom')) return 'bg-gradient-to-br from-emerald-600 to-emerald-900';
+    if (cat?.toLowerCase().includes('whole')) return 'bg-gradient-to-br from-gray-800 to-black';
+    if (search.includes('nut') || search.includes('almond') || search.includes('cashew') || search.includes('fruit')) return 'bg-gradient-to-br from-[#D2B48C] to-[#8B4513]';
+    if (search.includes('chai') || search.includes('tea') || search.includes('masala')) return 'bg-gradient-to-br from-amber-900 to-neutral-900';
+    return 'bg-gradient-to-br from-neutral-600 to-neutral-800';
+  };
 
   // Helper for visual spice level
   const renderSpiceLevel = () => {
@@ -98,14 +114,28 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       >
         {/* Image Container */}
         <div className="relative w-full aspect-[4/5] bg-neutral-50 overflow-hidden">
-          <OptimizedImage
-            src={image}
-            alt={name}
-            type="card"
-            className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-700"
-            width={300}
-            height={375}
-          />
+          {image.includes('fallback') ? (
+            <div className={`w-full h-full flex flex-col items-center justify-center p-6 ${getGradientClass(category, name)} relative overflow-hidden group-hover:scale-105 transition-transform duration-700`}>
+              <div className="absolute inset-0 opacity-20 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPgo8cmVjdCB3aWR0aD0iOCIgaGVpZ2h0PSI4IiBmaWxsPSIjZmZmIj48L3JlY3Q+CjxwYXRoIGQ9Ik0wIDBMODg4TTggMEwwIDgiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIxIj48L3BhdGg+Cjwvc3ZnPg==')] animate-[slide_10s_linear_infinite]" />
+              <div className="relative z-10 text-center flex flex-col items-center gap-3">
+                <span className="font-serif italic text-3xl md:text-3xl text-white drop-shadow-md leading-tight">{name}</span>
+                {origin && (
+                  <span className="font-sans uppercase tracking-[0.2em] text-[10px] pb-0.5 text-white/90 border-b border-white/50 inline-block px-1">
+                    {origin}
+                  </span>
+                )}
+              </div>
+            </div>
+          ) : (
+            <OptimizedImage
+              src={image}
+              alt={name}
+              type="card"
+              className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-700"
+              width={300}
+              height={375}
+            />
+          )}
 
           {/* Badges - Enhanced */}
           <div className="absolute top-3 left-3 flex flex-col gap-2 z-10">

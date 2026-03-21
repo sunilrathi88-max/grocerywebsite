@@ -405,9 +405,9 @@ export default function ProductDetailPage() {
                 .filter((recipe) => recipe.relatedProductIds?.includes(product.id))
                 .slice(0, 3)
                 .map((recipe) => (
-                  <a
+                  <Link
                     key={recipe.id}
-                    href={`#/recipe/${recipe.id}`}
+                    to={`/recipe/${recipe.id}`}
                     className="group block bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
                   >
                     <div className="relative h-48 overflow-hidden">
@@ -430,7 +430,7 @@ export default function ProductDetailPage() {
                         {recipe.description}
                       </p>
                     </div>
-                  </a>
+                  </Link>
                 ))}
             </div>
           </div>

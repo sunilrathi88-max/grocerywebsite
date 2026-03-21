@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { useGSAP } from '../hooks/useGSAP';
 import MagneticButton from './ui/MagneticButton';
@@ -79,25 +80,24 @@ export default function Hero() {
           <div className="overflow-hidden mb-6 flex flex-col gap-2">
             <span className="hero-badge inline-flex items-center gap-2 text-saffron tracking-[0.2em] text-xs font-bold uppercase w-fit">
               <span className="w-8 h-[1px] bg-saffron inline-block"></span>
-              Established 1968
+              Established 1965
             </span>
           </div>
 
           <h1 className="text-5xl md:text-7xl lg:text-[5.5rem] leading-[1.05] text-cream mb-6 tracking-tight">
             <div className="overflow-hidden p-1 -m-1">
-              <span className="hero-text-line block">The Absolute</span>
+              <span className="hero-text-line block">What hot-grinding</span>
             </div>
             <div className="overflow-hidden p-1 -m-1">
               <span className="hero-text-line block font-serif italic text-saffron font-medium pr-4">
-                Apex of Flavor.
+                destroys, we preserve.
               </span>
             </div>
           </h1>
 
           <div className="overflow-hidden mb-12 max-w-xl">
             <p className="hero-text-line text-lg lg:text-xl text-dust font-light leading-relaxed">
-              Unearth the ancient lineages of single-origin spices, cold-ground exclusively in
-              Ramganj Mandi to preserve volatile oils and sensory truth.
+              Cold-ground below 10°C. Direct from Ramganj Mandi. Since 1965. Zero shortcuts.
             </p>
           </div>
 
@@ -108,13 +108,13 @@ export default function Hero() {
             >
               Explore the Harvest
             </MagneticButton>
-            <a
-              href="/about"
+            <Link
+              to="/about"
               data-cursor="link"
               className="text-cream hover:text-saffron transition-colors uppercase tracking-wider text-xs font-bold border-b border-mist pb-1"
             >
-              Our 60-Year Legacy
-            </a>
+              Our Heritage &rarr;
+            </Link>
           </div>
         </div>
 

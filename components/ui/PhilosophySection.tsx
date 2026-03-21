@@ -70,7 +70,7 @@ export default function PhilosophySection() {
           </div>
 
           <h2 className="text-4xl lg:text-5xl xl:text-6xl text-cream font-serif leading-[1.1] mb-8 philo-text">
-            For 60 years, we refused to modernize our{' '}
+            Since 1965, we refused to modernize our{' '}
             <span className="italic text-saffron">cold-grinding</span> traditions.
           </h2>
 
@@ -80,7 +80,7 @@ export default function PhilosophySection() {
               degrees that vaporize their essential oils, we stayed in Ramganj Mandi.
             </p>
             <p>
-              We established The Rathi Spice Co. in 1968 with a singular promise: absolute sensory
+              We established The Rathi Spice Co. in 1965 with a singular promise: absolute sensory
               fidelity. Our spices are procured directly from heritage farmers across India—Salem
               for turmeric, Mathania for chillies—and processed using slow, low-temperature
               friction.

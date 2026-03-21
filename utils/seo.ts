@@ -228,15 +228,30 @@ export const generateOrganizationSchema = (): OrganizationStructuredData => ({
 });
 
 /**
+ * Generate WebSite structured data
+ */
+export const generateWebsiteSchema = (): Record<string, unknown> => ({
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Rathi Naturals',
+  url: 'https://rathinaturals.com',
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: 'https://rathinaturals.com/shop?q={search_term_string}',
+    'query-input': 'required name=search_term_string',
+  },
+});
+
+/**
  * Generate Product structured data
  */
 export const generateProductSchema = (product: Product): ProductStructuredData => {
   const lowestPrice = Math.min(...product.variants.map((v) => v.salePrice ?? v.price));
   const inStock = product.variants.some((v) => v.stock > 0);
-  const avgRating =
-    product.reviews.length > 0
-      ? product.reviews.reduce((sum, r) => sum + r.rating, 0) / product.reviews.length
-      : 0;
+  const hasReviews = product.reviews && product.reviews.length > 0;
+  const avgRating = hasReviews
+    ? Number((product.reviews.reduce((sum, r) => sum + r.rating, 0) / product.reviews.length).toFixed(1))
+    : 0;
 
   return {
     '@context': 'https://schema.org',
@@ -305,7 +320,7 @@ export const generateProductSchema = (product: Product): ProductStructuredData =
     }),
     ...(product.category && { category: product.category }),
     ...(product.grade && { itemCondition: product.grade }),
-    ...(product.reviews.length > 0 && {
+    ...(hasReviews && {
       aggregateRating: {
         '@type': 'AggregateRating',
         ratingValue: avgRating,

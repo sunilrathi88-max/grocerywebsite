@@ -10,16 +10,18 @@ import HarvestCollection from '../components/HarvestCollection';
 import ProductGrid from '../components/ProductGrid';
 import SortDropdown from '../components/SortDropdown';
 import AdvancedFilters from '../components/AdvancedFilters';
-import Testimonials from '../components/Testimonials';
+// Lazy load below-the-fold heavy components for INP/LCP optimization
+const Testimonials = React.lazy(() => import('../components/Testimonials'));
+const CookingContextWidget = React.lazy(() => import('../components/CookingContextWidget'));
+const BlogHighlights = React.lazy(() => import('../components/BlogHighlights'));
+const NewsletterSection = React.lazy(() => import('../components/NewsletterSection'));
+const RecommendedProducts = React.lazy(() => import('../components/RecommendedProducts'));
+
 import { FEATURED_TESTIMONIALS } from '../data/testimonials';
 import QuizModule from '../components/QuizModule';
 import toast from 'react-hot-toast';
-import CookingContextWidget from '../components/CookingContextWidget';
-import BlogHighlights from '../components/BlogHighlights';
-import NewsletterSection from '../components/NewsletterSection';
-import RecommendedProducts from '../components/RecommendedProducts';
 import SEO from '../components/SEO';
-import { pageSEO } from '../utils/seo';
+import { pageSEO, generateOrganizationSchema, generateWebsiteSchema } from '../utils/seo';
 
 interface HomePageProps {
   products: Product[];
@@ -164,7 +166,15 @@ const HomePage: React.FC<HomePageProps> = ({
 
   return (
     <main className="bg-ink min-h-screen">
-      <SEO {...pageSEO.home()} />
+      <SEO 
+        {...pageSEO.home()} 
+        title="Rathi Naturals — Premium Indian Spices (Cold Ground, Est. 1965)"
+        description="Shop premium single-origin Indian spices. Cold-ground in small batches to preserve 100% of natural essential oils, colour, and aroma."
+        structuredData={[
+          generateOrganizationSchema(), 
+          generateWebsiteSchema()
+        ]} 
+      />
       {/* 1. Hero Section (New Design) */}
       <Hero />
 
@@ -181,41 +191,44 @@ const HomePage: React.FC<HomePageProps> = ({
       {/* Removed BrandStory and CategoryShowcase as per user request */}
       <TrustSignals />
 
-      {/* 4b. Personalized Recommendations (Based on History) */}
-      <RecommendedProducts
-        allProducts={products}
-        onAddToCart={handleAddToCartWithTracking}
-        onSelectProduct={setSelectedProduct}
-        onNotifyMe={handleNotifyMe}
-      />
+      {/* Lazy Loaded Below The Fold Components */}
+      <React.Suspense fallback={<div className="w-full h-40 bg-background-light animate-pulse" />}>
+        {/* 4b. Personalized Recommendations (Based on History) */}
+        <RecommendedProducts
+          allProducts={products}
+          onAddToCart={handleAddToCartWithTracking}
+          onSelectProduct={setSelectedProduct}
+          onNotifyMe={handleNotifyMe}
+        />
 
-      {/* 5. Cooking Context Widget (Moved up for better engagement) */}
-      <div className="py-8 bg-[#fafafa]">
-        <CookingContextWidget onAddBundleToCart={handleAddBundleToCart} />
-      </div>
+        {/* 5. Cooking Context Widget (Moved up for better engagement) */}
+        <div className="py-8 bg-[#fafafa]">
+          <CookingContextWidget onAddBundleToCart={handleAddBundleToCart} />
+        </div>
 
-      {/* 6. Customer Testimonials */}
-      <Testimonials testimonials={FEATURED_TESTIMONIALS} />
+        {/* 6. Customer Testimonials */}
+        <Testimonials testimonials={FEATURED_TESTIMONIALS} />
 
-      {/* 7. Featured Products - Best Sellers */}
-      <HarvestCollection
-        products={products}
-        title="Best Sellers"
-        subtitle="Most loved by our customers."
-      />
+        {/* 7. Featured Products - Best Sellers */}
+        <HarvestCollection
+          products={products}
+          title="Best Sellers"
+          subtitle="Most loved by our customers."
+        />
 
-      {/* 8. Featured Products - New Arrivals */}
-      <HarvestCollection
-        products={products.slice(0, 4)}
-        title="New Arrivals"
-        subtitle="Fresh from the latest harvest."
-      />
+        {/* 8. Featured Products - New Arrivals */}
+        <HarvestCollection
+          products={products.slice(0, 4)}
+          title="New Arrivals"
+          subtitle="Fresh from the latest harvest."
+        />
 
-      {/* 11. Blog Highlights */}
-      <BlogHighlights />
+        {/* 11. Blog Highlights */}
+        <BlogHighlights />
 
-      {/* 12. Newsletter Signup */}
-      <NewsletterSection />
+        {/* 12. Newsletter Signup */}
+        <NewsletterSection />
+      </React.Suspense>
 
       {/* (Hidden) Main Product Grid for SEO/Fallback purposes - kept but de-emphasized */}
       <div className="hidden">

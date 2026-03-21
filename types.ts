@@ -174,8 +174,11 @@ export interface BlogPost {
   title: string;
   author: string;
   date: string;
+  updateDate?: string;
   image: string;
   excerpt: string;
+  metaTitle?: string;
+  metaDescription?: string;
   content: string; // This could be markdown or HTML string
   tags: string[];
   isMarkdown?: boolean;

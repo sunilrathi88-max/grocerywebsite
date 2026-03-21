@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { Order, OrderStatus, User } from '../types';
 import { m, AnimatePresence } from 'framer-motion';
 import { imageErrorHandlers } from '../utils/imageHelpers';
+import { Link } from 'react-router-dom';
 
 interface OrderHistoryProps {
   user: User | null;
@@ -57,9 +58,9 @@ const OrderHistory: React.FC<OrderHistoryProps> = ({ user, orders, onSelectOrder
           <h2 className="text-2xl font-bold text-gray-900 mb-4">
             Please log in to view your orders
           </h2>
-          <a href="#/login" className="text-brand-primary hover:underline">
+          <Link to="/login" className="text-brand-primary hover:underline">
             Go to Login
-          </a>
+          </Link>
         </div>
       </div>
     );
@@ -134,12 +135,12 @@ const OrderHistory: React.FC<OrderHistoryProps> = ({ user, orders, onSelectOrder
                 : "You haven't placed any orders yet"}
             </p>
             {!searchQuery && (
-              <a
-                href="#/"
+              <Link
+                to="/"
                 className="inline-block bg-brand-primary text-brand-dark px-6 py-3 rounded-lg hover:bg-opacity-90 transition-all"
               >
                 Start Shopping
-              </a>
+              </Link>
             )}
           </div>
         ) : (

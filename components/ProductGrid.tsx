@@ -40,7 +40,17 @@ const ProductGrid: React.FC<ProductGridProps> = ({
     return products.filter((p) => p.category === activeFilter || p.category.includes(activeFilter));
   }, [products, activeFilter, enableFilters]);
 
-  const displayProducts = enableFilters ? filteredProducts : products;
+  const displayProducts = useMemo(() => {
+    const arr = [...(enableFilters ? filteredProducts : products)];
+    arr.sort((a, b) => {
+      const aHasReal = !a.images[0]?.includes('fallback');
+      const bHasReal = !b.images[0]?.includes('fallback');
+      if (aHasReal && !bHasReal) return -1;
+      if (!aHasReal && bHasReal) return 1;
+      return 0;
+    });
+    return arr;
+  }, [filteredProducts, products, enableFilters]);
 
   if (isLoading) {
     return (
@@ -141,6 +151,8 @@ const ProductGrid: React.FC<ProductGridProps> = ({
                   const p = products.find((prod) => prod.id.toString() === id);
                   if (p) onToggleWishlist(p);
                 }}
+                category={product.category}
+                origin={product.origin || 'Rajasthan, India'}
               />
             </div>
           ))}

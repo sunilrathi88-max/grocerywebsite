@@ -1,4 +1,5 @@
 import React, { memo } from 'react';
+import { Link } from 'react-router-dom';
 import { ChevronRightIcon } from '../icons/ChevronRightIcon';
 
 export interface BreadcrumbItem {
@@ -28,12 +29,12 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items, className = '' 
               )}
               {!isLast ? (
                 item.href ? (
-                  <a
-                    href={item.href}
+                  <Link
+                    to={item.href}
                     className="text-neutral-500 hover:text-brand-primary transition-colors duration-200 font-medium"
                   >
                     {item.label}
-                  </a>
+                  </Link>
                 ) : (
                   <button
                     onClick={item.onClick}

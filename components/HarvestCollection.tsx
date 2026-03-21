@@ -100,6 +100,8 @@ const HarvestCollection: React.FC<HarvestCollectionProps> = ({
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 filter saturate-[0.85] contrast-[1.1] group-hover:saturate-100 mix-blend-luminosity hover:mix-blend-normal"
                     src={getProductImage(product)}
                     loading="lazy"
+                    width={400}
+                    height={500}
                   />
                   {tag && (
                     <div className="absolute top-4 left-4">
