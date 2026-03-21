@@ -153,6 +153,7 @@ jobs:
           PUPPETEER_SKIP_DOWNLOAD: true
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
           CYPRESS_INSTALL_BINARY: 0
+          PUPPETEER_EXECUTABLE_PATH: /usr/bin/google-chrome
 
       - name: 🚀 Deploy to Vercel
         id: deploy
@@ -212,6 +213,7 @@ jobs:
           PUPPETEER_SKIP_DOWNLOAD: true
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
           CYPRESS_INSTALL_BINARY: 0
+          PUPPETEER_EXECUTABLE_PATH: /usr/bin/google-chrome
 
       - name: 🔍 Deploy Preview to Vercel
         id: deploy
