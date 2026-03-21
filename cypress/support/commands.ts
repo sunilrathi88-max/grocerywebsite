@@ -26,12 +26,6 @@ Cypress.Commands.add('waitForLazyImages', () => {
   cy.get('img[loading="lazy"]', { timeout: 10000 }).should('be.visible');
 });
 
-// Custom command for checking social proof notifications
-  cy.get('[data-testid="social-proof-notification"]', { timeout: 20000 })
-    .should('be.visible')
-    .and('contain.text', 'purchased');
-});
-
 // Custom command for adding product to cart
 Cypress.Commands.add('addProductToCart', (productName?: string) => {
   // Ensure products are loaded first

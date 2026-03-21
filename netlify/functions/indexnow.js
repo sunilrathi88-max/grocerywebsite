@@ -17,21 +17,27 @@ export const handler = async (event) => {
       host,
       key,
       keyLocation,
-      urlList: urls
+      urlList: urls,
     };
 
     const response = await fetch('https://api.indexnow.org/indexnow', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json; charset=utf-8'
+        'Content-Type': 'application/json; charset=utf-8',
       },
-      body: JSON.stringify(indexNowPayload)
+      body: JSON.stringify(indexNowPayload),
     });
 
     if (response.ok) {
-      return { statusCode: 200, body: JSON.stringify({ message: 'URLs submitted to IndexNow successfully' }) };
+      return {
+        statusCode: 200,
+        body: JSON.stringify({ message: 'URLs submitted to IndexNow successfully' }),
+      };
     } else {
-      return { statusCode: response.status, body: JSON.stringify({ error: 'Failed to submit URLs' }) };
+      return {
+        statusCode: response.status,
+        body: JSON.stringify({ error: 'Failed to submit URLs' }),
+      };
     }
   } catch (err) {
     return { statusCode: 500, body: JSON.stringify({ error: err.message }) };
