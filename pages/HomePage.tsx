@@ -166,14 +166,11 @@ const HomePage: React.FC<HomePageProps> = ({
 
   return (
     <main className="bg-ink min-h-screen">
-      <SEO 
-        {...pageSEO.home()} 
+      <SEO
+        {...pageSEO.home()}
         title="Rathi Naturals — Premium Indian Spices (Cold Ground, Est. 1965)"
         description="Shop premium single-origin Indian spices. Cold-ground in small batches to preserve 100% of natural essential oils, colour, and aroma."
-        structuredData={[
-          generateOrganizationSchema(), 
-          generateWebsiteSchema()
-        ]} 
+        structuredData={[generateOrganizationSchema(), generateWebsiteSchema()]}
       />
       {/* 1. Hero Section (New Design) */}
       <Hero />

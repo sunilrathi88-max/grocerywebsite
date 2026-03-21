@@ -24,26 +24,26 @@ async function submitIndexNow() {
     }
   }
 
-  console.log(\`✅ Extracted \${urls.length} absolute URLs from sitemap.\`);
+  console.log(`✅ Extracted ${urls.length} absolute URLs from sitemap.`);
 
   const payload = {
     host: 'rathinaturals.com',
     key: 'rathi-123456789-indexnow',
     keyLocation: 'https://rathinaturals.com/rathi-123456789-indexnow.txt',
-    urlList: urls
+    urlList: urls,
   };
 
   try {
     const response = await fetch('https://api.indexnow.org/indexnow', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json; charset=utf-8' },
-      body: JSON.stringify(payload)
+      body: JSON.stringify(payload),
     });
 
     if (response.ok) {
       console.log('🚀 Successfully submitted index payload to Bing & Yandex algorithms!');
     } else {
-      console.error(\`❌ Failed to submit protocol: \${response.status} \${response.statusText}\`);
+      console.error(`❌ Failed to submit protocol: ${response.status} ${response.statusText}`);
     }
   } catch (err) {
     console.error('❌ Endpoint connection failure: ', err.message);

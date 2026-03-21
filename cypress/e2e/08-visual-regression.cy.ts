@@ -136,7 +136,7 @@ describe('Visual Regression Tests', () => {
     cy.wait(2000);
 
     // Capture with social proof notification
-    
+
     cy.percySnapshot('Homepage - With Social Proof Notification');
 
     // Capture with mobile menu open

@@ -250,7 +250,9 @@ export const generateProductSchema = (product: Product): ProductStructuredData =
   const inStock = product.variants.some((v) => v.stock > 0);
   const hasReviews = product.reviews && product.reviews.length > 0;
   const avgRating = hasReviews
-    ? Number((product.reviews.reduce((sum, r) => sum + r.rating, 0) / product.reviews.length).toFixed(1))
+    ? Number(
+        (product.reviews.reduce((sum, r) => sum + r.rating, 0) / product.reviews.length).toFixed(1)
+      )
     : 0;
 
   return {

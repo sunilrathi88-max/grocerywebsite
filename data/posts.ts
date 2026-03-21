@@ -7,12 +7,14 @@ export const BLOG_POSTS_DATA: BlogPost[] = [
     slug: 'spices-for-gut-health-india',
     title: 'Top 5 Spices for Gut Health in India',
     metaTitle: 'Top 5 Spices for Gut Health in India | Rathi Naturals',
-    metaDescription: 'Discover the best spices for gut health in India. From Salem turmeric to cumin, learn how everyday Indian cold-ground spices improve digestion and microbiome balance.',
+    metaDescription:
+      'Discover the best spices for gut health in India. From Salem turmeric to cumin, learn how everyday Indian cold-ground spices improve digestion and microbiome balance.',
     author: 'Dr. Aditi Sharma',
     date: 'March 15, 2025',
     updateDate: 'March 21, 2026',
     image: 'fallback-blog-gut-health',
-    excerpt: 'Discover which spices can aid digestion and improve your gut microbiome naturally. From turmeric to black pepper, learn how to use them in everyday cooking.',
+    excerpt:
+      'Discover which spices can aid digestion and improve your gut microbiome naturally. From turmeric to black pepper, learn how to use them in everyday cooking.',
     tags: ['Health', 'Gut Health', 'Ayurveda', 'Digestion'],
     isMarkdown: true,
     content: `
@@ -117,29 +119,34 @@ Dr. Aditi Sharma is an Ayurvedic practitioner and clinical nutritionist. She spe
     faqs: [
       {
         question: 'Can spices replace medical treatment for gut issues?',
-        answer: 'No. Spices may support digestion but cannot replace professional medical treatment for diagnosed gut conditions.',
+        answer:
+          'No. Spices may support digestion but cannot replace professional medical treatment for diagnosed gut conditions.',
       },
       {
         question: 'How much spice can I safely consume per day?',
-        answer: 'Most healthy adults tolerate 1–2 teaspoons of mixed spices per meal, but individual tolerance varies.',
+        answer:
+          'Most healthy adults tolerate 1–2 teaspoons of mixed spices per meal, but individual tolerance varies.',
       },
       {
         question: 'Are whole spices better than ground spices for gut health?',
-        answer: 'Whole spices keep essential oils and flavour longer, while ground spices are convenient but should be sourced from trusted brands.',
+        answer:
+          'Whole spices keep essential oils and flavour longer, while ground spices are convenient but should be sourced from trusted brands.',
       },
     ],
   },
   {
     id: 102,
     slug: 'best-gourmet-spice-brands-india',
-    title: 'The Best Gourmet Spice Brands in India: A 2025 Buyer\'s Guide',
-    metaTitle: 'Best Gourmet Spice Brands in India (2025 Buyer\'s Guide) | Rathi Naturals',
-    metaDescription: 'Find the best gourmet spice brands in India for 2025. Learn how to identify premium cold-ground spices, check FSSAI certifications, and avoid adulteration.',
+    title: "The Best Gourmet Spice Brands in India: A 2025 Buyer's Guide",
+    metaTitle: "Best Gourmet Spice Brands in India (2025 Buyer's Guide) | Rathi Naturals",
+    metaDescription:
+      'Find the best gourmet spice brands in India for 2025. Learn how to identify premium cold-ground spices, check FSSAI certifications, and avoid adulteration.',
     author: 'Rathi Naturals Team',
     date: 'Jan 25, 2025',
     updateDate: 'March 21, 2026',
     image: 'fallback-blog-gourmet',
-    excerpt: 'This comprehensive guide breaks down what makes premium spices worth it—covering sourcing practices, certifications, unique positioning, and how to spot genuine quality.',
+    excerpt:
+      'This comprehensive guide breaks down what makes premium spices worth it—covering sourcing practices, certifications, unique positioning, and how to spot genuine quality.',
     tags: ['Premium Spices', 'Guide', 'Buying Guide', '2025'],
     isMarkdown: true,
     content: `
@@ -222,15 +229,18 @@ The Rathi Naturals Team consists of third-generation spice merchants and agronom
     faqs: [
       {
         question: 'Do I need all my spices to be premium?',
-        answer: 'No. Use a mix of reliable everyday brands and premium single-origin spices like Salem turmeric and Mathania chilli for dishes where flavour and colour matter most.',
+        answer:
+          'No. Use a mix of reliable everyday brands and premium single-origin spices like Salem turmeric and Mathania chilli for dishes where flavour and colour matter most.',
       },
       {
         question: 'Are single-origin spices always better?',
-        answer: 'Single-origin spices offer traceability and consistent flavour, but quality still depends on farming, processing, and storage.',
+        answer:
+          'Single-origin spices offer traceability and consistent flavour, but quality still depends on farming, processing, and storage.',
       },
       {
         question: 'How should I store premium spices?',
-        answer: 'Keep spices in airtight containers away from light, heat, and moisture; buy ground spices in smaller packs and use within a few months.',
+        answer:
+          'Keep spices in airtight containers away from light, heat, and moisture; buy ground spices in smaller packs and use within a few months.',
       },
     ],
   },
@@ -239,12 +249,14 @@ The Rathi Naturals Team consists of third-generation spice merchants and agronom
     slug: 'restaurant-style-biryani-recipe-spices',
     title: 'The Secret Spices for a Perfect Restaurant-Style Biryani Recipe',
     metaTitle: 'Secret Spices for Restaurant Style Biryani | Rathi Naturals',
-    metaDescription: 'Master the secret restaurant style biryani recipe simply by upgrading your spices. Learn the Dum technique and how to layer Shahi Jeera and Star Anise.',
+    metaDescription:
+      'Master the secret restaurant style biryani recipe simply by upgrading your spices. Learn the Dum technique and how to layer Shahi Jeera and Star Anise.',
     author: 'Chef Anjali D.',
     date: 'Jan 15, 2025',
     updateDate: 'March 21, 2026',
     image: 'fallback-blog-biryani',
-    excerpt: 'It\'s not just about the rice. The secret lies in the "Dum" technique and the layering of whole spices. Learn how to master it at home.',
+    excerpt:
+      'It\'s not just about the rice. The secret lies in the "Dum" technique and the layering of whole spices. Learn how to master it at home.',
     tags: ['Recipe', 'Cooking Tips', 'Biryani'],
     isMarkdown: true,
     content: `
@@ -288,15 +300,18 @@ Chef Anjali D. is a culinary consultant and former executive sous-chef specializ
     faqs: [
       {
         question: 'What is the best rice for biryani?',
-        answer: 'Aged Basmati rice (at least 1-2 years old) is best because it expands significantly without becoming sticky or mushy.',
+        answer:
+          'Aged Basmati rice (at least 1-2 years old) is best because it expands significantly without becoming sticky or mushy.',
       },
       {
         question: 'Can I make Dum Biryani without a clay pot?',
-        answer: 'Yes, any heavy-bottomed pot (like a Dutch oven) works nicely. The key is a tight seal to trap steam.',
+        answer:
+          'Yes, any heavy-bottomed pot (like a Dutch oven) works nicely. The key is a tight seal to trap steam.',
       },
       {
         question: 'Why is my biryani mushy?',
-        answer: 'Usually due to overcooking the rice before layering. Boil rice only until 70% done (still has a bite) before the final Dum phase.',
+        answer:
+          'Usually due to overcooking the rice before layering. Boil rice only until 70% done (still has a bite) before the final Dum phase.',
       },
     ],
   },
@@ -305,12 +320,14 @@ Chef Anjali D. is a culinary consultant and former executive sous-chef specializ
     slug: 'how-to-identify-fake-turmeric',
     title: 'How to Identify Fake Turmeric From Supermarkets',
     metaTitle: 'How to Identify Fake Turmeric (Water Test) | Rathi Naturals',
-    metaDescription: 'Is your supermarket turmeric fake? Learn how to identify fake turmeric and test for dangerous adulterants like Lead Chromate with a simple water test.',
+    metaDescription:
+      'Is your supermarket turmeric fake? Learn how to identify fake turmeric and test for dangerous adulterants like Lead Chromate with a simple water test.',
     author: 'Suresh R., Agronomist',
     date: 'Jan 10, 2025',
     updateDate: 'March 21, 2026',
     image: 'fallback-blog-adulteration',
-    excerpt: 'Lead chromate is often used to give stale turmeric a bright yellow color. Here is a simple water test you can do at home to check for purity.',
+    excerpt:
+      'Lead chromate is often used to give stale turmeric a bright yellow color. Here is a simple water test you can do at home to check for purity.',
     tags: ['Education', 'Food Safety', 'Turmeric'],
     isMarkdown: true,
     content: `
@@ -354,15 +371,18 @@ Suresh R. is an agronomist and quality control specialist with over three decade
     faqs: [
       {
         question: 'Is Lead Chromate dangerous?',
-        answer: 'Yes, it is a neurotoxin. Long-term consumption can lead to serious health issues, particularly affecting the nervous system.',
+        answer:
+          'Yes, it is a neurotoxin. Long-term consumption can lead to serious health issues, particularly affecting the nervous system.',
       },
       {
         question: 'Why is organic/tested turmeric more expensive?',
-        answer: 'It reflects the cost of genuine farming, lack of cheap fillers, and the expense of rigorous lab testing for purity.',
+        answer:
+          'It reflects the cost of genuine farming, lack of cheap fillers, and the expense of rigorous lab testing for purity.',
       },
       {
         question: 'Does the water test detect all adulterants?',
-        answer: 'It detects common fillers like chalk and some dyes, but lab testing is the only way to confirm 100% purity and absence of heavy metals.',
+        answer:
+          'It detects common fillers like chalk and some dyes, but lab testing is the only way to confirm 100% purity and absence of heavy metals.',
       },
     ],
   },
@@ -371,12 +391,14 @@ Suresh R. is an agronomist and quality control specialist with over three decade
     slug: 'fssai-spice-certification-guide-2025',
     title: 'The 2025 FSSAI Spice Safety Enforcement: A Complete Guide for Consumers & Brands',
     metaTitle: 'FSSAI Spice Safety Enforcement Complete Guide 2025 | Rathi Naturals',
-    metaDescription: 'Everything you need to know about the FSSAI October 2025 spice enforcement drive. Learn about the 18,000+ testing parameters and mandatory NABL certification.',
+    metaDescription:
+      'Everything you need to know about the FSSAI October 2025 spice enforcement drive. Learn about the 18,000+ testing parameters and mandatory NABL certification.',
     author: 'Sunil Rathi',
     date: 'Jan 29, 2026',
     updateDate: 'March 21, 2026',
     image: 'fallback-blog-fssai',
-    excerpt: 'Everything you need to know about the FSSAI\'s October 2025 spice enforcement drive. Learn about the 18,000+ testing parameters, mandatory NABL certification, and how to spot safe spices.',
+    excerpt:
+      "Everything you need to know about the FSSAI's October 2025 spice enforcement drive. Learn about the 18,000+ testing parameters, mandatory NABL certification, and how to spot safe spices.",
     tags: ['FSSAI', 'Food Safety', 'Spices', 'Compliance', 'Health'],
     isMarkdown: true,
     content: `
@@ -463,15 +485,18 @@ Sunil Rathi is the Managing Director of Rathi Naturals. Drawing from a 1965 fami
     faqs: [
       {
         question: 'What is the FSSAI enforcement drive?',
-        answer: 'A targeted surveillance campaign to check for adulteration, pesticide residues, and heavy metals in spices.',
+        answer:
+          'A targeted surveillance campaign to check for adulteration, pesticide residues, and heavy metals in spices.',
       },
       {
         question: 'Why are heavy metals found in spices?',
-        answer: 'Contaminated soil, wastewater irrigation, or intentional adulteration (like Lead Chromate for color) are the main causes.',
+        answer:
+          'Contaminated soil, wastewater irrigation, or intentional adulteration (like Lead Chromate for color) are the main causes.',
       },
       {
         question: 'How can I check if my spices are safe?',
-        answer: 'Check for the FSSAI license number, look for NABL-accredited lab reports (often via QR code), and avoid loose unbranded spices.',
+        answer:
+          'Check for the FSSAI license number, look for NABL-accredited lab reports (often via QR code), and avoid loose unbranded spices.',
       },
     ],
   },

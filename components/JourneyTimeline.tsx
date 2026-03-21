@@ -94,9 +94,7 @@ const JourneyTimeline: React.FC = () => {
                     <h4 className="font-serif text-2xl text-cream mb-4 leading-tight">
                       {step.title}
                     </h4>
-                    <p className="text-sm text-dust leading-relaxed font-light">
-                      {step.desc}
-                    </p>
+                    <p className="text-sm text-dust leading-relaxed font-light">{step.desc}</p>
                   </div>
                 </div>
               </div>

@@ -1608,7 +1608,6 @@ const App: React.FC = () => {
                 />
               )}
 
-
               {/* Newsletter Popup - Disabled */}
               {/* <NewsletterPopup delayMs={8000} /> */}
             </React.Suspense>

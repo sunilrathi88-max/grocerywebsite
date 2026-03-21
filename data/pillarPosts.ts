@@ -6,12 +6,14 @@ export const PILLAR_POSTS: BlogPost[] = [
     slug: 'cold-grinding-vs-hot-grinding-spices-india',
     title: 'Cold Grinding vs. Hot Grinding: The Science of Preserving Spice Flavour',
     metaTitle: 'Cold Grinding vs Hot Grinding Spices India | Rathi Naturals',
-    metaDescription: 'Discover why Rathi Naturals uses traditional cold grinding instead of commercial hot grinding. Learn the science behind preserving essential oils, aroma, and curcumin.',
+    metaDescription:
+      'Discover why Rathi Naturals uses traditional cold grinding instead of commercial hot grinding. Learn the science behind preserving essential oils, aroma, and curcumin.',
     author: 'Sunil Rathi',
     date: 'March 20, 2026',
     updateDate: 'March 21, 2026',
     image: 'fallback-blog-grinding',
-    excerpt: 'Commercial spice factories use high-speed hot grinding that literally burns away the flavour. Here is why true chefs insist on traditional cold-ground spices instead.',
+    excerpt:
+      'Commercial spice factories use high-speed hot grinding that literally burns away the flavour. Here is why true chefs insist on traditional cold-ground spices instead.',
     tags: ['Quality', 'Cold Grinding', 'Science', 'Spices'],
     isMarkdown: true,
     content: `
@@ -95,15 +97,18 @@ Sunil Rathi is the Managing Director of Rathi Naturals. Combining his family's 1
     faqs: [
       {
         question: 'What happens when spices are hot-ground?',
-        answer: 'Friction heats the spices to over 90°C, causing up to 60% of the volatile essential oils and flavor compounds to vaporize.',
+        answer:
+          'Friction heats the spices to over 90°C, causing up to 60% of the volatile essential oils and flavor compounds to vaporize.',
       },
       {
         question: 'What temperature is used for Cold Grinding?',
-        answer: 'Cold grinding utilizes slow-RPM equipment and cooling systems to keep the spices below 40°C, preserving maximum nutrition and aroma.',
+        answer:
+          'Cold grinding utilizes slow-RPM equipment and cooling systems to keep the spices below 40°C, preserving maximum nutrition and aroma.',
       },
       {
         question: 'Is cold-ground spice actually stronger?',
-        answer: 'Yes. Because the natural essential oils are preserved, cold-ground spices are highly potent. You often need to use significantly less in a recipe than commercial powder.',
+        answer:
+          'Yes. Because the natural essential oils are preserved, cold-ground spices are highly potent. You often need to use significantly less in a recipe than commercial powder.',
       },
     ],
   },
@@ -112,12 +117,14 @@ Sunil Rathi is the Managing Director of Rathi Naturals. Combining his family's 1
     slug: 'how-to-identify-adulterated-spices',
     title: '8 Simple Tests to Identify Adulterated Spices at Home',
     metaTitle: 'How to Identify Adulterated Spices (8 Home Tests) | Rathi Naturals',
-    metaDescription: 'Learn how to spot fake or adulterated spices using 8 simple home tests. Protect your family from lead chromate, sawdust, and synthetic dyes.',
+    metaDescription:
+      'Learn how to spot fake or adulterated spices using 8 simple home tests. Protect your family from lead chromate, sawdust, and synthetic dyes.',
     author: 'Suresh R., Agronomist',
     date: 'March 21, 2026',
     updateDate: 'March 21, 2026',
     image: 'fallback-blog-adulteration-tests',
-    excerpt: 'Is your spice drawer hiding toxic chemicals? From brick powder in chilli to sawdust in coriander, here are 8 FSSAI-approved tests you can do in your kitchen.',
+    excerpt:
+      'Is your spice drawer hiding toxic chemicals? From brick powder in chilli to sawdust in coriander, here are 8 FSSAI-approved tests you can do in your kitchen.',
     tags: ['Food Safety', 'Testing', 'Spices', 'Adulteration'],
     isMarkdown: true,
     content: `
@@ -252,15 +259,18 @@ Suresh R. is an agronomist and quality control specialist. He regularly leads wo
     faqs: [
       {
         question: 'How do I test turmeric for adulteration?',
-        answer: 'Mix it in warm water without stirring. Pure turmeric settls slowly leaving a light yellow tint, while adulterated turmeric turns the water instantly cloudy or drops bright streaks.',
+        answer:
+          'Mix it in warm water without stirring. Pure turmeric settls slowly leaving a light yellow tint, while adulterated turmeric turns the water instantly cloudy or drops bright streaks.',
       },
       {
         question: 'How do you check for papaya seeds in black pepper?',
-        answer: 'Drop the peppercorns in water. Pure black pepper will sink, while dried papaya seeds will float.',
+        answer:
+          'Drop the peppercorns in water. Pure black pepper will sink, while dried papaya seeds will float.',
       },
       {
         question: 'Why do home tests matter?',
-        answer: 'Home tests catch bulk physical adulterants like brick powder, sawdust, and heavy dyes, protecting you from immediate toxins, but lab-tested brands guarantee chemical purity.',
+        answer:
+          'Home tests catch bulk physical adulterants like brick powder, sawdust, and heavy dyes, protecting you from immediate toxins, but lab-tested brands guarantee chemical purity.',
       },
     ],
   },

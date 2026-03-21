@@ -15,7 +15,10 @@ interface BlogPostPageProps {
 const BlogPostPage: React.FC<BlogPostPageProps> = ({ post }) => {
   // SEO Configuration
   const seoConfig = React.useMemo(
-    () => (post ? { title: post.metaTitle || post.title, description: post.metaDescription || post.excerpt } : null),
+    () =>
+      post
+        ? { title: post.metaTitle || post.title, description: post.metaDescription || post.excerpt }
+        : null,
     [post]
   );
 
@@ -68,7 +71,9 @@ const BlogPostPage: React.FC<BlogPostPageProps> = ({ post }) => {
           {post.updateDate && (
             <>
               <span className="w-1 h-1 bg-neutral-300 rounded-full" />
-              <span className="italic text-neutral-400 normal-case">Last updated: {post.updateDate}</span>
+              <span className="italic text-neutral-400 normal-case">
+                Last updated: {post.updateDate}
+              </span>
             </>
           )}
           {post.tags?.[0] && (
@@ -80,7 +85,10 @@ const BlogPostPage: React.FC<BlogPostPageProps> = ({ post }) => {
         </div>
       </div>
 
-      <div className="w-full max-w-5xl mx-auto mb-12 rounded-sm shadow-xl overflow-hidden relative" style={{ minHeight: '400px' }}>
+      <div
+        className="w-full max-w-5xl mx-auto mb-12 rounded-sm shadow-xl overflow-hidden relative"
+        style={{ minHeight: '400px' }}
+      >
         {post.image.includes('fallback') ? (
           <div className="w-full h-full min-h-[400px] md:min-h-[500px] bg-gradient-to-br from-brand-primary to-brand-dark flex flex-col items-center justify-center p-8 md:p-12 text-center relative">
             {/* Animated SVG background pattern */}
