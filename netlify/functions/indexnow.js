@@ -11,7 +11,7 @@ export const handler = async (event) => {
 
     const host = 'rathinaturals.com';
     const key = 'rathi-123456789-indexnow';
-    const keyLocation = \`https://\${host}/\${key}.txt\`;
+    const keyLocation = `https://${host}/${key}.txt`;
 
     const indexNowPayload = {
       host,
