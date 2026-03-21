@@ -24,6 +24,9 @@ export default [
         document: 'readonly',
         navigator: 'readonly',
         console: 'readonly',
+        requestAnimationFrame: 'readonly',
+        cancelAnimationFrame: 'readonly',
+        HTMLCanvasElement: 'readonly',
         setTimeout: 'readonly',
         setInterval: 'readonly',
         clearTimeout: 'readonly',
@@ -92,6 +95,7 @@ export default [
       ...prettierConfig.rules,
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off',
+      'react/no-unescaped-entities': 'warn',
       '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
       '@typescript-eslint/explicit-module-boundary-types': 'off',
       '@typescript-eslint/no-explicit-any': 'warn',
@@ -99,6 +103,7 @@ export default [
       'no-console': ['warn', { allow: ['warn', 'error'] }],
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'warn',
+      'react-hooks/preserve-manual-memoization': 'off',
     },
     settings: {
       react: {
@@ -135,6 +140,7 @@ export default [
         module: 'readonly',
         __dirname: 'readonly',
         document: 'readonly',
+        setTimeout: 'readonly',
       },
     },
     rules: {
