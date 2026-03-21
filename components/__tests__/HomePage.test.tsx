@@ -29,6 +29,8 @@ jest.mock('../RecommendedProducts', () => () => <div data-testid="recommended-pr
 jest.mock('../SEO', () => () => null);
 jest.mock('../../utils/seo', () => ({
   pageSEO: { home: () => ({ title: 'Test', description: 'Test' }) },
+  generateOrganizationSchema: jest.fn(() => ({})),
+  generateWebsiteSchema: jest.fn(() => ({})),
 }));
 jest.mock('../../data/testimonials', () => ({
   FEATURED_TESTIMONIALS: [],
@@ -100,17 +102,25 @@ describe('HomePage UX Redesign Verification', () => {
     _addToast: jest.fn(),
   };
 
-  it('renders the harvest collection sections', () => {
-    render(<HomePage {...defaultProps} />);
-    const collections = screen.getAllByTestId('harvest-collection');
+  it('renders the harvest collection sections', async () => {
+    render(
+      <React.Suspense fallback={<div>Loading...</div>}>
+        <HomePage {...defaultProps} />
+      </React.Suspense>
+    );
+    const collections = await screen.findAllByTestId('harvest-collection');
     expect(collections.length).toBe(2); // Best Sellers + New Arrivals
   });
 
-  it('renders core page sections', () => {
-    render(<HomePage {...defaultProps} />);
+  it('renders core page sections', async () => {
+    render(
+      <React.Suspense fallback={<div>Loading...</div>}>
+        <HomePage {...defaultProps} />
+      </React.Suspense>
+    );
     expect(screen.getByTestId('hero')).toBeInTheDocument();
-    expect(screen.getByTestId('trust-signals')).toBeInTheDocument();
-    expect(screen.getByTestId('testimonials')).toBeInTheDocument();
-    expect(screen.getByTestId('newsletter')).toBeInTheDocument();
+    expect(await screen.findByTestId('trust-signals')).toBeInTheDocument();
+    expect(await screen.findByTestId('testimonials')).toBeInTheDocument();
+    expect(await screen.findByTestId('newsletter')).toBeInTheDocument();
   });
 });
