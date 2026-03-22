@@ -50,7 +50,9 @@ const AuthModal: React.FC<AuthModalProps> = ({ onClose, onLogin, onSignUp }) => 
 
     return (
       <form onSubmit={handleSubmit} className="space-y-4">
-        {error && <div className="text-red-500 text-sm font-bold bg-red-50 p-2 rounded">{error}</div>}
+        {error && (
+          <div className="text-red-500 text-sm font-bold bg-red-50 p-2 rounded">{error}</div>
+        )}
         <div>
           <label htmlFor="email-login" className="block text-sm font-medium text-gray-700">
             Email Address
@@ -121,7 +123,9 @@ const AuthModal: React.FC<AuthModalProps> = ({ onClose, onLogin, onSignUp }) => 
 
     return (
       <form onSubmit={handleSubmit} className="space-y-4">
-        {error && <div className="text-red-500 text-sm font-bold bg-red-50 p-2 rounded">{error}</div>}
+        {error && (
+          <div className="text-red-500 text-sm font-bold bg-red-50 p-2 rounded">{error}</div>
+        )}
         <div>
           <label htmlFor="name-register" className="block text-sm font-medium text-gray-700">
             Full Name

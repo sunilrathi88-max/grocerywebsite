@@ -60,8 +60,6 @@ const Navigation: React.FC<NavigationProps> = ({ onSelectCategory }) => {
         <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-primary transition-all duration-300 group-hover:w-full" />
       </button>
 
-
-
       {/* Shop - with MegaMenu */}
       <div className="relative" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
         <Link

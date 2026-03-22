@@ -26,6 +26,8 @@ jest.mock('../CookingContextWidget', () => () => <div data-testid="cooking-conte
 jest.mock('../BlogHighlights', () => () => <div data-testid="blog-highlights" />);
 jest.mock('../NewsletterSection', () => () => <div data-testid="newsletter" />);
 jest.mock('../RecommendedProducts', () => () => <div data-testid="recommended-products" />);
+jest.mock('../SubscriptionBanner', () => () => <div data-testid="subscription-banner" />);
+jest.mock('../LoyaltyWidget', () => () => <div data-testid="loyalty-widget" />);
 jest.mock('../SEO', () => () => null);
 jest.mock('../../utils/seo', () => ({
   pageSEO: { home: () => ({ title: 'Test', description: 'Test' }) },
@@ -45,11 +47,11 @@ jest.mock('react-hot-toast', () => ({
 
 describe('HomePage UX Redesign Verification', () => {
   const mockProducts: Product[] = [
-    { id: 4, name: 'Target Spices 1', variants: [] } as any,
-    { id: 12, name: 'Target Spices 2', variants: [] } as any,
-    { id: 29, name: 'Target Spices 3', variants: [] } as any,
-    { id: 28, name: 'Target Spices 4', variants: [] } as any,
-    { id: 99, name: 'Other Spice', variants: [] } as any,
+    { id: 4, name: 'Target Spices 1', variants: [{ id: 'v1', price: 10, weight: '100g' }] } as any,
+    { id: 12, name: 'Target Spices 2', variants: [{ id: 'v1', price: 10, weight: '100g' }] } as any,
+    { id: 29, name: 'Target Spices 3', variants: [{ id: 'v1', price: 10, weight: '100g' }] } as any,
+    { id: 28, name: 'Target Spices 4', variants: [{ id: 'v1', price: 10, weight: '100g' }] } as any,
+    { id: 99, name: 'Other Spice', variants: [{ id: 'v1', price: 10, weight: '100g' }] } as any,
   ];
 
   const defaultProps = {

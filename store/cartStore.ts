@@ -40,7 +40,7 @@ export const useCartStore = create<CartStore>()(
             };
           }
 
-          return { 
+          return {
             items: [...state.items, item],
             isOpen: true, // Auto-open cart UX strategy
           };

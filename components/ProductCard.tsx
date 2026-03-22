@@ -53,7 +53,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({
     hot: '🌶️🌶️🌶️',
   };
 
-  const computedStock = stock !== undefined ? stock : sizes ? sizes.reduce((sum, s) => sum + (s.stock || 20), 0) : 20;
+  const computedStock =
+    stock !== undefined ? stock : sizes ? sizes.reduce((sum, s) => sum + (s.stock || 20), 0) : 20;
 
   // Default to 0 based on user logic, though usually it's calculated
   const discount = originalPrice ? Math.round(((originalPrice - price) / originalPrice) * 100) : 0;

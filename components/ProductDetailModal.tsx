@@ -273,9 +273,14 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                 <EyeIcon className="h-5 w-5" />
                 <span>{viewers} people are viewing this right now</span>
               </div>
-              
+
               <div className="mb-4">
-                <StockBadge stock={selectedVariant.stock} lowStockThreshold={20} isPopular={product.reviews.length > 20} className="inline-block" />
+                <StockBadge
+                  stock={selectedVariant.stock}
+                  lowStockThreshold={20}
+                  isPopular={product.reviews.length > 20}
+                  className="inline-block"
+                />
               </div>
 
               {/* Variant Selection */}
