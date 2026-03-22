@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { HelmetProvider } from 'react-helmet-async';
-import { Routes, Route, Navigate, useNavigate, useLocation, useParams } from 'react-router-dom';
+import { Routes, Route, Navigate, useNavigate, useLocation, useParams, Link } from 'react-router-dom';
 import {
   Product,
   ToastMessage,
@@ -76,7 +76,8 @@ const MobileBottomNav = React.lazy(() => import('./components/MobileBottomNav'))
 const MessagingShowcase = React.lazy(() => import('./components/MessagingShowcase'));
 
 // Lazy-Loaded Pages (Route-Based Code Splitting)
-const CheckoutPage = React.lazy(() => import('./pages/CheckoutPage'));
+const CheckoutPage = React.lazy(() => import('./components/CheckoutPage'));
+import { OrderConfirmation } from './components/OrderConfirmation';
 
 // AdminDashboard is imported lazily at top of file
 // const AdminDashboard = React.lazy(() => import('./components/AdminDashboard'));
@@ -134,34 +135,36 @@ const PageLoader = () => (
 
 const OrderConfirmationRoute = ({
   currentUser,
-  handlePlaceOrder,
-  addToast,
 }: {
   currentUser: User | null;
-  handlePlaceOrder: (order: Order) => void;
-  addToast: (message: string, type: ToastMessage['type']) => void;
 }) => {
   const { orderId } = useParams();
-  const { orders } = useUserOrders();
+  const { orders, isLoading, error } = useUserOrders();
+  
+  if (isLoading) return <PageLoader />;
+  
+  if (error) {
+    return (
+      <div className="text-center py-20">
+        <h2 className="text-2xl font-bold text-red-600">Error loading order</h2>
+        <p className="text-gray-600 mt-2">Please try refreshing the page or contact support.</p>
+      </div>
+    );
+  }
+
   const order = orders.find((o: Order) => o.id === orderId);
+  
   return order ? (
-    <React.Suspense fallback={<PageLoader />}>
-      <CheckoutPage
-        cartItems={[]}
-        user={currentUser}
-        onPlaceOrder={handlePlaceOrder}
-        addToast={addToast}
-        discount={0}
-        promoCode=""
-        onApplyPromoCode={() => {}}
-        onRemovePromoCode={() => {}}
-        subtotal={0}
-        shippingCost={0}
-      />
-    </React.Suspense>
+    <OrderConfirmation order={order} />
   ) : (
-    <div className="text-center py-20">
-      <h2>Order not found</h2>
+    <div className="text-center py-20 px-4">
+      <h2 className="text-2xl font-bold">Order not found</h2>
+      <p className="text-gray-600 mt-2">
+        We couldn't find an order with ID: <span className="font-mono">{orderId}</span>
+      </p>
+      <Link to="/" className="mt-6 inline-block bg-brand-primary text-brand-dark px-6 py-2 rounded-full font-bold">
+        Return to Home
+      </Link>
     </div>
   );
 };
@@ -1346,8 +1349,6 @@ const App: React.FC = () => {
                   element={
                     <OrderConfirmationRoute
                       currentUser={currentUser}
-                      handlePlaceOrder={handlePlaceOrder}
-                      addToast={addToast}
                     />
                   }
                 />
