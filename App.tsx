@@ -22,6 +22,9 @@ import { trackPageView } from './utils/analytics';
 // Framer Motion Optimization
 import { LazyMotion, domAnimation } from 'framer-motion';
 
+// Vercel Web Analytics
+import { Analytics } from '@vercel/analytics/react';
+
 // SEO Utils
 import SEO from './components/SEO';
 import { pageSEO, generateOrganizationSchema } from './utils/seo';
@@ -1632,6 +1635,9 @@ const App: React.FC = () => {
               <WhatsAppButton phoneNumber="918890006364" />
               <BackToTop />
             </React.Suspense>
+
+            {/* Vercel Web Analytics */}
+            <Analytics />
           </div>
         </LazyMotion>
       </ABTestProvider>
