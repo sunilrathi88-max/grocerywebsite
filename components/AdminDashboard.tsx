@@ -25,13 +25,29 @@ type TabType =
   | 'affiliates'
   | 'settings';
 
+interface AnalyticsData {
+  totalRevenue: number;
+  totalOrders: number;
+  averageOrderValue: number;
+  conversionRate: number;
+  salesData: any[]; // Still using any here if I don't have types for these specific ones, but making progress
+  topProducts: any[];
+  recentOrders: any[];
+}
+
+interface ContentState {
+  posts: any[];
+  recipes: any[];
+  testimonials: any[];
+}
+
 const AdminDashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState<TabType>('products');
   const [products, setProducts] = useState<Product[]>([]);
   const [orders, setOrders] = useState<Order[]>([]);
   const [reviews, setReviews] = useState<BaseReview[]>([]);
-  const [content, setContent] = useState<any>({ posts: [], recipes: [], testimonials: [] });
-  const [analytics, setAnalytics] = useState<any>({
+  const [content, setContent] = useState<ContentState>({ posts: [], recipes: [], testimonials: [] });
+  const [analytics, setAnalytics] = useState<AnalyticsData>({
     totalRevenue: 0,
     totalOrders: 0,
     averageOrderValue: 0,
@@ -122,7 +138,7 @@ const AdminDashboard: React.FC = () => {
         date: '2023-10-20',
         helpful: 12,
         verifiedPurchase: true,
-      } as any,
+      } as BaseReview,
       {
         id: 2,
         author: 'Rajesh K.',
@@ -131,7 +147,7 @@ const AdminDashboard: React.FC = () => {
         date: '2023-10-22',
         helpful: 3,
         verifiedPurchase: true,
-      } as any,
+      } as BaseReview,
       {
         id: 3,
         author: 'Sneha P.',
@@ -536,7 +552,7 @@ const ReviewModeration: React.FC<{ reviews: BaseReview[]; onUpdate: () => void }
   );
 };
 
-const ContentManagement: React.FC<{ content: any[]; onUpdate: () => void }> = ({
+const ContentManagement: React.FC<{ content: ContentState; onUpdate: () => void }> = ({
   content,
   onUpdate,
 }) => {
