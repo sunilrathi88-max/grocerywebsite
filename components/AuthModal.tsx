@@ -3,6 +3,7 @@ import { XIcon } from './icons/XIcon';
 import { UserIcon } from './icons/UserIcon';
 import { User } from '../types';
 import OAuthButtons from './OAuthButtons';
+import { AuthService } from '../utils/authService';
 
 interface AuthModalProps {
   onClose: () => void;
@@ -26,25 +27,30 @@ const AuthModal: React.FC<AuthModalProps> = ({ onClose, onLogin, onSignUp }) => 
   }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState('');
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
-      // Simulate login or call API
-      const mockUser: User = {
-        id: Date.now().toString(),
-        name: email.split('@')[0],
-        email: email,
-        isAdmin: false,
-        addresses: [],
-        wishlist: [],
-        orders: [],
-      };
-      onLogin(mockUser);
-      onClose();
+      setIsLoading(true);
+      setError('');
+      try {
+        const response = await AuthService.login(email, password, false);
+        if (response.success && response.user) {
+          onClose();
+        } else {
+          setError(response.message || 'Invalid login credentials');
+        }
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Login failed');
+      } finally {
+        setIsLoading(false);
+      }
     };
 
     return (
       <form onSubmit={handleSubmit} className="space-y-4">
+        {error && <div className="text-red-500 text-sm font-bold bg-red-50 p-2 rounded">{error}</div>}
         <div>
           <label htmlFor="email-login" className="block text-sm font-medium text-gray-700">
             Email Address
@@ -73,9 +79,10 @@ const AuthModal: React.FC<AuthModalProps> = ({ onClose, onLogin, onSignUp }) => 
         </div>
         <button
           type="submit"
-          className="w-full bg-brand-dark text-white font-bold py-3 rounded-full shadow-lg hover:bg-opacity-90 transition-all duration-300"
+          disabled={isLoading}
+          className="w-full bg-brand-dark text-white font-bold py-3 rounded-full shadow-lg hover:bg-opacity-90 transition-all duration-300 disabled:opacity-50"
         >
-          Login
+          {isLoading ? 'Logging in...' : 'Login'}
         </button>
       </form>
     );
@@ -91,15 +98,30 @@ const AuthModal: React.FC<AuthModalProps> = ({ onClose, onLogin, onSignUp }) => 
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState('');
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
-      onSignUp(name, email, password);
-      onClose();
+      setIsLoading(true);
+      setError('');
+      try {
+        const response = await AuthService.signUp(name, email, password);
+        if (response.success) {
+          onClose();
+        } else {
+          setError(response.message || 'Registration failed');
+        }
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Registration failed');
+      } finally {
+        setIsLoading(false);
+      }
     };
 
     return (
       <form onSubmit={handleSubmit} className="space-y-4">
+        {error && <div className="text-red-500 text-sm font-bold bg-red-50 p-2 rounded">{error}</div>}
         <div>
           <label htmlFor="name-register" className="block text-sm font-medium text-gray-700">
             Full Name
@@ -141,9 +163,10 @@ const AuthModal: React.FC<AuthModalProps> = ({ onClose, onLogin, onSignUp }) => 
         </div>
         <button
           type="submit"
-          className="w-full bg-brand-dark text-white font-bold py-3 rounded-full shadow-lg hover:bg-opacity-90 transition-all duration-300"
+          disabled={isLoading}
+          className="w-full bg-brand-dark text-white font-bold py-3 rounded-full shadow-lg hover:bg-opacity-90 transition-all duration-300 disabled:opacity-50"
         >
-          Create Account
+          {isLoading ? 'Creating Account...' : 'Create Account'}
         </button>
       </form>
     );

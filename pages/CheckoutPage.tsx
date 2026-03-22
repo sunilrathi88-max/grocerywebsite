@@ -4,6 +4,7 @@ import { useCartStore } from '../store/cartStore';
 import { User, Order, CartItem, ToastMessage } from '../types';
 import { Helmet } from 'react-helmet-async';
 import { ShieldCheckIcon } from '../components/icons/ShieldCheckIcon';
+import TrustSignals from '../components/TrustSignals';
 
 interface CheckoutPageProps {
   cartItems?: CartItem[];
@@ -385,6 +386,9 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
             </div>
           </div>
         </div>
+      </div>
+      <div className="mt-16">
+        <TrustSignals />
       </div>
     </div>
   );

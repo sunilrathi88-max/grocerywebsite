@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { OptimizedImage } from './OptimizedImage';
 import { Link } from 'react-router-dom';
 import { Button } from './Button';
+import StockBadge from './StockBadge';
 
 interface ProductCardProps {
   id: string;
@@ -18,6 +19,7 @@ interface ProductCardProps {
   badgeValue?: string;
   category?: string;
   origin?: string;
+  stock?: number;
   onAddToCart: (productId: string) => void;
   onWishlist: (productId: string) => void;
 }
@@ -36,6 +38,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   badge,
   category,
   origin,
+  stock,
   onAddToCart,
   onWishlist,
 }) => {
@@ -49,6 +52,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({
     medium: '🌶️🌶️',
     hot: '🌶️🌶️🌶️',
   };
+
+  const computedStock = stock !== undefined ? stock : sizes ? sizes.reduce((sum, s) => sum + (s.stock || 20), 0) : 20;
 
   // Default to 0 based on user logic, though usually it's calculated
   const discount = originalPrice ? Math.round(((originalPrice - price) / originalPrice) * 100) : 0;
@@ -155,6 +160,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               height={375}
             />
           )}
+
+          <div className="absolute top-3 left-3 z-20 pointer-events-none scale-90 origin-top-left">
+            <StockBadge stock={computedStock} lowStockThreshold={10} isPopular={reviewCount > 40} />
+          </div>
 
           {/* Badges - Enhanced */}
           <div className="absolute top-3 left-3 flex flex-col gap-2 z-10">

@@ -16,6 +16,8 @@ const CookingContextWidget = React.lazy(() => import('../components/CookingConte
 const BlogHighlights = React.lazy(() => import('../components/BlogHighlights'));
 const NewsletterSection = React.lazy(() => import('../components/NewsletterSection'));
 const RecommendedProducts = React.lazy(() => import('../components/RecommendedProducts'));
+const LoyaltyWidget = React.lazy(() => import('../components/LoyaltyWidget'));
+const SubscriptionBanner = React.lazy(() => import('../components/SubscriptionBanner'));
 
 import { FEATURED_TESTIMONIALS } from '../data/testimonials';
 import QuizModule from '../components/QuizModule';
@@ -222,6 +224,12 @@ const HomePage: React.FC<HomePageProps> = ({
 
         {/* 11. Blog Highlights */}
         <BlogHighlights />
+
+        {/* Loyalty & Subscriptions Engine */}
+        <div className="py-8 bg-white">
+          <SubscriptionBanner />
+        </div>
+        <LoyaltyWidget className="border-t border-gray-100" />
 
         {/* 12. Newsletter Signup */}
         <NewsletterSection />

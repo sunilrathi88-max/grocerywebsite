@@ -51,7 +51,7 @@ import CustomCursor from './components/ui/CustomCursor';
 import SeedTrail from './components/ui/SeedTrail';
 import Preloader from './components/ui/Preloader';
 import { ToastContainer } from './components/ui/ToastContainer';
-import FreeShippingBanner from './components/FreeShippingBanner';
+import PromotionalBanner from './components/PromotionalBanner';
 
 // Lazy-Loaded Components (Load on Demand)
 const Footer = React.lazy(() => import('./components/Footer'));
@@ -821,7 +821,7 @@ const App: React.FC = () => {
               structuredDataId="organization-schema"
             />
 
-            {location.pathname !== '/checkout' && <FreeShippingBanner />}
+            {location.pathname !== '/checkout' && <PromotionalBanner />}
             {location.pathname !== '/checkout' && (
               <Header
                 cartItems={cartItems}

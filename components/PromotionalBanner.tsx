@@ -2,10 +2,11 @@ import React from 'react';
 import { XIcon } from './icons/XIcon';
 
 interface PromotionalBannerProps {
-  onClose: () => void;
+  onClose?: () => void;
 }
 
 const PromotionalBanner: React.FC<PromotionalBannerProps> = ({ onClose }) => {
+  const [isVisible, setIsVisible] = React.useState(true);
   const [timeLeft, setTimeLeft] = React.useState('');
 
   React.useEffect(() => {
@@ -31,6 +32,8 @@ const PromotionalBanner: React.FC<PromotionalBannerProps> = ({ onClose }) => {
     return () => clearInterval(timer);
   }, []);
 
+  if (!isVisible) return null;
+
   return (
     <div className="bg-brand-dark text-white text-center py-2 px-4 relative text-sm h-auto min-h-[48px] flex items-center justify-center z-50">
       <div className="flex flex-col sm:flex-row items-center gap-1 sm:gap-2">
@@ -42,7 +45,10 @@ const PromotionalBanner: React.FC<PromotionalBannerProps> = ({ onClose }) => {
         </span>
       </div>
       <button
-        onClick={onClose}
+        onClick={() => {
+          setIsVisible(false);
+          if (onClose) onClose();
+        }}
         className="absolute top-1/2 right-2 transform -translate-y-1/2 p-1.5 rounded-full hover:bg-white/20 transition-colors"
         aria-label="Dismiss promotional banner"
       >
