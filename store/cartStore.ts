@@ -6,6 +6,8 @@ export interface CartStore {
   items: CartItem[];
   discountCode: string | null;
   discountAmount: number;
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
   addItem: (item: CartItem) => void;
   removeItem: (id: string) => void;
   updateQuantity: (id: string, quantity: number) => void;
@@ -21,6 +23,9 @@ export const useCartStore = create<CartStore>()(
       items: [],
       discountCode: null,
       discountAmount: 0,
+      isOpen: false,
+
+      setIsOpen: (isOpen: boolean) => set({ isOpen }),
 
       addItem: (item: CartItem) => {
         set((state) => {
@@ -31,10 +36,14 @@ export const useCartStore = create<CartStore>()(
               items: state.items.map((i) =>
                 i.id === item.id ? { ...i, quantity: i.quantity + item.quantity } : i
               ),
+              isOpen: true, // Auto-open cart UX strategy
             };
           }
 
-          return { items: [...state.items, item] };
+          return { 
+            items: [...state.items, item],
+            isOpen: true, // Auto-open cart UX strategy
+          };
         });
       },
 

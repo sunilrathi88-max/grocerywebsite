@@ -178,10 +178,10 @@ const Cart: React.FC<CartProps> = ({
   return (
     <div className="h-full flex flex-col">
       {/* Header - Item Count */}
-      <div className="px-6 pt-6 pb-2">
-        <h3 className="font-bold text-lg text-brand-dark">
-          Your Cart ({items.reduce((acc, i) => acc + i.quantity, 0)} Items)
-        </h3>
+      <div className="px-6 pt-2 pb-2">
+        <p className="text-sm font-medium text-gray-500">
+          You have {items.reduce((acc, i) => acc + i.quantity, 0)} items in your cart
+        </p>
       </div>
 
       {/* Free Shipping Progress Bar */}
@@ -446,13 +446,13 @@ const Cart: React.FC<CartProps> = ({
             <label htmlFor="promo-code" className="text-sm font-medium text-gray-700">
               Promo Code
             </label>
-            <div className="mt-1 flex rounded-md shadow-sm">
+            <div className="mt-1 flex rounded-md shadow-sm h-[42px]">
               <input
                 type="text"
                 id="promo-code"
                 value={promoCode}
                 onChange={(e) => onPromoCodeChange(e.target.value)}
-                className="flex-1 block w-full rounded-none rounded-l-md border-gray-300 focus:ring-brand-primary focus:border-brand-primary sm:text-sm"
+                className="flex-1 block w-full rounded-none rounded-l-md border-gray-300 focus:ring-brand-primary focus:border-brand-primary sm:text-sm h-full px-3"
                 placeholder="RATHI10"
                 disabled={loadingState.type === 'promo'}
               />
@@ -460,7 +460,7 @@ const Cart: React.FC<CartProps> = ({
                 type="button"
                 onClick={handleApplyPromo}
                 disabled={loadingState.type === 'promo'}
-                className="relative inline-flex items-center justify-center w-[75px] px-4 py-2 border border-l-0 border-gray-300 rounded-r-md bg-gray-50 text-sm font-medium text-gray-700 hover:bg-gray-100 disabled:bg-gray-200 disabled:cursor-wait"
+                className="relative inline-flex items-center justify-center w-[75px] px-4 h-full border border-l-0 border-gray-300 rounded-r-md bg-gray-50 text-sm font-medium text-gray-700 hover:bg-gray-100 disabled:bg-gray-200 disabled:cursor-wait"
               >
                 {loadingState.type === 'promo' ? <Spinner /> : 'Apply'}
               </button>

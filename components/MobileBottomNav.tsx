@@ -132,7 +132,7 @@ const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
                       initial={{ scale: 0, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
                       exit={{ scale: 0, opacity: 0 }}
-                      className="absolute -top-1.5 -right-1.5 bg-accent-red text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-[18px] text-center border-2 border-white shadow-sm z-10"
+                      className="absolute -top-2 -right-2 bg-accent-red text-white text-[10px] font-bold px-1 py-0.5 rounded-full min-w-[18px] h-[18px] flex items-center justify-center border-2 border-white shadow-sm z-10"
                     >
                       {item.badge}
                     </motion.span>

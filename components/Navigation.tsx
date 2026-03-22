@@ -24,7 +24,7 @@ const Navigation: React.FC<NavigationProps> = ({ onSelectCategory }) => {
   const handleMouseLeave = () => {
     closeTimeoutRef.current = setTimeout(() => {
       setMegaMenuOpen(false);
-    }, 200); // 200ms delay to bridge the gap
+    }, 400); // 400ms delay to bridge the gap comfortably
   };
 
   const handleScrollTo = (id: string) => {
@@ -60,14 +60,7 @@ const Navigation: React.FC<NavigationProps> = ({ onSelectCategory }) => {
         <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-primary transition-all duration-300 group-hover:w-full" />
       </button>
 
-      {/* Blog */}
-      <Link
-        to="/blog"
-        className="text-base font-medium text-neutral-900 hover:text-brand-primary transition-colors py-2 relative group"
-      >
-        Blog
-        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-primary transition-all duration-300 group-hover:w-full" />
-      </Link>
+
 
       {/* Shop - with MegaMenu */}
       <div className="relative" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>

@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { BrowserRouter } from 'react-router-dom';
 import './src/index.css';
+import './src/styles/design-system.css';
 import './src/mobile.css';
 import './styles/animations.css';
 

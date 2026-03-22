@@ -320,9 +320,9 @@ export default function ProductDetailPage() {
                 size="lg"
                 fullWidth
                 onClick={handleAddToCart}
-                className={variant === 'B' ? '!bg-green-600 hover:!bg-green-700' : ''} // A/B Test Variant
+                className={variant === 'B' && purchaseType === 'subscription' ? '!bg-green-600 hover:!bg-green-700' : ''} // A/B Test Variant tied to state
               >
-                {variant === 'B' ? 'Add to Cart (Save 10%)' : 'Add to Cart'}
+                {variant === 'B' && purchaseType === 'subscription' ? 'Add to Cart (Save 10%)' : 'Add to Cart'}
               </Button>
               <Button variant="outline" size="lg" fullWidth onClick={handleBuyNow}>
                 Buy Now

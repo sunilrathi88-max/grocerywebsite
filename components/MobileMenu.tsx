@@ -69,9 +69,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
   const navLinks = [
     { name: 'Home', href: '/' },
     { name: 'Offers', href: '/offers' },
-    { name: 'Recipes', href: '/recipes' },
-    { name: 'Blog', href: '/blog' },
-    { name: 'Contact Us', href: '/contact' },
+    { name: 'Subscription', href: '/subscription' },
   ];
 
   return (

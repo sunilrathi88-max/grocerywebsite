@@ -240,7 +240,7 @@ const App: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Cart & Wishlist UI State
-  const [isCartOpen, setIsCartOpen] = useState(false);
+  const { isOpen: isCartOpen, setIsOpen: setIsCartOpen } = useCartStore();
   const [isWishlistOpen, setIsWishlistOpen] = useState(false);
 
   // Product & Filter State
@@ -798,7 +798,10 @@ const App: React.FC = () => {
           <SeedTrail />
           <div className="flex flex-col min-h-screen">
             {/* Skip to main content link for accessibility */}
-            <a href="#main-content" className="skip-link">
+            <a
+              href="#main-content"
+              className="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:z-[9999] focus:p-4 focus:bg-brand-primary focus:text-white"
+            >
               Skip to main content
             </a>
             <SEO

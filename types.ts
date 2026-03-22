@@ -53,6 +53,8 @@ export interface Product {
   tags?: string[];
   rating?: number;
   review_count?: number;
+  heatLevel?: number | 'mild' | 'medium' | 'hot';
+  useCase?: string | string[];
 
   // Compliance Fields
   fssaiLicense?: string;
