@@ -259,7 +259,7 @@ const App: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Cart & Wishlist UI State
-  const { isOpen: isCartOpen, setIsOpen: setIsCartOpen, items: cartItems } = useCartStore();
+  const { isOpen: isCartOpen, setIsOpen: setIsCartOpen } = useCartStore();
   const [isWishlistOpen, setIsWishlistOpen] = useState(false);
 
   // Product & Filter State
