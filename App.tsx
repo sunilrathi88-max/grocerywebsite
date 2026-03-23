@@ -136,7 +136,9 @@ const AffiliateProgramPage = React.lazy(() => import('./pages/AffiliateProgramPa
 const RedesignedLayout = React.lazy(() => import('./src/components/Redesigned/RedesignedLayout'));
 const RedesignedHomePage = React.lazy(() => import('./src/components/Redesigned/HomePage'));
 const RedesignedShopPage = React.lazy(() => import('./src/components/Redesigned/ShopPage'));
-const RedesignedProductDetailPage = React.lazy(() => import('./src/components/Redesigned/ProductDetailPage'));
+const RedesignedProductDetailPage = React.lazy(
+  () => import('./src/components/Redesigned/ProductDetailPage')
+);
 const RedesignedCartPage = React.lazy(() => import('./src/components/Redesigned/CartPage'));
 const RedesignedCheckoutPage = React.lazy(() => import('./src/components/Redesigned/CheckoutPage'));
 
@@ -841,32 +843,39 @@ const App: React.FC = () => {
               structuredDataId="organization-schema"
             />
 
-          {/* Conditionally render Header for legacy pages only (Admin, Account, etc.) */}
-          {['/admin', '/account', '/profile', '/login', '/signup'].some(path => location.pathname.startsWith(path)) && (
-            <Header
-              cartItems={useCartStore.getState().items}
-              wishlistItemCount={wishlistItemCount}
-              searchQuery={searchQuery}
-              onSearchChange={setSearchQuery}
-              onCartClick={() => setIsCartOpen(true)}
-              onWishlistClick={() => setIsWishlistOpen(true)}
-              onMobileMenuClick={() => setIsMobileMenuOpen((prev) => !prev)}
-              isLoggedIn={isLoggedIn}
-              isAdmin={!!currentUser?.isAdmin}
-              onLoginClick={() => setAuthModalOpen(true)}
-              onLogoutClick={handleLogout}
-              allProducts={products}
-              onSelectProduct={setSelectedProduct}
-              categories={categories}
-              onSelectCategory={handleSelectCategoryAndClose}
-            />
-          )}
-
+            {/* Conditionally render Header for legacy pages only (Admin, Account, etc.) */}
+            {['/admin', '/account', '/profile', '/login', '/signup'].some((path) =>
+              location.pathname.startsWith(path)
+            ) && (
+              <Header
+                cartItems={useCartStore.getState().items}
+                wishlistItemCount={wishlistItemCount}
+                searchQuery={searchQuery}
+                onSearchChange={setSearchQuery}
+                onCartClick={() => setIsCartOpen(true)}
+                onWishlistClick={() => setIsWishlistOpen(true)}
+                onMobileMenuClick={() => setIsMobileMenuOpen((prev) => !prev)}
+                isLoggedIn={isLoggedIn}
+                isAdmin={!!currentUser?.isAdmin}
+                onLoginClick={() => setAuthModalOpen(true)}
+                onLogoutClick={handleLogout}
+                allProducts={products}
+                onSelectProduct={setSelectedProduct}
+                categories={categories}
+                onSelectCategory={handleSelectCategoryAndClose}
+              />
+            )}
 
             <main id="main-content" className="flex-grow pt-16 md:pt-20">
               <Routes>
                 {/* Redesigned Routes */}
-                <Route element={<React.Suspense fallback={<PageLoader />}><RedesignedLayout /></React.Suspense>}>
+                <Route
+                  element={
+                    <React.Suspense fallback={<PageLoader />}>
+                      <RedesignedLayout />
+                    </React.Suspense>
+                  }
+                >
                   <Route path="/" element={<RedesignedHomePage products={products} />} />
                   <Route path="/shop" element={<RedesignedShopPage products={products} />} />
                   <Route path="/product/:id" element={<RedesignedProductDetailPage />} />
@@ -876,14 +885,26 @@ const App: React.FC = () => {
                   <Route path="/contact" element={<ContactPage />} />
                   <Route path="/faqs" element={<FAQsPage />} />
                   <Route path="/faq" element={<FAQsPage />} />
-                  <Route path="/blog" element={<BlogPage posts={blogPosts} onSelectPost={(slug) => navigate(`/blog/${slug}`)} />} />
+                  <Route
+                    path="/blog"
+                    element={
+                      <BlogPage
+                        posts={blogPosts}
+                        onSelectPost={(slug) => navigate(`/blog/${slug}`)}
+                      />
+                    }
+                  />
                   <Route path="/blog/:slug" element={<BlogPostRoute posts={blogPosts} />} />
-                  <Route path="/recipes" element={<RecipesPage recipes={MOCK_RECIPES} onSelectRecipe={setSelectedRecipe} />} />
+                  <Route
+                    path="/recipes"
+                    element={
+                      <RecipesPage recipes={MOCK_RECIPES} onSelectRecipe={setSelectedRecipe} />
+                    }
+                  />
                   <Route path="/offers" element={<OffersPage />} />
                   <Route path="/offers/subscription" element={<SubscriptionPage />} />
                   <Route path="/subscription" element={<SubscriptionPage />} />
                 </Route>
-
 
                 <Route
                   path="/account"
@@ -1150,7 +1171,6 @@ const App: React.FC = () => {
                   }
                 />
 
-
                 <Route
                   path="/order-confirmation/:orderId"
                   element={<OrderConfirmationRoute currentUser={currentUser} />}
@@ -1225,13 +1245,13 @@ const App: React.FC = () => {
             </main>
 
             {/* Hide Footer on mobile pages AND redesigned pages */}
-            {!(isMobile && isMobileLayoutPage) && 
-             !['/', '/shop', '/cart', '/checkout'].includes(location.pathname) && 
-             !location.pathname.startsWith('/product/') && (
-              <React.Suspense fallback={<div className="h-64 bg-gray-100" />}>
-                <Footer onSelectCategory={handleSelectCategoryAndClose} />
-              </React.Suspense>
-            )}
+            {!(isMobile && isMobileLayoutPage) &&
+              !['/', '/shop', '/cart', '/checkout'].includes(location.pathname) &&
+              !location.pathname.startsWith('/product/') && (
+                <React.Suspense fallback={<div className="h-64 bg-gray-100" />}>
+                  <Footer onSelectCategory={handleSelectCategoryAndClose} />
+                </React.Suspense>
+              )}
 
             <ToastContainer
               toasts={toasts}

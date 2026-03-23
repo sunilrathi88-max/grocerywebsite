@@ -3,26 +3,26 @@
 @tailwind utilities;
 
 :root {
-  --brand:        #7C2D0E;
-  --brand-light:  #A03A14;
-  --brand-pale:   #FFF4EE;
-  --accent:       #F59E0B;
-  --accent-dark:  #D97706;
-  --success:      #16A34A;
-  --danger:       #DC2626;
-  --ink:          #1A0A00;
-  --muted:        #6B5344;
-  --border:       #E8D5C4;
-  --surface:      #FAF6F2;
-  --white:        #FFFFFF;
-  --shadow-sm:    0 1px 3px rgba(124,45,14,0.08);
-  --shadow-md:    0 4px 16px rgba(124,45,14,0.12);
-  --radius-sm:    6px;
-  --radius-md:    10px;
-  --radius-lg:    16px;
+  --brand: #7c2d0e;
+  --brand-light: #a03a14;
+  --brand-pale: #fff4ee;
+  --accent: #f59e0b;
+  --accent-dark: #d97706;
+  --success: #16a34a;
+  --danger: #dc2626;
+  --ink: #1a0a00;
+  --muted: #6b5344;
+  --border: #e8d5c4;
+  --surface: #faf6f2;
+  --white: #ffffff;
+  --shadow-sm: 0 1px 3px rgba(124, 45, 14, 0.08);
+  --shadow-md: 0 4px 16px rgba(124, 45, 14, 0.12);
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
   --font-display: 'Cormorant Garamond', serif;
-  --font-body:    'DM Sans', sans-serif;
-  
+  --font-body: 'DM Sans', sans-serif;
+
   /* Fallbacks for existing code */
   --primary-gold: var(--accent);
   --primary-gold-dark: var(--accent-dark);
@@ -45,7 +45,12 @@
     line-height: 1.6;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: var(--font-display);
     color: var(--brand);
     font-weight: 600;
