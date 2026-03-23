@@ -169,13 +169,16 @@ const OffersPage: React.FC = () => {
       {/* Sale Countdown */}
       <CountdownTimer endDate={saleEndDate} label="Limited Time Sale Ends In" />
 
-      <div className="bg-brand-primary/10 py-12 mb-8">
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-5xl font-serif font-bold text-brand-dark mb-4">
-            Special Offers
+      <div className="bg-[#FAF6F2] py-20">
+        <div className="max-w-7xl mx-auto px-4 text-center">
+          <div className="inline-block px-4 py-1.5 bg-[#B38B59]/10 border border-[#B38B59]/20 rounded-full text-[10px] font-bold text-[#B38B59] uppercase tracking-widest mb-6">
+            Seasonal Deals
+          </div>
+          <h1 className="font-display text-4xl md:text-6xl font-bold text-[#42210B] mb-6">
+            Exclusive <span className="text-[#B38B59] italic">Offers</span>
           </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Exclusive deals on our premium spices and ingredients. Limited time only.
+          <p className="text-stone-500 text-lg max-w-2xl mx-auto leading-relaxed">
+            Limited-time savings on our most sought-after spices, direct from the fields of Rajasthan.
           </p>
         </div>
       </div>

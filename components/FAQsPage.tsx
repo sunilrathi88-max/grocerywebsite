@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { ChevronDownIcon } from './icons/ChevronDownIcon';
+import { Search } from 'lucide-react';
 import { SEO } from './SEO';
 import { generateFAQSchema } from '../utils/seo';
 
@@ -50,20 +51,20 @@ const FAQItem: React.FC<{ faq: (typeof FAQ_DATA)[0]; isOpen: boolean; onToggle: 
   onToggle,
 }) => {
   return (
-    <div className="border-b last:border-0">
+    <div className="border-b border-stone-100 last:border-0">
       <button
         onClick={onToggle}
-        className="w-full flex justify-between items-center text-left py-4 px-2 hover:bg-gray-50 rounded-lg transition-colors"
+        className="w-full flex justify-between items-center text-left py-6 px-4 hover:bg-[#FAF6F2] rounded-2xl transition-all group"
         aria-expanded={isOpen}
       >
-        <span className="text-lg font-semibold text-brand-dark">{faq.question}</span>
-        <ChevronDownIcon
-          className={`h-5 w-5 text-gray-500 transform transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
-        />
+        <span className={`text-lg font-bold transition-colors ${isOpen ? 'text-[#B38B59]' : 'text-[#42210B] group-hover:text-[#B38B59]'}`}>{faq.question}</span>
+        <div className={`p-2 rounded-full bg-stone-50 transition-transform duration-300 ${isOpen ? 'rotate-180 bg-[#B38B59] text-white' : 'text-stone-400'}`}>
+          <ChevronDownIcon className="h-4 w-4" />
+        </div>
       </button>
       {isOpen && (
-        <div className="pb-4 px-2 text-gray-600 animate-fadeIn">
-          <p>{faq.answer}</p>
+        <div className="pb-8 px-4 text-stone-500 animate-in fade-in slide-in-from-top-2 duration-300">
+          <p className="leading-relaxed font-medium">{faq.answer}</p>
         </div>
       )}
     </div>
@@ -89,51 +90,52 @@ const FAQsPage: React.FC = () => {
     });
   }, [searchQuery, activeCategory]);
 
-  const faqSchema = React.useMemo(() => generateFAQSchema(filteredFAQs), [filteredFAQs]);
-
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
+    <div className="min-h-screen bg-[#FAF6F2] py-20">
       <SEO
-        title="Frequently Asked Questions | Rathi Naturals."
-        description="Find answers to common questions about our products, shipping, returns, and more."
-        structuredData={faqSchema}
-        structuredDataId="faq-schema"
+        title="Frequently Asked Questions | Rathi Naturals"
+        description="Find answers to common questions about our cold-ground spices, shipping, and more."
       />
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
-        <div className="text-center mb-12">
-          <h1 className="text-3xl md:text-4xl font-serif font-bold text-brand-dark mb-4">
-            How can we help?
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-20">
+          <div className="inline-block px-4 py-1.5 bg-[#B38B59]/10 border border-[#B38B59]/20 rounded-full text-[10px] font-bold text-[#B38B59] uppercase tracking-widest mb-6">
+            Help Center
+          </div>
+          <h1 className="font-display text-4xl md:text-6xl font-bold text-[#42210B] mb-6">
+            Everything You Need to <span className="text-[#B38B59] italic">Know</span>
           </h1>
-          <p className="text-gray-600 mb-8">Search our help center or browse by category.</p>
+          <p className="text-stone-500 text-lg leading-relaxed max-w-2xl mx-auto">
+            Can't find what you're looking for? Reach out to our support team directly through the contact page.
+          </p>
 
           {/* Search Bar */}
-          <div className="max-w-xl mx-auto relative">
+          <div className="max-w-2xl mx-auto mt-12 relative group">
             <input
               type="text"
               placeholder="Search for answers..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full px-6 py-4 rounded-full border border-gray-300 shadow-sm focus:ring-2 focus:ring-brand-primary focus:border-brand-primary outline-none text-lg"
+              className="w-full pl-14 pr-8 py-5 rounded-2xl bg-white border border-stone-100 shadow-sm focus:ring-2 focus:ring-[#B38B59] outline-none text-lg transition-all"
             />
-            <div className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400">
-              🔍
+            <div className="absolute left-6 top-1/2 transform -translate-y-1/2 text-[#B38B59]">
+              <Search size={24} />
             </div>
           </div>
         </div>
 
         {/* Categories */}
-        <div className="flex flex-wrap justify-center gap-3 mb-12">
+        <div className="flex flex-wrap justify-center gap-3 mb-16">
           <button
             onClick={() => setActiveCategory('All')}
-            className={`px-5 py-2 rounded-full font-medium transition-colors ${activeCategory === 'All' ? 'bg-brand-primary text-white' : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200'}`}
+            className={`px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest transition-all ${activeCategory === 'All' ? 'bg-[#42210B] text-white shadow-lg' : 'bg-white text-stone-500 hover:bg-[#B38B59]/10 hover:text-[#42210B] border border-stone-100'}`}
           >
-            All
+            All Questions
           </button>
           {FAQ_CATEGORIES.map((category) => (
             <button
               key={category}
               onClick={() => setActiveCategory(category)}
-              className={`px-5 py-2 rounded-full font-medium transition-colors ${activeCategory === category ? 'bg-brand-primary text-white' : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200'}`}
+              className={`px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest transition-all ${activeCategory === category ? 'bg-[#42210B] text-white shadow-lg' : 'bg-white text-stone-500 hover:bg-[#B38B59]/10 hover:text-[#42210B] border border-stone-100'}`}
             >
               {category}
             </button>
@@ -141,7 +143,7 @@ const FAQsPage: React.FC = () => {
         </div>
 
         {/* FAQ List */}
-        <div className="bg-white rounded-2xl shadow-sm p-6 md:p-8">
+        <div className="bg-white rounded-[2.5rem] shadow-sm border border-stone-100 p-8 md:p-12">
           {filteredFAQs.length > 0 ? (
             <div className="space-y-2">
               {filteredFAQs.map((faq, index) => (

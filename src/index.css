@@ -3,53 +3,52 @@
 @tailwind utilities;
 
 :root {
-  /* Dark Luxury Editorial Palette */
-  --ink: #110c06; /* primary background — near-black warm */
-  --char: #1e1408; /* elevated surfaces */
-  --ember: #c45e1a; /* deep saffron */
-  --saffron: #e07830; /* primary accent — all CTAs, highlights */
-  --turmeric: #c89518; /* secondary accent — warm gold */
-  --gold: #a87820; /* hover state for saffron */
-  --cream: #f2e8d0; /* primary text on dark, light section bg */
-  --dust: #b89868; /* secondary text, labels */
-  --mist: #7a6040; /* tertiary text, decorative lines */
-  --rouge: #7a2010; /* deep red spice — use sparingly */
-
-  /* Fallbacks mapped to preserve UI during transition */
-  --primary-gold: var(--saffron);
-  --primary-gold-dark: var(--ember);
-  --primary-gold-light: var(--turmeric);
+  --brand:        #7C2D0E;
+  --brand-light:  #A03A14;
+  --brand-pale:   #FFF4EE;
+  --accent:       #F59E0B;
+  --accent-dark:  #D97706;
+  --success:      #16A34A;
+  --danger:       #DC2626;
+  --ink:          #1A0A00;
+  --muted:        #6B5344;
+  --border:       #E8D5C4;
+  --surface:      #FAF6F2;
+  --white:        #FFFFFF;
+  --shadow-sm:    0 1px 3px rgba(124,45,14,0.08);
+  --shadow-md:    0 4px 16px rgba(124,45,14,0.12);
+  --radius-sm:    6px;
+  --radius-md:    10px;
+  --radius-lg:    16px;
+  --font-display: 'Cormorant Garamond', serif;
+  --font-body:    'DM Sans', sans-serif;
+  
+  /* Fallbacks for existing code */
+  --primary-gold: var(--accent);
+  --primary-gold-dark: var(--accent-dark);
+  --primary-gold-light: var(--brand-pale);
   --neutral-900: var(--ink);
-  --neutral-700: var(--char);
-  --neutral-400: var(--dust);
-  --neutral-100: var(--cream);
-  --white: var(--cream);
-  --success: #2d8f5e;
-  --error: #ef4444;
-  --info: #3b82f6;
-  --accent-brown: var(--mist);
-  --accent-red: var(--rouge);
+  --neutral-700: var(--muted);
+  --neutral-400: var(--muted);
+  --neutral-100: var(--surface);
+  --white-bg: var(--white);
+  --error: var(--danger);
   --spacing-base: 4px;
 }
 
 @layer base {
   body {
-    background-color: var(--ink);
-    color: var(--dust);
-    font-family: 'DM Sans', system-ui, sans-serif;
-    font-weight: 300;
-    letter-spacing: 0.01em;
+    background-color: var(--surface);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-weight: 400;
+    line-height: 1.6;
   }
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    color: var(--cream);
-    font-weight: 300;
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    color: var(--brand);
+    font-weight: 600;
   }
 }
 

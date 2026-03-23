@@ -132,6 +132,14 @@ const ShippingPage = React.lazy(() => import('./pages/ShippingPage'));
 const FreshnessCalculatorPage = React.lazy(() => import('./pages/FreshnessCalculatorPage'));
 const AffiliateProgramPage = React.lazy(() => import('./pages/AffiliateProgramPage'));
 
+// --- Redesigned Components (Amazon Style) ---
+const RedesignedLayout = React.lazy(() => import('./src/components/Redesigned/RedesignedLayout'));
+const RedesignedHomePage = React.lazy(() => import('./src/components/Redesigned/HomePage'));
+const RedesignedShopPage = React.lazy(() => import('./src/components/Redesigned/ShopPage'));
+const RedesignedProductDetailPage = React.lazy(() => import('./src/components/Redesigned/ProductDetailPage'));
+const RedesignedCartPage = React.lazy(() => import('./src/components/Redesigned/CartPage'));
+const RedesignedCheckoutPage = React.lazy(() => import('./src/components/Redesigned/CheckoutPage'));
+
 const PageLoader = () => (
   <div className="flex items-center justify-center min-h-[60vh]">
     <div className="text-center">
@@ -833,196 +841,49 @@ const App: React.FC = () => {
               structuredDataId="organization-schema"
             />
 
-            {location.pathname !== '/checkout' && <PromotionalBanner />}
-            {location.pathname !== '/checkout' && (
-              <Header
-                cartItems={cartItems}
-                wishlistItemCount={wishlistItemCount}
-                searchQuery={searchQuery}
-                onSearchChange={setSearchQuery}
-                onCartClick={() => setIsCartOpen(true)}
-                onWishlistClick={() => setIsWishlistOpen(true)}
-                onMobileMenuClick={() => setIsMobileMenuOpen((prev) => !prev)}
-                isLoggedIn={isLoggedIn}
-                isAdmin={!!currentUser?.isAdmin}
-                onLoginClick={() => setAuthModalOpen(true)}
-                onLogoutClick={handleLogout}
-                allProducts={products}
-                onSelectProduct={setSelectedProduct}
-                categories={categories}
-                onSelectCategory={handleSelectCategoryAndClose}
-              />
-            )}
+          {/* Conditionally render Header for legacy pages only (Admin, Account, etc.) */}
+          {['/admin', '/account', '/profile', '/login', '/signup'].some(path => location.pathname.startsWith(path)) && (
+            <Header
+              isMenuOpen={isMobileMenuOpen}
+              wishlistItemCount={wishlistItemCount}
+              searchQuery={searchQuery}
+              onSearchChange={setSearchQuery}
+              onCartClick={() => setIsCartOpen(true)}
+              onWishlistClick={() => setIsWishlistOpen(true)}
+              onMobileMenuClick={() => setIsMobileMenuOpen((prev) => !prev)}
+              isLoggedIn={isLoggedIn}
+              isAdmin={!!currentUser?.isAdmin}
+              onLoginClick={() => setAuthModalOpen(true)}
+              onLogoutClick={handleLogout}
+              allProducts={products}
+              onSelectProduct={setSelectedProduct}
+              categories={categories}
+              onSelectCategory={handleSelectCategoryAndClose}
+            />
+          )}
+
 
             <main id="main-content" className="flex-grow pt-16 md:pt-20">
               <Routes>
-                <Route
-                  path="/product/:id"
-                  element={
-                    <React.Suspense fallback={<PageLoader />}>
-                      <ProductDetailPage />
-                    </React.Suspense>
-                  }
-                />
-                <Route
-                  path="/category/:category"
-                  element={
-                    <React.Suspense fallback={<PageLoader />}>
-                      <ResponsiveCategoryPage
-                        searchQuery={searchQuery}
-                        onSearchChange={setSearchQuery}
-                        cartItemCount={cartItems.reduce((acc, item) => acc + item.quantity, 0)}
-                        onCartClick={() => setIsCartOpen(true)}
-                        addToast={addToast}
-                        setSelectedProduct={setSelectedProduct}
-                      />
-                    </React.Suspense>
-                  }
-                />
-                <Route
-                  path="/subscription"
-                  element={
-                    <React.Suspense fallback={<PageLoader />}>
-                      <SubscriptionPage />
-                    </React.Suspense>
-                  }
-                />
-                <Route
-                  path="/farmers"
-                  element={
-                    <React.Suspense fallback={<PageLoader />}>
-                      <FarmersPage />
-                    </React.Suspense>
-                  }
-                />
-                <Route
-                  path="/shop"
-                  element={
-                    <React.Suspense fallback={<PageLoader />}>
-                      <ResponsiveCategoryPage
-                        searchQuery={searchQuery}
-                        onSearchChange={setSearchQuery}
-                        cartItemCount={cartItems.reduce((acc, item) => acc + item.quantity, 0)}
-                        onCartClick={() => setIsCartOpen(true)}
-                        addToast={addToast}
-                        setSelectedProduct={setSelectedProduct}
-                        defaultCategory="All"
-                      />
-                    </React.Suspense>
-                  }
-                />
-                <Route
-                  path="/"
-                  element={
-                    <React.Suspense fallback={<PageLoader />}>
-                      {GlobalSEO}
-                      {isMobile ? (
-                        <MobileHomePage
-                          products={products}
-                          wishlistedIds={wishlistedIds}
-                          cartItemCount={cartItems.reduce((acc, item) => acc + item.quantity, 0)}
-                          searchQuery={searchQuery}
-                          onSearchChange={setSearchQuery}
-                          handleAddToCart={handleAddToCart}
-                          handleToggleWishlist={handleToggleWishlist}
-                          setSelectedProduct={() => {}}
-                          onCartClick={() => setIsCartOpen(true)}
-                          addToast={addToast}
-                        />
-                      ) : (
-                        <ResponsiveHomePage
-                          products={products}
-                          selectedCategory={selectedCategory}
-                          setSelectedCategory={(cat) => {
-                            handleSelectCategoryAndClose(cat);
-                            if (cat === 'Offers') navigate('/offers');
-                          }}
-                          searchQuery={searchQuery}
-                          selectedTags={selectedTags}
-                          finalFilteredProducts={finalFilteredProducts}
-                          productsLoading={productsLoading}
-                          wishlistedIds={wishlistedIds}
-                          comparisonIds={comparisonIds}
-                          handleAddToCart={handleAddToCart}
-                          handleToggleWishlist={handleToggleWishlist}
-                          setSelectedProduct={setSelectedProduct}
-                          handleNotifyMe={handleNotifyMe}
-                          handleToggleCompare={handleToggleCompare}
-                          handleClearFilters={handleClearFilters}
-                          setIsFilterOpen={setIsFilterOpen}
-                          setSortOrder={setSortOrder}
-                          sortOrder={sortOrder}
-                          showOnSale={showOnSale}
-                          setShowOnSale={setShowOnSale}
-                          showInStock={showInStock}
-                          setShowInStock={setShowInStock}
-                          availableTags={availableTags}
-                          selectedTagsState={selectedTags}
-                          handleToggleTag={handleToggleTag}
-                          priceRange={priceRange}
-                          setPriceRange={(range) =>
-                            setPriceRange((prev) => ({ ...prev, ...range }))
-                          }
-                          maxPrice={maxPrice}
-                          selectedOrigins={selectedOrigins}
-                          handleToggleOrigin={handleToggleOrigin}
-                          availableOrigins={availableOrigins}
-                          selectedHeatLevels={selectedHeatLevels}
-                          handleToggleHeatLevel={handleToggleHeatLevel}
-                          availableHeatLevels={availableHeatLevels}
-                          selectedCuisines={selectedCuisines}
-                          handleToggleCuisine={handleToggleCuisine}
-                          availableCuisines={availableCuisines}
-                          selectedSizes={selectedSizes}
-                          handleToggleSize={handleToggleSize}
-                          availableSizes={availableSizes}
-                          selectedGrinds={selectedGrinds}
-                          handleToggleGrind={handleToggleGrind}
-                          availableGrinds={availableGrinds}
-                          selectedGrades={selectedGrades}
-                          handleToggleGrade={handleToggleGrade}
-                          availableGrades={availableGrades}
-                          addToast={addToast}
-                          cartItemCount={cartItems.reduce((sum, item) => sum + item.quantity, 0)}
-                          onMenuClick={() => setIsMobileMenuOpen(true)}
-                          onCartClick={() => (isMobile ? navigate('/cart') : setIsCartOpen(true))}
-                          onSearchChange={setSearchQuery}
-                        />
-                      )}
-                    </React.Suspense>
-                  }
-                />
+                {/* Redesigned Routes */}
+                <Route element={<React.Suspense fallback={<PageLoader />}><RedesignedLayout /></React.Suspense>}>
+                  <Route path="/" element={<RedesignedHomePage products={products} />} />
+                  <Route path="/shop" element={<RedesignedShopPage products={products} />} />
+                  <Route path="/product/:id" element={<RedesignedProductDetailPage />} />
+                  <Route path="/cart" element={<RedesignedCartPage />} />
+                  <Route path="/checkout" element={<RedesignedCheckoutPage />} />
+                  <Route path="/about" element={<AboutPage />} />
+                  <Route path="/contact" element={<ContactPage />} />
+                  <Route path="/faqs" element={<FAQsPage />} />
+                  <Route path="/faq" element={<FAQsPage />} />
+                  <Route path="/blog" element={<BlogPage posts={blogPosts} onSelectPost={(slug) => navigate(`/blog/${slug}`)} />} />
+                  <Route path="/blog/:slug" element={<BlogPostRoute posts={blogPosts} />} />
+                  <Route path="/recipes" element={<RecipesPage recipes={MOCK_RECIPES} onSelectRecipe={setSelectedRecipe} />} />
+                  <Route path="/offers" element={<OffersPage />} />
+                  <Route path="/offers/subscription" element={<SubscriptionPage />} />
+                  <Route path="/subscription" element={<SubscriptionPage />} />
+                </Route>
 
-                <Route
-                  path="/messaging"
-                  element={
-                    <React.Suspense fallback={<PageLoader />}>
-                      {GlobalSEO}
-                      <MessagingShowcase />
-                    </React.Suspense>
-                  }
-                />
-
-                <Route
-                  path="/checkout"
-                  element={
-                    <React.Suspense fallback={<PageLoader />}>
-                      {GlobalSEO}
-                      <CheckoutPage
-                        cartItems={cartItems}
-                        user={currentUser}
-                        onPlaceOrder={handlePlaceOrder}
-                        addToast={addToast}
-                        discount={discount}
-                        promoCode={promoCode}
-                        onApplyPromoCode={handleApplyPromoCode}
-                        onRemovePromoCode={handleRemovePromoCode}
-                        subtotal={subtotal}
-                        shippingCost={shippingCost}
-                      />
-                    </React.Suspense>
-                  }
-                />
 
                 <Route
                   path="/account"
@@ -1211,42 +1072,6 @@ const App: React.FC = () => {
                     </React.Suspense>
                   }
                 />
-                <Route
-                  path="/faqs"
-                  element={
-                    <React.Suspense fallback={<PageLoader />}>
-                      <FAQsPage />
-                    </React.Suspense>
-                  }
-                />
-                <Route
-                  path="/contact"
-                  element={
-                    <React.Suspense fallback={<PageLoader />}>
-                      <ContactPage />
-                    </React.Suspense>
-                  }
-                />
-                <Route
-                  path="/recipes"
-                  element={
-                    <React.Suspense fallback={<PageLoader />}>
-                      <RecipesPage recipes={MOCK_RECIPES} onSelectRecipe={setSelectedRecipe} />
-                    </React.Suspense>
-                  }
-                />
-
-                <Route
-                  path="/blog"
-                  element={
-                    <React.Suspense fallback={<PageLoader />}>
-                      <BlogPage
-                        posts={blogPosts}
-                        onSelectPost={(slug) => navigate(`/blog/${slug}`)}
-                      />
-                    </React.Suspense>
-                  }
-                />
 
                 <Route
                   path="/login"
@@ -1302,14 +1127,6 @@ const App: React.FC = () => {
                 />
 
                 <Route
-                  path="/cart"
-                  element={
-                    <React.Suspense fallback={<PageLoader />}>
-                      <ResponsiveCartPage />
-                    </React.Suspense>
-                  }
-                />
-                <Route
                   path="/track-order"
                   element={
                     <React.Suspense fallback={<PageLoader />}>
@@ -1333,22 +1150,6 @@ const App: React.FC = () => {
                   }
                 />
 
-                <Route
-                  path="/offers"
-                  element={
-                    <React.Suspense fallback={<PageLoader />}>
-                      <OffersPage />
-                    </React.Suspense>
-                  }
-                />
-                <Route
-                  path="/offers/subscription"
-                  element={
-                    <React.Suspense fallback={<PageLoader />}>
-                      <SubscriptionPage />
-                    </React.Suspense>
-                  }
-                />
 
                 <Route
                   path="/order-confirmation/:orderId"
@@ -1423,8 +1224,10 @@ const App: React.FC = () => {
               </Routes>
             </main>
 
-            {/* Hide Footer on mobile pages */}
-            {!(isMobile && isMobileLayoutPage) && (
+            {/* Hide Footer on mobile pages AND redesigned pages */}
+            {!(isMobile && isMobileLayoutPage) && 
+             !['/', '/shop', '/cart', '/checkout'].includes(location.pathname) && 
+             !location.pathname.startsWith('/product/') && (
               <React.Suspense fallback={<div className="h-64 bg-gray-100" />}>
                 <Footer onSelectCategory={handleSelectCategoryAndClose} />
               </React.Suspense>

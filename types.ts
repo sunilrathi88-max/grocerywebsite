@@ -56,6 +56,13 @@ export interface Product {
   heatLevel?: number | 'mild' | 'medium' | 'hot';
   useCase?: string | string[];
 
+  // Redesign Metadata
+  usp?: string;
+  features?: string[];
+  emoji?: string;
+  shortName?: string;
+  badge?: string | null;
+
   // Compliance Fields
   fssaiLicense?: string;
   ingredients?: string;
