@@ -1,7 +1,15 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { HelmetProvider } from 'react-helmet-async';
-import { Routes, Route, Navigate, useNavigate, useLocation, useParams, Link } from 'react-router-dom';
+import {
+  Routes,
+  Route,
+  Navigate,
+  useNavigate,
+  useLocation,
+  useParams,
+  Link,
+} from 'react-router-dom';
 import {
   Product,
   ToastMessage,
@@ -133,16 +141,12 @@ const PageLoader = () => (
   </div>
 );
 
-const OrderConfirmationRoute = ({
-  currentUser,
-}: {
-  currentUser: User | null;
-}) => {
+const OrderConfirmationRoute = ({ currentUser }: { currentUser: User | null }) => {
   const { orderId } = useParams();
   const { orders, isLoading, error } = useUserOrders();
-  
+
   if (isLoading) return <PageLoader />;
-  
+
   if (error) {
     return (
       <div className="text-center py-20">
@@ -153,7 +157,6 @@ const OrderConfirmationRoute = ({
   }
 
   const order = orders.find((o: Order) => o.id === orderId);
-  
   return order ? (
     <OrderConfirmation order={order} />
   ) : (
@@ -162,7 +165,10 @@ const OrderConfirmationRoute = ({
       <p className="text-gray-600 mt-2">
         We couldn't find an order with ID: <span className="font-mono">{orderId}</span>
       </p>
-      <Link to="/" className="mt-6 inline-block bg-brand-primary text-brand-dark px-6 py-2 rounded-full font-bold">
+      <Link
+        to="/"
+        className="mt-6 inline-block bg-brand-primary text-brand-dark px-6 py-2 rounded-full font-bold"
+      >
         Return to Home
       </Link>
     </div>
@@ -1346,11 +1352,7 @@ const App: React.FC = () => {
 
                 <Route
                   path="/order-confirmation/:orderId"
-                  element={
-                    <OrderConfirmationRoute
-                      currentUser={currentUser}
-                    />
-                  }
+                  element={<OrderConfirmationRoute currentUser={currentUser} />}
                 />
                 <Route path="/blog/:slug" element={<BlogPostRoute posts={blogPosts} />} />
                 <Route

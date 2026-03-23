@@ -3,7 +3,7 @@ const puppeteer = require('puppeteer');
 const fs = require('fs');
 const path = require('path');
 
-// We use dynamic import for vite since it's an ESM package sometimes, 
+// We use dynamic import for vite since it's an ESM package sometimes,
 // or require if it's CJS. Vite exposes modern CJS exports.
 async function startServer() {
   const { preview } = await import('vite');
@@ -23,11 +23,11 @@ const routes = [
   '/category/spices',
   '/category/dry-fruits',
   '/category/nuts',
-  '/category/beverages'
+  '/category/beverages',
 ];
 
 async function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 async function prerender() {
@@ -35,25 +35,28 @@ async function prerender() {
   let server;
   try {
     server = await startServer();
-  } catch(e) {
+  } catch (e) {
     console.error('Failed to start Vite preview server:', e);
     process.exit(1);
   }
-  
+
   console.log('Launching browser...');
   const browser = await puppeteer.launch({
     executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
-    headless: "new",
-    args: ['--no-sandbox', '--disable-setuid-sandbox']
+    headless: 'new',
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
   });
-  
+
   try {
     const page = await browser.newPage();
-    
+
     await page.setRequestInterception(true);
     page.on('request', (req) => {
       const type = req.resourceType();
-      if (['image', 'media', 'font', 'stylesheet'].includes(type) || req.url().includes('google-analytics')) {
+      if (
+        ['image', 'media', 'font', 'stylesheet'].includes(type) ||
+        req.url().includes('google-analytics')
+      ) {
         req.abort();
       } else {
         req.continue();
@@ -63,17 +66,21 @@ async function prerender() {
     for (const route of routes) {
       console.log(`Prerendering ${route} ...`);
       await page.goto(`${BASE_URL}${route}`, { waitUntil: 'networkidle0', timeout: 30000 });
-      await sleep(1500); 
+      await sleep(1500);
 
       let html = await page.content();
-      
-      const filePath = path.join(__dirname, '../dist', route === '/' ? 'index.html' : `${route}/index.html`);
+
+      const filePath = path.join(
+        __dirname,
+        '../dist',
+        route === '/' ? 'index.html' : `${route}/index.html`
+      );
       const dirPath = path.dirname(filePath);
-      
+
       if (!fs.existsSync(dirPath)) {
         fs.mkdirSync(dirPath, { recursive: true });
       }
-      
+
       html = html.replace('</head>', '<meta name="prerendered" content="true" />\n</head>');
       fs.writeFileSync(filePath, html);
       console.log(`Saved: ${filePath}`);
@@ -82,7 +89,7 @@ async function prerender() {
     console.error('Error during prerendering:', error);
   } finally {
     await browser.close();
-    if(server && server.httpServer) {
+    if (server && server.httpServer) {
       server.httpServer.close();
     }
     console.log('Prerendering complete! Server and Browser closed.');

@@ -46,7 +46,11 @@ const AdminDashboard: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [orders, setOrders] = useState<Order[]>([]);
   const [reviews, setReviews] = useState<BaseReview[]>([]);
-  const [content, setContent] = useState<ContentState>({ posts: [], recipes: [], testimonials: [] });
+  const [content, setContent] = useState<ContentState>({
+    posts: [],
+    recipes: [],
+    testimonials: [],
+  });
   const [analytics, setAnalytics] = useState<AnalyticsData>({
     totalRevenue: 0,
     totalOrders: 0,

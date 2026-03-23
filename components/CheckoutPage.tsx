@@ -37,7 +37,6 @@ interface CheckoutPageProps {
   shippingCost: number;
 }
 
-
 // Move AddressForm outside to avoid creating component during render
 const AddressForm: React.FC<{
   address: Omit<Address, 'id' | 'type' | 'isDefault'>;
@@ -470,11 +469,12 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
           addToast('Order placed successfully!', 'success');
         } catch (apiError) {
           console.warn('API Order creation failed:', apiError);
-          
+
           // Enhanced Fallback for Demo/Preview modes
-          const isPlaceholderBackend = window.location.hostname === 'localhost' || 
-                                     (apiError instanceof Error && apiError.message.includes('fetch'));
-          
+          const isPlaceholderBackend =
+            window.location.hostname === 'localhost' ||
+            (apiError instanceof Error && apiError.message.includes('fetch'));
+
           if (paymentMethod === 'Cash on Delivery' && isPlaceholderBackend) {
             console.info('Using Demo Fallback for Cash on Delivery order.');
             const demoOrder: Order = {
