@@ -123,8 +123,6 @@ const ResponsiveCategoryPage = React.lazy(() => import('./pages/ResponsiveCatego
 const OffersPage = React.lazy(() => import('./pages/OffersPage'));
 const SubscriptionPage = React.lazy(() => import('./pages/SubscriptionPage'));
 const FarmersPage = React.lazy(() => import('./pages/FarmersPage'));
-const ResponsiveCartPage = React.lazy(() => import('./pages/ResponsiveCartPage'));
-const MobileHomePage = React.lazy(() => import('./pages/MobileHomePage'));
 const NotFoundPage = React.lazy(() => import('./pages/NotFoundPage'));
 const TrackingPage = React.lazy(() => import('./pages/TrackingPage'));
 const AdminShipmentsPage = React.lazy(() => import('./pages/admin/ShipmentsPage'));

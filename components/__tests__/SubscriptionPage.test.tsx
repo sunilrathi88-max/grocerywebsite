@@ -31,9 +31,9 @@ describe('SubscriptionPage', () => {
 
   it('renders subscription plans', () => {
     renderComponent();
-    expect(screen.getByText('INTRODUCING RATHI NATURALS FRESH MONTHLY')).toBeInTheDocument();
+    expect(screen.getByText('Rathi Naturals Fresh Monthly')).toBeInTheDocument();
     // Case insensitive text match
-    expect(screen.getByText(/INTRODUCING RATHI NATURALS FRESH MONTHLY/i)).toBeInTheDocument();
+    expect(screen.getByText(/Rathi Naturals Fresh Monthly/i)).toBeInTheDocument();
     expect(screen.getByText('Starter Box')).toBeInTheDocument();
     expect(screen.getByText('Chef’s Collection')).toBeInTheDocument();
   });
