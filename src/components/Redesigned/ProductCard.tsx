@@ -11,17 +11,17 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const { addToCart } = useCart();
-  
+
   // Get rating and review count
   const rating = product.rating || 4.8;
   const reviewCount = product.reviews?.length || 124;
-  
+
   // Get primary variant (usually the first one)
   const primaryVariant = product.variants[0];
   const currentPrice = primaryVariant.salePrice || primaryVariant.price;
   const originalPrice = primaryVariant.salePrice ? primaryVariant.price : null;
-  const discount = originalPrice 
-    ? Math.round(((originalPrice - currentPrice) / originalPrice) * 100) 
+  const discount = originalPrice
+    ? Math.round(((originalPrice - currentPrice) / originalPrice) * 100)
     : null;
 
   return (
@@ -36,9 +36,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       )}
 
       {/* Image Section */}
-      <Link to={`/product/${product.id}`} className="relative aspect-square overflow-hidden bg-[#F8F7F3] block">
-        <img 
-          src={product.images[0]} 
+      <Link
+        to={`/product/${product.id}`}
+        className="relative aspect-square overflow-hidden bg-[#F8F7F3] block"
+      >
+        <img
+          src={product.images[0]}
           alt={product.name}
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
         />
@@ -62,7 +65,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             {product.shortName || product.name} {product.emoji}
           </h3>
         </Link>
-        
+
         <p className="text-xs text-stone-500 line-clamp-2 mb-4 leading-relaxed font-medium">
           {product.usp}
         </p>
@@ -74,11 +77,15 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               <div className="flex items-center gap-2">
                 <span className="text-xl font-bold text-[#42210B]">₹{currentPrice}</span>
                 {originalPrice && (
-                  <span className="text-sm text-stone-400 line-through font-medium">₹{originalPrice}</span>
+                  <span className="text-sm text-stone-400 line-through font-medium">
+                    ₹{originalPrice}
+                  </span>
                 )}
               </div>
               {discount && (
-                <span className="text-[10px] text-green-600 font-bold uppercase">Save {discount}%</span>
+                <span className="text-[10px] text-green-600 font-bold uppercase">
+                  Save {discount}%
+                </span>
               )}
             </div>
             <div className="text-[10px] font-bold text-stone-400 uppercase tracking-tighter">
@@ -86,7 +93,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             </div>
           </div>
 
-          <button 
+          <button
             onClick={(e) => {
               e.preventDefault();
               addToCart(product, primaryVariant, 1);

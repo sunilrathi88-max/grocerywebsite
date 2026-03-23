@@ -21,7 +21,8 @@ const RecipesPage: React.FC<RecipesPageProps> = ({ recipes, onSelectRecipe }) =>
             Kitchen secrets from <span className="text-[#B38B59] italic">India's Heartland</span>
           </h2>
           <p className="text-stone-500 text-lg max-w-2xl mx-auto leading-relaxed font-medium">
-            Elevate your daily cooking with authentic recipes designed for our premium cold-ground spices.
+            Elevate your daily cooking with authentic recipes designed for our premium cold-ground
+            spices.
           </p>
         </div>
 
@@ -52,20 +53,26 @@ const RecipesPage: React.FC<RecipesPageProps> = ({ recipes, onSelectRecipe }) =>
                 <p className="text-stone-500 text-sm mb-8 line-clamp-3 leading-relaxed font-normal">
                   {recipe.description}
                 </p>
-                
+
                 <div className="flex items-center justify-between py-6 border-y border-stone-50 mb-8">
                   <div className="text-center">
-                    <div className="text-[10px] font-black text-stone-300 uppercase tracking-widest mb-1">Prep</div>
+                    <div className="text-[10px] font-black text-stone-300 uppercase tracking-widest mb-1">
+                      Prep
+                    </div>
                     <div className="text-sm font-bold text-[#42210B]">{recipe.prepTime}</div>
                   </div>
                   <div className="w-px h-8 bg-stone-100" />
                   <div className="text-center">
-                    <div className="text-[10px] font-black text-stone-300 uppercase tracking-widest mb-1">Cook</div>
+                    <div className="text-[10px] font-black text-stone-300 uppercase tracking-widest mb-1">
+                      Cook
+                    </div>
                     <div className="text-sm font-bold text-[#42210B]">{recipe.cookTime}</div>
                   </div>
                   <div className="w-px h-8 bg-stone-100" />
                   <div className="text-center">
-                    <div className="text-[10px] font-black text-stone-300 uppercase tracking-widest mb-1">Serves</div>
+                    <div className="text-[10px] font-black text-stone-300 uppercase tracking-widest mb-1">
+                      Serves
+                    </div>
                     <div className="text-sm font-bold text-[#42210B]">{recipe.serves}</div>
                   </div>
                 </div>

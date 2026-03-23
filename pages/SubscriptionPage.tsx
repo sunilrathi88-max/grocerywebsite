@@ -41,12 +41,14 @@ const SubscriptionPage: React.FC = () => {
             Rathi Naturals Fresh Monthly
           </div>
           <h1 className="font-display text-4xl md:text-7xl font-bold mb-8 leading-tight">
-            Never Run Out of <br /><span className="text-[#B38B59] italic text-5xl md:text-8xl">Fresh Flavor</span>
+            Never Run Out of <br />
+            <span className="text-[#B38B59] italic text-5xl md:text-8xl">Fresh Flavor</span>
           </h1>
           <p className="text-lg md:text-xl text-stone-300 max-w-2xl mx-auto mb-16 leading-relaxed font-medium">
-            Hand-picked, single-origin spices delivered to your door every month. Milled fresh in Sangaria and packed with soul.
+            Hand-picked, single-origin spices delivered to your door every month. Milled fresh in
+            Sangaria and packed with soul.
           </p>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-3xl mx-auto text-left">
             <div className="flex gap-5">
               <div className="w-14 h-14 bg-[#B38B59]/20 rounded-2xl flex items-center justify-center shrink-0 border border-[#B38B59]/30">
@@ -54,7 +56,9 @@ const SubscriptionPage: React.FC = () => {
               </div>
               <div>
                 <h3 className="font-bold text-white text-lg mb-2">Peak Freshness</h3>
-                <p className="text-sm text-stone-400 leading-relaxed">Ground and vacuum-sealed within 24 hours of shipping for maximum aroma.</p>
+                <p className="text-sm text-stone-400 leading-relaxed">
+                  Ground and vacuum-sealed within 24 hours of shipping for maximum aroma.
+                </p>
               </div>
             </div>
             <div className="flex gap-5">
@@ -63,7 +67,9 @@ const SubscriptionPage: React.FC = () => {
               </div>
               <div>
                 <h3 className="font-bold text-white text-lg mb-2">Direct From Farmers</h3>
-                <p className="text-sm text-stone-400 leading-relaxed">By subscribing, you ensure fair-trade pricing directly to our spice growers.</p>
+                <p className="text-sm text-stone-400 leading-relaxed">
+                  By subscribing, you ensure fair-trade pricing directly to our spice growers.
+                </p>
               </div>
             </div>
           </div>
@@ -78,7 +84,9 @@ const SubscriptionPage: React.FC = () => {
             <h2 className="font-display text-4xl md:text-6xl font-bold text-[#42210B] mb-6">
               Choose Your <span className="text-[#B38B59] italic">Plan</span>
             </h2>
-            <p className="text-stone-500 text-lg font-medium">No commitments. Pause, skip, or cancel your subscription anytime.</p>
+            <p className="text-stone-500 text-lg font-medium">
+              No commitments. Pause, skip, or cancel your subscription anytime.
+            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-5xl mx-auto">
@@ -92,18 +100,22 @@ const SubscriptionPage: React.FC = () => {
       {/* Trust Section */}
       <section className="py-32 bg-white px-4 md:px-6">
         <div className="container mx-auto max-w-4xl text-center">
-          <h2 className="font-display text-3xl font-bold text-[#42210B] mb-20 text-center">Frequently Asked <span className="text-[#B38B59] italic">Questions</span></h2>
+          <h2 className="font-display text-3xl font-bold text-[#42210B] mb-20 text-center">
+            Frequently Asked <span className="text-[#B38B59] italic">Questions</span>
+          </h2>
           <div className="grid md:grid-cols-2 gap-16 text-left">
             <div className="space-y-4 p-8 rounded-3xl bg-[#FAF6F2] border border-stone-50">
               <h4 className="font-bold text-[#42210B] text-xl">Can I skip a month?</h4>
               <p className="text-stone-500 leading-relaxed">
-                Absolutely. Life happens. You can pause or skip your delivery from your account dashboard with a single click.
+                Absolutely. Life happens. You can pause or skip your delivery from your account
+                dashboard with a single click.
               </p>
             </div>
             <div className="space-y-4 p-8 rounded-3xl bg-[#FAF6F2] border border-stone-50">
               <h4 className="font-bold text-[#42210B] text-xl">What's inside the box?</h4>
               <p className="text-stone-500 leading-relaxed">
-                A curated selection of our finest seasonal spices, artisan blends, and exclusive, chef-curated recipe cards.
+                A curated selection of our finest seasonal spices, artisan blends, and exclusive,
+                chef-curated recipe cards.
               </p>
             </div>
           </div>

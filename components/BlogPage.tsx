@@ -19,7 +19,8 @@ const BlogPage: React.FC<BlogPageProps> = ({ posts, onSelectPost }) => {
             Stories of <span className="text-[#B38B59] italic">Flavor & Heritage</span>
           </h2>
           <p className="text-stone-500 text-lg max-w-2xl mx-auto leading-relaxed font-medium">
-            Explore the deep-rooted traditions of Indian spices, authentic recipes, and our journey from farm to your kitchen.
+            Explore the deep-rooted traditions of Indian spices, authentic recipes, and our journey
+            from farm to your kitchen.
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">

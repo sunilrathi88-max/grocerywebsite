@@ -178,7 +178,8 @@ const OffersPage: React.FC = () => {
             Exclusive <span className="text-[#B38B59] italic">Offers</span>
           </h1>
           <p className="text-stone-500 text-lg max-w-2xl mx-auto leading-relaxed">
-            Limited-time savings on our most sought-after spices, direct from the fields of Rajasthan.
+            Limited-time savings on our most sought-after spices, direct from the fields of
+            Rajasthan.
           </p>
         </div>
       </div>

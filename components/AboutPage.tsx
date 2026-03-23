@@ -49,9 +49,11 @@ const AboutPage: React.FC = () => {
         {/* The Rathi Naturals Difference - Lab & Process */}
         <div className="bg-[#42210B] rounded-[3rem] p-12 md:p-24 mb-32 relative overflow-hidden text-white">
           <div className="absolute top-0 right-0 w-96 h-96 bg-[#B38B59]/10 rounded-full blur-3xl -mr-48 -mt-48" />
-          
+
           <div className="text-center max-w-3xl mx-auto mb-20 relative z-10">
-            <span className="text-[#B38B59] font-bold tracking-[0.3em] uppercase text-xs mb-4 block">Uncompromising Standards</span>
+            <span className="text-[#B38B59] font-bold tracking-[0.3em] uppercase text-xs mb-4 block">
+              Uncompromising Standards
+            </span>
             <h2 className="text-3xl md:text-5xl font-display font-bold mb-6">
               The Rathi Naturals Difference
             </h2>
@@ -66,7 +68,9 @@ const AboutPage: React.FC = () => {
               <div className="w-16 h-16 bg-[#B38B59]/20 rounded-2xl flex items-center justify-center mb-8 text-3xl group-hover:scale-110 transition-transform">
                 ❄️
               </div>
-              <h3 className="font-display font-bold text-2xl mb-4 text-white">Cold-Grinding Moat</h3>
+              <h3 className="font-display font-bold text-2xl mb-4 text-white">
+                Cold-Grinding Moat
+              </h3>
               <p className="text-stone-400 text-sm leading-relaxed">
                 Unlike mass-market brands reliant on high-speed hot-grinding, we uphold our heritage
                 by slowly grinding spices at low temperatures. This scientifically defensible
@@ -80,7 +84,8 @@ const AboutPage: React.FC = () => {
               <h3 className="font-display font-bold text-2xl mb-4 text-white">Lab Tested</h3>
               <p className="text-stone-400 text-sm leading-relaxed">
                 Every batch undergoes rigorous testing for pesticides, heavy metals, and
-                adulteration in ISO-certified laboratories. Only the purest spices make it to your kitchen.
+                adulteration in ISO-certified laboratories. Only the purest spices make it to your
+                kitchen.
               </p>
             </div>
             <div className="bg-white/5 backdrop-blur-sm p-10 rounded-[2.5rem] border border-white/10 hover:bg-white/10 transition-all group">
@@ -89,7 +94,9 @@ const AboutPage: React.FC = () => {
               </div>
               <h3 className="font-display font-bold text-2xl mb-4 text-white">Authentic Origins</h3>
               <p className="text-stone-400 text-sm leading-relaxed">
-                We source exclusively from historically significant regions: <strong>Ramganj Mandi</strong> for Coriander, <strong>Mathania</strong> for Red Chilli, and <strong>Salem</strong> for Turmeric.
+                We source exclusively from historically significant regions:{' '}
+                <strong>Ramganj Mandi</strong> for Coriander, <strong>Mathania</strong> for Red
+                Chilli, and <strong>Salem</strong> for Turmeric.
               </p>
             </div>
           </div>

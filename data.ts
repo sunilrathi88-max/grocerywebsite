@@ -346,7 +346,7 @@ export const MOCK_PRODUCTS: Product[] = [
     badge: null,
     usp: 'Gujarat origin · Intense thymol aroma',
     features: [
-      'Gujarat origin — India\'s primary cumin-growing region',
+      "Gujarat origin — India's primary cumin-growing region",
       'High thymol content for intense flavour and digestive properties',
       'Use as tadka base for dals, sabzis and rice',
       'Dry-roast before using for even deeper flavour',
@@ -538,11 +538,11 @@ export const MOCK_PRODUCTS: Product[] = [
     shortName: 'Coriander Powder',
     emoji: '🟤',
     badge: 'Organic',
-    usp: 'Ramganj Mandi sourced · Asia\'s largest coriander market',
+    usp: "Ramganj Mandi sourced · Asia's largest coriander market",
     features: [
-      'Single-origin Ramganj Mandi — Asia\'s largest coriander trading hub',
+      "Single-origin Ramganj Mandi — Asia's largest coriander trading hub",
       'Three-generation direct sourcing relationship with Kota district farmers',
-      'High linalool content from the region\'s semi-arid microclimate',
+      "High linalool content from the region's semi-arid microclimate",
       'Cold-ground to preserve citrusy, floral aromatic profile',
       'Certified organic · No pesticide residues detected in lab testing',
     ],

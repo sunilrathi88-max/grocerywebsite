@@ -259,7 +259,7 @@ const App: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Cart & Wishlist UI State
-  const { isOpen: isCartOpen, setIsOpen: setIsCartOpen } = useCartStore();
+  const { isOpen: isCartOpen, setIsOpen: setIsCartOpen, items: cartItems } = useCartStore();
   const [isWishlistOpen, setIsWishlistOpen] = useState(false);
 
   // Product & Filter State
@@ -841,14 +841,13 @@ const App: React.FC = () => {
                             : pageSEO.home())}
               structuredData={currentView === 'home' ? orgSchema : undefined}
               structuredDataId="organization-schema"
-            />
-
+            />{' '}
             {/* Conditionally render Header for legacy pages only (Admin, Account, etc.) */}
             {['/admin', '/account', '/profile', '/login', '/signup'].some((path) =>
               location.pathname.startsWith(path)
             ) && (
               <Header
-                cartItems={useCartStore.getState().items}
+                cartItems={cartItems}
                 wishlistItemCount={wishlistItemCount}
                 searchQuery={searchQuery}
                 onSearchChange={setSearchQuery}
@@ -865,7 +864,6 @@ const App: React.FC = () => {
                 onSelectCategory={handleSelectCategoryAndClose}
               />
             )}
-
             <main id="main-content" className="flex-grow pt-16 md:pt-20">
               <Routes>
                 {/* Redesigned Routes */}
@@ -1243,7 +1241,6 @@ const App: React.FC = () => {
                 <Route path="*" element={<NotFoundPage />} />
               </Routes>
             </main>
-
             {/* Hide Footer on mobile pages AND redesigned pages */}
             {!(isMobile && isMobileLayoutPage) &&
               !['/', '/shop', '/cart', '/checkout'].includes(location.pathname) &&
@@ -1252,12 +1249,10 @@ const App: React.FC = () => {
                   <Footer onSelectCategory={handleSelectCategoryAndClose} />
                 </React.Suspense>
               )}
-
             <ToastContainer
               toasts={toasts}
               onClose={(id) => setToasts((t) => t.filter((toast) => toast.id !== id))}
             />
-
             {/* Modals */}
             <React.Suspense fallback={null}>
               {selectedProduct && (
@@ -1452,7 +1447,6 @@ const App: React.FC = () => {
                 />
               </React.Suspense>
             )}
-
             {/* Global UI Elements */}
             <React.Suspense fallback={null}>
               <WhatsAppButton phoneNumber="918890006364" />

@@ -37,7 +37,9 @@ const BlogPostCard: React.FC<BlogPostCardProps> = ({ post, onSelectPost }) => {
           </div>
         </div>
         <div className="p-10">
-          <div className="text-[10px] font-black text-[#B38B59] uppercase tracking-[0.2em] mb-4">By {post.author}</div>
+          <div className="text-[10px] font-black text-[#B38B59] uppercase tracking-[0.2em] mb-4">
+            By {post.author}
+          </div>
           <h3 className="font-display text-2xl font-bold text-[#42210B] mb-4 line-clamp-2 leading-tight group-hover:text-[#B38B59] transition-colors">
             {post.title}
           </h3>

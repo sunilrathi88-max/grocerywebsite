@@ -57,8 +57,14 @@ const FAQItem: React.FC<{ faq: (typeof FAQ_DATA)[0]; isOpen: boolean; onToggle: 
         className="w-full flex justify-between items-center text-left py-6 px-4 hover:bg-[#FAF6F2] rounded-2xl transition-all group"
         aria-expanded={isOpen}
       >
-        <span className={`text-lg font-bold transition-colors ${isOpen ? 'text-[#B38B59]' : 'text-[#42210B] group-hover:text-[#B38B59]'}`}>{faq.question}</span>
-        <div className={`p-2 rounded-full bg-stone-50 transition-transform duration-300 ${isOpen ? 'rotate-180 bg-[#B38B59] text-white' : 'text-stone-400'}`}>
+        <span
+          className={`text-lg font-bold transition-colors ${isOpen ? 'text-[#B38B59]' : 'text-[#42210B] group-hover:text-[#B38B59]'}`}
+        >
+          {faq.question}
+        </span>
+        <div
+          className={`p-2 rounded-full bg-stone-50 transition-transform duration-300 ${isOpen ? 'rotate-180 bg-[#B38B59] text-white' : 'text-stone-400'}`}
+        >
           <ChevronDownIcon className="h-4 w-4" />
         </div>
       </button>
@@ -105,7 +111,8 @@ const FAQsPage: React.FC = () => {
             Everything You Need to <span className="text-[#B38B59] italic">Know</span>
           </h1>
           <p className="text-stone-500 text-lg leading-relaxed max-w-2xl mx-auto">
-            Can't find what you're looking for? Reach out to our support team directly through the contact page.
+            Can't find what you're looking for? Reach out to our support team directly through the
+            contact page.
           </p>
 
           {/* Search Bar */}
