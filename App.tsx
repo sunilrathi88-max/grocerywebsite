@@ -844,7 +844,7 @@ const App: React.FC = () => {
           {/* Conditionally render Header for legacy pages only (Admin, Account, etc.) */}
           {['/admin', '/account', '/profile', '/login', '/signup'].some(path => location.pathname.startsWith(path)) && (
             <Header
-              isMenuOpen={isMobileMenuOpen}
+              cartItems={useCartStore.getState().items}
               wishlistItemCount={wishlistItemCount}
               searchQuery={searchQuery}
               onSearchChange={setSearchQuery}
