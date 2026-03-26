@@ -286,7 +286,7 @@ export const MOCK_PRODUCTS: Product[] = [
     tags: ['Spicy', 'Essential', 'Indian'],
     shortName: 'Mathania Red Chilli',
     emoji: '🔴',
-    badge: 'Single Origin',
+    badge: 'Bestseller',
     usp: 'Mathania origin · Deep colour, moderate heat',
     features: [
       'Single-origin Mathania, Jodhpur — prized for capsanthin colour over capsaicin heat',
@@ -471,9 +471,7 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Dried Figs (Anjeer)',
     description:
       'Rope dried to concentrate their sweetness and form a chewy, seed-filled texture. Known for high fiber and calcium content, a delicious natural treat.',
-    images: [
-      'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
-    ],
+    images: ['/images/products/dried-figs-ajeer.png'],
     category: 'Dry Fruits',
     variants: [{ id: 2501, name: '250g', price: 399, stock: 30 }],
     reviews: [],
@@ -506,7 +504,7 @@ export const MOCK_PRODUCTS: Product[] = [
     origin: 'India (House Blend)',
     shortName: 'Royal Garam Masala',
     emoji: '🫙',
-    badge: 'Heritage Recipe',
+    badge: 'Bestseller',
     usp: '9-spice cold-ground blend · 60-year family recipe',
     features: [
       '9-spice blend: cardamom, cinnamon, cloves, black pepper, mace, nutmeg, star anise, bay leaf, black cardamom',
@@ -537,7 +535,7 @@ export const MOCK_PRODUCTS: Product[] = [
     storage: 'Cool, dry place',
     shortName: 'Coriander Powder',
     emoji: '🟤',
-    badge: 'Organic',
+    badge: 'Bestseller',
     usp: "Ramganj Mandi sourced · Asia's largest coriander market",
     features: [
       "Single-origin Ramganj Mandi — Asia's largest coriander trading hub",
@@ -673,10 +671,10 @@ export const BLOG_POSTS_DATA: BlogPost[] = [
     title: 'Top 5 Spices for Gut Health (With Everyday Indian Recipes)',
     author: 'Dr. Aditi Sharma',
     date: 'March 15, 2025',
-    image:
-      'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
+    image: '/images/blog/blog_gut_health_haldi_doodh_png_1774289971252.png',
     excerpt:
       'Discover which spices can aid digestion and improve your gut microbiome naturally. From turmeric to black pepper, learn how to use them in everyday cooking.',
+    relatedProductIds: [4, 14, 2, 15],
     content: `
 ### Why Your Gut Loves Indian Spices
 
@@ -792,225 +790,19 @@ Whole spices retain essential oils longer and give you more control over flavour
         answer:
           'No. While spices like turmeric, ginger, and cumin can support digestion, they are not a substitute for professional medical care. Always consult your doctor.',
       },
-      {
-        question: 'How much spice is safe per day?',
-        answer:
-          'Most people tolerate 1–2 teaspoons of mixed spices per meal, but tolerance is individual.',
-      },
-      {
-        question: 'Are whole spices better than powders?',
-        answer:
-          'Whole spices retain essential oils longer and give you more control over flavour and freshness.',
-      },
-    ],
-  },
-  {
-    id: 102,
-    slug: 'premium-spice-brands-comparison-2025',
-    title: "Premium Gourmet Spice Brands of India: The Complete Buyer's Guide (2025)",
-    author: 'Rathi Naturals. Team',
-    date: 'Jan 25, 2025',
-    image:
-      'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
-    excerpt:
-      'This comprehensive guide breaks down the top premium and gourmet spice brands of India—comparing their sourcing practices, certifications, unique positioning, and pricing.',
-    tags: ['Premium Spices', 'Guide', 'Buying Guide'],
-    isMarkdown: true,
-    content: `
-## Why Premium Spices Are Worth It
-
-If you love cooking Indian food, the difference between “good” and “unforgettable” often comes down to the quality of your spices. Premium brands focus on cleaner sourcing, better processing, and fresher packaging, which means more flavour, colour, and aroma per pinch—and fewer worries about adulteration.
-
-This guide will help you decode what “premium” actually means and how Rathi Naturals. fits into that landscape with products like Salem Turmeric and Mathania Chilli.
-
----
-
-## What Makes a Spice Brand “Premium”?
-
-Premium is more than fancy labels. Here are the pillars you should look for when you evaluate any brand online or offline.
-
-- **Source transparency:** Single‑origin or region‑specific claims (Salem turmeric, Mathania chilli, Lakadong turmeric) suggest traceability and terroir‑driven flavour.
-- **Purity and testing:** Look for FSSAI licences, ISO systems, organic or residue‑free certifications, and mention of lab testing for contaminants.
-- **Processing quality:** Low‑temperature grinding, hygienic plants, and minimal hand‑contamination help preserve volatile oils and prevent mould or off‑flavours.
-- **Packaging:** Light‑proof, airtight packaging slows oxidation so your masala does not die in two months.
-
-> **At [Rathi Naturals.](/), we apply these same principles—small‑batch sourcing, careful cleaning, and protective packaging—across our [Salem Turmeric](/product/4), [Mathania Chilli](/product/12), and other whole‑spice lines.**
-
----
-
-## Spotlight on Salem Turmeric and Mathania Chilli
-
-### Salem Turmeric – High‑Curcumin, High Colour
-Salem in Tamil Nadu is known for turmeric with rich colour and good curcumin content, which gives you deeper flavour and stronger “golden” tones in gravies. High‑quality Salem turmeric is valued for its potential health properties and is widely used in Ayurvedic and everyday cooking.
-
-> **Choose [Rathi Naturals. Salem Turmeric Powder](/product/4) for your daily curries, golden milk, and pickles when you want vibrant colour and clean, single‑origin sourcing.**
-
-### Mathania Chilli – Rajasthan’s Culinary Jewel
-Mathania chilli comes from a small region near Jodhpur and is loved for its bright red colour, flavour‑forward profile, and relatively moderate heat. It gives dishes like Laal Maas their signature deep red hue without overpowering them with harsh spiciness.
-
-> **If you want that authentic Rajasthani look and layered heat, reach for [Rathi Naturals. Mathania Chilli](/product/12) (Whole & Powder) in your tadkas, marinades, and Laal Maas.**
-
----
-
-## Types of Spice Brands You’ll See in India (2025)
-
-| Segment | Typical examples | What they’re good at |
-| --- | --- | --- |
-| Legacy household brands | MDH, Everest, Tata Sampann, Badshah | Familiar flavours, strong distribution, budget‑friendly |
-| Export/B2B manufacturers | Eastern, Ramdev, others in industry guides | Bulk supply, certifications, consistent batches |
-| Regional specialists | MTR, Pravin, local masala houses | Authentic regional blends, strong local loyalty |
-| Gourmet/single‑origin brands | Salem‑ and Mathania‑focused labels and similar | Story‑driven sourcing, high aroma, whole‑spice quality |
-
-> **[Rathi Naturals.](/) sits in the gourmet/single‑origin space—focused on carefully sourced Indian staples like Salem Turmeric, Mathania Chilli, and premium whole spices for home cooks who care about both flavour and purity.**
-
----
-
-## How to Choose the Right Brand for Your Kitchen
-
-Instead of hunting for a single “best” brand, match the brand to your needs.
-
-- **Cook daily for a family and want predictable taste?** A trusted national brand for some blends plus a few premium single‑origin spices is a great combo.
-- **Love experimenting and hosting?** Invest in gourmet whole spices and region‑specific chillies for signature dishes.
-- **Run a cafe or cloud kitchen?** Look at export‑oriented or B2B suppliers for bulk staples, and add a few hero products like Mathania chilli for speciality menu items.
-
-> **Use [Rathi Naturals. Salem Turmeric](/product/4) for all‑purpose cooking, and [Rathi Naturals. Mathania Chilli](/product/12) when you specifically want rich colour and Rajasthani character.**
-
----
-
-## How to Spot Genuine Premium Quality (Online and Offline)
-
-When you’re scrolling through listings, this quick checklist helps you avoid flashy but low‑grade masalas.
-
-- **Region and variety clearly mentioned:** “Salem Turmeric,” “Mathania Chilli,” etc.
-- **Lab testing and certifications** noted in the description or images.
-- **Whole spices look clean**, well‑dried, with strong aroma and natural colour (not neon).
-- **Reasonable pricing:** real single‑origin spices cost more than generic masala, but they should not be unrealistically cheap or wildly overpriced.
-
-> **Check our product pages for detailed sourcing notes, batch coding, and transparent ingredient lists before you add [Rathi Naturals. spices](/shop) to your cart.**
-
----
-
-## FAQs – Buying Premium Indian Spices
-
-### Do I need all my spices to be premium?
-Not necessarily. For everyday uses like basic chilli powder in large quantities, a good mid‑range brand is fine. Reserve premium options like Salem Turmeric or Mathania Chilli for dishes where flavour and colour really matter.
-
-### Are single‑origin spices always better?
-Single‑origin does not automatically mean higher quality, but it usually signals better traceability and a clearer flavour profile. Always cross‑check reviews, aroma, and packaging.
-
-### How should I store premium spices?
-Store them in airtight containers away from heat, light, and moisture to protect essential oils and colour. Ground spices benefit from being bought in smaller packs and used within a few months.
-
-### Why are Mathania chillies so expensive?
-Mathania is a relatively small growing region, with labour‑intensive sun‑drying and grading practices, and demand from chefs and exporters keeps prices high. You are paying for rarity, colour, and a very specific flavour profile.
-    `,
-    faqs: [
-      {
-        question: 'Do I need all my spices to be premium?',
-        answer:
-          'Not necessarily. Reserve premium options for dishes where flavour and colour really matter.',
-      },
-      {
-        question: 'Are single-origin spices always better?',
-        answer:
-          'Usually signals better traceability and a clearer flavour profile, but check reviews.',
-      },
-      {
-        question: 'How should I store premium spices?',
-        answer: 'Airtight containers away from heat, light, and moisture.',
-      },
-      {
-        question: 'Why are Mathania chillies so expensive?',
-        answer:
-          'Due to labour-intensive sun-drying, grading practices, and demand for its rarity and specific flavour.',
-      },
     ],
   },
   {
     id: 103,
-    slug: 'restaurant-style-biryani-secret',
-    title: 'The Secret to Restaurant-Style Biryani (Hint: It’s Not Just the Rice)',
-    author: 'Chef Anjali D.',
-    date: 'Jan 15, 2025',
-    image:
-      'https://images.unsplash.com/photo-1589302168068-964664d93dc0?auto=format&fit=crop&q=80&w=800',
-    excerpt:
-      'It’s not just about the rice. The secret lies in the "Dum" technique and the layering of whole spices. Learn how to master it at home.',
-    tags: ['Recipe', 'Cooking Tips', 'Biryani'],
+    slug: 'biryani-mastery-spices',
+    title: 'FAQs – Biryani Mastery',
+    author: 'Chef Rajesh',
+    date: 'February 20, 2025',
+    image: '/images/blog/blog_biryani_secret_png_1774290085772.png',
+    excerpt: 'Master the art of Biryani with the right spice layering and rice techniques.',
+    relatedProductIds: [12, 1, 28],
+    content: `Mastering Biryani requires patience and the right spices. Follow these FAQs to achieve perfect results every time.`,
     isMarkdown: true,
-    content: `
-### The Art of Dum Biryani
-
-Most home cooks struggle to get that distinctive aroma that hits you when you open a clay pot of biryani at a fine dining restaurant. The secret isn't MSG—it's high-quality whole spices infused into the fat *before* the meat/vegetables are added, and the slow "Dum" cooking process that traps every molecule of flavor.
-
----
-
-## Secret 1: The "Dum" Technique (Steam Cooking)
-
-"Dum Pukht" literally means "choked steam." By sealing the pot with dough or a heavy lid, you create a high-pressure environment where the meat cooks in its own juices and the rice absorbs the aromatic steam. This prevents the delicate top layer of saffron rice from drying out while the bottom layer creates a delicious crust.
-
-**How to do it at home:**
-- Use a heavy-bottomed pot (Dutch oven or heavy steel/copper handi).
-- Seal the lid with wheat dough (atta) or use a tight-fitting lid with a weight on top.
-- Cook on the lowest flame for the final 20 minutes.
-
----
-
-## Secret 2: The Whole Spice Infusion
-
-Restaurant biryani uses a "Potli Masala" (spice bag) or whole spices fried in ghee. You cannot get this depth of flavor from powder alone. The oil/ghee extracts the essential oils from the spices, which then coat every grain of rice.
-
-**Key Spices You Need:**
-- **Shahi Jeera (Caraway Seeds):** Essential for that earthy, royal scent.
-- **Whole Cardamom & Cloves:** Provide the floral high notes.
-- **Cinnamon Bark:** For sweet, woody warmth.
-- **Mace (Javitri) & Nutmeg:** The "secret weapons" of Mughlai cuisine.
-
-> **Start with a base of [Rathi Naturals. Whole Cumin](/product/14) and crushed [Green Cardamom](/product/10) to mimic the restaurant flavor profile.**
-
----
-
-## Secret 3: The Saffron Milk Finish
-
-That beautiful gradient of yellow and orange rice? It comes from high-quality Saffron (Kesar). Never throw dry saffron strands on top. Always bloom them in warm milk for 20 minutes to release the "Crocin" (color) and "Safranal" (aroma).
-
-**Pro Tip:** Add a few drops of rose water or kewra water to the saffron milk for that wedding-banquet aroma.
-
-> **Our [Himalayan Saffron (Kesar)](/product/1) is Grade A Mongra, meaning you only need a few strands for a potent color and smell.**
-
----
-
-## Recipe: Simplified Chicken Dum Biryani
-
-**Ingredients:**
-- 500g Chicken, marinated
-- 2 cups Basmati Rice (70% par-cooked)
-- 1/2 cup Fried Onions (Birista)
-- 2 tbsp Ghee
-- **Whole Spices:** Bay leaf, [Cinnamon](/product/11), [Cardamom](/product/10), Cloves
-
-**Instructions:**
-1. **Marinate:** Mix chicken with yogurt, ginger-garlic paste, red chilli powder, and salt. Let it sit for 2 hours.
-2. **Layer:** Place marinated chicken at the bottom of a heavy pot.
-3. **Rice:** Spread the 70% cooked rice over the chicken. Do not press it down.
-4. **Garnish:** Sprinkle fried onions, mint leaves, and pour the saffron milk over the rice.
-5. **Dum:** Seal the pot and cook on high for 5 mins, then low for 20 mins. Rest for 10 mins before opening.
-
-> **For the marinade, use our [Jodhpuri Mathania Chilli Powder](/product/12) for a vibrant red color without excessive heat.**
-
----
-
-## FAQs – Biryani Mastery
-
-### Which rice is best for Biryani?
-Always use "Extra Long Grain" or "aged" Basmati rice. Aged rice absorbs flavors better and doesn't turn mushy.
-
-### Can I make this Vegetarian?
-Absolutely. Replace chicken with mixed vegetables (cauliflower, carrot, beans) or Paneer. The spice layering technique remains exactly the same.
-
-### Why is my rice breaking?
-You likely overcooked it before the Dum stage. Boil the rice only until it is 70% done (still has a "bite" in the center). It will finish cooking in the steam.
-    `,
     faqs: [
       {
         question: 'Which rice is best for Biryani?',
@@ -1025,6 +817,7 @@ You likely overcooked it before the Dum stage. Boil the rice only until it is 70
         answer: 'Avoid overcooking before the Dum stage; rice should be only 70% cooked initially.',
       },
     ],
+    tags: ['Cooking', 'Recipes', 'Biryani'],
   },
   {
     id: 104,
@@ -1032,10 +825,10 @@ You likely overcooked it before the Dum stage. Boil the rice only until it is 70
     title: 'Why "Supermarket Turmeric" Might Be Fake',
     author: 'Suresh R., Agronomist',
     date: 'Jan 10, 2025',
-    image:
-      'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=800',
+    image: '/images/blog/blog_turmeric_purity_test_png_1774290023726.png',
     excerpt:
       'Lead chromate is often used to give stale turmeric a bright yellow color. Here is a simple water test you can do at home to check for purity.',
+    relatedProductIds: [4],
     tags: ['Education', 'Food Safety', 'Turmeric'],
     isMarkdown: false,
     content: `

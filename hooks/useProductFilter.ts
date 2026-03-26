@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { Product } from '../types';
-import { fuzzySearch } from '../utils/searchUtils';
+import { fuzzySearchProducts } from '../utils/searchUtils';
 
 export interface FilterOptions {
   category: string;
@@ -52,7 +52,7 @@ export const useProductFilter = (
 
     // Filter by search query
     if (filters.searchQuery) {
-      result = fuzzySearch(filters.searchQuery, result);
+      result = fuzzySearchProducts(filters.searchQuery, result);
     }
 
     // Filter by price range

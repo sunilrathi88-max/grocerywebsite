@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Product, Variant } from '../../../types';
 import { useProducts } from '../../../hooks/useProducts';
 import { useCart } from '../../../hooks/useCart';
@@ -20,6 +20,7 @@ const ProductDetailPage: React.FC = () => {
   const { id } = useParams();
   const { products } = useProducts({ useMockData: true });
   const { addToCart } = useCart();
+  const navigate = useNavigate();
 
   const product = useMemo(() => products.find((p) => p.id === Number(id)), [products, id]);
 
@@ -49,6 +50,11 @@ const ProductDetailPage: React.FC = () => {
     addToCart(product, currentVariant, qty);
     setAdded(true);
     setTimeout(() => setAdded(false), 1600);
+  };
+
+  const handleBuyNow = () => {
+    addToCart(product, currentVariant, qty);
+    navigate('/checkout');
   };
 
   const related = products
@@ -216,7 +222,10 @@ const ProductDetailPage: React.FC = () => {
                       <ShoppingCart size={18} />
                       {added ? 'ADDED TO CART' : 'ADD TO CART'}
                     </button>
-                    <button className="flex-1 flex items-center justify-center gap-3 py-4 bg-[#42210B] hover:bg-[#5D3D28] text-white rounded-2xl font-bold text-sm tracking-widest shadow-xl transition-all active:scale-[0.98]">
+                    <button
+                      onClick={handleBuyNow}
+                      className="flex-1 flex items-center justify-center gap-3 py-4 bg-[#42210B] hover:bg-[#5D3D28] text-white rounded-2xl font-bold text-sm tracking-widest shadow-xl transition-all active:scale-[0.98]"
+                    >
                       <CreditCard size={18} />
                       BUY NOW
                     </button>

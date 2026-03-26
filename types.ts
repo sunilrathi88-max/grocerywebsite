@@ -192,6 +192,7 @@ export interface BlogPost {
   tags: string[];
   isMarkdown?: boolean;
   faqs?: Array<{ question: string; answer: string }>;
+  relatedProductIds?: number[];
 }
 
 export interface Recipe {

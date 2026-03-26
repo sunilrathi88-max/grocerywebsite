@@ -39,22 +39,21 @@ export const calculateLevenshteinDistance = (a: string, b: string): number => {
 /**
  * fuzzySearch
  * Returns items that match the query with a certain degree of fuzziness.
- *
- * @param query The search term
- * @param items The list of products to search
- * @param threshold Max distance allowed (default 2 for short words, 3 for longer)
  */
-export const fuzzySearch = (query: string, items: Product[], threshold = 2): Product[] => {
+export const fuzzySearch = <T extends { id: string | number }>(
+  query: string,
+  items: T[],
+  getSearchSpace: (item: T) => string,
+  getMatchKey: (item: T) => string,
+  threshold = 2
+): T[] => {
   if (!query) return [];
 
   const lowerQuery = query.toLowerCase().trim();
 
   // 1. Exact/Substring match (High Priority)
   const exactMatches = items.filter((item) => {
-    const searchSpace = [item.name, item.category, item.description, ...(item.tags || [])]
-      .join(' ')
-      .toLowerCase();
-
+    const searchSpace = getSearchSpace(item).toLowerCase();
     return searchSpace.includes(lowerQuery);
   });
 
@@ -66,14 +65,40 @@ export const fuzzySearch = (query: string, items: Product[], threshold = 2): Pro
     // Skip if already found in exact matches
     if (exactMatches.find((m) => m.id === item.id)) return false;
 
-    const nameDistance = calculateLevenshteinDistance(lowerQuery, item.name.toLowerCase());
+    const matchKey = getMatchKey(item).toLowerCase();
+    const distance = calculateLevenshteinDistance(lowerQuery, matchKey);
     // Allow slightly higher threshold for longer names
-    const allowedDistance = item.name.length > 5 ? threshold + 1 : threshold;
+    const allowedDistance = matchKey.length > 5 ? threshold + 1 : threshold;
 
-    return nameDistance <= allowedDistance;
+    return distance <= allowedDistance;
   });
 
   return [...exactMatches, ...fuzzyMatches];
+};
+
+/**
+ * fuzzySearchProducts
+ */
+export const fuzzySearchProducts = (query: string, items: Product[]): Product[] => {
+  return fuzzySearch(
+    query,
+    items,
+    (p) => [p.name, p.category, p.description, ...(p.tags || [])].join(' '),
+    (p) => p.name
+  );
+};
+
+/**
+ * fuzzySearchBlogs
+ */
+import { BlogPost } from '../types';
+export const fuzzySearchBlogs = (query: string, items: BlogPost[]): BlogPost[] => {
+  return fuzzySearch(
+    query,
+    items,
+    (b) => [b.title, b.excerpt, b.content, ...(b.tags || [])].join(' '),
+    (b) => b.title
+  );
 };
 
 /**

@@ -1,7 +1,8 @@
 import React, { useState, useMemo } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { Product } from '../../../types';
+import { useSearchParams, useNavigate } from 'react-router-dom';
+import { Product, BlogPost } from '../../../types';
 import ProductCard from './ProductCard';
+import BlogPostCard from '../../../components/BlogPostCard';
 import {
   SlidersHorizontal,
   ChevronDown,
@@ -11,10 +12,12 @@ import {
   Box,
   Sparkles,
   LayoutGrid,
+  FileText,
 } from 'lucide-react';
 
 interface ShopPageProps {
   products: Product[];
+  posts: BlogPost[];
 }
 
 const REDESIGN_CATEGORIES = [
@@ -25,8 +28,9 @@ const REDESIGN_CATEGORIES = [
   { id: 'specialty', label: 'Specialty', icon: <Sparkles size={18} /> },
 ];
 
-const ShopPage: React.FC<ShopPageProps> = ({ products }) => {
+const ShopPage: React.FC<ShopPageProps> = ({ products, posts }) => {
   const [params] = useSearchParams();
+  const navigate = useNavigate();
   const initCat = params.get('cat') || 'all';
   const initQ = params.get('q') || '';
 
@@ -47,19 +51,53 @@ const ShopPage: React.FC<ShopPageProps> = ({ products }) => {
     setActiveTags((prev) => (prev.includes(t) ? prev.filter((x) => x !== t) : [...prev, t]));
   };
 
+  const filteredPosts = useMemo(() => {
+    if (!searchQuery) return [];
+    const q = searchQuery.toLowerCase();
+    return posts.filter(
+      (p) =>
+        p.title.toLowerCase().includes(q) ||
+        p.excerpt.toLowerCase().includes(q) ||
+        p.tags?.some((t) => t.toLowerCase().includes(q)) ||
+        p.content.toLowerCase().includes(q)
+    );
+  }, [posts, searchQuery]);
+
   const filteredResults = useMemo(() => {
     return products
       .filter((p) => {
         if (activeCat === 'all') return true;
         const pCat = p.category.toLowerCase();
-        const aCat = activeCat.toLowerCase();
-        // More robust matching
-        if (aCat === 'powder') return pCat.includes('powder');
-        if (aCat === 'whole') return pCat.includes('whole');
-        if (aCat === 'masala') return pCat.includes('masala') || pCat.includes('blend');
-        if (aCat === 'specialty')
-          return pCat.includes('special') || pCat.includes('premium') || pCat.includes('saffron');
-        return pCat.includes(aCat);
+        const pName = p.name.toLowerCase();
+        const pGrind = (p.grind || '').toLowerCase();
+        const aCatLower = activeCat.toLowerCase();
+
+        // Functional Category Matching
+        if (aCatLower === 'powder') {
+          return pCat.includes('powder') || pName.includes('powder') || pGrind.includes('powder');
+        }
+        if (aCatLower === 'whole') {
+          return pCat.includes('whole') || pName.includes('whole') || pGrind.includes('whole');
+        }
+        if (aCatLower === 'masala') {
+          return (
+            pCat.includes('masala') ||
+            pCat.includes('blend') ||
+            pName.includes('masala') ||
+            pName.includes('blend')
+          );
+        }
+        if (aCatLower === 'specialty') {
+          return (
+            pCat.includes('special') ||
+            pCat.includes('premium') ||
+            pCat.includes('saffron') ||
+            pName.includes('saffron') ||
+            p.badge === 'Premium'
+          );
+        }
+
+        return pCat.includes(aCatLower) || pName.includes(aCatLower);
       })
       .filter(
         (p) =>
@@ -207,6 +245,35 @@ const ShopPage: React.FC<ShopPageProps> = ({ products }) => {
             >
               CLEAR ALL FILTERS
             </button>
+          </div>
+        )}
+
+        {/* Blog Posts Results */}
+        {searchQuery && filteredPosts.length > 0 && (
+          <div className="mt-20">
+            <div className="flex items-center gap-3 mb-8 pb-4 border-b border-stone-200">
+              <div className="w-10 h-10 bg-[#B38B59]/10 rounded-xl flex items-center justify-center">
+                <FileText className="text-[#B38B59]" size={20} />
+              </div>
+              <div>
+                <h3 className="font-display text-xl font-bold text-[#42210B]">
+                  Articles & Recipes
+                </h3>
+                <p className="text-stone-400 text-xs uppercase tracking-widest font-bold">
+                  {filteredPosts.length} matches found
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {filteredPosts.map((post) => (
+                <BlogPostCard
+                  key={post.id}
+                  post={post}
+                  onSelectPost={(slug) => navigate(`/blog/${slug}`)}
+                />
+              ))}
+            </div>
           </div>
         )}
       </main>

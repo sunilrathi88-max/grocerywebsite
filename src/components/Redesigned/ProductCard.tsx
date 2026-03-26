@@ -13,8 +13,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const { addToCart } = useCart();
 
   // Get rating and review count
-  const rating = product.rating || 4.8;
-  const reviewCount = product.reviews?.length || 124;
+  const hasReviews = product.reviews && product.reviews.length > 0;
+  const rating = product.rating || (hasReviews ? 4.8 : null);
+  const reviewCount = product.reviews?.length || 0;
 
   // Get primary variant (usually the first one)
   const primaryVariant = product.variants[0];

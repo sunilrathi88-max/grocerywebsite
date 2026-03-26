@@ -71,3 +71,10 @@ export const imageErrorHandlers = {
   blog: createImageErrorHandler(PLACEHOLDER_URLS.blog),
   recipe: createImageErrorHandler(PLACEHOLDER_URLS.recipe),
 };
+
+/**
+ * Helper to get the primary image for a product
+ */
+export const getProductImage = (product: any): string => {
+  return product?.images?.[0] || PLACEHOLDER_URLS.product;
+};

@@ -302,56 +302,98 @@ const CheckoutPage: React.FC = () => {
                     </h2>
                   </div>
 
-                  <div className="space-y-4">
+                  <div className="space-y-6">
                     {[
                       {
                         id: 'upi',
-                        label: '📱 UPI (GPay, PhonePe, Paytm)',
-                        desc: 'Instant & Secure Payment',
+                        label: 'UPI (GPay, PhonePe, Paytm)',
+                        desc: 'Pay instantly with any UPI app',
+                        icon: <Smartphone className="text-[#B38B59]" size={20} />,
+                        trust: 'Zero Transaction Fee',
                       },
                       {
                         id: 'card',
-                        label: '💳 Credit / Debit Card',
-                        desc: 'Secure card processing via Razorpay',
+                        label: 'Credit / Debit Card',
+                        desc: 'Visa, Mastercard, RuPay & more',
+                        icon: <CreditCard className="text-[#B38B59]" size={20} />,
+                        trust: '100% Secure via Razorpay',
                       },
                       {
                         id: 'cod',
-                        label: '💰 Cash On Delivery',
-                        desc: 'Pay when your order arrives',
+                        label: 'Cash On Delivery (COD)',
+                        desc: 'Pay ₹ grandTotal when order arrives',
+                        icon: <Truck className="text-[#B38B59]" size={20} />,
+                        trust: 'Safe & Contactless',
                       },
                     ].map((m) => (
-                      <div
+                      <button
                         key={m.id}
+                        type="button"
                         onClick={() => setPayMethod(m.id)}
-                        className={`p-6 rounded-2xl border-2 cursor-pointer transition-all flex items-center justify-between ${
+                        className={`w-full p-6 rounded-[2rem] border-2 text-left transition-all relative overflow-hidden flex flex-col gap-4 ${
                           payMethod === m.id
-                            ? 'border-[#B38B59] bg-[#B38B59]/5 shadow-md'
-                            : 'border-stone-100 hover:border-stone-200'
+                            ? 'border-[#B38B59] bg-[#B38B59]/5 shadow-inner'
+                            : 'border-stone-100 bg-[#FAF6F2] hover:border-stone-200'
                         }`}
                       >
-                        <div className="flex items-center gap-4">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-4">
+                            <div
+                              className={`w-12 h-12 rounded-xl flex items-center justify-center transition-colors ${payMethod === m.id ? 'bg-[#B38B59] text-white' : 'bg-white text-stone-300 shadow-sm'}`}
+                            >
+                              {m.icon}
+                            </div>
+                            <div>
+                              <div className="text-sm font-bold text-[#42210B]">{m.label}</div>
+                              <div className="text-xs text-stone-400 font-medium">
+                                {m.desc.replace('grandTotal', grandTotal.toString())}
+                              </div>
+                            </div>
+                          </div>
                           <div
-                            className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${
-                              payMethod === m.id
-                                ? 'border-[#B38B59] bg-[#B38B59]'
-                                : 'border-stone-200'
-                            }`}
+                            className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${payMethod === m.id ? 'border-[#B38B59] bg-[#B38B59]' : 'border-stone-200'}`}
                           >
                             {payMethod === m.id && (
                               <div className="w-2 h-2 rounded-full bg-white" />
                             )}
                           </div>
-                          <div>
-                            <div className="text-sm font-bold text-[#42210B]">{m.label}</div>
-                            <div className="text-xs text-stone-400 font-medium">{m.desc}</div>
-                          </div>
                         </div>
-                        {m.id === 'upi' && (
-                          <div className="flex items-center gap-1 opacity-20">
-                            {/* UPI provider icons could go here */}
+
+                        <div className="flex items-center justify-between pt-4 border-t border-dashed border-stone-200">
+                          <div className="flex items-center gap-1.5 text-[10px] font-black text-[#B38B59] uppercase tracking-widest">
+                            <CheckCircle2 size={12} />
+                            {m.trust}
                           </div>
-                        )}
-                      </div>
+                          {m.id === 'upi' && (
+                            <div className="flex gap-2 opacity-30 grayscale saturate-0 contrast-150">
+                              <img
+                                src="https://upload.wikimedia.org/wikipedia/commons/e/e1/UPI-Logo-vector.svg"
+                                alt="UPI"
+                                className="h-3"
+                              />
+                              <img
+                                src="https://upload.wikimedia.org/wikipedia/commons/f/f2/Google_Pay_Logo.svg"
+                                alt="GPay"
+                                className="h-3"
+                              />
+                            </div>
+                          )}
+                          {m.id === 'card' && (
+                            <div className="flex gap-2 opacity-30 grayscale saturate-0 contrast-150">
+                              <img
+                                src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg"
+                                alt="Visa"
+                                className="h-3"
+                              />
+                              <img
+                                src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg"
+                                alt="MC"
+                                className="h-3"
+                              />
+                            </div>
+                          )}
+                        </div>
+                      </button>
                     ))}
                   </div>
 

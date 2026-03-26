@@ -70,6 +70,20 @@ const generateSitemap = () => {
     slugs.push(match[1]);
   }
 
+  // Also read from content/blog directory
+  const blogDir = path.resolve(__dirname, '../content/blog');
+  if (fs.existsSync(blogDir)) {
+    const files = fs.readdirSync(blogDir);
+    files.forEach(file => {
+      if (file.endsWith('.md')) {
+        const slug = file.replace('.md', '');
+        if (!slugs.includes(slug)) {
+          slugs.push(slug);
+        }
+      }
+    });
+  }
+
   // Generate XML
   let xml =
     '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';

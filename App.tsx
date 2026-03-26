@@ -183,7 +183,13 @@ const OrderConfirmationRoute = ({ currentUser }: { currentUser: User | null }) =
   );
 };
 
-const BlogPostRoute = ({ posts }: { posts: import('./types').BlogPost[] }) => {
+const BlogPostRoute = ({
+  posts,
+  products,
+}: {
+  posts: import('./types').BlogPost[];
+  products: Product[];
+}) => {
   const { slug } = useParams();
   console.log('DEBUG: BlogPostRoute', {
     slug,
@@ -193,12 +199,11 @@ const BlogPostRoute = ({ posts }: { posts: import('./types').BlogPost[] }) => {
   const post = posts.find((p) => p.slug === slug);
   return post ? (
     <React.Suspense fallback={<PageLoader />}>
-      <BlogPostPage post={post} />
+      <BlogPostPage post={post} allProducts={products} />
     </React.Suspense>
   ) : (
     <div className="text-center py-20">
       <h2>Post not found: {slug}</h2>
-      <p className="text-sm text-gray-500 mt-2">Available posts: {posts.length}</p>
     </div>
   );
 };
@@ -857,7 +862,9 @@ const App: React.FC = () => {
                 onLoginClick={() => setAuthModalOpen(true)}
                 onLogoutClick={handleLogout}
                 allProducts={products}
+                allPosts={blogPosts}
                 onSelectProduct={setSelectedProduct}
+                onSelectPost={(post) => navigate(`/blog/${post.slug}`)}
                 categories={categories}
                 onSelectCategory={handleSelectCategoryAndClose}
               />
@@ -868,12 +875,15 @@ const App: React.FC = () => {
                 <Route
                   element={
                     <React.Suspense fallback={<PageLoader />}>
-                      <RedesignedLayout />
+                      <RedesignedLayout products={products} posts={blogPosts} />
                     </React.Suspense>
                   }
                 >
                   <Route path="/" element={<RedesignedHomePage products={products} />} />
-                  <Route path="/shop" element={<RedesignedShopPage products={products} />} />
+                  <Route
+                    path="/shop"
+                    element={<RedesignedShopPage products={products} posts={blogPosts} />}
+                  />
                   <Route path="/product/:id" element={<RedesignedProductDetailPage />} />
                   <Route path="/cart" element={<RedesignedCartPage />} />
                   <Route path="/checkout" element={<RedesignedCheckoutPage />} />
@@ -890,7 +900,10 @@ const App: React.FC = () => {
                       />
                     }
                   />
-                  <Route path="/blog/:slug" element={<BlogPostRoute posts={blogPosts} />} />
+                  <Route
+                    path="/blog/:slug"
+                    element={<BlogPostRoute posts={blogPosts} products={products} />}
+                  />
                   <Route
                     path="/recipes"
                     element={
@@ -1050,14 +1063,6 @@ const App: React.FC = () => {
                   }
                 />
                 <Route
-                  path="/about"
-                  element={
-                    <React.Suspense fallback={<PageLoader />}>
-                      <AboutPage />
-                    </React.Suspense>
-                  }
-                />
-                <Route
                   path="/reviews"
                   element={
                     <React.Suspense fallback={<PageLoader />}>
@@ -1171,7 +1176,10 @@ const App: React.FC = () => {
                   path="/order-confirmation/:orderId"
                   element={<OrderConfirmationRoute currentUser={currentUser} />}
                 />
-                <Route path="/blog/:slug" element={<BlogPostRoute posts={blogPosts} />} />
+                <Route
+                  path="/blog/:slug"
+                  element={<BlogPostRoute posts={blogPosts} products={products} />}
+                />
                 <Route
                   path="/faq"
                   element={
@@ -1241,8 +1249,22 @@ const App: React.FC = () => {
             </main>
             {/* Hide Footer on mobile pages AND redesigned pages */}
             {!(isMobile && isMobileLayoutPage) &&
-              !['/', '/shop', '/cart', '/checkout'].includes(location.pathname) &&
-              !location.pathname.startsWith('/product/') && (
+              ![
+                '/',
+                '/shop',
+                '/cart',
+                '/checkout',
+                '/about',
+                '/contact',
+                '/faqs',
+                '/faq',
+                '/blog',
+              ].some(
+                (p) =>
+                  location.pathname === p ||
+                  location.pathname.startsWith('/blog/') ||
+                  location.pathname.startsWith('/product/')
+              ) && (
                 <React.Suspense fallback={<div className="h-64 bg-gray-100" />}>
                   <Footer onSelectCategory={handleSelectCategoryAndClose} />
                 </React.Suspense>

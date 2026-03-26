@@ -238,25 +238,6 @@ const HomePage: React.FC<HomePageProps> = ({ products }) => {
           </div>
         </div>
       </section>
-
-      {/* Mini Footer */}
-      <footer className="bg-[#1A0A00] text-stone-400 py-16 px-4">
-        <div className="max-w-7xl mx-auto text-center">
-          <div className="font-display text-2xl font-bold text-white mb-6 uppercase tracking-widest">
-            Rathi Naturals
-          </div>
-          <p className="text-sm max-w-2xl mx-auto mb-12 leading-relaxed font-medium">
-            Founded in 1965 in Sangaria, Rajasthan, Rathi Naturals has been bringing the purest
-            spices from the field to your kitchen for over three generations.
-          </p>
-          <div className="flex flex-wrap justify-center gap-x-12 gap-y-6 text-[10px] font-black uppercase tracking-[0.2em]">
-            <span>UPI SECURE</span>
-            <span>RUPAY ACCEPTED</span>
-            <span>CASH ON DELIVERY</span>
-            <span>SECURE CHECKOUT</span>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 };

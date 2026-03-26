@@ -16,8 +16,9 @@ import Navigation from './Navigation';
 import { imageErrorHandlers } from '../utils/imageHelpers';
 import { useDarkMode } from '../hooks/useDarkMode';
 import { m, AnimatePresence } from 'framer-motion';
-import { fuzzySearch, getSuggestions } from '../utils/searchUtils';
+import { fuzzySearchProducts, fuzzySearchBlogs, getSuggestions } from '../utils/searchUtils';
 import { useLoyaltyStore } from '../store/loyaltyStore';
+import { BlogPost } from '../types';
 import { SparklesIcon } from './icons/SparklesIcon';
 
 interface HeaderProps {
@@ -33,7 +34,9 @@ interface HeaderProps {
   onLoginClick: () => void;
   onLogoutClick: () => void; // Keep for interface compatibility, ignore unused warning for now
   allProducts: Product[];
+  allPosts: BlogPost[];
   onSelectProduct: (product: Product) => void;
+  onSelectPost: (post: BlogPost) => void;
   categories: string[];
   onSelectCategory: (category: string) => void;
 }
@@ -51,7 +54,9 @@ const Header: React.FC<HeaderProps> = ({
   onLoginClick,
   onLogoutClick: _onLogoutClick,
   allProducts,
+  allPosts,
   onSelectProduct,
+  onSelectPost,
   categories,
   onSelectCategory,
 }) => {
@@ -96,10 +101,13 @@ const Header: React.FC<HeaderProps> = ({
   // import { fuzzySearch, getSuggestions } from '../utils/searchUtils';
 
   const autocompleteResults = useMemo(() => {
-    if (!searchQuery) return { products: [], categories: [], suggestions: [] };
+    if (!searchQuery) return { products: [], posts: [], categories: [], suggestions: [] };
 
     // Use fuzzy search for products
-    const matchingProducts = fuzzySearch(searchQuery, allProducts).slice(0, 4);
+    const matchingProducts = fuzzySearchProducts(searchQuery, allProducts).slice(0, 4);
+
+    // Use fuzzy search for blogs
+    const matchingPosts = fuzzySearchBlogs(searchQuery, allPosts).slice(0, 3);
 
     // Fuzzy matching for categories
     const matchingCategories = categories
@@ -111,13 +119,23 @@ const Header: React.FC<HeaderProps> = ({
 
     // Get suggestions if low on results
     let suggestions: string[] = [];
-    if (matchingProducts.length === 0 && matchingCategories.length === 0) {
+    if (
+      matchingProducts.length === 0 &&
+      matchingCategories.length === 0 &&
+      matchingPosts.length === 0
+    ) {
       const allNames = allProducts.map((p) => p.name);
-      suggestions = getSuggestions(searchQuery, [...allNames, ...categories]);
+      const allTitles = allPosts.map((p) => p.title);
+      suggestions = getSuggestions(searchQuery, [...allNames, ...categories, ...allTitles]);
     }
 
-    return { products: matchingProducts, categories: matchingCategories, suggestions };
-  }, [searchQuery, allProducts, categories]);
+    return {
+      products: matchingProducts,
+      posts: matchingPosts,
+      categories: matchingCategories,
+      suggestions,
+    };
+  }, [searchQuery, allProducts, allPosts, categories]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -237,6 +255,46 @@ const Header: React.FC<HeaderProps> = ({
                                   <p className="text-sm text-gray-500">
                                     Rs. {product.variants[0].salePrice || product.variants[0].price}
                                   </p>
+                                </div>
+                              </button>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    {/* Blog Posts */}
+                    {autocompleteResults.posts.length > 0 && (
+                      <div className="border-t border-gray-100">
+                        <div className="px-4 py-2 bg-gray-50">
+                          <p className="text-xs font-bold text-gray-500 uppercase tracking-wide">
+                            Blog Posts
+                          </p>
+                        </div>
+                        <ul>
+                          {autocompleteResults.posts.map((post) => (
+                            <li key={post.id}>
+                              <button
+                                onClick={() => {
+                                  onSelectPost(post);
+                                  setAutocompleteOpen(false);
+                                  onSearchChange('');
+                                }}
+                                className="w-full text-left flex items-center gap-4 px-4 py-3 hover:bg-neutral-50 transition-all group"
+                              >
+                                <div className="w-12 h-12 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
+                                  <img
+                                    src={post.image}
+                                    alt={post.title}
+                                    className="w-full h-full object-cover"
+                                    onError={imageErrorHandlers.thumb}
+                                  />
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                  <p className="font-medium text-gray-800 group-hover:text-brand-primary transition-colors truncate">
+                                    {post.title}
+                                  </p>
+                                  <p className="text-xs text-gray-500 truncate">{post.excerpt}</p>
                                 </div>
                               </button>
                             </li>

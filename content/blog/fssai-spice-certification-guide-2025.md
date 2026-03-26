@@ -1,10 +1,12 @@
 ---
 title: 'The 2025 FSSAI Spice Safety Enforcement: A Complete Guide for Consumers & Brands'
-author: 'Rathi Naturals. Editorial Team'
+author: 'Rathi Naturals Editorial Team'
 date: '2026-01-29'
 category: 'Food Safety & Standards'
-description: "Everything you need to know about the FSSAI's October 2025 spice enforcement drive. Learn about the 18,000+ testing parameters, mandatory NABL certification, and how to spot safe spices."
+image: '/images/blog/blog_premium_spice_comparison_png_1774289989410.png'
+excerpt: 'The FSSAI launched India\'s most comprehensive spice safety enforcement drive in October 2025, covering 18,000+ parameters. Here\'s what it means for your kitchen.'
 tags: ['FSSAI', 'Food Safety', 'Spices', 'Compliance', 'Health']
+slug: 'fssai-spice-certification-guide-2025'
 ---
 
 # The 2025 FSSAI Spice Safety Enforcement: A Complete Guide

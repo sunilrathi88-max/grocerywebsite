@@ -201,17 +201,17 @@ export const generateOrganizationSchema = (): OrganizationStructuredData => ({
   logo: 'https://www.rathinaturals.com/logo.png',
   description:
     'Premium single-origin spices sourced directly from heritage farms. FSSAI certified, organic, pesticide-free.',
-  foundingDate: '1984',
+  foundingDate: '1965',
   foundingLocation: {
     '@type': 'Place',
-    name: 'Jaipur, Rajasthan, India',
+    name: 'Sangaria, Rajasthan, India',
   },
   address: {
     '@type': 'PostalAddress',
-    streetAddress: 'Jaipur Spice Market',
-    addressLocality: 'Jaipur',
+    streetAddress: 'Main Market, Sangaria',
+    addressLocality: 'Sangaria',
     addressRegion: 'Rajasthan',
-    postalCode: '302001',
+    postalCode: '335063',
     addressCountry: 'IN',
   },
   contactPoint: {

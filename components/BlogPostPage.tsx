@@ -1,7 +1,8 @@
 import React from 'react';
-import { BlogPost } from '../types';
+import { Link } from 'react-router-dom';
+import { BlogPost, Product } from '../types';
 import { Breadcrumbs } from './ui/Breadcrumbs';
-import { imageErrorHandlers } from '../utils/imageHelpers';
+import { imageErrorHandlers, getProductImage } from '../utils/imageHelpers';
 import { SEO } from './SEO';
 import { pageSEO, generateBlogPostingSchema, generateFAQSchema } from '../utils/seo';
 
@@ -10,9 +11,10 @@ import rehypeRaw from 'rehype-raw';
 
 interface BlogPostPageProps {
   post: BlogPost;
+  allProducts: Product[];
 }
 
-const BlogPostPage: React.FC<BlogPostPageProps> = ({ post }) => {
+const BlogPostPage: React.FC<BlogPostPageProps> = ({ post, allProducts }) => {
   // SEO Configuration
   const seoConfig = React.useMemo(
     () =>
@@ -21,6 +23,27 @@ const BlogPostPage: React.FC<BlogPostPageProps> = ({ post }) => {
         : null,
     [post]
   );
+
+  // Suggested Products Logic
+  const suggestedProducts = React.useMemo(() => {
+    if (!post || !allProducts) return [];
+
+    // 1. Get explicitly related products
+    let related = post.relatedProductIds
+      ? allProducts.filter((p) => post.relatedProductIds?.includes(p.id))
+      : [];
+
+    // 2. If no explicit relations, pick bestsellers or first 2 products as fallback
+    if (related.length === 0) {
+      related = allProducts.filter((p) => p.badge === 'Bestseller').slice(0, 2);
+    }
+    // Final fallback
+    if (related.length === 0) {
+      related = allProducts.slice(0, 2);
+    }
+
+    return related;
+  }, [post, allProducts]);
 
   // Generate combined Article + FAQ schema for rich results
   const structuredDataSchemas = React.useMemo(() => {
@@ -157,62 +180,43 @@ const BlogPostPage: React.FC<BlogPostPageProps> = ({ post }) => {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {/* Product 1 */}
-            <a
-              href="#/product/1"
-              className="group bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-neutral-100 flex items-center gap-5"
-            >
-              <div className="w-24 h-24 bg-neutral-50 rounded-lg overflow-hidden shrink-0 relative">
-                <img
-                  src="/images/products/saffron-kesar-front.webp"
-                  alt="Saffron"
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-              </div>
-              <div>
-                <h4 className="font-bold text-lg text-brand-dark group-hover:text-brand-primary transition-colors font-serif">
-                  Kashmiri Saffron
-                </h4>
-                <p className="text-xs text-neutral-500 uppercase tracking-wider mb-2">
-                  Premium Grade A++
-                </p>
-                <div className="flex items-center gap-2">
-                  <span className="font-bold text-brand-primary">₹599</span>
-                  <span className="text-xs text-neutral-400 line-through">₹799</span>
+            {suggestedProducts.map((product) => (
+              <Link
+                key={product.id}
+                to={`/product/${product.id}`}
+                className="group bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-neutral-100 flex items-center gap-5"
+              >
+                <div className="w-24 h-24 bg-neutral-50 rounded-lg overflow-hidden shrink-0 relative">
+                  <img
+                    src={getProductImage(product)}
+                    alt={product.name}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    onError={imageErrorHandlers.product}
+                  />
                 </div>
-                <span className="text-xs font-bold text-brand-dark mt-2 inline-block border-b border-brand-dark group-hover:border-brand-primary transition-colors">
-                  View Product
-                </span>
-              </div>
-            </a>
-
-            {/* Product 2 */}
-            <a
-              href="#/product/2"
-              className="group bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-neutral-100 flex items-center gap-5"
-            >
-              <div className="w-24 h-24 bg-neutral-50 rounded-lg overflow-hidden shrink-0 relative">
-                <img
-                  src="/images/products/tattv-cardamom.webp"
-                  alt="Cardamom"
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-              </div>
-              <div>
-                <h4 className="font-bold text-lg text-brand-dark group-hover:text-brand-primary transition-colors font-serif">
-                  Green Cardamom
-                </h4>
-                <p className="text-xs text-neutral-500 uppercase tracking-wider mb-2">
-                  8mm Bold Pods
-                </p>
-                <div className="flex items-center gap-2">
-                  <span className="font-bold text-brand-primary">₹349</span>
+                <div>
+                  <h4 className="font-bold text-lg text-brand-dark group-hover:text-brand-primary transition-colors font-serif line-clamp-1">
+                    {product.name}
+                  </h4>
+                  <p className="text-xs text-neutral-500 uppercase tracking-wider mb-2">
+                    {product.usp || product.category}
+                  </p>
+                  <div className="flex items-center gap-2">
+                    <span className="font-bold text-brand-primary">
+                      ₹{product.variants[0]?.salePrice || product.variants[0]?.price}
+                    </span>
+                    {product.variants[0]?.salePrice && (
+                      <span className="text-xs text-neutral-400 line-through">
+                        ₹{product.variants[0].price}
+                      </span>
+                    )}
+                  </div>
+                  <span className="text-xs font-bold text-brand-dark mt-2 inline-block border-b border-brand-dark group-hover:border-brand-primary transition-colors">
+                    View Product
+                  </span>
                 </div>
-                <span className="text-xs font-bold text-brand-dark mt-2 inline-block border-b border-brand-dark group-hover:border-brand-primary transition-colors">
-                  View Product
-                </span>
-              </div>
-            </a>
+              </Link>
+            ))}
           </div>
         </div>
       </div>

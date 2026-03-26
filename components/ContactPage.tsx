@@ -1,6 +1,7 @@
 import React from 'react';
 import { MailIcon } from './icons/MailIcon';
 import { PhoneIcon } from './icons/PhoneIcon';
+import { LocationMarkerIcon } from './icons/LocationMarkerIcon';
 import { SEO } from './SEO';
 import { pageSEO } from '../utils/seo';
 
@@ -116,6 +117,25 @@ const ContactPage: React.FC = () => {
                     sunilrathi88@gmail.com
                   </p>
                   <p className="text-stone-500 text-sm">We typically respond within 24 hours.</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-6 group">
+                <div className="w-14 h-14 bg-[#B38B59]/10 rounded-2xl flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                  <LocationMarkerIcon className="h-6 w-6 text-[#B38B59]" />
+                </div>
+                <div>
+                  <h3 className="text-[11px] font-black text-stone-400 uppercase tracking-widest mb-2">
+                    Company Headquarters
+                  </h3>
+                  <p className="text-[#42210B] font-display text-lg font-bold mb-1">
+                    Rathi Naturals Pvt Ltd
+                  </p>
+                  <p className="text-stone-500 text-sm leading-relaxed">
+                    NH-15, Sangaria, Hanumangarh,
+                    <br />
+                    Rajasthan - 335063, India
+                  </p>
                 </div>
               </div>
 
