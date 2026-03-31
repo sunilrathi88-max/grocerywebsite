@@ -1,8 +1,18 @@
 import React from 'react';
 import clsx from 'clsx';
+import {
+  Lock,
+  CheckCircle,
+  RefreshCcw,
+  ShieldCheck,
+  Leaf,
+  Users,
+  Beaker,
+  Package,
+} from 'lucide-react';
 
 export interface Badge {
-  icon: string;
+  icon: React.ReactNode;
   text: string;
   tooltip?: string;
 }
@@ -92,40 +102,40 @@ export const PAYMENT_METHODS: PaymentMethod[] = [
 ];
 
 export const SECURITY_BADGES = [
-  { icon: '🔒', text: 'SSL Secure', tooltip: '256-bit SSL Encryption' },
-  { icon: '✅', text: '100% Safe', tooltip: 'Verified Secure Checkout' },
-  { icon: '💯', text: 'Money Back', tooltip: '7-Day Money Back Guarantee' },
+  { icon: <Lock size={20} />, text: 'SSL Secure', tooltip: '256-bit SSL Encryption' },
+  { icon: <CheckCircle size={20} />, text: '100% Safe', tooltip: 'Verified Secure Checkout' },
+  { icon: <RefreshCcw size={20} />, text: 'Money Back', tooltip: '7-Day Money Back Guarantee' },
 ];
 
 // Pre-defined certification badges for easy reuse
 export const CERTIFICATION_BADGES: CertificationBadge[] = [
   {
-    icon: '🏛️',
+    icon: <ShieldCheck size={32} />,
     title: 'FSSAI Licensed',
-    subtitle: 'Lic. No. 12345678901234',
+    subtitle: 'Lic. No. 12225025000253',
     verified: true,
     link: 'https://foscos.fssai.gov.in/',
   },
   {
-    icon: '🌿',
+    icon: <Leaf size={32} />,
     title: 'Certified Organic',
     subtitle: 'India Organic / NPOP',
     verified: true,
   },
   {
-    icon: '🤝',
+    icon: <Users size={32} />,
     title: 'Fair Trade',
     subtitle: 'Direct Farmer Partnerships',
     verified: true,
   },
   {
-    icon: '🧪',
+    icon: <Beaker size={32} />,
     title: 'Lab Tested',
     subtitle: 'No Adulterants',
     verified: true,
   },
   {
-    icon: '📦',
+    icon: <Package size={32} />,
     title: 'Fresh Packed',
     subtitle: '< 7 Days Old',
     verified: true,

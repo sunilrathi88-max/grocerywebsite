@@ -132,9 +132,9 @@ const ContactPage: React.FC = () => {
                     Rathi Naturals Pvt Ltd
                   </p>
                   <p className="text-stone-500 text-sm leading-relaxed">
-                    NH-15, Sangaria, Hanumangarh,
+                    125, Main Market, Sangaria,
                     <br />
-                    Rajasthan - 335063, India
+                    Hanumangarh, Rajasthan - 335063
                   </p>
                 </div>
               </div>

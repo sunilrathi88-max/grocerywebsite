@@ -156,16 +156,16 @@ const Footer: React.FC = () => {
               <div className="flex items-start gap-4 text-stone-400">
                 <MapPin size={18} className="text-[#B38B59] mt-1 shrink-0" />
                 <span className="text-xs leading-relaxed">
-                  Rathi Naturals Pvt Ltd, NH-15, Sangaria, Hanumangarh, Rajasthan - 335063
+                  125, Main Market, Sangaria, Hanumangarh, Rajasthan - 335063
                 </span>
               </div>
               <div className="flex items-center gap-4 text-stone-400">
                 <Mail size={18} className="text-[#B38B59] shrink-0" />
-                <span className="text-xs">hello@rathinaturals.in</span>
+                <span className="text-xs">sunilrathi88@gmail.com</span>
               </div>
               <div className="flex items-center gap-4 text-stone-400">
                 <Phone size={18} className="text-[#B38B59] shrink-0" />
-                <span className="text-xs">+91 98765 43210</span>
+                <span className="text-xs">+91 88900 06364</span>
               </div>
             </div>
           </div>

@@ -563,34 +563,34 @@ export const applySEO = (config: SEOConfig): void => {
  */
 export const pageSEO = {
   home: (): SEOConfig => ({
-    title: 'Rathi Naturals. - Authentic Indian Gourmet Spices | Premium & Organic',
+    title: 'Rathi Naturals — Authentic Indian Gourmet Spices & Organic Superfoods',
     description:
-      'Shop authentic Indian gourmet products including premium saffron, spices, nuts, and organic ingredients. Free shipping on orders over ₹499. 100% satisfaction guaranteed.',
+      'Experience the legacy of authentic Indian spices. Shop single-origin saffron, hand-ground masalas, and premium organic nuts. Farm-to-kitchen purity with free shipping over ₹500.',
     keywords: [
-      'indian grocery online',
-      'premium spices',
-      'organic food',
-      'saffron',
-      'indian gourmet',
-      'spices delivery',
+      'indian spices online',
+      'authentic garam masala',
+      'kashmiri saffron premium',
+      'organic lakadong turmeric',
+      'rathi naturals spices',
+      'hand-ground indian spices',
     ],
     canonical: 'https://rathinaturals.com',
     ogType: 'website',
-    ogImage: '/images/og-home.jpg',
+    ogImage: 'https://rathinaturals.com/images/og-home.jpg',
     twitterCard: 'summary_large_image',
   }),
 
   products: (category?: string): SEOConfig => ({
     title: category
-      ? `${category} - Premium Indian ${category} | Rathi Naturals.`
-      : 'Shop All Products - Authentic Indian Gourmet | Rathi Naturals.',
+      ? `${category} — Premium Single-Origin ${category} | Rathi Naturals`
+      : 'Shop Our Spice Collection — Single-Origin & Hand-Ground | Rathi Naturals',
     description: category
-      ? `Browse our selection of premium ${category.toLowerCase()}. Authentic, organic, and sourced directly from India. Free shipping on orders over ₹499.`
-      : 'Explore our complete collection of authentic Indian gourmet products. Premium spices, nuts, organic ingredients, and more. Shop now!',
-    keywords: ['indian products', 'shop indian spices', category?.toLowerCase(), 'buy online'],
+      ? `Discover the finest ${category.toLowerCase()} sourced directly from heritage farms across India. FSSAI certified, pesticide-free, and ethically sourced.`
+      : 'Explore our curated collection of single-origin spices, hand-ground masalas, and premium organic pantry essentials. Authentic flavors for professional kitchens.',
+    keywords: ['indian spice shop', 'buy spices online india', category?.toLowerCase(), 'organic masalas'],
     canonical: category
-      ? `https://rathinaturals.com/products/${category}`
-      : 'https://rathinaturals.com/products',
+      ? `https://rathinaturals.com/shop?category=${category}`
+      : 'https://rathinaturals.com/shop',
     ogType: 'website',
   }),
 

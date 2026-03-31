@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Search, ShoppingCart, X, FileText, ChevronRight } from 'lucide-react';
+import { Search, ShoppingCart, X, FileText, ChevronRight, UserCircle, Menu } from 'lucide-react';
 import { useCart } from '../../../hooks/useCart';
 import TrustBar from './TrustBar';
 import { Product, BlogPost } from '../../../types';
@@ -18,6 +18,7 @@ const Navbar: React.FC<NavbarProps> = ({ products, posts }) => {
   const [isFocused, setIsFocused] = useState(false);
   const navigate = useNavigate();
   const searchRef = useRef<HTMLDivElement>(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const autocompleteResults = useMemo(() => {
     if (!query.trim()) return { products: [], posts: [] };
@@ -223,6 +224,15 @@ const Navbar: React.FC<NavbarProps> = ({ products, posts }) => {
           </Link>
         </div>
 
+        {/* User Icon */}
+        <Link
+          to="/account"
+          className="text-white hover:text-[#B38B59] transition-colors active:scale-95"
+          title="Account / Login"
+        >
+          <UserCircle size={26} strokeWidth={1.5} />
+        </Link>
+
         {/* Cart */}
         <Link
           to="/cart"
@@ -238,7 +248,35 @@ const Navbar: React.FC<NavbarProps> = ({ products, posts }) => {
           </div>
           <span className="hidden sm:inline font-bold text-sm tracking-wide">CART</span>
         </Link>
+        
+        {/* Mobile Menu Toggle */}
+        <button
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className="lg:hidden text-white hover:text-[#B38B59] transition-colors active:scale-95 ml-2"
+        >
+          {isMobileMenuOpen ? <X size={26} /> : <Menu size={26} />}
+        </button>
       </nav>
+
+      {/* Mobile Nav Dropdown */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="lg:hidden bg-[#42210B] border-t border-white/10 overflow-hidden"
+          >
+            <div className="flex flex-col py-4 px-6 space-y-4">
+              <Link to="/shop" onClick={() => setIsMobileMenuOpen(false)} className="text-white font-bold uppercase tracking-widest hover:text-[#B38B59]">Shop</Link>
+              <Link to="/offers" onClick={() => setIsMobileMenuOpen(false)} className="text-white font-bold uppercase tracking-widest hover:text-[#B38B59]">Offers</Link>
+              <Link to="/about" onClick={() => setIsMobileMenuOpen(false)} className="text-white font-bold uppercase tracking-widest hover:text-[#B38B59]">Our Story</Link>
+              <Link to="/blog" onClick={() => setIsMobileMenuOpen(false)} className="text-white font-bold uppercase tracking-widest hover:text-[#B38B59]">Blog</Link>
+              <Link to="/account" onClick={() => setIsMobileMenuOpen(false)} className="text-[#B38B59] font-bold uppercase tracking-widest">Login / Account</Link>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Redesigned TrustBar below Navbar */}
       <TrustBar />

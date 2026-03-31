@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
+import { paymentService } from '../../../utils/paymentService';
 import { CartItem } from '../../../types';
 import { useCart } from '../../../hooks/useCart';
 import {
@@ -35,8 +36,30 @@ const CheckoutPage: React.FC = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [payMethod, setPayMethod] = useState('upi');
 
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [searchParams] = useSearchParams();
+  const orderId = searchParams.get('order_id');
+
   const shipping = totalPrice >= 1000 ? 0 : 70;
   const grandTotal = totalPrice + shipping;
+
+  useEffect(() => {
+    if (orderId && step !== 3) {
+      setIsProcessing(true);
+      paymentService.verifyPayment(orderId).then((success) => {
+        setIsProcessing(false);
+        if (success) {
+          setStep(3);
+        } else {
+          alert('Payment verification failed. Please try again or contact support.');
+        }
+      }).catch((err) => {
+        setIsProcessing(false);
+        console.error(err);
+        alert('Payment verification encountered an error.');
+      });
+    }
+  }, [orderId, step]);
 
   const validate = () => {
     const newErrors: Record<string, string> = {};
@@ -318,13 +341,6 @@ const CheckoutPage: React.FC = () => {
                         icon: <CreditCard className="text-[#B38B59]" size={20} />,
                         trust: '100% Secure via Razorpay',
                       },
-                      {
-                        id: 'cod',
-                        label: 'Cash On Delivery (COD)',
-                        desc: 'Pay ₹ grandTotal when order arrives',
-                        icon: <Truck className="text-[#B38B59]" size={20} />,
-                        trust: 'Safe & Contactless',
-                      },
                     ].map((m) => (
                       <button
                         key={m.id}
@@ -399,10 +415,32 @@ const CheckoutPage: React.FC = () => {
 
                   <div className="pt-8 space-y-4">
                     <button
-                      onClick={() => setStep(3)}
-                      className="w-full bg-[#42210B] hover:bg-[#5D3D28] text-white py-5 rounded-2xl font-bold text-lg shadow-xl flex items-center justify-center gap-3 transition-all active:scale-95"
+                      disabled={isProcessing}
+                      onClick={async () => {
+                        setIsProcessing(true);
+                        try {
+                          await paymentService.initializePayment(
+                            grandTotal,
+                            { 
+                              id: (form.email || `guest_${Date.now()}`).replace(/[@.]/g, '_'), 
+                              name: form.name, 
+                              email: form.email, 
+                              phone: form.phone 
+                            },
+                            () => { /* handled by redirect */ },
+                            (err) => {
+                              setIsProcessing(false);
+                              alert(err);
+                            }
+                          );
+                        } catch (err) {
+                          console.error(err);
+                          setIsProcessing(false);
+                        }
+                      }}
+                      className="w-full bg-[#42210B] hover:bg-[#5D3D28] text-white py-5 rounded-2xl font-bold text-lg shadow-xl flex items-center justify-center gap-3 transition-all active:scale-95 disabled:opacity-50"
                     >
-                      PLACE ORDER · ₹{grandTotal}
+                      {isProcessing ? 'PROCESSING...' : `PLACE ORDER · ₹${grandTotal}`}
                     </button>
                     <p className="text-center text-[10px] font-black text-stone-300 uppercase tracking-widest flex items-center justify-center gap-4">
                       <span className="flex items-center gap-1">

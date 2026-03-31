@@ -3,6 +3,7 @@ import { imageErrorHandlers } from '../utils/imageHelpers';
 import { SEO } from './SEO';
 import { pageSEO } from '../utils/seo';
 import { OptimizedImage } from './OptimizedImage';
+import { Wind, Beaker, MapPin } from 'lucide-react';
 
 const AboutPage: React.FC = () => {
   return (
@@ -65,8 +66,8 @@ const AboutPage: React.FC = () => {
 
           <div className="grid md:grid-cols-3 gap-12 relative z-10">
             <div className="bg-white/5 backdrop-blur-sm p-10 rounded-[2.5rem] border border-white/10 hover:bg-white/10 transition-all group">
-              <div className="w-16 h-16 bg-[#B38B59]/20 rounded-2xl flex items-center justify-center mb-8 text-3xl group-hover:scale-110 transition-transform">
-                ❄️
+              <div className="w-16 h-16 bg-[#B38B59]/20 rounded-2xl flex items-center justify-center mb-8 text-[#B38B59] group-hover:scale-110 transition-transform">
+                <Wind size={32} />
               </div>
               <h3 className="font-display font-bold text-2xl mb-4 text-white">
                 Cold-Grinding Moat
@@ -78,8 +79,8 @@ const AboutPage: React.FC = () => {
               </p>
             </div>
             <div className="bg-white/5 backdrop-blur-sm p-10 rounded-[2.5rem] border border-white/10 hover:bg-white/10 transition-all group">
-              <div className="w-16 h-16 bg-[#B38B59]/20 rounded-2xl flex items-center justify-center mb-8 text-3xl group-hover:scale-110 transition-transform">
-                🧪
+              <div className="w-16 h-16 bg-[#B38B59]/20 rounded-2xl flex items-center justify-center mb-8 text-[#B38B59] group-hover:scale-110 transition-transform">
+                <Beaker size={32} />
               </div>
               <h3 className="font-display font-bold text-2xl mb-4 text-white">Lab Tested</h3>
               <p className="text-stone-400 text-sm leading-relaxed">
@@ -89,8 +90,8 @@ const AboutPage: React.FC = () => {
               </p>
             </div>
             <div className="bg-white/5 backdrop-blur-sm p-10 rounded-[2.5rem] border border-white/10 hover:bg-white/10 transition-all group">
-              <div className="w-16 h-16 bg-[#B38B59]/20 rounded-2xl flex items-center justify-center mb-8 text-3xl group-hover:scale-110 transition-transform">
-                📍
+              <div className="w-16 h-16 bg-[#B38B59]/20 rounded-2xl flex items-center justify-center mb-8 text-[#B38B59] group-hover:scale-110 transition-transform">
+                <MapPin size={32} />
               </div>
               <h3 className="font-display font-bold text-2xl mb-4 text-white">Authentic Origins</h3>
               <p className="text-stone-400 text-sm leading-relaxed">

@@ -32,7 +32,7 @@ import { LazyMotion, domAnimation } from 'framer-motion';
 
 // SEO Utils
 import SEO from './components/SEO';
-import { pageSEO, generateOrganizationSchema } from './utils/seo';
+import { pageSEO, generateOrganizationSchema, generateWebsiteSchema } from './utils/seo';
 
 // A/B Testing Provider
 import { ABTestProvider } from './src/context/ABTestContext';
@@ -781,7 +781,8 @@ const App: React.FC = () => {
 
   // Use empty strings to avoid overriding page titles, purely for Schema injection
   const orgSchema = generateOrganizationSchema();
-  const GlobalSEO = <SEO title="" description="" structuredData={orgSchema} />;
+  const websiteSchema = generateWebsiteSchema();
+  const GlobalSEO = <SEO title="" description="" structuredData={[orgSchema, websiteSchema]} />;
 
   // Check if mobile for hiding desktop layout on mobile pages
   // Use 1024px breakpoint to include tablets in mobile view
@@ -842,7 +843,7 @@ const App: React.FC = () => {
                           : selectedCategory !== 'All'
                             ? pageSEO.products(selectedCategory)
                             : pageSEO.home())}
-              structuredData={currentView === 'home' ? orgSchema : undefined}
+              structuredData={currentView === 'home' ? [orgSchema, websiteSchema] : undefined}
               structuredDataId="organization-schema"
             />{' '}
             {/* Conditionally render Header for legacy pages only (Admin, Account, etc.) */}

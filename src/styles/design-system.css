@@ -69,9 +69,9 @@
      ===================================== */
 
   /* Font Families */
-  --font-heading: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-heading: 'Cormorant Garamond', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-body: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
-  --font-display: 'Playfair Display', Georgia, serif;
+  --font-display: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
   --font-mono: 'Roboto Mono', 'Courier New', monospace;
 
   /* Font Sizes */
