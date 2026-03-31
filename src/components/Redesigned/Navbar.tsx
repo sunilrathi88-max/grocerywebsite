@@ -248,7 +248,7 @@ const Navbar: React.FC<NavbarProps> = ({ products, posts }) => {
           </div>
           <span className="hidden sm:inline font-bold text-sm tracking-wide">CART</span>
         </Link>
-        
+
         {/* Mobile Menu Toggle */}
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -268,11 +268,41 @@ const Navbar: React.FC<NavbarProps> = ({ products, posts }) => {
             className="lg:hidden bg-[#42210B] border-t border-white/10 overflow-hidden"
           >
             <div className="flex flex-col py-4 px-6 space-y-4">
-              <Link to="/shop" onClick={() => setIsMobileMenuOpen(false)} className="text-white font-bold uppercase tracking-widest hover:text-[#B38B59]">Shop</Link>
-              <Link to="/offers" onClick={() => setIsMobileMenuOpen(false)} className="text-white font-bold uppercase tracking-widest hover:text-[#B38B59]">Offers</Link>
-              <Link to="/about" onClick={() => setIsMobileMenuOpen(false)} className="text-white font-bold uppercase tracking-widest hover:text-[#B38B59]">Our Story</Link>
-              <Link to="/blog" onClick={() => setIsMobileMenuOpen(false)} className="text-white font-bold uppercase tracking-widest hover:text-[#B38B59]">Blog</Link>
-              <Link to="/account" onClick={() => setIsMobileMenuOpen(false)} className="text-[#B38B59] font-bold uppercase tracking-widest">Login / Account</Link>
+              <Link
+                to="/shop"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="text-white font-bold uppercase tracking-widest hover:text-[#B38B59]"
+              >
+                Shop
+              </Link>
+              <Link
+                to="/offers"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="text-white font-bold uppercase tracking-widest hover:text-[#B38B59]"
+              >
+                Offers
+              </Link>
+              <Link
+                to="/about"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="text-white font-bold uppercase tracking-widest hover:text-[#B38B59]"
+              >
+                Our Story
+              </Link>
+              <Link
+                to="/blog"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="text-white font-bold uppercase tracking-widest hover:text-[#B38B59]"
+              >
+                Blog
+              </Link>
+              <Link
+                to="/account"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="text-[#B38B59] font-bold uppercase tracking-widest"
+              >
+                Login / Account
+              </Link>
             </div>
           </motion.div>
         )}

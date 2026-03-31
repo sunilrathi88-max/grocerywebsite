@@ -587,7 +587,12 @@ export const pageSEO = {
     description: category
       ? `Discover the finest ${category.toLowerCase()} sourced directly from heritage farms across India. FSSAI certified, pesticide-free, and ethically sourced.`
       : 'Explore our curated collection of single-origin spices, hand-ground masalas, and premium organic pantry essentials. Authentic flavors for professional kitchens.',
-    keywords: ['indian spice shop', 'buy spices online india', category?.toLowerCase(), 'organic masalas'],
+    keywords: [
+      'indian spice shop',
+      'buy spices online india',
+      category?.toLowerCase(),
+      'organic masalas',
+    ],
     canonical: category
       ? `https://rathinaturals.com/shop?category=${category}`
       : 'https://rathinaturals.com/shop',

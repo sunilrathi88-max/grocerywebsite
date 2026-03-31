@@ -46,18 +46,21 @@ const CheckoutPage: React.FC = () => {
   useEffect(() => {
     if (orderId && step !== 3) {
       setIsProcessing(true);
-      paymentService.verifyPayment(orderId).then((success) => {
-        setIsProcessing(false);
-        if (success) {
-          setStep(3);
-        } else {
-          alert('Payment verification failed. Please try again or contact support.');
-        }
-      }).catch((err) => {
-        setIsProcessing(false);
-        console.error(err);
-        alert('Payment verification encountered an error.');
-      });
+      paymentService
+        .verifyPayment(orderId)
+        .then((success) => {
+          setIsProcessing(false);
+          if (success) {
+            setStep(3);
+          } else {
+            alert('Payment verification failed. Please try again or contact support.');
+          }
+        })
+        .catch((err) => {
+          setIsProcessing(false);
+          console.error(err);
+          alert('Payment verification encountered an error.');
+        });
     }
   }, [orderId, step]);
 
@@ -421,13 +424,15 @@ const CheckoutPage: React.FC = () => {
                         try {
                           await paymentService.initializePayment(
                             grandTotal,
-                            { 
-                              id: (form.email || `guest_${Date.now()}`).replace(/[@.]/g, '_'), 
-                              name: form.name, 
-                              email: form.email, 
-                              phone: form.phone 
+                            {
+                              id: (form.email || `guest_${Date.now()}`).replace(/[@.]/g, '_'),
+                              name: form.name,
+                              email: form.email,
+                              phone: form.phone,
                             },
-                            () => { /* handled by redirect */ },
+                            () => {
+                              /* handled by redirect */
+                            },
                             (err) => {
                               setIsProcessing(false);
                               alert(err);
