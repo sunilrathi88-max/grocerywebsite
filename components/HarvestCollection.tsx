@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Product } from '../types';
+import { UniversalProductCard as ProductCard } from './UniversalProductCard';
 
 interface HarvestCollectionProps {
   products: Product[];
@@ -86,56 +87,16 @@ const HarvestCollection: React.FC<HarvestCollectionProps> = ({
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16">
-          {displayProducts.map((product) => {
-            const tag = getProductTag(product);
-            return (
-              <div
-                key={product.id}
-                className="group cursor-pointer"
-                onClick={() => handleProductClick(product.id)}
-              >
-                <div className="relative overflow-hidden mb-6 bg-char border border-mist/10 aspect-[4/5]">
-                  <img
-                    alt={product.name}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 filter saturate-[0.85] contrast-[1.1] group-hover:saturate-100 mix-blend-luminosity hover:mix-blend-normal"
-                    src={getProductImage(product)}
-                    loading="lazy"
-                    width={400}
-                    height={500}
-                  />
-                  {tag && (
-                    <div className="absolute top-4 left-4">
-                      <span className="bg-ink/90 backdrop-blur-sm text-saffron text-[10px] font-bold uppercase tracking-wider px-3 py-1">
-                        {tag}
-                      </span>
-                    </div>
-                  )}
-                </div>
-                <div className="flex flex-col gap-1 px-2">
-                  <h4 className="font-serif text-xl text-cream group-hover:text-saffron transition-colors">
-                    {product.name}
-                  </h4>
-                  {product.origin && (
-                    <p className="text-xs text-mist uppercase tracking-widest mb-2">
-                      Origin: {product.origin}
-                    </p>
-                  )}
-                  <div className="flex items-center justify-between mt-2 border-t border-char pt-3">
-                    <span className="font-medium text-dust">₹{getProductPrice(product)}</span>
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        navigate(`/product/${product.id}`);
-                      }}
-                      className="text-saffron uppercase text-xs font-bold tracking-widest hover:text-gold"
-                    >
-                      View
-                    </button>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+          {displayProducts.map((product) => (
+            <ProductCard
+              key={product.id}
+              product={product}
+              onAddToCart={() => navigate(`/product/${product.id}`)}
+              onToggleWishlist={() => {
+                /* Handled by card internal or parent */
+              }}
+            />
+          ))}
         </div>
 
         <div className="mt-12 md:hidden text-center">

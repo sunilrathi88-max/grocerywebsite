@@ -4,7 +4,7 @@ import { Product, Variant } from '../../../types';
 import { useProducts } from '../../../hooks/useProducts';
 import { useCart } from '../../../hooks/useCart';
 import StarRating from './StarRating';
-import ProductCard from './ProductCard';
+import { UniversalProductCard as ProductCard } from '../../../components/UniversalProductCard';
 import {
   ShieldCheck,
   Truck,
@@ -299,7 +299,16 @@ const ProductDetailPage: React.FC = () => {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
               {related.map((p) => (
-                <ProductCard key={p.id} product={p} />
+                <ProductCard
+                  key={p.id}
+                  product={p}
+                  onAddToCart={() => {
+                    /* Handled by card logic */
+                  }}
+                  onToggleWishlist={() => {
+                    /* Handled by card logic */
+                  }}
+                />
               ))}
             </div>
           </section>

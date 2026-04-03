@@ -4,7 +4,7 @@ import { Recipe, Product } from '../types';
 import { XIcon } from './icons/XIcon';
 import { ClockIcon } from './icons/ClockIcon';
 import { UsersIcon } from './icons/UsersIcon';
-import ProductCard from './ProductCard';
+import { UniversalProductCard as ProductCard } from './UniversalProductCard';
 import OptimizedImage from './OptimizedImage';
 import { SEO } from './SEO';
 import { generateRecipeSchema } from '../utils/seo';
@@ -149,25 +149,12 @@ const RecipeDetailModal: React.FC<RecipeDetailModalProps> = ({
                       <ProductCard
                         key={product.id}
                         id={product.id.toString()}
-                        name={product.name}
-                        price={product.variants[0]?.salePrice || product.variants[0]?.price}
-                        originalPrice={
-                          product.variants[0]?.salePrice ? product.variants[0]?.price : undefined
-                        }
-                        image={product.images[0]}
-                        rating={product.rating || 0}
-                        reviewCount={product.reviews.length}
-                        heatLevel="medium"
-                        useCase={product.category}
-                        sizes={product.variants.map((v) => ({
-                          size: v.name,
-                          price: v.salePrice || v.price,
-                        }))}
+                        product={product}
                         onAddToCart={(id) => {
                           const p = relatedProducts.find((prod) => prod.id.toString() === id);
                           if (p) onAddToCart(p);
                         }}
-                        onWishlist={(id) => {
+                        onToggleWishlist={(id) => {
                           const p = relatedProducts.find((prod) => prod.id.toString() === id);
                           if (p) onToggleWishlist(p);
                         }}

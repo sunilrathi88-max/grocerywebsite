@@ -40,7 +40,7 @@ serve(async (req) => {
         customer_email: customer_email || 'guest@example.com',
       },
       order_meta: {
-        return_url: `${req.headers.get('origin')}/checkout?order_id=${orderId}`,
+        return_url: `${req.headers.get('origin')?.replace('http://', 'https://')}/checkout?order_id=${orderId}`,
       },
     };
 
@@ -50,7 +50,7 @@ serve(async (req) => {
         'Content-Type': 'application/json',
         'x-client-id': APP_ID,
         'x-client-secret': SECRET_KEY,
-        'x-api-version': '2022-09-01',
+        'x-api-version': '2023-08-01',
       },
       body: JSON.stringify(payload),
     });
@@ -62,9 +62,12 @@ serve(async (req) => {
       throw new Error(data.message || 'Failed to create Cashfree order');
     }
 
-    return new Response(JSON.stringify(data), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    return new Response(
+      JSON.stringify({ ...data, environment: IS_PRODUCTION ? 'production' : 'sandbox' }),
+      {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   } catch (error) {
     return new Response(JSON.stringify({ error: error.message }), {
       status: 400,

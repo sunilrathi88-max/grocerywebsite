@@ -44,14 +44,14 @@ const CheckoutPage: React.FC = () => {
   const grandTotal = totalPrice + shipping;
 
   useEffect(() => {
-    if (orderId && step !== 3) {
+    if (orderId && step !== 5) {
       setIsProcessing(true);
       paymentService
         .verifyPayment(orderId)
         .then((success) => {
           setIsProcessing(false);
           if (success) {
-            setStep(3);
+            setStep(5);
           } else {
             alert('Payment verification failed. Please try again or contact support.');
           }
@@ -64,21 +64,28 @@ const CheckoutPage: React.FC = () => {
     }
   }, [orderId, step]);
 
-  const validate = () => {
+  const validateStep1 = () => {
     const newErrors: Record<string, string> = {};
     if (!form.name.trim()) newErrors.name = 'Name is required';
     if (!/^\d{10}$/.test(form.phone)) newErrors.phone = 'Enter valid 10-digit mobile';
     if (!/\S+@\S+\.\S+/.test(form.email)) newErrors.email = 'Enter valid email';
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const validateStep2 = () => {
+    const newErrors: Record<string, string> = {};
     if (!form.address.trim()) newErrors.address = 'Address is required';
     if (!/^\d{6}$/.test(form.pincode)) newErrors.pincode = 'Enter 6-digit PIN';
     if (!form.city.trim()) newErrors.city = 'City is required';
-
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const handleNext = () => {
-    if (validate()) setStep(2);
+    if (step === 1 && validateStep1()) setStep(2);
+    else if (step === 2 && validateStep2()) setStep(3);
+    else if (step === 3) setStep(4);
   };
 
   const handleField = (f: string, v: string) => {
@@ -90,7 +97,7 @@ const CheckoutPage: React.FC = () => {
       });
   };
 
-  if (step === 3)
+  if (step === 5)
     return (
       <div className="min-h-screen bg-[#FAF6F2] py-20 px-4">
         <div className="max-w-2xl mx-auto text-center">
@@ -164,9 +171,10 @@ const CheckoutPage: React.FC = () => {
         <div className="flex justify-between items-center max-w-3xl mx-auto mb-16 relative">
           <div className="absolute top-1/2 left-0 w-full h-0.5 bg-stone-200 -translate-y-1/2 z-0" />
           {[
-            { id: 1, label: 'Delivery Details', icon: <MapPin size={16} /> },
-            { id: 2, label: 'Secure Payment', icon: <CreditCard size={16} /> },
-            { id: 3, label: 'Order Summary', icon: <CheckCircle2 size={16} /> },
+            { id: 1, label: 'Contact', icon: <Mail size={16} /> },
+            { id: 2, label: 'Location', icon: <MapPin size={16} /> },
+            { id: 3, label: 'Delivery', icon: <Truck size={16} /> },
+            { id: 4, label: 'Payment', icon: <CreditCard size={16} /> },
           ].map((s) => (
             <div key={s.id} className="relative z-10 flex flex-col items-center gap-3">
               <div
@@ -198,11 +206,11 @@ const CheckoutPage: React.FC = () => {
               {step === 1 && (
                 <div className="space-y-10 relative z-10">
                   <h2 className="font-display text-3xl font-bold text-[#42210B]">
-                    Delivery Information
+                    Contact Information
                   </h2>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
+                    <div className="space-y-2 md:col-span-2">
                       <label className="text-[10px] font-black text-stone-400 uppercase tracking-widest flex items-center gap-2">
                         <User size={12} className="text-[#B38B59]" /> Full Name
                       </label>
@@ -216,6 +224,23 @@ const CheckoutPage: React.FC = () => {
                       {errors.name && (
                         <p className="text-[10px] text-red-500 font-bold uppercase tracking-wider mt-1 ml-2">
                           {errors.name}
+                        </p>
+                      )}
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-black text-stone-400 uppercase tracking-widest flex items-center gap-2">
+                        <Mail size={12} className="text-[#B38B59]" /> Email Address
+                      </label>
+                      <input
+                        type="email"
+                        value={form.email}
+                        onChange={(e) => handleField('email', e.target.value)}
+                        className={`w-full bg-[#FAF6F2] border-none rounded-2xl px-6 py-4 text-sm font-medium focus:ring-2 focus:ring-[#B38B59] transition-all ${errors.email ? 'ring-2 ring-red-500' : ''}`}
+                        placeholder="rahul@example.com"
+                      />
+                      {errors.email && (
+                        <p className="text-[10px] text-red-500 font-bold uppercase tracking-wider mt-1 ml-2">
+                          {errors.email}
                         </p>
                       )}
                     </div>
@@ -236,23 +261,33 @@ const CheckoutPage: React.FC = () => {
                         </p>
                       )}
                     </div>
-                    <div className="md:col-span-2 space-y-2">
-                      <label className="text-[10px] font-black text-stone-400 uppercase tracking-widest flex items-center gap-2">
-                        <Mail size={12} className="text-[#B38B59]" /> Email Address
-                      </label>
-                      <input
-                        type="email"
-                        value={form.email}
-                        onChange={(e) => handleField('email', e.target.value)}
-                        className={`w-full bg-[#FAF6F2] border-none rounded-2xl px-6 py-4 text-sm font-medium focus:ring-2 focus:ring-[#B38B59] transition-all ${errors.email ? 'ring-2 ring-red-500' : ''}`}
-                        placeholder="rahul@example.com"
-                      />
-                      {errors.email && (
-                        <p className="text-[10px] text-red-500 font-bold uppercase tracking-wider mt-1 ml-2">
-                          {errors.email}
-                        </p>
-                      )}
-                    </div>
+                  </div>
+
+                  <button
+                    onClick={handleNext}
+                    className="w-full bg-[#B38B59] hover:bg-[#8C6D45] text-white py-5 rounded-2xl font-bold text-lg shadow-xl flex items-center justify-center gap-3 transition-all active:scale-95"
+                  >
+                    CONTINUE TO LOCATION
+                    <ArrowRight size={20} />
+                  </button>
+                </div>
+              )}
+
+              {step === 2 && (
+                <div className="space-y-10 relative z-10">
+                  <div className="flex items-center gap-4 mb-2">
+                    <button
+                      onClick={() => setStep(1)}
+                      className="p-2 hover:bg-stone-100 rounded-lg transition-colors text-stone-400"
+                    >
+                      <ArrowLeft size={20} />
+                    </button>
+                    <h2 className="font-display text-3xl font-bold text-[#42210B]">
+                      Delivery Location
+                    </h2>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="md:col-span-2 space-y-2">
                       <label className="text-[10px] font-black text-stone-400 uppercase tracking-widest flex items-center gap-2">
                         <MapPin size={12} className="text-[#B38B59]" /> Full Address
@@ -308,17 +343,67 @@ const CheckoutPage: React.FC = () => {
                     onClick={handleNext}
                     className="w-full bg-[#B38B59] hover:bg-[#8C6D45] text-white py-5 rounded-2xl font-bold text-lg shadow-xl flex items-center justify-center gap-3 transition-all active:scale-95"
                   >
+                    CONTINUE TO DELIVERY
+                    <ArrowRight size={20} />
+                  </button>
+                </div>
+              )}
+
+              {step === 3 && (
+                <div className="space-y-10 relative z-10">
+                  <div className="flex items-center gap-4 mb-2">
+                    <button
+                      onClick={() => setStep(2)}
+                      className="p-2 hover:bg-stone-100 rounded-lg transition-colors text-stone-400"
+                    >
+                      <ArrowLeft size={20} />
+                    </button>
+                    <h2 className="font-display text-3xl font-bold text-[#42210B]">
+                      Delivery Options
+                    </h2>
+                  </div>
+
+                  <div className="space-y-6">
+                    <button
+                      type="button"
+                      className="w-full p-6 rounded-[2rem] border-2 border-[#B38B59] bg-[#B38B59]/5 shadow-inner text-left transition-all relative overflow-hidden flex flex-col gap-4"
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-4">
+                          <div className="w-12 h-12 rounded-xl flex items-center justify-center transition-colors bg-[#B38B59] text-white">
+                            <Truck size={20} />
+                          </div>
+                          <div>
+                            <div className="text-sm font-bold text-[#42210B]">
+                              Standard Delivery
+                            </div>
+                            <div className="text-xs text-stone-400 font-medium">
+                              Estimated 3-5 business days
+                            </div>
+                          </div>
+                        </div>
+                        <div className="w-6 h-6 rounded-full border-2 flex items-center justify-center border-[#B38B59] bg-[#B38B59]">
+                          <div className="w-2 h-2 rounded-full bg-white" />
+                        </div>
+                      </div>
+                    </button>
+                  </div>
+
+                  <button
+                    onClick={handleNext}
+                    className="w-full bg-[#B38B59] hover:bg-[#8C6D45] text-white py-5 rounded-2xl font-bold text-lg shadow-xl flex items-center justify-center gap-3 transition-all active:scale-95"
+                  >
                     CONTINUE TO PAYMENT
                     <ArrowRight size={20} />
                   </button>
                 </div>
               )}
 
-              {step === 2 && (
+              {step === 4 && (
                 <div className="space-y-10 relative z-10">
                   <div className="flex items-center gap-4 mb-2">
                     <button
-                      onClick={() => setStep(1)}
+                      onClick={() => setStep(3)}
                       className="p-2 hover:bg-stone-100 rounded-lg transition-colors text-stone-400"
                     >
                       <ArrowLeft size={20} />
@@ -445,15 +530,38 @@ const CheckoutPage: React.FC = () => {
                       }}
                       className="w-full bg-[#42210B] hover:bg-[#5D3D28] text-white py-5 rounded-2xl font-bold text-lg shadow-xl flex items-center justify-center gap-3 transition-all active:scale-95 disabled:opacity-50"
                     >
-                      {isProcessing ? 'PROCESSING...' : `PLACE ORDER · ₹${grandTotal}`}
+                      {isProcessing ? (
+                        'Processing...'
+                      ) : (
+                        <>
+                          <CreditCard size={20} />
+                          Pay ₹{grandTotal} Securely
+                        </>
+                      )}
                     </button>
-                    <p className="text-center text-[10px] font-black text-stone-300 uppercase tracking-widest flex items-center justify-center gap-4">
-                      <span className="flex items-center gap-1">
-                        <ShieldCheck size={12} /> 256-bit SSL
-                      </span>
-                      <span className="flex items-center gap-1 font-bold text-green-600">
-                        <CheckCircle2 size={12} /> ISO Certified
-                      </span>
+
+                    <div className="grid grid-cols-3 gap-4 pt-4 border-t border-stone-100/50">
+                      <div className="flex flex-col items-center text-center gap-1.5 p-3 rounded-2xl bg-stone-50/50">
+                        <ShieldCheck size={18} className="text-[#B38B59]" />
+                        <span className="text-[9px] font-black uppercase tracking-tighter text-stone-500 leading-none">
+                          Secure Gateway
+                        </span>
+                      </div>
+                      <div className="flex flex-col items-center text-center gap-1.5 p-3 rounded-2xl bg-stone-50/50">
+                        <Smartphone size={18} className="text-[#B38B59]" />
+                        <span className="text-[9px] font-black uppercase tracking-tighter text-stone-500 leading-none">
+                          UPI Enabled
+                        </span>
+                      </div>
+                      <div className="flex flex-col items-center text-center gap-1.5 p-3 rounded-2xl bg-stone-50/50">
+                        <Truck size={18} className="text-[#B38B59]" />
+                        <span className="text-[9px] font-black uppercase tracking-tighter text-stone-500 leading-none">
+                          Fast Delivery
+                        </span>
+                      </div>
+                    </div>
+                    <p className="text-center text-[10px] font-bold text-stone-400">
+                      Your data is protected with 256-bit SSL encryption.
                     </p>
                   </div>
                 </div>

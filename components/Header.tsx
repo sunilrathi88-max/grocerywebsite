@@ -157,40 +157,40 @@ const Header: React.FC<HeaderProps> = ({
           isScrolled ? 'bg-white shadow-sm' : 'bg-white border-b border-neutral-200'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-8">
-          {/* Left: Logo */}
-          <Link to="/" className="flex-shrink-0 flex items-center gap-2 cursor-pointer">
-            <span className="text-2xl font-serif font-bold text-neutral-900 tracking-tight">
-              Rathi Naturals
-            </span>
-          </Link>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+          {/* Left: Logo & Navigation */}
+          <div className="flex-1 flex items-center gap-8 min-w-0">
+            <Link to="/" className="flex-shrink-0 flex items-center gap-2 cursor-pointer">
+              <span className="text-2xl font-serif font-bold text-neutral-900 tracking-tight">
+                Rathi Naturals
+              </span>
+            </Link>
+            <Navigation onSelectCategory={onSelectCategory} />
+          </div>
 
-          {/* Center: Navigation (Desktop) */}
-          <Navigation onSelectCategory={onSelectCategory} />
-
-          {/* Right: Actions */}
-          <div className="flex items-center gap-4">
-            {/* Search */}
-            <div className="relative hidden md:block" ref={searchContainerRef}>
+          {/* Center: Search (Desktop) */}
+          <div className="flex-1 hidden md:flex justify-center max-w-xl">
+            <div className="relative w-full" ref={searchContainerRef}>
               <input
                 type="text"
-                placeholder="Search..."
+                placeholder="Search spices, masalas, saffron..."
                 value={searchQuery}
                 onChange={(e) => onSearchChange(e.target.value)}
                 onFocus={() => setAutocompleteOpen(true)}
-                className="w-48 focus:w-64 transition-all duration-300 bg-neutral-100 border-none rounded-full py-2 pl-4 pr-10 text-sm focus:ring-2 focus:ring-brand-primary/20 placeholder-neutral-500"
+                className="w-full transition-all duration-300 bg-neutral-100 border-none rounded-full py-2.5 pl-6 pr-12 text-sm focus:ring-2 focus:ring-brand-primary/20 placeholder-neutral-500"
               />
-              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500">
-                <SearchIcon className="w-4 h-4" />
+              <span className="absolute right-4 top-1/2 -translate-y-1/2 text-neutral-500">
+                <SearchIcon className="w-5 h-5" />
               </span>
 
-              {/* Autocomplete Dropdown */}
+              {/* Autocomplete Dropdown (Inherits relative positioning from parent) */}
               {isAutocompleteOpen &&
                 (autocompleteResults.products.length > 0 ||
                   autocompleteResults.categories.length > 0 ||
                   (autocompleteResults.suggestions &&
                     autocompleteResults.suggestions.length > 0)) && (
-                  <div className="absolute top-full mt-2 w-80 bg-white rounded-lg shadow-2xl border border-gray-200 z-50 animate-fade-in-up overflow-hidden right-0">
+                  <div className="absolute top-full mt-2 w-full bg-white rounded-2xl shadow-2xl border border-gray-200 z-50 animate-fade-in-up overflow-hidden left-0">
+                    {/* (Autocomplete content remains unchanged) */}
                     {/* Categories */}
                     {autocompleteResults.categories.length > 0 && (
                       <div className="border-b border-gray-100">
@@ -329,7 +329,10 @@ const Header: React.FC<HeaderProps> = ({
                   </div>
                 )}
             </div>
+          </div>
 
+          {/* Right: Utilities */}
+          <div className="flex-1 flex justify-end items-center gap-2 md:gap-4">
             {/* Mobile Search Toggle */}
             <button
               className="md:hidden text-neutral-700"

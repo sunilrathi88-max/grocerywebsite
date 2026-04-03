@@ -117,9 +117,9 @@ const EmailVerificationPage = React.lazy(() => import('./components/EmailVerific
 
 const TwoFactorSetupPage = React.lazy(() => import('./components/TwoFactorSetupPage'));
 const OrderTrackingPage = React.lazy(() => import('./pages/OrderTrackingPage'));
+const CollectionsPage = React.lazy(() => import('./pages/CollectionsPage'));
 const ProductDetailPage = React.lazy(() => import('./pages/ProductDetailPage'));
 const ResponsiveHomePage = React.lazy(() => import('./pages/ResponsiveHomePage'));
-const ResponsiveCategoryPage = React.lazy(() => import('./pages/ResponsiveCategoryPage'));
 const OffersPage = React.lazy(() => import('./pages/OffersPage'));
 const SubscriptionPage = React.lazy(() => import('./pages/SubscriptionPage'));
 const FarmersPage = React.lazy(() => import('./pages/FarmersPage'));
@@ -141,10 +141,16 @@ const RedesignedCartPage = React.lazy(() => import('./src/components/Redesigned/
 const RedesignedCheckoutPage = React.lazy(() => import('./src/components/Redesigned/CheckoutPage'));
 
 const PageLoader = () => (
-  <div className="flex items-center justify-center min-h-[60vh]">
-    <div className="text-center">
-      <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-brand-primary"></div>
-      <p className="mt-4 text-gray-600">Loading...</p>
+  <div className="flex flex-col w-full animate-pulse space-y-8 p-8 md:p-16 max-w-7xl mx-auto min-h-[70vh]">
+    <div className="h-10 bg-neutral-100 rounded-2xl w-1/3 mb-4 mt-8"></div>
+    <div className="h-6 bg-neutral-100 rounded-xl w-1/4 mb-12"></div>
+    <div className="grid grid-cols-1 md:grid-cols-12 gap-10">
+      <div className="col-span-1 md:col-span-8 space-y-6">
+        <div className="h-40 bg-neutral-50 rounded-3xl w-full border border-neutral-100"></div>
+        <div className="h-32 bg-neutral-50 rounded-3xl w-full border border-neutral-100"></div>
+        <div className="h-24 bg-neutral-50 rounded-3xl w-full border border-neutral-100"></div>
+      </div>
+      <div className="col-span-1 md:col-span-4 h-96 bg-neutral-50 rounded-[2.5rem] border border-neutral-100"></div>
     </div>
   </div>
 );
@@ -921,14 +927,7 @@ const App: React.FC = () => {
                   element={
                     currentUser ? (
                       <React.Suspense fallback={<PageLoader />}>
-                        <AccountLayout user={currentUser} onLogout={handleLogout}>
-                          <AccountOverview
-                            user={currentUser!}
-                            onUpdateUser={(updatedUser) =>
-                              setCurrentUser((prev) => ({ ...prev!, ...updatedUser }))
-                            }
-                          />
-                        </AccountLayout>
+                        <AccountLayout user={currentUser} onLogout={handleLogout} />
                       </React.Suspense>
                     ) : (
                       <Navigate to="/login" replace />
@@ -952,9 +951,7 @@ const App: React.FC = () => {
                     path="orders"
                     element={
                       <React.Suspense fallback={<PageLoader />}>
-                        <AccountLayout user={currentUser!} onLogout={handleLogout}>
-                          <OrdersList />
-                        </AccountLayout>
+                        <OrdersList />
                       </React.Suspense>
                     }
                   />
@@ -962,9 +959,7 @@ const App: React.FC = () => {
                     path="addresses"
                     element={
                       <React.Suspense fallback={<PageLoader />}>
-                        <AccountLayout user={currentUser!} onLogout={handleLogout}>
-                          <AddressBook />
-                        </AccountLayout>
+                        <AddressBook />
                       </React.Suspense>
                     }
                   />
@@ -972,9 +967,7 @@ const App: React.FC = () => {
                     path="wishlist"
                     element={
                       <React.Suspense fallback={<PageLoader />}>
-                        <AccountLayout user={currentUser!} onLogout={handleLogout}>
-                          <AccountWishlist />
-                        </AccountLayout>
+                        <AccountWishlist />
                       </React.Suspense>
                     }
                   />
@@ -982,9 +975,7 @@ const App: React.FC = () => {
                     path="loyalty"
                     element={
                       <React.Suspense fallback={<PageLoader />}>
-                        <AccountLayout user={currentUser!} onLogout={handleLogout}>
-                          <LoyaltyPointsTracker />
-                        </AccountLayout>
+                        <LoyaltyPointsTracker />
                       </React.Suspense>
                     }
                   />
@@ -992,12 +983,10 @@ const App: React.FC = () => {
                     path="security/2fa"
                     element={
                       <React.Suspense fallback={<PageLoader />}>
-                        <AccountLayout user={currentUser!} onLogout={handleLogout}>
-                          <TwoFactorSetupPage
-                            onComplete={() => addToast('2FA Enabled', 'success')}
-                            onCancel={() => {}}
-                          />
-                        </AccountLayout>
+                        <TwoFactorSetupPage
+                          onComplete={() => addToast('2FA Enabled', 'success')}
+                          onCancel={() => {}}
+                        />
                       </React.Suspense>
                     }
                   />
@@ -1173,6 +1162,26 @@ const App: React.FC = () => {
                   }
                 />
 
+                {/* Unified Collections & Shop Architecture */}
+                <Route path="/shop" element={<Navigate to="/collections/all" replace />} />
+                <Route
+                  path="/category/:slug"
+                  element={
+                    <Navigate
+                      to={`/collections/${window.location.pathname.split('/').pop()}`}
+                      replace
+                    />
+                  }
+                />
+                <Route
+                  path="/collections/:slug"
+                  element={
+                    <React.Suspense fallback={<PageLoader />}>
+                      <CollectionsPage />
+                    </React.Suspense>
+                  }
+                />
+
                 <Route
                   path="/order-confirmation/:orderId"
                   element={<OrderConfirmationRoute currentUser={currentUser} />}
@@ -1189,8 +1198,9 @@ const App: React.FC = () => {
                     </React.Suspense>
                   }
                 />
+                <Route path="/return-policy" element={<Navigate to="/refund-policy" replace />} />
                 <Route
-                  path="/return-policy"
+                  path="/refund-policy"
                   element={
                     <React.Suspense fallback={<PageLoader />}>
                       <RefundPolicyPage />
@@ -1226,6 +1236,7 @@ const App: React.FC = () => {
                     </React.Suspense>
                   }
                 />
+                <Route path="/shipping" element={<Navigate to="/shipping-policy" replace />} />
                 <Route
                   path="/shipping-policy"
                   element={

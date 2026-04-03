@@ -52,21 +52,40 @@ export const paymentService = {
     customer: { id: string; phone: string; name?: string; email?: string }
   ): Promise<PaymentOrderResponse> => {
     try {
-      // Call Edge Function for secure order creation
-      const { data, error } = await supabase.functions.invoke('create-cashfree-order', {
-        body: {
+      console.log('Supabase URL from client:', supabase.supabaseUrl);
+      console.log('Calling create-cashfree-order for amount:', amount);
+
+      // Call Edge Function for secure order creation using native fetch to bypass any potential client issues
+      const baseUrl = import.meta.env.VITE_SUPABASE_URL;
+      const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+      const response = await fetch(`${baseUrl}/functions/v1/create-cashfree-order`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${anonKey}`,
+          apikey: anonKey,
+        },
+        body: JSON.stringify({
           order_amount: amount,
           customer_id: customer.id,
           customer_phone: customer.phone,
           customer_name: customer.name,
           customer_email: customer.email,
-        },
+        }),
       });
 
-      if (error) {
-        console.error('Order creation error:', error);
+      const data = await response.json();
+      const error = response.ok ? null : { message: data.error || 'Failed to create order' };
 
-        // Fallback to mock for development if Edge Function not deployed
+      if (error) {
+        console.error('Order creation error from Edge Function:', {
+          message: error.message,
+          details: error,
+        });
+
+        // We are disabling mock fallback for verification to identify the root cause
+        /*
         if (
           error.message?.includes('FunctionsRelayError') ||
           error.message?.includes('not found') ||
@@ -74,13 +93,15 @@ export const paymentService = {
         ) {
           console.warn('⚠️ Edge Function not found. Using MOCK order creation for development.');
           return {
-            payment_session_id: `session_${Date.now()} _mock`,
-            order_id: `order_${Date.now()}_${Math.random().toString(36).substr(2, 9)} `,
+            payment_session_id: `session_${Date.now()}_mock`,
+            order_id: `order_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
           };
         }
+        */
         throw error;
       }
 
+      console.log('✅ Order creation response:', data);
       return data;
     } catch (error) {
       console.error('Failed to create order:', error);
@@ -180,20 +201,19 @@ export const paymentService = {
         email: user.email,
       });
 
-      // 3. Initialize Cashfree
-      const isProduction = isProd(); // Or use a specific env var
+      console.log('🚀 Initializing payment with order data:', orderData);
+
+      // 3. Initialize Cashfree using the environment returned by the Edge Function
+      const isProduction =
+        orderData.environment === 'production' || (orderData.environment === undefined && isProd());
       const cashfree = new window.Cashfree({
         mode: isProduction ? 'production' : 'sandbox',
       });
 
       // 4. Checkout
-      // Note: Cashfree v3 redirects or opens a modal.
-      // For SPA, we might want to handle the return URL or use a popup if supported/configured.
-      // Here we assume standard checkout which might redirect.
       await cashfree.checkout({
         paymentSessionId: orderData.payment_session_id,
         redirectTarget: '_self', // or _blank
-        returnUrl: window.location.origin + '/checkout?order_id=' + orderData.order_id, // Example return URL
       });
 
       // Note: Since Cashfree redirects, onSuccess might not be called directly here unless we use a popup/iframe mode that returns control.

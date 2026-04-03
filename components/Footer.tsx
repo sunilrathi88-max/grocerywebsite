@@ -18,32 +18,57 @@ const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
               care.
             </p>
           </div>
+          {/* Block 1: Shop */}
           <div className="md:col-span-2">
-            <h5 className="text-white font-bold text-xs uppercase tracking-widest mb-6">Shop</h5>
+            <h5 className="text-white font-bold text-xs uppercase tracking-widest mb-6 border-b border-primary/20 pb-2 w-fit">
+              Shop
+            </h5>
             <ul className="flex flex-col gap-3 text-sm font-light">
               <li>
                 <Link
-                  to="/shop"
-                  className="hover:text-primary transition-colors"
+                  to="/collections/all"
+                  className="hover:text-primary transition-colors flex items-center gap-2 group"
                   onClick={() => onSelectCategory('All')}
                 >
+                  <span className="w-1 h-1 rounded-full bg-primary/40 group-hover:bg-primary transition-colors" />
                   All Spices
                 </Link>
               </li>
               <li>
-                <Link to="/shop?sort=newest" className="hover:text-primary transition-colors">
+                <Link
+                  to="/collections/all?sort=newest"
+                  className="hover:text-primary transition-colors flex items-center gap-2 group"
+                >
+                  <span className="w-1 h-1 rounded-full bg-primary/40 group-hover:bg-primary transition-colors" />
                   New Arrivals
                 </Link>
               </li>
               <li>
-                <Link to="/category/Gift%20Sets" className="hover:text-primary transition-colors">
+                <Link
+                  to="/collections/gift-sets"
+                  className="hover:text-primary transition-colors flex items-center gap-2 group"
+                >
+                  <span className="w-1 h-1 rounded-full bg-primary/40 group-hover:bg-primary transition-colors" />
                   Gift Sets
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/offers"
+                  className="hover:text-primary transition-colors flex items-center gap-2 group"
+                >
+                  <span className="w-1 h-1 rounded-full bg-primary/40 group-hover:bg-primary transition-colors" />
+                  Special Offers
                 </Link>
               </li>
             </ul>
           </div>
+
+          {/* Block 2: Company */}
           <div className="md:col-span-2">
-            <h5 className="text-white font-bold text-xs uppercase tracking-widest mb-6">Company</h5>
+            <h5 className="text-white font-bold text-xs uppercase tracking-widest mb-6 border-b border-primary/20 pb-2 w-fit">
+              Company
+            </h5>
             <ul className="flex flex-col gap-3 text-sm font-light">
               <li>
                 <Link to="/about" className="hover:text-primary transition-colors">
@@ -52,25 +77,12 @@ const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
               </li>
               <li>
                 <Link to="/farmers" className="hover:text-primary transition-colors">
-                  Farms
+                  Farms & Sustainability
                 </Link>
               </li>
               <li>
                 <Link to="/contact" className="hover:text-primary transition-colors">
-                  Contact
-                </Link>
-              </li>
-              <li>
-                <Link to="/faq" className="hover:text-primary transition-colors">
-                  FAQ
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/tools/spice-freshness-calculator"
-                  className="hover:text-primary transition-colors"
-                >
-                  FreshnessCalculator
+                  Contact Us
                 </Link>
               </li>
               <li>
@@ -78,17 +90,70 @@ const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
                   Affiliate Program
                 </Link>
               </li>
+            </ul>
+          </div>
+
+          {/* Block 3: Learn */}
+          <div className="md:col-span-2">
+            <h5 className="text-white font-bold text-xs uppercase tracking-widest mb-6 border-b border-primary/20 pb-2 w-fit">
+              Learn
+            </h5>
+            <ul className="flex flex-col gap-3 text-sm font-light">
+              <li>
+                <Link to="/indian-spices-guide" className="hover:text-primary transition-colors">
+                  Indian Spices Guide
+                </Link>
+              </li>
+              <li>
+                <Link to="/blog" className="hover:text-primary transition-colors">
+                  Blog & Recipes
+                </Link>
+              </li>
               <li>
                 <Link to="/reviews" className="hover:text-primary transition-colors">
                   Customer Reviews
                 </Link>
               </li>
-              <li className="pt-4 mt-2 border-t border-white/10">
-                <span className="block text-[10px] uppercase font-bold tracking-widest text-primary mb-1">
-                  Learning Hub
-                </span>
-                <Link to="/indian-spices-guide" className="hover:text-white transition-colors">
-                  Indian Spices Guide
+              <li>
+                <Link
+                  to="/tools/spice-freshness-calculator"
+                  className="hover:text-primary transition-colors"
+                >
+                  Freshness Calculator
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Block 4: Help & Policies */}
+          <div className="md:col-span-2">
+            <h5 className="text-white font-bold text-xs uppercase tracking-widest mb-6 border-b border-primary/20 pb-2 w-fit">
+              Help & Policies
+            </h5>
+            <ul className="flex flex-col gap-3 text-sm font-light">
+              <li>
+                <Link to="/faq" className="hover:text-primary transition-colors">
+                  FAQ
+                </Link>
+              </li>
+              <li>
+                <Link to="/shipping-policy" className="hover:text-primary transition-colors">
+                  Shipping Policy
+                </Link>
+              </li>
+              <li>
+                <Link to="/refund-policy" className="hover:text-primary transition-colors">
+                  Refund Policy
+                </Link>
+              </li>
+              <li>
+                <Link to="/privacy-policy" className="hover:text-primary transition-colors">
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link to="/terms-of-service" className="hover:text-primary transition-colors">
+                  Terms of Service
                 </Link>
               </li>
             </ul>

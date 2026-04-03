@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { Product, Variant } from '../types';
-import ProductCard from './ProductCard';
+import { UniversalProductCard as ProductCard } from './UniversalProductCard';
 import ProductCardSkeleton from './ProductCardSkeleton';
 import { trackEvent } from '../utils/analytics';
 import { CategorySEO } from './CategorySEO';
@@ -104,30 +104,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({
             <div key={product.id} className="w-full">
               <ProductCard
                 id={product.id.toString()}
-                name={product.name}
-                price={product.variants[0]?.salePrice || product.variants[0]?.price}
-                originalPrice={
-                  product.variants[0]?.salePrice ? product.variants[0]?.price : undefined
-                }
-                image={product.images[0]}
-                rating={product.rating || 0}
-                reviewCount={product.reviews.length}
-                heatLevel={
-                  product.tags?.some((t) => t.toLowerCase().includes('hot'))
-                    ? 8
-                    : product.tags?.some((t) => t.toLowerCase().includes('medium'))
-                      ? 5
-                      : product.tags?.some((t) => t.toLowerCase().includes('mild'))
-                        ? 2
-                        : product.name.toLowerCase().includes('chilli')
-                          ? 7
-                          : 0
-                }
-                useCase={product.tags?.filter((t) => t.startsWith('For ')) || [product.category]}
-                sizes={product.variants.map((v) => ({
-                  size: v.name,
-                  price: v.salePrice || v.price,
-                }))}
+                product={product}
                 onAddToCart={(id) => {
                   const p = products.find((prod) => prod.id.toString() === id);
                   if (p && p.variants[0]) {
@@ -147,12 +124,10 @@ const ProductGrid: React.FC<ProductGridProps> = ({
                     }
                   }
                 }}
-                onWishlist={(id) => {
+                onToggleWishlist={(id) => {
                   const p = products.find((prod) => prod.id.toString() === id);
                   if (p) onToggleWishlist(p);
                 }}
-                category={product.category}
-                origin={product.origin || 'Rajasthan, India'}
               />
             </div>
           ))}

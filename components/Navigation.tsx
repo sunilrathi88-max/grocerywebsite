@@ -54,18 +54,26 @@ const Navigation: React.FC<NavigationProps> = ({ onSelectCategory }) => {
           navigate('/');
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }}
-        className="text-base font-medium text-neutral-900 hover:text-brand-primary transition-colors py-2 relative group"
+        className={`text-base font-medium transition-colors py-2 relative group ${
+          location.pathname === '/'
+            ? 'text-brand-primary'
+            : 'text-neutral-900 hover:text-brand-primary'
+        }`}
       >
         Home
-        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-primary transition-all duration-300 group-hover:w-full" />
+        <span
+          className={`absolute bottom-0 left-0 h-0.5 bg-brand-primary transition-all duration-300 ${location.pathname === '/' ? 'w-full' : 'w-0 group-hover:w-full'}`}
+        />
       </button>
 
       {/* Shop - with MegaMenu */}
       <div className="relative" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
         <Link
-          to="/shop"
+          to="/collections/all"
           className={`text-base font-medium transition-colors py-2 flex items-center gap-1 ${
-            isMegaMenuOpen ? 'text-brand-primary' : 'text-neutral-900 hover:text-brand-primary'
+            isMegaMenuOpen || location.pathname.startsWith('/collections')
+              ? 'text-brand-primary'
+              : 'text-neutral-900 hover:text-brand-primary'
           }`}
         >
           Shop
@@ -87,19 +95,32 @@ const Navigation: React.FC<NavigationProps> = ({ onSelectCategory }) => {
       {/* Offers */}
       <Link
         to="/offers"
-        className="text-base font-medium text-neutral-600 hover:text-brand-primary transition-colors py-2 relative group"
+        className={`text-base font-medium transition-colors py-2 relative group ${
+          location.pathname === '/offers'
+            ? 'text-brand-primary'
+            : 'text-neutral-600 hover:text-brand-primary'
+        }`}
       >
         Offers
-        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-primary transition-all duration-300 group-hover:w-full" />
+        <span
+          className={`absolute bottom-0 left-0 h-0.5 bg-brand-primary transition-all duration-300 ${location.pathname === '/offers' ? 'w-full' : 'w-0 group-hover:w-full'}`}
+        />
       </Link>
 
       {/* Subscription */}
       <Link
         to="/subscription"
-        className="text-base font-bold text-brand-dark hover:text-brand-primary transition-colors py-2 flex items-center gap-1"
+        className={`text-base font-bold transition-colors py-2 flex items-center gap-1 relative group ${
+          location.pathname === '/subscription'
+            ? 'text-brand-primary'
+            : 'text-brand-dark hover:text-brand-primary'
+        }`}
       >
         <span className="text-lg">📦</span>
         Subscription
+        <span
+          className={`absolute bottom-0 left-0 h-0.5 bg-brand-primary transition-all duration-300 ${location.pathname === '/subscription' ? 'w-full' : 'w-0 group-hover:w-full'}`}
+        />
       </Link>
 
       {/* MegaMenu - Positioned from parent */}

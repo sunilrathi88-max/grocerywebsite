@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { Product, BlogPost } from '../../../types';
-import ProductCard from './ProductCard';
+import { UniversalProductCard as ProductCard } from '../../../components/UniversalProductCard';
 import BlogPostCard from '../../../components/BlogPostCard';
 import {
   SlidersHorizontal,
@@ -221,7 +221,16 @@ const ShopPage: React.FC<ShopPageProps> = ({ products, posts }) => {
         {filteredResults.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-12">
             {filteredResults.map((p) => (
-              <ProductCard key={p.id} product={p} />
+              <ProductCard
+                key={p.id}
+                product={p}
+                onAddToCart={() => {
+                  /* Handled by card logic */
+                }}
+                onToggleWishlist={() => {
+                  /* Handled by card logic */
+                }}
+              />
             ))}
           </div>
         ) : (

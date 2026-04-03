@@ -19,11 +19,11 @@ const AccountLayout: React.FC<AccountLayoutProps> = ({ user, children, onLogout 
   }
 
   const navItems = [
-    { path: '.', label: 'Profile', icon: UserIcon, end: true },
-    { path: 'orders', label: 'My Orders', icon: ClipboardListIcon },
-    { path: 'addresses', label: 'Addresses', icon: LocationMarkerIcon },
-    { path: 'wishlist', label: 'Wishlist', icon: HeartIcon },
-    { path: 'loyalty', label: 'Loyalty Points', icon: SparklesIcon },
+    { path: '/account', label: 'Profile', icon: UserIcon, end: true },
+    { path: '/account/orders', label: 'My Orders', icon: ClipboardListIcon },
+    { path: '/account/addresses', label: 'Addresses', icon: LocationMarkerIcon },
+    { path: '/account/wishlist', label: 'Wishlist', icon: HeartIcon },
+    { path: '/account/loyalty', label: 'Loyalty Points', icon: SparklesIcon },
   ];
 
   return (

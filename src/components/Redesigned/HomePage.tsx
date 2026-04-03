@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Product } from '../../../types';
-import ProductCard from './ProductCard';
+import { UniversalProductCard as ProductCard } from '../../../components/UniversalProductCard';
 import {
   ArrowRight,
   Star,
@@ -194,7 +194,16 @@ const HomePage: React.FC<HomePageProps> = ({ products }) => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {bestSellers.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <ProductCard
+                key={product.id}
+                product={product}
+                onAddToCart={() => {
+                  /* Handled by card logic */
+                }}
+                onToggleWishlist={() => {
+                  /* Handled by card logic */
+                }}
+              />
             ))}
           </div>
         </div>
