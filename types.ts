@@ -57,6 +57,8 @@ export interface Product {
   useCase?: string | string[];
 
   // Redesign Metadata
+  isNew?: boolean;
+  isBestseller?: boolean;
   usp?: string;
   features?: string[];
   emoji?: string;

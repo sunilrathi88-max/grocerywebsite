@@ -40,6 +40,7 @@ const CollectionsPage: React.FC = () => {
     () => ({
       category: !slug || slug === 'all' ? 'All' : displayTitle,
       sortBy: sortBy,
+      searchQuery: '',
     }),
     [slug, displayTitle, sortBy]
   );

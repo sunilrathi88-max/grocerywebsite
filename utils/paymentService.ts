@@ -23,6 +23,7 @@ declare global {
 interface PaymentOrderResponse {
   payment_session_id: string;
   order_id: string;
+  environment?: 'production' | 'sandbox';
 }
 
 export const paymentService = {
@@ -52,7 +53,6 @@ export const paymentService = {
     customer: { id: string; phone: string; name?: string; email?: string }
   ): Promise<PaymentOrderResponse> => {
     try {
-      console.log('Supabase URL from client:', supabase.supabaseUrl);
       console.log('Calling create-cashfree-order for amount:', amount);
 
       // Call Edge Function for secure order creation using native fetch to bypass any potential client issues
