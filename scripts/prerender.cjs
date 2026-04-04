@@ -65,7 +65,7 @@ async function prerender() {
 
     for (const route of routes) {
       console.log(`Prerendering ${route} ...`);
-      await page.goto(`${BASE_URL}${route}`, { waitUntil: 'networkidle0', timeout: 30000 });
+      await page.goto(`${BASE_URL}${route}`, { waitUntil: 'networkidle2', timeout: 45000 });
       await sleep(1500);
 
       let html = await page.content();
@@ -87,6 +87,7 @@ async function prerender() {
     }
   } catch (error) {
     console.error('Error during prerendering:', error);
+    process.exitCode = 1;
   } finally {
     await browser.close();
     if (server && server.httpServer) {
