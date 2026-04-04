@@ -56,8 +56,8 @@ export const paymentService = {
       console.log('Calling create-cashfree-order for amount:', amount);
 
       // Call Edge Function for secure order creation using native fetch to bypass any potential client issues
-      const baseUrl = import.meta.env.VITE_SUPABASE_URL;
-      const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+      const baseUrl = (supabase as any).supabaseUrl;
+      const anonKey = (supabase as any).supabaseKey;
 
       const response = await fetch(`${baseUrl}/functions/v1/create-cashfree-order`, {
         method: 'POST',
