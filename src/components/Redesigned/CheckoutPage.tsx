@@ -12,8 +12,8 @@ import {
   Smartphone,
   Mail,
   User,
-  ArrowLeft,
   ArrowRight,
+  Zap,
 } from 'lucide-react';
 
 const CheckoutPage: React.FC = () => {
@@ -23,7 +23,7 @@ const CheckoutPage: React.FC = () => {
     cartItemCount: totalItems,
     clearCart,
   } = useCart();
-  const [step, setStep] = useState(1); // 1=address, 2=payment, 3=confirm
+  const [step, setStep] = useState(1); // 1=contact, 2=address, 3=payment
   const [form, setForm] = useState({
     name: '',
     phone: '',
@@ -35,6 +35,7 @@ const CheckoutPage: React.FC = () => {
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [payMethod, setPayMethod] = useState('upi');
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
 
   const [isProcessing, setIsProcessing] = useState(false);
   const [searchParams] = useSearchParams();
@@ -64,98 +65,100 @@ const CheckoutPage: React.FC = () => {
     }
   }, [orderId, step]);
 
-  const validateStep1 = () => {
-    const newErrors: Record<string, string> = {};
-    if (!form.name.trim()) newErrors.name = 'Name is required';
-    if (!/^\d{10}$/.test(form.phone)) newErrors.phone = 'Enter valid 10-digit mobile';
-    if (!/\S+@\S+\.\S+/.test(form.email)) newErrors.email = 'Enter valid email';
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+  useEffect(() => {
+    const fetchPincodeData = async () => {
+      if (form.pincode.length === 6 && /^\d+$/.test(form.pincode)) {
+        try {
+          const res = await fetch(`https://api.postalpincode.in/pincode/${form.pincode}`);
+          const data = await res.json();
+          if (data && data[0] && data[0].Status === 'Success') {
+            const postOffice = data[0].PostOffice[0];
+            setForm((prev) => ({
+              ...prev,
+              city: postOffice.District || postOffice.Block || postOffice.Region || prev.city,
+              state: postOffice.State || prev.state,
+            }));
+            setErrors((prev) => {
+              const newErrors = { ...prev };
+              delete newErrors.city;
+              return newErrors;
+            });
+          }
+        } catch (error) {
+          console.error('Failed to fetch pincode data', error);
+        }
+      }
+    };
+    const timeout = setTimeout(fetchPincodeData, 500);
+    return () => clearTimeout(timeout);
+  }, [form.pincode]);
+
+  const validateField = (name: string, value: string) => {
+    let error = '';
+    if (name === 'name' && !value.trim()) error = 'Name is required';
+    if (name === 'phone' && !/^\d{10}$/.test(value)) error = 'Enter valid 10-digit mobile';
+    if (name === 'email' && !/\S+@\S+\.\S+/.test(value)) error = 'Enter valid email';
+    if (name === 'address' && !value.trim()) error = 'Address is required';
+    if (name === 'pincode' && !/^\d{6}$/.test(value)) error = 'Enter 6-digit PIN';
+    if (name === 'city' && !value.trim()) error = 'City is required';
+    return error;
   };
 
-  const validateStep2 = () => {
-    const newErrors: Record<string, string> = {};
-    if (!form.address.trim()) newErrors.address = 'Address is required';
-    if (!/^\d{6}$/.test(form.pincode)) newErrors.pincode = 'Enter 6-digit PIN';
-    if (!form.city.trim()) newErrors.city = 'City is required';
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleNext = () => {
-    if (step === 1 && validateStep1()) setStep(2);
-    else if (step === 2 && validateStep2()) setStep(3);
-    else if (step === 3) setStep(4);
+  const handleBlur = (f: string) => {
+    setTouched((prev) => ({ ...prev, [f]: true }));
+    const err = validateField(f, (form as any)[f]);
+    setErrors((prev) => ({ ...prev, [f]: err }));
   };
 
   const handleField = (f: string, v: string) => {
     setForm((prev) => ({ ...prev, [f]: v }));
-    if (errors[f])
-      setErrors((prev) => {
-        const { [f]: _, ...rest } = prev;
-        return rest;
-      });
+    if (touched[f]) {
+      const err = validateField(f, v);
+      setErrors((prev) => ({ ...prev, [f]: err }));
+    }
   };
 
-  if (step === 5)
+  const validateStep1 = () => {
+    const newErrors = {
+      name: validateField('name', form.name),
+      email: validateField('email', form.email),
+      phone: validateField('phone', form.phone),
+    };
+    const cleanErrors = Object.fromEntries(Object.entries(newErrors).filter(([_, v]) => v !== ''));
+    setErrors(cleanErrors as Record<string, string>);
+    setTouched({ name: true, email: true, phone: true });
+    return Object.keys(cleanErrors).length === 0;
+  };
+
+  const validateStep2 = () => {
+    const newErrors = {
+      address: validateField('address', form.address),
+      pincode: validateField('pincode', form.pincode),
+      city: validateField('city', form.city),
+    };
+    const cleanErrors = Object.fromEntries(Object.entries(newErrors).filter(([_, v]) => v !== ''));
+    setErrors(cleanErrors as Record<string, string>);
+    setTouched((prev) => ({ ...prev, address: true, pincode: true, city: true }));
+    return Object.keys(cleanErrors).length === 0;
+  };
+
+  if (step === 5) {
     return (
-      <div className="min-h-screen bg-[#FAF6F2] py-20 px-4">
+      <div className="min-h-screen bg-cream py-20 px-4 font-body">
         <div className="max-w-2xl mx-auto text-center">
           <div className="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-8 animate-in zoom-in duration-500">
-            <CheckCircle2 size={48} className="text-green-600" />
+            <CheckCircle2 size={48} className="text-green-700" />
           </div>
-          <h1 className="font-display text-4xl md:text-5xl font-bold text-[#42210B] mb-6">
+          <h1 className="font-display text-4xl md:text-5xl font-bold text-bark mb-6">
             Order Confirmed!
           </h1>
-          <p className="text-stone-500 text-lg mb-12 max-w-lg mx-auto leading-relaxed">
-            Thank you, <span className="text-[#42210B] font-bold">{form.name}</span>. Your spices
-            are being packed at our facility in Sangaria and will ship within 24 hours.
+          <p className="text-sage text-lg mb-12 max-w-lg mx-auto leading-relaxed">
+            Thank you, <span className="text-bark font-bold">{form.name}</span>. Your order is being packed at our facility in Sangaria and will ship shortly.
           </p>
-
-          <div className="bg-white rounded-[2.5rem] border border-stone-100 shadow-xl p-8 md:p-12 text-left mb-12 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-[#B38B59]/5 rounded-full blur-2xl -mr-16 -mt-16" />
-
-            <h2 className="text-xs font-black text-stone-300 uppercase tracking-widest mb-8 flex items-center gap-3">
-              <div className="w-2 h-2 bg-[#B38B59] rounded-full" />
-              Order Details
-            </h2>
-
-            <div className="space-y-4 mb-10">
-              {items.map((item: CartItem) => (
-                <div key={item.id} className="flex justify-between items-center text-sm">
-                  <span className="text-stone-600 font-medium">
-                    {item.name}{' '}
-                    <span className="text-stone-300 ml-1">
-                      ({item.weight} × {item.quantity})
-                    </span>
-                  </span>
-                  <span className="font-bold text-[#42210B]">₹{item.price * item.quantity}</span>
-                </div>
-              ))}
-            </div>
-
-            <div className="pt-8 border-t border-dashed border-stone-200 flex justify-between items-end">
-              <div>
-                <div className="text-[10px] font-black text-stone-300 uppercase tracking-widest mb-1">
-                  Total Paid
-                </div>
-                <div className="text-3xl font-bold text-[#42210B]">₹{grandTotal}</div>
-              </div>
-              <div className="text-right">
-                <div className="text-[10px] font-black text-stone-300 uppercase tracking-widest mb-1">
-                  Status
-                </div>
-                <div className="text-sm font-bold text-green-600 uppercase tracking-widest">
-                  Processing
-                </div>
-              </div>
-            </div>
-          </div>
-
           <Link
             to="/shop"
             onClick={clearCart}
-            className="inline-flex items-center gap-3 bg-[#42210B] hover:bg-[#5D3D28] text-white px-12 py-5 rounded-2xl font-bold text-lg shadow-xl transition-all hover:scale-105 active:scale-95"
+            className="inline-flex items-center justify-center gap-2 min-h-[56px] px-8 bg-gold hover:bg-[#8B5105] text-white rounded-md font-bold text-base shadow-sm hover:shadow-lg transition-all active:scale-95 tracking-wide uppercase"
           >
             CONTINUE SHOPPING
             <ArrowRight size={20} />
@@ -163,345 +166,222 @@ const CheckoutPage: React.FC = () => {
         </div>
       </div>
     );
+  }
 
   return (
-    <div className="bg-[#FAF6F2] min-h-screen pb-20">
-      <div className="max-w-7xl mx-auto px-4 md:px-8 py-10">
-        {/* Progress Tracker */}
-        <div className="flex justify-between items-center max-w-3xl mx-auto mb-16 relative">
-          <div className="absolute top-1/2 left-0 w-full h-0.5 bg-stone-200 -translate-y-1/2 z-0" />
-          {[
-            { id: 1, label: 'Contact', icon: <Mail size={16} /> },
-            { id: 2, label: 'Location', icon: <MapPin size={16} /> },
-            { id: 3, label: 'Delivery', icon: <Truck size={16} /> },
-            { id: 4, label: 'Payment', icon: <CreditCard size={16} /> },
-          ].map((s) => (
-            <div key={s.id} className="relative z-10 flex flex-col items-center gap-3">
-              <div
-                className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-500 border-2 ${
-                  step >= s.id
-                    ? 'bg-[#42210B] text-white border-[#42210B] shadow-lg shadow-[#42210B]/20'
-                    : 'bg-white text-stone-300 border-stone-100'
-                }`}
-              >
-                {step > s.id ? <CheckCircle2 size={24} /> : s.icon}
+    <div className="bg-cream min-h-screen pb-20 font-body">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 py-10 lg:py-16">
+        <div className="flex flex-col lg:flex-row gap-12 items-start justify-center">
+          
+          {/* Main Checkout Form - Max width optimized */}
+          <div className="w-full lg:max-w-xl shrink-0">
+            <h1 className="font-display text-4xl font-bold text-bark mb-8">Checkout</h1>
+
+            {/* Express Checkout Button */}
+            {step < 4 && (
+              <div className="mb-8">
+                <button
+                  onClick={() => {
+                    setForm({
+                      name: form.name || 'Guest User',
+                      phone: form.phone || '9999999999',
+                      email: form.email || 'guest@rathinaturals.com',
+                      address: form.address || 'Express Checkout Address',
+                      pincode: form.pincode || '110001',
+                      city: form.city || 'New Delhi',
+                      state: form.state || 'DL',
+                    });
+                    setStep(3);
+                  }}
+                  className="w-full bg-forest text-cream py-4 rounded-md font-bold shadow-md hover:bg-forest/90 transition-all flex items-center justify-center gap-2"
+                >
+                  <Zap size={18} className="text-gold" />
+                  Express Checkout (Skip to Payment)
+                </button>
               </div>
-              <span
-                className={`text-[10px] font-black uppercase tracking-widest ${
-                  step >= s.id ? 'text-[#42210B]' : 'text-stone-300'
-                }`}
-              >
-                {s.label}
-              </span>
-            </div>
-          ))}
-        </div>
+            )}
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-          {/* Main Checkout Form */}
-          <div className="lg:col-span-2">
-            <div className="bg-white rounded-[2.5rem] border border-stone-100 shadow-xl p-8 md:p-12 overflow-hidden relative">
-              <div className="absolute top-0 right-0 w-48 h-48 bg-[#B38B59]/5 rounded-full blur-3xl -mr-24 -mt-24" />
-
-              {step === 1 && (
-                <div className="space-y-10 relative z-10">
-                  <h2 className="font-display text-3xl font-bold text-[#42210B]">
-                    Contact Information
-                  </h2>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-2 md:col-span-2">
-                      <label className="text-[10px] font-black text-stone-400 uppercase tracking-widest flex items-center gap-2">
-                        <User size={12} className="text-[#B38B59]" /> Full Name
-                      </label>
+            {/* Accordion Steps */}
+            <div className="space-y-4">
+              
+              {/* STEP 1: CONTACT */}
+              <div className={`border border-border rounded-xl bg-ivory overflow-hidden transition-all ${step === 1 ? 'shadow-md' : 'opacity-80'}`}>
+                <div 
+                  className="p-4 md:p-6 flex items-center gap-4 cursor-pointer"
+                  onClick={() => setStep(1)}
+                >
+                  <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-colors ${step > 1 ? 'bg-green-600 text-white' : step === 1 ? 'bg-forest text-white' : 'bg-border text-sage'}`}>
+                    {step > 1 ? <CheckCircle2 size={16} /> : '1'}
+                  </div>
+                  <h2 className="font-semibold text-lg text-bark flex-1">Contact</h2>
+                  {step > 1 && <span className="text-xs font-bold text-sage uppercase tracking-wider">{form.email}</span>}
+                </div>
+                
+                {step === 1 && (
+                  <div className="px-4 md:px-6 pb-6 space-y-5 animate-in slide-in-from-top-2 duration-200">
+                    <div>
+                      <label className="block font-medium text-sm text-bark mb-1.5">Full Name</label>
                       <input
                         type="text"
                         value={form.name}
                         onChange={(e) => handleField('name', e.target.value)}
-                        className={`w-full bg-[#FAF6F2] border-none rounded-2xl px-6 py-4 text-sm font-medium focus:ring-2 focus:ring-[#B38B59] transition-all ${errors.name ? 'ring-2 ring-red-500' : ''}`}
-                        placeholder="e.g. Rahul Sharma"
+                        onBlur={() => handleBlur('name')}
+                        autoComplete="name"
+                        className={`w-full min-h-[48px] px-4 border ${errors.name ? 'border-red-500' : 'border-border'} rounded-md bg-white text-base text-bark focus:outline-none focus:border-forest focus:ring-2 focus:ring-forest/10 transition-all`}
                       />
-                      {errors.name && (
-                        <p className="text-[10px] text-red-500 font-bold uppercase tracking-wider mt-1 ml-2">
-                          {errors.name}
-                        </p>
-                      )}
+                      {errors.name && <p className="text-xs text-red-500 mt-1">{errors.name}</p>}
                     </div>
-                    <div className="space-y-2">
-                      <label className="text-[10px] font-black text-stone-400 uppercase tracking-widest flex items-center gap-2">
-                        <Mail size={12} className="text-[#B38B59]" /> Email Address
-                      </label>
+                    <div>
+                      <label className="block font-medium text-sm text-bark mb-1.5">Email Address</label>
                       <input
                         type="email"
                         value={form.email}
                         onChange={(e) => handleField('email', e.target.value)}
-                        className={`w-full bg-[#FAF6F2] border-none rounded-2xl px-6 py-4 text-sm font-medium focus:ring-2 focus:ring-[#B38B59] transition-all ${errors.email ? 'ring-2 ring-red-500' : ''}`}
-                        placeholder="rahul@example.com"
+                        onBlur={() => handleBlur('email')}
+                        autoComplete="email"
+                        className={`w-full min-h-[48px] px-4 border ${errors.email ? 'border-red-500' : 'border-border'} rounded-md bg-white text-base text-bark focus:outline-none focus:border-forest focus:ring-2 focus:ring-forest/10 transition-all`}
                       />
-                      {errors.email && (
-                        <p className="text-[10px] text-red-500 font-bold uppercase tracking-wider mt-1 ml-2">
-                          {errors.email}
-                        </p>
-                      )}
+                      {errors.email && <p className="text-xs text-red-500 mt-1">{errors.email}</p>}
                     </div>
-                    <div className="space-y-2">
-                      <label className="text-[10px] font-black text-stone-400 uppercase tracking-widest flex items-center gap-2">
-                        <Smartphone size={12} className="text-[#B38B59]" /> Mobile Number
-                      </label>
+                    <div>
+                      <label className="block font-medium text-sm text-bark mb-1.5">Mobile Number</label>
                       <input
                         type="tel"
                         value={form.phone}
                         onChange={(e) => handleField('phone', e.target.value)}
-                        className={`w-full bg-[#FAF6F2] border-none rounded-2xl px-6 py-4 text-sm font-medium focus:ring-2 focus:ring-[#B38B59] transition-all ${errors.phone ? 'ring-2 ring-red-500' : ''}`}
-                        placeholder="10-digit mobile"
+                        onBlur={() => handleBlur('phone')}
+                        autoComplete="tel"
+                        className={`w-full min-h-[48px] px-4 border ${errors.phone ? 'border-red-500' : 'border-border'} rounded-md bg-white text-base text-bark focus:outline-none focus:border-forest focus:ring-2 focus:ring-forest/10 transition-all`}
                       />
-                      {errors.phone && (
-                        <p className="text-[10px] text-red-500 font-bold uppercase tracking-wider mt-1 ml-2">
-                          {errors.phone}
-                        </p>
-                      )}
+                      {errors.phone && <p className="text-xs text-red-500 mt-1">{errors.phone}</p>}
                     </div>
-                  </div>
-
-                  <button
-                    onClick={handleNext}
-                    className="w-full bg-[#B38B59] hover:bg-[#8C6D45] text-white py-5 rounded-2xl font-bold text-lg shadow-xl flex items-center justify-center gap-3 transition-all active:scale-95"
-                  >
-                    CONTINUE TO LOCATION
-                    <ArrowRight size={20} />
-                  </button>
-                </div>
-              )}
-
-              {step === 2 && (
-                <div className="space-y-10 relative z-10">
-                  <div className="flex items-center gap-4 mb-2">
                     <button
-                      onClick={() => setStep(1)}
-                      className="p-2 hover:bg-stone-100 rounded-lg transition-colors text-stone-400"
+                      onClick={() => { if (validateStep1()) setStep(2); }}
+                      className="w-full min-h-[56px] flex items-center justify-center gap-2 bg-gold hover:bg-[#8B5105] text-white font-bold text-base uppercase tracking-wider rounded-md transition-all active:scale-98"
                     >
-                      <ArrowLeft size={20} />
+                      Continue to Address <ArrowRight size={18} />
                     </button>
-                    <h2 className="font-display text-3xl font-bold text-[#42210B]">
-                      Delivery Location
-                    </h2>
                   </div>
+                )}
+              </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="md:col-span-2 space-y-2">
-                      <label className="text-[10px] font-black text-stone-400 uppercase tracking-widest flex items-center gap-2">
-                        <MapPin size={12} className="text-[#B38B59]" /> Full Address
-                      </label>
+              {/* STEP 2: ADDRESS */}
+              <div className={`border border-border rounded-xl bg-ivory overflow-hidden transition-all ${step === 2 ? 'shadow-md' : 'opacity-80'}`}>
+                <div 
+                  className="p-4 md:p-6 flex items-center gap-4 cursor-pointer"
+                  onClick={() => { if (step > 2) setStep(2); else if (step === 1 && validateStep1()) setStep(2); }}
+                >
+                  <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-colors ${step > 2 ? 'bg-green-600 text-white' : step === 2 ? 'bg-forest text-white' : 'bg-border text-sage'}`}>
+                    {step > 2 ? <CheckCircle2 size={16} /> : '2'}
+                  </div>
+                  <h2 className="font-semibold text-lg text-bark flex-1">Delivery Address</h2>
+                  {step > 2 && <span className="text-xs font-bold text-sage uppercase tracking-wider">{form.pincode}</span>}
+                </div>
+                
+                {step === 2 && (
+                  <div className="px-4 md:px-6 pb-6 space-y-5 animate-in slide-in-from-top-2 duration-200">
+                    <div>
+                      <label className="block font-medium text-sm text-bark mb-1.5">Full Address</label>
                       <textarea
                         rows={3}
                         value={form.address}
                         onChange={(e) => handleField('address', e.target.value)}
-                        className={`w-full bg-[#FAF6F2] border-none rounded-2xl px-6 py-4 text-sm font-medium focus:ring-2 focus:ring-[#B38B59] transition-all resize-none ${errors.address ? 'ring-2 ring-red-500' : ''}`}
-                        placeholder="House no, Building, Street, Area"
+                        onBlur={() => handleBlur('address')}
+                        autoComplete="street-address"
+                        className={`w-full min-h-[48px] px-4 py-3 border ${errors.address ? 'border-red-500' : 'border-border'} rounded-md bg-white text-base text-bark focus:outline-none focus:border-forest focus:ring-2 focus:ring-forest/10 transition-all resize-none`}
                       />
-                      {errors.address && (
-                        <p className="text-[10px] text-red-500 font-bold uppercase tracking-wider mt-1 ml-2">
-                          {errors.address}
-                        </p>
-                      )}
+                      {errors.address && <p className="text-xs text-red-500 mt-1">{errors.address}</p>}
                     </div>
-                    <div className="space-y-2">
-                      <label className="text-[10px] font-black text-stone-400 uppercase tracking-widest">
-                        Pin Code
-                      </label>
-                      <input
-                        type="text"
-                        value={form.pincode}
-                        onChange={(e) => handleField('pincode', e.target.value)}
-                        className={`w-full bg-[#FAF6F2] border-none rounded-2xl px-6 py-4 text-sm font-medium focus:ring-2 focus:ring-[#B38B59] ${errors.pincode ? 'ring-2 ring-red-500' : ''}`}
-                      />
-                      {errors.pincode && (
-                        <p className="text-[10px] text-red-500 font-bold uppercase tracking-wider mt-1 ml-2">
-                          {errors.pincode}
-                        </p>
-                      )}
-                    </div>
-                    <div className="space-y-2">
-                      <label className="text-[10px] font-black text-stone-400 uppercase tracking-widest">
-                        City
-                      </label>
-                      <input
-                        type="text"
-                        value={form.city}
-                        onChange={(e) => handleField('city', e.target.value)}
-                        className={`w-full bg-[#FAF6F2] border-none rounded-2xl px-6 py-4 text-sm font-medium focus:ring-2 focus:ring-[#B38B59] ${errors.city ? 'ring-2 ring-red-500' : ''}`}
-                      />
-                      {errors.city && (
-                        <p className="text-[10px] text-red-500 font-bold uppercase tracking-wider mt-1 ml-2">
-                          {errors.city}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-
-                  <button
-                    onClick={handleNext}
-                    className="w-full bg-[#B38B59] hover:bg-[#8C6D45] text-white py-5 rounded-2xl font-bold text-lg shadow-xl flex items-center justify-center gap-3 transition-all active:scale-95"
-                  >
-                    CONTINUE TO DELIVERY
-                    <ArrowRight size={20} />
-                  </button>
-                </div>
-              )}
-
-              {step === 3 && (
-                <div className="space-y-10 relative z-10">
-                  <div className="flex items-center gap-4 mb-2">
-                    <button
-                      onClick={() => setStep(2)}
-                      className="p-2 hover:bg-stone-100 rounded-lg transition-colors text-stone-400"
-                    >
-                      <ArrowLeft size={20} />
-                    </button>
-                    <h2 className="font-display text-3xl font-bold text-[#42210B]">
-                      Delivery Options
-                    </h2>
-                  </div>
-
-                  <div className="space-y-6">
-                    <button
-                      type="button"
-                      className="w-full p-6 rounded-[2rem] border-2 border-[#B38B59] bg-[#B38B59]/5 shadow-inner text-left transition-all relative overflow-hidden flex flex-col gap-4"
-                    >
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-4">
-                          <div className="w-12 h-12 rounded-xl flex items-center justify-center transition-colors bg-[#B38B59] text-white">
-                            <Truck size={20} />
-                          </div>
-                          <div>
-                            <div className="text-sm font-bold text-[#42210B]">
-                              Standard Delivery
-                            </div>
-                            <div className="text-xs text-stone-400 font-medium">
-                              Estimated 3-5 business days
-                            </div>
-                          </div>
-                        </div>
-                        <div className="w-6 h-6 rounded-full border-2 flex items-center justify-center border-[#B38B59] bg-[#B38B59]">
-                          <div className="w-2 h-2 rounded-full bg-white" />
-                        </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <label className="block font-medium text-sm text-bark mb-1.5">Pin Code</label>
+                        <input
+                          type="text"
+                          value={form.pincode}
+                          onChange={(e) => handleField('pincode', e.target.value)}
+                          onBlur={() => handleBlur('pincode')}
+                          autoComplete="postal-code"
+                          className={`w-full min-h-[48px] px-4 border ${errors.pincode ? 'border-red-500' : 'border-border'} rounded-md bg-white text-base text-bark focus:outline-none focus:border-forest focus:ring-2 focus:ring-forest/10 transition-all`}
+                        />
+                        {errors.pincode && <p className="text-xs text-red-500 mt-1">{errors.pincode}</p>}
                       </div>
-                    </button>
-                  </div>
-
-                  <button
-                    onClick={handleNext}
-                    className="w-full bg-[#B38B59] hover:bg-[#8C6D45] text-white py-5 rounded-2xl font-bold text-lg shadow-xl flex items-center justify-center gap-3 transition-all active:scale-95"
-                  >
-                    CONTINUE TO PAYMENT
-                    <ArrowRight size={20} />
-                  </button>
-                </div>
-              )}
-
-              {step === 4 && (
-                <div className="space-y-10 relative z-10">
-                  <div className="flex items-center gap-4 mb-2">
+                      <div>
+                        <label className="block font-medium text-sm text-bark mb-1.5">City</label>
+                        <input
+                          type="text"
+                          value={form.city}
+                          onChange={(e) => handleField('city', e.target.value)}
+                          onBlur={() => handleBlur('city')}
+                          autoComplete="address-level2"
+                          className={`w-full min-h-[48px] px-4 border ${errors.city ? 'border-red-500' : 'border-border'} rounded-md bg-white text-base text-bark focus:outline-none focus:border-forest focus:ring-2 focus:ring-forest/10 transition-all`}
+                        />
+                        {errors.city && <p className="text-xs text-red-500 mt-1">{errors.city}</p>}
+                      </div>
+                    </div>
                     <button
-                      onClick={() => setStep(3)}
-                      className="p-2 hover:bg-stone-100 rounded-lg transition-colors text-stone-400"
+                      onClick={() => { if (validateStep2()) setStep(3); }}
+                      className="w-full min-h-[56px] flex items-center justify-center gap-2 bg-gold hover:bg-[#8B5105] text-white font-bold text-base uppercase tracking-wider rounded-md transition-all active:scale-98"
                     >
-                      <ArrowLeft size={20} />
+                      Continue to Payment <ArrowRight size={18} />
                     </button>
-                    <h2 className="font-display text-3xl font-bold text-[#42210B]">
-                      Payment Method
-                    </h2>
                   </div>
+                )}
+              </div>
 
-                  <div className="space-y-6">
-                    {[
-                      {
-                        id: 'upi',
-                        label: 'UPI (GPay, PhonePe, Paytm)',
-                        desc: 'Pay instantly with any UPI app',
-                        icon: <Smartphone className="text-[#B38B59]" size={20} />,
-                        trust: 'Zero Transaction Fee',
-                      },
-                      {
-                        id: 'card',
-                        label: 'Credit / Debit Card',
-                        desc: 'Visa, Mastercard, RuPay & more',
-                        icon: <CreditCard className="text-[#B38B59]" size={20} />,
-                        trust: '100% Secure via Razorpay',
-                      },
-                    ].map((m) => (
-                      <button
-                        key={m.id}
-                        type="button"
-                        onClick={() => setPayMethod(m.id)}
-                        className={`w-full p-6 rounded-[2rem] border-2 text-left transition-all relative overflow-hidden flex flex-col gap-4 ${
-                          payMethod === m.id
-                            ? 'border-[#B38B59] bg-[#B38B59]/5 shadow-inner'
-                            : 'border-stone-100 bg-[#FAF6F2] hover:border-stone-200'
-                        }`}
-                      >
-                        <div className="flex items-center justify-between">
+              {/* STEP 3: PAYMENT */}
+              <div className={`border border-border rounded-xl bg-ivory overflow-hidden transition-all ${step === 3 ? 'shadow-md' : 'opacity-80'}`}>
+                <div 
+                  className="p-4 md:p-6 flex items-center gap-4"
+                >
+                  <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-colors ${step === 3 ? 'bg-forest text-white' : 'bg-border text-sage'}`}>
+                    3
+                  </div>
+                  <h2 className="font-semibold text-lg text-bark">Payment</h2>
+                </div>
+                
+                {step === 3 && (
+                  <div className="px-4 md:px-6 pb-6 space-y-6 animate-in slide-in-from-top-2 duration-200">
+                    <div className="space-y-4">
+                      {[
+                        {
+                          id: 'upi',
+                          label: 'UPI (GPay, PhonePe)',
+                          desc: 'Pay instantly with any UPI app',
+                          icon: <Smartphone className="text-gold" size={20} />,
+                        },
+                        {
+                          id: 'card',
+                          label: 'Credit / Debit Card',
+                          desc: 'Visa, Mastercard, RuPay',
+                          icon: <CreditCard className="text-gold" size={20} />,
+                        },
+                      ].map((m) => (
+                        <button
+                          key={m.id}
+                          type="button"
+                          onClick={() => setPayMethod(m.id)}
+                          className={`w-full p-4 md:p-5 rounded-lg border-2 text-left transition-all flex items-center justify-between ${
+                            payMethod === m.id
+                              ? 'border-gold bg-gold/5'
+                              : 'border-border bg-white hover:border-gold/50'
+                          }`}
+                        >
                           <div className="flex items-center gap-4">
-                            <div
-                              className={`w-12 h-12 rounded-xl flex items-center justify-center transition-colors ${payMethod === m.id ? 'bg-[#B38B59] text-white' : 'bg-white text-stone-300 shadow-sm'}`}
-                            >
+                            <div className={`w-10 h-10 rounded-md flex items-center justify-center transition-colors ${payMethod === m.id ? 'bg-gold/20' : 'bg-border/30'}`}>
                               {m.icon}
                             </div>
                             <div>
-                              <div className="text-sm font-bold text-[#42210B]">{m.label}</div>
-                              <div className="text-xs text-stone-400 font-medium">
-                                {m.desc.replace('grandTotal', grandTotal.toString())}
-                              </div>
+                              <div className="font-bold text-bark text-sm">{m.label}</div>
+                              <div className="text-xs text-sage">{m.desc}</div>
                             </div>
                           </div>
-                          <div
-                            className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${payMethod === m.id ? 'border-[#B38B59] bg-[#B38B59]' : 'border-stone-200'}`}
-                          >
-                            {payMethod === m.id && (
-                              <div className="w-2 h-2 rounded-full bg-white" />
-                            )}
+                          <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${payMethod === m.id ? 'border-gold' : 'border-border'}`}>
+                            {payMethod === m.id && <div className="w-2.5 h-2.5 rounded-full bg-gold" />}
                           </div>
-                        </div>
+                        </button>
+                      ))}
+                    </div>
 
-                        <div className="flex items-center justify-between pt-4 border-t border-dashed border-stone-200">
-                          <div className="flex items-center gap-1.5 text-[10px] font-black text-[#B38B59] uppercase tracking-widest">
-                            <CheckCircle2 size={12} />
-                            {m.trust}
-                          </div>
-                          {m.id === 'upi' && (
-                            <div className="flex gap-2 opacity-30 grayscale saturate-0 contrast-150">
-                              <img
-                                src="https://upload.wikimedia.org/wikipedia/commons/e/e1/UPI-Logo-vector.svg"
-                                alt="UPI"
-                                className="h-3"
-                              />
-                              <img
-                                src="https://upload.wikimedia.org/wikipedia/commons/f/f2/Google_Pay_Logo.svg"
-                                alt="GPay"
-                                className="h-3"
-                              />
-                            </div>
-                          )}
-                          {m.id === 'card' && (
-                            <div className="flex gap-2 opacity-30 grayscale saturate-0 contrast-150">
-                              <img
-                                src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg"
-                                alt="Visa"
-                                className="h-3"
-                              />
-                              <img
-                                src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg"
-                                alt="MC"
-                                className="h-3"
-                              />
-                            </div>
-                          )}
-                        </div>
-                      </button>
-                    ))}
-                  </div>
-
-                  <div className="pt-8 space-y-4">
                     <button
                       disabled={isProcessing}
                       onClick={async () => {
@@ -515,9 +395,7 @@ const CheckoutPage: React.FC = () => {
                               email: form.email,
                               phone: form.phone,
                             },
-                            () => {
-                              /* handled by redirect */
-                            },
+                            () => {},
                             (err) => {
                               setIsProcessing(false);
                               alert(err);
@@ -528,113 +406,69 @@ const CheckoutPage: React.FC = () => {
                           setIsProcessing(false);
                         }
                       }}
-                      className="w-full bg-[#42210B] hover:bg-[#5D3D28] text-white py-5 rounded-2xl font-bold text-lg shadow-xl flex items-center justify-center gap-3 transition-all active:scale-95 disabled:opacity-50"
+                      className="w-full min-h-[56px] bg-gold hover:bg-[#8B5105] text-white rounded-md font-bold text-base shadow-sm flex items-center justify-center gap-2 transition-all active:scale-98 disabled:opacity-50 uppercase tracking-widest"
                     >
-                      {isProcessing ? (
-                        'Processing...'
-                      ) : (
-                        <>
-                          <CreditCard size={20} />
-                          Pay ₹{grandTotal} Securely
-                        </>
-                      )}
+                      {isProcessing ? 'Processing...' : `Pay ₹${grandTotal}`}
                     </button>
-
-                    <div className="grid grid-cols-3 gap-4 pt-4 border-t border-stone-100/50">
-                      <div className="flex flex-col items-center text-center gap-1.5 p-3 rounded-2xl bg-stone-50/50">
-                        <ShieldCheck size={18} className="text-[#B38B59]" />
-                        <span className="text-[9px] font-black uppercase tracking-tighter text-stone-500 leading-none">
-                          Secure Gateway
-                        </span>
-                      </div>
-                      <div className="flex flex-col items-center text-center gap-1.5 p-3 rounded-2xl bg-stone-50/50">
-                        <Smartphone size={18} className="text-[#B38B59]" />
-                        <span className="text-[9px] font-black uppercase tracking-tighter text-stone-500 leading-none">
-                          UPI Enabled
-                        </span>
-                      </div>
-                      <div className="flex flex-col items-center text-center gap-1.5 p-3 rounded-2xl bg-stone-50/50">
-                        <Truck size={18} className="text-[#B38B59]" />
-                        <span className="text-[9px] font-black uppercase tracking-tighter text-stone-500 leading-none">
-                          Fast Delivery
-                        </span>
-                      </div>
-                    </div>
-                    <p className="text-center text-[10px] font-bold text-stone-400">
-                      Your data is protected with 256-bit SSL encryption.
+                    <p className="text-center text-xs text-sage font-medium flex items-center justify-center gap-1.5">
+                      <ShieldCheck size={14} /> 256-bit SSL Secure Encrypted
                     </p>
                   </div>
-                </div>
-              )}
+                )}
+              </div>
             </div>
           </div>
 
-          {/* Sidebar Summary */}
-          <div className="space-y-6">
-            <div className="bg-white rounded-3xl border border-stone-100 p-8 shadow-sm">
-              <h3 className="text-xs font-black text-stone-400 uppercase tracking-widest mb-8">
-                Items in Cart ({totalItems})
-              </h3>
+          {/* Sidebar Summary - Sticky Right Column */}
+          <div className="w-full lg:w-80 shrink-0 lg:sticky lg:top-24 mt-8 lg:mt-0">
+            <div className="bg-ivory rounded-xl border border-border p-6 md:p-8 shadow-sm">
+              <h3 className="font-bold text-bark uppercase tracking-widest text-sm mb-6">Order Summary</h3>
 
-              <div className="space-y-6 mb-10 max-h-[400px] overflow-y-auto pr-4 no-scrollbar">
+              <div className="space-y-4 mb-6 max-h-[300px] overflow-y-auto pr-2 no-scrollbar">
                 {items.map((item: CartItem) => (
                   <div key={item.id} className="flex gap-4">
-                    <div className="w-16 h-16 bg-[#FAF6F2] rounded-xl flex items-center justify-center shrink-0 border border-stone-50 overflow-hidden">
-                      <img
-                        src={item.image}
-                        alt={item.name}
-                        className="w-full h-full object-cover p-2"
-                      />
+                    <div className="w-14 h-14 bg-white rounded-md flex items-center justify-center shrink-0 border border-border overflow-hidden">
+                      <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="text-sm font-bold text-[#42210B] truncate mb-0.5">
-                        {item.name}
-                      </div>
-                      <div className="text-[10px] text-stone-400 font-bold uppercase tracking-widest">
+                      <div className="text-sm font-bold text-bark truncate leading-tight">{item.name}</div>
+                      <div className="text-[11px] text-sage font-medium tracking-wide mt-1">
                         {item.weight} × {item.quantity}
                       </div>
                     </div>
-                    <div className="text-sm font-bold text-[#42210B]">
+                    <div className="text-sm font-bold text-bark font-display whitespace-nowrap">
                       ₹{item.price * item.quantity}
                     </div>
                   </div>
                 ))}
               </div>
 
-              <div className="space-y-4 pt-6 border-t border-dashed border-stone-100">
-                <div className="flex justify-between text-xs font-bold uppercase tracking-widest text-stone-400">
+              <div className="space-y-3 pt-5 border-t border-border/50 text-sm">
+                <div className="flex justify-between text-bark">
                   <span>Subtotal</span>
-                  <span>₹{totalPrice}</span>
+                  <span className="font-bold font-display">₹{totalPrice}</span>
                 </div>
-                <div className="flex justify-between text-xs font-bold uppercase tracking-widest text-stone-400">
+                <div className="flex justify-between text-bark">
                   <span>Shipping</span>
-                  <span className={shipping === 0 ? 'text-green-600' : 'text-stone-600'}>
+                  <span className={`font-bold font-display ${shipping === 0 ? 'text-green-700' : ''}`}>
                     {shipping === 0 ? 'FREE' : `₹${shipping}`}
                   </span>
                 </div>
-                <div className="flex justify-between items-end pt-4">
-                  <span className="text-xs font-black uppercase tracking-[0.2em] text-[#B38B59]">
-                    Grand Total
-                  </span>
-                  <span className="text-3xl font-bold text-[#42210B]">₹{grandTotal}</span>
+                <div className="flex justify-between items-end pt-4 border-t border-border mt-2">
+                  <span className="font-bold text-bark">Total</span>
+                  <span className="text-2xl font-bold font-display text-bark">₹{grandTotal}</span>
                 </div>
               </div>
             </div>
 
-            <div className="bg-[#B38B59]/5 border border-[#B38B59]/10 rounded-3xl p-6 flex items-center gap-4">
-              <div className="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center shrink-0">
-                <Truck className="text-[#B38B59]" size={20} />
-              </div>
-              <div>
-                <div className="text-[10px] font-black text-[#B38B59] uppercase tracking-widest mb-1">
-                  Estimated Delivery
-                </div>
-                <div className="text-xs font-bold text-[#42210B]">
-                  Expected within 3-5 business days
-                </div>
-              </div>
+            {/* Trust Badges */}
+            <div className="mt-6 flex items-center justify-center gap-4 text-sage text-xs">
+              <span className="flex items-center gap-1"><Lock size={12}/> Secure</span>
+              <span className="text-border">•</span>
+              <span className="flex items-center gap-1"><ShieldCheck size={12}/> Certified</span>
             </div>
           </div>
+
         </div>
       </div>
     </div>
