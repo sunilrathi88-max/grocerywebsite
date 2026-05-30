@@ -13,6 +13,11 @@ async function startServer() {
 const PORT = 4173;
 const BASE_URL = `http://localhost:${PORT}`;
 
+if (process.env.VERCEL === '1' || process.env.CI) {
+  console.log('Skipping Puppeteer prerender in CI/Vercel environment due to missing Chromium OS dependencies.');
+  process.exit(0);
+}
+
 const routes = [
   '/',
   '/shop',
