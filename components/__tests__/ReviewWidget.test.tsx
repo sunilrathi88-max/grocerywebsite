@@ -29,7 +29,7 @@ describe('ReviewWidget', () => {
   it('renders overall rating and review count', () => {
     render(<ReviewWidget reviews={mockReviews} overallRating={4.5} />);
     expect(screen.getByText('4.5')).toBeInTheDocument();
-    expect(screen.getByText('2 Verified Reviews')).toBeInTheDocument();
+    expect(screen.getByText('2 Reviews')).toBeInTheDocument();
   });
 
   it('renders individual reviews with correct details', () => {
@@ -37,7 +37,7 @@ describe('ReviewWidget', () => {
     expect(screen.getByText('Test User 1')).toBeInTheDocument();
     expect(screen.getByText('Great Product')).toBeInTheDocument();
     expect(screen.getByText('Loved it!')).toBeInTheDocument();
-    expect(screen.getByText('Verified Buyer')).toBeInTheDocument();
+    expect(screen.getByText('Verified')).toBeInTheDocument();
   });
 
   it('filters reviews by star rating', () => {
@@ -51,7 +51,7 @@ describe('ReviewWidget', () => {
     expect(screen.queryByText('Test User 2')).not.toBeInTheDocument();
 
     // Clear filter
-    fireEvent.click(screen.getByText('Clear Filter'));
+    fireEvent.click(screen.getByText('Clear'));
     expect(screen.getByText('Test User 2')).toBeInTheDocument();
   });
 
@@ -63,8 +63,10 @@ describe('ReviewWidget', () => {
     expect(reviews[1]).toHaveTextContent('Test User 1');
 
     // Change sort to Helpful
-    const sortSelect = screen.getByDisplayValue('Most Recent'); // or use role 'combobox'
-    fireEvent.change(sortSelect, { target: { value: 'helpful' } });
+    const sortButton = screen.getByText('Sort: Most Recent');
+    fireEvent.click(sortButton);
+    const helpfulOption = screen.getByText('Most Helpful');
+    fireEvent.click(helpfulOption);
 
     // Test User 1 (5 helpful) should be first
     const reviewsHelpful = screen.getAllByText(/Test User/);

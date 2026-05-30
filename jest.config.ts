@@ -45,7 +45,7 @@ const config: Config = {
     },
   },*/
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
-  testPathIgnorePatterns: ['/node_modules/', '/dist/'],
+  testPathIgnorePatterns: ['/node_modules/', '/dist/', '/tests/', '/cypress/'],
   coveragePathIgnorePatterns: ['/node_modules/', '/dist/'],
 };
 

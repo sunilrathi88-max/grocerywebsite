@@ -51,13 +51,13 @@ describe('LoyaltyPointsTracker', () => {
 
   it('renders current points', () => {
     render(<LoyaltyPointsTracker />);
-    expect(screen.getByText('1,250 Points')).toBeInTheDocument();
-    expect(screen.getByText('Silver')).toBeInTheDocument();
+    expect(screen.getByText('1,250')).toBeInTheDocument();
+    expect(screen.getByText('Silver Member')).toBeInTheDocument();
   });
 
   it('allows redeeming points if balance is sufficient', () => {
     render(<LoyaltyPointsTracker />);
-    const redeemButton = screen.getAllByText('Redeem')[0]; // First button is for 500 points
+    const redeemButton = screen.getAllByText('Redeem Now')[0]; // First button is for 500 points
 
     fireEvent.click(redeemButton);
 
@@ -66,8 +66,11 @@ describe('LoyaltyPointsTracker', () => {
     // Since we can't easily spy on the top-level mock here without importing it first,
     // let's rely on the state update which is correctly asserted below.
     // Or we can check if confirm was called
-    expect(window.confirm).toHaveBeenCalled();
-    expect(screen.getByText('750 Points')).toBeInTheDocument(); // 1250 - 500
+    // Wait, the new component has a confirmation modal first!
+    const confirmButton = screen.getByText('Confirm');
+    fireEvent.click(confirmButton);
+
+    expect(screen.getByText('750')).toBeInTheDocument(); // 1250 - 500
   });
 
   it('disables redeem button if balance is insufficient', () => {
@@ -80,7 +83,7 @@ describe('LoyaltyPointsTracker', () => {
 
     render(<LoyaltyPointsTracker />);
 
-    // Buttons should be disabled or show 'Not Available'
-    expect(screen.getAllByText('Not Available').length).toBeGreaterThan(0);
+    // Buttons should be disabled or show 'Not Enough Points'
+    expect(screen.getAllByText('Not Enough Points').length).toBeGreaterThan(0);
   });
 });

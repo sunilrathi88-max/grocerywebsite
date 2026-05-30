@@ -30,11 +30,11 @@ describe('MobileBottomNav', () => {
     expect(mockNavigate).toHaveBeenCalledWith('/');
   });
 
-  it('navigates to Profile when Profile icon is clicked', () => {
+  it('navigates to Profile when Account icon is clicked', () => {
     render(<MobileBottomNav {...defaultProps} />);
-    const profileButton = screen.getByLabelText('Profile');
+    const profileButton = screen.getByLabelText('Account');
     fireEvent.click(profileButton);
-    expect(mockNavigate).toHaveBeenCalledWith('/profile');
+    expect(mockNavigate).toHaveBeenCalledWith('/account');
   });
 
   it('calls onOpenCart when Cart icon is clicked', () => {
@@ -44,9 +44,9 @@ describe('MobileBottomNav', () => {
     expect(defaultProps.onOpenCart).toHaveBeenCalled();
   });
 
-  it('calls onOpenWishlist when Wishlist icon is clicked', () => {
+  it('calls onOpenWishlist when Saved icon is clicked', () => {
     render(<MobileBottomNav {...defaultProps} />);
-    const wishlistButton = screen.getByLabelText('Wishlist');
+    const wishlistButton = screen.getByLabelText('Saved');
     fireEvent.click(wishlistButton);
     expect(defaultProps.onOpenWishlist).toHaveBeenCalled();
   });
