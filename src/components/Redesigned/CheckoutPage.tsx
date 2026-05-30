@@ -14,6 +14,7 @@ import {
   User,
   ArrowRight,
   Zap,
+  Lock,
 } from 'lucide-react';
 
 const CheckoutPage: React.FC = () => {
@@ -46,6 +47,7 @@ const CheckoutPage: React.FC = () => {
 
   useEffect(() => {
     if (orderId && step !== 5) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsProcessing(true);
       paymentService
         .verifyPayment(orderId)
@@ -153,7 +155,8 @@ const CheckoutPage: React.FC = () => {
             Order Confirmed!
           </h1>
           <p className="text-sage text-lg mb-12 max-w-lg mx-auto leading-relaxed">
-            Thank you, <span className="text-bark font-bold">{form.name}</span>. Your order is being packed at our facility in Sangaria and will ship shortly.
+            Thank you, <span className="text-bark font-bold">{form.name}</span>. Your order is being
+            packed at our facility in Sangaria and will ship shortly.
           </p>
           <Link
             to="/shop"
@@ -172,7 +175,6 @@ const CheckoutPage: React.FC = () => {
     <div className="bg-cream min-h-screen pb-20 font-body">
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-10 lg:py-16">
         <div className="flex flex-col lg:flex-row gap-12 items-start justify-center">
-          
           {/* Main Checkout Form - Max width optimized */}
           <div className="w-full lg:max-w-xl shrink-0">
             <h1 className="font-display text-4xl font-bold text-bark mb-8">Checkout</h1>
@@ -203,24 +205,33 @@ const CheckoutPage: React.FC = () => {
 
             {/* Accordion Steps */}
             <div className="space-y-4">
-              
               {/* STEP 1: CONTACT */}
-              <div className={`border border-border rounded-xl bg-ivory overflow-hidden transition-all ${step === 1 ? 'shadow-md' : 'opacity-80'}`}>
-                <div 
+              <div
+                className={`border border-border rounded-xl bg-ivory overflow-hidden transition-all ${step === 1 ? 'shadow-md' : 'opacity-80'}`}
+              >
+                <div
                   className="p-4 md:p-6 flex items-center gap-4 cursor-pointer"
                   onClick={() => setStep(1)}
                 >
-                  <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-colors ${step > 1 ? 'bg-green-600 text-white' : step === 1 ? 'bg-forest text-white' : 'bg-border text-sage'}`}>
+                  <div
+                    className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-colors ${step > 1 ? 'bg-green-600 text-white' : step === 1 ? 'bg-forest text-white' : 'bg-border text-sage'}`}
+                  >
                     {step > 1 ? <CheckCircle2 size={16} /> : '1'}
                   </div>
                   <h2 className="font-semibold text-lg text-bark flex-1">Contact</h2>
-                  {step > 1 && <span className="text-xs font-bold text-sage uppercase tracking-wider">{form.email}</span>}
+                  {step > 1 && (
+                    <span className="text-xs font-bold text-sage uppercase tracking-wider">
+                      {form.email}
+                    </span>
+                  )}
                 </div>
-                
+
                 {step === 1 && (
                   <div className="px-4 md:px-6 pb-6 space-y-5 animate-in slide-in-from-top-2 duration-200">
                     <div>
-                      <label className="block font-medium text-sm text-bark mb-1.5">Full Name</label>
+                      <label className="block font-medium text-sm text-bark mb-1.5">
+                        Full Name
+                      </label>
                       <input
                         type="text"
                         value={form.name}
@@ -232,7 +243,9 @@ const CheckoutPage: React.FC = () => {
                       {errors.name && <p className="text-xs text-red-500 mt-1">{errors.name}</p>}
                     </div>
                     <div>
-                      <label className="block font-medium text-sm text-bark mb-1.5">Email Address</label>
+                      <label className="block font-medium text-sm text-bark mb-1.5">
+                        Email Address
+                      </label>
                       <input
                         type="email"
                         value={form.email}
@@ -244,7 +257,9 @@ const CheckoutPage: React.FC = () => {
                       {errors.email && <p className="text-xs text-red-500 mt-1">{errors.email}</p>}
                     </div>
                     <div>
-                      <label className="block font-medium text-sm text-bark mb-1.5">Mobile Number</label>
+                      <label className="block font-medium text-sm text-bark mb-1.5">
+                        Mobile Number
+                      </label>
                       <input
                         type="tel"
                         value={form.phone}
@@ -256,7 +271,9 @@ const CheckoutPage: React.FC = () => {
                       {errors.phone && <p className="text-xs text-red-500 mt-1">{errors.phone}</p>}
                     </div>
                     <button
-                      onClick={() => { if (validateStep1()) setStep(2); }}
+                      onClick={() => {
+                        if (validateStep1()) setStep(2);
+                      }}
                       className="w-full min-h-[56px] flex items-center justify-center gap-2 bg-gold hover:bg-[#8B5105] text-white font-bold text-base uppercase tracking-wider rounded-md transition-all active:scale-98"
                     >
                       Continue to Address <ArrowRight size={18} />
@@ -266,22 +283,35 @@ const CheckoutPage: React.FC = () => {
               </div>
 
               {/* STEP 2: ADDRESS */}
-              <div className={`border border-border rounded-xl bg-ivory overflow-hidden transition-all ${step === 2 ? 'shadow-md' : 'opacity-80'}`}>
-                <div 
+              <div
+                className={`border border-border rounded-xl bg-ivory overflow-hidden transition-all ${step === 2 ? 'shadow-md' : 'opacity-80'}`}
+              >
+                <div
                   className="p-4 md:p-6 flex items-center gap-4 cursor-pointer"
-                  onClick={() => { if (step > 2) setStep(2); else if (step === 1 && validateStep1()) setStep(2); }}
+                  onClick={() => {
+                    if (step > 2) setStep(2);
+                    else if (step === 1 && validateStep1()) setStep(2);
+                  }}
                 >
-                  <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-colors ${step > 2 ? 'bg-green-600 text-white' : step === 2 ? 'bg-forest text-white' : 'bg-border text-sage'}`}>
+                  <div
+                    className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-colors ${step > 2 ? 'bg-green-600 text-white' : step === 2 ? 'bg-forest text-white' : 'bg-border text-sage'}`}
+                  >
                     {step > 2 ? <CheckCircle2 size={16} /> : '2'}
                   </div>
                   <h2 className="font-semibold text-lg text-bark flex-1">Delivery Address</h2>
-                  {step > 2 && <span className="text-xs font-bold text-sage uppercase tracking-wider">{form.pincode}</span>}
+                  {step > 2 && (
+                    <span className="text-xs font-bold text-sage uppercase tracking-wider">
+                      {form.pincode}
+                    </span>
+                  )}
                 </div>
-                
+
                 {step === 2 && (
                   <div className="px-4 md:px-6 pb-6 space-y-5 animate-in slide-in-from-top-2 duration-200">
                     <div>
-                      <label className="block font-medium text-sm text-bark mb-1.5">Full Address</label>
+                      <label className="block font-medium text-sm text-bark mb-1.5">
+                        Full Address
+                      </label>
                       <textarea
                         rows={3}
                         value={form.address}
@@ -290,11 +320,15 @@ const CheckoutPage: React.FC = () => {
                         autoComplete="street-address"
                         className={`w-full min-h-[48px] px-4 py-3 border ${errors.address ? 'border-red-500' : 'border-border'} rounded-md bg-white text-base text-bark focus:outline-none focus:border-forest focus:ring-2 focus:ring-forest/10 transition-all resize-none`}
                       />
-                      {errors.address && <p className="text-xs text-red-500 mt-1">{errors.address}</p>}
+                      {errors.address && (
+                        <p className="text-xs text-red-500 mt-1">{errors.address}</p>
+                      )}
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <label className="block font-medium text-sm text-bark mb-1.5">Pin Code</label>
+                        <label className="block font-medium text-sm text-bark mb-1.5">
+                          Pin Code
+                        </label>
                         <input
                           type="text"
                           value={form.pincode}
@@ -303,7 +337,9 @@ const CheckoutPage: React.FC = () => {
                           autoComplete="postal-code"
                           className={`w-full min-h-[48px] px-4 border ${errors.pincode ? 'border-red-500' : 'border-border'} rounded-md bg-white text-base text-bark focus:outline-none focus:border-forest focus:ring-2 focus:ring-forest/10 transition-all`}
                         />
-                        {errors.pincode && <p className="text-xs text-red-500 mt-1">{errors.pincode}</p>}
+                        {errors.pincode && (
+                          <p className="text-xs text-red-500 mt-1">{errors.pincode}</p>
+                        )}
                       </div>
                       <div>
                         <label className="block font-medium text-sm text-bark mb-1.5">City</label>
@@ -319,7 +355,9 @@ const CheckoutPage: React.FC = () => {
                       </div>
                     </div>
                     <button
-                      onClick={() => { if (validateStep2()) setStep(3); }}
+                      onClick={() => {
+                        if (validateStep2()) setStep(3);
+                      }}
                       className="w-full min-h-[56px] flex items-center justify-center gap-2 bg-gold hover:bg-[#8B5105] text-white font-bold text-base uppercase tracking-wider rounded-md transition-all active:scale-98"
                     >
                       Continue to Payment <ArrowRight size={18} />
@@ -329,16 +367,18 @@ const CheckoutPage: React.FC = () => {
               </div>
 
               {/* STEP 3: PAYMENT */}
-              <div className={`border border-border rounded-xl bg-ivory overflow-hidden transition-all ${step === 3 ? 'shadow-md' : 'opacity-80'}`}>
-                <div 
-                  className="p-4 md:p-6 flex items-center gap-4"
-                >
-                  <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-colors ${step === 3 ? 'bg-forest text-white' : 'bg-border text-sage'}`}>
+              <div
+                className={`border border-border rounded-xl bg-ivory overflow-hidden transition-all ${step === 3 ? 'shadow-md' : 'opacity-80'}`}
+              >
+                <div className="p-4 md:p-6 flex items-center gap-4">
+                  <div
+                    className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-colors ${step === 3 ? 'bg-forest text-white' : 'bg-border text-sage'}`}
+                  >
                     3
                   </div>
                   <h2 className="font-semibold text-lg text-bark">Payment</h2>
                 </div>
-                
+
                 {step === 3 && (
                   <div className="px-4 md:px-6 pb-6 space-y-6 animate-in slide-in-from-top-2 duration-200">
                     <div className="space-y-4">
@@ -367,7 +407,9 @@ const CheckoutPage: React.FC = () => {
                           }`}
                         >
                           <div className="flex items-center gap-4">
-                            <div className={`w-10 h-10 rounded-md flex items-center justify-center transition-colors ${payMethod === m.id ? 'bg-gold/20' : 'bg-border/30'}`}>
+                            <div
+                              className={`w-10 h-10 rounded-md flex items-center justify-center transition-colors ${payMethod === m.id ? 'bg-gold/20' : 'bg-border/30'}`}
+                            >
                               {m.icon}
                             </div>
                             <div>
@@ -375,8 +417,12 @@ const CheckoutPage: React.FC = () => {
                               <div className="text-xs text-sage">{m.desc}</div>
                             </div>
                           </div>
-                          <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${payMethod === m.id ? 'border-gold' : 'border-border'}`}>
-                            {payMethod === m.id && <div className="w-2.5 h-2.5 rounded-full bg-gold" />}
+                          <div
+                            className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${payMethod === m.id ? 'border-gold' : 'border-border'}`}
+                          >
+                            {payMethod === m.id && (
+                              <div className="w-2.5 h-2.5 rounded-full bg-gold" />
+                            )}
                           </div>
                         </button>
                       ))}
@@ -422,16 +468,24 @@ const CheckoutPage: React.FC = () => {
           {/* Sidebar Summary - Sticky Right Column */}
           <div className="w-full lg:w-80 shrink-0 lg:sticky lg:top-24 mt-8 lg:mt-0">
             <div className="bg-ivory rounded-xl border border-border p-6 md:p-8 shadow-sm">
-              <h3 className="font-bold text-bark uppercase tracking-widest text-sm mb-6">Order Summary</h3>
+              <h3 className="font-bold text-bark uppercase tracking-widest text-sm mb-6">
+                Order Summary
+              </h3>
 
               <div className="space-y-4 mb-6 max-h-[300px] overflow-y-auto pr-2 no-scrollbar">
                 {items.map((item: CartItem) => (
                   <div key={item.id} className="flex gap-4">
                     <div className="w-14 h-14 bg-white rounded-md flex items-center justify-center shrink-0 border border-border overflow-hidden">
-                      <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="w-full h-full object-cover"
+                      />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="text-sm font-bold text-bark truncate leading-tight">{item.name}</div>
+                      <div className="text-sm font-bold text-bark truncate leading-tight">
+                        {item.name}
+                      </div>
                       <div className="text-[11px] text-sage font-medium tracking-wide mt-1">
                         {item.weight} × {item.quantity}
                       </div>
@@ -450,7 +504,9 @@ const CheckoutPage: React.FC = () => {
                 </div>
                 <div className="flex justify-between text-bark">
                   <span>Shipping</span>
-                  <span className={`font-bold font-display ${shipping === 0 ? 'text-green-700' : ''}`}>
+                  <span
+                    className={`font-bold font-display ${shipping === 0 ? 'text-green-700' : ''}`}
+                  >
                     {shipping === 0 ? 'FREE' : `₹${shipping}`}
                   </span>
                 </div>
@@ -463,12 +519,15 @@ const CheckoutPage: React.FC = () => {
 
             {/* Trust Badges */}
             <div className="mt-6 flex items-center justify-center gap-4 text-sage text-xs">
-              <span className="flex items-center gap-1"><Lock size={12}/> Secure</span>
+              <span className="flex items-center gap-1">
+                <Lock size={12} /> Secure
+              </span>
               <span className="text-border">•</span>
-              <span className="flex items-center gap-1"><ShieldCheck size={12}/> Certified</span>
+              <span className="flex items-center gap-1">
+                <ShieldCheck size={12} /> Certified
+              </span>
             </div>
           </div>
-
         </div>
       </div>
     </div>
