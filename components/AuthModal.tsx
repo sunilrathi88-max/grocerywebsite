@@ -1,265 +1,362 @@
-import React, { useState } from 'react';
-import { XIcon } from './icons/XIcon';
-import { UserIcon } from './icons/UserIcon';
-import { User } from '../types';
+import React, { useState, useCallback } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { X, Mail, Lock, User, Eye, EyeOff, AlertCircle } from 'lucide-react';
+import { User as UserType } from '../types';
 import OAuthButtons from './OAuthButtons';
 import { AuthService } from '../utils/authService';
 
 interface AuthModalProps {
   onClose: () => void;
-  onLogin: (user: User) => void;
+  onLogin: (user: UserType) => void;
   onSignUp: (name: string, email: string, password: string) => void;
 }
 
-const AuthModal: React.FC<AuthModalProps> = ({ onClose, onLogin, onSignUp }) => {
-  /* eslint-disable @typescript-eslint/no-unused-vars */
-  const handleSimulatedAuth = (e: React.FormEvent) => {
-    // Deprecated in favor of subcomponents
-  };
-  /* eslint-enable @typescript-eslint/no-unused-vars */
+const InputField = ({
+  id,
+  type,
+  label,
+  value,
+  onChange,
+  icon: Icon,
+  showToggle = false,
+}: {
+  id: string;
+  type: string;
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  icon: React.FC<{ size?: number; className?: string }>;
+  showToggle?: boolean;
+}) => {
+  const [visible, setVisible] = useState(false);
+  const [focused, setFocused] = useState(false);
+  const inputType = showToggle && visible ? 'text' : type;
 
-  const LoginForm = ({
-    onLogin,
-    onClose,
-  }: {
-    onLogin: (user: User) => void;
-    onClose: () => void;
-  }) => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState('');
-
-    const handleSubmit = async (e: React.FormEvent) => {
-      e.preventDefault();
-      setIsLoading(true);
-      setError('');
-      try {
-        const response = await AuthService.login(email, password, false);
-        if (response.success && response.user) {
-          onClose();
-        } else {
-          setError(response.message || 'Invalid login credentials');
-        }
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Login failed');
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    return (
-      <form onSubmit={handleSubmit} className="space-y-4">
-        {error && (
-          <div className="text-red-500 text-sm font-bold bg-red-50 p-2 rounded">{error}</div>
+  return (
+    <div className="space-y-1.5">
+      <label
+        htmlFor={id}
+        className="text-[11px] font-black uppercase tracking-widest text-stone-500 block"
+      >
+        {label}
+      </label>
+      <div
+        className="relative h-12 rounded-xl overflow-hidden transition-all"
+        style={{
+          border: `1px solid ${focused ? 'rgba(179,139,89,0.5)' : 'rgba(255,255,255,0.08)'}`,
+          background: 'rgba(255,255,255,0.04)',
+          boxShadow: focused ? '0 0 0 3px rgba(179,139,89,0.1)' : 'none',
+        }}
+      >
+        <Icon
+          size={15}
+          className="absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-600 pointer-events-none"
+        />
+        <input
+          id={id}
+          type={inputType}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          onFocus={() => setFocused(true)}
+          onBlur={() => setFocused(false)}
+          required
+          className="w-full h-full bg-transparent pl-10 pr-10 text-sm text-white placeholder-stone-600 outline-none"
+          placeholder={`Enter ${label.toLowerCase()}`}
+        />
+        {showToggle && (
+          <button
+            type="button"
+            onClick={() => setVisible(!visible)}
+            className="absolute right-3.5 top-1/2 -translate-y-1/2 text-stone-500 hover:text-stone-300 transition-colors"
+          >
+            {visible ? <EyeOff size={14} /> : <Eye size={14} />}
+          </button>
         )}
-        <div>
-          <label htmlFor="email-login" className="block text-sm font-medium text-gray-700">
-            Email Address
-          </label>
-          <input
-            type="email"
-            id="email-login"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="mt-1 input-field"
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="password-login" className="block text-sm font-medium text-gray-700">
-            Password
-          </label>
-          <input
-            type="password"
-            id="password-login"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="mt-1 input-field"
-            required
-          />
-        </div>
-        <button
-          type="submit"
-          disabled={isLoading}
-          className="w-full bg-brand-dark text-white font-bold py-3 rounded-full shadow-lg hover:bg-opacity-90 transition-all duration-300 disabled:opacity-50"
-        >
-          {isLoading ? 'Logging in...' : 'Login'}
-        </button>
-      </form>
-    );
-  };
+      </div>
+    </div>
+  );
+};
 
-  const RegisterForm = ({
-    onSignUp,
-    onClose,
-  }: {
-    onSignUp: (name: string, email: string, password: string) => void;
-    onClose: () => void;
-  }) => {
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState('');
+const LoginForm = ({ onClose }: { onClose: () => void }) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
-    const handleSubmit = async (e: React.FormEvent) => {
-      e.preventDefault();
-      setIsLoading(true);
-      setError('');
-      try {
-        const response = await AuthService.signUp(name, email, password);
-        if (response.success) {
-          onClose();
-        } else {
-          setError(response.message || 'Registration failed');
-        }
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Registration failed');
-      } finally {
-        setIsLoading(false);
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError('');
+    try {
+      const response = await AuthService.login(email, password, false);
+      if (response.success) {
+        onClose();
+      } else {
+        setError(response.message || 'Invalid credentials. Please try again.');
       }
-    };
-
-    return (
-      <form onSubmit={handleSubmit} className="space-y-4">
-        {error && (
-          <div className="text-red-500 text-sm font-bold bg-red-50 p-2 rounded">{error}</div>
-        )}
-        <div>
-          <label htmlFor="name-register" className="block text-sm font-medium text-gray-700">
-            Full Name
-          </label>
-          <input
-            type="text"
-            id="name-register"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="mt-1 input-field"
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="email-register" className="block text-sm font-medium text-gray-700">
-            Email Address
-          </label>
-          <input
-            type="email"
-            id="email-register"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="mt-1 input-field"
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="password-register" className="block text-sm font-medium text-gray-700">
-            Password
-          </label>
-          <input
-            type="password"
-            id="password-register"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="mt-1 input-field"
-            required
-          />
-        </div>
-        <button
-          type="submit"
-          disabled={isLoading}
-          className="w-full bg-brand-dark text-white font-bold py-3 rounded-full shadow-lg hover:bg-opacity-90 transition-all duration-300 disabled:opacity-50"
-        >
-          {isLoading ? 'Creating Account...' : 'Create Account'}
-        </button>
-      </form>
-    );
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Login failed');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4">
+      {error && (
+        <motion.div
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="flex items-center gap-2 bg-red-950/40 border border-red-800/40 text-red-300 text-sm rounded-xl px-4 py-3"
+        >
+          <AlertCircle size={14} className="shrink-0" />
+          {error}
+        </motion.div>
+      )}
+      <InputField
+        id="email-login"
+        type="email"
+        label="Email"
+        value={email}
+        onChange={setEmail}
+        icon={Mail}
+      />
+      <InputField
+        id="password-login"
+        type="password"
+        label="Password"
+        value={password}
+        onChange={setPassword}
+        icon={Lock}
+        showToggle
+      />
+      <div className="text-right">
+        <a
+          href="/forgot-password"
+          className="text-[11px] text-[#B38B59] font-bold hover:text-[#D4A96A] transition-colors uppercase tracking-widest"
+        >
+          Forgot Password?
+        </a>
+      </div>
+      <button
+        type="submit"
+        disabled={isLoading}
+        className="w-full py-3.5 rounded-2xl font-black text-sm uppercase tracking-widest text-white transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2"
+        style={{
+          background: 'linear-gradient(135deg,#B38B59,#8C6D45)',
+          boxShadow: '0 8px 30px rgba(179,139,89,0.3)',
+          opacity: isLoading ? 0.75 : 1,
+        }}
+      >
+        {isLoading ? (
+          <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+        ) : (
+          'Sign In'
+        )}
+      </button>
+    </form>
+  );
+};
+
+const RegisterForm = ({ onClose }: { onClose: () => void }) => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError('');
+    try {
+      const response = await AuthService.signUp(name, email, password);
+      if (response.success) {
+        onClose();
+      } else {
+        setError(response.message || 'Registration failed. Please try again.');
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Registration failed');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4">
+      {error && (
+        <motion.div
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="flex items-center gap-2 bg-red-950/40 border border-red-800/40 text-red-300 text-sm rounded-xl px-4 py-3"
+        >
+          <AlertCircle size={14} className="shrink-0" />
+          {error}
+        </motion.div>
+      )}
+      <InputField
+        id="name-register"
+        type="text"
+        label="Full Name"
+        value={name}
+        onChange={setName}
+        icon={User}
+      />
+      <InputField
+        id="email-register"
+        type="email"
+        label="Email"
+        value={email}
+        onChange={setEmail}
+        icon={Mail}
+      />
+      <InputField
+        id="password-register"
+        type="password"
+        label="Password"
+        value={password}
+        onChange={setPassword}
+        icon={Lock}
+        showToggle
+      />
+      <button
+        type="submit"
+        disabled={isLoading}
+        className="w-full py-3.5 rounded-2xl font-black text-sm uppercase tracking-widest text-white transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2"
+        style={{
+          background: 'linear-gradient(135deg,#B38B59,#8C6D45)',
+          boxShadow: '0 8px 30px rgba(179,139,89,0.3)',
+          opacity: isLoading ? 0.75 : 1,
+        }}
+      >
+        {isLoading ? (
+          <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+        ) : (
+          'Create Account'
+        )}
+      </button>
+    </form>
+  );
+};
+
+const AuthModal: React.FC<AuthModalProps> = ({
+  onClose,
+  onLogin: _onLogin,
+  onSignUp: _onSignUp,
+}) => {
   const [activeTab, setActiveTab] = useState<'login' | 'register'>('login');
 
   return (
-    <div
-      className="fixed inset-0 bg-black bg-opacity-60 z-[100] flex justify-center items-center p-4 animate-fade-in"
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4"
+      style={{ background: 'rgba(0,0,0,0.75)', backdropFilter: 'blur(10px)' }}
       onClick={onClose}
       aria-modal="true"
       role="dialog"
     >
-      <div
-        className="bg-white rounded-lg shadow-2xl w-full max-w-sm flex flex-col overflow-hidden"
+      <motion.div
+        initial={{ scale: 0.92, opacity: 0, y: 20 }}
+        animate={{ scale: 1, opacity: 1, y: 0 }}
+        exit={{ scale: 0.92, opacity: 0 }}
+        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
         onClick={(e) => e.stopPropagation()}
+        className="w-full max-w-sm rounded-[2rem] overflow-hidden"
+        style={{
+          background: '#0F0704',
+          border: '1px solid rgba(255,255,255,0.08)',
+          boxShadow: '0 40px 100px rgba(0,0,0,0.7), 0 0 0 1px rgba(179,139,89,0.08)',
+        }}
       >
-        <div className="flex justify-between items-center p-4 border-b">
-          <div className="flex items-center gap-3">
-            <UserIcon className="h-8 w-8 text-brand-primary" />
-            <h2 className="text-xl font-serif font-bold">My Account</h2>
-          </div>
+        {/* Header */}
+        <div className="relative px-8 pt-8 pb-6">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-56 h-24 bg-[#B38B59]/10 rounded-full blur-[60px] pointer-events-none" />
           <button
             onClick={onClose}
-            className="p-2 rounded-full hover:bg-gray-200"
-            aria-label="Close"
+            className="absolute top-5 right-5 w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-stone-400 hover:text-white hover:bg-white/10 transition-all"
           >
-            <XIcon className="h-6 w-6" />
+            <X size={14} />
           </button>
+          <div className="text-center relative z-10">
+            <div
+              className="w-14 h-14 rounded-2xl mx-auto mb-4 flex items-center justify-center"
+              style={{
+                background: 'linear-gradient(135deg,#B38B59,#8C6D45)',
+                boxShadow: '0 8px 30px rgba(179,139,89,0.35)',
+              }}
+            >
+              <User size={24} className="text-white" />
+            </div>
+            <h2 className="font-display text-2xl font-black text-white">
+              {activeTab === 'login' ? 'Welcome Back' : 'Join Rathi'}
+            </h2>
+            <p className="text-stone-500 text-sm mt-1">
+              {activeTab === 'login' ? 'Sign in to your account' : 'Create your account today'}
+            </p>
+          </div>
         </div>
 
-        <div className="border-b border-gray-200">
-          <nav className="-mb-px flex" aria-label="Tabs">
+        {/* Tab switcher */}
+        <div
+          className="flex mx-8 mb-6 gap-1 p-1 rounded-xl"
+          style={{ background: 'rgba(255,255,255,0.04)' }}
+        >
+          {(['login', 'register'] as const).map((tab) => (
             <button
-              onClick={() => setActiveTab('login')}
-              className={`w-1/2 py-4 px-1 text-center border-b-2 font-medium text-sm ${activeTab === 'login' ? 'border-brand-primary text-brand-primary' : 'border-transparent text-gray-500 hover:text-gray-700'}`}
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className="flex-1 py-2.5 rounded-lg text-[11px] font-black uppercase tracking-widest transition-colors relative"
+              style={{ color: activeTab === tab ? '#42210B' : 'rgba(255,255,255,0.35)' }}
             >
-              Login
+              {activeTab === tab && (
+                <motion.div
+                  layoutId="authTabBg"
+                  className="absolute inset-0 rounded-lg"
+                  style={{ background: 'linear-gradient(135deg,#B38B59,#8C6D45)' }}
+                  transition={{ type: 'spring', stiffness: 500, damping: 40 }}
+                />
+              )}
+              <span className="relative z-10">{tab === 'login' ? 'Sign In' : 'Register'}</span>
             </button>
-            <button
-              onClick={() => setActiveTab('register')}
-              className={`w-1/2 py-4 px-1 text-center border-b-2 font-medium text-sm ${activeTab === 'register' ? 'border-brand-primary text-brand-primary' : 'border-transparent text-gray-500 hover:text-gray-700'}`}
-            >
-              Register
-            </button>
-          </nav>
+          ))}
         </div>
 
-        <div className="p-6">
-          <OAuthButtons
-            onSuccess={(_user) => {
-              // Note: This might not run due to redirect, but required for type check
-              // If we were handling popup flow, we would call onLogin here.
-              // For now, we rely on the Supabase auth listener in App.tsx
-            }}
-            onError={(error) => console.error(error)}
-          />
+        {/* Body */}
+        <div className="px-8 pb-8 space-y-6">
+          {/* OAuth */}
+          <OAuthButtons onSuccess={() => onClose()} onError={(err) => console.error(err)} />
 
-          <div className="relative my-6">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-300"></div>
-            </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-gray-500">Or continue with</span>
-            </div>
+          {/* Divider */}
+          <div className="relative flex items-center gap-3">
+            <div className="flex-1 h-px" style={{ background: 'rgba(255,255,255,0.06)' }} />
+            <span className="text-[10px] font-bold uppercase tracking-widest text-stone-600">
+              Or continue with email
+            </span>
+            <div className="flex-1 h-px" style={{ background: 'rgba(255,255,255,0.06)' }} />
           </div>
 
-          {activeTab === 'login' ? (
-            <LoginForm onLogin={onLogin} onClose={onClose} />
-          ) : (
-            <RegisterForm onSignUp={onSignUp} onClose={onClose} />
-          )}
+          {/* Form */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, x: activeTab === 'login' ? -16 : 16 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: activeTab === 'login' ? 16 : -16 }}
+              transition={{ duration: 0.2 }}
+            >
+              {activeTab === 'login' ? (
+                <LoginForm onClose={onClose} />
+              ) : (
+                <RegisterForm onClose={onClose} />
+              )}
+            </motion.div>
+          </AnimatePresence>
         </div>
-      </div>
-      <style>{`
-        @keyframes fade-in {
-          from { opacity: 0; transform: scale(0.95); }
-          to { opacity: 1; transform: scale(1); }
-        }
-        .animate-fade-in { animation: fade-in 0.2s ease-out forwards; }
-        .input-field {
-          display: block; width: 100%; padding: 0.5rem 0.75rem; border: 1px solid #D1D5DB; border-radius: 0.375rem;
-        }
-        .input-field:focus {
-          outline: none; --tw-ring-color: #FFB7C1; box-shadow: 0 0 0 2px var(--tw-ring-color); border-color: #FFB7C1;
-        }
-      `}</style>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 

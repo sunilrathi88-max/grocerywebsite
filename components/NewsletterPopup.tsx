@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { XIcon } from './icons/XIcon';
-import { SparklesIcon } from './icons/SparklesIcon';
+import { motion, AnimatePresence } from 'framer-motion';
+import { X, Mail, Check, Gift, ArrowRight } from 'lucide-react';
 
 interface NewsletterPopupProps {
   delayMs?: number;
@@ -15,26 +15,22 @@ const NewsletterPopup: React.FC<NewsletterPopupProps> = ({ delayMs = 5000, onClo
   const [email, setEmail] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    // Check if already dismissed this session
     const dismissed = sessionStorage.getItem(STORAGE_KEY);
     if (dismissed) return;
 
-    // Show popup after delay or on scroll
     const showPopup = () => setIsVisible(true);
-
     const timer = setTimeout(showPopup, delayMs);
 
     const handleScroll = () => {
-      const scrollPercent =
-        (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
-      if (scrollPercent > 50) {
+      const scrollPct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+      if (scrollPct > 50) {
         showPopup();
         window.removeEventListener('scroll', handleScroll);
       }
     };
-
     window.addEventListener('scroll', handleScroll);
 
     return () => {
@@ -52,111 +48,221 @@ const NewsletterPopup: React.FC<NewsletterPopupProps> = ({ delayMs = 5000, onClo
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
-
     setIsLoading(true);
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    await new Promise((r) => setTimeout(r, 900));
     setIsLoading(false);
     setIsSubmitted(true);
-
-    // Store email (in real app, send to backend)
     try {
-      const subscribers = JSON.parse(localStorage.getItem('rathi_subscribers') || '[]');
-      subscribers.push({ email, date: new Date().toISOString() });
-      localStorage.setItem('rathi_subscribers', JSON.stringify(subscribers));
+      const subs = JSON.parse(localStorage.getItem('rathi_subscribers') || '[]');
+      subs.push({ email, date: new Date().toISOString() });
+      localStorage.setItem('rathi_subscribers', JSON.stringify(subs));
     } catch {
-      // Silently fail
+      // ignore
     }
   };
 
-  if (!isVisible) return null;
+  const copyCode = () => {
+    navigator.clipboard.writeText(PROMO_CODE);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   return (
-    <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fadeIn">
-      <div className="relative bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden animate-slideUp">
-        {/* Close Button */}
-        <button
-          onClick={handleClose}
-          className="absolute top-4 right-4 p-2 rounded-full hover:bg-neutral-100 transition-colors z-10"
-          aria-label="Close popup"
+    <AnimatePresence>
+      {isVisible && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3 }}
+          className="fixed inset-0 z-[200] flex items-center justify-center p-4"
+          style={{ background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(8px)' }}
         >
-          <XIcon className="w-5 h-5 text-neutral-500" />
-        </button>
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0, y: 20 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
+            exit={{ scale: 0.92, opacity: 0, y: 10 }}
+            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            className="relative max-w-md w-full overflow-hidden rounded-[2rem]"
+            style={{
+              background: '#0F0704',
+              border: '1px solid rgba(255,255,255,0.08)',
+              boxShadow: '0 40px 100px rgba(0,0,0,0.6), 0 0 0 1px rgba(179,139,89,0.1)',
+            }}
+          >
+            {/* Close */}
+            <button
+              onClick={handleClose}
+              className="absolute top-4 right-4 z-10 w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-stone-400 hover:text-white hover:bg-white/10 transition-all"
+            >
+              <X size={15} />
+            </button>
 
-        {/* Header Image */}
-        <div className="bg-gradient-to-br from-amber-500 to-orange-600 py-8 px-6 text-center text-white">
-          <SparklesIcon className="w-12 h-12 mx-auto mb-3" />
-          <h2 className="text-2xl font-serif font-bold mb-2">
-            {isSubmitted ? '🎉 Welcome to the Family!' : 'Get 10% Off Your First Order'}
-          </h2>
-          {!isSubmitted && (
-            <p className="text-amber-100 text-sm">
-              Join 10,000+ spice lovers for exclusive recipes & deals
-            </p>
-          )}
-        </div>
+            {/* Top panel */}
+            <div className="relative overflow-hidden px-8 pt-10 pb-8">
+              {/* Glow */}
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-[#B38B59]/20 rounded-full blur-[60px] pointer-events-none" />
 
-        {/* Content */}
-        <div className="p-6">
-          {isSubmitted ? (
-            <div className="text-center">
-              <p className="text-neutral-600 mb-4">
-                Your discount code is ready! Use it at checkout:
-              </p>
-              <div className="bg-amber-50 border-2 border-dashed border-amber-300 rounded-lg py-4 px-6 mb-4">
-                <p className="font-mono text-2xl font-bold text-amber-700 tracking-wider">
-                  {PROMO_CODE}
-                </p>
+              <div className="relative z-10 text-center">
+                <div
+                  className="w-16 h-16 rounded-2xl mx-auto mb-5 flex items-center justify-center"
+                  style={{
+                    background: 'linear-gradient(135deg,#B38B59,#8C6D45)',
+                    boxShadow: '0 8px 32px rgba(179,139,89,0.4)',
+                  }}
+                >
+                  {isSubmitted ? (
+                    <Gift size={28} className="text-white" />
+                  ) : (
+                    <Mail size={28} className="text-white" />
+                  )}
+                </div>
+
+                <AnimatePresence mode="wait">
+                  {isSubmitted ? (
+                    <motion.div
+                      key="success"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                    >
+                      <h2 className="font-display text-3xl font-black text-white mb-2">
+                        Welcome to the Family! 🎉
+                      </h2>
+                      <p className="text-stone-400 text-sm">
+                        Your exclusive discount code is ready.
+                      </p>
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="default"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                    >
+                      <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#B38B59]/10 border border-[#B38B59]/20 mb-4">
+                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#B38B59]">
+                          Limited Offer
+                        </span>
+                      </div>
+                      <h2 className="font-display text-3xl md:text-4xl font-black text-white mb-3">
+                        Get 10% Off
+                        <br />
+                        <span className="italic font-light text-[#B38B59]">Your First Order</span>
+                      </h2>
+                      <p className="text-stone-500 text-sm leading-relaxed">
+                        Join 10,000+ spice lovers for exclusive recipes, origin stories &
+                        member-only deals.
+                      </p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
-              <p className="text-sm text-neutral-500 mb-4">Valid for 7 days on orders above ₹499</p>
-              <button
-                onClick={() => {
-                  navigator.clipboard.writeText(PROMO_CODE);
-                  handleClose();
-                }}
-                className="w-full bg-amber-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-amber-600 transition-colors"
-              >
-                Copy Code & Start Shopping
-              </button>
             </div>
-          ) : (
-            <form onSubmit={handleSubmit}>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email"
-                className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none mb-4"
-                required
-              />
-              <button
-                type="submit"
-                disabled={isLoading}
-                className="w-full bg-amber-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-amber-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {isLoading ? 'Subscribing...' : 'Get My 10% Off'}
-              </button>
-              <p className="text-xs text-neutral-400 text-center mt-3">
-                No spam, ever. Unsubscribe anytime.
-              </p>
-            </form>
-          )}
-        </div>
-      </div>
 
-      <style>{`
-        @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-        @keyframes slideUp {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fadeIn { animation: fadeIn 0.3s ease-out; }
-        .animate-slideUp { animation: slideUp 0.3s ease-out; }
-      `}</style>
-    </div>
+            {/* Bottom panel */}
+            <div className="px-8 pb-8">
+              <AnimatePresence mode="wait">
+                {isSubmitted ? (
+                  <motion.div
+                    key="code"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="space-y-4"
+                  >
+                    {/* Code box */}
+                    <div
+                      className="rounded-2xl p-5 text-center"
+                      style={{
+                        background: 'rgba(179,139,89,0.08)',
+                        border: '2px dashed rgba(179,139,89,0.3)',
+                      }}
+                    >
+                      <p className="text-stone-500 text-xs uppercase tracking-widest mb-2 font-bold">
+                        Your Code
+                      </p>
+                      <p className="font-mono text-3xl font-black text-[#B38B59] tracking-[0.12em]">
+                        {PROMO_CODE}
+                      </p>
+                      <p className="text-stone-600 text-xs mt-2">
+                        Valid 7 days · Orders above ₹499
+                      </p>
+                    </div>
+
+                    <button
+                      onClick={copyCode}
+                      className="w-full py-4 rounded-2xl font-black text-sm uppercase tracking-widest text-white transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2"
+                      style={{
+                        background: 'linear-gradient(135deg,#B38B59,#8C6D45)',
+                        boxShadow: '0 8px 30px rgba(179,139,89,0.35)',
+                      }}
+                    >
+                      {copied ? (
+                        <>
+                          <Check size={16} /> Copied!
+                        </>
+                      ) : (
+                        <>
+                          <ArrowRight size={16} /> Copy Code & Shop
+                        </>
+                      )}
+                    </button>
+                  </motion.div>
+                ) : (
+                  <motion.form
+                    key="form"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    onSubmit={handleSubmit}
+                    className="space-y-3"
+                  >
+                    <div className="relative">
+                      <Mail
+                        size={15}
+                        className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-500 pointer-events-none"
+                      />
+                      <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="your@email.com"
+                        required
+                        className="w-full h-12 pl-10 pr-4 rounded-xl text-sm text-white placeholder-stone-600 outline-none transition-all"
+                        style={{
+                          background: 'rgba(255,255,255,0.05)',
+                          border: '1px solid rgba(255,255,255,0.08)',
+                        }}
+                        onFocus={(e) => (e.target.style.borderColor = 'rgba(179,139,89,0.5)')}
+                        onBlur={(e) => (e.target.style.borderColor = 'rgba(255,255,255,0.08)')}
+                      />
+                    </div>
+
+                    <button
+                      type="submit"
+                      disabled={isLoading}
+                      className="w-full py-4 rounded-2xl font-black text-sm uppercase tracking-widest text-white transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2"
+                      style={{
+                        background: 'linear-gradient(135deg,#B38B59,#8C6D45)',
+                        boxShadow: '0 8px 30px rgba(179,139,89,0.35)',
+                        opacity: isLoading ? 0.75 : 1,
+                      }}
+                    >
+                      {isLoading ? (
+                        <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      ) : (
+                        'Unlock My 10% Off'
+                      )}
+                    </button>
+
+                    <p className="text-center text-[10px] text-stone-600 font-bold uppercase tracking-widest">
+                      No spam, ever. Unsubscribe anytime.
+                    </p>
+                  </motion.form>
+                )}
+              </AnimatePresence>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };
 
