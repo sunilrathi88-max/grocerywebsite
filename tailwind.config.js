@@ -10,9 +10,9 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['DM Sans', 'system-ui', 'sans-serif'],
+        sans: ['Raleway', 'system-ui', 'sans-serif'],
         serif: ['Cormorant Garamond', 'Georgia', 'serif'],
-        label: ['Syne', 'system-ui', 'sans-serif'],
+        label: ['Raleway', 'system-ui', 'sans-serif'],
       },
       colors: {
         ink: 'var(--color-bg-dark)',

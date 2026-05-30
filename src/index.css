@@ -3,25 +3,25 @@
 @tailwind utilities;
 
 :root {
-  --brand: #7c2d0e;
-  --brand-light: #a03a14;
-  --brand-pale: #fff4ee;
-  --accent: #f59e0b;
-  --accent-dark: #d97706;
-  --success: #16a34a;
-  --danger: #dc2626;
-  --ink: #1a0a00;
-  --muted: #6b5344;
-  --border: #e8d5c4;
-  --surface: #faf6f2;
+  --brand: #1B2E1B;
+  --brand-light: #2D4A2D;
+  --brand-pale: #FAF7F2;
+  --accent: #A16207;
+  --accent-dark: #8B5105;
+  --success: #15803D;
+  --danger: #DC2626;
+  --ink: #3C2415;
+  --muted: #7C8C6D;
+  --border: #D9CFBF;
+  --surface: #FAF7F2;
   --white: #ffffff;
-  --shadow-sm: 0 1px 3px rgba(124, 45, 14, 0.08);
-  --shadow-md: 0 4px 16px rgba(124, 45, 14, 0.12);
+  --shadow-sm: 0 1px 3px rgba(27, 46, 27, 0.08);
+  --shadow-md: 0 4px 16px rgba(27, 46, 27, 0.12);
   --radius-sm: 6px;
   --radius-md: 10px;
   --radius-lg: 16px;
   --font-display: 'Cormorant Garamond', serif;
-  --font-body: 'DM Sans', sans-serif;
+  --font-body: 'Raleway', sans-serif;
 
   /* Fallbacks for existing code */
   --primary-gold: var(--accent);

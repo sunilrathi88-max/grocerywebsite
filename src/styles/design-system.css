@@ -9,42 +9,49 @@
 
 :root {
   /* Primary Brand Colors */
-  --color-primary: #c14701;
-  /* Warm Spice Orange */
-  --color-primary-dark: #8b4513;
-  /* Saddle Brown */
-  --color-primary-light: #e86a2c;
-  /* Light Spice */
+  --color-primary: #1B2E1B;
+  /* Forest Green */
+  --color-primary-dark: #3C2415;
+  /* Bark Brown */
+  --color-primary-light: #2D4A2D;
+  /* Light Forest */
 
   /* Accent Colors */
-  --color-accent-gold: #d4af37;
-  /* Premium Gold */
-  --color-accent-cream: #fffbf7;
+  --color-accent-gold: #A16207;
+  /* Amber Gold */
+  --color-accent-cream: #FAF7F2;
   /* Warm Cream */
-  --color-accent-brown: #5f5238;
-  /* Deep Brown */
+  --color-accent-brown: #3C2415;
+  /* Bark Brown */
 
   /* Background Colors */
-  --color-bg-primary: #ffffff;
-  --color-bg-secondary: #fffbf7;
+  --color-bg-primary: #FAF7F2;
   /* Warm Cream */
-  --color-bg-tertiary: #f5f0e8;
-  /* Light Beige */
-  --color-bg-dark: #1a1a1a;
+  --color-bg-secondary: #FAF7F2;
+  /* Warm Cream */
+  --color-bg-tertiary: #F0EAD8;
+  /* Warm Ivory */
+  --color-bg-dark: #1B2E1B;
+  /* Forest */
 
   /* Text Colors */
-  --color-text-primary: #1a1a1a;
-  --color-text-secondary: #4a4a4a;
-  --color-text-muted: #6b7280;
-  --color-text-light: #9ca3af;
-  --color-text-inverse: #ffffff;
+  --color-text-primary: #3C2415;
+  /* Bark Brown */
+  --color-text-secondary: #5C3A1E;
+  /* Mid Bark */
+  --color-text-muted: #7C8C6D;
+  /* Sage */
+  --color-text-light: #9EAB8A;
+  /* Light Sage */
+  --color-text-inverse: #FAF7F2;
+  /* Cream */
 
   /* Semantic Colors */
-  --color-success: #2d8659;
+  --color-success: #15803D;
   /* Trust Green */
-  --color-warning: #f59e0b;
-  /* Warning Yellow */
-  --color-error: #c94c4c;
+  --color-warning: #A16207;
+  /* Warning Gold */
+  --color-error: #DC2626;
   /* Alert Red */
   --color-info: #3b82f6;
   /* Info Blue */
@@ -60,18 +67,18 @@
   /* Dark Red - Extreme */
 
   /* Border Colors */
-  --color-border-light: #e5e7eb;
-  --color-border-default: #d1d5db;
-  --color-border-dark: #9ca3af;
+  --color-border-light: #E8DFD0;
+  --color-border-default: #D9CFBF;
+  --color-border-dark: #7C8C6D;
 
   /* =====================================
      TYPOGRAPHY SYSTEM
      ===================================== */
 
   /* Font Families */
-  --font-heading: 'Cormorant Garamond', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-body: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
-  --font-display: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+  --font-heading: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'Raleway', system-ui, sans-serif;
+  --font-display: 'Cormorant Garamond', Georgia, serif;
   --font-mono: 'Roboto Mono', 'Courier New', monospace;
 
   /* Font Sizes */
@@ -154,12 +161,12 @@
      SHADOWS
      ===================================== */
 
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
-  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
-  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.08);
-  --shadow-card-hover: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --shadow-sm: 0 1px 2px rgba(27, 46, 27, 0.06);
+  --shadow-md: 0 4px 6px rgba(27, 46, 27, 0.10);
+  --shadow-lg: 0 10px 15px rgba(27, 46, 27, 0.10);
+  --shadow-xl: 0 20px 25px rgba(27, 46, 27, 0.14);
+  --shadow-card: 0 2px 8px rgba(27, 46, 27, 0.08);
+  --shadow-card-hover: 0 8px 24px rgba(27, 46, 27, 0.14);
 
   /* =====================================
      TRANSITIONS
