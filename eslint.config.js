@@ -131,7 +131,7 @@ export default [
   },
   // Node scripts configuration
   {
-    files: ['scripts/**/*.{js,cjs}'],
+    files: ['scripts/**/*.{js,cjs,mjs}'],
     languageOptions: {
       globals: {
         console: 'readonly',
@@ -160,6 +160,9 @@ export default [
       '.vscode/**',
       '.git/**',
       'supabase/functions/**',
+      '.agent/**',
+      'scripts/**',
+      'runs.json',
     ],
   },
 ];
