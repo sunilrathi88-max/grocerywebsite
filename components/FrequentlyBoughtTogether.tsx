@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { Product, Variant } from '../types';
 import { OptimizedImage } from './OptimizedImage';
+import { getBundleSuggestions } from '../utils/recommendations';
 
 interface FrequentlyBoughtTogetherProps {
   currentProduct: Product;
@@ -13,39 +14,8 @@ const FrequentlyBoughtTogether: React.FC<FrequentlyBoughtTogetherProps> = ({
   allProducts,
   onAddBundleToCart,
 }) => {
-  // Simple rule-based logic for complementary products
   const complementaryProducts = useMemo(() => {
-    let suggestions: Product[] = [];
-
-    // Rule 1: Spices -> Suggest Cumin, Black Pepper, or Turmeric (if not current)
-    if (currentProduct.category === 'Spices') {
-      const staples = ['Cumin', 'Black Pepper', 'Turmeric', 'Coriander'];
-      suggestions = allProducts.filter(
-        (p) =>
-          p.category === 'Spices' &&
-          p.id !== currentProduct.id &&
-          staples.some((s) => p.name.includes(s))
-      );
-    }
-    // Rule 2: Tea -> Suggest Cardamom, Saffron, or Lemongrass
-    else if (currentProduct.category === 'Beverages') {
-      suggestions = allProducts.filter(
-        (p) =>
-          (p.name.includes('Cardamom') || p.name.includes('Saffron')) && p.id !== currentProduct.id
-      );
-    }
-    // Rule 3: Nuts -> Suggest other Nuts
-    else if (currentProduct.category === 'Nuts') {
-      suggestions = allProducts.filter((p) => p.category === 'Nuts' && p.id !== currentProduct.id);
-    }
-
-    // Fallback: Random robust suggestions
-    if (suggestions.length < 2) {
-      suggestions = allProducts.filter((p) => p.id !== currentProduct.id).slice(0, 5);
-    }
-
-    // Take top 2
-    return suggestions.slice(0, 2);
+    return getBundleSuggestions(currentProduct, allProducts);
   }, [currentProduct, allProducts]);
 
   if (complementaryProducts.length === 0) return null;

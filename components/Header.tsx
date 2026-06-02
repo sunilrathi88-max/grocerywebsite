@@ -176,6 +176,12 @@ const Header: React.FC<HeaderProps> = ({
                 placeholder="Search spices, masalas, saffron..."
                 value={searchQuery}
                 onChange={(e) => onSearchChange(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && searchQuery.trim()) {
+                    setAutocompleteOpen(false);
+                    navigate(`/collections/search?q=${encodeURIComponent(searchQuery.trim())}`);
+                  }
+                }}
                 onFocus={() => setAutocompleteOpen(true)}
                 className="w-full transition-all duration-300 bg-neutral-100 border-none rounded-full py-2.5 pl-6 pr-12 text-sm focus:ring-2 focus:ring-brand-primary/20 placeholder-neutral-500"
               />
@@ -458,6 +464,12 @@ const Header: React.FC<HeaderProps> = ({
                 placeholder="Search products..."
                 value={searchQuery}
                 onChange={(e) => onSearchChange(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && searchQuery.trim()) {
+                    setIsSearchOpen(false);
+                    navigate(`/collections/search?q=${encodeURIComponent(searchQuery.trim())}`);
+                  }
+                }}
                 className="w-full bg-neutral-100 border-none rounded-lg py-3 pl-4 pr-10 text-base focus:ring-2 focus:ring-brand-primary/20"
               />
             </m.div>

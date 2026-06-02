@@ -517,8 +517,10 @@ const Cart: React.FC<CartProps> = ({
 
       {/* Recommendations */}
       {recommendedProducts.length > 0 && onAddToCart && (
-        <div className="mt-6 border-t pt-6 bg-gray-50 -mx-6 px-6 pb-6">
-          <h4 className="font-bold text-gray-800 mb-3 text-sm">Customers also bought</h4>
+        <div className="mt-6 border-t pt-6 bg-gradient-to-b from-orange-50 to-[#FAF6F2] -mx-6 px-6 pb-6">
+          <h4 className="font-black text-[#42210B] uppercase tracking-wide mb-3 text-xs flex items-center gap-2">
+            <span className="text-[#B38B59] text-sm">✦</span> You might also like
+          </h4>
           <div className="space-y-3">
             {recommendedProducts
               .filter((p) => !items.some((i) => i.productId === p.id))

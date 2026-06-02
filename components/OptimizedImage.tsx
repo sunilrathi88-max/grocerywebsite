@@ -152,7 +152,10 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
           isLoaded ? 'opacity-100' : 'opacity-0'
         } transition-opacity duration-300 ease-in-out`}
         loading={loading}
-        fetchPriority={priority === 'high' ? 'high' : 'auto'}
+        // Use lowercase fetchpriority to avoid React DOM prop warning
+        {...({
+          fetchpriority: priority === 'high' ? 'high' : 'auto',
+        } as React.ImgHTMLAttributes<HTMLImageElement>)}
         width={width}
         height={height}
         onLoad={handleLoad}

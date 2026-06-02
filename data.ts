@@ -6,7 +6,7 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Himalayan Saffron (Kesar)',
     description:
       'Known as "Red Gold," our Himalayan Saffron is hand-harvested from the pristine valleys of Kashmir. These deep crimson strands (Mongra grade) possess a potent aroma and flavor. Your dishes will taste alive—never bland again.',
-    images: ['/images/products/saffron-kesar-front.jpg', '/images/products/saffron-kesar-back.jpg'],
+    images: ['/images/lifestyle/saffron_lifestyle.jpg', '/images/products/saffron-kesar-back.jpg'],
     videos: ['https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4'],
     category: 'Spices',
     variants: [
@@ -67,7 +67,7 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Malabar Black Pepper (Kali Mirch)',
     description:
       'Sourced directly from the Malabar coast, these bold black peppercorns are sun-dried to preserve their sharp, biting heat and complex citrusy aroma. Rich in piperine for a robust kick. Your dishes will taste alive—never bland again.',
-    images: ['/images/products/tattv-malabar-black-pepper-front.png'],
+    images: ['/images/lifestyle/pepper_lifestyle.png'],
     category: 'Spices',
     variants: [{ id: 201, name: '250g', price: 300, stock: 30 }],
     reviews: [
@@ -93,7 +93,7 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'California Almonds (Badam)',
     description:
       'Sourced from the best orchards in California, Tattv Almonds are sweet, crunchy, and packed with healthy fats, protein, and Vitamin E. Perfect for snacking or making rich Badam milk.',
-    images: ['/images/products/almonds-badam-front.jpg'],
+    images: ['/images/lifestyle/almonds_lifestyle.jpg'],
     category: 'Nuts',
     variants: [
       { id: 301, name: '500g', price: 500, stock: 20 },
@@ -123,10 +123,7 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Salem Turmeric Powder (Haldi)',
     description:
       'The Golden Standard of Purity. Sourced from the Salem region of Tamil Nadu, known for its rich essential oils and high curcumin content. This deep golden-orange powder is pure, healing, and free from artificial colors. Your dishes will taste alive—never bland again.',
-    images: [
-      '/images/products/turmeric-powder-front.jpg',
-      '/images/products/turmeric-powder-back.jpg',
-    ],
+    images: ['/images/lifestyle/haldi_lifestyle.jpg', '/images/products/turmeric-powder-back.jpg'],
     category: 'Spices',
     variants: [
       { id: 401, name: '200g', price: 100, stock: 5 },
@@ -201,7 +198,7 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Goan Cashew Nuts (Kaju)',
     description:
       'Experience the superior taste of Indian cashews. Renowned for their large size, ivory color, and naturally sweet, buttery taste. Expertly processed to ensure they remain whole and crunchy.',
-    images: ['/images/products/cashew-kaju-front.png'],
+    images: ['/images/lifestyle/cashew_lifestyle.jpg'],
     category: 'Nuts',
     variants: [
       { id: 801, name: '250g', price: 350, stock: 0 },
@@ -230,7 +227,7 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Coorg Green Cardamom (Elaichi)',
     description:
       'Grown in the misty hills of Coorg, handpicked at peak ripeness. Bursting with sweet, floral notes and refreshing menthol undertones. Essential for Masala Chai and rich desserts.',
-    images: ['/images/products/tattv-coorg-green-cardamom-front.jpg'],
+    images: ['/images/lifestyle/cardamom_lifestyle.png'],
     category: 'Spices',
     variants: [{ id: 1001, name: '50g', price: 250, stock: 30 }],
     reviews: [],
@@ -248,7 +245,7 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Cinnamon Bark (Dalchini)',
     description:
       'Provides a warm, sweet-spicy flavor profile. Perfect for steeping in tea, adding to rice pilafs, or grinding into baking spice mixes. Adds natural sweetness without sugar.',
-    images: ['/images/products/tattv-cinnamon-bark-front.png'],
+    images: ['/images/lifestyle/cinnamon_lifestyle.png'],
     category: 'Spices',
     variants: [{ id: 1101, name: '100g', price: 120, stock: 25 }],
     reviews: [],
@@ -267,7 +264,7 @@ export const MOCK_PRODUCTS: Product[] = [
     description:
       'Discover the Legend of Mathania. Sourced directly from the arid soils of Jodhpur, this "Red Gold" delivers a unique pungent heat and vibrant color perfect for authentic Rajasthani marinades and curries.',
     images: [
-      '/images/products/red-chilli-powder-front.jpg',
+      '/images/lifestyle/mirch_lifestyle.jpg',
       '/images/products/red-chilli-powder-back.jpg',
     ],
     category: 'Spices',
@@ -301,7 +298,7 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Whole Coriander Seeds (Sabut Dhaniya)',
     description:
       'Light, crisp, and full of citrusy, woody notes. Perfect for dry roasting and grinding fresh at home, or for crushing coarsely into Samosa fillings and pickles.',
-    images: ['/images/products/coriander-seeds-whole.jpg'],
+    images: ['/images/lifestyle/dhaniya_lifestyle.jpg'],
     category: 'Spices',
     variants: [{ id: 1301, name: '200g', price: 80, stock: 45 }],
     reviews: [],
@@ -329,7 +326,7 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Premium Cumin Seeds (Jeera)',
     description:
       'Cleaned and sorted to ensure zero dust or stones. They release an intense, nutty, and earthy aroma when tempered in hot oil/ghee. A digestive aid and flavor powerhouse.',
-    images: ['/images/products/tattv-cumin-seeds-front.jpg'],
+    images: ['/images/lifestyle/cumin_lifestyle.png'],
     category: 'Spices',
     variants: [{ id: 1401, name: '200g', price: 120, stock: 50 }],
     reviews: [],
@@ -357,7 +354,7 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Fennel Seeds (Saunf)',
     description:
       'Vibrant green and naturally sweet. Traditionally used as a post-meal digestive and mouth freshener (Mukhwas), they add a subtle anise-like sweetness to curries and pickles.',
-    images: ['/images/products/tattv-fennel-seeds-front.jpg'],
+    images: ['/images/lifestyle/fennel_lifestyle.png'],
     category: 'Spices',
     variants: [{ id: 1501, name: '200g', price: 130, stock: 40 }],
     reviews: [],
@@ -385,7 +382,7 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Small Mustard Seeds (Rai)',
     description:
       'Small in size but big on flavor. These seeds pop with a nutty, pungent kick when tempered. Essential for South Indian curries, pickles, and Bengali fish dishes.',
-    images: ['/images/products/tattv-mustard-seeds-rai-front.jpg'],
+    images: ['/images/lifestyle/mustard_lifestyle.png'],
     category: 'Spices',
     variants: [{ id: 1801, name: '200g', price: 60, stock: 60 }],
     reviews: [],
@@ -403,7 +400,7 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Fenugreek Seeds (Methi Dana)',
     description:
       'Known for their maple-like aroma and subtle bitterness. A staple for pickles and Sambars. Rich in fiber and known to support blood sugar health.',
-    images: ['/images/products/tattv-fenugreek-seeds-front.png'],
+    images: ['/images/lifestyle/fenugreek_lifestyle.png'],
     category: 'Spices',
     variants: [{ id: 1901, name: '200g', price: 60, stock: 40 }],
     reviews: [],
@@ -422,7 +419,7 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Premium Pistachios (Pista)',
     description:
       'Roasted to perfection to bring out their nutty flavor. Bursting with vibrant green kernels inside naturally open shells. A fiber-rich snack that is as delicious as it is healthy.',
-    images: ['/images/products/pistachios-pista-front.jpg'],
+    images: ['/images/lifestyle/pistachios_lifestyle.jpg'],
     category: 'Nuts',
     variants: [{ id: 2201, name: '200g', price: 350, stock: 30 }],
     reviews: [],
@@ -440,7 +437,7 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Premium Walnut Kernels (Akhrot)',
     description:
       'Fresh, earthy, and mildly bitter-sweet. Shelled carefully to keep the butterfly halves intact. Rich in Omega-3 fatty acids, the ultimate brain food.',
-    images: ['/images/products/walnuts-akhrot-front.jpg'],
+    images: ['/images/lifestyle/walnuts_lifestyle.jpg'],
     category: 'Nuts',
     variants: [{ id: 2301, name: '500g', price: 500, stock: 20 }],
     reviews: [],
@@ -458,9 +455,7 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Premium Raisins (Kishmish)',
     description:
       'Dried to a golden-brown perfection. Plump, juicy, and naturally sweet. Perfect for adding to Kheer, Pulao, or eating by the handful for an instant energy boost.',
-    images: [
-      'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
-    ],
+    images: ['/images/lifestyle/raisins_lifestyle.png'],
     category: 'Dry Fruits',
     variants: [{ id: 2401, name: '500g', price: 350, stock: 50 }],
     reviews: [],
@@ -471,7 +466,7 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Dried Figs (Anjeer)',
     description:
       'Rope dried to concentrate their sweetness and form a chewy, seed-filled texture. Known for high fiber and calcium content, a delicious natural treat.',
-    images: ['/images/products/dried-figs-ajeer.png'],
+    images: ['/images/lifestyle/figs_lifestyle.png'],
     category: 'Dry Fruits',
     variants: [{ id: 2501, name: '250g', price: 399, stock: 30 }],
     reviews: [],
@@ -483,7 +478,7 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Premium Chai Masala',
     description:
       'The Soul of Your Morning Cup. A natural blend dominated by premium Green Cardamom and dry Ginger, balanced with Clove and Cinnamon. No sugar, no fillers—just 100% pure aromatic spices.',
-    images: ['/images/products/chai-masala-front.jpg', '/images/products/chai-masala-back.jpg'],
+    images: ['/images/lifestyle/chai_masala_lifestyle.png'],
     category: 'Spices',
     variants: [{ id: 2701, name: '100g', price: 200, stock: 40 }],
     reviews: [],
@@ -496,7 +491,7 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Royal Garam Masala',
     description:
       'A Symphony of Spices. A premium blend of 15+ dry-roasted whole spices, including Cardamom and Mace. Just a pinch at the end of cooking transforms a simple dish into a gourmet feast.',
-    images: ['/images/products/garam-masala-front.jpg', '/images/products/garam-masala-back.jpg'],
+    images: ['/images/lifestyle/garam_masala_lifestyle.png'],
     category: 'Spices',
     variants: [{ id: 2801, name: '100g', price: 220, stock: 35 }],
     reviews: [],
@@ -519,10 +514,7 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Organic Coriander Powder (Dhaniya)',
     description:
       'Freshness You Can Smell. Stone-ground from organic coriander seeds to preserve the volatile oils responsible for that citrusy aroma. The perfect thickener and flavor enhancer for gravies.',
-    images: [
-      '/images/products/coriander-powder-front.jpg',
-      '/images/products/coriander-powder-back.jpg',
-    ],
+    images: ['/images/lifestyle/coriander_lifestyle.png'],
     category: 'Spices',
     variants: [
       { id: 2901, name: '200g', price: 130, stock: 45 },
@@ -543,6 +535,51 @@ export const MOCK_PRODUCTS: Product[] = [
       "High linalool content from the region's semi-arid microclimate",
       'Cold-ground to preserve citrusy, floral aromatic profile',
       'Certified organic · No pesticide residues detected in lab testing',
+    ],
+  },
+  {
+    id: 30,
+    name: 'Heritage Wooden Gift Box',
+    description:
+      'A luxurious Rajasthani heritage spice gift box with a textured wooden finish and subtle gold inlay accents. Curated with premium saffron threads and cold-ground Salem turmeric. The perfect premium gift for culinary enthusiasts.',
+    images: ['/images/lifestyle/gift_box_lifestyle.png'],
+    category: 'Gift Sets',
+    variants: [{ id: 3001, name: '1 Box', price: 2500, stock: 15 }],
+    reviews: [],
+    tags: ['Gift Sets', 'Premium', 'Saffron', 'Turmeric'],
+    origin: 'Rajasthan, India',
+    harvestDate: 'Current Season',
+    storage: 'Cool, dry place',
+    shortName: 'Heritage Box',
+    emoji: '🎁',
+    badge: 'Premium Gift',
+    usp: 'Handcrafted wooden box · Premium authentic spices',
+    features: [
+      'Luxurious Rajasthani heritage design with gold inlay',
+      'Includes premium Mongra Saffron and Salem Turmeric',
+      'Beautifully packed in glass vials to preserve freshness',
+    ],
+  },
+  {
+    id: 31,
+    name: 'Festive Premium Hamper',
+    description:
+      'Celebrate with flavor. A luxurious festive spice hamper containing assorted Indian spices like green cardamom, cloves, and premium Mathania red chilli powder, beautifully arranged in open brass bowls.',
+    images: ['/images/lifestyle/festive_hamper_lifestyle.png'],
+    category: 'Gift Sets',
+    variants: [{ id: 3101, name: '1 Hamper', price: 1800, stock: 20 }],
+    reviews: [],
+    tags: ['Gift Sets', 'Festive', 'Holiday'],
+    origin: 'India',
+    storage: 'Cool, dry place',
+    shortName: 'Festive Hamper',
+    emoji: '🎊',
+    badge: 'Best Value',
+    usp: 'Perfect for festive gifting · Assorted whole spices',
+    features: [
+      'Includes assorted whole spices like cardamom and cloves',
+      'Features authentic Mathania Red Chilli Powder',
+      'Presented in a premium festive hamper',
     ],
   },
 ];

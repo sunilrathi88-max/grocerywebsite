@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronRightIcon } from './icons/ChevronRightIcon';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowUp } from 'lucide-react';
 
 interface BackToTopProps {
   showAfter?: number;
@@ -8,33 +9,69 @@ interface BackToTopProps {
 
 const BackToTop: React.FC<BackToTopProps> = ({ showAfter = 500, className = '' }) => {
   const [isVisible, setIsVisible] = useState(false);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const toggleVisibility = () => {
-      setIsVisible(window.scrollY > showAfter);
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const docHeight = document.body.scrollHeight - window.innerHeight;
+      setIsVisible(scrollY > showAfter);
+      setProgress(docHeight > 0 ? (scrollY / docHeight) * 100 : 0);
     };
-
-    window.addEventListener('scroll', toggleVisibility);
-    return () => window.removeEventListener('scroll', toggleVisibility);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
   }, [showAfter]);
 
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
-  };
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
-  if (!isVisible) return null;
+  const radius = 18;
+  const circumference = 2 * Math.PI * radius;
+  const strokeDashoffset = circumference - (progress / 100) * circumference;
 
   return (
-    <button
-      onClick={scrollToTop}
-      className={`fixed bottom-24 right-6 z-40 w-12 h-12 bg-neutral-800 hover:bg-neutral-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center animate-fadeIn ${className}`}
-      aria-label="Back to top"
-    >
-      <ChevronRightIcon className="w-5 h-5 -rotate-90" />
-    </button>
+    <AnimatePresence>
+      {isVisible && (
+        <motion.button
+          initial={{ opacity: 0, scale: 0.7, y: 10 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.7, y: 10 }}
+          transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+          onClick={scrollToTop}
+          aria-label="Back to top"
+          className={`fixed bottom-24 right-6 z-40 w-12 h-12 flex items-center justify-center ${className}`}
+          style={{
+            background: 'linear-gradient(135deg, #B38B59, #8C6D45)',
+            borderRadius: '50%',
+            boxShadow: '0 4px 20px rgba(179,139,89,0.45)',
+          }}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.92 }}
+        >
+          {/* Progress ring */}
+          <svg
+            className="absolute inset-0 w-full h-full -rotate-90"
+            viewBox="0 0 48 48"
+            fill="none"
+          >
+            {/* Track */}
+            <circle cx="24" cy="24" r={radius} stroke="rgba(255,255,255,0.2)" strokeWidth="2.5" />
+            {/* Progress */}
+            <circle
+              cx="24"
+              cy="24"
+              r={radius}
+              stroke="white"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeDasharray={circumference}
+              strokeDashoffset={strokeDashoffset}
+              style={{ transition: 'stroke-dashoffset 0.15s ease-out' }}
+            />
+          </svg>
+          <ArrowUp size={16} className="text-white relative z-10" strokeWidth={2.5} />
+        </motion.button>
+      )}
+    </AnimatePresence>
   );
 };
 

@@ -1,10 +1,10 @@
 import React, { useState, useMemo } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { Product, Variant } from '../../../types';
 import { useProducts } from '../../../hooks/useProducts';
 import { useCart } from '../../../hooks/useCart';
 import StarRating from './StarRating';
 import { UniversalProductCard as ProductCard } from '../../../components/UniversalProductCard';
+import FrequentlyBoughtTogether from '../../../components/FrequentlyBoughtTogether';
 import {
   ShieldCheck,
   Truck,
@@ -283,6 +283,19 @@ const ProductDetailPage: React.FC = () => {
             </div>
           </div>
         </div>
+
+        {/* Frequently Bought Together */}
+        <FrequentlyBoughtTogether
+          currentProduct={product}
+          allProducts={products}
+          onAddBundleToCart={(bundleProducts) => {
+            bundleProducts.forEach((p) => {
+              addToCart(p, p.variants[0], 1);
+            });
+            setAdded(true);
+            setTimeout(() => setAdded(false), 2000);
+          }}
+        />
 
         {/* Related Products */}
         {related.length > 0 && (

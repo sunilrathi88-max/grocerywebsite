@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any, no-console */
 import { BlogPost } from '../../types';
 
 // Simple browser-safe frontmatter parser to avoid Buffer dependency

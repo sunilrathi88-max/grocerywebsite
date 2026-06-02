@@ -15,21 +15,21 @@ interface ABTestProviderProps {
 }
 
 export const ABTestProvider: React.FC<ABTestProviderProps> = ({ children }) => {
-  const [variant] = useState<Variant>(() => {
-    if (typeof window === 'undefined') return 'A'; // SSR safety
+  const [variant, setVariant] = useState<Variant>('A'); // Always start with A (matching SSR)
 
-    // 1. Check if user already has a variant assignments
+  React.useEffect(() => {
+    // 1. Check if user already has a variant assignment
     const storedVariant = localStorage.getItem('ab_test_variant') as Variant | null;
 
     if (storedVariant && (storedVariant === 'A' || storedVariant === 'B')) {
-      return storedVariant;
+      setVariant(storedVariant);
+    } else {
+      // 2. Assign new variant (50/50 split)
+      const newVariant: Variant = Math.random() < 0.5 ? 'A' : 'B';
+      localStorage.setItem('ab_test_variant', newVariant);
+      setVariant(newVariant);
     }
-
-    // 2. Assign new variant (50/50 split)
-    const newVariant: Variant = Math.random() < 0.5 ? 'A' : 'B';
-    localStorage.setItem('ab_test_variant', newVariant);
-    return newVariant;
-  });
+  }, []);
 
   // Track experiment view on mount (simplified)
   React.useEffect(() => {

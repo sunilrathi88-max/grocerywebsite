@@ -1,11 +1,7 @@
 import React from 'react';
-import { HomeIcon } from './icons/HomeIcon';
-import { ShoppingCartIcon } from './icons/ShoppingCartIcon';
-import { HeartIcon } from './icons/HeartIcon';
-import { UserIcon } from './icons/UserIcon';
-import { TagIcon } from './icons/TagIcon';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { Home, ShoppingCart, Heart, User, Tag } from 'lucide-react';
 
 interface MobileBottomNavProps {
   cartItemCount: number;
@@ -21,7 +17,6 @@ const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
   wishlistItemCount,
   onOpenCart,
   onOpenWishlist,
-  onOpenMenu: _onOpenMenu,
   currentView,
 }) => {
   const navigate = useNavigate();
@@ -31,22 +26,15 @@ const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
   React.useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      const scrollThreshold = 10;
-
-      if (currentScrollY < scrollThreshold) {
-        // Always show when at top
+      if (currentScrollY < 10) {
         setIsVisible(true);
       } else if (currentScrollY > lastScrollY + 5) {
-        // Scrolling down - hide
         setIsVisible(false);
       } else if (currentScrollY < lastScrollY - 5) {
-        // Scrolling up - show
         setIsVisible(true);
       }
-
       setLastScrollY(currentScrollY);
     };
-
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, [lastScrollY]);
@@ -54,113 +42,135 @@ const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
   const navItems = [
     {
       id: 'home',
-      name: 'Home',
-      icon: HomeIcon,
+      label: 'Home',
+      icon: Home,
       action: () => navigate('/'),
       isActive: currentView === 'home',
     },
     {
       id: 'shop',
-      name: 'Shop',
-      icon: TagIcon,
+      label: 'Shop',
+      icon: Tag,
       action: () => navigate('/shop'),
       isActive: currentView === 'shop',
     },
     {
       id: 'cart',
-      name: 'Cart',
-      icon: ShoppingCartIcon,
+      label: 'Cart',
+      icon: ShoppingCart,
       action: onOpenCart,
       isActive: false,
       badge: cartItemCount,
     },
     {
       id: 'wishlist',
-      name: 'Wishlist',
-      icon: HeartIcon,
+      label: 'Saved',
+      icon: Heart,
       action: onOpenWishlist,
       isActive: false,
       badge: wishlistItemCount,
     },
     {
-      id: 'profile',
-      name: 'Profile',
-      icon: UserIcon,
-      action: () => navigate('/profile'),
+      id: 'account',
+      label: 'Account',
+      icon: User,
+      action: () => navigate('/account'),
       isActive: currentView === 'profile' || currentView === 'login' || currentView === 'account',
     },
   ];
 
   return (
-    <motion.nav
-      className="fixed bottom-0 left-0 right-0 z-[100] md:hidden pb-safe"
+    <motion.div
+      className="fixed bottom-0 left-0 right-0 z-[100] md:hidden"
+      style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
       initial={{ y: 0 }}
       animate={{ y: isVisible ? 0 : 100 }}
-      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+      transition={{ type: 'spring', stiffness: 350, damping: 35 }}
     >
-      {/* Glassmorphism Background */}
-      <div className="absolute inset-0 bg-white/90 backdrop-blur-lg border-t border-white/20 shadow-[0_-4px_20px_rgba(0,0,0,0.05)]" />
+      {/* The floating pill container */}
+      <div className="px-3 pb-3">
+        <div
+          className="relative flex items-center justify-around rounded-[28px] overflow-hidden"
+          style={{
+            background: 'rgba(15, 7, 4, 0.92)',
+            backdropFilter: 'blur(20px) saturate(180%)',
+            WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+            border: '1px solid rgba(255,255,255,0.08)',
+            boxShadow: '0 8px 40px rgba(0,0,0,0.4), 0 2px 8px rgba(0,0,0,0.2)',
+            height: '64px',
+          }}
+        >
+          {/* Active background pill (slides) */}
 
-      <div className="relative flex justify-around items-center h-[60px] px-2">
-        {navItems.map((item) => {
-          const Icon = item.icon;
-          const isActive = item.isActive;
+          {navItems.map((item) => {
+            const Icon = item.icon;
+            const isActive = item.isActive;
 
-          return (
-            <button
-              key={item.id}
-              onClick={item.action}
-              aria-label={item.name}
-              className="relative flex flex-col items-center justify-center w-full h-full min-h-[44px]"
-            >
-              <div className="relative p-1">
-                <motion.div
-                  initial={false}
-                  animate={{
-                    scale: isActive ? 1.1 : 1,
-                    color: isActive ? '#D4A017' : '#6B7280', // brand-primary vs neutral-500
-                  }}
-                  transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                >
-                  <Icon className="h-6 w-6" />
-                </motion.div>
-
-                {/* Badge Animation */}
-                <AnimatePresence>
-                  {item.badge && item.badge > 0 && (
-                    <motion.span
-                      initial={{ scale: 0, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      exit={{ scale: 0, opacity: 0 }}
-                      className="absolute -top-2 -right-2 bg-accent-red text-white text-[10px] font-bold px-1 py-0.5 rounded-full min-w-[18px] h-[18px] flex items-center justify-center border-2 border-white shadow-sm z-10"
-                    >
-                      {item.badge}
-                    </motion.span>
-                  )}
-                </AnimatePresence>
-
-                {/* Active Indicator Dot */}
+            return (
+              <button
+                key={item.id}
+                onClick={item.action}
+                aria-label={item.label}
+                className="relative flex-1 flex flex-col items-center justify-center h-full gap-1 transition-all"
+              >
+                {/* Active bg pill */}
                 {isActive && (
                   <motion.div
-                    layoutId="activeTab"
-                    className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-1 h-1 bg-brand-primary rounded-full"
-                    transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+                    layoutId="activePill"
+                    className="absolute inset-x-1 inset-y-2 rounded-2xl"
+                    style={{ background: 'rgba(179,139,89,0.18)' }}
+                    transition={{ type: 'spring', stiffness: 500, damping: 40 }}
                   />
                 )}
-              </div>
 
-              <span
-                className={`text-[11px] font-medium mt-0.5 transition-colors ${
-                  isActive ? 'text-brand-primary' : 'text-neutral-500'
-                }`}
-              >
-                {item.name}
-              </span>
-            </button>
-          );
-        })}
+                <div className="relative">
+                  {/* Badge */}
+                  <AnimatePresence>
+                    {item.badge && item.badge > 0 && (
+                      <motion.span
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        exit={{ scale: 0 }}
+                        className="absolute -top-2 -right-2.5 min-w-[17px] h-[17px] flex items-center justify-center text-[9px] font-black rounded-full z-10"
+                        style={{
+                          background: 'linear-gradient(135deg, #B38B59, #8C6D45)',
+                          color: 'white',
+                          boxShadow: '0 1px 6px rgba(179,139,89,0.5)',
+                          padding: '0 3px',
+                        }}
+                      >
+                        {item.badge > 9 ? '9+' : item.badge}
+                      </motion.span>
+                    )}
+                  </AnimatePresence>
+
+                  <motion.div
+                    animate={{
+                      scale: isActive ? 1.1 : 1,
+                    }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+                  >
+                    <Icon
+                      size={20}
+                      strokeWidth={isActive ? 2.5 : 1.8}
+                      className="transition-colors"
+                      style={{ color: isActive ? '#B38B59' : 'rgba(255,255,255,0.4)' }}
+                    />
+                  </motion.div>
+                </div>
+
+                <span
+                  className="text-[9px] font-bold uppercase tracking-widest transition-colors relative"
+                  style={{ color: isActive ? '#B38B59' : 'rgba(255,255,255,0.3)' }}
+                >
+                  {item.label}
+                </span>
+              </button>
+            );
+          })}
+        </div>
       </div>
-    </motion.nav>
+    </motion.div>
   );
 };
 

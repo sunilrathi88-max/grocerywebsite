@@ -9,49 +9,49 @@
 
 :root {
   /* Primary Brand Colors */
-  --color-primary: #1B2E1B;
+  --color-primary: #1b2e1b;
   /* Forest Green */
-  --color-primary-dark: #3C2415;
+  --color-primary-dark: #3c2415;
   /* Bark Brown */
-  --color-primary-light: #2D4A2D;
+  --color-primary-light: #2d4a2d;
   /* Light Forest */
 
   /* Accent Colors */
-  --color-accent-gold: #A16207;
+  --color-accent-gold: #a16207;
   /* Amber Gold */
-  --color-accent-cream: #FAF7F2;
+  --color-accent-cream: #faf7f2;
   /* Warm Cream */
-  --color-accent-brown: #3C2415;
+  --color-accent-brown: #3c2415;
   /* Bark Brown */
 
   /* Background Colors */
-  --color-bg-primary: #FAF7F2;
+  --color-bg-primary: #faf7f2;
   /* Warm Cream */
-  --color-bg-secondary: #FAF7F2;
+  --color-bg-secondary: #faf7f2;
   /* Warm Cream */
-  --color-bg-tertiary: #F0EAD8;
+  --color-bg-tertiary: #f0ead8;
   /* Warm Ivory */
-  --color-bg-dark: #1B2E1B;
+  --color-bg-dark: #1b2e1b;
   /* Forest */
 
   /* Text Colors */
-  --color-text-primary: #3C2415;
+  --color-text-primary: #3c2415;
   /* Bark Brown */
-  --color-text-secondary: #5C3A1E;
+  --color-text-secondary: #5c3a1e;
   /* Mid Bark */
-  --color-text-muted: #7C8C6D;
+  --color-text-muted: #7c8c6d;
   /* Sage */
-  --color-text-light: #9EAB8A;
+  --color-text-light: #9eab8a;
   /* Light Sage */
-  --color-text-inverse: #FAF7F2;
+  --color-text-inverse: #faf7f2;
   /* Cream */
 
   /* Semantic Colors */
-  --color-success: #15803D;
+  --color-success: #15803d;
   /* Trust Green */
-  --color-warning: #A16207;
+  --color-warning: #a16207;
   /* Warning Gold */
-  --color-error: #DC2626;
+  --color-error: #dc2626;
   /* Alert Red */
   --color-info: #3b82f6;
   /* Info Blue */
@@ -67,9 +67,9 @@
   /* Dark Red - Extreme */
 
   /* Border Colors */
-  --color-border-light: #E8DFD0;
-  --color-border-default: #D9CFBF;
-  --color-border-dark: #7C8C6D;
+  --color-border-light: #e8dfd0;
+  --color-border-default: #d9cfbf;
+  --color-border-dark: #7c8c6d;
 
   /* =====================================
      TYPOGRAPHY SYSTEM
@@ -162,8 +162,8 @@
      ===================================== */
 
   --shadow-sm: 0 1px 2px rgba(27, 46, 27, 0.06);
-  --shadow-md: 0 4px 6px rgba(27, 46, 27, 0.10);
-  --shadow-lg: 0 10px 15px rgba(27, 46, 27, 0.10);
+  --shadow-md: 0 4px 6px rgba(27, 46, 27, 0.1);
+  --shadow-lg: 0 10px 15px rgba(27, 46, 27, 0.1);
   --shadow-xl: 0 20px 25px rgba(27, 46, 27, 0.14);
   --shadow-card: 0 2px 8px rgba(27, 46, 27, 0.08);
   --shadow-card-hover: 0 8px 24px rgba(27, 46, 27, 0.14);

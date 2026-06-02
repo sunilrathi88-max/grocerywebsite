@@ -1,4 +1,6 @@
 import React from 'react';
+import { motion } from 'framer-motion';
+import { AlertCircle, CheckCircle2, Clock, Zap } from 'lucide-react';
 
 interface StockBadgeProps {
   stock: number;
@@ -21,14 +23,12 @@ const StockBadge: React.FC<StockBadgeProps> = ({
     // Back in stock takes priority
     if (isBackInStock && stock > 0) {
       return {
-        label: '🎉 Back in Stock!',
-        color: 'bg-green-100 text-green-800 border-green-200',
+        label: 'Back in Stock!',
+        bg: 'bg-emerald-50',
+        text: 'text-emerald-700',
+        border: 'border-emerald-100',
+        icon: <CheckCircle2 size={13} className="text-emerald-500" />,
         animate: true,
-        icon: (
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-          </svg>
-        ),
       };
     }
 
@@ -38,86 +38,77 @@ const StockBadge: React.FC<StockBadgeProps> = ({
         const formattedDate = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
         return {
           label: `Available ${formattedDate}`,
-          color: 'bg-blue-100 text-blue-800 border-blue-200',
+          bg: 'bg-stone-50',
+          text: 'text-stone-500',
+          border: 'border-stone-200',
+          icon: <Clock size={13} className="text-stone-400" />,
           animate: false,
-          icon: (
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
-          ),
         };
       }
       return {
         label: 'Out of Stock',
-        color: 'bg-red-100 text-red-800 border-red-200',
+        bg: 'bg-stone-100',
+        text: 'text-stone-400',
+        border: 'border-stone-200',
+        icon: <AlertCircle size={13} />,
         animate: false,
-        icon: (
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
-        ),
       };
     }
 
     if (stock <= lowStockThreshold) {
       return {
-        label: `Only ${stock} left!`,
-        color: 'bg-orange-100 text-orange-800 border-orange-200',
+        label: `Only ${stock} left`,
+        bg: 'bg-orange-50',
+        text: 'text-orange-700',
+        border: 'border-orange-100',
+        icon: <Zap size={13} className="text-orange-500 fill-orange-500" />,
         animate: true,
-        icon: (
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-            />
-          </svg>
-        ),
       };
     }
 
     // Popular items
     if (isPopular) {
       return {
-        label: '🔥 Selling Fast',
-        color: 'bg-amber-100 text-amber-800 border-amber-200',
+        label: 'High Demand',
+        bg: 'bg-[#B38B59]/10',
+        text: 'text-[#B38B59]',
+        border: 'border-[#B38B59]/20',
+        icon: <Zap size={13} className="fill-[#B38B59]" />,
         animate: true,
-        icon: null,
       };
     }
 
     return {
       label: 'In Stock',
-      color: 'bg-green-100 text-green-800 border-green-200',
+      bg: 'bg-emerald-50/50',
+      text: 'text-emerald-600',
+      border: 'border-emerald-100/50',
+      icon: <CheckCircle2 size={13} />,
       animate: false,
-      icon: (
-        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-        </svg>
-      ),
     };
   };
 
   const status = getStockStatus();
 
   return (
-    <div
-      className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border ${status.color} ${status.animate ? 'animate-pulse' : ''} ${className}`}
+    <motion.div
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-wider border shadow-sm ${status.bg} ${status.text} ${status.border} ${className}`}
     >
-      {status.icon}
+      {status.animate && (
+        <span className="relative flex h-1.5 w-1.5">
+          <span
+            className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${status.text.replace('text-', 'bg-')}`}
+          ></span>
+          <span
+            className={`relative inline-flex rounded-full h-1.5 w-1.5 ${status.text.replace('text-', 'bg-')}`}
+          ></span>
+        </span>
+      )}
+      {!status.animate && status.icon}
       <span>{status.label}</span>
-    </div>
+    </motion.div>
   );
 };
 

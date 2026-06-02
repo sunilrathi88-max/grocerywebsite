@@ -72,7 +72,7 @@ const FarmerSpotlight: React.FC = () => {
 
             <div className="mt-10">
               <Link
-                to="/farmers"
+                to="/about"
                 className="inline-flex items-center text-[#1c1917] font-bold border-b-2 border-[#c2410c] pb-1 hover:text-[#c2410c] transition-colors"
               >
                 Read Rajesh's Full Story

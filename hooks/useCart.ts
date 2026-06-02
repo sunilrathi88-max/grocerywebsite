@@ -35,8 +35,7 @@ export const useCart = (): UseCartReturn => {
         return [];
       }
     },
-    staleTime: Infinity, // Local state, effectively
-    initialData: [],
+    staleTime: Infinity,
   });
 
   // --- Mutations ---

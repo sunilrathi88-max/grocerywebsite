@@ -1,4 +1,5 @@
 import React, { useState, useRef, useMemo, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Product, Review, ToastMessage, Variant, Recipe } from '../types';
 import { XIcon } from './icons/XIcon';
 import { OptimizedImage } from './OptimizedImage';
@@ -89,6 +90,7 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
     product.variants.find((v) => v.stock > 0) || product.variants[0]
   );
   const [quantity, setQuantity] = useState(1);
+  const navigate = useNavigate();
 
   // Reset quantity on product change handled by key prop on container
   // useEffect(() => {
@@ -430,44 +432,75 @@ const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                         Notify Me
                       </button>
                     ) : (
-                      <button
-                        ref={mainButtonRef}
-                        disabled={isOutOfStock}
-                        onClick={() => {
-                          const finalPrice = isSubscription
-                            ? Math.floor(
-                                (onSale ? selectedVariant.salePrice! : selectedVariant.price) * 0.9
-                              )
-                            : onSale
-                              ? selectedVariant.salePrice!
-                              : selectedVariant.price;
+                      <div className="flex gap-2 flex-1 w-full">
+                        <button
+                          ref={mainButtonRef}
+                          disabled={isOutOfStock}
+                          onClick={() => {
+                            const finalPrice = isSubscription
+                              ? Math.floor(
+                                  (onSale ? selectedVariant.salePrice! : selectedVariant.price) *
+                                    0.9
+                                )
+                              : onSale
+                                ? selectedVariant.salePrice!
+                                : selectedVariant.price;
 
-                          const variantToAdd = isSubscription
-                            ? {
-                                ...selectedVariant,
-                                price: finalPrice,
-                                salePrice: undefined,
-                                name: selectedVariant.name + ' (Subscribed)',
-                              }
-                            : selectedVariant;
+                            const variantToAdd = isSubscription
+                              ? {
+                                  ...selectedVariant,
+                                  price: finalPrice,
+                                  salePrice: undefined,
+                                  name: selectedVariant.name + ' (Subscribed)',
+                                }
+                              : selectedVariant;
 
-                          onAddToCart(product, variantToAdd, quantity);
-                          if (isSubscription) {
-                            addToast('Subscribed! Deliver every 30 days.', 'success');
-                          }
-                        }}
-                        className={`flex-1 w-full bg-brand-primary text-brand-dark font-bold py-3 md:py-4 px-4 md:px-8 rounded-full shadow-lg hover:bg-opacity-90 transform hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2 md:gap-3 ${
-                          isOutOfStock ? 'opacity-50 cursor-not-allowed hover:scale-100' : ''
-                        }`}
-                      >
-                        <span className="whitespace-nowrap">Add to Cart - </span>
-                        <span>
-                          ₹
-                          {(
-                            (onSale ? selectedVariant.salePrice! : selectedVariant.price) * quantity
-                          ).toFixed(2)}
-                        </span>
-                      </button>
+                            onAddToCart(product, variantToAdd, quantity);
+                            if (isSubscription) {
+                              addToast('Subscribed! Deliver every 30 days.', 'success');
+                            }
+                          }}
+                          className={`flex-1 bg-brand-primary text-brand-dark font-bold py-3 md:py-4 px-2 md:px-4 rounded-full shadow-lg hover:bg-opacity-90 transform hover:scale-105 transition-all duration-300 flex items-center justify-center gap-1 md:gap-2 ${
+                            isOutOfStock ? 'opacity-50 cursor-not-allowed hover:scale-100' : ''
+                          }`}
+                        >
+                          <span className="whitespace-nowrap text-xs md:text-base">
+                            Add to Cart
+                          </span>
+                        </button>
+
+                        <button
+                          disabled={isOutOfStock}
+                          onClick={() => {
+                            const finalPrice = isSubscription
+                              ? Math.floor(
+                                  (onSale ? selectedVariant.salePrice! : selectedVariant.price) *
+                                    0.9
+                                )
+                              : onSale
+                                ? selectedVariant.salePrice!
+                                : selectedVariant.price;
+
+                            const variantToAdd = isSubscription
+                              ? {
+                                  ...selectedVariant,
+                                  price: finalPrice,
+                                  salePrice: undefined,
+                                  name: selectedVariant.name + ' (Subscribed)',
+                                }
+                              : selectedVariant;
+
+                            onAddToCart(product, variantToAdd, quantity);
+                            navigate('/checkout');
+                            onClose();
+                          }}
+                          className={`flex-1 bg-[#42210B] text-white font-bold py-3 md:py-4 px-2 md:px-4 rounded-full shadow-lg hover:bg-opacity-90 transform hover:scale-105 transition-all duration-300 flex items-center justify-center gap-1 md:gap-2 ${
+                            isOutOfStock ? 'opacity-50 cursor-not-allowed hover:scale-100' : ''
+                          }`}
+                        >
+                          <span className="whitespace-nowrap text-xs md:text-base">Buy Now</span>
+                        </button>
+                      </div>
                     )}
                   </div>
                   <div className="mt-4 border-t border-gray-100 pt-4">

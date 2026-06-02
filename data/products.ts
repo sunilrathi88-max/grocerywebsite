@@ -6,7 +6,11 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Himalayan Saffron (Kesar)',
     description:
       'Known as "Red Gold," our Himalayan Saffron is hand-harvested from the pristine valleys of Kashmir. These deep crimson strands (Mongra grade) possess a potent aroma and flavor. Your dishes will taste alive—never bland again.',
-    images: ['/images/products/saffron-kesar-front.jpg', '/images/products/saffron-kesar-back.jpg'],
+    images: [
+      '/images/categories/premium.png',
+      '/images/products/saffron-kesar-front.jpg',
+      '/images/products/saffron-kesar-back.jpg',
+    ],
     videos: ['https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4'],
     category: 'Spices',
     variants: [
@@ -152,10 +156,7 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Royal Assam Kadak Chai',
     description:
       'For those who love their tea strong and bold. A blend of premium CTC granules that brews a dark, malty cup with a rich amber color. Delivers the authentic "Kadak" taste of India.',
-    images: [
-      'https://images.unsplash.com/photo-1594631252845-29fc4cc8cde9?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=800&q=80',
-    ],
+    images: ['/images/products/assam-tea-hero.png'],
     category: 'Beverages',
     variants: [{ id: 501, name: '500g', price: 300, stock: 25 }],
     reviews: [
@@ -397,9 +398,7 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Premium Raisins (Kishmish)',
     description:
       'Dried to a golden-brown perfection. Plump, juicy, and naturally sweet. Perfect for adding to Kheer, Pulao, or eating by the handful for an instant energy boost.',
-    images: [
-      'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
-    ],
+    images: ['/images/lifestyle/raisins_lifestyle.png'],
     category: 'Dry Fruits',
     variants: [{ id: 2401, name: '500g', price: 350, stock: 50 }],
     reviews: [],
@@ -410,9 +409,7 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Dried Figs (Anjeer)',
     description:
       'Rope dried to concentrate their sweetness and form a chewy, seed-filled texture. Known for high fiber and calcium content, a delicious natural treat.',
-    images: [
-      'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80',
-    ],
+    images: ['/images/lifestyle/figs_lifestyle.png'],
     category: 'Dry Fruits',
     variants: [{ id: 2501, name: '250g', price: 399, stock: 30 }],
     reviews: [],
@@ -424,7 +421,7 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Premium Chai Masala',
     description:
       'The Soul of Your Morning Cup. A natural blend dominated by premium Green Cardamom and dry Ginger, balanced with Clove and Cinnamon. No sugar, no fillers—just 100% pure aromatic spices.',
-    images: ['/images/products/chai-masala-front.jpg', '/images/products/chai-masala-back.jpg'],
+    images: ['/images/lifestyle/chai_masala_lifestyle.png'],
     category: 'Spices',
     variants: [{ id: 2701, name: '100g', price: 200, stock: 40 }],
     reviews: [],
@@ -437,7 +434,7 @@ export const MOCK_PRODUCTS: Product[] = [
     name: 'Royal Garam Masala',
     description:
       'A Symphony of Spices. A premium blend of 15+ dry-roasted whole spices, including Cardamom and Mace. Just a pinch at the end of cooking transforms a simple dish into a gourmet feast.',
-    images: ['/images/products/garam-masala-front.jpg', '/images/products/garam-masala-back.jpg'],
+    images: ['/images/lifestyle/garam_masala_lifestyle.png'],
     category: 'Spices',
     variants: [{ id: 2801, name: '100g', price: 220, stock: 35 }],
     reviews: [],
@@ -463,5 +460,19 @@ export const MOCK_PRODUCTS: Product[] = [
     origin: 'Rajasthan, India',
     harvestDate: 'April 2025',
     storage: 'Cool, dry place',
+  },
+  {
+    id: 30,
+    name: 'Premium Heritage Gift Chest',
+    description:
+      'The Ultimate Expression of Rathi Naturals. A heavyweight, matte-black heritage chest with gold-foil embossing. Contains a curated selection of our most prized offerings: Himalayan Saffron (1g), Goan Cashews (250g), and Mammoth Almonds (250g). Perfect for festive gifting or corporate tokens.',
+    images: ['/images/products/gift-set-chest.png'],
+    category: 'Gifting',
+    variants: [{ id: 3001, name: 'Heritage Collection', price: 2499, stock: 20 }],
+    reviews: [],
+    tags: ['Luxury', 'Gifting', 'Exclusive', 'Limited Edition'],
+    origin: 'House Blend & Curation',
+    purityTest: 'Individually Lab-Tested',
+    shelfLife: '12 Months',
   },
 ];

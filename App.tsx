@@ -54,7 +54,7 @@ const AdminDashboard = React.lazy(() => import('./components/AdminDashboard'));
 // const AdminDashboard = () => <div className="p-10">Admin Dashboard Mock (Debugging)</div>;
 
 // Core Components (Eagerly Loaded - Always Visible)
-import Header from './components/Header';
+import Navbar from './src/components/Redesigned/Navbar';
 import CustomCursor from './components/ui/CustomCursor';
 import SeedTrail from './components/ui/SeedTrail';
 import Preloader from './components/ui/Preloader';
@@ -855,27 +855,7 @@ const App: React.FC = () => {
             {/* Conditionally render Header for legacy pages only (Admin, Account, etc.) */}
             {['/admin', '/account', '/profile', '/login', '/signup'].some((path) =>
               location.pathname.startsWith(path)
-            ) && (
-              <Header
-                cartItems={cartItems}
-                wishlistItemCount={wishlistItemCount}
-                searchQuery={searchQuery}
-                onSearchChange={setSearchQuery}
-                onCartClick={() => setIsCartOpen(true)}
-                onWishlistClick={() => setIsWishlistOpen(true)}
-                onMobileMenuClick={() => setIsMobileMenuOpen((prev) => !prev)}
-                isLoggedIn={isLoggedIn}
-                isAdmin={!!currentUser?.isAdmin}
-                onLoginClick={() => setAuthModalOpen(true)}
-                onLogoutClick={handleLogout}
-                allProducts={products}
-                allPosts={blogPosts}
-                onSelectProduct={setSelectedProduct}
-                onSelectPost={(post) => navigate(`/blog/${post.slug}`)}
-                categories={categories}
-                onSelectCategory={handleSelectCategoryAndClose}
-              />
-            )}
+            ) && <Navbar products={products} posts={blogPosts} />}
             <main id="main-content" className="flex-grow pt-16 md:pt-20">
               <Routes>
                 {/* Redesigned Routes */}
@@ -920,6 +900,7 @@ const App: React.FC = () => {
                   <Route path="/offers" element={<OffersPage />} />
                   <Route path="/offers/subscription" element={<SubscriptionPage />} />
                   <Route path="/subscription" element={<SubscriptionPage />} />
+                  <Route path="/farmers" element={<FarmersPage />} />
                 </Route>
 
                 <Route

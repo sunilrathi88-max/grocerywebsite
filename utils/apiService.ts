@@ -71,12 +71,19 @@ export const productAPI = {
           harvestDate: p.harvest_date as string | null,
           purityTest: p.purity_test as string | null,
           shelfLife: p.shelf_life as number | null,
-          // Ensure arrays are arrays
+          // Ensure arrays are arrays and map snake_case to camelCase
           images: p.images || [],
           videos: p.videos || [],
           tags: p.tags || [],
-          variants: p.variants || [],
-          reviews: p.reviews || [],
+          variants: ((p.variants as any[]) || []).map((v) => ({
+            ...v,
+            salePrice: v.sale_price ? Number(v.sale_price) : undefined,
+            price: Number(v.price),
+          })),
+          reviews: ((p.reviews as any[]) || []).map((r) => ({
+            ...r,
+            verifiedPurchase: r.verified_purchase,
+          })),
           qna: p.qna || [],
         }) as unknown as Product
     );
@@ -112,8 +119,15 @@ export const productAPI = {
       images: p.images || [],
       videos: p.videos || [],
       tags: p.tags || [],
-      variants: p.variants || [],
-      reviews: p.reviews || [],
+      variants: ((p.variants as any[]) || []).map((v) => ({
+        ...v,
+        salePrice: v.sale_price ? Number(v.sale_price) : undefined,
+        price: Number(v.price),
+      })),
+      reviews: ((p.reviews as any[]) || []).map((r) => ({
+        ...r,
+        verifiedPurchase: r.verified_purchase,
+      })),
       qna: p.qna || [],
     } as Product;
   },

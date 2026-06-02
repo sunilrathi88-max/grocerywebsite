@@ -75,21 +75,25 @@ const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
                   Our Story
                 </Link>
               </li>
+              {/*
               <li>
                 <Link to="/farmers" className="hover:text-primary transition-colors">
                   Farms & Sustainability
                 </Link>
               </li>
+              */}
               <li>
                 <Link to="/contact" className="hover:text-primary transition-colors">
                   Contact Us
                 </Link>
               </li>
+              {/*
               <li>
                 <Link to="/affiliate-program" className="hover:text-primary transition-colors">
                   Affiliate Program
                 </Link>
               </li>
+              */}
             </ul>
           </div>
 

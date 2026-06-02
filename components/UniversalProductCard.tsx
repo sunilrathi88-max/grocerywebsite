@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { OptimizedImage } from './OptimizedImage';
 import { Link } from 'react-router-dom';
-import { Button } from './Button';
 import StockBadge from './StockBadge';
-import { ShieldCheck, Leaf, Star, Flame, ShoppingCart, Heart } from 'lucide-react';
+import { ShieldCheck, Leaf, Star, Flame, Plus, Minus, FlaskConical } from 'lucide-react';
 import { Product } from '../types';
+import { useCart } from '../hooks/useCart';
 
 interface UniversalProductCardProps {
   product?: Product;
@@ -15,7 +15,7 @@ interface UniversalProductCardProps {
   image?: string;
   rating?: number;
   reviewCount?: number;
-  spiceLevel?: number; // 1-10
+  spiceLevel?: number;
   useCases?: string[];
   isNew?: boolean;
   isBestseller?: boolean;
@@ -62,13 +62,38 @@ export const UniversalProductCard: React.FC<UniversalProductCardProps> = ({
   onToggleWishlist,
   isWishlisted: initialWishlisted = false,
 }) => {
-  const [isHovered, setIsHovered] = useState(false);
   const [isWishlisted, setIsWishlisted] = useState(initialWishlisted);
-  const [isAdding, setIsAdding] = useState(false);
-  const [showSuccess, setShowSuccess] = useState(false);
+
+  const { addToCart, updateQuantity, getCartItemQuantity } = useCart();
+
+  const activeVariant = product?.variants?.find((v) => v.stock > 0) || product?.variants?.[0];
+
+  const cartQty = product && activeVariant ? getCartItemQuantity(product.id, activeVariant.id) : 0;
 
   const discountPercent =
     originalPrice && price ? Math.round(((originalPrice - price) / originalPrice) * 100) : 0;
+
+  const handleIncrement = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (product && activeVariant) {
+      if (cartQty === 0) {
+        addToCart(product, activeVariant, 1);
+      } else {
+        updateQuantity(product.id, activeVariant.id, cartQty + 1);
+      }
+    } else if (onAddToCart && id) {
+      onAddToCart(id);
+    }
+  };
+
+  const handleDecrement = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (product && activeVariant) {
+      updateQuantity(product.id, activeVariant.id, cartQty - 1);
+    }
+  };
 
   const getGradientClass = (cat?: string, productName?: string) => {
     const search = ((cat || '') + ' ' + (productName || '')).toLowerCase();
@@ -81,51 +106,39 @@ export const UniversalProductCard: React.FC<UniversalProductCardProps> = ({
     return 'bg-gradient-to-br from-neutral-600 to-neutral-800';
   };
 
-  const handleAdd = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (!onAddToCart || !id) return;
-    setIsAdding(true);
-    setTimeout(() => {
-      onAddToCart(id);
-      setIsAdding(false);
-      setShowSuccess(true);
-      setTimeout(() => setShowSuccess(false), 2000);
-    }, 600);
-  };
+  const showNabl = !!product?.purityTest;
+  const showSingleOrigin = !!product?.origin;
 
   return (
     <Link
       to={`/product/${id}`}
       className="group relative bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-stone-100 flex flex-col h-full"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Badges Stack */}
+      {/* Badges Stack — top-left */}
       <div className="absolute top-4 left-4 z-20 flex flex-col gap-2">
         {isNew && (
-          <span className="bg-blue-600 text-white text-[10px] font-black px-3 py-1 rounded-full shadow-lg uppercase tracking-widest">
-            New
+          <span className="bg-[#B38B59] text-white text-[9px] font-black px-3 py-1.5 rounded-full shadow-xl uppercase tracking-[0.2em] backdrop-blur-md">
+            New Arrival
           </span>
         )}
         {isBestseller && (
-          <span className="bg-amber-500 text-white text-[10px] font-black px-3 py-1 rounded-full shadow-lg uppercase tracking-widest flex items-center gap-1">
+          <span className="bg-amber-400 text-amber-950 text-[9px] font-black px-3 py-1.5 rounded-full shadow-xl uppercase tracking-[0.2em] flex items-center gap-1.5">
             <Star size={10} fill="currentColor" /> Bestseller
           </span>
         )}
         {discountPercent > 0 && (
-          <span className="bg-red-600 text-white text-[10px] font-black px-3 py-1 rounded-full shadow-lg">
-            -{discountPercent}%
+          <span className="bg-orange-500 text-white text-[10px] font-black px-3 py-1.5 rounded-full shadow-xl uppercase tracking-[0.1em]">
+            {discountPercent}% OFF
           </span>
         )}
       </div>
 
-      {/* Stock Status */}
+      {/* Stock Badge — top-right */}
       <div className="absolute top-4 right-4 z-20 transition-opacity duration-300 group-hover:opacity-0">
         <StockBadge stock={stock} lowStockThreshold={10} />
       </div>
 
-      {/* Wishlist Button */}
+      {/* Wishlist Button — top-right on hover */}
       <button
         onClick={(e) => {
           e.preventDefault();
@@ -139,7 +152,7 @@ export const UniversalProductCard: React.FC<UniversalProductCardProps> = ({
             : 'bg-white/80 text-stone-400 hover:text-red-500'
         }`}
       >
-        <Heart size={20} fill={isWishlisted ? 'currentColor' : 'none'} strokeWidth={2.5} />
+        ♥
       </button>
 
       {/* Image Media Area */}
@@ -168,44 +181,66 @@ export const UniversalProductCard: React.FC<UniversalProductCardProps> = ({
           />
         )}
 
-        {/* Quick Add Overlay (Desktop) */}
-        <div
-          className={`absolute inset-x-6 bottom-6 transition-all duration-500 transform hidden md:block ${
-            isHovered ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-          }`}
-        >
-          <Button
-            variant="primary"
-            fullWidth
-            onClick={handleAdd}
-            className={`shadow-2xl border-none h-12 rounded-2xl font-black tracking-widest text-xs uppercase transition-all active:scale-95 ${
-              showSuccess ? 'bg-green-600' : 'bg-brand-primary text-brand-dark'
-            }`}
-          >
-            {isAdding ? (
-              <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin" />
-            ) : showSuccess ? (
-              '✓ Added to Cart'
-            ) : (
-              <span className="flex items-center gap-2">
-                <ShoppingCart size={16} /> Quick Add
-              </span>
-            )}
-          </Button>
+        {/* Trust Badges — bottom-left of image */}
+        <div className="absolute bottom-14 left-2 z-10 flex flex-col gap-1 pointer-events-none">
+          {isPure && (
+            <span className="bg-green-900/90 text-white text-[8px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider flex items-center gap-1 w-fit">
+              <ShieldCheck size={8} /> 100% Pure
+            </span>
+          )}
+          {showSingleOrigin && (
+            <span className="bg-green-900/90 text-white text-[8px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider flex items-center gap-1 w-fit">
+              <Leaf size={8} /> Single-Origin
+            </span>
+          )}
+          {showNabl && (
+            <span className="bg-green-900/90 text-white text-[8px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider flex items-center gap-1 w-fit">
+              <FlaskConical size={8} /> NABL Tested
+            </span>
+          )}
+        </div>
+
+        {/* Quantity Counter — bottom-right of image, always visible */}
+        <div className="absolute bottom-3 right-3 z-20">
+          {cartQty === 0 ? (
+            <button
+              onClick={handleIncrement}
+              className="w-10 h-10 bg-[#42210B] text-[#F5DEB3] rounded-xl flex items-center justify-center shadow-lg active:scale-90 transition-all duration-150 hover:bg-[#6b3a1f]"
+              aria-label="Add to cart"
+            >
+              <Plus size={20} strokeWidth={3} />
+            </button>
+          ) : (
+            <div className="flex items-center bg-[#42210B] rounded-xl shadow-lg overflow-hidden">
+              <button
+                onClick={handleDecrement}
+                className="w-9 h-10 flex items-center justify-center text-[#F5DEB3] hover:bg-[#6b3a1f] active:scale-90 transition-all duration-150"
+                aria-label="Decrease quantity"
+              >
+                <Minus size={14} strokeWidth={3} />
+              </button>
+              <span className="w-7 text-center text-sm font-black text-[#F5DEB3]">{cartQty}</span>
+              <button
+                onClick={handleIncrement}
+                className="w-9 h-10 flex items-center justify-center text-[#F5DEB3] hover:bg-[#6b3a1f] active:scale-90 transition-all duration-150"
+                aria-label="Increase quantity"
+              >
+                <Plus size={14} strokeWidth={3} />
+              </button>
+            </div>
+          )}
         </div>
       </div>
 
       {/* Info Body */}
       <div className="p-6 flex-1 flex flex-col">
         <div className="flex items-center justify-between mb-2">
-          {/* Rating */}
           <div className="flex items-center gap-1.5 bg-stone-50 px-2 py-1 rounded-lg">
             <Star size={12} fill="#FACC15" className="text-yellow-400" />
             <span className="text-[11px] font-black text-stone-700">{rating}</span>
             <span className="text-[10px] font-bold text-stone-400">({reviewCount})</span>
           </div>
 
-          {/* Spice Level Indicator */}
           {spiceLevel && (
             <div className="flex items-center gap-0.5" title={`Spice Level: ${spiceLevel}/10`}>
               {[...Array(3)].map((_, i) => (
@@ -225,13 +260,7 @@ export const UniversalProductCard: React.FC<UniversalProductCardProps> = ({
           {name}
         </h3>
 
-        {/* Dynamic Tags */}
         <div className="flex flex-wrap gap-2 mb-4 min-h-[1.5rem]">
-          {isPure && (
-            <span className="inline-flex items-center gap-1 text-[9px] font-black uppercase tracking-widest text-green-700 bg-green-50 px-2 py-1 rounded-md">
-              <ShieldCheck size={10} /> 100% Pure
-            </span>
-          )}
           {isOrganic && (
             <span className="inline-flex items-center gap-1 text-[9px] font-black uppercase tracking-widest text-emerald-700 bg-emerald-50 px-2 py-1 rounded-md">
               <Leaf size={10} /> Organic
@@ -247,28 +276,26 @@ export const UniversalProductCard: React.FC<UniversalProductCardProps> = ({
           ))}
         </div>
 
-        {/* Price & Action Footer */}
-        <div className="mt-auto pt-6 border-t border-stone-50 flex items-end justify-between">
+        {/* Price Footer */}
+        <div className="mt-auto pt-6 border-t border-stone-50">
           <div className="space-y-1">
-            {originalPrice && originalPrice > price && (
+            {originalPrice && originalPrice > (price ?? 0) && (
               <div className="text-xs text-stone-400 line-through font-bold">₹{originalPrice}</div>
             )}
-            <div className="flex items-baseline gap-1.5">
+            <div className="flex items-baseline gap-2">
               <span className="text-2xl font-black text-[#42210B]">₹{price}</span>
               {weight && (
                 <span className="text-[10px] font-black text-stone-300 uppercase tracking-widest">
                   / {weight}
                 </span>
               )}
+              {discountPercent > 0 && (
+                <span className="text-[10px] font-black text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded-md">
+                  {discountPercent}% off
+                </span>
+              )}
             </div>
           </div>
-
-          <button
-            onClick={handleAdd}
-            className="md:hidden w-12 h-12 bg-brand-primary text-brand-dark rounded-2xl flex items-center justify-center shadow-lg active:scale-90 transition-transform"
-          >
-            <ShoppingCart size={20} strokeWidth={2.5} />
-          </button>
         </div>
       </div>
     </Link>

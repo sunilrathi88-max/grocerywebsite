@@ -72,7 +72,7 @@ const CartPage: React.FC = () => {
                     </span>
                   ) : (
                     <span className="text-sm font-bold text-green-600">
-                      You've unlocked FREE Express Shipping! ✨
+                      You&apos;ve unlocked FREE Express Shipping! ✨
                     </span>
                   )}
                 </div>
