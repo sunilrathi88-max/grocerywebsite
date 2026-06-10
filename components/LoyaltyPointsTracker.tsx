@@ -70,7 +70,12 @@ export const LoyaltyPointsTracker: React.FC = () => {
     points: number;
     reward: string;
   } | null>(null);
-  const { points, history, redeemPoints } = useLoyaltyStore();
+  const { points, history, redeemPoints, syncWithRemote } = useLoyaltyStore();
+
+  // Pull the signed-in user's balance from Supabase (no-op for guests)
+  React.useEffect(() => {
+    syncWithRemote();
+  }, [syncWithRemote]);
 
   const tier = TIER_CONFIG[points.tier];
   const progress = Math.min((points.lifetime / points.nextTierPoints) * 100, 100);

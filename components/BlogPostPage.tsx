@@ -5,9 +5,7 @@ import { Breadcrumbs } from './ui/Breadcrumbs';
 import { imageErrorHandlers, getProductImage } from '../utils/imageHelpers';
 import { SEO } from './SEO';
 import { generateBlogPostingSchema, generateFAQSchema } from '../utils/seo';
-
-import ReactMarkdown from 'react-markdown';
-import rehypeRaw from 'rehype-raw';
+import { renderMarkdown } from '../src/utils/markdownLoader';
 
 interface BlogPostPageProps {
   post: BlogPost;
@@ -57,6 +55,12 @@ const BlogPostPage: React.FC<BlogPostPageProps> = ({ post, allProducts }) => {
     }
 
     return schemas;
+  }, [post]);
+
+  // Pre-render markdown to an HTML string (content is first-party repo markdown)
+  const renderedContent = React.useMemo(() => {
+    if (!post) return '';
+    return post.isMarkdown ? renderMarkdown(post.content) : post.content;
   }, [post]);
 
   if (!post || !seoConfig || !structuredDataSchemas) {
@@ -138,20 +142,7 @@ const BlogPostPage: React.FC<BlogPostPageProps> = ({ post, allProducts }) => {
       <div className="max-w-2xl mx-auto">
         {/* Article Content */}
         <div className="prose prose-lg prose-neutral max-w-none prose-headings:font-serif prose-headings:text-brand-dark prose-a:text-brand-primary hover:prose-a:text-brand-dark prose-img:rounded-xl">
-          {post.isMarkdown ? (
-            <ReactMarkdown
-              rehypePlugins={[rehypeRaw]}
-              components={{
-                img: ({ node: _node, ...props }) => (
-                  <img {...props} className="rounded-xl shadow-lg my-8 w-full" />
-                ),
-              }}
-            >
-              {post.content}
-            </ReactMarkdown>
-          ) : (
-            <div dangerouslySetInnerHTML={{ __html: post.content }} />
-          )}
+          <div dangerouslySetInnerHTML={{ __html: renderedContent }} />
         </div>
 
         {/* Tags Footer */}

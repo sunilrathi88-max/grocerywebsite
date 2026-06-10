@@ -62,18 +62,22 @@ export default defineConfig(({ mode }) => {
           ],
         },
         workbox: {
-          // Cache static assets
-          globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg,jpeg,webp,woff,woff2}'],
+          // Precache only the app shell (JS/CSS/HTML/fonts/SVG). Raster images
+          // are served via runtime CacheFirst below — precaching the full
+          // images folder cost ~46MB on first visit.
+          globPatterns: ['**/*.{js,css,html,ico,svg,woff,woff2}'],
+          globIgnores: ['stats.html', '**/*.map'],
+          maximumFileSizeToCacheInBytes: 3 * 1024 * 1024,
           // Runtime caching strategies
           runtimeCaching: [
             {
-              // Cache images
-              urlPattern: /^https:\/\/.*\.(png|jpg|jpeg|webp|svg|gif)$/,
+              // Cache images (same-origin and remote)
+              urlPattern: /\.(?:png|jpg|jpeg|webp|svg|gif|avif)$/,
               handler: 'CacheFirst',
               options: {
                 cacheName: 'images-cache',
                 expiration: {
-                  maxEntries: 100,
+                  maxEntries: 200,
                   maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
                 },
                 cacheableResponse: {

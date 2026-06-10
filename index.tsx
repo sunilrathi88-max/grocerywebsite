@@ -14,6 +14,23 @@ import App from './App';
 // Error Boundary
 import ErrorBoundary from './components/ErrorBoundary';
 
+// Error monitoring (Sentry) — only active when VITE_SENTRY_DSN is configured.
+// Dynamically imported so it adds no bundle weight when disabled.
+const sentryDsn = import.meta.env.VITE_SENTRY_DSN;
+if (sentryDsn) {
+  import('@sentry/react')
+    .then((Sentry) => {
+      Sentry.init({
+        dsn: sentryDsn,
+        environment: import.meta.env.MODE,
+        tracesSampleRate: 0.1,
+      });
+    })
+    .catch((error) => {
+      console.warn('Sentry failed to initialize:', error);
+    });
+}
+
 // Initialize Analytics (Removed due to missing export)
 // import { initAnalytics } from './utils/analytics';
 

@@ -38,13 +38,18 @@ const CheckoutPage: React.FC = () => {
 
   useEffect(() => {
     if (orderId && step !== 5) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsProcessing(true);
       paymentService
         .verifyPayment(orderId)
         .then((success) => {
           setIsProcessing(false);
           if (success) {
+            // Award loyalty points: 1 point per ₹1 of the verified order
+            if (grandTotal > 0) {
+              import('../../../store/loyaltyStore').then(({ useLoyaltyStore }) =>
+                useLoyaltyStore.getState().addPoints(Math.floor(grandTotal), `Order ${orderId}`)
+              );
+            }
             setStep(5);
           } else {
             alert('Payment verification failed. Please try again or contact support.');
@@ -56,7 +61,7 @@ const CheckoutPage: React.FC = () => {
           alert('Payment verification encountered an error.');
         });
     }
-  }, [orderId, step]);
+  }, [orderId, step, grandTotal]);
 
   useEffect(() => {
     const fetchPincodeData = async () => {

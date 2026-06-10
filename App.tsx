@@ -651,27 +651,21 @@ const App: React.FC = () => {
   );
 
   const handleApplyPromoCode = useCallback(
-    (code: string) => {
+    async (code: string) => {
       if (promoCode) {
         addToast('Promo code already applied. Please remove current code first.', 'error');
         return;
       }
 
-      if (subtotal < 500) {
-        addToast('Minimum order of ₹500 required for promo codes.', 'error');
-        return;
-      }
+      const { validateCoupon } = await import('./utils/couponService');
+      const result = await validateCoupon(code, subtotal);
 
-      if (['RATHI10', 'SPICEFAN10'].includes(code.toUpperCase())) {
-        setDiscount(subtotal * 0.1);
+      if (result.valid) {
+        setDiscount(result.discount);
         setPromoCode(code);
-        addToast('Promo code applied!', 'success');
-      } else if (['COMEBACK15', 'QUIZMASTER15'].includes(code.toUpperCase())) {
-        setDiscount(subtotal * 0.15);
-        setPromoCode(code);
-        addToast('Promo code applied!', 'success');
+        addToast(result.message, 'success');
       } else {
-        addToast('Invalid promo code.', 'error');
+        addToast(result.message, 'error');
       }
     },
     [subtotal, addToast, promoCode]
