@@ -424,7 +424,7 @@ const ShopPage: React.FC<ShopPageProps> = ({ products, posts }) => {
             ))}
           </div>
 
-          <p className="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-3">
+          <p className="text-[10px] font-bold text-stone-500 uppercase tracking-widest mb-3">
             <span className="text-[#42210B] text-sm font-black mr-1">{filteredResults.length}</span>
             products
           </p>
@@ -436,7 +436,7 @@ const ShopPage: React.FC<ShopPageProps> = ({ products, posts }) => {
       {/* ─── DESKTOP: MAIN CONTENT ─── */}
       <main className="hidden md:block max-w-7xl mx-auto px-4 md:px-8 py-10 pb-28">
         <div className="flex items-center justify-between mb-8">
-          <p className="text-xs font-bold text-stone-400 uppercase tracking-widest">
+          <p className="text-xs font-bold text-stone-500 uppercase tracking-widest">
             <span className="text-[#42210B] text-lg font-black mr-1">{filteredResults.length}</span>
             {filteredResults.length !== 1 ? 'Products' : 'Product'}
             {searchQuery && (
@@ -453,7 +453,7 @@ const ShopPage: React.FC<ShopPageProps> = ({ products, posts }) => {
                 setActiveTags([]);
                 setSearchQuery('');
               }}
-              className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest text-stone-400 hover:text-[#B38B59] transition-colors"
+              className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest text-stone-500 hover:text-[#B38B59] transition-colors"
             >
               <X size={12} /> Clear all
             </button>

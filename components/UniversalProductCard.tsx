@@ -3,7 +3,7 @@ import { OptimizedImage } from './OptimizedImage';
 import { Link } from 'react-router-dom';
 import StockBadge from './StockBadge';
 import { ShieldCheck, Leaf, Star, Flame, Plus, Minus, FlaskConical } from 'lucide-react';
-import { Product } from '../types';
+import { Product, Variant } from '../types';
 import { useCart } from '../hooks/useCart';
 
 interface UniversalProductCardProps {
@@ -63,15 +63,32 @@ export const UniversalProductCard: React.FC<UniversalProductCardProps> = ({
   isWishlisted: initialWishlisted = false,
 }) => {
   const [isWishlisted, setIsWishlisted] = useState(initialWishlisted);
+  const [selectedVariantId, setSelectedVariantId] = useState<Variant['id'] | null>(null);
 
   const { addToCart, updateQuantity, getCartItemQuantity } = useCart();
 
-  const activeVariant = product?.variants?.find((v) => v.stock > 0) || product?.variants?.[0];
+  const activeVariant =
+    product?.variants?.find((v) => v.id === selectedVariantId) ||
+    product?.variants?.find((v) => v.stock > 0) ||
+    product?.variants?.[0];
+
+  // When the card has a full product, price/weight follow the selected variant
+  const displayPrice =
+    product && activeVariant ? activeVariant.salePrice || activeVariant.price : price;
+  const displayOriginalPrice =
+    product && activeVariant
+      ? activeVariant.salePrice
+        ? activeVariant.price
+        : undefined
+      : originalPrice;
+  const displayWeight = product && activeVariant ? activeVariant.name : weight;
 
   const cartQty = product && activeVariant ? getCartItemQuantity(product.id, activeVariant.id) : 0;
 
   const discountPercent =
-    originalPrice && price ? Math.round(((originalPrice - price) / originalPrice) * 100) : 0;
+    displayOriginalPrice && displayPrice
+      ? Math.round(((displayOriginalPrice - displayPrice) / displayOriginalPrice) * 100)
+      : 0;
 
   const handleIncrement = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -278,15 +295,43 @@ export const UniversalProductCard: React.FC<UniversalProductCardProps> = ({
 
         {/* Price Footer */}
         <div className="mt-auto pt-6 border-t border-stone-50">
+          {/* Variant quick-select */}
+          {product && product.variants && product.variants.length > 1 && (
+            <div className="flex flex-wrap gap-1.5 mb-3">
+              {product.variants.map((v) => (
+                <button
+                  key={v.id}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setSelectedVariantId(v.id);
+                  }}
+                  disabled={v.stock === 0}
+                  aria-label={`Select ${v.name} pack`}
+                  className={`px-2.5 py-1 rounded-lg text-[10px] font-black uppercase tracking-wider border transition-all ${
+                    activeVariant?.id === v.id
+                      ? 'bg-[#42210B] text-[#F5DEB3] border-[#42210B]'
+                      : v.stock === 0
+                        ? 'bg-stone-50 text-stone-300 border-stone-100 line-through cursor-not-allowed'
+                        : 'bg-white text-stone-500 border-stone-200 hover:border-[#B38B59]'
+                  }`}
+                >
+                  {v.name}
+                </button>
+              ))}
+            </div>
+          )}
           <div className="space-y-1">
-            {originalPrice && originalPrice > (price ?? 0) && (
-              <div className="text-xs text-stone-400 line-through font-bold">₹{originalPrice}</div>
+            {displayOriginalPrice && displayOriginalPrice > (displayPrice ?? 0) && (
+              <div className="text-xs text-stone-400 line-through font-bold">
+                ₹{displayOriginalPrice}
+              </div>
             )}
             <div className="flex items-baseline gap-2">
-              <span className="text-2xl font-black text-[#42210B]">₹{price}</span>
-              {weight && (
-                <span className="text-[10px] font-black text-stone-300 uppercase tracking-widest">
-                  / {weight}
+              <span className="text-2xl font-black text-[#42210B]">₹{displayPrice}</span>
+              {displayWeight && (
+                <span className="text-[10px] font-black text-stone-400 uppercase tracking-widest">
+                  / {displayWeight}
                 </span>
               )}
               {discountPercent > 0 && (

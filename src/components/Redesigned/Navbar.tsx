@@ -13,7 +13,19 @@ interface NavbarProps {
   posts: BlogPost[];
 }
 
-const Navbar: React.FC<NavbarProps> = ({ products: _products, posts }) => {
+const RECENT_SEARCHES_KEY = 'rn-recent-searches';
+
+function loadRecentSearches(): string[] {
+  try {
+    const raw = window.localStorage.getItem(RECENT_SEARCHES_KEY);
+    const parsed = raw ? JSON.parse(raw) : [];
+    return Array.isArray(parsed) ? parsed.filter((t) => typeof t === 'string') : [];
+  } catch {
+    return [];
+  }
+}
+
+const Navbar: React.FC<NavbarProps> = ({ products, posts }) => {
   const { cartItemCount: totalItems } = useCart();
   const [query, setQuery] = useState('');
   const [debouncedQuery, setDebouncedQuery] = useState('');
@@ -25,6 +37,37 @@ const Navbar: React.FC<NavbarProps> = ({ products: _products, posts }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const searchRef = useRef<HTMLDivElement>(null);
+
+  // Search empty-state: recent searches + popular products
+  const [recentSearches, setRecentSearches] = useState<string[]>(loadRecentSearches);
+
+  const saveRecentSearch = (term: string) => {
+    const t = term.trim();
+    if (!t) return;
+    setRecentSearches((prev) => {
+      const next = [t, ...prev.filter((x) => x.toLowerCase() !== t.toLowerCase())].slice(0, 5);
+      try {
+        window.localStorage.setItem(RECENT_SEARCHES_KEY, JSON.stringify(next));
+      } catch {
+        // Ignore storage failures (private mode)
+      }
+      return next;
+    });
+  };
+
+  const clearRecentSearches = () => {
+    setRecentSearches([]);
+    try {
+      window.localStorage.removeItem(RECENT_SEARCHES_KEY);
+    } catch {
+      // Ignore storage failures
+    }
+  };
+
+  const popularProducts = useMemo(
+    () => [...products].sort((a, b) => (b.rating || 0) - (a.rating || 0)).slice(0, 4),
+    [products]
+  );
 
   useEffect(() => {
     const handleScroll = () => {
@@ -71,6 +114,7 @@ const Navbar: React.FC<NavbarProps> = ({ products: _products, posts }) => {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (query.trim()) {
+      saveRecentSearch(query);
       setIsFocused(false);
       navigate(`/shop?q=${encodeURIComponent(query.trim())}`);
     }
@@ -154,65 +198,138 @@ const Navbar: React.FC<NavbarProps> = ({ products: _products, posts }) => {
             {/* Autocomplete Dropdown */}
             <AnimatePresence>
               {isFocused &&
-                (autocompleteResults.products.length > 0 ||
-                  autocompleteResults.posts.length > 0) && (
+                (query.trim()
+                  ? autocompleteResults.products.length > 0 || autocompleteResults.posts.length > 0
+                  : recentSearches.length > 0 || popularProducts.length > 0) && (
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 10 }}
                     className="absolute top-full right-0 mt-2 w-[calc(100vw-2rem)] max-w-[400px] bg-ivory rounded-xl shadow-2xl border border-border overflow-hidden z-[110] max-h-[60vh] overflow-y-auto"
                   >
-                    {/* Products Section */}
-                    {(autocompleteResults.products.length > 0 || isSearching) && (
-                      <div className="p-2">
-                        <div className="px-4 py-3">
-                          <h4 className="text-[10px] font-bold text-gold uppercase tracking-[0.2em]">
-                            Recommended Products{' '}
-                            {isSearching && (
-                              <span className="lowercase text-sage font-normal ml-2">
-                                searching...
-                              </span>
-                            )}
-                          </h4>
-                        </div>
-                        <div className="space-y-1">
-                          {autocompleteResults.products.map((p) => (
-                            <button
-                              key={p.id}
-                              onClick={() => {
-                                navigate(`/product/${p.id}`);
-                                setIsFocused(false);
-                                setQuery('');
-                              }}
-                              className="w-full flex items-center gap-4 p-3 hover:bg-cream rounded-lg transition-all group text-left"
-                            >
-                              <div className="w-12 h-12 rounded bg-white overflow-hidden flex-shrink-0 border border-border">
-                                <img
-                                  src={p.images[0]}
-                                  alt={p.name}
-                                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                                />
-                              </div>
-                              <div className="flex-1 min-w-0">
-                                <div className="text-sm font-bold text-bark truncate group-hover:text-gold transition-colors">
-                                  {p.name}
-                                </div>
-                                <div className="text-[10px] text-sage font-medium uppercase tracking-wider">
-                                  {p.category}
-                                </div>
-                              </div>
-                              <div className="text-sm font-bold text-bark font-display">
-                                ₹{p.variants[0].salePrice || p.variants[0].price}
-                              </div>
-                              <ChevronRight
-                                size={14}
-                                className="text-sage group-hover:text-gold transition-colors"
-                              />
-                            </button>
-                          ))}
-                        </div>
-                      </div>
+                    {/* Empty-query panel: recent searches + popular products */}
+                    {!query.trim() && (
+                      <>
+                        {recentSearches.length > 0 && (
+                          <div className="p-2">
+                            <div className="px-4 py-3 flex items-center justify-between">
+                              <h4 className="text-[10px] font-bold text-gold uppercase tracking-[0.2em]">
+                                Recent Searches
+                              </h4>
+                              <button
+                                onClick={clearRecentSearches}
+                                className="text-[10px] font-bold text-sage hover:text-bark uppercase tracking-widest"
+                              >
+                                Clear
+                              </button>
+                            </div>
+                            <div className="flex flex-wrap gap-2 px-4 pb-3">
+                              {recentSearches.map((term) => (
+                                <button
+                                  key={term}
+                                  onClick={() => setQuery(term)}
+                                  className="px-3 py-1.5 rounded-full bg-cream border border-border text-xs font-bold text-bark hover:border-gold transition-colors"
+                                >
+                                  {term}
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                        {popularProducts.length > 0 && (
+                          <div className="p-2 border-t border-border">
+                            <div className="px-4 py-3">
+                              <h4 className="text-[10px] font-bold text-gold uppercase tracking-[0.2em]">
+                                Popular Right Now
+                              </h4>
+                            </div>
+                            <div className="space-y-1">
+                              {popularProducts.map((p) => (
+                                <button
+                                  key={p.id}
+                                  onClick={() => {
+                                    navigate(`/product/${p.id}`);
+                                    setIsFocused(false);
+                                  }}
+                                  className="w-full flex items-center gap-4 p-3 hover:bg-cream rounded-lg transition-all group text-left"
+                                >
+                                  <div className="w-10 h-10 rounded bg-white overflow-hidden flex-shrink-0 border border-border">
+                                    <img
+                                      src={p.images[0]}
+                                      alt={p.name}
+                                      loading="lazy"
+                                      className="w-full h-full object-cover"
+                                    />
+                                  </div>
+                                  <div className="flex-1 min-w-0">
+                                    <div className="text-sm font-bold text-bark truncate group-hover:text-gold transition-colors">
+                                      {p.name}
+                                    </div>
+                                  </div>
+                                  <div className="text-sm font-bold text-bark font-display">
+                                    ₹{p.variants[0].salePrice || p.variants[0].price}
+                                  </div>
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </>
                     )}
+
+                    {/* Products Section */}
+                    {query.trim() !== '' &&
+                      (autocompleteResults.products.length > 0 || isSearching) && (
+                        <div className="p-2">
+                          <div className="px-4 py-3">
+                            <h4 className="text-[10px] font-bold text-gold uppercase tracking-[0.2em]">
+                              Recommended Products{' '}
+                              {isSearching && (
+                                <span className="lowercase text-sage font-normal ml-2">
+                                  searching...
+                                </span>
+                              )}
+                            </h4>
+                          </div>
+                          <div className="space-y-1">
+                            {autocompleteResults.products.map((p) => (
+                              <button
+                                key={p.id}
+                                onClick={() => {
+                                  saveRecentSearch(query);
+                                  navigate(`/product/${p.id}`);
+                                  setIsFocused(false);
+                                  setQuery('');
+                                }}
+                                className="w-full flex items-center gap-4 p-3 hover:bg-cream rounded-lg transition-all group text-left"
+                              >
+                                <div className="w-12 h-12 rounded bg-white overflow-hidden flex-shrink-0 border border-border">
+                                  <img
+                                    src={p.images[0]}
+                                    alt={p.name}
+                                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                  />
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                  <div className="text-sm font-bold text-bark truncate group-hover:text-gold transition-colors">
+                                    {p.name}
+                                  </div>
+                                  <div className="text-[10px] text-sage font-medium uppercase tracking-wider">
+                                    {p.category}
+                                  </div>
+                                </div>
+                                <div className="text-sm font-bold text-bark font-display">
+                                  ₹{p.variants[0].salePrice || p.variants[0].price}
+                                </div>
+                                <ChevronRight
+                                  size={14}
+                                  className="text-sage group-hover:text-gold transition-colors"
+                                />
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      )}
 
                     {/* Blog Section */}
                     {autocompleteResults.posts.length > 0 && (
@@ -251,12 +368,14 @@ const Navbar: React.FC<NavbarProps> = ({ products: _products, posts }) => {
                     )}
 
                     {/* View All */}
-                    <button
-                      onClick={handleSearch}
-                      className="w-full py-4 bg-forest text-cream text-xs font-bold uppercase tracking-[0.3em] hover:bg-forest/90 flex items-center justify-center gap-3 transition-colors"
-                    >
-                      View All Results <Search size={14} />
-                    </button>
+                    {query.trim() !== '' && (
+                      <button
+                        onClick={handleSearch}
+                        className="w-full py-4 bg-forest text-cream text-xs font-bold uppercase tracking-[0.3em] hover:bg-forest/90 flex items-center justify-center gap-3 transition-colors"
+                      >
+                        View All Results <Search size={14} />
+                      </button>
+                    )}
                   </motion.div>
                 )}
             </AnimatePresence>

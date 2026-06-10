@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useProducts } from '../../../hooks/useProducts';
 import { useCart } from '../../../hooks/useCart';
 import { FREE_SHIPPING_THRESHOLD } from '../../../utils/shippingConfig';
+import { StickyMobileCart } from '../../../components/StickyMobileCart';
 import StarRating from './StarRating';
 import { UniversalProductCard as ProductCard } from '../../../components/UniversalProductCard';
 import FrequentlyBoughtTogether from '../../../components/FrequentlyBoughtTogether';
@@ -28,6 +29,14 @@ const ProductDetailPage: React.FC = () => {
   const [selSize, setSelSize] = useState(0);
   const [qty, setQty] = useState(1);
   const [added, setAdded] = useState(false);
+  const [showStickyCart, setShowStickyCart] = useState(false);
+
+  // Show the sticky add-to-cart bar once the main buy buttons scroll away
+  React.useEffect(() => {
+    const onScroll = () => setShowStickyCart(window.scrollY > 600);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   if (!product)
     return (
@@ -66,7 +75,7 @@ const ProductDetailPage: React.FC = () => {
     <div className="bg-[#FAF6F2] min-h-screen pb-28 md:pb-20">
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-6 md:py-10">
         {/* Breadcrumb */}
-        <div className="flex items-center gap-2 text-xs md:text-[10px] font-bold uppercase tracking-widest text-stone-400 mb-6 md:mb-8">
+        <div className="flex items-center gap-2 text-xs md:text-[10px] font-bold uppercase tracking-widest text-stone-500 mb-6 md:mb-8">
           <Link to="/" className="hover:text-[#B38B59] transition-colors">
             Home
           </Link>
@@ -329,6 +338,15 @@ const ProductDetailPage: React.FC = () => {
           </section>
         )}
       </div>
+
+      {/* Mobile sticky add-to-cart (appears after the main CTA scrolls away) */}
+      <StickyMobileCart
+        product={product}
+        price={currentPrice}
+        image={product.images[0]}
+        onAddToCart={handleAdd}
+        isVisible={showStickyCart}
+      />
     </div>
   );
 };

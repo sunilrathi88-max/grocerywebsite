@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { paymentService } from '../../../utils/paymentService';
 import { CartItem } from '../../../types';
@@ -10,6 +10,7 @@ import {
   ShieldCheck,
   Smartphone,
   ArrowRight,
+  Truck,
   Zap,
   Lock,
 } from 'lucide-react';
@@ -36,6 +37,17 @@ const CheckoutPage: React.FC = () => {
 
   const shipping = getShippingCost(totalPrice);
   const grandTotal = totalPrice + shipping;
+
+  // 3-5 business day window, shown as "Mon, 15 Jun – Wed, 17 Jun"
+  const deliveryEstimate = useMemo(() => {
+    const fmt = (d: Date) =>
+      d.toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short' });
+    const from = new Date();
+    from.setDate(from.getDate() + 3);
+    const to = new Date();
+    to.setDate(to.getDate() + 5);
+    return `${fmt(from)} – ${fmt(to)}`;
+  }, []);
 
   useEffect(() => {
     if (orderId && step !== 5) {
@@ -351,6 +363,13 @@ const CheckoutPage: React.FC = () => {
                         {errors.city && <p className="text-xs text-red-500 mt-1">{errors.city}</p>}
                       </div>
                     </div>
+                    {/* Delivery estimate appears once the pincode resolves a city */}
+                    {form.city && /^\d{6}$/.test(form.pincode) && (
+                      <p className="flex items-center gap-2 text-sm font-medium text-green-700 bg-green-50 border border-green-200 rounded-md px-4 py-3">
+                        <Truck size={16} />
+                        Delivery to {form.city} by {deliveryEstimate}
+                      </p>
+                    )}
                     <button
                       onClick={() => {
                         if (validateStep2()) setStep(3);

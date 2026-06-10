@@ -68,7 +68,7 @@ export default function Preloader() {
         { strokeDashoffset: 0, duration: 1.0, ease: 'power2.inOut', stagger: 0.1 },
         0.2
       )
-        .to('#pre-text path', { fill: '#f2e8d0', fillOpacity: 1, duration: 0.4 }, 1.4)
+        .to('#pre-text path', { stroke: '#f2e8d0', duration: 0.4 }, 1.4)
         .to(
           '#pre-counter',
           {
@@ -101,16 +101,26 @@ export default function Preloader() {
       id="preloader"
       className="fixed inset-0 z-[10000] bg-ink flex flex-col items-center justify-center pointer-events-none"
     >
-      {/* Brand SVG Wordmark */}
+      {/* Brand SVG Wordmark — "RATHI", stroke-drawn letter by letter */}
       <div className="w-64 md:w-96 mb-16">
         <svg id="pre-text" viewBox="0 0 400 60" className="w-full h-auto overflow-hidden">
-          {/* Temporary placeholder shapes, will be replaced with real brand SVG */}
-          <path
-            className="stroke-saffron stroke-1 fill-transparent"
-            strokeDasharray="1000"
-            strokeDashoffset="1000"
-            d="M 50,30 L 70,10 L 90,30 L 70,50 Z M 150,30 C 150,10 200,10 200,30 C 200,50 150,50 150,30 M 250,50 L 250,10 L 300,10 M 250,30 L 290,30"
-          />
+          {[
+            'M 85,50 L 85,10 L 105,10 C 118,10 118,28 105,28 L 85,28 M 97,28 L 112,50',
+            'M 135,50 L 150,10 L 165,50 M 141,36 L 159,36',
+            'M 185,10 L 215,10 M 200,10 L 200,50',
+            'M 235,10 L 235,50 M 265,10 L 265,50 M 235,30 L 265,30',
+            'M 290,10 L 310,10 M 300,10 L 300,50 M 290,50 L 310,50',
+          ].map((d) => (
+            <path
+              key={d}
+              className="stroke-saffron fill-transparent"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeDasharray="1000"
+              strokeDashoffset="1000"
+              d={d}
+            />
+          ))}
         </svg>
       </div>
 

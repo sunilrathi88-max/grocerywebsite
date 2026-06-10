@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { User } from '../../types';
 import { userAPI } from '../../utils/apiService';
 import { APIErrorDisplay } from '../APIErrorDisplay';
@@ -35,6 +36,34 @@ const AccountOverview: React.FC<AccountOverviewProps> = ({ user, onUpdateUser })
 
   return (
     <div>
+      {/* Quick actions */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+        <Link
+          to="/track-order"
+          className="flex items-center gap-4 p-5 bg-amber-50 border border-amber-200 rounded-2xl hover:border-amber-400 hover:shadow-md transition-all"
+        >
+          <span className="text-2xl" aria-hidden="true">
+            🚚
+          </span>
+          <div>
+            <p className="font-bold text-gray-900">Where&apos;s my order?</p>
+            <p className="text-sm text-gray-500">Track your delivery status</p>
+          </div>
+        </Link>
+        <Link
+          to="/account/orders"
+          className="flex items-center gap-4 p-5 bg-stone-50 border border-stone-200 rounded-2xl hover:border-stone-400 hover:shadow-md transition-all"
+        >
+          <span className="text-2xl" aria-hidden="true">
+            📦
+          </span>
+          <div>
+            <p className="font-bold text-gray-900">Order history</p>
+            <p className="text-sm text-gray-500">View and reorder past purchases</p>
+          </div>
+        </Link>
+      </div>
+
       <h3 className="text-2xl font-serif font-bold mb-6">Personal Information</h3>
 
       {updateError && (
