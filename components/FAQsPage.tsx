@@ -2,7 +2,6 @@ import React, { useState, useMemo } from 'react';
 import { ChevronDownIcon } from './icons/ChevronDownIcon';
 import { Search } from 'lucide-react';
 import { SEO } from './SEO';
-import { generateFAQSchema } from '../utils/seo';
 
 const FAQ_CATEGORIES = ['Product Quality', 'Sourcing', 'Shipping', 'Returns', 'Wholesale'];
 
@@ -111,8 +110,8 @@ const FAQsPage: React.FC = () => {
             Everything You Need to <span className="text-[#B38B59] italic">Know</span>
           </h1>
           <p className="text-stone-500 text-lg leading-relaxed max-w-2xl mx-auto">
-            Can't find what you're looking for? Reach out to our support team directly through the
-            contact page.
+            Can&apos;t find what you&apos;re looking for? Reach out to our support team directly
+            through the contact page.
           </p>
 
           {/* Search Bar */}

@@ -86,8 +86,8 @@ export default function PhilosophySection() {
               friction.
             </p>
             <p className="text-dust font-medium">
-              The result isn't just color. It's the unadulterated volatile oils and profound aroma
-              of the earth itself, captured in every pinch.
+              The result isn&apos;t just color. It&apos;s the unadulterated volatile oils and
+              profound aroma of the earth itself, captured in every pinch.
             </p>
           </div>
 

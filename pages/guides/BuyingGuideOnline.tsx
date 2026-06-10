@@ -70,8 +70,8 @@ const BuyingGuideOnline = () => {
               </span>
               <span className="text-dust text-sm">
                 If the brand refuses to state the exact district or region of harvest (e.g., merely
-                stating "India"), they are aggregating mass market run-off. Expect zero unified
-                sensory profile.
+                stating &quot;India&quot;), they are aggregating mass market run-off. Expect zero
+                unified sensory profile.
               </span>
             </li>
             <li className="flex flex-col md:flex-row gap-4 bg-char p-4 rounded border border-mist/20">
@@ -90,8 +90,8 @@ const BuyingGuideOnline = () => {
               </span>
               <span className="text-dust text-sm">
                 A genuine procurer will speak about grinding temperatures, essential oil ratios, and
-                harvest dates. Scammers rely on generic adjectives like "healthy" or "flavorful,"
-                avoiding structural processing metrics.
+                harvest dates. Scammers rely on generic adjectives like &quot;healthy&quot; or
+                &quot;flavorful,&quot; avoiding structural processing metrics.
               </span>
             </li>
           </ul>
@@ -107,12 +107,12 @@ const BuyingGuideOnline = () => {
           </p>
           <p className="text-mist text-lg font-light mb-4">
             Look explicitly for the term{' '}
-            <strong className="text-cream">"Triple-Layer Barrier"</strong> or{' '}
-            <strong className="text-cream">"METPET construction"</strong> on the brand's
-            specifications. Cheap plastic pouches allow massive oxygen transfer algorithms,
-            accelerating oxidation exponentially. Only metallized layers combined with UV-blocking
-            opaque polymers guarantee that the powder survives transit heat without thermal
-            breakdown.
+            <strong className="text-cream">&quot;Triple-Layer Barrier&quot;</strong> or{' '}
+            <strong className="text-cream">&quot;METPET construction&quot;</strong> on the
+            brand&apos;s specifications. Cheap plastic pouches allow massive oxygen transfer
+            algorithms, accelerating oxidation exponentially. Only metallized layers combined with
+            UV-blocking opaque polymers guarantee that the powder survives transit heat without
+            thermal breakdown.
           </p>
         </section>
 

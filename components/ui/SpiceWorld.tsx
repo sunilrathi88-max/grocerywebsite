@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
 import { useGSAP } from '../../hooks/useGSAP';
 import { gsap } from 'gsap';
 
@@ -33,7 +33,7 @@ export default function SpiceWorld() {
     const cx = width / 2;
     const cy = height / 2;
 
-    const render = (time: number) => {
+    const render = (_time: number) => {
       ctx.clearRect(0, 0, width, height);
 
       // Central Orb (Golden Hour Lighting)

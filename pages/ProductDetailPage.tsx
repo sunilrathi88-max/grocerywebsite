@@ -10,8 +10,8 @@ import { Breadcrumbs } from '../components/ui/Breadcrumbs';
 
 import { useCartStore } from '../store/cartStore';
 import { ReviewWidget } from '../components/Reviews/ReviewWidget';
-import { GlobeIcon } from '../components/icons/GlobeIcon';
 import { StickyMobileCart } from '../components/StickyMobileCart';
+import { Product } from '../types';
 import { useRef, useEffect } from 'react';
 
 import { useProducts } from '../hooks/useProducts'; // Import hook
@@ -118,7 +118,7 @@ export default function ProductDetailPage() {
     navigate('/checkout');
   };
 
-  const handleAddBundle = (bundleProducts: any[]) => {
+  const handleAddBundle = (bundleProducts: Product[]) => {
     bundleProducts.forEach((p) => {
       const variant = p.variants[0];
       const discountedPrice = Math.round(variant.price * 0.85); // 15% off

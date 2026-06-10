@@ -75,12 +75,12 @@ export const productAPI = {
           images: p.images || [],
           videos: p.videos || [],
           tags: p.tags || [],
-          variants: ((p.variants as any[]) || []).map((v) => ({
+          variants: ((p.variants as Record<string, unknown>[]) || []).map((v) => ({
             ...v,
             salePrice: v.sale_price ? Number(v.sale_price) : undefined,
             price: Number(v.price),
           })),
-          reviews: ((p.reviews as any[]) || []).map((r) => ({
+          reviews: ((p.reviews as Record<string, unknown>[]) || []).map((r) => ({
             ...r,
             verifiedPurchase: r.verified_purchase,
           })),
@@ -119,12 +119,12 @@ export const productAPI = {
       images: p.images || [],
       videos: p.videos || [],
       tags: p.tags || [],
-      variants: ((p.variants as any[]) || []).map((v) => ({
+      variants: ((p.variants as Record<string, unknown>[]) || []).map((v) => ({
         ...v,
         salePrice: v.sale_price ? Number(v.sale_price) : undefined,
         price: Number(v.price),
       })),
-      reviews: ((p.reviews as any[]) || []).map((r) => ({
+      reviews: ((p.reviews as Record<string, unknown>[]) || []).map((r) => ({
         ...r,
         verifiedPurchase: r.verified_purchase,
       })),

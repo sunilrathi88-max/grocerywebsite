@@ -75,6 +75,6 @@ export const imageErrorHandlers = {
 /**
  * Helper to get the primary image for a product
  */
-export const getProductImage = (product: any): string => {
+export const getProductImage = (product: { images?: string[] } | null | undefined): string => {
   return product?.images?.[0] || PLACEHOLDER_URLS.product;
 };

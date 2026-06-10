@@ -67,7 +67,7 @@ export default function PinnedProcessSection() {
 
     // Mobile fallback animations
     mm.add('(max-width: 1023px)', () => {
-      gsap.utils.toArray('.process-step-mobile').forEach((step: any) => {
+      gsap.utils.toArray('.process-step-mobile').forEach((step: Element) => {
         gsap.from(step, {
           y: 30,
           opacity: 0,
@@ -100,7 +100,7 @@ export default function PinnedProcessSection() {
             </h2>
           </div>
 
-          {PROCESS_STEPS.map((step, idx) => (
+          {PROCESS_STEPS.map((step, _idx) => (
             <div
               key={step.id}
               className="process-text-block min-h-[60vh] flex flex-col justify-center max-w-lg relative group"

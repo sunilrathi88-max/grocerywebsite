@@ -8,8 +8,6 @@ import PinnedProcessSection from '../components/ui/PinnedProcessSection';
 import TrustSignals from '../components/TrustSignals';
 import HarvestCollection from '../components/HarvestCollection';
 import ProductGrid from '../components/ProductGrid';
-import SortDropdown from '../components/SortDropdown';
-import AdvancedFilters from '../components/AdvancedFilters';
 // Lazy load below-the-fold heavy components for INP/LCP optimization
 const Testimonials = React.lazy(() => import('../components/Testimonials'));
 const CookingContextWidget = React.lazy(() => import('../components/CookingContextWidget'));
@@ -20,8 +18,6 @@ const LoyaltyWidget = React.lazy(() => import('../components/LoyaltyWidget'));
 const SubscriptionBanner = React.lazy(() => import('../components/SubscriptionBanner'));
 
 import { FEATURED_TESTIMONIALS } from '../data/testimonials';
-import QuizModule from '../components/QuizModule';
-import toast from 'react-hot-toast';
 import SEO from '../components/SEO';
 import { pageSEO, generateOrganizationSchema, generateWebsiteSchema } from '../utils/seo';
 
@@ -92,37 +88,37 @@ const HomePage: React.FC<HomePageProps> = ({
   setSelectedProduct,
   handleNotifyMe,
   _handleClearFilters,
-  setIsFilterOpen,
-  setSortOrder,
-  sortOrder,
-  showOnSale,
-  setShowOnSale,
-  showInStock,
-  setShowInStock,
-  availableTags,
-  selectedTagsState,
-  handleToggleTag,
-  priceRange,
-  setPriceRange,
-  maxPrice,
-  selectedOrigins,
-  handleToggleOrigin,
-  availableOrigins,
-  selectedHeatLevels,
-  handleToggleHeatLevel,
-  availableHeatLevels,
-  selectedCuisines,
-  handleToggleCuisine,
-  availableCuisines,
-  selectedSizes,
-  handleToggleSize,
-  availableSizes,
-  selectedGrinds,
-  handleToggleGrind,
-  availableGrinds,
-  selectedGrades,
-  handleToggleGrade,
-  availableGrades,
+  setIsFilterOpen: _setIsFilterOpen,
+  setSortOrder: _setSortOrder,
+  sortOrder: _sortOrder,
+  showOnSale: _showOnSale,
+  setShowOnSale: _setShowOnSale,
+  showInStock: _showInStock,
+  setShowInStock: _setShowInStock,
+  availableTags: _availableTags,
+  selectedTagsState: _selectedTagsState,
+  handleToggleTag: _handleToggleTag,
+  priceRange: _priceRange,
+  setPriceRange: _setPriceRange,
+  maxPrice: _maxPrice,
+  selectedOrigins: _selectedOrigins,
+  handleToggleOrigin: _handleToggleOrigin,
+  availableOrigins: _availableOrigins,
+  selectedHeatLevels: _selectedHeatLevels,
+  handleToggleHeatLevel: _handleToggleHeatLevel,
+  availableHeatLevels: _availableHeatLevels,
+  selectedCuisines: _selectedCuisines,
+  handleToggleCuisine: _handleToggleCuisine,
+  availableCuisines: _availableCuisines,
+  selectedSizes: _selectedSizes,
+  handleToggleSize: _handleToggleSize,
+  availableSizes: _availableSizes,
+  selectedGrinds: _selectedGrinds,
+  handleToggleGrind: _handleToggleGrind,
+  availableGrinds: _availableGrinds,
+  selectedGrades: _selectedGrades,
+  handleToggleGrade: _handleToggleGrade,
+  availableGrades: _availableGrades,
   _addToast,
 }) => {
   const { variant, trackConversion } = useABTest();
@@ -136,19 +132,6 @@ const HomePage: React.FC<HomePageProps> = ({
   const handleAddToCartWithTracking = (product: Product, variant: Variant, quantity?: number) => {
     trackConversion('add_to_cart', { productId: product.id, productName: product.name });
     handleAddToCart(product, variant, quantity);
-  };
-
-  const handleQuizToast = (message: string, type: ToastMessage['type']) => {
-    switch (type) {
-      case 'success':
-        toast.success(message);
-        break;
-      case 'error':
-        toast.error(message);
-        break;
-      default:
-        toast(message);
-    }
   };
 
   // Handler for CookingContextWidget

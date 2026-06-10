@@ -5,7 +5,7 @@ interface ProductCertificationTabProps {
   product: Product;
 }
 
-const ProductCertificationTab: React.FC<ProductCertificationTabProps> = ({ product }) => {
+const ProductCertificationTab: React.FC<ProductCertificationTabProps> = ({ product: _product }) => {
   return (
     <div>
       <div className="flex flex-col md:flex-row gap-8 mb-8">

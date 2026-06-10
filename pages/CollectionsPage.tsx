@@ -1,5 +1,5 @@
-import React, { useState, useMemo, useEffect } from 'react';
-import { useParams, Link, useSearchParams, Navigate } from 'react-router-dom';
+import React, { useState, useMemo } from 'react';
+import { useParams, Link, useSearchParams } from 'react-router-dom';
 import { useProducts } from '../hooks/useProducts';
 import { useProductFilter, FilterOptions } from '../hooks/useProductFilter';
 import { FilterSidebar } from '../components/FilterSidebar';
@@ -7,7 +7,7 @@ import { UniversalProductCard } from '../components/UniversalProductCard';
 import { Pagination } from '../components/Pagination';
 import { useCartStore } from '../store/cartStore';
 import { useWishlist } from '../hooks/useWishlist';
-import { Product, Variant } from '../types';
+import { Product } from '../types';
 import { ChevronRight, SlidersHorizontal, PackageOpen } from 'lucide-react';
 
 const ITEMS_PER_PAGE = 12;
@@ -16,13 +16,13 @@ type SortOption = 'popular' | 'price-asc' | 'price-desc' | 'rating' | 'newest';
 
 const CollectionsPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const { products, isLoading, error } = useProducts({ useMockData: true });
+  const [searchParams] = useSearchParams();
+  const { products, isLoading } = useProducts({ useMockData: true });
   const addItem = useCartStore((state) => state.addItem);
   const { toggleWishlist, isInWishlist } = useWishlist();
 
   // State Management
-  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
+  const [, setIsMobileFilterOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(parseInt(searchParams.get('page') || '1', 10));
   const [sortBy, setSortBy] = useState<SortOption>(
     (searchParams.get('sort') as SortOption) || 'popular'

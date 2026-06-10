@@ -18,7 +18,8 @@ const RecipesPage: React.FC<RecipesPageProps> = ({ recipes, onSelectRecipe }) =>
             Culinary Inspiration
           </div>
           <h2 className="font-display text-4xl md:text-6xl font-bold text-[#42210B] mb-6 leading-tight">
-            Kitchen secrets from <span className="text-[#B38B59] italic">India's Heartland</span>
+            Kitchen secrets from{' '}
+            <span className="text-[#B38B59] italic">India&apos;s Heartland</span>
           </h2>
           <p className="text-stone-500 text-lg max-w-2xl mx-auto leading-relaxed font-medium">
             Elevate your daily cooking with authentic recipes designed for our premium cold-ground

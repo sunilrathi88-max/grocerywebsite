@@ -20,6 +20,7 @@ interface CartProps {
   promoCode: string;
   onPromoCodeChange: (code: string) => void;
   onApplyPromoCode: (code: string) => void;
+  onRemovePromoCode?: () => void;
   discount: number;
   subtotal: number;
   shippingCost: number;
@@ -81,6 +82,7 @@ const Cart: React.FC<CartProps> = ({
   promoCode,
   onPromoCodeChange,
   onApplyPromoCode,
+  onRemovePromoCode,
   discount,
   subtotal,
   shippingCost,
@@ -478,7 +480,19 @@ const Cart: React.FC<CartProps> = ({
             </div>
             {discount > 0 && (
               <div className="flex justify-between text-green-600">
-                <span>Discount</span>
+                <span className="flex items-center gap-2">
+                  Discount
+                  {onRemovePromoCode && (
+                    <button
+                      type="button"
+                      onClick={onRemovePromoCode}
+                      className="text-xs text-red-500 hover:text-red-700 underline"
+                      aria-label="Remove promo code"
+                    >
+                      Remove
+                    </button>
+                  )}
+                </span>
                 <span>-₹{discount.toFixed(2)}</span>
               </div>
             )}

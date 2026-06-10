@@ -126,7 +126,7 @@ export const LoyaltyPointsTracker: React.FC = () => {
               <h3 className="font-display text-2xl font-bold text-white mb-2">
                 Confirm Redemption
               </h3>
-              <p className="text-stone-400 text-sm mb-2">You're redeeming</p>
+              <p className="text-stone-400 text-sm mb-2">You&apos;re redeeming</p>
               <p className="font-black text-[#B38B59] text-xl mb-1">{confirmingReward.reward}</p>
               <p className="text-stone-500 text-sm mb-8">
                 for <strong className="text-white">{confirmingReward.points}</strong> points

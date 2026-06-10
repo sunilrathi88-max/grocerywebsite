@@ -37,7 +37,7 @@ const FarmerSpotlight: React.FC = () => {
               Meet Our Farmers
             </span>
             <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#1c1917] mb-8 leading-tight">
-              "Healthy soil makes healthy food. We use no chemicals, only nature."
+              &ldquo;Healthy soil makes healthy food. We use no chemicals, only nature.&rdquo;
             </h2>
             <div className="prose prose-lg text-gray-600 mb-8">
               <p>
@@ -75,7 +75,7 @@ const FarmerSpotlight: React.FC = () => {
                 to="/about"
                 className="inline-flex items-center text-[#1c1917] font-bold border-b-2 border-[#c2410c] pb-1 hover:text-[#c2410c] transition-colors"
               >
-                Read Rajesh's Full Story
+                Read Rajesh&apos;s Full Story
                 <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
                     strokeLinecap="round"

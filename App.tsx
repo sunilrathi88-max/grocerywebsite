@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { useQueryClient } from '@tanstack/react-query';
 import { HelmetProvider } from 'react-helmet-async';
 import {
   Routes,
@@ -59,7 +58,6 @@ import CustomCursor from './components/ui/CustomCursor';
 import SeedTrail from './components/ui/SeedTrail';
 import Preloader from './components/ui/Preloader';
 import { ToastContainer } from './components/ui/ToastContainer';
-import PromotionalBanner from './components/PromotionalBanner';
 
 // Lazy-Loaded Components (Load on Demand)
 const Footer = React.lazy(() => import('./components/Footer'));
@@ -81,10 +79,6 @@ const BackToTop = React.lazy(() => import('./components/BackToTop'));
 
 const MobileBottomNav = React.lazy(() => import('./components/MobileBottomNav'));
 
-const MessagingShowcase = React.lazy(() => import('./components/MessagingShowcase'));
-
-// Lazy-Loaded Pages (Route-Based Code Splitting)
-const CheckoutPage = React.lazy(() => import('./components/CheckoutPage'));
 import { OrderConfirmation } from './components/OrderConfirmation';
 
 // AdminDashboard is imported lazily at top of file
@@ -118,8 +112,6 @@ const EmailVerificationPage = React.lazy(() => import('./components/EmailVerific
 const TwoFactorSetupPage = React.lazy(() => import('./components/TwoFactorSetupPage'));
 const OrderTrackingPage = React.lazy(() => import('./pages/OrderTrackingPage'));
 const CollectionsPage = React.lazy(() => import('./pages/CollectionsPage'));
-const ProductDetailPage = React.lazy(() => import('./pages/ProductDetailPage'));
-const ResponsiveHomePage = React.lazy(() => import('./pages/ResponsiveHomePage'));
 const OffersPage = React.lazy(() => import('./pages/OffersPage'));
 const SubscriptionPage = React.lazy(() => import('./pages/SubscriptionPage'));
 const FarmersPage = React.lazy(() => import('./pages/FarmersPage'));
@@ -155,7 +147,7 @@ const PageLoader = () => (
   </div>
 );
 
-const OrderConfirmationRoute = ({ currentUser }: { currentUser: User | null }) => {
+const OrderConfirmationRoute = ({ currentUser: _currentUser }: { currentUser: User | null }) => {
   const { orderId } = useParams();
   const { orders, isLoading, error } = useUserOrders();
 
@@ -177,7 +169,7 @@ const OrderConfirmationRoute = ({ currentUser }: { currentUser: User | null }) =
     <div className="text-center py-20 px-4">
       <h2 className="text-2xl font-bold">Order not found</h2>
       <p className="text-gray-600 mt-2">
-        We couldn't find an order with ID: <span className="font-mono">{orderId}</span>
+        We couldn&apos;t find an order with ID: <span className="font-mono">{orderId}</span>
       </p>
       <Link
         to="/"
@@ -306,20 +298,17 @@ const App: React.FC = () => {
   const subtotal = useCartStore((state) => state.getSubtotal());
   const addToCart = useCartStore((state) => state.addItem);
   const updateQuantity = useCartStore((state) => state.updateQuantity);
-  const clearCart = useCartStore((state) => state.clearCart);
 
-  const { wishlistItems, wishlistItemCount, toggleWishlist, isInWishlist } = useWishlist();
+  const { wishlistItems, toggleWishlist, isInWishlist } = useWishlist();
 
   const {
     products,
-    isLoading: productsLoading,
 
     addReview,
     addQuestion,
   } = useProducts({ useMockData: true });
 
   const { orders } = useUserOrders();
-  const queryClient = useQueryClient();
   // --- Order Fetching ---
   // Moved to useUserOrders hook
   /*
@@ -405,8 +394,6 @@ const App: React.FC = () => {
   const availableHeatLevels = ['Mild', 'Medium', 'Spicy', 'Extra Spicy']; // Static for now, or derive from tags
   const availableCuisines: string[] = []; // Placeholder, to be populated from tags or new field
 
-  const wishlistedIds = useMemo(() => new Set(wishlistItems.map((p) => p.id)), [wishlistItems]);
-  const comparisonIds = useMemo(() => new Set(comparisonItems.map((p) => p.id)), [comparisonItems]);
   const shippingCost = useMemo(() => (subtotal > 999 || subtotal === 0 ? 0 : 50), [subtotal]);
 
   // Smart Cart Recommendations
@@ -695,22 +682,6 @@ const App: React.FC = () => {
     setPromoCode('');
   }, []);
 
-  const handlePlaceOrder = useCallback(
-    (order: Order) => {
-      // Invalidate orders query to fetch new order
-      queryClient.invalidateQueries({ queryKey: ['orders'] });
-      clearCart();
-      setDiscount(0);
-      setPromoCode('');
-
-      // Loyalty Points Logic (Mock)
-      const currentPoints = parseInt(localStorage.getItem('loyaltyPoints') || '0', 10);
-      const pointsEarned = Math.floor(order.total); // 1 point per currency unit
-      localStorage.setItem('loyaltyPoints', (currentPoints + pointsEarned).toString());
-    },
-    [clearCart, queryClient]
-  );
-
   const handleToggleCompare = useCallback(
     (product: Product) => {
       setComparisonItems((prev) => {
@@ -783,7 +754,6 @@ const App: React.FC = () => {
   // Use empty strings to avoid overriding page titles, purely for Schema injection
   const orgSchema = generateOrganizationSchema();
   const websiteSchema = generateWebsiteSchema();
-  const GlobalSEO = <SEO title="" description="" structuredData={[orgSchema, websiteSchema]} />;
 
   // Check if mobile for hiding desktop layout on mobile pages
   // Use 1024px breakpoint to include tablets in mobile view
@@ -798,19 +768,38 @@ const App: React.FC = () => {
   const [blogPosts, setBlogPosts] = useState<typeof BLOG_POSTS_DATA>(BLOG_POSTS_DATA);
 
   useEffect(() => {
-    // Load markdown posts and merge with mock data
-    import('./src/utils/markdownLoader').then(({ getAllPosts }) => {
-      getAllPosts().then((mdPosts) => {
-        setBlogPosts((prev) => {
-          // Avoid duplicates if HMR runs
-          const existingIds = new Set(prev.map((p) => p.id));
-          const newPosts = mdPosts.filter((p) => !existingIds.has(p.id));
-          return [...prev, ...newPosts].sort(
-            (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-          );
+    // Load markdown posts during idle time so the (large) markdown chunk
+    // doesn't compete with first paint on slow mobile connections.
+    let cancelled = false;
+    const load = () => {
+      import('./src/utils/markdownLoader').then(({ getAllPosts }) => {
+        getAllPosts().then((mdPosts) => {
+          if (cancelled) return;
+          setBlogPosts((prev) => {
+            // Avoid duplicates if HMR runs
+            const existingIds = new Set(prev.map((p) => p.id));
+            const newPosts = mdPosts.filter((p) => !existingIds.has(p.id));
+            return [...prev, ...newPosts].sort(
+              (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+            );
+          });
         });
       });
-    });
+    };
+
+    const idleId =
+      typeof window.requestIdleCallback === 'function'
+        ? window.requestIdleCallback(load, { timeout: 4000 })
+        : window.setTimeout(load, 1500);
+
+    return () => {
+      cancelled = true;
+      if (typeof window.cancelIdleCallback === 'function') {
+        window.cancelIdleCallback(idleId);
+      } else {
+        clearTimeout(idleId);
+      }
+    };
   }, []);
 
   return (
@@ -1293,6 +1282,7 @@ const App: React.FC = () => {
                   promoCode={promoCode}
                   onPromoCodeChange={setPromoCode}
                   onApplyPromoCode={handleApplyPromoCode}
+                  onRemovePromoCode={handleRemovePromoCode}
                   discount={discount}
                   shippingCost={shippingCost}
                   onAddToCart={handleAddToCart}

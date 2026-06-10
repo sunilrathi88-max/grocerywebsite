@@ -99,7 +99,7 @@ const CheckoutPage: React.FC = () => {
 
   const handleBlur = (f: string) => {
     setTouched((prev) => ({ ...prev, [f]: true }));
-    const err = validateField(f, (form as any)[f]);
+    const err = validateField(f, form[f as keyof typeof form]);
     setErrors((prev) => ({ ...prev, [f]: err }));
   };
 

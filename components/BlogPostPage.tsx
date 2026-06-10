@@ -4,7 +4,7 @@ import { BlogPost, Product } from '../types';
 import { Breadcrumbs } from './ui/Breadcrumbs';
 import { imageErrorHandlers, getProductImage } from '../utils/imageHelpers';
 import { SEO } from './SEO';
-import { pageSEO, generateBlogPostingSchema, generateFAQSchema } from '../utils/seo';
+import { generateBlogPostingSchema, generateFAQSchema } from '../utils/seo';
 
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
@@ -142,7 +142,7 @@ const BlogPostPage: React.FC<BlogPostPageProps> = ({ post, allProducts }) => {
             <ReactMarkdown
               rehypePlugins={[rehypeRaw]}
               components={{
-                img: ({ node, ...props }) => (
+                img: ({ node: _node, ...props }) => (
                   <img {...props} className="rounded-xl shadow-lg my-8 w-full" />
                 ),
               }}

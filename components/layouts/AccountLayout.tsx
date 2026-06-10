@@ -13,7 +13,11 @@ interface AccountLayoutProps {
   children?: React.ReactNode;
 }
 
-const AccountLayout: React.FC<AccountLayoutProps> = ({ user, children, onLogout }) => {
+const AccountLayout: React.FC<AccountLayoutProps> = ({
+  user,
+  children: _children,
+  onLogout: _onLogout,
+}) => {
   if (!user) {
     return <Navigate to="/login" replace />;
   }

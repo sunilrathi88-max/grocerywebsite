@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef } from 'react';
+import { useLayoutEffect, useRef, DependencyList } from 'react';
 import { gsap } from 'gsap';
 
 /**
@@ -8,7 +8,7 @@ import { gsap } from 'gsap';
  * @param callback The GSAP animation logic.
  * @param dependencies React dependency array to trigger re-animations.
  */
-export function useGSAP(callback: () => void, dependencies: any[] = []) {
+export function useGSAP(callback: () => void, dependencies: DependencyList = []) {
   const contextRef = useRef<gsap.Context | null>(null);
 
   useLayoutEffect(() => {

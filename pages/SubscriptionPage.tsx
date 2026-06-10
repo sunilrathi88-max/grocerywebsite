@@ -112,7 +112,7 @@ const SubscriptionPage: React.FC = () => {
               </p>
             </div>
             <div className="space-y-4 p-8 rounded-3xl bg-[#FAF6F2] border border-stone-50">
-              <h4 className="font-bold text-[#42210B] text-xl">What's inside the box?</h4>
+              <h4 className="font-bold text-[#42210B] text-xl">What&apos;s inside the box?</h4>
               <p className="text-stone-500 leading-relaxed">
                 A curated selection of our finest seasonal spices, artisan blends, and exclusive,
                 chef-curated recipe cards.

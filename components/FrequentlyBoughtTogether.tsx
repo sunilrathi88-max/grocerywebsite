@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Product, Variant } from '../types';
+import { Product } from '../types';
 import { OptimizedImage } from './OptimizedImage';
 import { getBundleSuggestions } from '../utils/recommendations';
 

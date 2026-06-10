@@ -72,15 +72,16 @@ const PremiumNutsGuide = () => {
               <li className="flex gap-4">
                 <span className="font-bold text-cream w-16 shrink-0">W-180</span>
                 <span className="text-dust text-sm">
-                  Known as the 'King of Cashews'. These are enormous, flawless kernels measuring
-                  roughly 180 pieces to the pound. They represent the top 1% of the harvest.
+                  Known as the &apos;King of Cashews&apos;. These are enormous, flawless kernels
+                  measuring roughly 180 pieces to the pound. They represent the top 1% of the
+                  harvest.
                 </span>
               </li>
               <li className="flex gap-4">
                 <span className="font-bold text-cream w-16 shrink-0">W-240</span>
                 <span className="text-dust text-sm">
-                  The 'Jumbo' grade. Highly sought after for premium gifting, offering substantial
-                  mechanical resistance and an incredible buttery bite.
+                  The &apos;Jumbo&apos; grade. Highly sought after for premium gifting, offering
+                  substantial mechanical resistance and an incredible buttery bite.
                 </span>
               </li>
               <li className="flex gap-4">
@@ -93,8 +94,8 @@ const PremiumNutsGuide = () => {
             </ul>
           </div>
           <p className="text-mist text-sm font-light">
-            *Note: The "W" stands for "White Whole", ensuring the nut has zero spotting, scorching,
-            or fracturing resulting from the violent extraction process.
+            *Note: The &quot;W&quot; stands for &quot;White Whole&quot;, ensuring the nut has zero
+            spotting, scorching, or fracturing resulting from the violent extraction process.
           </p>
         </section>
 

@@ -69,8 +69,8 @@ const FarmersPage: React.FC = () => {
             custom={2}
             className="text-lg md:text-xl text-stone-400 max-w-2xl mx-auto leading-relaxed"
           >
-            We don't buy from middlemen. We partner directly with farmers who treat their land like
-            gold. Meet the hands that feed you.
+            We don&apos;t buy from middlemen. We partner directly with farmers who treat their land
+            like gold. Meet the hands that feed you.
           </motion.p>
         </div>
       </section>
