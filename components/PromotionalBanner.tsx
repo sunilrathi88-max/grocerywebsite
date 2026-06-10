@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { FREE_SHIPPING_THRESHOLD } from '../utils/shippingConfig';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Tag, Clock } from 'lucide-react';
 
@@ -73,9 +74,12 @@ const PromotionalBanner: React.FC<PromotionalBannerProps> = ({ onClose }) => {
 
               {/* Message */}
               <span className="text-sm font-bold hidden sm:block">
-                🎉 Free shipping on all orders over <span className="text-[#FCD34D]">₹600</span>
+                🎉 Free shipping on all orders over{' '}
+                <span className="text-[#FCD34D]">₹{FREE_SHIPPING_THRESHOLD}</span>
               </span>
-              <span className="text-xs font-bold sm:hidden">Free shipping over ₹600</span>
+              <span className="text-xs font-bold sm:hidden">
+                Free shipping over ₹{FREE_SHIPPING_THRESHOLD}
+              </span>
 
               {/* Countdown */}
               <div className="flex items-center gap-2">

@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useProducts } from '../../../hooks/useProducts';
 import { useCart } from '../../../hooks/useCart';
+import { FREE_SHIPPING_THRESHOLD } from '../../../utils/shippingConfig';
 import StarRating from './StarRating';
 import { UniversalProductCard as ProductCard } from '../../../components/UniversalProductCard';
 import FrequentlyBoughtTogether from '../../../components/FrequentlyBoughtTogether';
@@ -236,7 +237,8 @@ const ProductDetailPage: React.FC = () => {
               {/* Shipping Trust */}
               <div className="flex justify-between items-center px-4 py-4 bg-stone-50 rounded-2xl text-[10px] font-bold text-stone-500 uppercase tracking-widest overflow-hidden">
                 <div className="flex items-center gap-2">
-                  <Truck size={14} className="text-[#B38B59]" /> Free Ship ₹1000+
+                  <Truck size={14} className="text-[#B38B59]" /> Free Ship ₹
+                  {FREE_SHIPPING_THRESHOLD}+
                 </div>
                 <div className="flex items-center gap-2">
                   <RotateCcw size={14} className="text-[#B38B59]" /> 7 Day Returns

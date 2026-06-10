@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { getShippingCost } from '../utils/shippingConfig';
 import { useNavigate } from 'react-router-dom';
 import Cart from '../components/Cart';
 import { useCartStore } from '../store/cartStore';
@@ -45,7 +46,7 @@ const MobileCartPage: React.FC = () => {
     fetchRecommendations();
   }, []);
 
-  const shippingCost = subtotal >= 600 ? 0 : 50;
+  const shippingCost = getShippingCost(subtotal);
 
   const handleAddToCart = (product: Product, variant: Variant) => {
     addItem({

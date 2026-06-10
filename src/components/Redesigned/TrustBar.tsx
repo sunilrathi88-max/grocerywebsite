@@ -1,4 +1,5 @@
 import React from 'react';
+import { FREE_SHIPPING_THRESHOLD } from '../../../utils/shippingConfig';
 import { motion } from 'framer-motion';
 import { ShieldCheck, Snowflake, Leaf, Lock, Package, RefreshCw } from 'lucide-react';
 
@@ -8,14 +9,14 @@ const badges = [
   { icon: ShieldCheck, text: 'FSSAI Certified' },
   { icon: Leaf, text: '100% Organic' },
   { icon: Snowflake, text: 'Cold-ground <10°C' },
-  { icon: Package, text: 'Free Shipping ₹1000+' },
+  { icon: Package, text: `Free Shipping ₹${FREE_SHIPPING_THRESHOLD}+` },
   // Duplicate for seamless loop
   { icon: Lock, text: '256-bit SSL' },
   { icon: RefreshCw, text: '7-day Returns' },
   { icon: ShieldCheck, text: 'FSSAI Certified' },
   { icon: Leaf, text: '100% Organic' },
   { icon: Snowflake, text: 'Cold-ground <10°C' },
-  { icon: Package, text: 'Free Shipping ₹1000+' },
+  { icon: Package, text: `Free Shipping ₹${FREE_SHIPPING_THRESHOLD}+` },
 ];
 
 export default function TrustBar() {

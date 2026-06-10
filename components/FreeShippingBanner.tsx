@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { FREE_SHIPPING_THRESHOLD } from '../utils/shippingConfig';
 import { XIcon } from './icons/XIcon';
 import { TruckIcon } from './icons/TruckIcon';
 
@@ -13,7 +14,7 @@ const FreeShippingBanner: React.FC = () => {
         <TruckIcon className="w-4 h-4 text-white" />
         <p className="font-medium tracking-wide">
           <span className="font-bold text-yellow-300">FREE SHIPPING</span> on orders over{' '}
-          <span className="font-bold text-white text-base">₹1000</span>
+          <span className="font-bold text-white text-base">₹{FREE_SHIPPING_THRESHOLD}</span>
         </p>
       </div>
       <button

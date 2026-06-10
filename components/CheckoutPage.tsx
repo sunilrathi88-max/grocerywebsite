@@ -6,7 +6,7 @@ import { CartItem as StoreCartItem } from '../types'; // Direct import or alias
 import { OptimizedImage } from './OptimizedImage';
 import { orderAPI } from '../utils/apiService';
 import { paymentService } from '../utils/paymentService';
-import { FREE_SHIPPING_THRESHOLD as FREE_SHIPPING_THRESHOLD_CONFIG } from '../utils/shippingConfig';
+import { FREE_SHIPPING_THRESHOLD } from '../utils/shippingConfig';
 import { APIErrorDisplay } from './APIErrorDisplay';
 import CheckoutStepper from './CheckoutStepper';
 import { lookupPinCodeAsync } from '../utils/pinCodeLookup';
@@ -223,7 +223,6 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
   subtotal,
   shippingCost,
 }) => {
-  const FREE_SHIPPING_THRESHOLD = FREE_SHIPPING_THRESHOLD_CONFIG;
   const remainingForFreeShipping = Math.max(0, FREE_SHIPPING_THRESHOLD - subtotal);
   const shippingProgress = Math.min(100, (subtotal / FREE_SHIPPING_THRESHOLD) * 100);
 

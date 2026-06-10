@@ -11,7 +11,7 @@ import { imageErrorHandlers } from '../utils/imageHelpers';
 import { m, AnimatePresence } from 'framer-motion';
 import PincodeChecker from './PincodeChecker';
 import { useCartStore } from '../store/cartStore';
-import { FREE_SHIPPING_THRESHOLD as FREE_SHIPPING_THRESHOLD_CONFIG } from '../utils/shippingConfig';
+import { FREE_SHIPPING_THRESHOLD } from '../utils/shippingConfig';
 
 interface CartProps {
   items: CartItem[];
@@ -91,7 +91,6 @@ const Cart: React.FC<CartProps> = ({
   onAddToCart,
   recommendedProducts = [],
 }) => {
-  const FREE_SHIPPING_THRESHOLD = FREE_SHIPPING_THRESHOLD_CONFIG;
   const remainingForFreeShipping = Math.max(0, FREE_SHIPPING_THRESHOLD - subtotal);
   const shippingProgress = Math.min(100, (subtotal / FREE_SHIPPING_THRESHOLD) * 100);
 
