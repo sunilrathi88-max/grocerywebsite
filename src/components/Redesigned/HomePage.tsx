@@ -25,7 +25,6 @@ interface HomePageProps {
 // Animated counter hook
 function useCounter(target: number, duration: number = 1800) {
   const [count, setCount] = useState(0);
-  // eslint-disable-next-line no-undef
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true });
 

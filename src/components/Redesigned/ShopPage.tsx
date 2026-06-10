@@ -405,7 +405,7 @@ const ShopPage: React.FC<ShopPageProps> = ({ products, posts }) => {
         {/* Right: Product Grid */}
         <div className="flex-1 overflow-y-auto bg-[#FAF6F2] p-2 pb-28">
           {/* Mobile filter chips */}
-          <div className="flex gap-2 overflow-x-auto no-scrollbar mb-3 pb-1">
+          <div className="flex gap-2 overflow-x-auto no-scrollbar mb-3 pb-1 [mask-image:linear-gradient(to_right,black_calc(100%-1.5rem),transparent)]">
             {FILTER_CHIPS.map((f) => (
               <button
                 key={f}
@@ -470,8 +470,7 @@ const ShopPage: React.FC<ShopPageProps> = ({ products, posts }) => {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 100, opacity: 0 }}
             transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-            className="fixed bottom-0 left-0 right-0 z-50 px-4 pb-4 pointer-events-none"
-            style={{ bottom: 'env(safe-area-inset-bottom, 0px)' }}
+            className="fixed left-0 right-0 z-50 px-4 pb-4 pointer-events-none bottom-[calc(env(safe-area-inset-bottom,0px)+5rem)] md:bottom-[env(safe-area-inset-bottom,0px)]"
           >
             {/* Bump up above mobile bottom nav if present */}
             <div className="md:max-w-lg md:mx-auto pointer-events-auto">
@@ -567,7 +566,7 @@ const ShopPage: React.FC<ShopPageProps> = ({ products, posts }) => {
                   </>
                 ) : (
                   <p className="text-[11px] font-black text-green-700">
-                    🎉 You've unlocked FREE delivery!
+                    🎉 You&apos;ve unlocked FREE delivery!
                   </p>
                 )}
               </div>

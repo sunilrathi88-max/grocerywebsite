@@ -46,11 +46,20 @@ async function prerender() {
   }
 
   console.log('Launching browser...');
-  const browser = await puppeteer.launch({
-    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
-    headless: 'new',
-    args: ['--no-sandbox', '--disable-setuid-sandbox'],
-  });
+  let browser;
+  try {
+    browser = await puppeteer.launch({
+      executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
+      headless: 'new',
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    });
+  } catch (e) {
+    console.warn('Skipping prerender: Chrome is not available in this environment.', e.message);
+    if (server && server.httpServer) {
+      server.httpServer.close();
+    }
+    process.exit(0);
+  }
 
   try {
     const page = await browser.newPage();

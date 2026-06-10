@@ -62,10 +62,10 @@ const ProductDetailPage: React.FC = () => {
     .slice(0, 4);
 
   return (
-    <div className="bg-[#FAF6F2] min-h-screen pb-20">
-      <div className="max-w-7xl mx-auto px-4 md:px-8 py-10">
+    <div className="bg-[#FAF6F2] min-h-screen pb-28 md:pb-20">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 py-6 md:py-10">
         {/* Breadcrumb */}
-        <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-stone-400 mb-8">
+        <div className="flex items-center gap-2 text-xs md:text-[10px] font-bold uppercase tracking-widest text-stone-400 mb-6 md:mb-8">
           <Link to="/" className="hover:text-[#B38B59] transition-colors">
             Home
           </Link>
@@ -77,7 +77,7 @@ const ProductDetailPage: React.FC = () => {
           <span className="text-[#42210B]">{product.name}</span>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-20 items-start">
           {/* Left Column: Image & Media */}
           <div className="space-y-6 lg:sticky lg:top-32">
             <div className="relative aspect-square bg-white rounded-[2.5rem] border border-stone-200 overflow-hidden shadow-sm group">

@@ -197,11 +197,6 @@ const BlogPostRoute = ({
   products: Product[];
 }) => {
   const { slug } = useParams();
-  console.log('DEBUG: BlogPostRoute', {
-    slug,
-    postsCount: posts.length,
-    postSlugs: posts.map((p) => p.slug),
-  });
   const post = posts.find((p) => p.slug === slug);
   return post ? (
     <React.Suspense fallback={<PageLoader />}>
@@ -910,6 +905,8 @@ const App: React.FC = () => {
                       <React.Suspense fallback={<PageLoader />}>
                         <AccountLayout user={currentUser} onLogout={handleLogout} />
                       </React.Suspense>
+                    ) : isAuthLoading ? (
+                      <PageLoader />
                     ) : (
                       <Navigate to="/login" replace />
                     )
@@ -975,7 +972,20 @@ const App: React.FC = () => {
 
                 <Route path="/profile" element={<Navigate to="/account" replace />} />
 
-                <Route path="/admin" element={<AdminDashboard />} />
+                <Route
+                  path="/admin"
+                  element={
+                    currentUser?.isAdmin ? (
+                      <React.Suspense fallback={<PageLoader />}>
+                        <AdminDashboard />
+                      </React.Suspense>
+                    ) : isAuthLoading ? (
+                      <PageLoader />
+                    ) : (
+                      <Navigate to="/login" replace />
+                    )
+                  }
+                />
                 <Route
                   path="/admin/dashboard"
                   element={
@@ -983,6 +993,8 @@ const App: React.FC = () => {
                       <React.Suspense fallback={<PageLoader />}>
                         <AdminDashboard />
                       </React.Suspense>
+                    ) : isAuthLoading ? (
+                      <PageLoader />
                     ) : (
                       <Navigate to="/" replace />
                     )
@@ -995,6 +1007,8 @@ const App: React.FC = () => {
                       <React.Suspense fallback={<PageLoader />}>
                         <AdminShipmentsPage />
                       </React.Suspense>
+                    ) : isAuthLoading ? (
+                      <PageLoader />
                     ) : (
                       <Navigate to="/" replace />
                     )
@@ -1144,7 +1158,6 @@ const App: React.FC = () => {
                 />
 
                 {/* Unified Collections & Shop Architecture */}
-                <Route path="/shop" element={<Navigate to="/collections/all" replace />} />
                 <Route
                   path="/category/:slug"
                   element={
@@ -1167,27 +1180,7 @@ const App: React.FC = () => {
                   path="/order-confirmation/:orderId"
                   element={<OrderConfirmationRoute currentUser={currentUser} />}
                 />
-                <Route
-                  path="/blog/:slug"
-                  element={<BlogPostRoute posts={blogPosts} products={products} />}
-                />
-                <Route
-                  path="/faq"
-                  element={
-                    <React.Suspense fallback={<PageLoader />}>
-                      <FAQsPage />
-                    </React.Suspense>
-                  }
-                />
                 <Route path="/return-policy" element={<Navigate to="/refund-policy" replace />} />
-                <Route
-                  path="/refund-policy"
-                  element={
-                    <React.Suspense fallback={<PageLoader />}>
-                      <RefundPolicyPage />
-                    </React.Suspense>
-                  }
-                />
                 {/* Tools & Utilities */}
                 <Route
                   path="/tools/spice-freshness-calculator"
@@ -1217,7 +1210,6 @@ const App: React.FC = () => {
                     </React.Suspense>
                   }
                 />
-                <Route path="/shipping" element={<Navigate to="/shipping-policy" replace />} />
                 <Route
                   path="/shipping-policy"
                   element={
@@ -1234,8 +1226,6 @@ const App: React.FC = () => {
                     </React.Suspense>
                   }
                 />
-                {/* Admin Routes */}
-                <Route path="/admin/shipments" element={<AdminShipmentsPage />} />
                 {/* 404 Not Found Page */}
                 <Route path="*" element={<NotFoundPage />} />
               </Routes>

@@ -33,14 +33,15 @@ export default defineConfig(({ mode }) => {
       VitePWA({
         registerType: 'autoUpdate',
         injectRegister: 'script-defer',
-        includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'],
+        includeAssets: ['favicon.svg', 'favicon-32x32.png', 'apple-touch-icon.png'],
         manifest: {
           name: 'Rathi Naturals & Co. - Indian Gourmet Products',
           short_name: 'Rathi Naturals & Co.',
           description: 'Premium Indian spices, condiments, and gourmet products',
-          theme_color: '#FFB7C1',
+          theme_color: '#4A2410',
           background_color: '#ffffff',
           display: 'standalone',
+          start_url: '/',
           icons: [
             {
               src: '/android-chrome-192x192.png',

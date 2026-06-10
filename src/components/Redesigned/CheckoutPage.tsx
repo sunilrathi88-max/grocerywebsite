@@ -6,24 +6,15 @@ import { useCart } from '../../../hooks/useCart';
 import {
   CheckCircle2,
   CreditCard,
-  Truck,
   ShieldCheck,
-  MapPin,
   Smartphone,
-  Mail,
-  User,
   ArrowRight,
   Zap,
   Lock,
 } from 'lucide-react';
 
 const CheckoutPage: React.FC = () => {
-  const {
-    cartItems: items,
-    subtotal: totalPrice,
-    cartItemCount: totalItems,
-    clearCart,
-  } = useCart();
+  const { cartItems: items, subtotal: totalPrice, clearCart } = useCart();
   const [step, setStep] = useState(1); // 1=contact, 2=address, 3=payment
   const [form, setForm] = useState({
     name: '',

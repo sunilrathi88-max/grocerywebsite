@@ -160,7 +160,7 @@ const Navbar: React.FC<NavbarProps> = ({ products: _products, posts }) => {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 10 }}
-                    className="absolute top-full right-0 mt-2 w-[400px] bg-ivory rounded-xl shadow-2xl border border-border overflow-hidden z-[110] max-h-[80vh] overflow-y-auto"
+                    className="absolute top-full right-0 mt-2 w-[calc(100vw-2rem)] max-w-[400px] bg-ivory rounded-xl shadow-2xl border border-border overflow-hidden z-[110] max-h-[60vh] overflow-y-auto"
                   >
                     {/* Products Section */}
                     {(autocompleteResults.products.length > 0 || isSearching) && (
@@ -286,7 +286,9 @@ const Navbar: React.FC<NavbarProps> = ({ products: _products, posts }) => {
           {/* Mobile Menu Toggle */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="lg:hidden text-cream hover:text-gold transition-colors"
+            aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={isMobileMenuOpen}
+            className="lg:hidden text-cream hover:text-gold transition-colors p-2 -mr-2"
           >
             {isMobileMenuOpen ? <X size={26} /> : <Menu size={26} />}
           </button>
@@ -301,7 +303,9 @@ const Navbar: React.FC<NavbarProps> = ({ products: _products, posts }) => {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: '-100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="lg:hidden fixed inset-0 top-[64px] bg-forest z-50 flex flex-col"
+            className={`lg:hidden fixed inset-0 bg-forest z-50 flex flex-col top-[64px] ${
+              isScrolled ? 'md:top-[56px]' : 'md:top-[72px]'
+            }`}
           >
             <div className="flex flex-col py-6 px-8 space-y-6 flex-1 overflow-y-auto">
               {['Pantry', 'Produce', 'Dairy', 'Spices', 'About'].map((item) => (

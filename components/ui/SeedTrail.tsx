@@ -14,15 +14,23 @@ interface Particle {
   col: string;
 }
 
+const random = (min: number, max: number) => Math.random() * (max - min) + min;
+const colors = ['#c89518', '#e07830', '#a07818', '#b86820', '#d4a030'];
+
 export default function SeedTrail() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particlesRef = useRef<Particle[]>([]);
   const lastMouseRef = useRef({ x: 0, y: 0 });
 
-  const random = (min: number, max: number) => Math.random() * (max - min) + min;
-  const colors = ['#c89518', '#e07830', '#a07818', '#b86820', '#d4a030'];
-
   useEffect(() => {
+    // Skip on touch devices (no mousemove) and for reduced-motion users
+    if (
+      window.matchMedia('(pointer: coarse)').matches ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
+      return;
+    }
+
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
@@ -35,10 +43,11 @@ export default function SeedTrail() {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     };
-    window.addEventListener('resize', () => {
+    const onResize = () => {
       cancelAnimationFrame(resizeFrame);
       resizeFrame = requestAnimationFrame(resize);
-    });
+    };
+    window.addEventListener('resize', onResize);
     resize();
 
     const onMouseMove = (e: MouseEvent) => {
@@ -118,8 +127,9 @@ export default function SeedTrail() {
     render();
 
     return () => {
-      window.removeEventListener('resize', resize);
+      window.removeEventListener('resize', onResize);
       window.removeEventListener('mousemove', onMouseMove);
+      cancelAnimationFrame(resizeFrame);
       cancelAnimationFrame(animationFrame);
     };
   }, []);
