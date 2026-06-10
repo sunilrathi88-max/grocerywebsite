@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { gsap } from 'gsap';
-import { useGSAP } from '../../hooks/useGSAP';
 
 const SESSION_KEY = 'rn-preloader-shown';
 
@@ -25,56 +23,76 @@ export default function Preloader() {
     window.dispatchEvent(new Event('preloader-complete'));
   }, [skipped]);
 
-  useGSAP(() => {
+  useEffect(() => {
     if (skipped) return;
+
+    let cancelled = false;
+    let dispose: (() => void) | undefined;
+
+    // gsap is loaded on demand so it stays out of the critical bundle.
+    // The static overlay below renders immediately; the animation starts
+    // as soon as the (cached, code-split) gsap chunk arrives.
+    import('gsap').then(({ gsap }) => {
+      if (cancelled) return;
+      dispose = runIntro(gsap);
+    });
+
+    return () => {
+      cancelled = true;
+      dispose?.();
+    };
+
     // 1. Dark screen with SVG brand wordmark
     // 2. Wordmark draws itself via stroke-dashoffset animation (1.0s)
     // 3. Fill colour fades in (0.4s)
     // 4. Counter ticks 000 → 100 (1.1s, starts at 0.4s)
     // 5. Thin gold progress line sweeps across (0.6s at 1.5s)
     // 6. Preloader fades out (0.5s at 2.1s)
-
-    const tl = gsap.timeline({
-      onComplete: () => {
-        setComplete(true);
-        try {
-          window.sessionStorage.setItem(SESSION_KEY, '1');
-        } catch {
-          // Ignore storage failures (private mode)
-        }
-        // Trigger generic event so Hero component knows it can animate in
-        window.dispatchEvent(new Event('preloader-complete'));
-      },
-    });
-
-    // The Stroke path math assumes the SVG path has pathLength="100" injected
-    tl.to(
-      '#pre-text path',
-      { strokeDashoffset: 0, duration: 1.0, ease: 'power2.inOut', stagger: 0.1 },
-      0.2
-    )
-      .to('#pre-text path', { fill: '#f2e8d0', fillOpacity: 1, duration: 0.4 }, 1.4)
-      .to(
-        '#pre-counter',
-        {
-          textContent: 100,
-          duration: 1.1,
-          snap: { textContent: 1 },
-          onUpdate: function () {
-            const el = document.getElementById('pre-counter');
-            if (el) {
-              el.innerHTML = String(Math.round(Number(this.targets()[0].textContent))).padStart(
-                3,
-                '0'
-              );
-            }
-          },
+    function runIntro(gsap: typeof import('gsap').gsap): () => void {
+      const tl = gsap.timeline({
+        onComplete: () => {
+          setComplete(true);
+          try {
+            window.sessionStorage.setItem(SESSION_KEY, '1');
+          } catch {
+            // Ignore storage failures (private mode)
+          }
+          // Trigger generic event so Hero component knows it can animate in
+          window.dispatchEvent(new Event('preloader-complete'));
         },
-        0.4
+      });
+
+      // The Stroke path math assumes the SVG path has pathLength="100" injected
+      tl.to(
+        '#pre-text path',
+        { strokeDashoffset: 0, duration: 1.0, ease: 'power2.inOut', stagger: 0.1 },
+        0.2
       )
-      .to('#pre-line', { width: '360px', duration: 0.6, ease: 'power3.inOut' }, 1.5)
-      .to('#preloader', { opacity: 0, duration: 0.5, ease: 'power2.in' }, 2.1);
-  }, []);
+        .to('#pre-text path', { fill: '#f2e8d0', fillOpacity: 1, duration: 0.4 }, 1.4)
+        .to(
+          '#pre-counter',
+          {
+            textContent: 100,
+            duration: 1.1,
+            snap: { textContent: 1 },
+            onUpdate: function () {
+              const el = document.getElementById('pre-counter');
+              if (el) {
+                el.innerHTML = String(Math.round(Number(this.targets()[0].textContent))).padStart(
+                  3,
+                  '0'
+                );
+              }
+            },
+          },
+          0.4
+        )
+        .to('#pre-line', { width: '360px', duration: 0.6, ease: 'power3.inOut' }, 1.5)
+        .to('#preloader', { opacity: 0, duration: 0.5, ease: 'power2.in' }, 2.1);
+
+      return () => tl.kill();
+    }
+  }, [skipped]);
 
   if (skipped || complete) return null;
 
