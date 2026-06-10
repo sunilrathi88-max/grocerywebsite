@@ -2,6 +2,8 @@ import React, { useState, useMemo } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useProducts } from '../../../hooks/useProducts';
 import { useCart } from '../../../hooks/useCart';
+import { FREE_SHIPPING_THRESHOLD } from '../../../utils/shippingConfig';
+import { StickyMobileCart } from '../../../components/StickyMobileCart';
 import StarRating from './StarRating';
 import { UniversalProductCard as ProductCard } from '../../../components/UniversalProductCard';
 import FrequentlyBoughtTogether from '../../../components/FrequentlyBoughtTogether';
@@ -27,6 +29,14 @@ const ProductDetailPage: React.FC = () => {
   const [selSize, setSelSize] = useState(0);
   const [qty, setQty] = useState(1);
   const [added, setAdded] = useState(false);
+  const [showStickyCart, setShowStickyCart] = useState(false);
+
+  // Show the sticky add-to-cart bar once the main buy buttons scroll away
+  React.useEffect(() => {
+    const onScroll = () => setShowStickyCart(window.scrollY > 600);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   if (!product)
     return (
@@ -62,10 +72,10 @@ const ProductDetailPage: React.FC = () => {
     .slice(0, 4);
 
   return (
-    <div className="bg-[#FAF6F2] min-h-screen pb-20">
-      <div className="max-w-7xl mx-auto px-4 md:px-8 py-10">
+    <div className="bg-[#FAF6F2] min-h-screen pb-28 md:pb-20">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 py-6 md:py-10">
         {/* Breadcrumb */}
-        <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-stone-400 mb-8">
+        <div className="flex items-center gap-2 text-xs md:text-[10px] font-bold uppercase tracking-widest text-stone-500 mb-6 md:mb-8">
           <Link to="/" className="hover:text-[#B38B59] transition-colors">
             Home
           </Link>
@@ -77,7 +87,7 @@ const ProductDetailPage: React.FC = () => {
           <span className="text-[#42210B]">{product.name}</span>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-20 items-start">
           {/* Left Column: Image & Media */}
           <div className="space-y-6 lg:sticky lg:top-32">
             <div className="relative aspect-square bg-white rounded-[2.5rem] border border-stone-200 overflow-hidden shadow-sm group">
@@ -236,7 +246,8 @@ const ProductDetailPage: React.FC = () => {
               {/* Shipping Trust */}
               <div className="flex justify-between items-center px-4 py-4 bg-stone-50 rounded-2xl text-[10px] font-bold text-stone-500 uppercase tracking-widest overflow-hidden">
                 <div className="flex items-center gap-2">
-                  <Truck size={14} className="text-[#B38B59]" /> Free Ship ₹1000+
+                  <Truck size={14} className="text-[#B38B59]" /> Free Ship ₹
+                  {FREE_SHIPPING_THRESHOLD}+
                 </div>
                 <div className="flex items-center gap-2">
                   <RotateCcw size={14} className="text-[#B38B59]" /> 7 Day Returns
@@ -327,6 +338,15 @@ const ProductDetailPage: React.FC = () => {
           </section>
         )}
       </div>
+
+      {/* Mobile sticky add-to-cart (appears after the main CTA scrolls away) */}
+      <StickyMobileCart
+        product={product}
+        price={currentPrice}
+        image={product.images[0]}
+        onAddToCart={handleAdd}
+        isVisible={showStickyCart}
+      />
     </div>
   );
 };

@@ -51,25 +51,6 @@ const HarvestCollection: React.FC<HarvestCollectionProps> = ({
           .filter((p): p is Product => p !== undefined)
       : products;
 
-  const handleProductClick = (productId: number) => {
-    navigate(`/product/${productId}`);
-  };
-
-  const getProductPrice = (product: Product): number => {
-    return product.variants[0]?.price || 0;
-  };
-
-  const getProductImage = (product: Product): string => {
-    return product.images[0] || '/images/placeholder.jpg';
-  };
-
-  const getProductTag = (product: Product): string | null => {
-    if (product.tags?.includes('Premium')) return 'Premium';
-    if (product.tags?.includes('Organic')) return 'Organic';
-    if (product.tags?.includes('Single-Origin')) return 'Single Origin';
-    return null;
-  };
-
   return (
     <section id="most-loved-section" className="py-20 bg-ink border-t border-mist/10">
       <div className="max-w-[1440px] mx-auto px-6 lg:px-12">

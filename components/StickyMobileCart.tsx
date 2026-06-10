@@ -21,7 +21,7 @@ export const StickyMobileCart: React.FC<StickyMobileCartProps> = ({
   if (!isVisible) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 shadow-top z-50 md:hidden animate-slide-up">
+    <div className="fixed bottom-[calc(env(safe-area-inset-bottom,0px)+5rem)] left-0 right-0 bg-white border-t border-gray-200 p-4 shadow-top z-50 md:hidden animate-slide-up">
       <div className="flex items-center gap-4">
         <div className="flex-shrink-0 w-12 h-12 rounded overflow-hidden bg-gray-100">
           <OptimizedImage

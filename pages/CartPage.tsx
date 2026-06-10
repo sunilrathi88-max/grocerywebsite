@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { FREE_SHIPPING_THRESHOLD, getShippingCost } from '../utils/shippingConfig';
 import { useNavigate } from 'react-router-dom';
 import Cart from '../components/Cart';
 import { useCartStore } from '../store/cartStore';
@@ -43,7 +44,7 @@ const CartPage: React.FC = () => {
     fetchRecommendations();
   }, []);
 
-  const shippingCost = subtotal >= 600 ? 0 : 50;
+  const shippingCost = getShippingCost(subtotal);
 
   const handleAddToCart = (product: Product, variant: Variant) => {
     addItem({
@@ -121,7 +122,7 @@ const CartPage: React.FC = () => {
     navigate('/checkout');
   };
 
-  const freeShippingThreshold = 600;
+  const freeShippingThreshold = FREE_SHIPPING_THRESHOLD;
   const progress = Math.min((subtotal / freeShippingThreshold) * 100, 100);
   const remaining = Math.max(freeShippingThreshold - subtotal, 0);
 

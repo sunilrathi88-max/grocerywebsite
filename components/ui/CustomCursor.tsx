@@ -1,97 +1,112 @@
-import React, { useRef } from 'react';
-import { gsap } from 'gsap';
-import { useGSAP } from '../../hooks/useGSAP';
+import React, { useRef, useEffect } from 'react';
 
 export default function CustomCursor() {
   const dotRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
 
-  useGSAP(() => {
-    // Hidden initially to prevent popping
-    gsap.set([dotRef.current, ringRef.current], { opacity: 0 });
+  useEffect(() => {
+    // Touch devices never see the cursor (hidden below lg) — skip the
+    // listeners, the GSAP ticker, and the gsap download entirely.
+    if (window.matchMedia('(pointer: coarse)').matches) return;
 
-    const mouse = { x: 0, y: 0 };
-    const ring = { x: 0, y: 0 };
-    let initialized = false;
+    let cancelled = false;
+    let dispose: (() => void) | undefined;
 
-    const xSetDot = gsap.quickSetter(dotRef.current, 'x', 'px');
-    const ySetDot = gsap.quickSetter(dotRef.current, 'y', 'px');
-    const xSetRing = gsap.quickSetter(ringRef.current, 'x', 'px');
-    const ySetRing = gsap.quickSetter(ringRef.current, 'y', 'px');
+    // gsap is loaded on demand so it stays out of the critical bundle
+    import('gsap').then(({ gsap }) => {
+      if (cancelled || !dotRef.current || !ringRef.current) return;
 
-    const onMouseMove = (e: MouseEvent) => {
-      mouse.x = e.clientX;
-      mouse.y = e.clientY;
+      // Hidden initially to prevent popping
+      gsap.set([dotRef.current, ringRef.current], { opacity: 0 });
 
-      if (!initialized) {
-        // Snap ring immediately on first move
-        ring.x = mouse.x;
-        ring.y = mouse.y;
-        gsap.set([dotRef.current, ringRef.current], { opacity: 1 });
-        initialized = true;
-      }
+      const mouse = { x: 0, y: 0 };
+      const ring = { x: 0, y: 0 };
+      let initialized = false;
 
-      xSetDot(mouse.x);
-      ySetDot(mouse.y);
+      const xSetDot = gsap.quickSetter(dotRef.current, 'x', 'px');
+      const ySetDot = gsap.quickSetter(dotRef.current, 'y', 'px');
+      const xSetRing = gsap.quickSetter(ringRef.current, 'x', 'px');
+      const ySetRing = gsap.quickSetter(ringRef.current, 'y', 'px');
 
-      // Handle hover states based on dataset
-      const target = e.target as HTMLElement;
-      const hoverTarget = target.closest('[data-cursor]');
-      const cursorState = hoverTarget ? hoverTarget.getAttribute('data-cursor') : null;
+      const onMouseMove = (e: MouseEvent) => {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
 
-      if (cursorState === 'cta') {
-        gsap.to(ringRef.current, {
-          width: 80,
-          height: 80,
-          marginLeft: -40,
-          marginTop: -40,
-          borderColor: 'var(--saffron)',
-          duration: 0.3,
-          ease: 'power2.out',
-          overwrite: 'auto',
-        });
-      } else if (cursorState === 'link') {
-        gsap.to(ringRef.current, {
-          width: 50,
-          height: 50,
-          marginLeft: -25,
-          marginTop: -25,
-          borderColor: 'var(--dust)',
-          duration: 0.3,
-          ease: 'power2.out',
-          overwrite: 'auto',
-        });
-      } else {
-        gsap.to(ringRef.current, {
-          width: 36,
-          height: 36,
-          marginLeft: -18,
-          marginTop: -18,
-          borderColor: 'var(--mist)',
-          duration: 0.3,
-          ease: 'power2.out',
-          overwrite: 'auto',
-        });
-      }
-    };
+        if (!initialized) {
+          // Snap ring immediately on first move
+          ring.x = mouse.x;
+          ring.y = mouse.y;
+          gsap.set([dotRef.current, ringRef.current], { opacity: 1 });
+          initialized = true;
+        }
 
-    window.addEventListener('mousemove', onMouseMove, { passive: true });
+        xSetDot(mouse.x);
+        ySetDot(mouse.y);
 
-    const tickerHandler = () => {
-      if (!initialized) return;
-      // Framerate independent lerp (0.13 smooth factor)
-      const dt = 1.0 - Math.pow(1.0 - 0.13, gsap.ticker.deltaRatio());
-      ring.x += (mouse.x - ring.x) * dt;
-      ring.y += (mouse.y - ring.y) * dt;
-      xSetRing(ring.x);
-      ySetRing(ring.y);
-    };
+        // Handle hover states based on dataset
+        const target = e.target as HTMLElement;
+        const hoverTarget = target.closest('[data-cursor]');
+        const cursorState = hoverTarget ? hoverTarget.getAttribute('data-cursor') : null;
 
-    gsap.ticker.add(tickerHandler);
+        if (cursorState === 'cta') {
+          gsap.to(ringRef.current, {
+            width: 80,
+            height: 80,
+            marginLeft: -40,
+            marginTop: -40,
+            borderColor: 'var(--saffron)',
+            duration: 0.3,
+            ease: 'power2.out',
+            overwrite: 'auto',
+          });
+        } else if (cursorState === 'link') {
+          gsap.to(ringRef.current, {
+            width: 50,
+            height: 50,
+            marginLeft: -25,
+            marginTop: -25,
+            borderColor: 'var(--dust)',
+            duration: 0.3,
+            ease: 'power2.out',
+            overwrite: 'auto',
+          });
+        } else {
+          gsap.to(ringRef.current, {
+            width: 36,
+            height: 36,
+            marginLeft: -18,
+            marginTop: -18,
+            borderColor: 'var(--mist)',
+            duration: 0.3,
+            ease: 'power2.out',
+            overwrite: 'auto',
+          });
+        }
+      };
+
+      window.addEventListener('mousemove', onMouseMove, { passive: true });
+
+      const tickerHandler = () => {
+        if (!initialized) return;
+        // Framerate independent lerp (0.13 smooth factor)
+        const dt = 1.0 - Math.pow(1.0 - 0.13, gsap.ticker.deltaRatio());
+        ring.x += (mouse.x - ring.x) * dt;
+        ring.y += (mouse.y - ring.y) * dt;
+        xSetRing(ring.x);
+        ySetRing(ring.y);
+      };
+
+      gsap.ticker.add(tickerHandler);
+
+      dispose = () => {
+        window.removeEventListener('mousemove', onMouseMove);
+        gsap.ticker.remove(tickerHandler);
+      };
+    });
 
     return () => {
-      window.removeEventListener('mousemove', onMouseMove);
-      gsap.ticker.remove(tickerHandler);
+      cancelled = true;
+      dispose?.();
     };
   }, []);
 

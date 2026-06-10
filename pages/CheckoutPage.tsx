@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { getShippingCost } from '../utils/shippingConfig';
 import { useNavigate } from 'react-router-dom';
 import { useCartStore } from '../store/cartStore';
 import { User, Order, CartItem, ToastMessage } from '../types';
@@ -41,7 +42,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
   const finalSubtotal = propSubtotal || storeSubtotal;
   const finalDiscount = propDiscount || storeDiscount;
   const finalShippingCost =
-    propShippingCost !== undefined ? propShippingCost : finalSubtotal >= 600 ? 0 : 50;
+    propShippingCost !== undefined ? propShippingCost : getShippingCost(finalSubtotal);
 
   const total = finalSubtotal - finalDiscount + finalShippingCost;
 

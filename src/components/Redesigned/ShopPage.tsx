@@ -23,6 +23,7 @@ import {
   Plus,
 } from 'lucide-react';
 import { useCart } from '../../../hooks/useCart';
+import { FREE_SHIPPING_THRESHOLD } from '../../../utils/shippingConfig';
 
 interface ShopPageProps {
   products: Product[];
@@ -46,7 +47,7 @@ const SORT_OPTIONS = [
 
 const FILTER_CHIPS = ['Organic', 'Bestseller', 'Single origin', 'Under ₹500', 'Whole spice'];
 
-const FREE_DELIVERY_THRESHOLD = 1000;
+const FREE_DELIVERY_THRESHOLD = FREE_SHIPPING_THRESHOLD;
 
 const FADE_UP = {
   hidden: { opacity: 0, y: 20 },
@@ -183,7 +184,7 @@ const ShopPage: React.FC<ShopPageProps> = ({ products, posts }) => {
     <>
       {filteredResults.length > 0 ? (
         <motion.div
-          className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-6"
+          className="grid grid-cols-1 min-[400px]:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-6"
           initial="hidden"
           animate="visible"
           variants={{ visible: { transition: { staggerChildren: 0.05 } } }}
@@ -405,7 +406,7 @@ const ShopPage: React.FC<ShopPageProps> = ({ products, posts }) => {
         {/* Right: Product Grid */}
         <div className="flex-1 overflow-y-auto bg-[#FAF6F2] p-2 pb-28">
           {/* Mobile filter chips */}
-          <div className="flex gap-2 overflow-x-auto no-scrollbar mb-3 pb-1">
+          <div className="flex gap-2 overflow-x-auto no-scrollbar mb-3 pb-1 [mask-image:linear-gradient(to_right,black_calc(100%-1.5rem),transparent)]">
             {FILTER_CHIPS.map((f) => (
               <button
                 key={f}
@@ -423,7 +424,7 @@ const ShopPage: React.FC<ShopPageProps> = ({ products, posts }) => {
             ))}
           </div>
 
-          <p className="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-3">
+          <p className="text-[10px] font-bold text-stone-500 uppercase tracking-widest mb-3">
             <span className="text-[#42210B] text-sm font-black mr-1">{filteredResults.length}</span>
             products
           </p>
@@ -435,7 +436,7 @@ const ShopPage: React.FC<ShopPageProps> = ({ products, posts }) => {
       {/* ─── DESKTOP: MAIN CONTENT ─── */}
       <main className="hidden md:block max-w-7xl mx-auto px-4 md:px-8 py-10 pb-28">
         <div className="flex items-center justify-between mb-8">
-          <p className="text-xs font-bold text-stone-400 uppercase tracking-widest">
+          <p className="text-xs font-bold text-stone-500 uppercase tracking-widest">
             <span className="text-[#42210B] text-lg font-black mr-1">{filteredResults.length}</span>
             {filteredResults.length !== 1 ? 'Products' : 'Product'}
             {searchQuery && (
@@ -452,7 +453,7 @@ const ShopPage: React.FC<ShopPageProps> = ({ products, posts }) => {
                 setActiveTags([]);
                 setSearchQuery('');
               }}
-              className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest text-stone-400 hover:text-[#B38B59] transition-colors"
+              className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest text-stone-500 hover:text-[#B38B59] transition-colors"
             >
               <X size={12} /> Clear all
             </button>
@@ -470,8 +471,7 @@ const ShopPage: React.FC<ShopPageProps> = ({ products, posts }) => {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 100, opacity: 0 }}
             transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-            className="fixed bottom-0 left-0 right-0 z-50 px-4 pb-4 pointer-events-none"
-            style={{ bottom: 'env(safe-area-inset-bottom, 0px)' }}
+            className="fixed left-0 right-0 z-50 px-4 pb-4 pointer-events-none bottom-[calc(env(safe-area-inset-bottom,0px)+5rem)] md:bottom-[env(safe-area-inset-bottom,0px)]"
           >
             {/* Bump up above mobile bottom nav if present */}
             <div className="md:max-w-lg md:mx-auto pointer-events-auto">
@@ -567,7 +567,7 @@ const ShopPage: React.FC<ShopPageProps> = ({ products, posts }) => {
                   </>
                 ) : (
                   <p className="text-[11px] font-black text-green-700">
-                    🎉 You've unlocked FREE delivery!
+                    🎉 You&apos;ve unlocked FREE delivery!
                   </p>
                 )}
               </div>

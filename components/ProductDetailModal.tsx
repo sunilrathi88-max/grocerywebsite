@@ -27,7 +27,6 @@ import { UsersIcon } from './icons/UsersIcon';
 import TrustBadges from './TrustBadges';
 
 import ImageGallery from './ImageGallery';
-import { getBundleSuggestions } from '../utils/recommendations';
 import PincodeChecker from './PincodeChecker';
 import FrequentlyBoughtTogether from './FrequentlyBoughtTogether';
 import StockBadge from './StockBadge';

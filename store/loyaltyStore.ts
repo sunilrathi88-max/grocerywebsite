@@ -24,6 +24,8 @@ interface LoyaltyState {
   addPoints: (amount: number, reason: string) => void;
   redeemPoints: (amount: number, reward: string) => boolean; // Returns true if successful
   calculateTier: () => void;
+  /** Pull the signed-in user's balance from Supabase (no-op for guests). */
+  syncWithRemote: () => Promise<void>;
 }
 
 const TIER_THRESHOLDS = {
@@ -74,6 +76,8 @@ export const useLoyaltyStore = create<LoyaltyState>()(
       ],
 
       addPoints: (amount, reason) => {
+        // Best-effort remote sync for signed-in users
+        import('../utils/loyaltyService').then(({ pushPointsDelta }) => pushPointsDelta(amount));
         set((state) => {
           const newCurrent = state.points.current + amount;
           const newLifetime = state.points.lifetime + amount;
@@ -120,6 +124,8 @@ export const useLoyaltyStore = create<LoyaltyState>()(
         const state = get();
         if (state.points.current < amount) return false;
 
+        // Best-effort remote sync for signed-in users
+        import('../utils/loyaltyService').then(({ pushPointsDelta }) => pushPointsDelta(-amount));
         set((state) => {
           const newHistoryItem: PointsHistory = {
             id: Date.now().toString(),
@@ -142,6 +148,37 @@ export const useLoyaltyStore = create<LoyaltyState>()(
 
       calculateTier: () => {
         // Logic already embedded in addPoints, but could be separate
+      },
+
+      syncWithRemote: async () => {
+        const { fetchRemoteBalance } = await import('../utils/loyaltyService');
+        const remote = await fetchRemoteBalance();
+        if (!remote) return;
+
+        set((state) => {
+          let tier: LoyaltyPoints['tier'] = 'Bronze';
+          let nextTierPoints: number = TIER_THRESHOLDS.Silver;
+          if (remote.lifetime >= TIER_THRESHOLDS.Platinum) {
+            tier = 'Platinum';
+            nextTierPoints = Infinity;
+          } else if (remote.lifetime >= TIER_THRESHOLDS.Gold) {
+            tier = 'Gold';
+            nextTierPoints = TIER_THRESHOLDS.Platinum;
+          } else if (remote.lifetime >= TIER_THRESHOLDS.Silver) {
+            tier = 'Silver';
+            nextTierPoints = TIER_THRESHOLDS.Gold;
+          }
+
+          return {
+            ...state,
+            points: {
+              current: remote.current,
+              lifetime: remote.lifetime,
+              tier,
+              nextTierPoints,
+            },
+          };
+        });
       },
     }),
     {

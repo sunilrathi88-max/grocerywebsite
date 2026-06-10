@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageCircle, X } from 'lucide-react';
 
 interface WhatsAppButtonProps {
   phoneNumber?: string;
@@ -67,7 +66,7 @@ const WhatsAppButton: React.FC<WhatsAppButtonProps> = ({
               >
                 <p className="text-xs font-black text-stone-800 uppercase tracking-widest flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                  We're Online!
+                  We&apos;re Online!
                 </p>
                 <p className="text-[10px] font-bold text-stone-400 mt-0.5">Chat with an expert</p>
               </motion.div>

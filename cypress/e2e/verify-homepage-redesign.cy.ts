@@ -5,7 +5,7 @@ describe('Homepage Redesign Verification', () => {
 
   it('should display the new Header with Announcement Bar', () => {
     // Announcement Bar
-    cy.contains('Free shipping on all orders over ₹999', { timeout: 10000 }).should('be.visible');
+    cy.contains('Free shipping on all orders over ₹1000', { timeout: 10000 }).should('be.visible');
 
     // Logo
     cy.contains('Rathi Naturals').should('be.visible');

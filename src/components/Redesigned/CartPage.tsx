@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../../../hooks/useCart';
+import { FREE_SHIPPING_THRESHOLD, getShippingCost } from '../../../utils/shippingConfig';
 import { useProducts } from '../../../hooks/useProducts';
 import { CartItem } from '../../../types';
 import { Trash2, Minus, Plus, ShoppingBag, Truck, ShieldCheck, ArrowRight } from 'lucide-react';
@@ -15,8 +16,8 @@ const CartPage: React.FC = () => {
   } = useCart();
   const { products } = useProducts({ useMockData: true });
 
-  const freeShipAt = 1000;
-  const shipping = totalPrice >= freeShipAt ? 0 : 70;
+  const freeShipAt = FREE_SHIPPING_THRESHOLD;
+  const shipping = getShippingCost(totalPrice);
   const remaining = Math.max(0, freeShipAt - totalPrice);
   const progressPercent = Math.min(100, (totalPrice / freeShipAt) * 100);
 

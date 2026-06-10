@@ -2,7 +2,6 @@ import React from 'react';
 import Testimonials from '../components/Testimonials';
 import { MOCK_TESTIMONIALS } from '../data/testimonials';
 import SEO from '../components/SEO';
-import { pageSEO } from '../utils/seo';
 
 const ReviewsPage: React.FC = () => {
   return (

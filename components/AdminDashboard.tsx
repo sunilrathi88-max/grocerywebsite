@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Product, Order, OrderStatus, Review as BaseReview } from '../types';
 import ProductFormModal from './ProductFormModal';
 import { PlusIcon } from './icons/PlusIcon';
@@ -25,20 +25,10 @@ type TabType =
   | 'affiliates'
   | 'settings';
 
-interface AnalyticsData {
-  totalRevenue: number;
-  totalOrders: number;
-  averageOrderValue: number;
-  conversionRate: number;
-  salesData: any[]; // Still using any here if I don't have types for these specific ones, but making progress
-  topProducts: any[];
-  recentOrders: any[];
-}
-
 interface ContentState {
-  posts: any[];
-  recipes: any[];
-  testimonials: any[];
+  posts: unknown[];
+  recipes: unknown[];
+  testimonials: unknown[];
 }
 
 const AdminDashboard: React.FC = () => {
@@ -46,19 +36,10 @@ const AdminDashboard: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [orders, setOrders] = useState<Order[]>([]);
   const [reviews, setReviews] = useState<BaseReview[]>([]);
-  const [content, setContent] = useState<ContentState>({
+  const [content] = useState<ContentState>({
     posts: [],
     recipes: [],
     testimonials: [],
-  });
-  const [analytics, setAnalytics] = useState<AnalyticsData>({
-    totalRevenue: 0,
-    totalOrders: 0,
-    averageOrderValue: 0,
-    conversionRate: 0,
-    salesData: [],
-    topProducts: [],
-    recentOrders: [],
   });
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -160,7 +141,7 @@ const AdminDashboard: React.FC = () => {
         date: '2023-10-24',
         helpful: 8,
         verifiedPurchase: true,
-      } as any,
+      } as BaseReview,
     ]);
   }, []);
 
@@ -174,16 +155,13 @@ const AdminDashboard: React.FC = () => {
     setIsModalOpen(true);
   };
 
-  const handleDelete = async (id: number) => {
-    console.log('Delete', id);
-  };
+  const handleDelete = async (_id: number) => {};
 
-  const handleSave = async (product: Product) => {
-    console.log('Save', product);
+  const handleSave = async (_product: Product) => {
     setIsModalOpen(false);
   };
 
-  const handleUpdateOrderStatus = (id: string, status: OrderStatus) => {};
+  const handleUpdateOrderStatus = (_id: string, _status: OrderStatus) => {};
   const fetchData = () => {};
 
   return (
@@ -497,7 +475,7 @@ const OrderManagement: React.FC<{
 
 const ReviewModeration: React.FC<{ reviews: BaseReview[]; onUpdate: () => void }> = ({
   reviews,
-  onUpdate,
+  onUpdate: _onUpdate,
 }) => {
   return (
     <div>
@@ -557,8 +535,8 @@ const ReviewModeration: React.FC<{ reviews: BaseReview[]; onUpdate: () => void }
 };
 
 const ContentManagement: React.FC<{ content: ContentState; onUpdate: () => void }> = ({
-  content,
-  onUpdate,
+  content: _content,
+  onUpdate: _onUpdate,
 }) => {
   return (
     <div>

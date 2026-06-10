@@ -1,4 +1,4 @@
-import { supabase } from '../supabaseClient';
+import { supabase, supabaseUrl, supabaseAnonKey } from '../supabaseClient';
 import { isProd } from './env';
 
 // Types for Cashfree
@@ -53,11 +53,9 @@ export const paymentService = {
     customer: { id: string; phone: string; name?: string; email?: string }
   ): Promise<PaymentOrderResponse> => {
     try {
-      console.log('Calling create-cashfree-order for amount:', amount);
-
       // Call Edge Function for secure order creation using native fetch to bypass any potential client issues
-      const baseUrl = (supabase as any).supabaseUrl;
-      const anonKey = (supabase as any).supabaseKey;
+      const baseUrl = supabaseUrl;
+      const anonKey = supabaseAnonKey;
 
       const response = await fetch(`${baseUrl}/functions/v1/create-cashfree-order`, {
         method: 'POST',
@@ -101,7 +99,6 @@ export const paymentService = {
         throw error;
       }
 
-      console.log('✅ Order creation response:', data);
       return data;
     } catch (error) {
       console.error('Failed to create order:', error);
@@ -200,8 +197,6 @@ export const paymentService = {
         name: user.name,
         email: user.email,
       });
-
-      console.log('🚀 Initializing payment with order data:', orderData);
 
       // 3. Initialize Cashfree using the environment returned by the Edge Function
       const isProduction =

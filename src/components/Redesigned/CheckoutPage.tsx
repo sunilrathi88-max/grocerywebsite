@@ -1,29 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { paymentService } from '../../../utils/paymentService';
 import { CartItem } from '../../../types';
 import { useCart } from '../../../hooks/useCart';
+import { getShippingCost } from '../../../utils/shippingConfig';
 import {
   CheckCircle2,
   CreditCard,
-  Truck,
   ShieldCheck,
-  MapPin,
   Smartphone,
-  Mail,
-  User,
   ArrowRight,
+  Truck,
   Zap,
   Lock,
 } from 'lucide-react';
 
 const CheckoutPage: React.FC = () => {
-  const {
-    cartItems: items,
-    subtotal: totalPrice,
-    cartItemCount: totalItems,
-    clearCart,
-  } = useCart();
+  const { cartItems: items, subtotal: totalPrice, clearCart } = useCart();
   const [step, setStep] = useState(1); // 1=contact, 2=address, 3=payment
   const [form, setForm] = useState({
     name: '',
@@ -42,18 +35,34 @@ const CheckoutPage: React.FC = () => {
   const [searchParams] = useSearchParams();
   const orderId = searchParams.get('order_id');
 
-  const shipping = totalPrice >= 1000 ? 0 : 70;
+  const shipping = getShippingCost(totalPrice);
   const grandTotal = totalPrice + shipping;
+
+  // 3-5 business day window, shown as "Mon, 15 Jun – Wed, 17 Jun"
+  const deliveryEstimate = useMemo(() => {
+    const fmt = (d: Date) =>
+      d.toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short' });
+    const from = new Date();
+    from.setDate(from.getDate() + 3);
+    const to = new Date();
+    to.setDate(to.getDate() + 5);
+    return `${fmt(from)} – ${fmt(to)}`;
+  }, []);
 
   useEffect(() => {
     if (orderId && step !== 5) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsProcessing(true);
       paymentService
         .verifyPayment(orderId)
         .then((success) => {
           setIsProcessing(false);
           if (success) {
+            // Award loyalty points: 1 point per ₹1 of the verified order
+            if (grandTotal > 0) {
+              import('../../../store/loyaltyStore').then(({ useLoyaltyStore }) =>
+                useLoyaltyStore.getState().addPoints(Math.floor(grandTotal), `Order ${orderId}`)
+              );
+            }
             setStep(5);
           } else {
             alert('Payment verification failed. Please try again or contact support.');
@@ -65,7 +74,7 @@ const CheckoutPage: React.FC = () => {
           alert('Payment verification encountered an error.');
         });
     }
-  }, [orderId, step]);
+  }, [orderId, step, grandTotal]);
 
   useEffect(() => {
     const fetchPincodeData = async () => {
@@ -108,7 +117,7 @@ const CheckoutPage: React.FC = () => {
 
   const handleBlur = (f: string) => {
     setTouched((prev) => ({ ...prev, [f]: true }));
-    const err = validateField(f, (form as any)[f]);
+    const err = validateField(f, form[f as keyof typeof form]);
     setErrors((prev) => ({ ...prev, [f]: err }));
   };
 
@@ -354,6 +363,13 @@ const CheckoutPage: React.FC = () => {
                         {errors.city && <p className="text-xs text-red-500 mt-1">{errors.city}</p>}
                       </div>
                     </div>
+                    {/* Delivery estimate appears once the pincode resolves a city */}
+                    {form.city && /^\d{6}$/.test(form.pincode) && (
+                      <p className="flex items-center gap-2 text-sm font-medium text-green-700 bg-green-50 border border-green-200 rounded-md px-4 py-3">
+                        <Truck size={16} />
+                        Delivery to {form.city} by {deliveryEstimate}
+                      </p>
+                    )}
                     <button
                       onClick={() => {
                         if (validateStep2()) setStep(3);

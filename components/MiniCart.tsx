@@ -2,6 +2,7 @@ import React from 'react';
 import { OptimizedImage } from './OptimizedImage';
 import { Button } from './Button';
 import clsx from 'clsx';
+import { FREE_SHIPPING_THRESHOLD, getShippingCost } from '../utils/shippingConfig';
 
 export interface MiniCartItem {
   id: string;
@@ -30,8 +31,7 @@ export const MiniCart: React.FC<MiniCartProps> = ({
   onRemoveItem,
 }) => {
   const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const FREE_SHIPPING_THRESHOLD = 600;
-  const shipping = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : 50;
+  const shipping = getShippingCost(subtotal);
   const amountToFreeShipping = Math.max(0, FREE_SHIPPING_THRESHOLD - subtotal);
   const progressPercent = Math.min(100, (subtotal / FREE_SHIPPING_THRESHOLD) * 100);
 

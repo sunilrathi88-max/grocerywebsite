@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { getShippingCost } from '../utils/shippingConfig';
 import { persist } from 'zustand/middleware';
 import { CartItem } from '../types';
 
@@ -70,7 +71,7 @@ export const useCartStore = create<CartStore>()(
 
       getTotal: () => {
         const subtotal = get().getSubtotal();
-        const shipping = subtotal >= 600 ? 0 : 50;
+        const shipping = getShippingCost(subtotal);
         const discount = get().discountAmount;
         return Math.max(0, subtotal + shipping - discount);
       },

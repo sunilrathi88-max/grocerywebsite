@@ -50,13 +50,14 @@ const IndianSpicesGuide: React.FC = () => {
           they were intended centuries ago.
         </p>
         <p>
-          At Rathi Naturals, our 60-year Rajasthani heritage means we don't buy generic "turmeric"
-          or "chilli." We buy from precise agricultural hubs renowned for perfection.
+          At Rathi Naturals, our 60-year Rajasthani heritage means we don&apos;t buy generic
+          &quot;turmeric&quot; or &quot;chilli.&quot; We buy from precise agricultural hubs renowned
+          for perfection.
         </p>
       </section>
 
       <section id="ramganj-mandi-coriander" className="scroll-mt-24 mb-12">
-        <h2>Ramganj Mandi: India's Coriander Capital</h2>
+        <h2>Ramganj Mandi: India&apos;s Coriander Capital</h2>
         <p>
           Nestled in Rajasthan, Ramganj Mandi is globally recognized as the largest mandi (market)
           for coriander (Dhaniya). The specific soil composition and arid climate here yield
@@ -99,14 +100,14 @@ const IndianSpicesGuide: React.FC = () => {
         <h2>The Cold-Ground Difference</h2>
         <p>
           Even the finest single-origin spices can be ruined by improper processing. The majority of
-          commercial spices are "hot-ground" through high-speed steel blades that generate immense
-          friction heat. This heat literally cooks the spices during grinding, evaporating the
-          delicate volatile oils that provide aroma and flavor.
+          commercial spices are &quot;hot-ground&quot; through high-speed steel blades that generate
+          immense friction heat. This heat literally cooks the spices during grinding, evaporating
+          the delicate volatile oils that provide aroma and flavor.
         </p>
         <p>
           Our precision cold-grinding moat ensures temperatures never spike, locking in the
-          essential oils. It's a scientifically defensible method that guarantees every pinch of
-          Rathi Naturals spice delivers maximum potency.
+          essential oils. It&apos;s a scientifically defensible method that guarantees every pinch
+          of Rathi Naturals spice delivers maximum potency.
         </p>
       </section>
     </PillarPageLayout>

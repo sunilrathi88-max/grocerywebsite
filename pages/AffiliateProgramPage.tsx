@@ -47,8 +47,8 @@ const AffiliateProgramPage = () => {
               <span className="text-brand-primary">Earn Real Rewards.</span>
             </h1>
             <p className="text-zinc-300 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
-              Partner with India's first science-backed, farm-direct spice brand. Help your audience
-              cook better food while earning industry-leading commissions.
+              Partner with India&apos;s first science-backed, farm-direct spice brand. Help your
+              audience cook better food while earning industry-leading commissions.
             </p>
             <a
               href="#join-form"
@@ -67,8 +67,8 @@ const AffiliateProgramPage = () => {
                 Why Partner With Rathi Naturals.?
               </h2>
               <p className="text-gray-600 max-w-2xl mx-auto">
-                We treat our affiliates like true partners. No "points" or "store credit"—just cash
-                commissions and real support.
+                We treat our affiliates like true partners. No &ldquo;points&rdquo; or &ldquo;store
+                credit&rdquo;—just cash commissions and real support.
               </p>
             </div>
 
@@ -175,7 +175,7 @@ const AffiliateProgramPage = () => {
                   </div>
                   <h3 className="text-2xl font-bold text-gray-900 mb-4">Application Received!</h3>
                   <p className="text-gray-600 mb-8">
-                    Thanks, {formData.name}. We've sent a confirmation email to{' '}
+                    Thanks, {formData.name}. We&apos;ve sent a confirmation email to{' '}
                     <strong>{formData.email}</strong>. Our team will review your profile and get
                     back to you within 24 hours.
                   </p>

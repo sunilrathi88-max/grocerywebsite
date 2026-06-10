@@ -3,17 +3,15 @@ import { OrderConfirmation } from './OrderConfirmation';
 import { TrustBadges } from './TrustBadges';
 import { User, Address, Order, ToastMessage, CartItem } from '../types';
 import { CartItem as StoreCartItem } from '../types'; // Direct import or alias
-import { CheckCircleIcon } from './icons/CheckCircleIcon';
 import { OptimizedImage } from './OptimizedImage';
-import { imageErrorHandlers } from '../utils/imageHelpers';
 import { orderAPI } from '../utils/apiService';
 import { paymentService } from '../utils/paymentService';
+import { FREE_SHIPPING_THRESHOLD } from '../utils/shippingConfig';
 import { APIErrorDisplay } from './APIErrorDisplay';
 import CheckoutStepper from './CheckoutStepper';
 import { lookupPinCodeAsync } from '../utils/pinCodeLookup';
 import ShippingRateSelector from './ShippingRateSelector';
 import { ShippingOption } from '../types/shipping';
-import { Link } from 'react-router-dom';
 
 // Helper to map flat store items to nested Order items
 // Helper to map flat store items to Order items (Identity for now as types adhere)
@@ -225,7 +223,6 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
   subtotal,
   shippingCost,
 }) => {
-  const FREE_SHIPPING_THRESHOLD = 1000;
   const remainingForFreeShipping = Math.max(0, FREE_SHIPPING_THRESHOLD - subtotal);
   const shippingProgress = Math.min(100, (subtotal / FREE_SHIPPING_THRESHOLD) * 100);
 
@@ -461,9 +458,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
 
         // Try API first
         try {
-          console.log('Attempting to create order via API...', orderData);
           const confirmedOrder = await orderAPI.create(orderData);
-          console.log('Order created successfully via API:', confirmedOrder);
           setOrderConfirmation(confirmedOrder.data);
           onPlaceOrder(confirmedOrder.data);
           addToast('Order placed successfully!', 'success');
@@ -476,7 +471,6 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({
             (apiError instanceof Error && apiError.message.includes('fetch'));
 
           if (paymentMethod === 'Cash on Delivery' && isPlaceholderBackend) {
-            console.info('Using Demo Fallback for Cash on Delivery order.');
             const demoOrder: Order = {
               ...orderData,
               id: `ORD-DEMO-${Date.now()}`,

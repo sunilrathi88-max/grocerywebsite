@@ -20,23 +20,19 @@ interface MobileHomePageProps {
 const MobileHomePage: React.FC<MobileHomePageProps> = ({
   products,
   wishlistedIds,
-  cartItemCount,
-  searchQuery,
-  onSearchChange,
+  cartItemCount: _cartItemCount,
+  searchQuery: _searchQuery,
+  onSearchChange: _onSearchChange,
   handleAddToCart,
   handleToggleWishlist,
   setSelectedProduct: _setSelectedProduct,
-  onCartClick,
+  onCartClick: _onCartClick,
   addToast: _addToast,
 }) => {
   const navigate = useNavigate();
 
   // Get most loved products (IDs 4, 12, 29, 28)
   const mostLovedProducts = products.filter((p) => [4, 12, 29, 28].includes(p.id));
-
-  // Pure Origin Hero background image
-  const heroImage =
-    'https://lh3.googleusercontent.com/aida-public/AB6AXuBJAJQpaMFNB6WLQB77bKXgSpPTZYfz66Wyca45BdecV6IvQW8IqUWnyuTlBpy9CdH1TcE2EXBR7LwAH1uPDNoj5ScAJrtDjDEwnrF5i6puZMCu0C6e7kfqOAbsFRrt2dyQPYIBmPwnARV63RCloDT2AQmg1M6nEKkcxcRRS1eWBhvDLLxtreTYJ_C9KAI1hbZK0NgQ9Zw5bBHPpOo_oKdYpjbMzM2gQa5EDNxjCrbNYFeNf7DqIWtJV0V1IZUGoBCBjAXOnG_nSA';
 
   return (
     <div className="min-h-screen bg-[#FAF9F6] pb-24">

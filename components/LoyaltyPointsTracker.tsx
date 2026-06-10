@@ -70,7 +70,12 @@ export const LoyaltyPointsTracker: React.FC = () => {
     points: number;
     reward: string;
   } | null>(null);
-  const { points, history, redeemPoints } = useLoyaltyStore();
+  const { points, history, redeemPoints, syncWithRemote } = useLoyaltyStore();
+
+  // Pull the signed-in user's balance from Supabase (no-op for guests)
+  React.useEffect(() => {
+    syncWithRemote();
+  }, [syncWithRemote]);
 
   const tier = TIER_CONFIG[points.tier];
   const progress = Math.min((points.lifetime / points.nextTierPoints) * 100, 100);
@@ -126,7 +131,7 @@ export const LoyaltyPointsTracker: React.FC = () => {
               <h3 className="font-display text-2xl font-bold text-white mb-2">
                 Confirm Redemption
               </h3>
-              <p className="text-stone-400 text-sm mb-2">You're redeeming</p>
+              <p className="text-stone-400 text-sm mb-2">You&apos;re redeeming</p>
               <p className="font-black text-[#B38B59] text-xl mb-1">{confirmingReward.reward}</p>
               <p className="text-stone-500 text-sm mb-8">
                 for <strong className="text-white">{confirmingReward.points}</strong> points

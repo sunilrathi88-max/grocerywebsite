@@ -1,5 +1,23 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, no-console */
+import { Marked } from 'marked';
 import { BlogPost } from '../../types';
+
+// Lightweight markdown renderer (replaces react-markdown + rehype-raw).
+// Content is first-party repo markdown, so raw HTML passthrough (marked's
+// default) matches the previous rehype-raw behaviour.
+const markedInstance = new Marked({
+  renderer: {
+    image({ href, title, text }) {
+      const titleAttr = title ? ` title="${title}"` : '';
+      return `<img src="${href}" alt="${text}"${titleAttr} loading="lazy" class="rounded-xl shadow-lg my-8 w-full" />`;
+    },
+  },
+});
+
+// Convert a markdown string to an HTML string.
+export function renderMarkdown(markdown: string): string {
+  return markedInstance.parse(markdown, { async: false });
+}
 
 // Simple browser-safe frontmatter parser to avoid Buffer dependency
 function parseFrontmatter(content: string) {
