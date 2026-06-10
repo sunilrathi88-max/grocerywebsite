@@ -97,7 +97,7 @@ export interface OrganizationStructuredData extends Record<string, unknown> {
 export const getDefaultSEO = (): SEOConfig => ({
   title: 'Rathi Naturals. - Authentic Indian Gourmet Spices | Premium & Organic',
   description:
-    'Discover authentic Indian gourmet products including premium saffron, spices, nuts, and organic ingredients. Free shipping on orders over ₹499.',
+    'Discover authentic Indian gourmet products including premium saffron, spices, nuts, and organic ingredients. Free shipping on orders over ₹1000.',
   keywords: [
     'indian spices',
     'gourmet products',
@@ -565,7 +565,7 @@ export const pageSEO = {
   home: (): SEOConfig => ({
     title: 'Rathi Naturals — Authentic Indian Gourmet Spices & Organic Superfoods',
     description:
-      'Experience the legacy of authentic Indian spices. Shop single-origin saffron, hand-ground masalas, and premium organic nuts. Farm-to-kitchen purity with free shipping over ₹500.',
+      'Experience the legacy of authentic Indian spices. Shop single-origin saffron, hand-ground masalas, and premium organic nuts. Farm-to-kitchen purity with free shipping over ₹1000.',
     keywords: [
       'indian spices online',
       'authentic garam masala',

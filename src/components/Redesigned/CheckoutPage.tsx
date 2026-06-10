@@ -3,6 +3,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { paymentService } from '../../../utils/paymentService';
 import { CartItem } from '../../../types';
 import { useCart } from '../../../hooks/useCart';
+import { getShippingCost } from '../../../utils/shippingConfig';
 import {
   CheckCircle2,
   CreditCard,
@@ -33,7 +34,7 @@ const CheckoutPage: React.FC = () => {
   const [searchParams] = useSearchParams();
   const orderId = searchParams.get('order_id');
 
-  const shipping = totalPrice >= 1000 ? 0 : 70;
+  const shipping = getShippingCost(totalPrice);
   const grandTotal = totalPrice + shipping;
 
   useEffect(() => {

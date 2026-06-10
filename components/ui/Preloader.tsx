@@ -1,11 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { useGSAP } from '../../hooks/useGSAP';
 
+const SESSION_KEY = 'rn-preloader-shown';
+
+function shouldSkipPreloader(): boolean {
+  if (typeof window === 'undefined') return true;
+  try {
+    if (window.sessionStorage.getItem(SESSION_KEY)) return true;
+  } catch {
+    // sessionStorage unavailable (private mode) — fall through to motion check
+  }
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+}
+
 export default function Preloader() {
+  // Play the intro only once per session, and never for reduced-motion users
+  const [skipped] = useState(shouldSkipPreloader);
   const [complete, setComplete] = useState(false);
 
+  useEffect(() => {
+    if (!skipped) return;
+    // Keep the contract for components that wait on this event
+    window.dispatchEvent(new Event('preloader-complete'));
+  }, [skipped]);
+
   useGSAP(() => {
+    if (skipped) return;
     // 1. Dark screen with SVG brand wordmark
     // 2. Wordmark draws itself via stroke-dashoffset animation (1.0s)
     // 3. Fill colour fades in (0.4s)
@@ -16,6 +37,11 @@ export default function Preloader() {
     const tl = gsap.timeline({
       onComplete: () => {
         setComplete(true);
+        try {
+          window.sessionStorage.setItem(SESSION_KEY, '1');
+        } catch {
+          // Ignore storage failures (private mode)
+        }
         // Trigger generic event so Hero component knows it can animate in
         window.dispatchEvent(new Event('preloader-complete'));
       },
@@ -50,7 +76,7 @@ export default function Preloader() {
       .to('#preloader', { opacity: 0, duration: 0.5, ease: 'power2.in' }, 2.1);
   }, []);
 
-  if (complete) return null;
+  if (skipped || complete) return null;
 
   return (
     <div

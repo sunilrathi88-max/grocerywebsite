@@ -23,6 +23,7 @@ import {
   Plus,
 } from 'lucide-react';
 import { useCart } from '../../../hooks/useCart';
+import { FREE_SHIPPING_THRESHOLD } from '../../../utils/shippingConfig';
 
 interface ShopPageProps {
   products: Product[];
@@ -46,7 +47,7 @@ const SORT_OPTIONS = [
 
 const FILTER_CHIPS = ['Organic', 'Bestseller', 'Single origin', 'Under ₹500', 'Whole spice'];
 
-const FREE_DELIVERY_THRESHOLD = 1000;
+const FREE_DELIVERY_THRESHOLD = FREE_SHIPPING_THRESHOLD;
 
 const FADE_UP = {
   hidden: { opacity: 0, y: 20 },
@@ -183,7 +184,7 @@ const ShopPage: React.FC<ShopPageProps> = ({ products, posts }) => {
     <>
       {filteredResults.length > 0 ? (
         <motion.div
-          className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-6"
+          className="grid grid-cols-1 min-[400px]:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-6"
           initial="hidden"
           animate="visible"
           variants={{ visible: { transition: { staggerChildren: 0.05 } } }}

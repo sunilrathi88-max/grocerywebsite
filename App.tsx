@@ -21,6 +21,7 @@ import {
 } from './types';
 
 import { getBundleSuggestions } from './utils/recommendations';
+import { getShippingCost } from './utils/shippingConfig';
 
 // Performance Utils
 import { usePerformanceMonitoring } from './utils/performance';
@@ -208,35 +209,8 @@ const App: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Register Service Worker (PWA) - Only in production
-  useEffect(() => {
-    // Skip service worker registration in development mode
-    if (import.meta.env.DEV) {
-      return;
-    }
-
-    if ('serviceWorker' in navigator) {
-      import('workbox-window')
-        .then(({ Workbox }) => {
-          const wb = new Workbox('/sw.js');
-
-          wb.addEventListener('installed', (event) => {
-            if (event.isUpdate) {
-              if (window.confirm('New version available! Click OK to update.')) {
-                window.location.reload();
-              }
-            }
-          });
-
-          wb.register().catch((error) => {
-            console.warn('Service Worker registration failed:', error);
-          });
-        })
-        .catch((error) => {
-          console.warn('Workbox import failed:', error);
-        });
-    }
-  }, []);
+  // Service worker registration is handled by vite-plugin-pwa
+  // (registerType 'autoUpdate' + injectRegister 'script-defer' in vite.config.ts).
 
   // --- State Definitions ---
 
@@ -394,7 +368,7 @@ const App: React.FC = () => {
   const availableHeatLevels = ['Mild', 'Medium', 'Spicy', 'Extra Spicy']; // Static for now, or derive from tags
   const availableCuisines: string[] = []; // Placeholder, to be populated from tags or new field
 
-  const shippingCost = useMemo(() => (subtotal > 999 || subtotal === 0 ? 0 : 50), [subtotal]);
+  const shippingCost = useMemo(() => getShippingCost(subtotal), [subtotal]);
 
   // Smart Cart Recommendations
   const cartRecommendations = useMemo(() => {
